@@ -49,6 +49,19 @@
 
 #include "driver/sst26/src/drv_sst26_local.h"
 
+#include "drv_sst26_spi_interface.h"
+<#if core.PRODUCT_FAMILY?matches("PIC32M.*") == false && DRV_SST26_TX_RX_DMA == true && core.DATA_CACHE_ENABLE?? && core.DATA_CACHE_ENABLE == true >
+#include "system/cache/sys_cache.h"
+</#if>
+
+/* Array to hold the commands to be sent  */
+static CACHE_ALIGN uint8_t sst26Command[CACHE_ALIGNED_SIZE_GET(8)];
+
+/* Stores Status Register value ([0]Dummy Byte, [1]Register value)*/
+static CACHE_ALIGN uint8_t sst26Response[CACHE_ALIGNED_SIZE_GET(2)];
+
+static CACHE_ALIGN uint8_t jedecID[CACHE_ALIGNED_SIZE_GET(4)] = { 0 };
+
 // *****************************************************************************
 // *****************************************************************************
 // Section: Global objects
@@ -92,162 +105,120 @@ static uint32_t DRV_SST26_GetFlashSize( uint8_t deviceId )
 
 static bool DRV_SST26_ResetFlash(void)
 {
-    bool status = false;
-
     dObj->transferStatus    = DRV_SST26_TRANSFER_BUSY;
 
     dObj->state             = DRV_SST26_STATE_WAIT_RESET_FLASH_COMPLETE;
 
-    dObj->sst26Command[0]   = SST26_CMD_FLASH_RESET_ENABLE;
+    sst26Command[0] = SST26_CMD_FLASH_RESET_ENABLE;
+    dObj->transferDataObj.pTransmitData = sst26Command;
 
-    /* Assert Chip Select */
-    SYS_PORT_PinClear(dObj->chipSelectPin);
+    dObj->transferDataObj.txSize = 1;
 
-    if (dObj->sst26Plib->write(&dObj->sst26Command[0], 1) == false)
-    {
-        /* De-assert the chip select */
-        SYS_PORT_PinSet(dObj->chipSelectPin);
-
-        dObj->transferStatus = DRV_SST26_TRANSFER_ERROR_UNKNOWN;
-
-        return status;
-    }
+    _DRV_SST26_SPIWriteRead(dObj, &dObj->transferDataObj);
 
     while (dObj->transferStatus == DRV_SST26_TRANSFER_BUSY);
 
-    /* De-assert the chip select */
-    SYS_PORT_PinSet(dObj->chipSelectPin);
 
     dObj->transferStatus    = DRV_SST26_TRANSFER_BUSY;
 
     dObj->state             = DRV_SST26_STATE_WAIT_RESET_FLASH_COMPLETE;
 
-    dObj->sst26Command[0]   = SST26_CMD_FLASH_RESET;
+    sst26Command[0] = SST26_CMD_FLASH_RESET;
+    dObj->transferDataObj.pTransmitData = sst26Command;
+    dObj->transferDataObj.pReceiveData = NULL;
 
-    /* Assert Chip Select */
-    SYS_PORT_PinClear(dObj->chipSelectPin);
+    dObj->transferDataObj.txSize = 1;
+    dObj->transferDataObj.rxSize = 0;
 
-    status = dObj->sst26Plib->write(&dObj->sst26Command[0], 1);
+    _DRV_SST26_SPIWriteRead(dObj, &dObj->transferDataObj);
 
-    if ( status == true)
-    {
-        while (dObj->transferStatus == DRV_SST26_TRANSFER_BUSY);
-    }
-    else
-    {
-        dObj->transferStatus = DRV_SST26_TRANSFER_ERROR_UNKNOWN;
-    }
+    while (dObj->transferStatus == DRV_SST26_TRANSFER_BUSY);
 
-    /* De-assert the chip select */
-    SYS_PORT_PinSet(dObj->chipSelectPin);
 
-    return status;
+    return true;
 }
 
 static bool DRV_SST26_WriteEnable(void)
 {
-    bool status = false;
+    sst26Command[0] = SST26_CMD_WRITE_ENABLE;
+    dObj->transferDataObj.pTransmitData = sst26Command;
+    dObj->transferDataObj.pReceiveData = NULL;
 
-    dObj->sst26Command[0] = SST26_CMD_WRITE_ENABLE;
+    dObj->transferDataObj.txSize = 1;
+    dObj->transferDataObj.rxSize = 0;
 
-    /* Assert Chip Select */
-    SYS_PORT_PinClear(dObj->chipSelectPin);
 
-    status = dObj->sst26Plib->write(&dObj->sst26Command[0], 1);
 
-    if ( status == false)
-    {
-        /* De-assert the chip select */
-        SYS_PORT_PinSet(dObj->chipSelectPin);
-    }
+    _DRV_SST26_SPIWriteRead(dObj, &dObj->transferDataObj);
 
-    return status;
+    return true;
 }
 
 static bool DRV_SST26_ReadStatus( void )
 {
-    bool status = false;
-
     /* Register Status will be stored in the second byte */
-    dObj->regStatus[1]      = 0;
-    dObj->sst26Command[0]   = SST26_CMD_READ_STATUS_REG;
+    sst26Response[1] = 0;
+    sst26Command[0] = SST26_CMD_READ_STATUS_REG;
 
-    /* Assert Chip Select */
-    SYS_PORT_PinClear(dObj->chipSelectPin);
+    dObj->transferDataObj.pTransmitData = sst26Command;
+    dObj->transferDataObj.txSize = 1;
+    dObj->transferDataObj.pReceiveData = sst26Response;
+    dObj->transferDataObj.rxSize = 2;
 
-    status = dObj->sst26Plib->writeRead(&dObj->sst26Command[0], 1, &dObj->regStatus[0], 2);
+    _DRV_SST26_SPIWriteRead(dObj, &dObj->transferDataObj);
 
-    if (status == false)
-    {
-        /* De-assert the chip select */
-        SYS_PORT_PinSet(dObj->chipSelectPin);
-    }
-
-    return status;
+    return true;
 }
 
 static bool DRV_SST26_WriteCommandAddress( uint8_t command, uint32_t address )
 {
-    bool status = false;
     uint8_t nBytes = 0;
 
     /* Save the request */
-    dObj->sst26Command[nBytes++] = command;
-    dObj->sst26Command[nBytes++] = (address >> 16);
-    dObj->sst26Command[nBytes++] = (address >> 8);
-    dObj->sst26Command[nBytes++] = address;
+    sst26Command[nBytes++] = command;
+    sst26Command[nBytes++] = (address >> 16);
+    sst26Command[nBytes++] = (address >> 8);
+    sst26Command[nBytes++] = address;
 
     if (command == SST26_CMD_HIGH_SPEED_READ)
     {
         /* For high speed read, perform a dummy write */
-        dObj->sst26Command[nBytes++] = 0xFF;
+        sst26Command[nBytes++] = 0xFF;
     }
 
-    /* Assert Chip Select */
-    SYS_PORT_PinClear(dObj->chipSelectPin);
+    dObj->transferDataObj.pTransmitData = sst26Command;
+    dObj->transferDataObj.txSize = nBytes;
 
-    status = dObj->sst26Plib->write(&dObj->sst26Command[0], nBytes);
+    dObj->transferDataObj.pReceiveData = NULL;
+    dObj->transferDataObj.rxSize = 0;
 
-    if ( status == false)
-    {
-        /* De-assert the chip select */
-        SYS_PORT_PinSet(dObj->chipSelectPin);
-    }
+    _DRV_SST26_SPIWriteRead(dObj, &dObj->transferDataObj);
 
-    return status;
+    return true;
 }
 
 static bool DRV_SST26_ReadData( void* rxData, uint32_t rxDataLength )
 {
-    bool status = false;
+    dObj->transferDataObj.pTransmitData = NULL;
+    dObj->transferDataObj.txSize = 0;
+    dObj->transferDataObj.pReceiveData = rxData;
+    dObj->transferDataObj.rxSize = rxDataLength;
 
-    /* Assert Chip Select */
-    SYS_PORT_PinClear(gDrvSST26Obj.chipSelectPin);
+    _DRV_SST26_SPIWriteRead(dObj, &dObj->transferDataObj);
 
-    status = dObj->sst26Plib->read((uint8_t*)rxData, rxDataLength);
-
-    if (status == false)
-    {
-        /* De-assert the chip select */
-        SYS_PORT_PinSet(gDrvSST26Obj.chipSelectPin);
-    }
-
-    return status;
+    return true;
 }
 
 static bool DRV_SST26_WriteData( void* txData, uint32_t txDataLength, uint32_t address )
 {
-    bool status = false;
+    dObj->transferDataObj.pTransmitData = txData;
+    dObj->transferDataObj.txSize = txDataLength;
+    dObj->transferDataObj.pReceiveData = NULL;
+    dObj->transferDataObj.rxSize = 0;
 
-    status = dObj->sst26Plib->write(txData, txDataLength);
+    _DRV_SST26_SPIWriteRead(dObj, &dObj->transferDataObj);
 
-    if (status == false)
-    {
-        /* De-assert the chip select */
-        SYS_PORT_PinSet(gDrvSST26Obj.chipSelectPin);
-    }
-
-    return status;
+    return true;
 }
 
 static bool DRV_SST26_Erase( uint8_t command, uint32_t address )
@@ -275,7 +246,7 @@ static bool DRV_SST26_Erase( uint8_t command, uint32_t address )
     return status;
 }
 
-static void DRV_SST26_Handler( void )
+void DRV_SST26_Handler( void )
 {
     switch(dObj->state)
     {
@@ -357,7 +328,7 @@ static void DRV_SST26_Handler( void )
             SYS_PORT_PinSet(dObj->chipSelectPin);
 
             /* Check the busy bit in the status register. 0 = Ready, 1 = busy*/
-            if (dObj->regStatus[1] & (1 << 0))
+            if (sst26Response[1] & (1 << 0))
             {
                 /* Keep reading the status of FLASH internal write cycle */
                 if (DRV_SST26_ReadStatus() == false)
@@ -396,22 +367,18 @@ static void DRV_SST26_Handler( void )
             SYS_PORT_PinSet(dObj->chipSelectPin);
 
             /* Global Unprotect Flash command */
-            dObj->currentCommand = SST26_CMD_UNPROTECT_GLOBAL;
+            sst26Command[0]     = SST26_CMD_UNPROTECT_GLOBAL;
+            dObj->transferDataObj.pTransmitData       = sst26Command;
+            dObj->transferDataObj.txSize              = 1;
+            dObj->transferDataObj.pReceiveData      = NULL;
+            dObj->transferDataObj.rxSize                = 0;
 
-            /* Assert Chip Select and Send Global Unprotect Flash command */
-            SYS_PORT_PinClear(dObj->chipSelectPin);
 
-            if (dObj->sst26Plib->write(&dObj->currentCommand, 1) == true)
-            {
-                dObj->state = DRV_SST26_STATE_WAIT_UNLOCK_FLASH_COMPLETE;
-            }
-            else
-            {
-                dObj->transferStatus = DRV_SST26_TRANSFER_ERROR_UNKNOWN;
+            _DRV_SST26_SPIWriteRead(dObj, &dObj->transferDataObj);
 
-                /* De-assert the chip select */
-                SYS_PORT_PinSet(dObj->chipSelectPin);
-            }
+            dObj->state = DRV_SST26_STATE_WAIT_UNLOCK_FLASH_COMPLETE;
+
+
             break;
         }
 
@@ -432,13 +399,6 @@ static void DRV_SST26_Handler( void )
             break;
         }
     }
-}
-
-/* This function will be called by SPI/QSPI PLIB when transfer is completed */
-static void sst26EventHandler(uintptr_t context )
-{
-    DRV_SST26_Handler();
-
     /* If transfer is complete, notify the application */
     if (dObj->transferStatus != DRV_SST26_TRANSFER_BUSY)
     {
@@ -466,7 +426,7 @@ bool DRV_SST26_UnlockFlash( const DRV_HANDLE handle )
     }
 
     dObj->transferStatus    = DRV_SST26_TRANSFER_BUSY;
-
+    dObj->currentCommand    = SST26_CMD_UNPROTECT_GLOBAL;
     dObj->state             = DRV_SST26_STATE_UNLOCK_FLASH;
 
     /* Start the transfer by submitting a Write Enable request. Further commands
@@ -482,43 +442,31 @@ bool DRV_SST26_UnlockFlash( const DRV_HANDLE handle )
     return status;
 }
 
-bool DRV_SST26_ReadJedecId( const DRV_HANDLE handle, void *jedec_id )
+bool DRV_SST26_ReadJedecId( const DRV_HANDLE handle, void* jedec_id )
 {
-    bool status = false;
-
     if( (handle == DRV_HANDLE_INVALID) ||
         (dObj->transferStatus == DRV_SST26_TRANSFER_BUSY))
     {
-        return status;
+        return false;
     }
 
-    /* De-assert the chip select */
-    SYS_PORT_PinSet(dObj->chipSelectPin);
 
     dObj->transferStatus    = DRV_SST26_TRANSFER_BUSY;
 
     dObj->state             = DRV_SST26_STATE_WAIT_JEDEC_ID_READ_COMPLETE;
 
-    dObj->sst26Command[0]   = SST26_CMD_JEDEC_ID_READ;
+    sst26Command[0]   = SST26_CMD_JEDEC_ID_READ;
 
-    /* Assert Chip Select */
-    SYS_PORT_PinClear(dObj->chipSelectPin);
+    dObj->transferDataObj.pTransmitData = sst26Command;
+    dObj->transferDataObj.txSize = 1;
+    dObj->transferDataObj.pReceiveData = jedec_id;
+    dObj->transferDataObj.rxSize = 4;
+    _DRV_SST26_SPIWriteRead(dObj, &dObj->transferDataObj);
 
-    status = dObj->sst26Plib->writeRead(&dObj->sst26Command[0], 1, jedec_id, 4);
+    while (dObj->transferStatus == DRV_SST26_TRANSFER_BUSY);
 
-    if (status == true)
-    {
-        while (dObj->transferStatus == DRV_SST26_TRANSFER_BUSY);
-    }
-    else
-    {
-        dObj->transferStatus = DRV_SST26_TRANSFER_ERROR_UNKNOWN;
-    }
 
-    /* De-assert the chip select */
-    SYS_PORT_PinSet(dObj->chipSelectPin);
-
-    return status;
+    return true;
 }
 
 DRV_SST26_TRANSFER_STATUS DRV_SST26_TransferStatusGet( const DRV_HANDLE handle )
@@ -629,14 +577,13 @@ bool DRV_SST26_ChipErase( const DRV_HANDLE handle )
 bool DRV_SST26_GeometryGet( const DRV_HANDLE handle, DRV_SST26_GEOMETRY *geometry )
 {
     uint32_t flash_size = 0;
-    uint8_t  jedec_id[4] = { 0 };
 
-    if (DRV_SST26_ReadJedecId(handle, (void *)&jedec_id) == false)
+    if (DRV_SST26_ReadJedecId(handle, (void *)jedecID) == false)
     {
         return false;
     }
 
-    flash_size = DRV_SST26_GetFlashSize(jedec_id[3]);
+    flash_size = DRV_SST26_GetFlashSize(jedecID[3]);
 
     if ((flash_size == 0) ||
         (DRV_SST26_START_ADDRESS >= flash_size))
@@ -680,6 +627,19 @@ DRV_HANDLE DRV_SST26_Open( const SYS_MODULE_INDEX drvIndex, const DRV_IO_INTENT 
     {
         return DRV_HANDLE_INVALID;
     }
+
+<#if DRV_SST26_INTERFACE_TYPE == "SPI_DRV">
+    dObj->spiDrvHandle = DRV_SPI_Open(dObj->spiDrvIndex, DRV_IO_INTENT_READWRITE);
+    if (dObj->spiDrvHandle != DRV_HANDLE_INVALID)
+    {
+        /* Register a callback with the SPI driver */
+        DRV_SPI_TransferEventHandlerSet(dObj->spiDrvHandle, _DRV_SST26_SPIDriverEventHandler, (uintptr_t)dObj);
+    }
+    else
+    {
+        return DRV_HANDLE_INVALID;
+    }
+</#if>
 
     /* Reset SST26 Flash device */
     if (DRV_SST26_ResetFlash() == false)
@@ -750,12 +710,9 @@ SYS_MODULE_OBJ DRV_SST26_Initialize
     /* Assign to the local pointer the init data passed */
     sst26Init       = (DRV_SST26_INIT *)init;
 
-    /* Initialize the attached memory device functions */
-    dObj->sst26Plib = sst26Init->sst26Plib;
-
     dObj->chipSelectPin = sst26Init->chipSelectPin;
 
-    dObj->sst26Plib->callbackRegister(sst26EventHandler, (uintptr_t)NULL);
+    _DRV_SST26_InterfaceInit(dObj, sst26Init);
 
     /* De-assert Chip Select pin to begin with. */
     SYS_PORT_PinSet(dObj->chipSelectPin);

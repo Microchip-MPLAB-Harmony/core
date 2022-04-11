@@ -50,7 +50,9 @@
 #include <string.h>
 #include "configuration.h"
 #include "driver/sst26/drv_sst26.h"
-
+<#if DRV_SST26_INTERFACE_TYPE == "SPI_DRV" >
+#include "driver/driver.h"
+</#if>
 // *****************************************************************************
 // *****************************************************************************
 // Section: Local Data Type Definitions
@@ -172,6 +174,7 @@ typedef enum
 
     <#lt>    /* PLIB API list that will be used by the driver to access the hardware */
     <#lt>    const DRV_SST26_PLIB_INTERFACE *sst26Plib;
+
     <#lt>} DRV_SST26_OBJECT;
 
 <#elseif DRV_SST26_PROTOCOL == "SPI">
@@ -189,6 +192,22 @@ typedef enum
     <#lt>    DRV_SST26_STATE_WAIT_RESET_FLASH_COMPLETE,
     <#lt>    DRV_SST26_STATE_WAIT_JEDEC_ID_READ_COMPLETE
     <#lt>} DRV_SST26_STATE;
+
+    <#lt>typedef struct
+    <#lt>{
+    <#lt>    /* Pointer to the receive data */
+    <#lt>    void*   pReceiveData;
+
+    <#lt>    /* Pointer to the transmit data */
+    <#lt>    void*   pTransmitData;
+
+    <#lt>    /* Number of bytes to be written */
+    <#lt>    size_t  txSize;
+
+    <#lt>    /* Number of bytes to be read */
+    <#lt>    size_t  rxSize;  
+
+    <#lt>}DRV_SST26_TRANSFER_OBJ;
 
     <#lt>/**************************************
     <#lt> * SST26 Driver Hardware Instance Object
@@ -213,9 +232,6 @@ typedef enum
     <#lt>    /* Indicates the number of clients that have opened this driver */
     <#lt>    size_t nClients;
 
-    <#lt>    /* Stores Status Register value ([0]Dummy Byte, [1]Register value)*/
-    <#lt>    uint8_t regStatus[2];
-
     <#lt>    /* Points to the FLASH memory address */
     <#lt>    uint32_t memoryAddr;
 
@@ -237,13 +253,56 @@ typedef enum
     <#lt>    /* Application context */
     <#lt>    uintptr_t context;
 
+<#if DRV_SST26_INTERFACE_TYPE == "SPI_DRV" >
+    <#lt>    uint32_t spiDrvIndex;
+
+    <#lt>    DRV_HANDLE spiDrvHandle;
+<#else>
     <#lt>    /* PLIB API list that will be used by the driver to access the hardware */
     <#lt>    const DRV_SST26_PLIB_INTERFACE *sst26Plib;
+</#if>
 
-    <#lt>    /* Array to hold the commands to be sent  */
-    <#lt>    uint8_t sst26Command[8];
+    <#lt>    DRV_SST26_TRANSFER_OBJ          transferDataObj;
+
+<#if DRV_SST26_TX_RX_DMA == true>
+    <#lt>    /* Transmit DMA Channel */
+    <#lt>    SYS_DMA_CHANNEL                 txDMAChannel;
+
+    <#lt>    /* Receive DMA Channel */
+    <#lt>    SYS_DMA_CHANNEL                 rxDMAChannel;
+
+    <#lt>    /* This is the SPI transmit register address. Used for DMA operation. */
+    <#lt>    void*                           txAddress;
+
+    <#lt>    /* This is the SPI receive register address. Used for DMA operation. */
+    <#lt>    void*                           rxAddress;
+
+<#if core.PRODUCT_FAMILY?matches("PIC32M.*") == true>
+    <#lt>    /* Number of bytes pending to be written */
+    <#lt>    size_t  txPending;
+
+    <#lt>    /* Number of bytes to pending to be read */
+    <#lt>    size_t  rxPending;
+
+    <#lt>    /* Number of bytes transferred */
+    <#lt>    size_t  nBytesTransferred;
+<#else>
+    <#lt>    /* Dummy data is read into this variable by RX DMA */
+    <#lt>    uint32_t                        rxDummyData;
+
+    <#lt>    /* This holds the number of dummy data to be transmitted */
+    <#lt>    size_t                          txDummyDataSize;
+
+    <#lt>    /* This holds the number of dummy data to be received */
+    <#lt>    size_t                          rxDummyDataSize;
+</#if>      
+
+</#if>
     <#lt>} DRV_SST26_OBJECT;
 </#if>
+
+
+
 
 #endif //#ifndef _DRV_SST26_LOCAL_H
 

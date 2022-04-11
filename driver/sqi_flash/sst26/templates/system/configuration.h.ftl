@@ -9,4 +9,8 @@
 </#if>
 <#if DRV_SST26_PROTOCOL == "SPI" >
     <#lt>#define DRV_SST26_CHIP_SELECT_PIN       ${SPI_CHIP_SELECT_PIN?string}
+<#if DRV_SST26_TX_RX_DMA == true>
+    <#lt>#define DRV_SST26_XMIT_DMA_CH                       SYS_DMA_CHANNEL_${DRV_SST26_TX_DMA_CHANNEL}
+    <#lt>#define DRV_SST26_RCV_DMA_CH                        SYS_DMA_CHANNEL_${DRV_SST26_RX_DMA_CHANNEL}
+</#if>
 </#if>

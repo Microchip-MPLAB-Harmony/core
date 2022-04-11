@@ -67,7 +67,7 @@ def loadModule():
 
         {"name":"memory", "label": "MEMORY", "type":"driver", "display_path":"", "actual_path":"", "instance":"multi", "capability":["DRV_MEDIA"], "capability_type":"multi", "dependency":["MEMORY"], "condition":"True"},
 
-        {"name":"sst26", "label": "SST26", "type":"driver", "display_path":"SQI Flash", "actual_path":"sqi_flash", "instance":"single", "capability":["MEMORY"], "dependency":["SQI", "SPI"] if hasPeripheral(SQINamesList) else ["SPI"], "condition":"True"},
+        {"name":"sst26", "label": "SST26", "type":"driver", "display_path":"SQI Flash", "actual_path":"sqi_flash", "instance":"single", "capability":["MEMORY"], "dependency":["SQI", "SPI", "DRV_SPI"] if hasPeripheral(SQINamesList) else ["SPI", "DRV_SPI"], "condition":"True"},
 
         {"name":"mx25l", "label": "MX25L", "type":"driver", "display_path":"SQI Flash", "actual_path":"sqi_flash", "instance":"single", "capability":["MEMORY"], "dependency":["SQI"], "condition":'any(x in Variables.get("__PROCESSOR") for x in ["SAMV70", "SAMV71", "SAME70", "SAMS70", "SAMD5", "SAME5", "SAMA5D2", "SAM9X60"])'},
 

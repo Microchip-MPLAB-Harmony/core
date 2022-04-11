@@ -54,46 +54,48 @@ def sst26HeaderFileGen(symbol, event):
     component = symbol.getComponent()
 
     protocolUsed = component.getSymbolByID("DRV_SST26_PROTOCOL").getValue()
-    plib_used = event["value"]
+    plib_used = component.getSymbolByID("DRV_SST26_PLIB").getValue()
 
-    if (plib_used == ""):
-        symbol.setEnabled(False)
-    else:
-        if (protocolUsed == "SQI"):
-            if ("QSPI" in plib_used):
-                symbol.setSourcePath("driver/sqi_flash/sst26/templates/drv_sst26_qspi_definitions.h.ftl")
-            elif ("SQI" in plib_used):
-                symbol.setSourcePath("driver/sqi_flash/sst26/templates/drv_sst26_sqi_definitions.h.ftl")
-        elif (protocolUsed == "SPI"):
-            symbol.setSourcePath("driver/sqi_flash/sst26/templates/drv_sst26_qspi_spi_definitions.h.ftl")
+    if (protocolUsed == "SQI"):
+        if ("QSPI" in plib_used):
+            symbol.setSourcePath("driver/sqi_flash/sst26/templates/drv_sst26_qspi_definitions.h.ftl")
+        elif ("SQI" in plib_used):
+            symbol.setSourcePath("driver/sqi_flash/sst26/templates/drv_sst26_sqi_definitions.h.ftl")
+    elif (protocolUsed == "SPI"):
+        symbol.setSourcePath("driver/sqi_flash/sst26/templates/drv_sst26_qspi_spi_definitions.h.ftl")
 
-        symbol.setEnabled(True)
+    symbol.setEnabled(True)
 
 def sst26SourceFileGen(symbol, event):
     component = symbol.getComponent()
 
     coreArch = Database.getSymbolValue("core", "CoreArchitecture")
     protocolUsed = component.getSymbolByID("DRV_SST26_PROTOCOL").getValue()
-    plib_used = event["value"]
+    plib_used = component.getSymbolByID("DRV_SST26_PLIB").getValue()
 
-    if (plib_used == ""):
-        symbol.setEnabled(False)
-    else:
-        if (protocolUsed == "SQI"):
-            if ("QSPI" in plib_used):
-                symbol.setSourcePath("driver/sqi_flash/sst26/src/drv_sst26_qspi.c")
-                symbol.setMarkup(False)
-            elif ("SQI" in plib_used):
-                if "CORTEX" in coreArch:
-                    symbol.setSourcePath("driver/sqi_flash/sst26/src/drv_sst26_sqi_arm.c.ftl")
-                else:
-                    symbol.setSourcePath("driver/sqi_flash/sst26/src/drv_sst26_sqi_pic.c.ftl")
-                symbol.setMarkup(True)
-        elif (protocolUsed == "SPI"):
-            symbol.setSourcePath("driver/sqi_flash/sst26/src/drv_sst26_qspi_spi.c")
+    if (protocolUsed == "SQI"):
+        if ("QSPI" in plib_used):
+            symbol.setSourcePath("driver/sqi_flash/sst26/src/drv_sst26_qspi.c")
             symbol.setMarkup(False)
+        elif ("SQI" in plib_used):
+            if "CORTEX" in coreArch:
+                symbol.setSourcePath("driver/sqi_flash/sst26/src/drv_sst26_sqi_arm.c.ftl")
+            else:
+                symbol.setSourcePath("driver/sqi_flash/sst26/src/drv_sst26_sqi_pic.c.ftl")
+            symbol.setMarkup(True)
+    elif (protocolUsed == "SPI"):
+        symbol.setSourcePath("driver/sqi_flash/sst26/src/drv_sst26_qspi_spi.c.ftl")
+        symbol.setMarkup(True)
 
-        symbol.setEnabled(True)
+    symbol.setEnabled(True)
+
+def sst26InterfaceFileGen(symbol, event):
+    global sst26InterfaceType
+
+    if symbol.getID() == "DRV_SST26_SPI_INTERFACE_SOURCE":
+        symbol.setEnabled(event["value"] == "SPI")
+    if symbol.getID() == "DRV_SST26_SPI_INTERFACE_HEADER":
+        symbol.setEnabled(event["value"] == "SPI")
 
 def setBuffDescriptor(symbol, event):
     if ("SQI" in event["value"]):
@@ -114,9 +116,70 @@ def setLaneMode(symbol, event):
 
         Database.sendMessage(plibID, "SET_SQI_LANE_MODE", {"laneMode":event["value"], "isReadOnly":True})
 
+def requestAndAssignDMAChannel(symbol, event):
+
+    component = symbol.getComponent()
+
+    spiPeripheral = component.getSymbolByID("DRV_SST26_PLIB").getValue()
+
+    if symbol.getID() == "DRV_SST26_TX_DMA_CHANNEL":
+        dmaChannelID = "DMA_CH_FOR_" + str(spiPeripheral) + "_Transmit"
+        dmaRequestID = "DMA_CH_NEEDED_FOR_" + str(spiPeripheral) + "_Transmit"
+    else:
+        dmaChannelID = "DMA_CH_FOR_" + str(spiPeripheral) + "_Receive"
+        dmaRequestID = "DMA_CH_NEEDED_FOR_" + str(spiPeripheral) + "_Receive"
+
+    # Control visibility
+    symbol.setVisible(event["value"])
+
+    dummyDict = {}
+
+    if event["value"] == False:
+        dummyDict = Database.sendMessage("core", "DMA_CHANNEL_DISABLE", {"dma_channel":dmaRequestID})
+    else:
+        dummyDict = Database.sendMessage("core", "DMA_CHANNEL_ENABLE", {"dma_channel":dmaRequestID})
+
+    # Get the allocated channel and assign it
+    channel = Database.getSymbolValue("core", dmaChannelID)
+    if channel != None:
+        symbol.setValue(channel)
+
+    # Enable "System DMA" option in MHC
+    if Database.getSymbolValue("core", "DMA_ENABLE") != None:
+        Database.sendMessage("HarmonyCore", "ENABLE_SYS_DMA", {"isEnabled":event["value"]})
+
+def requestDMAComment(symbol, event):
+    global sst26TXRXDMA
+
+    if ((event["value"] == -2) and (sst26TXRXDMA.getValue() == True)):
+        symbol.setVisible(True)
+        event["symbol"].setVisible(False)
+    else:
+        symbol.setVisible(False)
+
+def setPLIBOptionsVisibility(symbol, event):
+    global isDMAPresent
+
+    if (symbol.getID() == "DRV_SST26_TX_RX_DMA"):
+        if (isDMAPresent == True):
+            symbol.setVisible(event["value"] == "SPI_PLIB")
+    else:
+        symbol.setVisible(event["value"] != "SPI_DRV")
+
+def setDriverOptionsVisibility(symbol, event):
+    symbol.setVisible(event["value"] == "SPI_DRV")
+
 def instantiateComponent(sst26Component):
+    global isDMAPresent
+    global sst26TXRXDMA
+    global sst26InterfaceType
 
     res = Database.activateComponents(["HarmonyCore"])
+
+    if Database.getSymbolValue("core", "DMA_ENABLE") == None:
+        isDMAPresent = False
+    else:
+        isDMAPresent = True
 
     # Enable "Generate Harmony Driver Common Files" option in MHC
     Database.sendMessage("HarmonyCore", "ENABLE_DRV_COMMON", {"isEnabled":True})
@@ -128,10 +191,11 @@ def instantiateComponent(sst26Component):
     sst26PLIB.setLabel("PLIB Used")
     sst26PLIB.setHelp(drv_sst26_mcc_helpkeyword)
     sst26PLIB.setReadOnly(True)
+    sst26PLIB.setDependencies(setPLIBOptionsVisibility, ["DRV_SST26_INTERFACE_TYPE"])
 
     sst26Protocol = sst26Component.createComboSymbol("DRV_SST26_PROTOCOL", None, protocolUsed)
     sst26Protocol.setLabel("SST26 Protocol Used")
-    sst26Protocol.setVisible(False)
+    #sst26Protocol.setVisible(False)
     sst26Protocol.setDefaultValue("SQI")
 
     sst26NumClients = sst26Component.createIntegerSymbol("DRV_SST26_NUM_CLIENTS", None)
@@ -225,6 +289,51 @@ def instantiateComponent(sst26Component):
     sst26MemoryEraseComment.setLabel("*** Should be equal to Sector Erase Size ***")
     sst26MemoryEraseComment.setDependencies(sst26SetMemoryDependency, ["DRV_MEMORY_CONNECTED", "ERASE_ENABLE"])
 
+    sst26InterfaceType = sst26Component.createStringSymbol("DRV_SST26_INTERFACE_TYPE", None)
+    sst26InterfaceType.setLabel("SST26 Interface Type")
+    sst26InterfaceType.setVisible(False)
+    sst26InterfaceType.setDefaultValue("")
+
+    sst26TXRXDMA = sst26Component.createBooleanSymbol("DRV_SST26_TX_RX_DMA", None)
+    sst26TXRXDMA.setLabel("Use DMA for Transmit and Receive ?")
+    sst26TXRXDMA.setVisible(isDMAPresent and sst26InterfaceType.getValue() == "SPI_PLIB")
+    sst26TXRXDMA.setDependencies(setPLIBOptionsVisibility, ["DRV_SST26_INTERFACE_TYPE"])
+
+    sst26SymDrvInstance = sst26Component.createStringSymbol("DRV_SST26_SPI_DRIVER_INSTANCE", None)
+    sst26SymDrvInstance.setLabel("SPI Driver Instance Used")
+    sst26SymDrvInstance.setReadOnly(True)
+    sst26SymDrvInstance.setDefaultValue("")
+    sst26SymDrvInstance.setVisible(False)
+    sst26SymDrvInstance.setDependencies(setDriverOptionsVisibility, ["DRV_SST26_INTERFACE_TYPE"])
+
+    sst26TXDMAChannel = sst26Component.createIntegerSymbol("DRV_SST26_TX_DMA_CHANNEL", None)
+    sst26TXDMAChannel.setLabel("DMA Channel For Transmit")
+    sst26TXDMAChannel.setDefaultValue(0)
+    sst26TXDMAChannel.setVisible(False)
+    sst26TXDMAChannel.setReadOnly(True)
+    sst26TXDMAChannel.setDependencies(requestAndAssignDMAChannel, ["DRV_SST26_TX_RX_DMA"])
+
+    sst26TXDMAChannelComment = sst26Component.createCommentSymbol("DRV_SST26_TX_DMA_CH_COMMENT", None)
+    sst26TXDMAChannelComment.setLabel("Warning!!! Couldn't Allocate DMA Channel for Transmit. Check DMA manager. !!!")
+    sst26TXDMAChannelComment.setVisible(False)
+    sst26TXDMAChannelComment.setDependencies(requestDMAComment, ["DRV_SST26_TX_DMA_CHANNEL"])
+
+    sst26RXDMAChannel = sst26Component.createIntegerSymbol("DRV_SST26_RX_DMA_CHANNEL", None)
+    sst26RXDMAChannel.setLabel("DMA Channel For Receive")
+    sst26RXDMAChannel.setDefaultValue(1)
+    sst26RXDMAChannel.setVisible(False)
+    sst26RXDMAChannel.setReadOnly(True)
+    sst26RXDMAChannel.setDependencies(requestAndAssignDMAChannel, ["DRV_SST26_TX_RX_DMA"])
+
+    sst26RXDMAChannelComment = sst26Component.createCommentSymbol("DRV_SST26_RX_DMA_CH_COMMENT", None)
+    sst26RXDMAChannelComment.setLabel("Warning!!! Couldn't Allocate DMA Channel for Receive. Check DMA manager. !!!")
+    sst26RXDMAChannelComment.setVisible(False)
+    sst26RXDMAChannelComment.setDependencies(requestDMAComment, ["DRV_SST26_RX_DMA_CHANNEL"])
+
+    sst26DependencyDMAComment = sst26Component.createCommentSymbol("DRV_SST26_DEPENDENCY_DMA_COMMENT", None)
+    sst26DependencyDMAComment.setLabel("!!! Satisfy PLIB Dependency to Allocate DMA Channel !!!")
+    sst26DependencyDMAComment.setVisible(False)
+
     ############################################################################
     #### Code Generation ####
     ############################################################################
@@ -256,7 +365,7 @@ def instantiateComponent(sst26Component):
     sst26HeaderDefFile.setType("HEADER")
     sst26HeaderDefFile.setOverwrite(True)
     sst26HeaderDefFile.setMarkup(True)
-    sst26HeaderDefFile.setDependencies(sst26HeaderFileGen, ["DRV_SST26_PLIB"])
+    sst26HeaderDefFile.setDependencies(sst26HeaderFileGen, ["DRV_SST26_PROTOCOL"])
 
     sst26SourceFile = sst26Component.createFileSymbol("DRV_SST26_SOURCE", None)
     sst26SourceFile.setOutputName("drv_sst26.c")
@@ -264,7 +373,27 @@ def instantiateComponent(sst26Component):
     sst26SourceFile.setProjectPath("config/" + configName + "/driver/sst26/")
     sst26SourceFile.setType("SOURCE")
     sst26SourceFile.setOverwrite(True)
-    sst26SourceFile.setDependencies(sst26SourceFileGen, ["DRV_SST26_PLIB"])
+    sst26SourceFile.setDependencies(sst26SourceFileGen, ["DRV_SST26_PROTOCOL"])
+
+    sst26PlibIntfSourceFile = sst26Component.createFileSymbol("DRV_SST26_SPI_INTERFACE_SOURCE", None)
+    sst26PlibIntfSourceFile.setSourcePath("driver/sqi_flash/sst26/src/drv_sst26_spi_interface.c.ftl")
+    sst26PlibIntfSourceFile.setOutputName("drv_sst26_spi_interface.c")
+    sst26PlibIntfSourceFile.setDestPath("driver/sst26/src/")
+    sst26PlibIntfSourceFile.setProjectPath("config/" + configName + "/driver/sst26/")
+    sst26PlibIntfSourceFile.setType("SOURCE")
+    sst26PlibIntfSourceFile.setOverwrite(True)
+    sst26PlibIntfSourceFile.setMarkup(True)
+    sst26PlibIntfSourceFile.setDependencies(sst26InterfaceFileGen, ["DRV_SST26_PROTOCOL"])
+
+    sst26PlibIntfHeaderFile = sst26Component.createFileSymbol("DRV_SST26_SPI_INTERFACE_HEADER", None)
+    sst26PlibIntfHeaderFile.setSourcePath("driver/sqi_flash/sst26/src/drv_sst26_spi_interface.h.ftl")
+    sst26PlibIntfHeaderFile.setOutputName("drv_sst26_spi_interface.h")
+    sst26PlibIntfHeaderFile.setDestPath("driver/sst26/src/")
+    sst26PlibIntfHeaderFile.setProjectPath("config/" + configName + "/driver/sst26/")
+    sst26PlibIntfHeaderFile.setType("HEADER")
+    sst26PlibIntfHeaderFile.setOverwrite(True)
+    sst26PlibIntfHeaderFile.setMarkup(True)
+    sst26PlibIntfHeaderFile.setDependencies(sst26InterfaceFileGen, ["DRV_SST26_PROTOCOL"])
 
     # System Template Files
     sst26SystemDefFile = sst26Component.createFileSymbol("DRV_SST26_SYS_DEF", None)
@@ -298,6 +427,7 @@ def instantiateComponent(sst26Component):
     sst26SystemInitFile.setMarkup(True)
 
 def onAttachmentConnected(source, target):
+    global isDMAPresent
     localComponent = source["component"]
     remoteComponent = target["component"]
     remoteID = remoteComponent.getID()
@@ -306,13 +436,14 @@ def onAttachmentConnected(source, target):
 
     sqiCapabilityId = "drv_sst26_SQI_dependency"
     spiCapabilityId = "drv_sst26_SPI_dependency"
+    spiDrvCapabilityId = "drv_sst26_DRV_SPI_dependency"
 
     sst26PlibID = remoteID.upper()
 
     if connectID == sqiCapabilityId :
-        localComponent.getSymbolByID("DRV_SST26_PROTOCOL").setValue("SQI")
-
         localComponent.getSymbolByID("DRV_SST26_PLIB").setValue(sst26PlibID)
+        localComponent.getSymbolByID("DRV_SST26_PROTOCOL").setValue("SQI")
+        localComponent.getSymbolByID("DRV_SST26_INTERFACE_TYPE").setValue("SQI_PLIB")
 
         if ("sqi" in remoteID):
             localComponent.getSymbolByID("CHIP_SELECT").setVisible(True)
@@ -324,11 +455,13 @@ def onAttachmentConnected(source, target):
             Database.sendMessage(sst26PlibID.lower(), "SET_SQI_LANE_MODE", {"laneMode":laneMode, "isReadOnly":True})
 
         localComponent.setCapabilityEnabled(spiCapabilityId, False)
+        localComponent.setCapabilityEnabled(spiDrvCapabilityId, False)
+
 
     if connectID == spiCapabilityId :
-        localComponent.getSymbolByID("DRV_SST26_PROTOCOL").setValue("SPI")
 
         localComponent.getSymbolByID("DRV_SST26_PLIB").setValue(sst26PlibID)
+        localComponent.getSymbolByID("DRV_SST26_PROTOCOL").setValue("SPI")
 
         Database.setSymbolValue(sst26PlibID, "SPI_DRIVER_CONTROLLED", True)
 
@@ -338,9 +471,26 @@ def onAttachmentConnected(source, target):
         localComponent.getSymbolByID("SPI_CHIP_SELECT_PIN_COMMENT").setVisible(True)
 
         localComponent.setCapabilityEnabled(sqiCapabilityId, False)
+        localComponent.setCapabilityEnabled(spiDrvCapabilityId, False)
 
         # Enable "Enable System Ports" option in MHC
         Database.sendMessage("HarmonyCore", "ENABLE_SYS_PORTS", {"isEnabled":True})
+
+        localComponent.getSymbolByID("DRV_SST26_INTERFACE_TYPE").setValue("SPI_PLIB")
+        localComponent.getSymbolByID("DRV_SST26_TX_RX_DMA").setReadOnly(False)
+
+    if connectID == "drv_sst26_DRV_SPI_dependency":
+        localComponent.getSymbolByID("DRV_SST26_PLIB").setValue("")
+        localComponent.getSymbolByID("DRV_SST26_PROTOCOL").setValue("SPI")
+        localComponent.getSymbolByID("SPI_CHIP_SELECT_PIN").setVisible(True)
+        localComponent.getSymbolByID("SPI_CHIP_SELECT_PIN_COMMENT").setVisible(True)
+        localComponent.setCapabilityEnabled(spiCapabilityId, False)
+        localComponent.setCapabilityEnabled(sqiCapabilityId, False)
+        localComponent.getSymbolByID("DRV_SST26_INTERFACE_TYPE").setValue("SPI_DRV")
+        drvInstance = localComponent.getSymbolByID("DRV_SST26_SPI_DRIVER_INSTANCE")
+        drvInstance.clearValue()
+        index = Database.getSymbolValue(remoteID, "INDEX")
+        drvInstance.setValue(str(index))
 
 def onAttachmentDisconnected(source, target):
     localComponent = source["component"]
@@ -351,6 +501,7 @@ def onAttachmentDisconnected(source, target):
 
     sqiCapabilityId = "drv_sst26_SQI_dependency"
     spiCapabilityId = "drv_sst26_SPI_dependency"
+    spiDrvCapabilityId = "drv_sst26_DRV_SPI_dependency"
 
     sst26PlibID = remoteID.upper()
 
@@ -365,21 +516,35 @@ def onAttachmentDisconnected(source, target):
         localComponent.getSymbolByID("DRV_SST26_PLIB").clearValue()
 
         localComponent.setCapabilityEnabled(spiCapabilityId, True)
+        localComponent.setCapabilityEnabled(spiDrvCapabilityId, True)
+        localComponent.getSymbolByID("DRV_SST26_INTERFACE_TYPE").setValue("")
 
     if connectID == "drv_sst26_SPI_dependency" :
         localComponent.getSymbolByID("SPI_CHIP_SELECT_PIN").setVisible(False)
         localComponent.getSymbolByID("SPI_CHIP_SELECT_PIN_COMMENT").setVisible(False)
-
-        localComponent.getSymbolByID("DRV_SST26_PLIB").clearValue()
 
         Database.setSymbolValue(sst26PlibID, "SPI_DRIVER_CONTROLLED", False)
 
         localComponent.getSymbolByID("INTERRUPT_ENABLE").setValue(False)
 
         localComponent.setCapabilityEnabled(sqiCapabilityId, True)
+        localComponent.setCapabilityEnabled(spiDrvCapabilityId, True)
 
         Database.sendMessage("HarmonyCore", "ENABLE_SYS_PORTS", {"isEnabled":False})
+        localComponent.getSymbolByID("DRV_SST26_TX_RX_DMA").setReadOnly(True)
+        localComponent.getSymbolByID("DRV_SST26_TX_RX_DMA").setValue(False)
+        localComponent.getSymbolByID("DRV_SST26_PLIB").clearValue()
+        localComponent.getSymbolByID("DRV_SST26_INTERFACE_TYPE").setValue("")
+
+    if (connectID == "drv_sst26_DRV_SPI_dependency"):
+        localComponent.setCapabilityEnabled(sqiCapabilityId, True)
+        localComponent.setCapabilityEnabled(spiCapabilityId, True)
+        drvInstance = localComponent.getSymbolByID("DRV_SST26_SPI_DRIVER_INSTANCE")
+        drvInstance.clearValue()
+        localComponent.getSymbolByID("DRV_SST26_INTERFACE_TYPE").setValue("")
 
 def destroyComponent(sst26Component):
     Database.sendMessage("HarmonyCore", "ENABLE_DRV_COMMON", {"isEnabled":False})
     Database.sendMessage("HarmonyCore", "ENABLE_SYS_COMMON", {"isEnabled":False})
+    if Database.getSymbolValue("core", "DMA_ENABLE") != None:
+        Database.sendMessage("HarmonyCore", "ENABLE_SYS_DMA", {"isEnabled":False})

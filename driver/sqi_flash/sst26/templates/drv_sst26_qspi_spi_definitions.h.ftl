@@ -52,6 +52,9 @@
 #include "system/system.h"
 #include "driver/driver.h"
 #include "system/ports/sys_ports.h"
+<#if DRV_SST26_TX_RX_DMA == true>
+    <#lt>#include "system/dma/sys_dma.h"
+</#if>
 
 // DOM-IGNORE-BEGIN
 #ifdef __cplusplus  // Provide C++ Compatibility
@@ -64,7 +67,7 @@
 // Section: Data Types
 // *****************************************************************************
 // *****************************************************************************
-
+<#if DRV_SST26_INTERFACE_TYPE != "SPI_DRV">
 /* SST26 PLIB API Set
 
   Summary:
@@ -89,6 +92,8 @@ typedef bool (* DRV_SST26_PLIB_READ)(void*, size_t);
 
 typedef bool (* DRV_SST26_PLIB_IS_BUSY)(void);
 
+typedef bool (*DRV_SST26_PLIB_IS_TX_BUSY) (void);
+
 typedef void (* DRV_SST26_PLIB_CALLBACK_REGISTER)(DRV_SST26_PLIB_CALLBACK, uintptr_t);
 
 
@@ -106,6 +111,8 @@ typedef struct
     /* SST26 PLIB Transfer status API */
     DRV_SST26_PLIB_IS_BUSY                   isBusy;
 
+    DRV_SST26_PLIB_IS_TX_BUSY                isTransmitterBusy;
+
     /* SST26 PLIB callback register API */
     DRV_SST26_PLIB_CALLBACK_REGISTER         callbackRegister;
 
@@ -121,7 +128,33 @@ typedef struct
 
     /* Chip Select pin to be used */
     SYS_PORT_PIN chipSelectPin;
+
+<#if DRV_SST26_TX_RX_DMA == true>
+    /* Transmit DMA Channel */
+    SYS_DMA_CHANNEL                 txDMAChannel;
+
+    /* Receive DMA Channel */
+    SYS_DMA_CHANNEL                 rxDMAChannel;
+
+    /* This is the SPI transmit register address. Used for DMA operation. */
+    void*                           txAddress;
+
+    /* This is the SPI receive register address. Used for DMA operation. */
+    void*                           rxAddress;
+</#if>
 } DRV_SST26_INIT;
+
+<#else>
+/* SST26 Driver Initialization Data Declaration */
+typedef struct
+{
+    /* Chip Select pin to be used */
+    SYS_PORT_PIN    chipSelectPin;
+    
+    uint32_t        spiDrvIndex;
+
+} DRV_SST26_INIT;
+</#if>
 
 
 //DOM-IGNORE-BEGIN
