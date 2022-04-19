@@ -115,10 +115,14 @@ typedef struct
 <#if SYS_FS_FAT == true>
     <#lt>/* File status structure when using latest FAT-FS and MPFS Together*/
     <#lt>typedef struct {
-    <#lt>    unsigned long	fsize;			/* File size */
-    <#lt>    unsigned short	fdate;			/* Last modified date */
-    <#lt>    unsigned short	ftime;			/* Last modified time */
-    <#lt>    unsigned char	fattrib;		/* Attribute */
+    <#if SYS_FS_FAT_EXFAT_ENABLE == true>
+        <#lt>    uint64_t    fsize;     /* File size */
+    <#else>
+        <#lt>    uint32_t    fsize;     /* File size */
+    </#if>
+    <#lt>    uint16_t    fdate;     /* Last modified date */
+    <#lt>    uint16_t    ftime;     /* Last modified time */
+    <#lt>    uint8_t     fattrib;   /* Attribute */
     <#if SYS_FS_LFN_ENABLE == true>
         <#lt>    /* Alternate file name */
         <#lt>    char        altname[13];
@@ -136,10 +140,10 @@ typedef struct
 <#else>
     <#lt>/* File status structure (FILINFO) */
     <#lt>typedef struct {
-    <#lt>    unsigned long	fsize;			/* File size */
-    <#lt>    unsigned short	fdate;			/* Last modified date */
-    <#lt>    unsigned short	ftime;			/* Last modified time */
-    <#lt>    unsigned char	fattrib;		/* Attribute */
+    <#lt>    uint32_t    fsize;     /* File size */
+    <#lt>    uint16_t    fdate;     /* Last modified date */
+    <#lt>    uint16_t    ftime;     /* Last modified time */
+    <#lt>    uint8_t     fattrib;   /* Attribute */
     <#lt>    /* Short file name (8.3 format) */
     <#lt>    char        fname[13];
     <#if SYS_FS_LFN_ENABLE == true>

@@ -692,7 +692,11 @@ typedef void (* SYS_FS_EVENT_HANDLER)
     <#lt>typedef struct
     <#lt>{
     <#lt>    /* File size */
-    <#lt>    uint32_t    fsize;
+    <#if SYS_FS_FAT_EXFAT_ENABLE == true>
+        <#lt>    uint64_t    fsize;
+    <#else>
+        <#lt>    uint32_t    fsize;
+    </#if>
     <#lt>    /* Last modified date */
     <#lt>    uint16_t    fdate;
     <#lt>    /* Last modified time */
