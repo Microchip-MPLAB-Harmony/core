@@ -29,7 +29,7 @@ thirdPartyFreeRTOS = Module.CreateComponent("FreeRTOS", "FreeRTOS", "/Third Part
 thirdPartyFreeRTOS.setDisplayType("Third Party Library")
 thirdPartyFreeRTOS.addCapability("FreeRTOS", "RTOS", True)
 
-harmonySystemService = Module.CreateSharedComponent("HarmonyCore", "Core", "/Harmony", "config/harmonycore.py")
+harmonySystemService = Module.CreateSharedComponent("HarmonyCore", "Core", "/Core/", "config/harmonycore.py")
 harmonySystemService.setDisplayType("Harmony Core Service")
 harmonySystemService.addDependency("harmony_RTOS_dependency", "RTOS", True, False)
 harmonySystemService.addCapability("HarmonyCoreService", "Core Service", True)
@@ -46,7 +46,7 @@ for coreComponent in coreComponents:
         if coreComponent['type'] == "system":
             print("create component: " + Name.upper() + " System Service")
             actualPath  = "system/" + coreComponent['actual_path'] + "/"
-            displayPath = "/Harmony/System Services/" + coreComponent['display_path']
+            displayPath = "/System Services/" + coreComponent['display_path']
 
             if "instance" in coreComponent:
                 Component = Module.CreateGeneratorComponent("sys_" + Name, Label, displayPath, actualPath + Name + "/config/sys_" + Name + "_common.py", actualPath + Name + "/config/sys_" + Name + ".py")
@@ -88,7 +88,7 @@ for coreComponent in coreComponents:
             print("create component: " + Name.upper() + " Driver")
 
             actualPath  = "driver/" + coreComponent['actual_path'] + "/"
-            displayPath = "/Harmony/Drivers/" + coreComponent['display_path']
+            displayPath = "/Drivers/" + coreComponent['display_path']
 
             if coreComponent['instance'] == "multi":
                 Component = Module.CreateGeneratorComponent("drv_" + Name, Label, displayPath, actualPath + Name + "/config/drv_" + Name + "_common.py", actualPath + Name + "/config/drv_" + Name + ".py")
