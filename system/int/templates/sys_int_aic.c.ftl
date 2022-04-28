@@ -60,7 +60,7 @@
 #define INT_InterruptPendingSet     SYS_INT_SourceStatusSet
 #define INT_InterruptPendingClear   SYS_INT_SourceStatusClear
 
-<#if core.CoreArchitecture == "ARM926EJS">
+<#if core.CoreArchitecture?matches("ARM926.*")>
 #ifndef CPSR_I_Pos
 #define CPSR_I_Pos      7U
 #endif
@@ -78,7 +78,7 @@
 
 // private methods *************************************************************
 
-<#if core.CoreArchitecture == "ARM926EJS">
+<#if core.CoreArchitecture?matches("ARM926.*")>
 static inline unsigned int __get_CPSR( void )
 {
     unsigned int value = 0;

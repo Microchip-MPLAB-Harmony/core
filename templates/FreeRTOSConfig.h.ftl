@@ -121,7 +121,7 @@
 
 /* Interrupt nesting behaviour configuration. */
 <#if core.CoreArchitecture != "MIPS">
-  <#if core.CoreArchitecture != "CORTEX-A5" && core.CoreArchitecture != "ARM926EJS" && core.CoreArchitecture != "CORTEX-A7">
+  <#if core.CoreArchitecture != "CORTEX-A5" && (core.CoreArchitecture?matches("ARM926.*") == false) && core.CoreArchitecture != "CORTEX-A7">
     <#lt>/* The priority at which the tick interrupt runs.  This should probably be kept at lowest priority. */
     <#lt>#define configKERNEL_INTERRUPT_PRIORITY         (${FREERTOS_KERNEL_INTERRUPT_PRIORITY} << (8 - ${FREERTOS_CONFIG_PRIORITY_BITS}))
     <#lt>

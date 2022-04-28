@@ -27,7 +27,7 @@
 <#if core.PRODUCT_FAMILY?contains("PIC32MX") || core.PRODUCT_FAMILY?contains("PIC32MM")>
     <#lt>#define SYS_TIME_COMPARE_UPDATE_EXECUTION_CYCLES    (460)
 </#if>
-<#if core.CoreArchitecture == "ARM926EJS">
+<#if core.CoreArchitecture?matches("ARM926.*")>
     <#lt>#define SYS_TIME_COMPARE_UPDATE_EXECUTION_CYCLES    (470)
 </#if>
 <#if core.CoreArchitecture == "CORTEX-A7">

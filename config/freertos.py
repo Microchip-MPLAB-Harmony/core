@@ -580,7 +580,7 @@ def instantiateComponent(thirdPartyFreeRTOS):
     freeRtosSym_MaxSysCalIntrPrio.setMin(0)
     freeRtosSym_MaxSysCalIntrPrio.setMax(7)
 
-    if (coreArch != "MIPS") and (coreArch != "CORTEX-A5") and (coreArch != "ARM926EJS") and (coreArch != "CORTEX-A7"):
+    if (coreArch != "MIPS") and (coreArch != "CORTEX-A5") and ("ARM926" not in coreArch) and (coreArch != "CORTEX-A7"):
         freeRtosSym_ConfigPriorityBits = thirdPartyFreeRTOS.createIntegerSymbol("FREERTOS_CONFIG_PRIORITY_BITS", freeRtosSymMenu)
         freeRtosSym_ConfigPriorityBits.setLabel("Number of Bits used for Priority Levels")
         freeRtosSym_ConfigPriorityBits.setMin(2)
@@ -946,7 +946,7 @@ def instantiateComponent(thirdPartyFreeRTOS):
     # load family specific configuration
     if (coreArch == "MIPS"):
         execfile(Module.getPath() + "config/arch/mips/devices_" + coreFamily[:7].lower() + "/freertos_config.py")
-    elif (coreArch[:6] == "ARM926"):
-        execfile(Module.getPath() + "config/arch/arm/devices_" + coreArch[:6].lower() + "/freertos_config.py")
+    elif ("ARM926" in coreArch):
+        execfile(Module.getPath() + "config/arch/arm/devices_arm926/freertos_config.py")
     else:
         execfile(Module.getPath() + "config/arch/arm/devices_" + coreArch.replace("-", "_").replace("PLUS", "").lower() + "/freertos_config.py")
