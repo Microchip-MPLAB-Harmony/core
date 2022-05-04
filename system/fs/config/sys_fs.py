@@ -369,11 +369,11 @@ def instantiateComponent(sysFSComponent):
     sysFSLFSSize.setDefaultValue(64)
     sysFSLFSSize.setVisible(sysFSLFS.getValue())
     sysFSLFSSize.setDependencies(sysFsLFSSymbolShow, ["SYS_FS_LFS"])
-    
+
     symOptionsLFS = sysFSComponent.createSettingSymbol("SYM_OPTIONS_LFS", None)
     symOptionsLFS.setCategory("C32")
     symOptionsLFS.setKey("appendMe")
-    symOptionsLFS.setValue("-std=c99")
+    symOptionsLFS.setValue("-std=c99 -Wno-format")
     symOptionsLFS.setAppend(True, " ")
     symOptionsLFS.setEnabled(sysFSLFS.getValue())
     symOptionsLFS.setDependencies(sysFsFileGen, ["SYS_FS_LFS"])
