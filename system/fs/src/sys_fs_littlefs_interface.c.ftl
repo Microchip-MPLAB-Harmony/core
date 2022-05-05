@@ -573,7 +573,7 @@ int LITTLEFS_write (
     uintptr_t handle,   /* Pointer to the file object */
     const void *buff,   /* Pointer to the data to be written */
     uint32_t btw,       /* Number of bytes to write */
-    int32_t* bw        /* Pointer to number of bytes written */
+    uint32_t* bw        /* Pointer to number of bytes written */
 )
 {
     lfs_t *fs = NULL;
