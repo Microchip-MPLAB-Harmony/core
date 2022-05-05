@@ -83,7 +83,7 @@ bool LITTLEFS_eof(uintptr_t handle);
 uint32_t LITTLEFS_size(uintptr_t handle);
 
 <#if SYS_FS_LFS_READONLY == false>
-int LITTLEFS_write (uintptr_t handle, const void* buff, uint32_t btw, uint32_t* bw);
+int LITTLEFS_write (uintptr_t handle, const void* buff, uint32_t btw, int32_t* bw);
 
 int LITTLEFS_mkdir (const char* path);
 
