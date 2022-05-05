@@ -321,15 +321,19 @@ int LITTLEFS_read (
     fs = &LITTLEFSVolume[0].volObj;
     
 
-    *br = lfs_file_read(fs, fp, buff, btr);
+    int32_t lfs_ret = lfs_file_read(fs, fp, buff, btr);
     
-    if (*br < 0)
+    if (lfs_ret < 0)
     {
-        res = *br;
+        res = lfs_ret;
         *br = 0;
     }
-    
-    return ((int)res);
+    else
+    {
+        *br = lfs_ret;
+    }
+
+    return (LFS_Err_To_SYSFS_Err(res));
 
 }
 
@@ -583,12 +587,16 @@ int LITTLEFS_write (
 
     fs = &LITTLEFSVolume[0].volObj;
     
-    *bw = lfs_file_write(fs, fp, buff, btw);
+    int32_t lfs_ret = lfs_file_write(fs, fp, buff, btw);
     
-    if (*bw < 0)
+    if (lfs_ret < 0)
     {
-        res = *bw;
+        res = lfs_ret;
         *bw = 0;
+    }
+    else
+    {
+        *bw = lfs_ret;
     }
    
     return (LFS_Err_To_SYSFS_Err(res));
