@@ -508,7 +508,7 @@ typedef struct
     /* Function pointer of native file system for reading a file */
     int (*read) (uintptr_t fp, void* buff, uint32_t btr, uint32_t *br);
     /* Function pointer of native file system for writing to a file */
-    int (*write) (uintptr_t fp, const void* buff, uint32_t btw, uint32_t* bw);
+    int (*write) (uintptr_t fp, const void* buff, uint32_t btw, int32_t* bw);
     /* Function pointer of native file system for closing a file */
     int (*close) (uintptr_t fp);
     /* Function pointer of native file system for moving the file pointer by a
