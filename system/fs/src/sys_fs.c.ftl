@@ -2420,7 +2420,7 @@ size_t SYS_FS_FileWrite
 {
     int fileStatus = -1;
     SYS_FS_OBJ *fileObj = (SYS_FS_OBJ *)handle;
-    uint32_t bytesWritten = -1;
+    int32_t bytesWritten = -1;
     OSAL_RESULT osalResult = OSAL_RESULT_FALSE;
 
     /* Check if the handle is valid. */
