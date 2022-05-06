@@ -317,19 +317,24 @@ int LITTLEFS_read (
     enum lfs_error res = LFS_ERR_OK;
     LITTLEFS_FILE_OBJECT *ptr = (LITTLEFS_FILE_OBJECT *)handle;
     lfs_file_t *fp = &ptr->fileObj;
+    int32_t lfs_ret = 0;
 
     fs = &LITTLEFSVolume[0].volObj;
     
 
-    *br = lfs_file_read(fs, fp, buff, btr);
+    lfs_ret = lfs_file_read(fs, fp, buff, btr);
     
-    if (*br < 0)
+    if (lfs_ret < 0)
     {
-        res = *br;
+        res = lfs_ret;
         *br = 0;
     }
+    else
+    {
+        *br = lfs_ret;
+    }
     
-    return ((int)res);
+    return (LFS_Err_To_SYSFS_Err(res));
 
 }
 
@@ -580,15 +585,20 @@ int LITTLEFS_write (
     enum lfs_error res = LFS_ERR_OK;
     LITTLEFS_FILE_OBJECT *ptr = (LITTLEFS_FILE_OBJECT *)handle;
     lfs_file_t *fp = &ptr->fileObj;
+    int32_t lfs_ret = 0;
 
     fs = &LITTLEFSVolume[0].volObj;
     
-    *bw = lfs_file_write(fs, fp, buff, btw);
+    lfs_ret = lfs_file_write(fs, fp, buff, btw);
     
-    if (*bw < 0)
+    if (lfs_ret < 0)
     {
-        res = *bw;
+        res = lfs_ret;
         *bw = 0;
+    }
+    else
+    {
+        *bw = lfs_ret;
     }
    
     return (LFS_Err_To_SYSFS_Err(res));
