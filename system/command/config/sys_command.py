@@ -126,6 +126,13 @@ def instantiateComponent(commandComponent):
     commandMaxArgsPerCmd.setMin(1)
     commandMaxArgsPerCmd.setMax(65535)
     commandMaxArgsPerCmd.setDefaultValue(8)
+    
+    commandMaxCmdLengthPerCmd = commandComponent.createIntegerSymbol("SYS_COMMAND_MAX_CMD_LENGTH", None)
+    commandMaxCmdLengthPerCmd.setLabel("Maximum Length Per Command")
+    commandMaxCmdLengthPerCmd.setHelp(sys_command_mcc_helpkeyword)
+    commandMaxCmdLengthPerCmd.setMin(1)
+    commandMaxCmdLengthPerCmd.setMax(65535)
+    commandMaxCmdLengthPerCmd.setDefaultValue(80)
 
     enable_rtos_settings = False
 

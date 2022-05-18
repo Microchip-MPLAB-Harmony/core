@@ -111,7 +111,7 @@
     None.
 
 */
-#define         SYS_CMD_MAX_LENGTH  80
+#define     SYS_CMD_MAX_LENGTH  					${SYS_COMMAND_MAX_CMD_LENGTH}
 
 
 // *****************************************************************************
