@@ -1426,6 +1426,29 @@ size_t SYS_FS_FileRead
       This function can read the status of file regardless of whether a file is
       opened or not.
 
+      The file system supports 8.3 file name(Short File Name) and
+      also long file name. 8.3 filenames are limited to at most eight
+      characters, followed optionally by a filename extension
+      consisting of a period . and at most three further characters.
+      If the file name fits within the 8.3 limits then generally
+      there will be no valid LFN for it.
+
+      For FAT File system If LFN is used the stat structure's altname field
+      will contain the short file name and fname will contain the long file name.
+      The "lfname" member of the SYS_FS_FSTAT is not applicable for FAT. It has to be
+      initialized to NULL before calling the API. If "lfname" is not NULL, then
+      first byte of lfname will be set to zero indicating no file found.
+
+      For other File systems based on thier implementation, If LFN is used
+      then the "lfname" member of the SYS_FS_FSTAT structure should be
+      initialized with the address of a suitable buffer and the "lfsize"
+      should be initialized with the size of the buffer. Once the function
+      returns, the buffer whose address is held in "lfname" will have
+      the file name(long file name).
+      The stat structure's fname field will contain the SFN and if
+      there is a valid LFN entry for the file then the long file name
+      will be copied into lfname member of the structure.
+
     Precondition:
       Prior to opening a file, the name of the volume on which the file resides
       should be known and the volume should be mounted.
@@ -2020,6 +2043,9 @@ SYS_FS_RESULT SYS_FS_DirClose
 
       For FAT File system If LFN is used the stat structure's altname field
       will contain the short file name and fname will contain the long file name.
+      The "lfname" member of the SYS_FS_FSTAT is not applicable for FAT. It has to be
+      initialized to NULL before calling the API. If "lfname" is not NULL, then
+      first byte of lfname will be set to zero indicating no file found.
 
       For other File systems based on thier implementation, If LFN is used
       then the "lfname" member of the SYS_FS_FSTAT structure should be
@@ -2027,7 +2053,6 @@ SYS_FS_RESULT SYS_FS_DirClose
       should be initialized with the size of the buffer. Once the function
       returns, the buffer whose address is held in "lfname" will have
       the file name(long file name).
-
       The stat structure's fname field will contain the SFN and if
       there is a valid LFN entry for the file then the long file name
       will be copied into lfname member of the structure.
@@ -2223,6 +2248,9 @@ SYS_FS_RESULT SYS_FS_DirRewind
 
       For FAT File system If LFN is used the stat structure's altname field
       will contain the short file name and fname will contain the long file name.
+      The "lfname" member of the SYS_FS_FSTAT is not applicable for FAT. It has to be
+      initialized to NULL before calling the API. If "lfname" is not NULL, then
+      first byte of lfname will be set to zero indicating no file found.
 
       For other File systems based on thier implementation, If LFN is used
       then the "lfname" member of the SYS_FS_FSTAT structure should be
@@ -2230,7 +2258,6 @@ SYS_FS_RESULT SYS_FS_DirRewind
       should be initialized with the size of the buffer. Once the function
       returns, the buffer whose address is held in "lfname" will have
       the file name(long file name).
-
       The stat structure's fname field will contain the SFN and if
       there is a valid LFN entry for the file then the long file name
       will be copied into lfname member of the structure.
