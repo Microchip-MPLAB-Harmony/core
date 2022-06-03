@@ -1046,7 +1046,7 @@ void DRV_I2C_QueuePurge(const DRV_HANDLE handle)
     transferObj = _DRV_I2C_TransferObjListGet(dObj);
 
     /* Make sure the ongoing request belongs to the client that called this API and is currently with the PLIB */
-    if ( (transferObj != NULL) && (transferObj->clientHandle == clientObj->clientHandle) && (transferObj->currentState == DRV_I2C_TRANSFER_OBJ_IS_PROCESSING) )
+    if ( (dObj->i2cPlib->transferAbort != NULL) && (transferObj != NULL) && (transferObj->clientHandle == clientObj->clientHandle) && (transferObj->currentState == DRV_I2C_TRANSFER_OBJ_IS_PROCESSING) )
     {
         /* Abort the ongoing transfer with the PLIB */
         dObj->i2cPlib->transferAbort();

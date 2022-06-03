@@ -32,8 +32,12 @@ const DRV_I2C_PLIB_INTERFACE drvI2C${INDEX?string}PLibAPI = {
     /* I2C PLib Transfer Write Read Add function */
     .writeRead = (DRV_I2C_PLIB_WRITE_READ)${.vars["${DRV_I2C_PLIB?lower_case}"].I2C_PLIB_API_PREFIX}_WriteRead,
 
-    /*I2C PLib Tranfer Abort function */
+    /*I2C PLib Transfer Abort function */
+    <#if DRV_I2C_PLIB != "I2C_BB">
     .transferAbort = (DRV_I2C_PLIB_TRANSFER_ABORT)${.vars["${DRV_I2C_PLIB?lower_case}"].I2C_PLIB_API_PREFIX}_TransferAbort,
+    <#else>
+    .transferAbort = NULL,
+    </#if>
 
     /* I2C PLib Transfer Status function */
     .errorGet = (DRV_I2C_PLIB_ERROR_GET)${.vars["${DRV_I2C_PLIB?lower_case}"].I2C_PLIB_API_PREFIX}_ErrorGet,
