@@ -644,7 +644,7 @@ SYS_FS_RESULT SYS_FS_Mount
         fileStatus = disk->fsFunctions->mount(disk->diskNumber);
         errorValue = (SYS_FS_ERROR)fileStatus;
 <#if SYS_FS_LFS == true >
-        if (fileStatus == SYS_FS_ERROR_NO_FILESYSTEM || (fileStatus == SYS_FS_ERROR_CORRUPT && disk->fsType == LITTLEFS))
+        if (fileStatus == SYS_FS_ERROR_NO_FILESYSTEM || ((fileStatus == SYS_FS_ERROR_CORRUPT || fileStatus == SYS_FS_ERROR_INVAL) && disk->fsType == LITTLEFS))
 <#else>
         if (fileStatus == SYS_FS_ERROR_NO_FILESYSTEM)
 </#if>

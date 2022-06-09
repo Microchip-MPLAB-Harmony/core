@@ -355,6 +355,7 @@ def instantiateComponent(sysFSComponent):
     sysFSLFS.setLabel("LittleFS File System")
     sysFSLFS.setHelp(sys_fs_mcc_helpkeyword)
     sysFSLFS.setDefaultValue(False)
+    sysFSLFS.setDependencies(sysFsLFSEnabled, ["SYS_FS_LFS"])
 
     sysFSLFSReadonly = sysFSComponent.createBooleanSymbol("SYS_FS_LFS_READONLY", sysFSLFS)
     sysFSLFSReadonly.setLabel("Make LittleFS File System Read-only")
@@ -922,6 +923,10 @@ def sysFsRtosMicriumOSIIIAppTaskVisibility(symbol, event):
 
 def sysFsRtosMicriumOSIIITaskOptVisibility(symbol, event):
     symbol.setVisible(event["value"])
+
+def sysFsLFSEnabled (symbol, event):
+    if event["value"] == True:
+        Database.sendMessage("core", "HEAP_SIZE", {"heap_size":8192})
 
 def getActiveRtos():
     activeComponents = Database.getActiveComponentIDs()
