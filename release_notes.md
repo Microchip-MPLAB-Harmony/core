@@ -3,6 +3,43 @@
 
 # Microchip MPLAB® Harmony 3 Release Notes
 
+## Core Release v3.11.0
+
+### New Features
+
+- **New Features and Enhancements**
+  - Updated FatFS to R0.14b
+  - Updated CMSIS-FreeRTOS to v10.4.6
+  - Updated SST26 driver to support DMA based transfers when SPI mode is used. Added capability to use SST26 driver with SPI driver.
+  - Updated AT25DF driver to support AT25DF081A flash memory
+  - Updated MX25L driver to support 4 byte address mode and added support for all MX25L Flash devices
+
+- **Applications**
+  - MPLAB Harmony provides large number of application examples to accelerate learning and reduce the development cycles for your embedded systems with reusable software components. The application examples are available in the respective [product family specific repository](apps/readme.md).
+
+### Known Issues
+
+The current known issues are as follows:
+- The default/max clock for ATSAMG55 devices is changed from 120MHz to 100MHz. Some of the clock dependent peripheral configuration may need to be verified/updated.
+- The following product families specifically requires the below mentioned DFP versions to be [installed](https://microchipdeveloper.com/mplabx:projects-packs)  with MPLABX v6.00. It is always recommended to use the latest version of DFPs for all products provided by Microchip.
+     -  **CEC173x Family**: CEC DFP v1.5.142 or higher
+     -  **PIC32CX-BZ2 family of wireless microcontrollers (MCUs) and WBZ451 modules**: PIC32CX-BZ DFP 1.0.107 or higher
+
+### Development Tools
+
+- [MPLAB® X IDE v6.00](https://www.microchip.com/mplab/mplab-x-ide)
+- [MPLAB® XC32 C/C++ Compiler v4.10](https://www.microchip.com/mplab/compilers)
+- [IAR EWARM v9.10 or above](https://www.iar.com/iar-embedded-workbench/#!?architecture=Arm)
+- [KEIL MDK v5.35 or above](https://www2.keil.com/mdk5)
+- MPLAB® X IDE plug-ins:
+  - MPLAB® Code Configurator 5.1.9
+
+### Notes
+
+-  None
+
+# Microchip MPLAB® Harmony 3 Release Notes
+
 ## Core Release v3.10.0
 
 ### New Features
