@@ -1,0 +1,21 @@
+package:
+  format-version: "1.0.0"
+  name: "core"
+  type: "api"
+  status: "production"
+  required: false
+  version: "3.11.0"
+
+  dependencies:
+    - name: "bsp"
+      type: "package"
+      version: "3.13.0"
+    - name: "csp"
+      type: "package"
+      version: "3.13.0"
+    - name: "CMSIS-FreeRTOS"
+      type: "package"
+      version: "10.4.6"
+    - name: "littlefs"
+      type: "package"
+      version: "2.5.0"

@@ -35,6 +35,7 @@ reference information.
 | config    | Core module configuration scripts                          |
 | docs      | Core module library help documentation                     |
 | driver    | Core module peripheral device drivers                      |
+| libraries | Library modules                                            |
 | osal      | MPLAB Harmony Operating System Abstraction Layer           |
 | system    | MPLAB Harmony system services                              |
 | templates | Application and system file templates                      |
