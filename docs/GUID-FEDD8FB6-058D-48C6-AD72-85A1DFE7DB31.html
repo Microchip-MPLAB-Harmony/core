@@ -1,0 +1,451 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+
+<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE11" /><meta name="copyright" content="(C) Copyright 2022" />
+<meta name="DC.rights.owner" content="(C) Copyright 2022" />
+<meta name="DC.type" content="topic" />
+<meta name="DC.title" content="Configuring The Library" />
+<meta name="DC.relation" scheme="URI" content="GUID-066D09D2-5550-49D9-ADA2-60A702DB243E.html" />
+<meta name="DC.format" content="XHTML" />
+<meta name="DC.identifier" content="configuring-the-library" />
+<link rel="stylesheet" type="text/css" href="stylesheets/commonltr.css" />
+<link rel="stylesheet" type="text/css" href="stylesheets/atmel.css" />
+<link rel="stylesheet" type="text/css" href="./stylesheets/common-extended.css" /><title>Configuring The Library</title>
+<meta name="Microsoft.Help.Id" content="GUID-EDFB1AB8-CD6B-446F-8E25-F2167287A1AF-configuring-the-library" />
+<meta name="Microsoft.Help.TocParent" content="GUID-EDFB1AB8-CD6B-446F-8E25-F2167287A1AF" />
+<meta name="Microsoft.Help.TocOrder" content="0" />
+<meta name="Microsoft.Help.Locale" content="en-US" />
+<meta name="Microsoft.Help.TopicLocale" content="en-US" />
+<meta name="Microsoft.Help.DisplayVersion" content="MPLAB® Harmony Core Library Reference A 11/2021" />
+<script language="javascript">
+       
+       if (window.parent.location.protocol != 'file:') {
+				document.addEventListener('click', function(e) {
+				    if (e.target) {
+               if (e.target.nodeName == "A" ) {
+                    if (!e.target.target) {
+                      e.preventDefault();
+                      e.stopPropagation();
+                              
+                      var origUrl = window.parent.location.href.substr(0, window.parent.location.href.indexOf("?"));
+                      if (origUrl.length === 0) {
+                          origUrl = window.parent.location.href;
+                      }
+                      var href= e.target.getAttribute("href");
+                      var parts = href.split("#");
+          
+                      var url = "";
+                      if (parts.length == 2 ) {
+                        if (!parts[0].length) {
+                            url = window.parent.location.search.replace('?','')
+                        } else {
+                            url = parts[0].replace('.html','');
+                        }
+                      } else {
+                        url = parts[0].replace('.html','');
+                      }
+
+                      if (parts.length == 2) {
+                          url += "#" + parts[1];
+                      }
+    
+                      window.parent.location.href = origUrl + "?" + url;
+
+                      return false;
+                    }
+               }
+            }
+				});
+			}
+
+		</script><script language="javascript">
+        function cpy(id, button) {
+        
+            var element = document.getElementById(id);
+            var content = element.getAttribute("content");
+            var textArea = document.createElement("textarea");
+            
+            // Place in the top-left corner of screen regardless of scroll position.
+            textArea.style.position = 'fixed';
+            textArea.style.top = 0;
+            textArea.style.left = 0;
+            
+            // Ensure it has a small width and height. Setting to 1px / 1em
+            // doesn't work as this gives a negative w/h on some browsers.
+            textArea.style.width = '2em';
+            textArea.style.height = '2em';
+            
+            // We don't need padding, reducing the size if it does flash render.
+            textArea.style.padding = 0;
+            
+            // Clean up any borders.
+            textArea.style.border = 'none';
+            textArea.style.outline = 'none';
+            textArea.style.boxShadow = 'none';
+            
+            // Avoid flash of the white box if rendered for any reason.
+            textArea.style.background = 'transparent';
+            
+            
+            textArea.value = content;
+            
+            document.body.appendChild(textArea);
+            textArea.focus();
+            textArea.select();
+            
+            try {
+               var successful = document.execCommand('copy');
+               var msg = successful ? 'successful' : 'unsuccessful';
+               if (!button.classList.contains("copied")){
+                  button.textContent = "Copied";
+                  button.classList.add("copied");
+                  setTimeout(function(){
+                    button.textContent = "Copy";
+                    button.classList.remove("copied");
+                  },1000);
+               }
+            } catch (err) {
+              console.log('Oops, unable to copy');
+            }
+            
+            document.body.removeChild(textArea);
+        }
+      </script><script language="javascript">
+          
+          // Add the MathML namespace to html
+          var html = document.getElementsByTagName("html")[0],
+          head = document.getElementsByTagName("head")[0];
+          
+          var mathJax = document.createElement("script");
+          mathJax.src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-MML-AM_CHTML";
+          head.appendChild(mathJax);
+          
+          html.setAttribute("xmlns:m","http://www.w3.org/1998/Math/MathML");
+          
+          function inIframe() { try { return window.self !== window.top; } catch (e) { return true; } }
+          
+          if (!inIframe()) { 
+          
+          var Default = "index.html?GUID-FEDD8FB6-058D-48C6-AD72-85A1DFE7DB31"; 
+          
+          var displaylocation = "value" + window.location.href;
+          
+          var GUIDS = displaylocation.split('GUID');          
+          
+          if (displaylocation.indexOf('#GUID') != -1) {            
+          var First = GUIDS[1].split('.html');  
+          if (GUIDS[3]){First = GUIDS[2].split('.html');}
+          if (GUIDS[4]){First = GUIDS[3].split('.html');}
+          if (GUIDS[5]){First = GUIDS[4].split('.html');}
+          
+          var Second = GUIDS[2].split('#');   
+          if (GUIDS[3]){Second = GUIDS[3].split('#');}
+          if (GUIDS[4]){Second = GUIDS[4].split('#');}
+          if (GUIDS[5]){Second = GUIDS[5].split('#');}
+          
+          Default = "index.html?" + "GUID" + First[0] + "GUID" + Second[0];     
+          }                    
+          window.top.location = Default;
+          }       
+          
+        </script><style xml:space="">
+        
+          button.copy-code{
+            display:none;
+            padding:0.7em 1.4em;
+            margin:0 0.3em 0.3em 0;
+            border-radius:0.15em;
+            box-sizing: border-box;
+            text-decoration:none;
+            font-family:'Roboto',sans-serif;
+            text-transform:uppercase;
+            font-weight:400;
+            color:#FFFFFF;
+            background-color:#9c9c9c;
+            box-shadow:inset 0 -0.6em 0 -0.35em rgba(0,0,0,0.17);
+            text-align:center;
+            position:relative;
+            border: 0;
+            float: right;
+            border-radius: .5em;
+            cursor: pointer;
+          }
+          button.copy-code:active{
+            top:0.1em;
+          }
+          
+          pre:hover button.copy-code{
+            display: inline-block !important;
+          }
+          button.copy-code.copied {
+            cursor: default !important;
+          }
+          
+          
+          @media all and (max-width:30em){
+            button.copy-code{
+              display:block;
+              margin:0.4em auto;
+            }
+          }
+        
+        
+      </style></head>
+<body id="configuring-the-library">
+<h1 class="title topictitle1" id="ariaid-title1">Configuring The Library</h1><div class="body"><p class="p">File System Service Library should be configured via MHC. The following figures show the MHC configuration window for File System Service and brief description.</p>
+<p class="p"><strong class="ph b">File System configurations with Auto Mount disabled</strong></p>
+<br /><img class="image" src="GUID-65431C27-E694-446A-99E7-B0A411BE00A7-low.png" alt="sys_fs_mhc_config_automount_disabled" /><br /><p class="p"><strong class="ph b">File System configurations with Auto Mount Enabled</strong></p>
+<br /><img class="image" src="GUID-C4C87BB2-9786-400A-A92C-578B594F2426-low.png" alt="sys_fs_mhc_config_automount_enabled" /><br /><p class="p"><strong class="ph b">Configuration Options</strong></p>
+<ul class="ul"><li class="li"><p class="p"><strong class="ph b">Maximum Simultaneous File Access:</strong></p>
+<ul class="ul"><li class="li"><p class="p">Maximum Number of files which can be accessed/opened by application</p>
+</li>
+</ul>
+</li>
+<li class="li"><p class="p"><strong class="ph b">Size Of Block:</strong></p>
+<ul class="ul"><li class="li"><p class="p">Block Size used by File System layer to chunk the application data and to send to attached media</p>
+</li>
+</ul>
+</li>
+<li class="li"><p class="p"><strong class="ph b">Size Of Media Manager Buffer:</strong></p>
+<ul class="ul"><li class="li"><p class="p">Media Manager Buffer size to store Block Data</p>
+</li>
+</ul>
+</li>
+<li class="li"><p class="p"><strong class="ph b">Use File System Auto Mount Feature:</strong></p>
+<ul class="ul"><li class="li"><p class="p">Enables auto mount feature for all the media's</p>
+</li>
+</ul>
+</li>
+<li class="li"><p class="p"><strong class="ph b">Total Number Of Media:</strong></p>
+<ul class="ul"><li class="li"><p class="p">Number of media to be attached to file system</p>
+</li>
+</ul>
+</li>
+<li class="li"><p class="p"><strong class="ph b">Total Number Of File System Clients:</strong></p>
+<ul class="ul"><li class="li"><p class="p">Number of clients to file system registered when Auto mount is enabled</p>
+</li>
+<li class="li"><p class="p">Each of these client will receive a notfication on mount/unmount event for any media</p>
+</li>
+</ul>
+</li>
+<li class="li"><p class="p"><strong class="ph b">Total Number Of Volumes:</strong></p>
+<ul class="ul"><li class="li"><p class="p">Number of volumes to be created for each media</p>
+</li>
+</ul>
+</li>
+<li class="li"><p class="p"><strong class="ph b">MediaX:</strong></p>
+<ul class="ul"><li class="li"><p class="p">Media details to be configured when Auto mount feature is enabled.</p>
+</li>
+<li class="li"><p class="p">These options will be used to populate the sysfsMountTable in initialization.c</p>
+</li>
+<li class="li"><p class="p"><strong class="ph b">Media ConfigurationX:</strong></p>
+<ul class="ul"><li class="li"><p class="p"><strong class="ph b">Media Type:</strong></p>
+<ul class="ul"><li class="li"><p class="p">Specifies the media type to be mounted</p>
+</li>
+</ul>
+</li>
+<li class="li"><p class="p"><strong class="ph b">File System Type:</strong></p>
+<ul class="ul"><li class="li"><p class="p">Specifies the file system to be mounted for the selected media</p>
+</li>
+</ul>
+</li>
+<li class="li"><p class="p"><strong class="ph b">Number Of Volumes</strong></p>
+<ul class="ul"><li class="li"><p class="p">Number of volumes to be created for the selected media</p>
+</li>
+</ul>
+</li>
+<li class="li"><p class="p"><strong class="ph b">VolumeX:</strong></p>
+<ul class="ul"><li class="li"><p class="p"><strong class="ph b">Volume ConfigurationX:</strong></p>
+<ul class="ul"><li class="li"><p class="p">Volume details to be configured</p>
+</li>
+<li class="li"><p class="p"><strong class="ph b">Device Name:</strong></p>
+<ul class="ul"><li class="li"><p class="p">Specifies the device name to be used for the media. Each media type has fixed names and will be auto-populated</p>
+</li>
+<li class="li"><p class="p">Should always start with <strong class="ph b">/dev/</strong></p>
+</li>
+</ul>
+</li>
+<li class="li"><p class="p"><strong class="ph b">Media Mount Name:</strong></p>
+<ul class="ul"><li class="li"><p class="p">Specifies the unique volume mount name. This should be used by application while opening the file</p>
+</li>
+<li class="li"><p class="p">Should always start with <strong class="ph b">/mnt/</strong></p>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="li"><p class="p"><strong class="ph b">File System Types:</strong></p>
+<ul class="ul"><li class="li"><p class="p">Number of file systems used in the application</p>
+</li>
+</ul>
+</li>
+<li class="li"><p class="p"><strong class="ph b">FAT File System:</strong></p>
+<ul class="ul"><li class="li"><p class="p">When Selected FAT File system will be used</p>
+</li>
+<li class="li"><p class="p"><strong class="ph b">Fat File System Version:</strong></p>
+<ul class="ul"><li class="li"><p class="p">Specifies Fat-FS version currently Supported</p>
+</li>
+</ul>
+</li>
+<li class="li"><p class="p"><strong class="ph b">Make FAT File System Read-Only:</strong></p>
+<ul class="ul"><li class="li"><p class="p">When selected Fat-FS code is compiled with Read Only option enabled.</p>
+</li>
+</ul>
+</li>
+<li class="li"><p class="p"><strong class="ph b">OEM Code Page to be Used:</strong></p>
+<ul class="ul"><li class="li"><p class="p">Code page configuration to be used. Refer to ffconf.h for more details</p>
+</li>
+</ul>
+</li>
+<li class="li"><p class="p"><strong class="ph b">Enable exFAT File System Support:</strong></p>
+<ul class="ul"><li class="li"><p class="p">When selected exFAT support will be enabled in native file system code</p>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="li"><p class="p"><strong class="ph b">Microchip File System:</strong></p>
+<ul class="ul"><li class="li"><p class="p">When Selected MPFS File system will be used</p>
+</li>
+</ul>
+</li>
+<li class="li"><p class="p"><strong class="ph b">LittleFS File System:</strong></p>
+<ul class="ul"><li class="li"><p class="p">When Selected littleFS File system will be used</p>
+</li>
+<li class="li"><p class="p"><strong class="ph b">Make LittleFS File System Read-Only:</strong></p>
+<ul class="ul"><li class="li"><p class="p">When selected littleFS code is compiled with Read only option enabled.</p>
+</li>
+</ul>
+</li>
+<li class="li"><p class="p"><strong class="ph b">Size Of LFS image (in KB):</strong></p>
+<ul class="ul"><li class="li"><p class="p">Specifies the size of the LFS image to be used</p>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="li"><p class="p"><strong class="ph b">Enable Long File Name Support:</strong></p>
+<ul class="ul"><li class="li"><p class="p">When selected Long file name support is enabled. This option is selected by default</p>
+</li>
+<li class="li"><p class="p">If disabled, the file name length should follow the 8.3 format (Short file name)</p>
+</li>
+</ul>
+</li>
+<li class="li"><p class="p"><strong class="ph b">File Name Length:</strong></p>
+<ul class="ul"><li class="li"><p class="p">Max file name length to be supported</p>
+</li>
+</ul>
+</li>
+<li class="li"><p class="p"><strong class="ph b">Current Working Directory Scratch buffer length in Bytes:</strong></p>
+<ul class="ul"><li class="li"><p class="p">Buffer size to store the current directory path</p>
+</li>
+</ul>
+</li>
+<li class="li"><p class="p"><strong class="ph b">Enable Cache Line Aligned Buffer for Cache Management</strong></p>
+<ul class="ul"><li class="li"><p class="p">when enabled file system will use this aligned buffer to submit the request to Media if the input buffer for the read/Write operations is not aligned to Cache Line Size</p>
+</li>
+<li class="li"><p class="p"><strong class="ph b">Aligned Buffer Length in Multiple of 512 Bytes:</strong></p>
+<ul class="ul"><li class="li"><p class="p">Specifies the length of the internal file system aligned buffer. Increasing the length of the buffer will increase the <strong class="ph b">write throughput</strong> but consume more RAM memory</p>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="li"><p class="p"><strong class="ph b">RTOS Settings:</strong></p>
+<ul class="ul"><li class="li"><p class="p">These options will be enabled when any of the RTOS is added in MHC</p>
+</li>
+<li class="li"><p class="p"><strong class="ph b">Stack Size (in Bytes):</strong></p>
+<ul class="ul"><li class="li"><p class="p">Specifies the stack size for the File system task/thread</p>
+</li>
+<li class="li"><p class="p">The size can vary based on RTOS and should be configured based on application requirement</p>
+</li>
+</ul>
+</li>
+<li class="li"><p class="p"><strong class="ph b">Task Priority:</strong></p>
+<ul class="ul"><li class="li"><p class="p">Specifies the priority for the File system task/thread. The value can vary based on RTOS used</p>
+</li>
+</ul>
+</li>
+<li class="li"><p class="p"><strong class="ph b">Use Task Delay?</strong></p>
+<ul class="ul"><li class="li"><p class="p">When enabled the File system task will be scheduled out voluntarily after every run based on the delay configured.</p>
+</li>
+<li class="li"><p class="p"><strong class="ph b">Task Delay:</strong></p>
+<ul class="ul"><li class="li"><p class="p">Specifies the duration the task has to go to sleep after every run.</p>
+</li>
+<li class="li"><p class="p">Should be configured carefully based on the application need and number of task running along in the system</p>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p class="p"><strong class="ph b">RTOS Settings For MicriumOS-III RTOS</strong></p>
+<p class="p">Below additional options are visible in <strong class="ph b">File Systems RTOS settings</strong> when the MicriumOS-III is added into project graph</p>
+<br /><img class="image" src="GUID-B3EFA16B-3DAF-49D1-9E11-DBA535F90156-low.png" alt="rtos_settings_micrium_os_iii" /><br /><ul class="ul"><li class="li"><p class="p"><strong class="ph b">Maximum Message Queue Size:</strong></p>
+<ul class="ul"><li class="li"><p class="p">This argument specifies the maximum number of messages that the task can receive through internal message queue.</p>
+<ul class="ul"><li class="li"><p class="p">A MicriumOS-III task contains an optional internal message queue (if OS_CFG_TASK_Q_EN is set to DEF_ENABLED in os_cfg.h).</p>
+</li>
+</ul>
+</li>
+<li class="li"><p class="p">The user may specify that the task is unable to receive messages by setting this argument to 0</p>
+</li>
+</ul>
+</li>
+<li class="li"><p class="p"><strong class="ph b">Task Time Quanta:</strong></p>
+<ul class="ul"><li class="li"><p class="p">The amount of time (in clock ticks) for the time quanta when Round Robin is enabled.</p>
+</li>
+<li class="li"><p class="p">If you specify 0, then the default time quanta will be used which is the tick rate divided by 10.</p>
+</li>
+</ul>
+</li>
+<li class="li"><p class="p"><strong class="ph b">Task Specific Options:</strong></p>
+<ul class="ul"><li class="li"><p class="p">Contains task-specific options. Each option consists of one bit. The option is selected when the bit is set.</p>
+</li>
+<li class="li"><p class="p">The current version of MicriumOS-III supports the following options:</p>
+<ul class="ul"><li class="li"><p class="p"><strong class="ph b">Stack checking is allowed for the task:</strong></p>
+<ul class="ul"><li class="li"><p class="p">Specifies whether stack checking is allowed for the task</p>
+</li>
+</ul>
+</li>
+<li class="li"><p class="p"><strong class="ph b">Stack needs to be cleared:</strong></p>
+<ul class="ul"><li class="li"><p class="p">Specifies whether the stack needs to be cleared</p>
+</li>
+</ul>
+</li>
+<li class="li"><p class="p"><strong class="ph b">Floating-point registers needs to be saved:</strong></p>
+<ul class="ul"><li class="li"><p class="p">Specifies whether floating-point registers are saved.</p>
+</li>
+<li class="li"><p class="p">This option is only valid if the processor has floating-point hardware and the processor-specific code saves the floating-point registers</p>
+</li>
+</ul>
+</li>
+<li class="li"><p class="p"><strong class="ph b">TLS (Thread Local Storage) support needed for the task:</strong></p>
+<ul class="ul"><li class="li"><p class="p">If the caller doesn�t want or need TLS (Thread Local Storage) support for the task being created.</p>
+</li>
+<li class="li"><p class="p">If you do not include this option, TLS will be supported by default. TLS support was added in V3.03.00</p>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="related-links">
+<div class="familylinks">
+<div class="parentlink"><strong>Parent topic:</strong> <a class="link" href="GUID-066D09D2-5550-49D9-ADA2-60A702DB243E.html">File System Service</a></div>
+</div>
+</div></body>
+</html>

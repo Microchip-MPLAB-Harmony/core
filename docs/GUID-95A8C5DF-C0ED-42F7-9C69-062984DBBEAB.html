@@ -1,0 +1,373 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+
+<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE11" /><meta name="copyright" content="(C) Copyright 2022" />
+<meta name="DC.rights.owner" content="(C) Copyright 2022" />
+<meta name="DC.type" content="topic" />
+<meta name="DC.title" content="SYS_FS_DrivePartition Function" />
+<meta name="DC.relation" scheme="URI" content="GUID-42556FDF-A632-49FE-8A5E-9303A926578C.html" />
+<meta name="DC.format" content="XHTML" />
+<meta name="DC.identifier" content="sys-fs-drivepartition-function" />
+<link rel="stylesheet" type="text/css" href="stylesheets/commonltr.css" />
+<link rel="stylesheet" type="text/css" href="stylesheets/atmel.css" />
+<link rel="stylesheet" type="text/css" href="./stylesheets/common-extended.css" /><title>SYS_FS_DrivePartition Function</title>
+<meta name="Microsoft.Help.Id" content="GUID-EDFB1AB8-CD6B-446F-8E25-F2167287A1AF-sys-fs-drivepartition-function" />
+<meta name="Microsoft.Help.TocParent" content="GUID-EDFB1AB8-CD6B-446F-8E25-F2167287A1AF" />
+<meta name="Microsoft.Help.TocOrder" content="0" />
+<meta name="Microsoft.Help.Locale" content="en-US" />
+<meta name="Microsoft.Help.TopicLocale" content="en-US" />
+<meta name="Microsoft.Help.DisplayVersion" content="MPLAB® Harmony Core Library Reference A 11/2021" />
+<script language="javascript">
+       
+       if (window.parent.location.protocol != 'file:') {
+				document.addEventListener('click', function(e) {
+				    if (e.target) {
+               if (e.target.nodeName == "A" ) {
+                    if (!e.target.target) {
+                      e.preventDefault();
+                      e.stopPropagation();
+                              
+                      var origUrl = window.parent.location.href.substr(0, window.parent.location.href.indexOf("?"));
+                      if (origUrl.length === 0) {
+                          origUrl = window.parent.location.href;
+                      }
+                      var href= e.target.getAttribute("href");
+                      var parts = href.split("#");
+          
+                      var url = "";
+                      if (parts.length == 2 ) {
+                        if (!parts[0].length) {
+                            url = window.parent.location.search.replace('?','')
+                        } else {
+                            url = parts[0].replace('.html','');
+                        }
+                      } else {
+                        url = parts[0].replace('.html','');
+                      }
+
+                      if (parts.length == 2) {
+                          url += "#" + parts[1];
+                      }
+    
+                      window.parent.location.href = origUrl + "?" + url;
+
+                      return false;
+                    }
+               }
+            }
+				});
+			}
+
+		</script><script language="javascript">
+        function cpy(id, button) {
+        
+            var element = document.getElementById(id);
+            var content = element.getAttribute("content");
+            var textArea = document.createElement("textarea");
+            
+            // Place in the top-left corner of screen regardless of scroll position.
+            textArea.style.position = 'fixed';
+            textArea.style.top = 0;
+            textArea.style.left = 0;
+            
+            // Ensure it has a small width and height. Setting to 1px / 1em
+            // doesn't work as this gives a negative w/h on some browsers.
+            textArea.style.width = '2em';
+            textArea.style.height = '2em';
+            
+            // We don't need padding, reducing the size if it does flash render.
+            textArea.style.padding = 0;
+            
+            // Clean up any borders.
+            textArea.style.border = 'none';
+            textArea.style.outline = 'none';
+            textArea.style.boxShadow = 'none';
+            
+            // Avoid flash of the white box if rendered for any reason.
+            textArea.style.background = 'transparent';
+            
+            
+            textArea.value = content;
+            
+            document.body.appendChild(textArea);
+            textArea.focus();
+            textArea.select();
+            
+            try {
+               var successful = document.execCommand('copy');
+               var msg = successful ? 'successful' : 'unsuccessful';
+               if (!button.classList.contains("copied")){
+                  button.textContent = "Copied";
+                  button.classList.add("copied");
+                  setTimeout(function(){
+                    button.textContent = "Copy";
+                    button.classList.remove("copied");
+                  },1000);
+               }
+            } catch (err) {
+              console.log('Oops, unable to copy');
+            }
+            
+            document.body.removeChild(textArea);
+        }
+      </script><script language="javascript">
+          
+          // Add the MathML namespace to html
+          var html = document.getElementsByTagName("html")[0],
+          head = document.getElementsByTagName("head")[0];
+          
+          var mathJax = document.createElement("script");
+          mathJax.src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-MML-AM_CHTML";
+          head.appendChild(mathJax);
+          
+          html.setAttribute("xmlns:m","http://www.w3.org/1998/Math/MathML");
+          
+          function inIframe() { try { return window.self !== window.top; } catch (e) { return true; } }
+          
+          if (!inIframe()) { 
+          
+          var Default = "index.html?GUID-95A8C5DF-C0ED-42F7-9C69-062984DBBEAB"; 
+          
+          var displaylocation = "value" + window.location.href;
+          
+          var GUIDS = displaylocation.split('GUID');          
+          
+          if (displaylocation.indexOf('#GUID') != -1) {            
+          var First = GUIDS[1].split('.html');  
+          if (GUIDS[3]){First = GUIDS[2].split('.html');}
+          if (GUIDS[4]){First = GUIDS[3].split('.html');}
+          if (GUIDS[5]){First = GUIDS[4].split('.html');}
+          
+          var Second = GUIDS[2].split('#');   
+          if (GUIDS[3]){Second = GUIDS[3].split('#');}
+          if (GUIDS[4]){Second = GUIDS[4].split('#');}
+          if (GUIDS[5]){Second = GUIDS[5].split('#');}
+          
+          Default = "index.html?" + "GUID" + First[0] + "GUID" + Second[0];     
+          }                    
+          window.top.location = Default;
+          }       
+          
+        </script><style xml:space="">
+        
+          button.copy-code{
+            display:none;
+            padding:0.7em 1.4em;
+            margin:0 0.3em 0.3em 0;
+            border-radius:0.15em;
+            box-sizing: border-box;
+            text-decoration:none;
+            font-family:'Roboto',sans-serif;
+            text-transform:uppercase;
+            font-weight:400;
+            color:#FFFFFF;
+            background-color:#9c9c9c;
+            box-shadow:inset 0 -0.6em 0 -0.35em rgba(0,0,0,0.17);
+            text-align:center;
+            position:relative;
+            border: 0;
+            float: right;
+            border-radius: .5em;
+            cursor: pointer;
+          }
+          button.copy-code:active{
+            top:0.1em;
+          }
+          
+          pre:hover button.copy-code{
+            display: inline-block !important;
+          }
+          button.copy-code.copied {
+            cursor: default !important;
+          }
+          
+          
+          @media all and (max-width:30em){
+            button.copy-code{
+              display:block;
+              margin:0.4em auto;
+            }
+          }
+        
+        
+      </style></head>
+<body id="sys-fs-drivepartition-function">
+<h1 class="title topictitle1" id="ariaid-title1">SYS_FS_DrivePartition Function</h1><div class="body"></div>
+<div class="related-links">
+<div class="familylinks">
+<div class="parentlink"><strong>Parent topic:</strong> <a class="link" href="GUID-42556FDF-A632-49FE-8A5E-9303A926578C.html">Library Interface</a></div>
+</div>
+</div><div class="topic nested1" aria-labelledby="ariaid-title2" id="c"><h2 class="title topictitle2" id="ariaid-title2">C</h2><div class="body"><pre class="pre codeblock language-c"><button title="Copy Code" class="copy-code" onclick="cpy('d77028e21', this);">Copy</button><code id="d77028e21" content="SYS_FS_RESULT SYS_FS_DrivePartition&#xA;(&#xA;    const char *path,&#xA;    const uint32_t partition[],&#xA;    void * work&#xA;);">SYS_FS_RESULT SYS_FS_DrivePartition
+<span class="ph token punctuation">(</span>
+    <span class="ph token keyword">const</span> <span class="ph token keyword">char</span> <span class="ph token operator">*</span>path<span class="ph token punctuation">,</span>
+    <span class="ph token keyword">const</span> uint32_t partition<span class="ph token punctuation">[</span><span class="ph token punctuation">]</span><span class="ph token punctuation">,</span>
+    <span class="ph token keyword">void</span> <span class="ph token operator">*</span> work
+<span class="ph token punctuation">)</span><span class="ph token punctuation">;</span></code></pre></div>
+</div>
+<div class="topic nested1" aria-labelledby="ariaid-title3" id="summary"><h2 class="title topictitle2" id="ariaid-title3">Summary</h2><div class="body"><p class="p">Partitions a physical drive (media).</p>
+</div>
+</div>
+<div class="topic nested1" aria-labelledby="ariaid-title4" id="description"><h2 class="title topictitle2" id="ariaid-title4">Description</h2><div class="body"><p class="p">This function partitions a physical drive (media) into requested
+partition sizes. This function will alter the MBR of the physical drive
+and make it into multi partitions. Windows operating systems do not
+support multi partitioned removable media. Maximum 4 partitions can be
+created on a media.</p>
+</div>
+</div>
+<div class="topic nested1" aria-labelledby="ariaid-title5" id="precondition"><h2 class="title topictitle2" id="ariaid-title5">Precondition</h2><div class="body"><p class="p">Prior to partitioning the media, the media should have a valid MBR and it should be mounted as a volume with the file system.</p>
+</div>
+</div>
+<div class="topic nested1" aria-labelledby="ariaid-title6" id="parameters"><h2 class="title topictitle2" id="ariaid-title6">Parameters</h2><div class="body">
+<div class="tablenoborder"><table cellpadding="4" cellspacing="0" summary="" class="table" frame="border" border="1" rules="all"><col style="width:" /><col style="width:" /><thead class="thead" style="text-align:left;"><tr class="row"><th class="entry cellrowborder" style="text-align:left;vertical-align:middle;" id="d77028e88"><span>Param</span></th>
+<th class="entry cellrowborder" style="text-align:left;vertical-align:middle;" id="d77028e90"><span>Description</span></th>
+</tr>
+</thead>
+<tbody class="tbody"><tr class="row"><td class="entry cellrowborder" style="text-align:left;vertical-align:middle;" headers="d77028e88 "><span>path</span></td>
+<td class="entry cellrowborder" style="text-align:left;vertical-align:middle;" headers="d77028e90 "><span>Path to the volume with the volume name. The string of volume name has to be preceded by "/mnt/". Also, the volume name and directory name has to be separated by a slash "/".</span></td>
+</tr>
+<tr class="row"><td class="entry cellrowborder" style="text-align:left;vertical-align:middle;" headers="d77028e88 "><span>partition</span></td>
+<td class="entry cellrowborder" style="text-align:left;vertical-align:middle;" headers="d77028e90 "><span>Array with 4 items, where each items mentions the sizes of each partition in terms of number of sector. 0th element of array specifies the number of sectors for first partition and 3rd element of array specifies the number of sectors for fourth partition.</span></td>
+</tr>
+<tr class="row"><td class="entry cellrowborder" style="text-align:left;vertical-align:middle;" headers="d77028e88 "><span>work</span></td>
+<td class="entry cellrowborder" style="text-align:left;vertical-align:middle;" headers="d77028e90 "><span>Pointer to the buffer for function work area. The size must be at least FAT_FS_MAX_SS bytes.</span></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<div class="topic nested1" aria-labelledby="ariaid-title7" id="returns"><h2 class="title topictitle2" id="ariaid-title7">Returns</h2><div class="body"><p class="p"><em class="ph i">SYS_FS_RES_SUCCESS</em> - Partition was successful.</p>
+<p class="p"><em class="ph i">SYS_FS_RES_FAILURE</em> - Partition was unsuccessful. The reason for the
+failure can be retrieved with SYS_FS_Error.</p>
+</div>
+</div>
+<div class="topic nested1" aria-labelledby="ariaid-title8" id="example"><h2 class="title topictitle2" id="ariaid-title8">Example</h2><div class="body"><pre class="pre codeblock language-c"><button title="Copy Code" class="copy-code" onclick="cpy('d77028e124', this);">Copy</button><code id="d77028e124" content="//============================================================================&#xA;// Initially, consider the case of a SD card that has only one partition.&#xA;//============================================================================&#xA;SYS_FS_RESULT res;&#xA;&#xA;// Following 4 element array specifies the size of 2 partitions as&#xA;// 256MB (=524288 sectors). The 3rd and 4th partition are not created&#xA;// since, the sizes of those are zero.&#xA;uint32_t plist[] = {524288, 524288, 0, 0};&#xA;&#xA;// Work area for function SYS_FS_DrivePartition&#xA;char work[FAT_FS_MAX_SS];&#xA;&#xA;switch(appState)&#xA;{&#xA;    case TRY_MOUNT:&#xA;    {&#xA;        if(SYS_FS_Mount(&#34;/dev/mmcblka1&#34;, &#34;/mnt/myDrive&#34;, FAT, 0, NULL) != SYS_FS_RES_SUCCESS)&#xA;        {&#xA;            // Failure, try mounting again&#xA;        }&#xA;        else&#xA;        {&#xA;            // Mount was successful. Partition now.&#xA;            appState = PARTITION_DRIVE;&#xA;        }&#xA;        break;&#xA;    }&#xA;&#xA;    case PARTITION_DRIVE:&#xA;    {&#xA;        res = SYS_FS_DrivePartition(&#34;/mnt/myDrive&#34;, plist, work);&#xA;        if(res == SYS_FS_RES_FAILURE)&#xA;        {&#xA;            // Drive partition went wrong&#xA;        }&#xA;        else&#xA;        {&#xA;            // Partition was successful. Power cycle the board so that&#xA;            // all partitions are recognized. Then try mounting both&#xA;            // partitions.&#xA;        }&#xA;        break;&#xA;    }&#xA;&#xA;    default:&#xA;    {&#xA;        break;&#xA;    }&#xA;}&#xA;&#xA;//============================================================================&#xA;//The following code is after the SD card is partitioned and then&#xA;//powered ON.&#xA;//============================================================================&#xA;SYS_FS_RESULT res;&#xA;&#xA;switch(appState)&#xA;{&#xA;    case TRY_MOUNT_1ST_PARTITION:&#xA;    {&#xA;        if(SYS_FS_Mount(&#34;/dev/mmcblka1&#34;, &#34;/mnt/myDrive1&#34;, FAT, 0, NULL) != SYS_FS_RES_SUCCESS)&#xA;        {&#xA;            // Failure, try mounting again&#xA;            appState = TRY_MOUNT_1ST_PARTITION;&#xA;        }&#xA;        else&#xA;        {&#xA;            // Mount was successful. Mount second partition.&#xA;            appState = TRY_MOUNT_2ND_PARTITION;&#xA;        }&#xA;        break;&#xA;    }&#xA;&#xA;    case TRY_MOUNT_2ND_PARTITION:&#xA;    {&#xA;        if(SYS_FS_Mount(&#34;/dev/mmcblka2&#34;, &#34;/mnt/myDrive2&#34;, FAT, 0, NULL) != SYS_FS_RES_SUCCESS)&#xA;        {&#xA;            // Failure, try mounting again&#xA;            appState = TRY_MOUNT_2ND_PARTITION;&#xA;        }&#xA;        else&#xA;        {&#xA;            // Mount was successful. Try formating first partition.&#xA;            appState = TRY_FORMATING_1ST_PARTITION;&#xA;        }&#xA;        break;&#xA;    }&#xA;&#xA;    case TRY_FORMATING_1ST_PARTITION:&#xA;    {&#xA;        if(SYS_FS_DriveFormat(&#34;/mnt/myDrive1/&#34;, SYS_FS_FORMAT_FDISK, 0) == SYS_FS_RES_FAILURE)&#xA;        {&#xA;            // Failure&#xA;        }&#xA;        else&#xA;        {&#xA;            // Try formating second partitions.&#xA;            appState = TRY_FORMATING_2ND_PARTITION;&#xA;        }&#xA;        break;&#xA;    }&#xA;&#xA;    case TRY_FORMATING_2ND_PARTITION:&#xA;    {&#xA;        if(SYS_FS_DriveFormat(&#34;/mnt/myDrive2/&#34;, SYS_FS_FORMAT_FDISK, 0) == SYS_FS_RES_FAILURE)&#xA;        {&#xA;            // Failure&#xA;        }&#xA;        else&#xA;        {&#xA;            // Use both partitions as 2 separate volumes.&#xA;        }&#xA;        break;&#xA;    }&#xA;&#xA;    default:&#xA;    {&#xA;        break;&#xA;    }&#xA;}"><span class="ph token comment">//============================================================================</span>
+<span class="ph token comment">// Initially, consider the case of a SD card that has only one partition.</span>
+<span class="ph token comment">//============================================================================</span>
+SYS_FS_RESULT res<span class="ph token punctuation">;</span>
+
+<span class="ph token comment">// Following 4 element array specifies the size of 2 partitions as</span>
+<span class="ph token comment">// 256MB (=524288 sectors). The 3rd and 4th partition are not created</span>
+<span class="ph token comment">// since, the sizes of those are zero.</span>
+uint32_t plist<span class="ph token punctuation">[</span><span class="ph token punctuation">]</span> <span class="ph token operator">=</span> <span class="ph token punctuation">{</span><span class="ph token number">524288</span><span class="ph token punctuation">,</span> <span class="ph token number">524288</span><span class="ph token punctuation">,</span> <span class="ph token number">0</span><span class="ph token punctuation">,</span> <span class="ph token number">0</span><span class="ph token punctuation">}</span><span class="ph token punctuation">;</span>
+
+<span class="ph token comment">// Work area for function SYS_FS_DrivePartition</span>
+<span class="ph token keyword">char</span> work<span class="ph token punctuation">[</span>FAT_FS_MAX_SS<span class="ph token punctuation">]</span><span class="ph token punctuation">;</span>
+
+<span class="ph token keyword">switch</span><span class="ph token punctuation">(</span>appState<span class="ph token punctuation">)</span>
+<span class="ph token punctuation">{</span>
+    <span class="ph token keyword">case</span> TRY_MOUNT<span class="ph token operator">:</span>
+    <span class="ph token punctuation">{</span>
+        <span class="ph token keyword">if</span><span class="ph token punctuation">(</span><span class="ph token function">SYS_FS_Mount</span><span class="ph token punctuation">(</span><span class="ph token string">"/dev/mmcblka1"</span><span class="ph token punctuation">,</span> <span class="ph token string">"/mnt/myDrive"</span><span class="ph token punctuation">,</span> FAT<span class="ph token punctuation">,</span> <span class="ph token number">0</span><span class="ph token punctuation">,</span> <span class="ph token constant">NULL</span><span class="ph token punctuation">)</span> <span class="ph token operator">!=</span> SYS_FS_RES_SUCCESS<span class="ph token punctuation">)</span>
+        <span class="ph token punctuation">{</span>
+            <span class="ph token comment">// Failure, try mounting again</span>
+        <span class="ph token punctuation">}</span>
+        <span class="ph token keyword">else</span>
+        <span class="ph token punctuation">{</span>
+            <span class="ph token comment">// Mount was successful. Partition now.</span>
+            appState <span class="ph token operator">=</span> PARTITION_DRIVE<span class="ph token punctuation">;</span>
+        <span class="ph token punctuation">}</span>
+        <span class="ph token keyword">break</span><span class="ph token punctuation">;</span>
+    <span class="ph token punctuation">}</span>
+
+    <span class="ph token keyword">case</span> PARTITION_DRIVE<span class="ph token operator">:</span>
+    <span class="ph token punctuation">{</span>
+        res <span class="ph token operator">=</span> <span class="ph token function">SYS_FS_DrivePartition</span><span class="ph token punctuation">(</span><span class="ph token string">"/mnt/myDrive"</span><span class="ph token punctuation">,</span> plist<span class="ph token punctuation">,</span> work<span class="ph token punctuation">)</span><span class="ph token punctuation">;</span>
+        <span class="ph token keyword">if</span><span class="ph token punctuation">(</span>res <span class="ph token operator">==</span> SYS_FS_RES_FAILURE<span class="ph token punctuation">)</span>
+        <span class="ph token punctuation">{</span>
+            <span class="ph token comment">// Drive partition went wrong</span>
+        <span class="ph token punctuation">}</span>
+        <span class="ph token keyword">else</span>
+        <span class="ph token punctuation">{</span>
+            <span class="ph token comment">// Partition was successful. Power cycle the board so that</span>
+            <span class="ph token comment">// all partitions are recognized. Then try mounting both</span>
+            <span class="ph token comment">// partitions.</span>
+        <span class="ph token punctuation">}</span>
+        <span class="ph token keyword">break</span><span class="ph token punctuation">;</span>
+    <span class="ph token punctuation">}</span>
+
+    <span class="ph token keyword">default</span><span class="ph token operator">:</span>
+    <span class="ph token punctuation">{</span>
+        <span class="ph token keyword">break</span><span class="ph token punctuation">;</span>
+    <span class="ph token punctuation">}</span>
+<span class="ph token punctuation">}</span>
+
+<span class="ph token comment">//============================================================================</span>
+<span class="ph token comment">//The following code is after the SD card is partitioned and then</span>
+<span class="ph token comment">//powered ON.</span>
+<span class="ph token comment">//============================================================================</span>
+SYS_FS_RESULT res<span class="ph token punctuation">;</span>
+
+<span class="ph token keyword">switch</span><span class="ph token punctuation">(</span>appState<span class="ph token punctuation">)</span>
+<span class="ph token punctuation">{</span>
+    <span class="ph token keyword">case</span> TRY_MOUNT_1ST_PARTITION<span class="ph token operator">:</span>
+    <span class="ph token punctuation">{</span>
+        <span class="ph token keyword">if</span><span class="ph token punctuation">(</span><span class="ph token function">SYS_FS_Mount</span><span class="ph token punctuation">(</span><span class="ph token string">"/dev/mmcblka1"</span><span class="ph token punctuation">,</span> <span class="ph token string">"/mnt/myDrive1"</span><span class="ph token punctuation">,</span> FAT<span class="ph token punctuation">,</span> <span class="ph token number">0</span><span class="ph token punctuation">,</span> <span class="ph token constant">NULL</span><span class="ph token punctuation">)</span> <span class="ph token operator">!=</span> SYS_FS_RES_SUCCESS<span class="ph token punctuation">)</span>
+        <span class="ph token punctuation">{</span>
+            <span class="ph token comment">// Failure, try mounting again</span>
+            appState <span class="ph token operator">=</span> TRY_MOUNT_1ST_PARTITION<span class="ph token punctuation">;</span>
+        <span class="ph token punctuation">}</span>
+        <span class="ph token keyword">else</span>
+        <span class="ph token punctuation">{</span>
+            <span class="ph token comment">// Mount was successful. Mount second partition.</span>
+            appState <span class="ph token operator">=</span> TRY_MOUNT_2ND_PARTITION<span class="ph token punctuation">;</span>
+        <span class="ph token punctuation">}</span>
+        <span class="ph token keyword">break</span><span class="ph token punctuation">;</span>
+    <span class="ph token punctuation">}</span>
+
+    <span class="ph token keyword">case</span> TRY_MOUNT_2ND_PARTITION<span class="ph token operator">:</span>
+    <span class="ph token punctuation">{</span>
+        <span class="ph token keyword">if</span><span class="ph token punctuation">(</span><span class="ph token function">SYS_FS_Mount</span><span class="ph token punctuation">(</span><span class="ph token string">"/dev/mmcblka2"</span><span class="ph token punctuation">,</span> <span class="ph token string">"/mnt/myDrive2"</span><span class="ph token punctuation">,</span> FAT<span class="ph token punctuation">,</span> <span class="ph token number">0</span><span class="ph token punctuation">,</span> <span class="ph token constant">NULL</span><span class="ph token punctuation">)</span> <span class="ph token operator">!=</span> SYS_FS_RES_SUCCESS<span class="ph token punctuation">)</span>
+        <span class="ph token punctuation">{</span>
+            <span class="ph token comment">// Failure, try mounting again</span>
+            appState <span class="ph token operator">=</span> TRY_MOUNT_2ND_PARTITION<span class="ph token punctuation">;</span>
+        <span class="ph token punctuation">}</span>
+        <span class="ph token keyword">else</span>
+        <span class="ph token punctuation">{</span>
+            <span class="ph token comment">// Mount was successful. Try formating first partition.</span>
+            appState <span class="ph token operator">=</span> TRY_FORMATING_1ST_PARTITION<span class="ph token punctuation">;</span>
+        <span class="ph token punctuation">}</span>
+        <span class="ph token keyword">break</span><span class="ph token punctuation">;</span>
+    <span class="ph token punctuation">}</span>
+
+    <span class="ph token keyword">case</span> TRY_FORMATING_1ST_PARTITION<span class="ph token operator">:</span>
+    <span class="ph token punctuation">{</span>
+        <span class="ph token keyword">if</span><span class="ph token punctuation">(</span><span class="ph token function">SYS_FS_DriveFormat</span><span class="ph token punctuation">(</span><span class="ph token string">"/mnt/myDrive1/"</span><span class="ph token punctuation">,</span> SYS_FS_FORMAT_FDISK<span class="ph token punctuation">,</span> <span class="ph token number">0</span><span class="ph token punctuation">)</span> <span class="ph token operator">==</span> SYS_FS_RES_FAILURE<span class="ph token punctuation">)</span>
+        <span class="ph token punctuation">{</span>
+            <span class="ph token comment">// Failure</span>
+        <span class="ph token punctuation">}</span>
+        <span class="ph token keyword">else</span>
+        <span class="ph token punctuation">{</span>
+            <span class="ph token comment">// Try formating second partitions.</span>
+            appState <span class="ph token operator">=</span> TRY_FORMATING_2ND_PARTITION<span class="ph token punctuation">;</span>
+        <span class="ph token punctuation">}</span>
+        <span class="ph token keyword">break</span><span class="ph token punctuation">;</span>
+    <span class="ph token punctuation">}</span>
+
+    <span class="ph token keyword">case</span> TRY_FORMATING_2ND_PARTITION<span class="ph token operator">:</span>
+    <span class="ph token punctuation">{</span>
+        <span class="ph token keyword">if</span><span class="ph token punctuation">(</span><span class="ph token function">SYS_FS_DriveFormat</span><span class="ph token punctuation">(</span><span class="ph token string">"/mnt/myDrive2/"</span><span class="ph token punctuation">,</span> SYS_FS_FORMAT_FDISK<span class="ph token punctuation">,</span> <span class="ph token number">0</span><span class="ph token punctuation">)</span> <span class="ph token operator">==</span> SYS_FS_RES_FAILURE<span class="ph token punctuation">)</span>
+        <span class="ph token punctuation">{</span>
+            <span class="ph token comment">// Failure</span>
+        <span class="ph token punctuation">}</span>
+        <span class="ph token keyword">else</span>
+        <span class="ph token punctuation">{</span>
+            <span class="ph token comment">// Use both partitions as 2 separate volumes.</span>
+        <span class="ph token punctuation">}</span>
+        <span class="ph token keyword">break</span><span class="ph token punctuation">;</span>
+    <span class="ph token punctuation">}</span>
+
+    <span class="ph token keyword">default</span><span class="ph token operator">:</span>
+    <span class="ph token punctuation">{</span>
+        <span class="ph token keyword">break</span><span class="ph token punctuation">;</span>
+    <span class="ph token punctuation">}</span>
+<span class="ph token punctuation">}</span></code></pre></div>
+</div>
+<div class="topic nested1" aria-labelledby="ariaid-title9" id="remarks"><h2 class="title topictitle2" id="ariaid-title9">Remarks</h2><div class="body"><p class="p">None</p>
+</div>
+</div>
+</body>
+</html>

@@ -1,0 +1,434 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+
+<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE11" /><meta name="copyright" content="(C) Copyright 2022" />
+<meta name="DC.rights.owner" content="(C) Copyright 2022" />
+<meta name="DC.type" content="topic" />
+<meta name="DC.title" content="Library Interface" />
+<meta name="DC.relation" scheme="URI" content="GUID-0FFCD458-7F10-49C8-B068-E4E4B5439C47.html" />
+<meta name="DC.relation" scheme="URI" content="GUID-A19D31BD-CA9E-4C95-8C34-48C4F568CB46.html" />
+<meta name="DC.relation" scheme="URI" content="GUID-78A40801-3070-4F90-8BBC-C21C8AD1B362.html" />
+<meta name="DC.relation" scheme="URI" content="GUID-9C3DFDAE-818D-415D-8331-0F56F2817EBA.html" />
+<meta name="DC.relation" scheme="URI" content="GUID-E11AD2F4-E78A-41F1-A573-10270C7796D7.html" />
+<meta name="DC.relation" scheme="URI" content="GUID-8137CC20-0230-4197-A5B0-C6400C2617BC.html" />
+<meta name="DC.relation" scheme="URI" content="GUID-244989FC-1190-4854-8A64-9F0FAEF1B07C.html" />
+<meta name="DC.relation" scheme="URI" content="GUID-F499493F-2392-4CEC-B4B4-E61FD279CABE.html" />
+<meta name="DC.relation" scheme="URI" content="GUID-8D0CD4FB-C2B2-4AF4-8DB0-D6424CB9EAE1.html" />
+<meta name="DC.relation" scheme="URI" content="GUID-0B4A66DB-3680-46D5-BC13-EEA9E8A84481.html" />
+<meta name="DC.relation" scheme="URI" content="GUID-6655C843-3384-4DCB-8625-657E0EAD198B.html" />
+<meta name="DC.relation" scheme="URI" content="GUID-C8F255A5-C992-465D-A4B5-B62A2B89421F.html" />
+<meta name="DC.relation" scheme="URI" content="GUID-422BF1E5-FCA5-4BDA-86FF-1D69B0F9EE60.html" />
+<meta name="DC.relation" scheme="URI" content="GUID-76235F7D-E608-44C6-AFA4-73A09FF0EA9C.html" />
+<meta name="DC.relation" scheme="URI" content="GUID-40F0EA45-9E7D-4BE2-8DBF-31942FA1BD7D.html" />
+<meta name="DC.relation" scheme="URI" content="GUID-B409B252-4361-430D-8B89-48AAE39FD066.html" />
+<meta name="DC.relation" scheme="URI" content="GUID-6E6BFBF9-12EB-436D-9D2F-4611B260D7EF.html" />
+<meta name="DC.relation" scheme="URI" content="GUID-066D0FA7-453C-4736-8064-5E4224C50558.html" />
+<meta name="DC.relation" scheme="URI" content="GUID-3488A96B-8C3E-4967-9197-2376AB3B45E6.html" />
+<meta name="DC.relation" scheme="URI" content="GUID-47211219-744B-487E-975A-C6D963B11DE7.html" />
+<meta name="DC.relation" scheme="URI" content="GUID-B4934CBC-6AF2-495C-AC8D-576C20729D5F.html" />
+<meta name="DC.relation" scheme="URI" content="GUID-5587D300-1C17-4DCA-B342-9B2E74824EFB.html" />
+<meta name="DC.relation" scheme="URI" content="GUID-509B01EA-57F1-449C-A03F-EE3761F22F4E.html" />
+<meta name="DC.relation" scheme="URI" content="GUID-EF2E2FE9-A7F4-41F0-B5F3-3002C0E9396B.html" />
+<meta name="DC.relation" scheme="URI" content="GUID-C59F079A-EB80-4DFE-9FD1-B83486B907CE.html" />
+<meta name="DC.relation" scheme="URI" content="GUID-1F0928CE-E0E0-45E3-8717-E96769FA7B9F.html" />
+<meta name="DC.relation" scheme="URI" content="GUID-8095D76B-9C45-4295-94E8-D01CCCACAC91.html" />
+<meta name="DC.relation" scheme="URI" content="GUID-F6ADE0BF-13E7-4331-80CE-9FA9B5C33750.html" />
+<meta name="DC.relation" scheme="URI" content="GUID-3C10B2F9-8190-47F4-864D-813923E49E2F.html" />
+<meta name="DC.relation" scheme="URI" content="GUID-377058D8-9B13-47BE-A92A-47523CB84B3B.html" />
+<meta name="DC.relation" scheme="URI" content="GUID-FC3149C2-1EB6-47A0-8FA6-89584991B2BD.html" />
+<meta name="DC.relation" scheme="URI" content="GUID-5E1BD4E4-2CE2-43D1-B83A-CA20B9F7F3DD.html" />
+<meta name="DC.relation" scheme="URI" content="GUID-65ACFCA1-A979-4EE6-B224-6CC63491ACED.html" />
+<meta name="DC.relation" scheme="URI" content="GUID-FCE79155-DFAA-434F-B53C-FB851BD38651.html" />
+<meta name="DC.format" content="XHTML" />
+<meta name="DC.identifier" content="library-interface" />
+<link rel="stylesheet" type="text/css" href="stylesheets/commonltr.css" />
+<link rel="stylesheet" type="text/css" href="stylesheets/atmel.css" />
+<link rel="stylesheet" type="text/css" href="./stylesheets/common-extended.css" /><title>Library Interface</title>
+<meta name="Microsoft.Help.Id" content="GUID-EDFB1AB8-CD6B-446F-8E25-F2167287A1AF-library-interface" />
+<meta name="Microsoft.Help.TocParent" content="GUID-EDFB1AB8-CD6B-446F-8E25-F2167287A1AF" />
+<meta name="Microsoft.Help.TocOrder" content="0" />
+<meta name="Microsoft.Help.Locale" content="en-US" />
+<meta name="Microsoft.Help.TopicLocale" content="en-US" />
+<meta name="Microsoft.Help.DisplayVersion" content="MPLAB® Harmony Core Library Reference A 11/2021" />
+<script language="javascript">
+       
+       if (window.parent.location.protocol != 'file:') {
+				document.addEventListener('click', function(e) {
+				    if (e.target) {
+               if (e.target.nodeName == "A" ) {
+                    if (!e.target.target) {
+                      e.preventDefault();
+                      e.stopPropagation();
+                              
+                      var origUrl = window.parent.location.href.substr(0, window.parent.location.href.indexOf("?"));
+                      if (origUrl.length === 0) {
+                          origUrl = window.parent.location.href;
+                      }
+                      var href= e.target.getAttribute("href");
+                      var parts = href.split("#");
+          
+                      var url = "";
+                      if (parts.length == 2 ) {
+                        if (!parts[0].length) {
+                            url = window.parent.location.search.replace('?','')
+                        } else {
+                            url = parts[0].replace('.html','');
+                        }
+                      } else {
+                        url = parts[0].replace('.html','');
+                      }
+
+                      if (parts.length == 2) {
+                          url += "#" + parts[1];
+                      }
+    
+                      window.parent.location.href = origUrl + "?" + url;
+
+                      return false;
+                    }
+               }
+            }
+				});
+			}
+
+		</script><script language="javascript">
+        function cpy(id, button) {
+        
+            var element = document.getElementById(id);
+            var content = element.getAttribute("content");
+            var textArea = document.createElement("textarea");
+            
+            // Place in the top-left corner of screen regardless of scroll position.
+            textArea.style.position = 'fixed';
+            textArea.style.top = 0;
+            textArea.style.left = 0;
+            
+            // Ensure it has a small width and height. Setting to 1px / 1em
+            // doesn't work as this gives a negative w/h on some browsers.
+            textArea.style.width = '2em';
+            textArea.style.height = '2em';
+            
+            // We don't need padding, reducing the size if it does flash render.
+            textArea.style.padding = 0;
+            
+            // Clean up any borders.
+            textArea.style.border = 'none';
+            textArea.style.outline = 'none';
+            textArea.style.boxShadow = 'none';
+            
+            // Avoid flash of the white box if rendered for any reason.
+            textArea.style.background = 'transparent';
+            
+            
+            textArea.value = content;
+            
+            document.body.appendChild(textArea);
+            textArea.focus();
+            textArea.select();
+            
+            try {
+               var successful = document.execCommand('copy');
+               var msg = successful ? 'successful' : 'unsuccessful';
+               if (!button.classList.contains("copied")){
+                  button.textContent = "Copied";
+                  button.classList.add("copied");
+                  setTimeout(function(){
+                    button.textContent = "Copy";
+                    button.classList.remove("copied");
+                  },1000);
+               }
+            } catch (err) {
+              console.log('Oops, unable to copy');
+            }
+            
+            document.body.removeChild(textArea);
+        }
+      </script><script language="javascript">
+          
+          // Add the MathML namespace to html
+          var html = document.getElementsByTagName("html")[0],
+          head = document.getElementsByTagName("head")[0];
+          
+          var mathJax = document.createElement("script");
+          mathJax.src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-MML-AM_CHTML";
+          head.appendChild(mathJax);
+          
+          html.setAttribute("xmlns:m","http://www.w3.org/1998/Math/MathML");
+          
+          function inIframe() { try { return window.self !== window.top; } catch (e) { return true; } }
+          
+          if (!inIframe()) { 
+          
+          var Default = "index.html?GUID-E18B0923-4286-4E08-A2EB-9A482E0063AE"; 
+          
+          var displaylocation = "value" + window.location.href;
+          
+          var GUIDS = displaylocation.split('GUID');          
+          
+          if (displaylocation.indexOf('#GUID') != -1) {            
+          var First = GUIDS[1].split('.html');  
+          if (GUIDS[3]){First = GUIDS[2].split('.html');}
+          if (GUIDS[4]){First = GUIDS[3].split('.html');}
+          if (GUIDS[5]){First = GUIDS[4].split('.html');}
+          
+          var Second = GUIDS[2].split('#');   
+          if (GUIDS[3]){Second = GUIDS[3].split('#');}
+          if (GUIDS[4]){Second = GUIDS[4].split('#');}
+          if (GUIDS[5]){Second = GUIDS[5].split('#');}
+          
+          Default = "index.html?" + "GUID" + First[0] + "GUID" + Second[0];     
+          }                    
+          window.top.location = Default;
+          }       
+          
+        </script><style xml:space="">
+        
+          button.copy-code{
+            display:none;
+            padding:0.7em 1.4em;
+            margin:0 0.3em 0.3em 0;
+            border-radius:0.15em;
+            box-sizing: border-box;
+            text-decoration:none;
+            font-family:'Roboto',sans-serif;
+            text-transform:uppercase;
+            font-weight:400;
+            color:#FFFFFF;
+            background-color:#9c9c9c;
+            box-shadow:inset 0 -0.6em 0 -0.35em rgba(0,0,0,0.17);
+            text-align:center;
+            position:relative;
+            border: 0;
+            float: right;
+            border-radius: .5em;
+            cursor: pointer;
+          }
+          button.copy-code:active{
+            top:0.1em;
+          }
+          
+          pre:hover button.copy-code{
+            display: inline-block !important;
+          }
+          button.copy-code.copied {
+            cursor: default !important;
+          }
+          
+          
+          @media all and (max-width:30em){
+            button.copy-code{
+              display:block;
+              margin:0.4em auto;
+            }
+          }
+        
+        
+      </style></head>
+<body id="library-interface">
+<h1 class="title topictitle1" id="ariaid-title1">Library Interface</h1><div class="body"><p class="p">Memory driver library provides the following interfaces:</p>
+<p class="p"><strong class="ph b">Functions</strong></p>
+
+<div class="tablenoborder"><table cellpadding="4" cellspacing="0" summary="" class="table" frame="border" border="1" rules="all"><col style="width:" /><col style="width:" /><thead class="thead" style="text-align:left;"><tr class="row"><th class="entry cellrowborder" style="text-align:left;vertical-align:middle;" id="d192371e21"><span>Name</span></th>
+<th class="entry cellrowborder" style="text-align:left;vertical-align:middle;" id="d192371e23"><span>Description</span></th>
+</tr>
+</thead>
+<tbody class="tbody"><tr class="row"><td class="entry cellrowborder" style="text-align:left;vertical-align:middle;" headers="d192371e21 "><span>DRV_MEMORY_Initialize</span></td>
+<td class="entry cellrowborder" style="text-align:left;vertical-align:middle;" headers="d192371e23 "><span>Initializes the Memory instance for the specified driver index</span></td>
+</tr>
+<tr class="row"><td class="entry cellrowborder" style="text-align:left;vertical-align:middle;" headers="d192371e21 "><span>DRV_MEMORY_Status</span></td>
+<td class="entry cellrowborder" style="text-align:left;vertical-align:middle;" headers="d192371e23 "><span>Gets the current status of the Memory driver module</span></td>
+</tr>
+<tr class="row"><td class="entry cellrowborder" style="text-align:left;vertical-align:middle;" headers="d192371e21 "><span>DRV_MEMORY_Tasks</span></td>
+<td class="entry cellrowborder" style="text-align:left;vertical-align:middle;" headers="d192371e23 "><span>Maintains the Memory driver's internal state machine</span></td>
+</tr>
+<tr class="row"><td class="entry cellrowborder" style="text-align:left;vertical-align:middle;" headers="d192371e21 "><span>DRV_MEMORY_Open</span></td>
+<td class="entry cellrowborder" style="text-align:left;vertical-align:middle;" headers="d192371e23 "><span>Opens the specified Memory driver instance and returns a handle to it</span></td>
+</tr>
+<tr class="row"><td class="entry cellrowborder" style="text-align:left;vertical-align:middle;" headers="d192371e21 "><span>DRV_MEMORY_Close</span></td>
+<td class="entry cellrowborder" style="text-align:left;vertical-align:middle;" headers="d192371e23 "><span>Closes an opened-instance of the Memory driver</span></td>
+</tr>
+<tr class="row"><td class="entry cellrowborder" style="text-align:left;vertical-align:middle;" headers="d192371e21 "><span>DRV_MEMORY_AsyncErase</span></td>
+<td class="entry cellrowborder" style="text-align:left;vertical-align:middle;" headers="d192371e23 "><span>Erase the specified number of memory blocks in Asynchronous mode</span></td>
+</tr>
+<tr class="row"><td class="entry cellrowborder" style="text-align:left;vertical-align:middle;" headers="d192371e21 "><span>DRV_MEMORY_SyncErase</span></td>
+<td class="entry cellrowborder" style="text-align:left;vertical-align:middle;" headers="d192371e23 "><span>Erase the specified number of memory blocks in Synchronous mode</span></td>
+</tr>
+<tr class="row"><td class="entry cellrowborder" style="text-align:left;vertical-align:middle;" headers="d192371e21 "><span>DRV_MEMORY_AsyncEraseWrite</span></td>
+<td class="entry cellrowborder" style="text-align:left;vertical-align:middle;" headers="d192371e23 "><span>Erase and Write data for the specified number of memory blocks in Asynchronous mode</span></td>
+</tr>
+<tr class="row"><td class="entry cellrowborder" style="text-align:left;vertical-align:middle;" headers="d192371e21 "><span>DRV_MEMORY_SyncEraseWrite</span></td>
+<td class="entry cellrowborder" style="text-align:left;vertical-align:middle;" headers="d192371e23 "><span>Erase and Write data for the specified number of memory blocks in Synchronous mode</span></td>
+</tr>
+<tr class="row"><td class="entry cellrowborder" style="text-align:left;vertical-align:middle;" headers="d192371e21 "><span>DRV_MEMORY_AsyncWrite</span></td>
+<td class="entry cellrowborder" style="text-align:left;vertical-align:middle;" headers="d192371e23 "><span>Writes data for the specified number of memory blocks in Asynchronous mode</span></td>
+</tr>
+<tr class="row"><td class="entry cellrowborder" style="text-align:left;vertical-align:middle;" headers="d192371e21 "><span>DRV_MEMORY_SyncWrite</span></td>
+<td class="entry cellrowborder" style="text-align:left;vertical-align:middle;" headers="d192371e23 "><span>Writes data for the specified number of memory blocks in Synchronous mode</span></td>
+</tr>
+<tr class="row"><td class="entry cellrowborder" style="text-align:left;vertical-align:middle;" headers="d192371e21 "><span>DRV_MEMORY_AsyncRead</span></td>
+<td class="entry cellrowborder" style="text-align:left;vertical-align:middle;" headers="d192371e23 "><span>Reads data for the specified number of memory blocks in Asynchronous mode</span></td>
+</tr>
+<tr class="row"><td class="entry cellrowborder" style="text-align:left;vertical-align:middle;" headers="d192371e21 "><span>DRV_MEMORY_SyncRead</span></td>
+<td class="entry cellrowborder" style="text-align:left;vertical-align:middle;" headers="d192371e23 "><span>Reads data for the specified number of memory blocks in Synchronous mode</span></td>
+</tr>
+<tr class="row"><td class="entry cellrowborder" style="text-align:left;vertical-align:middle;" headers="d192371e21 "><span>DRV_MEMORY_GeometryGet</span></td>
+<td class="entry cellrowborder" style="text-align:left;vertical-align:middle;" headers="d192371e23 "><span>Returns the geometry of the memory device</span></td>
+</tr>
+<tr class="row"><td class="entry cellrowborder" style="text-align:left;vertical-align:middle;" headers="d192371e21 "><span>DRV_MEMORY_TransferStatusGet</span></td>
+<td class="entry cellrowborder" style="text-align:left;vertical-align:middle;" headers="d192371e23 "><span>Gets the current status of the transfer request on attached device</span></td>
+</tr>
+<tr class="row"><td class="entry cellrowborder" style="text-align:left;vertical-align:middle;" headers="d192371e21 "><span>DRV_MEMORY_CommandStatusGet</span></td>
+<td class="entry cellrowborder" style="text-align:left;vertical-align:middle;" headers="d192371e23 "><span>Gets the current status of the command</span></td>
+</tr>
+<tr class="row"><td class="entry cellrowborder" style="text-align:left;vertical-align:middle;" headers="d192371e21 "><span>DRV_MEMORY_TransferHandlerSet</span></td>
+<td class="entry cellrowborder" style="text-align:left;vertical-align:middle;" headers="d192371e23 "><span>Sets the pointer to the function (and it's context) to be called when queued operation has completed</span></td>
+</tr>
+<tr class="row"><td class="entry cellrowborder" style="text-align:left;vertical-align:middle;" headers="d192371e21 "><span>DRV_MEMORY_IsAttached</span></td>
+<td class="entry cellrowborder" style="text-align:left;vertical-align:middle;" headers="d192371e23 "><span>Returns the physical attach status of the Media</span></td>
+</tr>
+<tr class="row"><td class="entry cellrowborder" style="text-align:left;vertical-align:middle;" headers="d192371e21 "><span>DRV_MEMORY_IsWriteProtected</span></td>
+<td class="entry cellrowborder" style="text-align:left;vertical-align:middle;" headers="d192371e23 "><span>Returns the write protect status of the Memory</span></td>
+</tr>
+<tr class="row"><td class="entry cellrowborder" style="text-align:left;vertical-align:middle;" headers="d192371e21 "><span>DRV_MEMORY_AddressGet</span></td>
+<td class="entry cellrowborder" style="text-align:left;vertical-align:middle;" headers="d192371e23 "><span>Returns the Memory media start address</span></td>
+</tr>
+<tr class="row"><td class="entry cellrowborder" style="text-align:left;vertical-align:middle;" headers="d192371e21 "><span>DRV_MEMORY_Erase</span></td>
+<td class="entry cellrowborder" style="text-align:left;vertical-align:middle;" headers="d192371e23 "><span>Interface to the file system to perform a erase operation in Synchronous mode</span></td>
+</tr>
+<tr class="row"><td class="entry cellrowborder" style="text-align:left;vertical-align:middle;" headers="d192371e21 "><span>DRV_MEMORY_EraseWrite</span></td>
+<td class="entry cellrowborder" style="text-align:left;vertical-align:middle;" headers="d192371e23 "><span>Interface to the file system to perform a erase-write operation in Synchronous mode</span></td>
+</tr>
+<tr class="row"><td class="entry cellrowborder" style="text-align:left;vertical-align:middle;" headers="d192371e21 "><span>DRV_MEMORY_Write</span></td>
+<td class="entry cellrowborder" style="text-align:left;vertical-align:middle;" headers="d192371e23 "><span>Interface to the file system to perform a write operation in Synchronous mode</span></td>
+</tr>
+<tr class="row"><td class="entry cellrowborder" style="text-align:left;vertical-align:middle;" headers="d192371e21 "><span>DRV_MEMORY_Read</span></td>
+<td class="entry cellrowborder" style="text-align:left;vertical-align:middle;" headers="d192371e23 "><span>Interface to the file system to perform a read operation in Synchronous mode</span></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p class="p"><strong class="ph b">Data types and constants</strong></p>
+
+<div class="tablenoborder"><table cellpadding="4" cellspacing="0" summary="" class="table" frame="border" border="1" rules="all"><col style="width:" /><col style="width:" /><col style="width:" /><thead class="thead" style="text-align:left;"><tr class="row"><th class="entry cellrowborder" style="text-align:left;vertical-align:middle;" id="d192371e158"><span>Name</span></th>
+<th class="entry cellrowborder" style="text-align:left;vertical-align:middle;" id="d192371e160"><span>Type</span></th>
+<th class="entry cellrowborder" style="text-align:left;vertical-align:middle;" id="d192371e162"><span>Description</span></th>
+</tr>
+</thead>
+<tbody class="tbody"><tr class="row"><td class="entry cellrowborder" style="text-align:left;vertical-align:middle;" headers="d192371e158 "><span>DRV_MEMORY_COMMAND_HANDLE</span></td>
+<td class="entry cellrowborder" style="text-align:left;vertical-align:middle;" headers="d192371e160 "><span>Typedef</span></td>
+<td class="entry cellrowborder" style="text-align:left;vertical-align:middle;" headers="d192371e162 "><span>Handle to identify commands queued in the driver</span></td>
+</tr>
+<tr class="row"><td class="entry cellrowborder" style="text-align:left;vertical-align:middle;" headers="d192371e158 "><span>DRV_MEMORY_COMMAND_HANDLE_INVALID</span></td>
+<td class="entry cellrowborder" style="text-align:left;vertical-align:middle;" headers="d192371e160 "><span>Macro</span></td>
+<td class="entry cellrowborder" style="text-align:left;vertical-align:middle;" headers="d192371e162 "><span>This value defines the Memory Driver's Invalid Command Handle</span></td>
+</tr>
+<tr class="row"><td class="entry cellrowborder" style="text-align:left;vertical-align:middle;" headers="d192371e158 "><span>DRV_MEMORY_EVENT</span></td>
+<td class="entry cellrowborder" style="text-align:left;vertical-align:middle;" headers="d192371e160 "><span>Enum</span></td>
+<td class="entry cellrowborder" style="text-align:left;vertical-align:middle;" headers="d192371e162 "><span>Identifies the possible events that can result from a request</span></td>
+</tr>
+<tr class="row"><td class="entry cellrowborder" style="text-align:left;vertical-align:middle;" headers="d192371e158 "><span>DRV_MEMORY_COMMAND_STATUS</span></td>
+<td class="entry cellrowborder" style="text-align:left;vertical-align:middle;" headers="d192371e160 "><span>Enum</span></td>
+<td class="entry cellrowborder" style="text-align:left;vertical-align:middle;" headers="d192371e162 "><span>Memory Driver command Status</span></td>
+</tr>
+<tr class="row"><td class="entry cellrowborder" style="text-align:left;vertical-align:middle;" headers="d192371e158 "><span>DRV_MEMORY_TRANSFER_HANDLER</span></td>
+<td class="entry cellrowborder" style="text-align:left;vertical-align:middle;" headers="d192371e160 "><span>Typedef</span></td>
+<td class="entry cellrowborder" style="text-align:left;vertical-align:middle;" headers="d192371e162 "><span>Pointer to a Memory Driver Event handler function</span></td>
+</tr>
+<tr class="row"><td class="entry cellrowborder" style="text-align:left;vertical-align:middle;" headers="d192371e158 "><span>MEMORY_DEVICE_TRANSFER_STATUS</span></td>
+<td class="entry cellrowborder" style="text-align:left;vertical-align:middle;" headers="d192371e160 "><span>Enum</span></td>
+<td class="entry cellrowborder" style="text-align:left;vertical-align:middle;" headers="d192371e162 "><span>Memory Device Transfer Status</span></td>
+</tr>
+<tr class="row"><td class="entry cellrowborder" style="text-align:left;vertical-align:middle;" headers="d192371e158 "><span>MEMORY_DEVICE_GEOMETRY</span></td>
+<td class="entry cellrowborder" style="text-align:left;vertical-align:middle;" headers="d192371e160 "><span>Struct</span></td>
+<td class="entry cellrowborder" style="text-align:left;vertical-align:middle;" headers="d192371e162 "><span>Memory Device Geometry Table</span></td>
+</tr>
+<tr class="row"><td class="entry cellrowborder" style="text-align:left;vertical-align:middle;" headers="d192371e158 "><span>DRV_MEMORY_DEVICE_INTERFACE</span></td>
+<td class="entry cellrowborder" style="text-align:left;vertical-align:middle;" headers="d192371e160 "><span>Struct</span></td>
+<td class="entry cellrowborder" style="text-align:left;vertical-align:middle;" headers="d192371e162 "><span>Memory Device API Interface</span></td>
+</tr>
+<tr class="row"><td class="entry cellrowborder" style="text-align:left;vertical-align:middle;" headers="d192371e158 "><span>DRV_MEMORY_INIT</span></td>
+<td class="entry cellrowborder" style="text-align:left;vertical-align:middle;" headers="d192371e160 "><span>Struct</span></td>
+<td class="entry cellrowborder" style="text-align:left;vertical-align:middle;" headers="d192371e162 "><span>Memory Driver Initialization Data</span></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="related-links">
+<ul class="ullinks">
+<li class="link ulchildlink"><strong><a href="GUID-A19D31BD-CA9E-4C95-8C34-48C4F568CB46.html">DRV_MEMORY_Initialize Function</a></strong><br />
+</li>
+<li class="link ulchildlink"><strong><a href="GUID-78A40801-3070-4F90-8BBC-C21C8AD1B362.html">DRV_MEMORY_Status Function</a></strong><br />
+</li>
+<li class="link ulchildlink"><strong><a href="GUID-9C3DFDAE-818D-415D-8331-0F56F2817EBA.html">DRV_MEMORY_Tasks Function</a></strong><br />
+</li>
+<li class="link ulchildlink"><strong><a href="GUID-E11AD2F4-E78A-41F1-A573-10270C7796D7.html">DRV_MEMORY_Open Function</a></strong><br />
+</li>
+<li class="link ulchildlink"><strong><a href="GUID-8137CC20-0230-4197-A5B0-C6400C2617BC.html">DRV_MEMORY_Close Function</a></strong><br />
+</li>
+<li class="link ulchildlink"><strong><a href="GUID-244989FC-1190-4854-8A64-9F0FAEF1B07C.html">DRV_MEMORY_AsyncErase Function</a></strong><br />
+</li>
+<li class="link ulchildlink"><strong><a href="GUID-F499493F-2392-4CEC-B4B4-E61FD279CABE.html">DRV_MEMORY_SyncErase Function</a></strong><br />
+</li>
+<li class="link ulchildlink"><strong><a href="GUID-8D0CD4FB-C2B2-4AF4-8DB0-D6424CB9EAE1.html">DRV_MEMORY_AsyncEraseWrite Function</a></strong><br />
+</li>
+<li class="link ulchildlink"><strong><a href="GUID-0B4A66DB-3680-46D5-BC13-EEA9E8A84481.html">DRV_MEMORY_SyncEraseWrite Function</a></strong><br />
+</li>
+<li class="link ulchildlink"><strong><a href="GUID-6655C843-3384-4DCB-8625-657E0EAD198B.html">DRV_MEMORY_AsyncWrite Function</a></strong><br />
+</li>
+<li class="link ulchildlink"><strong><a href="GUID-C8F255A5-C992-465D-A4B5-B62A2B89421F.html">DRV_MEMORY_SyncWrite Function</a></strong><br />
+</li>
+<li class="link ulchildlink"><strong><a href="GUID-422BF1E5-FCA5-4BDA-86FF-1D69B0F9EE60.html">DRV_MEMORY_AsyncRead Function</a></strong><br />
+</li>
+<li class="link ulchildlink"><strong><a href="GUID-76235F7D-E608-44C6-AFA4-73A09FF0EA9C.html">DRV_MEMORY_SyncRead Function</a></strong><br />
+</li>
+<li class="link ulchildlink"><strong><a href="GUID-40F0EA45-9E7D-4BE2-8DBF-31942FA1BD7D.html">DRV_MEMORY_GeometryGet Function</a></strong><br />
+</li>
+<li class="link ulchildlink"><strong><a href="GUID-B409B252-4361-430D-8B89-48AAE39FD066.html">DRV_MEMORY_TransferStatusGet Function</a></strong><br />
+</li>
+<li class="link ulchildlink"><strong><a href="GUID-6E6BFBF9-12EB-436D-9D2F-4611B260D7EF.html">DRV_MEMORY_CommandStatusGet Function</a></strong><br />
+</li>
+<li class="link ulchildlink"><strong><a href="GUID-066D0FA7-453C-4736-8064-5E4224C50558.html">DRV_MEMORY_TransferHandlerSet Function</a></strong><br />
+</li>
+<li class="link ulchildlink"><strong><a href="GUID-3488A96B-8C3E-4967-9197-2376AB3B45E6.html">DRV_MEMORY_IsAttached Function</a></strong><br />
+</li>
+<li class="link ulchildlink"><strong><a href="GUID-47211219-744B-487E-975A-C6D963B11DE7.html">DRV_MEMORY_IsWriteProtected Function</a></strong><br />
+</li>
+<li class="link ulchildlink"><strong><a href="GUID-B4934CBC-6AF2-495C-AC8D-576C20729D5F.html">DRV_MEMORY_AddressGet Function</a></strong><br />
+</li>
+<li class="link ulchildlink"><strong><a href="GUID-5587D300-1C17-4DCA-B342-9B2E74824EFB.html">DRV_MEMORY_Erase Function</a></strong><br />
+</li>
+<li class="link ulchildlink"><strong><a href="GUID-509B01EA-57F1-449C-A03F-EE3761F22F4E.html">DRV_MEMORY_EraseWrite Function</a></strong><br />
+</li>
+<li class="link ulchildlink"><strong><a href="GUID-EF2E2FE9-A7F4-41F0-B5F3-3002C0E9396B.html">DRV_MEMORY_Write Function</a></strong><br />
+</li>
+<li class="link ulchildlink"><strong><a href="GUID-C59F079A-EB80-4DFE-9FD1-B83486B907CE.html">DRV_MEMORY_Read Function</a></strong><br />
+</li>
+<li class="link ulchildlink"><strong><a href="GUID-1F0928CE-E0E0-45E3-8717-E96769FA7B9F.html">DRV_MEMORY_COMMAND_HANDLE Typedef</a></strong><br />
+</li>
+<li class="link ulchildlink"><strong><a href="GUID-8095D76B-9C45-4295-94E8-D01CCCACAC91.html">DRV_MEMORY_COMMAND_HANDLE_INVALID Macro</a></strong><br />
+</li>
+<li class="link ulchildlink"><strong><a href="GUID-F6ADE0BF-13E7-4331-80CE-9FA9B5C33750.html">DRV_MEMORY_EVENT Enum</a></strong><br />
+</li>
+<li class="link ulchildlink"><strong><a href="GUID-3C10B2F9-8190-47F4-864D-813923E49E2F.html">DRV_MEMORY_COMMAND_STATUS Enum</a></strong><br />
+</li>
+<li class="link ulchildlink"><strong><a href="GUID-377058D8-9B13-47BE-A92A-47523CB84B3B.html">DRV_MEMORY_TRANSFER_HANDLER Typedef</a></strong><br />
+</li>
+<li class="link ulchildlink"><strong><a href="GUID-FC3149C2-1EB6-47A0-8FA6-89584991B2BD.html">MEMORY_DEVICE_TRANSFER_STATUS Enum</a></strong><br />
+</li>
+<li class="link ulchildlink"><strong><a href="GUID-5E1BD4E4-2CE2-43D1-B83A-CA20B9F7F3DD.html">MEMORY_DEVICE_GEOMETRY Struct</a></strong><br />
+</li>
+<li class="link ulchildlink"><strong><a href="GUID-65ACFCA1-A979-4EE6-B224-6CC63491ACED.html">DRV_MEMORY_DEVICE_INTERFACE Struct</a></strong><br />
+</li>
+<li class="link ulchildlink"><strong><a href="GUID-FCE79155-DFAA-434F-B53C-FB851BD38651.html">DRV_MEMORY_INIT Struct</a></strong><br />
+</li>
+</ul>
+
+<div class="familylinks">
+<div class="parentlink"><strong>Parent topic:</strong> <a class="link" href="GUID-0FFCD458-7F10-49C8-B068-E4E4B5439C47.html">Memory Driver</a></div>
+</div>
+</div></body>
+</html>

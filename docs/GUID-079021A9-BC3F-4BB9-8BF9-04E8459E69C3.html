@@ -1,0 +1,365 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+
+<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE11" /><meta name="copyright" content="(C) Copyright 2022" />
+<meta name="DC.rights.owner" content="(C) Copyright 2022" />
+<meta name="DC.type" content="topic" />
+<meta name="DC.title" content="Configuring The Library" />
+<meta name="DC.relation" scheme="URI" content="GUID-013A85E2-6948-44FA-907E-7DC945B5CE82.html" />
+<meta name="DC.format" content="XHTML" />
+<meta name="DC.identifier" content="configuring-the-library" />
+<link rel="stylesheet" type="text/css" href="stylesheets/commonltr.css" />
+<link rel="stylesheet" type="text/css" href="stylesheets/atmel.css" />
+<link rel="stylesheet" type="text/css" href="./stylesheets/common-extended.css" /><title>Configuring The Library</title>
+<meta name="Microsoft.Help.Id" content="GUID-EDFB1AB8-CD6B-446F-8E25-F2167287A1AF-configuring-the-library" />
+<meta name="Microsoft.Help.TocParent" content="GUID-EDFB1AB8-CD6B-446F-8E25-F2167287A1AF" />
+<meta name="Microsoft.Help.TocOrder" content="0" />
+<meta name="Microsoft.Help.Locale" content="en-US" />
+<meta name="Microsoft.Help.TopicLocale" content="en-US" />
+<meta name="Microsoft.Help.DisplayVersion" content="MPLAB® Harmony Core Library Reference A 11/2021" />
+<script language="javascript">
+       
+       if (window.parent.location.protocol != 'file:') {
+				document.addEventListener('click', function(e) {
+				    if (e.target) {
+               if (e.target.nodeName == "A" ) {
+                    if (!e.target.target) {
+                      e.preventDefault();
+                      e.stopPropagation();
+                              
+                      var origUrl = window.parent.location.href.substr(0, window.parent.location.href.indexOf("?"));
+                      if (origUrl.length === 0) {
+                          origUrl = window.parent.location.href;
+                      }
+                      var href= e.target.getAttribute("href");
+                      var parts = href.split("#");
+          
+                      var url = "";
+                      if (parts.length == 2 ) {
+                        if (!parts[0].length) {
+                            url = window.parent.location.search.replace('?','')
+                        } else {
+                            url = parts[0].replace('.html','');
+                        }
+                      } else {
+                        url = parts[0].replace('.html','');
+                      }
+
+                      if (parts.length == 2) {
+                          url += "#" + parts[1];
+                      }
+    
+                      window.parent.location.href = origUrl + "?" + url;
+
+                      return false;
+                    }
+               }
+            }
+				});
+			}
+
+		</script><script language="javascript">
+        function cpy(id, button) {
+        
+            var element = document.getElementById(id);
+            var content = element.getAttribute("content");
+            var textArea = document.createElement("textarea");
+            
+            // Place in the top-left corner of screen regardless of scroll position.
+            textArea.style.position = 'fixed';
+            textArea.style.top = 0;
+            textArea.style.left = 0;
+            
+            // Ensure it has a small width and height. Setting to 1px / 1em
+            // doesn't work as this gives a negative w/h on some browsers.
+            textArea.style.width = '2em';
+            textArea.style.height = '2em';
+            
+            // We don't need padding, reducing the size if it does flash render.
+            textArea.style.padding = 0;
+            
+            // Clean up any borders.
+            textArea.style.border = 'none';
+            textArea.style.outline = 'none';
+            textArea.style.boxShadow = 'none';
+            
+            // Avoid flash of the white box if rendered for any reason.
+            textArea.style.background = 'transparent';
+            
+            
+            textArea.value = content;
+            
+            document.body.appendChild(textArea);
+            textArea.focus();
+            textArea.select();
+            
+            try {
+               var successful = document.execCommand('copy');
+               var msg = successful ? 'successful' : 'unsuccessful';
+               if (!button.classList.contains("copied")){
+                  button.textContent = "Copied";
+                  button.classList.add("copied");
+                  setTimeout(function(){
+                    button.textContent = "Copy";
+                    button.classList.remove("copied");
+                  },1000);
+               }
+            } catch (err) {
+              console.log('Oops, unable to copy');
+            }
+            
+            document.body.removeChild(textArea);
+        }
+      </script><script language="javascript">
+          
+          // Add the MathML namespace to html
+          var html = document.getElementsByTagName("html")[0],
+          head = document.getElementsByTagName("head")[0];
+          
+          var mathJax = document.createElement("script");
+          mathJax.src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-MML-AM_CHTML";
+          head.appendChild(mathJax);
+          
+          html.setAttribute("xmlns:m","http://www.w3.org/1998/Math/MathML");
+          
+          function inIframe() { try { return window.self !== window.top; } catch (e) { return true; } }
+          
+          if (!inIframe()) { 
+          
+          var Default = "index.html?GUID-079021A9-BC3F-4BB9-8BF9-04E8459E69C3"; 
+          
+          var displaylocation = "value" + window.location.href;
+          
+          var GUIDS = displaylocation.split('GUID');          
+          
+          if (displaylocation.indexOf('#GUID') != -1) {            
+          var First = GUIDS[1].split('.html');  
+          if (GUIDS[3]){First = GUIDS[2].split('.html');}
+          if (GUIDS[4]){First = GUIDS[3].split('.html');}
+          if (GUIDS[5]){First = GUIDS[4].split('.html');}
+          
+          var Second = GUIDS[2].split('#');   
+          if (GUIDS[3]){Second = GUIDS[3].split('#');}
+          if (GUIDS[4]){Second = GUIDS[4].split('#');}
+          if (GUIDS[5]){Second = GUIDS[5].split('#');}
+          
+          Default = "index.html?" + "GUID" + First[0] + "GUID" + Second[0];     
+          }                    
+          window.top.location = Default;
+          }       
+          
+        </script><style xml:space="">
+        
+          button.copy-code{
+            display:none;
+            padding:0.7em 1.4em;
+            margin:0 0.3em 0.3em 0;
+            border-radius:0.15em;
+            box-sizing: border-box;
+            text-decoration:none;
+            font-family:'Roboto',sans-serif;
+            text-transform:uppercase;
+            font-weight:400;
+            color:#FFFFFF;
+            background-color:#9c9c9c;
+            box-shadow:inset 0 -0.6em 0 -0.35em rgba(0,0,0,0.17);
+            text-align:center;
+            position:relative;
+            border: 0;
+            float: right;
+            border-radius: .5em;
+            cursor: pointer;
+          }
+          button.copy-code:active{
+            top:0.1em;
+          }
+          
+          pre:hover button.copy-code{
+            display: inline-block !important;
+          }
+          button.copy-code.copied {
+            cursor: default !important;
+          }
+          
+          
+          @media all and (max-width:30em){
+            button.copy-code{
+              display:block;
+              margin:0.4em auto;
+            }
+          }
+        
+        
+      </style></head>
+<body id="configuring-the-library">
+<h1 class="title topictitle1" id="ariaid-title1">Configuring The Library</h1><div class="body"><p class="p">SDMMC Driver Library should be configured via MHC. The following figures show the MHC configuration window for SDMMC driver and brief description.</p>
+<p class="p"><strong class="ph b">Common User Configuration for all Instances</strong></p>
+<ul class="ul"><li class="li"><p class="p"><strong class="ph b">Driver Mode:</strong></p>
+<ul class="ul"><li class="li"><p class="p">Allows User to select the mode of driver(Asynchronous or Synchronous). This setting is common for all the instances.</p>
+</li>
+<li class="li"><p class="p">Only Asycnhronous mode is supported for now</p>
+</li>
+</ul>
+</li>
+</ul>
+<p class="p"><strong class="ph b">Instance Specific User Configurations</strong></p>
+<p class="p"><strong class="ph b">Asynchronous Mode with SD protocol and File-System</strong></p>
+<br /><img class="image" src="GUID-DBD04660-F035-49F6-8F5A-58989A846A98-low.png" alt="drv_sdmmc_mhc_config_async_with_sd_fs" /><br /><p class="p"><strong class="ph b">Asynchronous Mode with SD protocol, RTOS and without File-System </strong></p>
+<br /><img class="image" src="GUID-966AAE9F-6436-4A57-830C-9DFE3923C114-low.png" alt="drv_sdmmc_mhc_config_async_with_sd_rtos" /><br /><p class="p"><strong class="ph b">Asynchronous Mode with eMMC protocol and File-System</strong></p>
+<br /><img class="image" src="GUID-458682DD-A7AF-450B-8518-76194BD046A0-low.png" alt="drv_sdmmc_mhc_config_async_with_emmc_fs" /><br /><ul class="ul"><li class="li"><p class="p"><strong class="ph b">PLIB Used:</strong></p>
+<ul class="ul"><li class="li"><p class="p">Specifies the peripheral library used by the SDMMC driver. This can either be the HSMCI PLIB or the SDHC PLIB.</p>
+</li>
+</ul>
+</li>
+<li class="li"><p class="p"><strong class="ph b">Number of Clients:</strong></p>
+<ul class="ul"><li class="li"><p class="p">Specifies number of clients that can access the specific instance of the driver</p>
+</li>
+</ul>
+</li>
+<li class="li"><p class="p"><strong class="ph b">Transfer Queue Size:</strong></p>
+<ul class="ul"><li class="li"><p class="p">Specifies maximum number of requests that can be queued</p>
+</li>
+<li class="li"><p class="p">This Configuration is displayed only in <strong class="ph b">Asynchronous mode</strong></p>
+</li>
+</ul>
+</li>
+<li class="li"><p class="p"><strong class="ph b">Data Transfer Bus Width:</strong></p>
+<ul class="ul"><li class="li"><p class="p">Specifies the Bus width to be used for data transfer (1-Bit, 4-Bit)</p>
+</li>
+</ul>
+</li>
+<li class="li"><p class="p"><strong class="ph b">Bus Speed:</strong></p>
+<ul class="ul"><li class="li"><p class="p">Specifies Bus Speed to be used for Communication with SD-card (DEFAULT_SPEED, HIGH_SPEED)</p>
+</li>
+<li class="li"><p class="p">Standard SD-Cards only support Default Speed</p>
+</li>
+<li class="li"><p class="p">SD-Cards with High Capacity support Both Default and High Speed</p>
+</li>
+</ul>
+</li>
+<li class="li"><p class="p"><strong class="ph b">Protocol:</strong></p>
+<ul class="ul"><li class="li"><p class="p">Specifies whether SD or eMMC protocol is enabled in the SDMMC driver.</p>
+</li>
+</ul>
+</li>
+<li class="li"><p class="p"><strong class="ph b">Sleep when idle?</strong></p>
+<ul class="ul"><li class="li"><p class="p">This option is available only when eMMC protocol is enabled.</p>
+</li>
+<li class="li"><p class="p">Enabling this option puts the eMMC card in sleep mode when no
+data transfers are pending. When a data transfer is requested, the
+SDMMC driver brings the eMMC card out of sleep mode. Refer to the eMMC
+datasheet for the switching time from standby to sleep and vice-versa.</p>
+</li>
+</ul>
+</li>
+<li class="li"><p class="p"><strong class="ph b">Card Detection Method:</strong></p>
+<ul class="ul"><li class="li"><p class="p">Specifies the card detection method used by the SDMMC driver.
+Either SDCD pin or Polling method can be used to detect
+insertion/removal of SD Card</p>
+</li>
+</ul>
+</li>
+<li class="li"><p class="p"><strong class="ph b">Polling Interval (ms):</strong></p>
+<ul class="ul"><li class="li"><p class="p">If the Card Detection Method is selected as "Use Polling", then
+this option specifies the rate at which the SDMMC driver checks for SD
+Card insertion/removal</p>
+</li>
+</ul>
+</li>
+<li class="li"><p class="p"><strong class="ph b">File system for SDMMC Driver Enabled:</strong></p>
+<ul class="ul"><li class="li"><p class="p">Indicates whether SDMMC driver will register its services with the file system or not.</p>
+</li>
+<li class="li"><p class="p">This option is automatically checked when the file system is connected to the SDMMC driver.</p>
+</li>
+</ul>
+</li>
+<li class="li"><p class="p"><strong class="ph b">RTOS Settings:</strong></p>
+<ul class="ul"><li class="li"><p class="p">This configuration is displayed only in asynchronous mode</p>
+</li>
+<li class="li"><p class="p"><strong class="ph b">Stack Size (in bytes):</strong></p>
+<ul class="ul"><li class="li"><p class="p">Specifies the number of bytes to be allocated on the stack for the SDMMC driver task of the instance</p>
+</li>
+</ul>
+</li>
+<li class="li"><p class="p"><strong class="ph b">Task Priority:</strong></p>
+<ul class="ul"><li class="li"><p class="p">Specifies priority for the SDMMC driver task thread. The value can vary based on RTOS used</p>
+</li>
+</ul>
+</li>
+<li class="li"><p class="p"><strong class="ph b">Use Task Delay?</strong></p>
+<ul class="ul"><li class="li"><p class="p">When enabled the SDMMC driver task will be scheduled out voluntarily after every run based on the delay configured.</p>
+</li>
+<li class="li"><p class="p"><strong class="ph b">Task Delay:</strong></p>
+<ul class="ul"><li class="li"><p class="p">Specifies the duration the task has to go to sleep after every run.</p>
+</li>
+<li class="li"><p class="p">Should be configured carefully based on the application need and number of task running along in the system</p>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p class="p"><strong class="ph b">RTOS Settings For MicriumOS-III RTOS</strong></p>
+<p class="p">Below additional options are visible in <strong class="ph b">drivers instance RTOS settings</strong> when the MicriumOS-III is added into project graph</p>
+<br /><img class="image" src="GUID-B3EFA16B-3DAF-49D1-9E11-DBA535F90156-low.png" alt="rtos_settings_micrium_os_iii" /><br /><ul class="ul"><li class="li"><p class="p"><strong class="ph b">Maximum Message Queue Size:</strong></p>
+<ul class="ul"><li class="li"><p class="p">This argument specifies the maximum number of messages that the task can receive through internal message queue.</p>
+<ul class="ul"><li class="li"><p class="p">A MicriumOS-III task contains an optional internal message queue (if OS_CFG_TASK_Q_EN is set to DEF_ENABLED in os_cfg.h).</p>
+</li>
+</ul>
+</li>
+<li class="li"><p class="p">The user may specify that the task is unable to receive messages by setting this argument to 0</p>
+</li>
+</ul>
+</li>
+<li class="li"><p class="p"><strong class="ph b">Task Time Quanta:</strong></p>
+<ul class="ul"><li class="li"><p class="p">The amount of time (in clock ticks) for the time quanta when Round Robin is enabled.</p>
+</li>
+<li class="li"><p class="p">If you specify 0, then the default time quanta will be used which is the tick rate divided by 10.</p>
+</li>
+</ul>
+</li>
+<li class="li"><p class="p"><strong class="ph b">Task Specific Options:</strong></p>
+<ul class="ul"><li class="li"><p class="p">Contains task-specific options. Each option consists of one bit. The option is selected when the bit is set.</p>
+</li>
+<li class="li"><p class="p">The current version of MicriumOS-III supports the following options:</p>
+<ul class="ul"><li class="li"><p class="p"><strong class="ph b">Stack checking is allowed for the task:</strong></p>
+<ul class="ul"><li class="li"><p class="p">Specifies whether stack checking is allowed for the task</p>
+</li>
+</ul>
+</li>
+<li class="li"><p class="p"><strong class="ph b">Stack needs to be cleared:</strong></p>
+<ul class="ul"><li class="li"><p class="p">Specifies whether the stack needs to be cleared</p>
+</li>
+</ul>
+</li>
+<li class="li"><p class="p"><strong class="ph b">Floating-point registers needs to be saved:</strong></p>
+<ul class="ul"><li class="li"><p class="p">Specifies whether floating-point registers are saved.</p>
+</li>
+<li class="li"><p class="p">This option is only valid if the processor has floating-point hardware and the processor-specific code saves the floating-point registers</p>
+</li>
+</ul>
+</li>
+<li class="li"><p class="p"><strong class="ph b">TLS (Thread Local Storage) support needed for the task:</strong></p>
+<ul class="ul"><li class="li"><p class="p">If the caller doesn�t want or need TLS (Thread Local Storage) support for the task being created.</p>
+</li>
+<li class="li"><p class="p">If you do not include this option, TLS will be supported by default. TLS support was added in V3.03.00</p>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="related-links">
+<div class="familylinks">
+<div class="parentlink"><strong>Parent topic:</strong> <a class="link" href="GUID-013A85E2-6948-44FA-907E-7DC945B5CE82.html">SDMMC Driver</a></div>
+</div>
+</div></body>
+</html>

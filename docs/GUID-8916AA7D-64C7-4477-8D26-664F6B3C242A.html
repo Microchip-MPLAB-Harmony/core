@@ -1,0 +1,482 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+
+<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE11" /><meta name="copyright" content="(C) Copyright 2022" />
+<meta name="DC.rights.owner" content="(C) Copyright 2022" />
+<meta name="DC.type" content="topic" />
+<meta name="DC.title" content="Using The Library" />
+<meta name="DC.relation" scheme="URI" content="GUID-4321CAFA-57B5-4633-9D43-0AE24B87C101.html" />
+<meta name="DC.format" content="XHTML" />
+<meta name="DC.identifier" content="using-the-library" />
+<link rel="stylesheet" type="text/css" href="stylesheets/commonltr.css" />
+<link rel="stylesheet" type="text/css" href="stylesheets/atmel.css" />
+<link rel="stylesheet" type="text/css" href="./stylesheets/common-extended.css" /><title>Using The Library</title>
+<meta name="Microsoft.Help.Id" content="GUID-EDFB1AB8-CD6B-446F-8E25-F2167287A1AF-using-the-library" />
+<meta name="Microsoft.Help.TocParent" content="GUID-EDFB1AB8-CD6B-446F-8E25-F2167287A1AF" />
+<meta name="Microsoft.Help.TocOrder" content="0" />
+<meta name="Microsoft.Help.Locale" content="en-US" />
+<meta name="Microsoft.Help.TopicLocale" content="en-US" />
+<meta name="Microsoft.Help.DisplayVersion" content="MPLAB® Harmony Core Library Reference A 11/2021" />
+<script language="javascript">
+       
+       if (window.parent.location.protocol != 'file:') {
+				document.addEventListener('click', function(e) {
+				    if (e.target) {
+               if (e.target.nodeName == "A" ) {
+                    if (!e.target.target) {
+                      e.preventDefault();
+                      e.stopPropagation();
+                              
+                      var origUrl = window.parent.location.href.substr(0, window.parent.location.href.indexOf("?"));
+                      if (origUrl.length === 0) {
+                          origUrl = window.parent.location.href;
+                      }
+                      var href= e.target.getAttribute("href");
+                      var parts = href.split("#");
+          
+                      var url = "";
+                      if (parts.length == 2 ) {
+                        if (!parts[0].length) {
+                            url = window.parent.location.search.replace('?','')
+                        } else {
+                            url = parts[0].replace('.html','');
+                        }
+                      } else {
+                        url = parts[0].replace('.html','');
+                      }
+
+                      if (parts.length == 2) {
+                          url += "#" + parts[1];
+                      }
+    
+                      window.parent.location.href = origUrl + "?" + url;
+
+                      return false;
+                    }
+               }
+            }
+				});
+			}
+
+		</script><script language="javascript">
+        function cpy(id, button) {
+        
+            var element = document.getElementById(id);
+            var content = element.getAttribute("content");
+            var textArea = document.createElement("textarea");
+            
+            // Place in the top-left corner of screen regardless of scroll position.
+            textArea.style.position = 'fixed';
+            textArea.style.top = 0;
+            textArea.style.left = 0;
+            
+            // Ensure it has a small width and height. Setting to 1px / 1em
+            // doesn't work as this gives a negative w/h on some browsers.
+            textArea.style.width = '2em';
+            textArea.style.height = '2em';
+            
+            // We don't need padding, reducing the size if it does flash render.
+            textArea.style.padding = 0;
+            
+            // Clean up any borders.
+            textArea.style.border = 'none';
+            textArea.style.outline = 'none';
+            textArea.style.boxShadow = 'none';
+            
+            // Avoid flash of the white box if rendered for any reason.
+            textArea.style.background = 'transparent';
+            
+            
+            textArea.value = content;
+            
+            document.body.appendChild(textArea);
+            textArea.focus();
+            textArea.select();
+            
+            try {
+               var successful = document.execCommand('copy');
+               var msg = successful ? 'successful' : 'unsuccessful';
+               if (!button.classList.contains("copied")){
+                  button.textContent = "Copied";
+                  button.classList.add("copied");
+                  setTimeout(function(){
+                    button.textContent = "Copy";
+                    button.classList.remove("copied");
+                  },1000);
+               }
+            } catch (err) {
+              console.log('Oops, unable to copy');
+            }
+            
+            document.body.removeChild(textArea);
+        }
+      </script><script language="javascript">
+          
+          // Add the MathML namespace to html
+          var html = document.getElementsByTagName("html")[0],
+          head = document.getElementsByTagName("head")[0];
+          
+          var mathJax = document.createElement("script");
+          mathJax.src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-MML-AM_CHTML";
+          head.appendChild(mathJax);
+          
+          html.setAttribute("xmlns:m","http://www.w3.org/1998/Math/MathML");
+          
+          function inIframe() { try { return window.self !== window.top; } catch (e) { return true; } }
+          
+          if (!inIframe()) { 
+          
+          var Default = "index.html?GUID-8916AA7D-64C7-4477-8D26-664F6B3C242A"; 
+          
+          var displaylocation = "value" + window.location.href;
+          
+          var GUIDS = displaylocation.split('GUID');          
+          
+          if (displaylocation.indexOf('#GUID') != -1) {            
+          var First = GUIDS[1].split('.html');  
+          if (GUIDS[3]){First = GUIDS[2].split('.html');}
+          if (GUIDS[4]){First = GUIDS[3].split('.html');}
+          if (GUIDS[5]){First = GUIDS[4].split('.html');}
+          
+          var Second = GUIDS[2].split('#');   
+          if (GUIDS[3]){Second = GUIDS[3].split('#');}
+          if (GUIDS[4]){Second = GUIDS[4].split('#');}
+          if (GUIDS[5]){Second = GUIDS[5].split('#');}
+          
+          Default = "index.html?" + "GUID" + First[0] + "GUID" + Second[0];     
+          }                    
+          window.top.location = Default;
+          }       
+          
+        </script><style xml:space="">
+        
+          button.copy-code{
+            display:none;
+            padding:0.7em 1.4em;
+            margin:0 0.3em 0.3em 0;
+            border-radius:0.15em;
+            box-sizing: border-box;
+            text-decoration:none;
+            font-family:'Roboto',sans-serif;
+            text-transform:uppercase;
+            font-weight:400;
+            color:#FFFFFF;
+            background-color:#9c9c9c;
+            box-shadow:inset 0 -0.6em 0 -0.35em rgba(0,0,0,0.17);
+            text-align:center;
+            position:relative;
+            border: 0;
+            float: right;
+            border-radius: .5em;
+            cursor: pointer;
+          }
+          button.copy-code:active{
+            top:0.1em;
+          }
+          
+          pre:hover button.copy-code{
+            display: inline-block !important;
+          }
+          button.copy-code.copied {
+            cursor: default !important;
+          }
+          
+          
+          @media all and (max-width:30em){
+            button.copy-code{
+              display:block;
+              margin:0.4em auto;
+            }
+          }
+        
+        
+      </style></head>
+<body id="using-the-library">
+<h1 class="title topictitle1" id="ariaid-title1">Using The Library</h1><div class="body"><p class="p">The I2C driver builds on top of the I2C peripheral library (PLIB) and provides write, read and write-read API's in blocking and non-blocking mode for I2C master functionality.</p>
+<ul class="ul"><li class="li"><p class="p">Provides Write, Read and Write followed by Read API's.</p>
+</li>
+<li class="li"><p class="p">Supports multiple slaves connected to the same I2C peripheral instance (multi-client mode).</p>
+</li>
+<li class="li"><p class="p">In asynchronous (non-blocking) mode, application can either register a callback to get notified once the data transfer is complete or can poll the status of the data transfer using the status APIs</p>
+</li>
+<li class="li"><p class="p">In asynchronous mode, application can queue more than one transmit/receive requests without waiting for the previous request to be completed. The number of transmit/receive requests that can be queued depends on the depth of the transfer queue configured using the MHC</p>
+</li>
+<li class="li"><p class="p">The asynchronous mode is supported in both bare-metal and RTOS environment</p>
+</li>
+<li class="li"><p class="p">The synchronous (blocking) mode of the driver is supported only in an RTOS environment</p>
+</li>
+<li class="li"><p class="p">The synchronous mode of the driver does not support callback or queuing multiple requests. This is because the implementation is blocking in nature</p>
+</li>
+</ul>
+<p class="p"><strong class="ph b">Example application to Read and Write from I2C EEPROM in Asynchronous mode</strong></p>
+<pre class="pre codeblock language-c"><button title="Copy Code" class="copy-code" onclick="cpy('d58918e37', this);">Copy</button><code id="d58918e37" content="#define APP_EEPROM_MEMORY_ADDR                  0x0000&#xA;&#xA;/* Size of the string written to EEPROM must be less than or equal to the EEPROM page size */&#xA;#define APP_EEPROM_TEST_DATA                    &#34;I2C EEPROM Demo&#34;&#xA;#define APP_EEPROM_TEST_DATA_SIZE               (sizeof(APP_EEPROM_TEST_DATA)-1)&#xA;#define APP_EEPROM_RX_BUFFER_SIZE               APP_EEPROM_TEST_DATA_SIZE&#xA;&#xA;#if APP_EEPROM_ADDR_LEN_BITS == 18 || APP_EEPROM_ADDR_LEN_BITS == 16&#xA;    /* For 18 bit address, A16 and A17 are part of the EEPROM slave address.&#xA;     * The A16 and A17 bits are set to 0 in this demonstration. */&#xA;    #define APP_EEPROM_NUM_ADDR_BYTES           2&#xA;#elif APP_EEPROM_ADDR_LEN_BITS == 8&#xA;    #define APP_EEPROM_NUM_ADDR_BYTES           1&#xA;#endif&#xA;&#xA;#define APP_EEPROM_TX_BUFFER_SIZE        (APP_EEPROM_TEST_DATA_SIZE + APP_EEPROM_NUM_ADDR_BYTES)&#xA;&#xA;APP_DATA appData;&#xA;&#xA;static uint8_t testTxData[APP_EEPROM_TX_BUFFER_SIZE] = {0};&#xA;static uint8_t testRxData[APP_EEPROM_RX_BUFFER_SIZE] = {0};&#xA;&#xA;void APP_I2CEventHandler (&#xA;    DRV_I2C_TRANSFER_EVENT event,&#xA;    DRV_I2C_TRANSFER_HANDLE transferHandle,&#xA;    uintptr_t context&#xA;)&#xA;{&#xA;    APP_TRANSFER_STATUS* transferStatus = (APP_TRANSFER_STATUS*)context;&#xA;&#xA;    if (event == DRV_I2C_TRANSFER_EVENT_COMPLETE)&#xA;    {&#xA;        if (transferStatus)&#xA;        {&#xA;            *transferStatus = APP_TRANSFER_STATUS_SUCCESS;&#xA;        }&#xA;    }&#xA;    else&#xA;    {&#xA;        if (transferStatus)&#xA;        {&#xA;            *transferStatus = APP_TRANSFER_STATUS_ERROR;&#xA;        }&#xA;    }&#xA;}&#xA;&#xA;void APP_Initialize ( void )&#xA;{&#xA;    /* Initialize the appData structure. */&#xA;    appData.state = APP_STATE_INIT;&#xA;    appData.drvI2CHandle   = DRV_HANDLE_INVALID;&#xA;    appData.transferHandle = DRV_I2C_TRANSFER_HANDLE_INVALID;&#xA;    appData.transferStatus = APP_TRANSFER_STATUS_ERROR;&#xA;&#xA;#if APP_EEPROM_NUM_ADDR_BYTES == 2&#xA;    testTxData[0] = (APP_EEPROM_MEMORY_ADDR &gt;&gt; 8);&#xA;    testTxData[1] = APP_EEPROM_MEMORY_ADDR;&#xA;    memcpy(&amp;testTxData[2], (const void*)APP_EEPROM_TEST_DATA, APP_EEPROM_TEST_DATA_SIZE);&#xA;#else&#xA;    testTxData[0] = APP_EEPROM_MEMORY_ADDR;&#xA;    memcpy(&amp;testTxData[1], (const void*)APP_EEPROM_TEST_DATA, APP_EEPROM_TEST_DATA_SIZE);&#xA;#endif&#xA;&#xA;}&#xA;&#xA;void APP_Tasks ( void )&#xA;{&#xA;    /* Check the application's current state. */&#xA;    switch ( appData.state )&#xA;    {&#xA;        /* Application's initial state. */&#xA;        case APP_STATE_INIT:&#xA;&#xA;            /* Open the I2C Driver */&#xA;            appData.drvI2CHandle = DRV_I2C_Open( DRV_I2C_INDEX_0, DRV_IO_INTENT_READWRITE );&#xA;            if(appData.drvI2CHandle == DRV_HANDLE_INVALID)&#xA;            {&#xA;                appData.state = APP_STATE_ERROR;&#xA;            }&#xA;            else&#xA;            {&#xA;                /* Register the I2C Driver event Handler */&#xA;                DRV_I2C_TransferEventHandlerSet(&#xA;                    appData.drvI2CHandle,&#xA;                    APP_I2CEventHandler,&#xA;                    (uintptr_t)&amp;appData.transferStatus&#xA;                );&#xA;                appData.state  = APP_STATE_IS_EEPROM_READY;&#xA;            }&#xA;            break;&#xA;&#xA;        case APP_STATE_IS_EEPROM_READY:&#xA;&#xA;            appData.transferStatus = APP_TRANSFER_STATUS_IN_PROGRESS;&#xA;            /* Add a dummy write transfer request to verify whether EEPROM is ready */&#xA;            DRV_I2C_WriteTransferAdd(&#xA;                appData.drvI2CHandle,&#xA;                APP_EEPROM_SLAVE_ADDR,&#xA;                (void *)&amp;appData.dummyData,&#xA;                1,&#xA;                &amp;appData.transferHandle&#xA;            );&#xA;&#xA;            if( appData.transferHandle == DRV_I2C_TRANSFER_HANDLE_INVALID )&#xA;            {&#xA;                appData.state = APP_STATE_ERROR;&#xA;            }&#xA;            else&#xA;            {&#xA;                appData.state = APP_STATE_DATA_WRITE;&#xA;            }&#xA;            break;&#xA;&#xA;        case APP_STATE_DATA_WRITE:&#xA;            if (appData.transferStatus == APP_TRANSFER_STATUS_SUCCESS)&#xA;            {&#xA;                appData.transferStatus = APP_TRANSFER_STATUS_IN_PROGRESS;&#xA;&#xA;                /* Add a request to write the application data */&#xA;                DRV_I2C_WriteTransferAdd(&#xA;                    appData.drvI2CHandle,&#xA;                    APP_EEPROM_SLAVE_ADDR,&#xA;                    (void *)&amp;testTxData[0],&#xA;                    APP_EEPROM_TX_BUFFER_SIZE,&#xA;                    &amp;appData.transferHandle&#xA;                );&#xA;&#xA;                if( appData.transferHandle == DRV_I2C_TRANSFER_HANDLE_INVALID )&#xA;                {&#xA;                    appData.state = APP_STATE_ERROR;&#xA;                }&#xA;                else&#xA;                {&#xA;                    appData.state = APP_STATE_WAIT_WRITE_COMPLETE;&#xA;                }&#xA;            }&#xA;            else if (appData.transferStatus == APP_TRANSFER_STATUS_ERROR)&#xA;            {&#xA;                //EEPROM is not ready. Keep checking until it is ready to receive commands.&#xA;                //Some EEPROMs need stabilization time before they can start responding to commands.&#xA;                appData.state = APP_STATE_IS_EEPROM_READY;&#xA;            }&#xA;            break;&#xA;&#xA;        case APP_STATE_WAIT_WRITE_COMPLETE:&#xA;            if (appData.transferStatus == APP_TRANSFER_STATUS_SUCCESS)&#xA;            {&#xA;                appData.transferStatus = APP_TRANSFER_STATUS_IN_PROGRESS;&#xA;&#xA;                /* Add a dummy write request to check if EEPROM's internal write cycle is complete */&#xA;                DRV_I2C_WriteTransferAdd(&#xA;                    appData.drvI2CHandle,&#xA;                    APP_EEPROM_SLAVE_ADDR,&#xA;                    (void *)&amp;appData.dummyData,&#xA;                    1,&#xA;                    &amp;appData.transferHandle&#xA;                );&#xA;&#xA;                if( appData.transferHandle == DRV_I2C_TRANSFER_HANDLE_INVALID )&#xA;                {&#xA;                    appData.state = APP_STATE_ERROR;&#xA;                }&#xA;                else&#xA;                {&#xA;                    appData.state = APP_STATE_EEPROM_CHECK_INTERNAL_WRITE_STATUS;&#xA;                }&#xA;            }&#xA;            else if (appData.transferStatus == APP_TRANSFER_STATUS_ERROR)&#xA;            {&#xA;                appData.state = APP_STATE_ERROR;&#xA;            }&#xA;            break;&#xA;&#xA;        case APP_STATE_EEPROM_CHECK_INTERNAL_WRITE_STATUS:&#xA;            if (appData.transferStatus == APP_TRANSFER_STATUS_SUCCESS)&#xA;            {&#xA;                appData.state = APP_STATE_DATA_READ;&#xA;            }&#xA;            else if (appData.transferStatus == APP_TRANSFER_STATUS_ERROR)&#xA;            {&#xA;                appData.transferStatus = APP_TRANSFER_STATUS_IN_PROGRESS;&#xA;&#xA;                /* Keep checking if EEPROM's internal write cycle is complete */&#xA;                DRV_I2C_WriteTransferAdd(&#xA;                    appData.drvI2CHandle,&#xA;                    APP_EEPROM_SLAVE_ADDR,&#xA;                    (void *)&amp;appData.dummyData,&#xA;                    1,&#xA;                    &amp;appData.transferHandle&#xA;                );&#xA;&#xA;                if( appData.transferHandle == DRV_I2C_TRANSFER_HANDLE_INVALID )&#xA;                {&#xA;                    appData.state = APP_STATE_ERROR;&#xA;                }&#xA;            }&#xA;            break;&#xA;&#xA;        case APP_STATE_DATA_READ:&#xA;&#xA;            appData.transferStatus = APP_TRANSFER_STATUS_IN_PROGRESS;&#xA;&#xA;            /* Add a request to read data from EEPROM. */&#xA;            DRV_I2C_WriteReadTransferAdd(&#xA;                appData.drvI2CHandle,&#xA;                APP_EEPROM_SLAVE_ADDR,&#xA;                (void *)&amp;testTxData[0],&#xA;                APP_EEPROM_NUM_ADDR_BYTES,&#xA;                (void *)&amp;testRxData[0],&#xA;                APP_EEPROM_TEST_DATA_SIZE,&#xA;                &amp;appData.transferHandle&#xA;            );&#xA;&#xA;            if( appData.transferHandle == DRV_I2C_TRANSFER_HANDLE_INVALID )&#xA;            {&#xA;                appData.state = APP_STATE_ERROR;&#xA;            }&#xA;            else&#xA;            {&#xA;                appData.state = APP_STATE_WAIT_READ_COMPLETE;&#xA;            }&#xA;            break;&#xA;&#xA;        case APP_STATE_WAIT_READ_COMPLETE:&#xA;            if (appData.transferStatus == APP_TRANSFER_STATUS_SUCCESS)&#xA;            {&#xA;                appData.state = APP_STATE_DATA_VERIFY;&#xA;            }&#xA;            else if (appData.transferStatus == APP_TRANSFER_STATUS_ERROR)&#xA;            {&#xA;                appData.state = APP_STATE_ERROR;&#xA;            }&#xA;            break;&#xA;&#xA;        case APP_STATE_DATA_VERIFY:&#xA;&#xA;            /* Compare data written and data read */&#xA;            if (memcmp(&amp;testTxData[APP_EEPROM_NUM_ADDR_BYTES], &amp;testRxData[0], APP_EEPROM_TEST_DATA_SIZE) == 0)&#xA;            {&#xA;                appData.state = APP_STATE_SUCCESS;&#xA;            }&#xA;            else&#xA;            {&#xA;                appData.state = APP_STATE_ERROR;&#xA;            }&#xA;            break;&#xA;&#xA;        case APP_STATE_SUCCESS:&#xA;&#xA;            appData.state = APP_STATE_IDLE;&#xA;            break;&#xA;&#xA;        case APP_STATE_ERROR:&#xA;&#xA;            appData.state = APP_STATE_IDLE;&#xA;            break;&#xA;&#xA;        case APP_STATE_IDLE:&#xA;        default:&#xA;            break;&#xA;    }&#xA;}"><span class="ph token macro property">#<span class="ph token directive keyword">define</span> APP_EEPROM_MEMORY_ADDR                  0x0000</span>
+
+<span class="ph token comment">/* Size of the string written to EEPROM must be less than or equal to the EEPROM page size */</span>
+<span class="ph token macro property">#<span class="ph token directive keyword">define</span> APP_EEPROM_TEST_DATA                    "I2C EEPROM Demo"</span>
+<span class="ph token macro property">#<span class="ph token directive keyword">define</span> APP_EEPROM_TEST_DATA_SIZE               (sizeof(APP_EEPROM_TEST_DATA)-1)</span>
+<span class="ph token macro property">#<span class="ph token directive keyword">define</span> APP_EEPROM_RX_BUFFER_SIZE               APP_EEPROM_TEST_DATA_SIZE</span>
+
+<span class="ph token macro property">#<span class="ph token directive keyword">if</span> APP_EEPROM_ADDR_LEN_BITS == 18 || APP_EEPROM_ADDR_LEN_BITS == 16</span>
+    <span class="ph token comment">/* For 18 bit address, A16 and A17 are part of the EEPROM slave address.
+     * The A16 and A17 bits are set to 0 in this demonstration. */</span>
+    <span class="ph token macro property">#<span class="ph token directive keyword">define</span> APP_EEPROM_NUM_ADDR_BYTES           2</span>
+<span class="ph token macro property">#<span class="ph token directive keyword">elif</span> APP_EEPROM_ADDR_LEN_BITS == 8</span>
+    <span class="ph token macro property">#<span class="ph token directive keyword">define</span> APP_EEPROM_NUM_ADDR_BYTES           1</span>
+<span class="ph token macro property">#<span class="ph token directive keyword">endif</span></span>
+
+<span class="ph token macro property">#<span class="ph token directive keyword">define</span> APP_EEPROM_TX_BUFFER_SIZE        (APP_EEPROM_TEST_DATA_SIZE + APP_EEPROM_NUM_ADDR_BYTES)</span>
+
+APP_DATA appData<span class="ph token punctuation">;</span>
+
+<span class="ph token keyword">static</span> uint8_t testTxData<span class="ph token punctuation">[</span>APP_EEPROM_TX_BUFFER_SIZE<span class="ph token punctuation">]</span> <span class="ph token operator">=</span> <span class="ph token punctuation">{</span><span class="ph token number">0</span><span class="ph token punctuation">}</span><span class="ph token punctuation">;</span>
+<span class="ph token keyword">static</span> uint8_t testRxData<span class="ph token punctuation">[</span>APP_EEPROM_RX_BUFFER_SIZE<span class="ph token punctuation">]</span> <span class="ph token operator">=</span> <span class="ph token punctuation">{</span><span class="ph token number">0</span><span class="ph token punctuation">}</span><span class="ph token punctuation">;</span>
+
+<span class="ph token keyword">void</span> APP_I2CEventHandler <span class="ph token punctuation">(</span>
+    DRV_I2C_TRANSFER_EVENT event<span class="ph token punctuation">,</span>
+    DRV_I2C_TRANSFER_HANDLE transferHandle<span class="ph token punctuation">,</span>
+    uintptr_t context
+<span class="ph token punctuation">)</span>
+<span class="ph token punctuation">{</span>
+    APP_TRANSFER_STATUS<span class="ph token operator">*</span> transferStatus <span class="ph token operator">=</span> <span class="ph token punctuation">(</span>APP_TRANSFER_STATUS<span class="ph token operator">*</span><span class="ph token punctuation">)</span>context<span class="ph token punctuation">;</span>
+
+    <span class="ph token keyword">if</span> <span class="ph token punctuation">(</span>event <span class="ph token operator">==</span> DRV_I2C_TRANSFER_EVENT_COMPLETE<span class="ph token punctuation">)</span>
+    <span class="ph token punctuation">{</span>
+        <span class="ph token keyword">if</span> <span class="ph token punctuation">(</span>transferStatus<span class="ph token punctuation">)</span>
+        <span class="ph token punctuation">{</span>
+            <span class="ph token operator">*</span>transferStatus <span class="ph token operator">=</span> APP_TRANSFER_STATUS_SUCCESS<span class="ph token punctuation">;</span>
+        <span class="ph token punctuation">}</span>
+    <span class="ph token punctuation">}</span>
+    <span class="ph token keyword">else</span>
+    <span class="ph token punctuation">{</span>
+        <span class="ph token keyword">if</span> <span class="ph token punctuation">(</span>transferStatus<span class="ph token punctuation">)</span>
+        <span class="ph token punctuation">{</span>
+            <span class="ph token operator">*</span>transferStatus <span class="ph token operator">=</span> APP_TRANSFER_STATUS_ERROR<span class="ph token punctuation">;</span>
+        <span class="ph token punctuation">}</span>
+    <span class="ph token punctuation">}</span>
+<span class="ph token punctuation">}</span>
+
+<span class="ph token keyword">void</span> APP_Initialize <span class="ph token punctuation">(</span> <span class="ph token keyword">void</span> <span class="ph token punctuation">)</span>
+<span class="ph token punctuation">{</span>
+    <span class="ph token comment">/* Initialize the appData structure. */</span>
+    appData<span class="ph token punctuation">.</span>state <span class="ph token operator">=</span> APP_STATE_INIT<span class="ph token punctuation">;</span>
+    appData<span class="ph token punctuation">.</span>drvI2CHandle   <span class="ph token operator">=</span> DRV_HANDLE_INVALID<span class="ph token punctuation">;</span>
+    appData<span class="ph token punctuation">.</span>transferHandle <span class="ph token operator">=</span> DRV_I2C_TRANSFER_HANDLE_INVALID<span class="ph token punctuation">;</span>
+    appData<span class="ph token punctuation">.</span>transferStatus <span class="ph token operator">=</span> APP_TRANSFER_STATUS_ERROR<span class="ph token punctuation">;</span>
+
+<span class="ph token macro property">#<span class="ph token directive keyword">if</span> APP_EEPROM_NUM_ADDR_BYTES == 2</span>
+    testTxData<span class="ph token punctuation">[</span><span class="ph token number">0</span><span class="ph token punctuation">]</span> <span class="ph token operator">=</span> <span class="ph token punctuation">(</span>APP_EEPROM_MEMORY_ADDR <span class="ph token operator">&gt;&gt;</span> <span class="ph token number">8</span><span class="ph token punctuation">)</span><span class="ph token punctuation">;</span>
+    testTxData<span class="ph token punctuation">[</span><span class="ph token number">1</span><span class="ph token punctuation">]</span> <span class="ph token operator">=</span> APP_EEPROM_MEMORY_ADDR<span class="ph token punctuation">;</span>
+    <span class="ph token function">memcpy</span><span class="ph token punctuation">(</span><span class="ph token operator">&amp;</span>testTxData<span class="ph token punctuation">[</span><span class="ph token number">2</span><span class="ph token punctuation">]</span><span class="ph token punctuation">,</span> <span class="ph token punctuation">(</span><span class="ph token keyword">const</span> <span class="ph token keyword">void</span><span class="ph token operator">*</span><span class="ph token punctuation">)</span>APP_EEPROM_TEST_DATA<span class="ph token punctuation">,</span> APP_EEPROM_TEST_DATA_SIZE<span class="ph token punctuation">)</span><span class="ph token punctuation">;</span>
+<span class="ph token macro property">#<span class="ph token directive keyword">else</span></span>
+    testTxData<span class="ph token punctuation">[</span><span class="ph token number">0</span><span class="ph token punctuation">]</span> <span class="ph token operator">=</span> APP_EEPROM_MEMORY_ADDR<span class="ph token punctuation">;</span>
+    <span class="ph token function">memcpy</span><span class="ph token punctuation">(</span><span class="ph token operator">&amp;</span>testTxData<span class="ph token punctuation">[</span><span class="ph token number">1</span><span class="ph token punctuation">]</span><span class="ph token punctuation">,</span> <span class="ph token punctuation">(</span><span class="ph token keyword">const</span> <span class="ph token keyword">void</span><span class="ph token operator">*</span><span class="ph token punctuation">)</span>APP_EEPROM_TEST_DATA<span class="ph token punctuation">,</span> APP_EEPROM_TEST_DATA_SIZE<span class="ph token punctuation">)</span><span class="ph token punctuation">;</span>
+<span class="ph token macro property">#<span class="ph token directive keyword">endif</span></span>
+
+<span class="ph token punctuation">}</span>
+
+<span class="ph token keyword">void</span> APP_Tasks <span class="ph token punctuation">(</span> <span class="ph token keyword">void</span> <span class="ph token punctuation">)</span>
+<span class="ph token punctuation">{</span>
+    <span class="ph token comment">/* Check the application's current state. */</span>
+    <span class="ph token keyword">switch</span> <span class="ph token punctuation">(</span> appData<span class="ph token punctuation">.</span>state <span class="ph token punctuation">)</span>
+    <span class="ph token punctuation">{</span>
+        <span class="ph token comment">/* Application's initial state. */</span>
+        <span class="ph token keyword">case</span> APP_STATE_INIT<span class="ph token operator">:</span>
+
+            <span class="ph token comment">/* Open the I2C Driver */</span>
+            appData<span class="ph token punctuation">.</span>drvI2CHandle <span class="ph token operator">=</span> <span class="ph token function">DRV_I2C_Open</span><span class="ph token punctuation">(</span> DRV_I2C_INDEX_0<span class="ph token punctuation">,</span> DRV_IO_INTENT_READWRITE <span class="ph token punctuation">)</span><span class="ph token punctuation">;</span>
+            <span class="ph token keyword">if</span><span class="ph token punctuation">(</span>appData<span class="ph token punctuation">.</span>drvI2CHandle <span class="ph token operator">==</span> DRV_HANDLE_INVALID<span class="ph token punctuation">)</span>
+            <span class="ph token punctuation">{</span>
+                appData<span class="ph token punctuation">.</span>state <span class="ph token operator">=</span> APP_STATE_ERROR<span class="ph token punctuation">;</span>
+            <span class="ph token punctuation">}</span>
+            <span class="ph token keyword">else</span>
+            <span class="ph token punctuation">{</span>
+                <span class="ph token comment">/* Register the I2C Driver event Handler */</span>
+                <span class="ph token function">DRV_I2C_TransferEventHandlerSet</span><span class="ph token punctuation">(</span>
+                    appData<span class="ph token punctuation">.</span>drvI2CHandle<span class="ph token punctuation">,</span>
+                    APP_I2CEventHandler<span class="ph token punctuation">,</span>
+                    <span class="ph token punctuation">(</span>uintptr_t<span class="ph token punctuation">)</span><span class="ph token operator">&amp;</span>appData<span class="ph token punctuation">.</span>transferStatus
+                <span class="ph token punctuation">)</span><span class="ph token punctuation">;</span>
+                appData<span class="ph token punctuation">.</span>state  <span class="ph token operator">=</span> APP_STATE_IS_EEPROM_READY<span class="ph token punctuation">;</span>
+            <span class="ph token punctuation">}</span>
+            <span class="ph token keyword">break</span><span class="ph token punctuation">;</span>
+
+        <span class="ph token keyword">case</span> APP_STATE_IS_EEPROM_READY<span class="ph token operator">:</span>
+
+            appData<span class="ph token punctuation">.</span>transferStatus <span class="ph token operator">=</span> APP_TRANSFER_STATUS_IN_PROGRESS<span class="ph token punctuation">;</span>
+            <span class="ph token comment">/* Add a dummy write transfer request to verify whether EEPROM is ready */</span>
+            <span class="ph token function">DRV_I2C_WriteTransferAdd</span><span class="ph token punctuation">(</span>
+                appData<span class="ph token punctuation">.</span>drvI2CHandle<span class="ph token punctuation">,</span>
+                APP_EEPROM_SLAVE_ADDR<span class="ph token punctuation">,</span>
+                <span class="ph token punctuation">(</span><span class="ph token keyword">void</span> <span class="ph token operator">*</span><span class="ph token punctuation">)</span><span class="ph token operator">&amp;</span>appData<span class="ph token punctuation">.</span>dummyData<span class="ph token punctuation">,</span>
+                <span class="ph token number">1</span><span class="ph token punctuation">,</span>
+                <span class="ph token operator">&amp;</span>appData<span class="ph token punctuation">.</span>transferHandle
+            <span class="ph token punctuation">)</span><span class="ph token punctuation">;</span>
+
+            <span class="ph token keyword">if</span><span class="ph token punctuation">(</span> appData<span class="ph token punctuation">.</span>transferHandle <span class="ph token operator">==</span> DRV_I2C_TRANSFER_HANDLE_INVALID <span class="ph token punctuation">)</span>
+            <span class="ph token punctuation">{</span>
+                appData<span class="ph token punctuation">.</span>state <span class="ph token operator">=</span> APP_STATE_ERROR<span class="ph token punctuation">;</span>
+            <span class="ph token punctuation">}</span>
+            <span class="ph token keyword">else</span>
+            <span class="ph token punctuation">{</span>
+                appData<span class="ph token punctuation">.</span>state <span class="ph token operator">=</span> APP_STATE_DATA_WRITE<span class="ph token punctuation">;</span>
+            <span class="ph token punctuation">}</span>
+            <span class="ph token keyword">break</span><span class="ph token punctuation">;</span>
+
+        <span class="ph token keyword">case</span> APP_STATE_DATA_WRITE<span class="ph token operator">:</span>
+            <span class="ph token keyword">if</span> <span class="ph token punctuation">(</span>appData<span class="ph token punctuation">.</span>transferStatus <span class="ph token operator">==</span> APP_TRANSFER_STATUS_SUCCESS<span class="ph token punctuation">)</span>
+            <span class="ph token punctuation">{</span>
+                appData<span class="ph token punctuation">.</span>transferStatus <span class="ph token operator">=</span> APP_TRANSFER_STATUS_IN_PROGRESS<span class="ph token punctuation">;</span>
+
+                <span class="ph token comment">/* Add a request to write the application data */</span>
+                <span class="ph token function">DRV_I2C_WriteTransferAdd</span><span class="ph token punctuation">(</span>
+                    appData<span class="ph token punctuation">.</span>drvI2CHandle<span class="ph token punctuation">,</span>
+                    APP_EEPROM_SLAVE_ADDR<span class="ph token punctuation">,</span>
+                    <span class="ph token punctuation">(</span><span class="ph token keyword">void</span> <span class="ph token operator">*</span><span class="ph token punctuation">)</span><span class="ph token operator">&amp;</span>testTxData<span class="ph token punctuation">[</span><span class="ph token number">0</span><span class="ph token punctuation">]</span><span class="ph token punctuation">,</span>
+                    APP_EEPROM_TX_BUFFER_SIZE<span class="ph token punctuation">,</span>
+                    <span class="ph token operator">&amp;</span>appData<span class="ph token punctuation">.</span>transferHandle
+                <span class="ph token punctuation">)</span><span class="ph token punctuation">;</span>
+
+                <span class="ph token keyword">if</span><span class="ph token punctuation">(</span> appData<span class="ph token punctuation">.</span>transferHandle <span class="ph token operator">==</span> DRV_I2C_TRANSFER_HANDLE_INVALID <span class="ph token punctuation">)</span>
+                <span class="ph token punctuation">{</span>
+                    appData<span class="ph token punctuation">.</span>state <span class="ph token operator">=</span> APP_STATE_ERROR<span class="ph token punctuation">;</span>
+                <span class="ph token punctuation">}</span>
+                <span class="ph token keyword">else</span>
+                <span class="ph token punctuation">{</span>
+                    appData<span class="ph token punctuation">.</span>state <span class="ph token operator">=</span> APP_STATE_WAIT_WRITE_COMPLETE<span class="ph token punctuation">;</span>
+                <span class="ph token punctuation">}</span>
+            <span class="ph token punctuation">}</span>
+            <span class="ph token keyword">else</span> <span class="ph token keyword">if</span> <span class="ph token punctuation">(</span>appData<span class="ph token punctuation">.</span>transferStatus <span class="ph token operator">==</span> APP_TRANSFER_STATUS_ERROR<span class="ph token punctuation">)</span>
+            <span class="ph token punctuation">{</span>
+                <span class="ph token comment">//EEPROM is not ready. Keep checking until it is ready to receive commands.</span>
+                <span class="ph token comment">//Some EEPROMs need stabilization time before they can start responding to commands.</span>
+                appData<span class="ph token punctuation">.</span>state <span class="ph token operator">=</span> APP_STATE_IS_EEPROM_READY<span class="ph token punctuation">;</span>
+            <span class="ph token punctuation">}</span>
+            <span class="ph token keyword">break</span><span class="ph token punctuation">;</span>
+
+        <span class="ph token keyword">case</span> APP_STATE_WAIT_WRITE_COMPLETE<span class="ph token operator">:</span>
+            <span class="ph token keyword">if</span> <span class="ph token punctuation">(</span>appData<span class="ph token punctuation">.</span>transferStatus <span class="ph token operator">==</span> APP_TRANSFER_STATUS_SUCCESS<span class="ph token punctuation">)</span>
+            <span class="ph token punctuation">{</span>
+                appData<span class="ph token punctuation">.</span>transferStatus <span class="ph token operator">=</span> APP_TRANSFER_STATUS_IN_PROGRESS<span class="ph token punctuation">;</span>
+
+                <span class="ph token comment">/* Add a dummy write request to check if EEPROM's internal write cycle is complete */</span>
+                <span class="ph token function">DRV_I2C_WriteTransferAdd</span><span class="ph token punctuation">(</span>
+                    appData<span class="ph token punctuation">.</span>drvI2CHandle<span class="ph token punctuation">,</span>
+                    APP_EEPROM_SLAVE_ADDR<span class="ph token punctuation">,</span>
+                    <span class="ph token punctuation">(</span><span class="ph token keyword">void</span> <span class="ph token operator">*</span><span class="ph token punctuation">)</span><span class="ph token operator">&amp;</span>appData<span class="ph token punctuation">.</span>dummyData<span class="ph token punctuation">,</span>
+                    <span class="ph token number">1</span><span class="ph token punctuation">,</span>
+                    <span class="ph token operator">&amp;</span>appData<span class="ph token punctuation">.</span>transferHandle
+                <span class="ph token punctuation">)</span><span class="ph token punctuation">;</span>
+
+                <span class="ph token keyword">if</span><span class="ph token punctuation">(</span> appData<span class="ph token punctuation">.</span>transferHandle <span class="ph token operator">==</span> DRV_I2C_TRANSFER_HANDLE_INVALID <span class="ph token punctuation">)</span>
+                <span class="ph token punctuation">{</span>
+                    appData<span class="ph token punctuation">.</span>state <span class="ph token operator">=</span> APP_STATE_ERROR<span class="ph token punctuation">;</span>
+                <span class="ph token punctuation">}</span>
+                <span class="ph token keyword">else</span>
+                <span class="ph token punctuation">{</span>
+                    appData<span class="ph token punctuation">.</span>state <span class="ph token operator">=</span> APP_STATE_EEPROM_CHECK_INTERNAL_WRITE_STATUS<span class="ph token punctuation">;</span>
+                <span class="ph token punctuation">}</span>
+            <span class="ph token punctuation">}</span>
+            <span class="ph token keyword">else</span> <span class="ph token keyword">if</span> <span class="ph token punctuation">(</span>appData<span class="ph token punctuation">.</span>transferStatus <span class="ph token operator">==</span> APP_TRANSFER_STATUS_ERROR<span class="ph token punctuation">)</span>
+            <span class="ph token punctuation">{</span>
+                appData<span class="ph token punctuation">.</span>state <span class="ph token operator">=</span> APP_STATE_ERROR<span class="ph token punctuation">;</span>
+            <span class="ph token punctuation">}</span>
+            <span class="ph token keyword">break</span><span class="ph token punctuation">;</span>
+
+        <span class="ph token keyword">case</span> APP_STATE_EEPROM_CHECK_INTERNAL_WRITE_STATUS<span class="ph token operator">:</span>
+            <span class="ph token keyword">if</span> <span class="ph token punctuation">(</span>appData<span class="ph token punctuation">.</span>transferStatus <span class="ph token operator">==</span> APP_TRANSFER_STATUS_SUCCESS<span class="ph token punctuation">)</span>
+            <span class="ph token punctuation">{</span>
+                appData<span class="ph token punctuation">.</span>state <span class="ph token operator">=</span> APP_STATE_DATA_READ<span class="ph token punctuation">;</span>
+            <span class="ph token punctuation">}</span>
+            <span class="ph token keyword">else</span> <span class="ph token keyword">if</span> <span class="ph token punctuation">(</span>appData<span class="ph token punctuation">.</span>transferStatus <span class="ph token operator">==</span> APP_TRANSFER_STATUS_ERROR<span class="ph token punctuation">)</span>
+            <span class="ph token punctuation">{</span>
+                appData<span class="ph token punctuation">.</span>transferStatus <span class="ph token operator">=</span> APP_TRANSFER_STATUS_IN_PROGRESS<span class="ph token punctuation">;</span>
+
+                <span class="ph token comment">/* Keep checking if EEPROM's internal write cycle is complete */</span>
+                <span class="ph token function">DRV_I2C_WriteTransferAdd</span><span class="ph token punctuation">(</span>
+                    appData<span class="ph token punctuation">.</span>drvI2CHandle<span class="ph token punctuation">,</span>
+                    APP_EEPROM_SLAVE_ADDR<span class="ph token punctuation">,</span>
+                    <span class="ph token punctuation">(</span><span class="ph token keyword">void</span> <span class="ph token operator">*</span><span class="ph token punctuation">)</span><span class="ph token operator">&amp;</span>appData<span class="ph token punctuation">.</span>dummyData<span class="ph token punctuation">,</span>
+                    <span class="ph token number">1</span><span class="ph token punctuation">,</span>
+                    <span class="ph token operator">&amp;</span>appData<span class="ph token punctuation">.</span>transferHandle
+                <span class="ph token punctuation">)</span><span class="ph token punctuation">;</span>
+
+                <span class="ph token keyword">if</span><span class="ph token punctuation">(</span> appData<span class="ph token punctuation">.</span>transferHandle <span class="ph token operator">==</span> DRV_I2C_TRANSFER_HANDLE_INVALID <span class="ph token punctuation">)</span>
+                <span class="ph token punctuation">{</span>
+                    appData<span class="ph token punctuation">.</span>state <span class="ph token operator">=</span> APP_STATE_ERROR<span class="ph token punctuation">;</span>
+                <span class="ph token punctuation">}</span>
+            <span class="ph token punctuation">}</span>
+            <span class="ph token keyword">break</span><span class="ph token punctuation">;</span>
+
+        <span class="ph token keyword">case</span> APP_STATE_DATA_READ<span class="ph token operator">:</span>
+
+            appData<span class="ph token punctuation">.</span>transferStatus <span class="ph token operator">=</span> APP_TRANSFER_STATUS_IN_PROGRESS<span class="ph token punctuation">;</span>
+
+            <span class="ph token comment">/* Add a request to read data from EEPROM. */</span>
+            <span class="ph token function">DRV_I2C_WriteReadTransferAdd</span><span class="ph token punctuation">(</span>
+                appData<span class="ph token punctuation">.</span>drvI2CHandle<span class="ph token punctuation">,</span>
+                APP_EEPROM_SLAVE_ADDR<span class="ph token punctuation">,</span>
+                <span class="ph token punctuation">(</span><span class="ph token keyword">void</span> <span class="ph token operator">*</span><span class="ph token punctuation">)</span><span class="ph token operator">&amp;</span>testTxData<span class="ph token punctuation">[</span><span class="ph token number">0</span><span class="ph token punctuation">]</span><span class="ph token punctuation">,</span>
+                APP_EEPROM_NUM_ADDR_BYTES<span class="ph token punctuation">,</span>
+                <span class="ph token punctuation">(</span><span class="ph token keyword">void</span> <span class="ph token operator">*</span><span class="ph token punctuation">)</span><span class="ph token operator">&amp;</span>testRxData<span class="ph token punctuation">[</span><span class="ph token number">0</span><span class="ph token punctuation">]</span><span class="ph token punctuation">,</span>
+                APP_EEPROM_TEST_DATA_SIZE<span class="ph token punctuation">,</span>
+                <span class="ph token operator">&amp;</span>appData<span class="ph token punctuation">.</span>transferHandle
+            <span class="ph token punctuation">)</span><span class="ph token punctuation">;</span>
+
+            <span class="ph token keyword">if</span><span class="ph token punctuation">(</span> appData<span class="ph token punctuation">.</span>transferHandle <span class="ph token operator">==</span> DRV_I2C_TRANSFER_HANDLE_INVALID <span class="ph token punctuation">)</span>
+            <span class="ph token punctuation">{</span>
+                appData<span class="ph token punctuation">.</span>state <span class="ph token operator">=</span> APP_STATE_ERROR<span class="ph token punctuation">;</span>
+            <span class="ph token punctuation">}</span>
+            <span class="ph token keyword">else</span>
+            <span class="ph token punctuation">{</span>
+                appData<span class="ph token punctuation">.</span>state <span class="ph token operator">=</span> APP_STATE_WAIT_READ_COMPLETE<span class="ph token punctuation">;</span>
+            <span class="ph token punctuation">}</span>
+            <span class="ph token keyword">break</span><span class="ph token punctuation">;</span>
+
+        <span class="ph token keyword">case</span> APP_STATE_WAIT_READ_COMPLETE<span class="ph token operator">:</span>
+            <span class="ph token keyword">if</span> <span class="ph token punctuation">(</span>appData<span class="ph token punctuation">.</span>transferStatus <span class="ph token operator">==</span> APP_TRANSFER_STATUS_SUCCESS<span class="ph token punctuation">)</span>
+            <span class="ph token punctuation">{</span>
+                appData<span class="ph token punctuation">.</span>state <span class="ph token operator">=</span> APP_STATE_DATA_VERIFY<span class="ph token punctuation">;</span>
+            <span class="ph token punctuation">}</span>
+            <span class="ph token keyword">else</span> <span class="ph token keyword">if</span> <span class="ph token punctuation">(</span>appData<span class="ph token punctuation">.</span>transferStatus <span class="ph token operator">==</span> APP_TRANSFER_STATUS_ERROR<span class="ph token punctuation">)</span>
+            <span class="ph token punctuation">{</span>
+                appData<span class="ph token punctuation">.</span>state <span class="ph token operator">=</span> APP_STATE_ERROR<span class="ph token punctuation">;</span>
+            <span class="ph token punctuation">}</span>
+            <span class="ph token keyword">break</span><span class="ph token punctuation">;</span>
+
+        <span class="ph token keyword">case</span> APP_STATE_DATA_VERIFY<span class="ph token operator">:</span>
+
+            <span class="ph token comment">/* Compare data written and data read */</span>
+            <span class="ph token keyword">if</span> <span class="ph token punctuation">(</span><span class="ph token function">memcmp</span><span class="ph token punctuation">(</span><span class="ph token operator">&amp;</span>testTxData<span class="ph token punctuation">[</span>APP_EEPROM_NUM_ADDR_BYTES<span class="ph token punctuation">]</span><span class="ph token punctuation">,</span> <span class="ph token operator">&amp;</span>testRxData<span class="ph token punctuation">[</span><span class="ph token number">0</span><span class="ph token punctuation">]</span><span class="ph token punctuation">,</span> APP_EEPROM_TEST_DATA_SIZE<span class="ph token punctuation">)</span> <span class="ph token operator">==</span> <span class="ph token number">0</span><span class="ph token punctuation">)</span>
+            <span class="ph token punctuation">{</span>
+                appData<span class="ph token punctuation">.</span>state <span class="ph token operator">=</span> APP_STATE_SUCCESS<span class="ph token punctuation">;</span>
+            <span class="ph token punctuation">}</span>
+            <span class="ph token keyword">else</span>
+            <span class="ph token punctuation">{</span>
+                appData<span class="ph token punctuation">.</span>state <span class="ph token operator">=</span> APP_STATE_ERROR<span class="ph token punctuation">;</span>
+            <span class="ph token punctuation">}</span>
+            <span class="ph token keyword">break</span><span class="ph token punctuation">;</span>
+
+        <span class="ph token keyword">case</span> APP_STATE_SUCCESS<span class="ph token operator">:</span>
+
+            appData<span class="ph token punctuation">.</span>state <span class="ph token operator">=</span> APP_STATE_IDLE<span class="ph token punctuation">;</span>
+            <span class="ph token keyword">break</span><span class="ph token punctuation">;</span>
+
+        <span class="ph token keyword">case</span> APP_STATE_ERROR<span class="ph token operator">:</span>
+
+            appData<span class="ph token punctuation">.</span>state <span class="ph token operator">=</span> APP_STATE_IDLE<span class="ph token punctuation">;</span>
+            <span class="ph token keyword">break</span><span class="ph token punctuation">;</span>
+
+        <span class="ph token keyword">case</span> APP_STATE_IDLE<span class="ph token operator">:</span>
+        <span class="ph token keyword">default</span><span class="ph token operator">:</span>
+            <span class="ph token keyword">break</span><span class="ph token punctuation">;</span>
+    <span class="ph token punctuation">}</span>
+<span class="ph token punctuation">}</span></code></pre></div>
+<div class="related-links">
+<div class="familylinks">
+<div class="parentlink"><strong>Parent topic:</strong> <a class="link" href="GUID-4321CAFA-57B5-4633-9D43-0AE24B87C101.html">I2C Driver</a></div>
+</div>
+</div></body>
+</html>

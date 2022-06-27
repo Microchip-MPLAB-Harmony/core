@@ -1,0 +1,298 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+
+<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE11" /><meta name="copyright" content="(C) Copyright 2022" />
+<meta name="DC.rights.owner" content="(C) Copyright 2022" />
+<meta name="DC.type" content="topic" />
+<meta name="DC.title" content="Library Interface" />
+<meta name="DC.relation" scheme="URI" content="GUID-4F625306-2206-49B1-8846-60C97E40A440.html" />
+<meta name="DC.relation" scheme="URI" content="GUID-76AC2CF8-EF78-49D0-8123-4FBCCD8EFE2E.html" />
+<meta name="DC.relation" scheme="URI" content="GUID-0AAFE706-5859-4761-97D4-223C2EF91279.html" />
+<meta name="DC.relation" scheme="URI" content="GUID-090F979E-B329-47FA-B6CA-D7BE390EAB02.html" />
+<meta name="DC.relation" scheme="URI" content="GUID-01431AF2-8257-4F6A-8069-1B2CB1BD7B5D.html" />
+<meta name="DC.relation" scheme="URI" content="GUID-DD1D5912-45D3-4227-8720-01869BD15139.html" />
+<meta name="DC.relation" scheme="URI" content="GUID-E21F3B3B-3CAA-4C6B-8B66-56BF29565731.html" />
+<meta name="DC.relation" scheme="URI" content="GUID-BA771AE9-3E03-4F87-BE24-51D33B871898.html" />
+<meta name="DC.relation" scheme="URI" content="GUID-8E283F11-3204-43A3-86D5-10CF8066E03F.html" />
+<meta name="DC.relation" scheme="URI" content="GUID-09E87B48-98E8-49F7-BBBD-6C049105F75C.html" />
+<meta name="DC.relation" scheme="URI" content="GUID-223F4EC1-EFAC-46A1-BF77-0DB6B8CB27BB.html" />
+<meta name="DC.relation" scheme="URI" content="GUID-F4092B61-8FC4-4D6E-A043-E20E2965D24D.html" />
+<meta name="DC.format" content="XHTML" />
+<meta name="DC.identifier" content="library-interface" />
+<link rel="stylesheet" type="text/css" href="stylesheets/commonltr.css" />
+<link rel="stylesheet" type="text/css" href="stylesheets/atmel.css" />
+<link rel="stylesheet" type="text/css" href="./stylesheets/common-extended.css" /><title>Library Interface</title>
+<meta name="Microsoft.Help.Id" content="GUID-EDFB1AB8-CD6B-446F-8E25-F2167287A1AF-library-interface" />
+<meta name="Microsoft.Help.TocParent" content="GUID-EDFB1AB8-CD6B-446F-8E25-F2167287A1AF" />
+<meta name="Microsoft.Help.TocOrder" content="0" />
+<meta name="Microsoft.Help.Locale" content="en-US" />
+<meta name="Microsoft.Help.TopicLocale" content="en-US" />
+<meta name="Microsoft.Help.DisplayVersion" content="MPLAB® Harmony Core Library Reference A 11/2021" />
+<script language="javascript">
+       
+       if (window.parent.location.protocol != 'file:') {
+				document.addEventListener('click', function(e) {
+				    if (e.target) {
+               if (e.target.nodeName == "A" ) {
+                    if (!e.target.target) {
+                      e.preventDefault();
+                      e.stopPropagation();
+                              
+                      var origUrl = window.parent.location.href.substr(0, window.parent.location.href.indexOf("?"));
+                      if (origUrl.length === 0) {
+                          origUrl = window.parent.location.href;
+                      }
+                      var href= e.target.getAttribute("href");
+                      var parts = href.split("#");
+          
+                      var url = "";
+                      if (parts.length == 2 ) {
+                        if (!parts[0].length) {
+                            url = window.parent.location.search.replace('?','')
+                        } else {
+                            url = parts[0].replace('.html','');
+                        }
+                      } else {
+                        url = parts[0].replace('.html','');
+                      }
+
+                      if (parts.length == 2) {
+                          url += "#" + parts[1];
+                      }
+    
+                      window.parent.location.href = origUrl + "?" + url;
+
+                      return false;
+                    }
+               }
+            }
+				});
+			}
+
+		</script><script language="javascript">
+        function cpy(id, button) {
+        
+            var element = document.getElementById(id);
+            var content = element.getAttribute("content");
+            var textArea = document.createElement("textarea");
+            
+            // Place in the top-left corner of screen regardless of scroll position.
+            textArea.style.position = 'fixed';
+            textArea.style.top = 0;
+            textArea.style.left = 0;
+            
+            // Ensure it has a small width and height. Setting to 1px / 1em
+            // doesn't work as this gives a negative w/h on some browsers.
+            textArea.style.width = '2em';
+            textArea.style.height = '2em';
+            
+            // We don't need padding, reducing the size if it does flash render.
+            textArea.style.padding = 0;
+            
+            // Clean up any borders.
+            textArea.style.border = 'none';
+            textArea.style.outline = 'none';
+            textArea.style.boxShadow = 'none';
+            
+            // Avoid flash of the white box if rendered for any reason.
+            textArea.style.background = 'transparent';
+            
+            
+            textArea.value = content;
+            
+            document.body.appendChild(textArea);
+            textArea.focus();
+            textArea.select();
+            
+            try {
+               var successful = document.execCommand('copy');
+               var msg = successful ? 'successful' : 'unsuccessful';
+               if (!button.classList.contains("copied")){
+                  button.textContent = "Copied";
+                  button.classList.add("copied");
+                  setTimeout(function(){
+                    button.textContent = "Copy";
+                    button.classList.remove("copied");
+                  },1000);
+               }
+            } catch (err) {
+              console.log('Oops, unable to copy');
+            }
+            
+            document.body.removeChild(textArea);
+        }
+      </script><script language="javascript">
+          
+          // Add the MathML namespace to html
+          var html = document.getElementsByTagName("html")[0],
+          head = document.getElementsByTagName("head")[0];
+          
+          var mathJax = document.createElement("script");
+          mathJax.src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-MML-AM_CHTML";
+          head.appendChild(mathJax);
+          
+          html.setAttribute("xmlns:m","http://www.w3.org/1998/Math/MathML");
+          
+          function inIframe() { try { return window.self !== window.top; } catch (e) { return true; } }
+          
+          if (!inIframe()) { 
+          
+          var Default = "index.html?GUID-3CBAD06F-CC26-46CB-AF78-AE7790F210D6"; 
+          
+          var displaylocation = "value" + window.location.href;
+          
+          var GUIDS = displaylocation.split('GUID');          
+          
+          if (displaylocation.indexOf('#GUID') != -1) {            
+          var First = GUIDS[1].split('.html');  
+          if (GUIDS[3]){First = GUIDS[2].split('.html');}
+          if (GUIDS[4]){First = GUIDS[3].split('.html');}
+          if (GUIDS[5]){First = GUIDS[4].split('.html');}
+          
+          var Second = GUIDS[2].split('#');   
+          if (GUIDS[3]){Second = GUIDS[3].split('#');}
+          if (GUIDS[4]){Second = GUIDS[4].split('#');}
+          if (GUIDS[5]){Second = GUIDS[5].split('#');}
+          
+          Default = "index.html?" + "GUID" + First[0] + "GUID" + Second[0];     
+          }                    
+          window.top.location = Default;
+          }       
+          
+        </script><style xml:space="">
+        
+          button.copy-code{
+            display:none;
+            padding:0.7em 1.4em;
+            margin:0 0.3em 0.3em 0;
+            border-radius:0.15em;
+            box-sizing: border-box;
+            text-decoration:none;
+            font-family:'Roboto',sans-serif;
+            text-transform:uppercase;
+            font-weight:400;
+            color:#FFFFFF;
+            background-color:#9c9c9c;
+            box-shadow:inset 0 -0.6em 0 -0.35em rgba(0,0,0,0.17);
+            text-align:center;
+            position:relative;
+            border: 0;
+            float: right;
+            border-radius: .5em;
+            cursor: pointer;
+          }
+          button.copy-code:active{
+            top:0.1em;
+          }
+          
+          pre:hover button.copy-code{
+            display: inline-block !important;
+          }
+          button.copy-code.copied {
+            cursor: default !important;
+          }
+          
+          
+          @media all and (max-width:30em){
+            button.copy-code{
+              display:block;
+              margin:0.4em auto;
+            }
+          }
+        
+        
+      </style></head>
+<body id="library-interface">
+<h1 class="title topictitle1" id="ariaid-title1">Library Interface</h1><div class="body"><p class="p">Debug System Service library provides the following interfaces:</p>
+<p class="p"><strong class="ph b">Functions</strong></p>
+
+<div class="tablenoborder"><table cellpadding="4" cellspacing="0" summary="" class="table" frame="border" border="1" rules="all"><col style="width:" /><col style="width:" /><thead class="thead" style="text-align:left;"><tr class="row"><th class="entry cellrowborder" style="text-align:left;vertical-align:middle;" id="d87407e21"><span>Name</span></th>
+<th class="entry cellrowborder" style="text-align:left;vertical-align:middle;" id="d87407e23"><span>Description</span></th>
+</tr>
+</thead>
+<tbody class="tbody"><tr class="row"><td class="entry cellrowborder" style="text-align:left;vertical-align:middle;" headers="d87407e21 "><span>SYS_DEBUG_Initialize</span></td>
+<td class="entry cellrowborder" style="text-align:left;vertical-align:middle;" headers="d87407e23 "><span>Initializes the global error level and specific module instance</span></td>
+</tr>
+<tr class="row"><td class="entry cellrowborder" style="text-align:left;vertical-align:middle;" headers="d87407e21 "><span>SYS_DEBUG_Status</span></td>
+<td class="entry cellrowborder" style="text-align:left;vertical-align:middle;" headers="d87407e23 "><span>Returns status of the specific instance of the debug service module</span></td>
+</tr>
+<tr class="row"><td class="entry cellrowborder" style="text-align:left;vertical-align:middle;" headers="d87407e21 "><span>SYS_DEBUG_ErrorLevelSet</span></td>
+<td class="entry cellrowborder" style="text-align:left;vertical-align:middle;" headers="d87407e23 "><span>Sets the global system error reporting level</span></td>
+</tr>
+<tr class="row"><td class="entry cellrowborder" style="text-align:left;vertical-align:middle;" headers="d87407e21 "><span>SYS_DEBUG_ErrorLevelGet</span></td>
+<td class="entry cellrowborder" style="text-align:left;vertical-align:middle;" headers="d87407e23 "><span>Returns the global system Error reporting level</span></td>
+</tr>
+<tr class="row"><td class="entry cellrowborder" style="text-align:left;vertical-align:middle;" headers="d87407e21 "><span>SYS_DEBUG_Redirect</span></td>
+<td class="entry cellrowborder" style="text-align:left;vertical-align:middle;" headers="d87407e23 "><span>Allows re-direction of debug system service to another console instance</span></td>
+</tr>
+<tr class="row"><td class="entry cellrowborder" style="text-align:left;vertical-align:middle;" headers="d87407e21 "><span>SYS_DEBUG_ConsoleInstanceGet</span></td>
+<td class="entry cellrowborder" style="text-align:left;vertical-align:middle;" headers="d87407e23 "><span>Returns console instance used by debug system service</span></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p class="p"><strong class="ph b">Data types and constants</strong></p>
+
+<div class="tablenoborder"><table cellpadding="4" cellspacing="0" summary="" class="table" frame="border" border="1" rules="all"><col style="width:" /><col style="width:" /><col style="width:" /><thead class="thead" style="text-align:left;"><tr class="row"><th class="entry cellrowborder" style="text-align:left;vertical-align:middle;" id="d87407e66"><span>Name</span></th>
+<th class="entry cellrowborder" style="text-align:left;vertical-align:middle;" id="d87407e68"><span>Type</span></th>
+<th class="entry cellrowborder" style="text-align:left;vertical-align:middle;" id="d87407e70"><span>Description</span></th>
+</tr>
+</thead>
+<tbody class="tbody"><tr class="row"><td class="entry cellrowborder" style="text-align:left;vertical-align:middle;" headers="d87407e66 "><span>SYS_ERROR_LEVEL</span></td>
+<td class="entry cellrowborder" style="text-align:left;vertical-align:middle;" headers="d87407e68 "><span>Enum</span></td>
+<td class="entry cellrowborder" style="text-align:left;vertical-align:middle;" headers="d87407e70 "><span>System error message priority levels</span></td>
+</tr>
+<tr class="row"><td class="entry cellrowborder" style="text-align:left;vertical-align:middle;" headers="d87407e66 "><span>SYS_DEBUG_INDEX_0</span></td>
+<td class="entry cellrowborder" style="text-align:left;vertical-align:middle;" headers="d87407e68 "><span>Macro</span></td>
+<td class="entry cellrowborder" style="text-align:left;vertical-align:middle;" headers="d87407e70 "><span>Debug System Service index</span></td>
+</tr>
+<tr class="row"><td class="entry cellrowborder" style="text-align:left;vertical-align:middle;" headers="d87407e66 "><span>SYS_DEBUG_MESSAGE</span></td>
+<td class="entry cellrowborder" style="text-align:left;vertical-align:middle;" headers="d87407e68 "><span>Macro</span></td>
+<td class="entry cellrowborder" style="text-align:left;vertical-align:middle;" headers="d87407e70 "><span>Prints a debug message if the system error level is defined at or lower than the level specified</span></td>
+</tr>
+<tr class="row"><td class="entry cellrowborder" style="text-align:left;vertical-align:middle;" headers="d87407e66 "><span>SYS_DEBUG_PRINT</span></td>
+<td class="entry cellrowborder" style="text-align:left;vertical-align:middle;" headers="d87407e68 "><span>Macro</span></td>
+<td class="entry cellrowborder" style="text-align:left;vertical-align:middle;" headers="d87407e70 "><span>Formats and prints an error message if the system error level is defined at or lower than the level specified</span></td>
+</tr>
+<tr class="row"><td class="entry cellrowborder" style="text-align:left;vertical-align:middle;" headers="d87407e66 "><span>SYS_DEBUG_BreakPoint</span></td>
+<td class="entry cellrowborder" style="text-align:left;vertical-align:middle;" headers="d87407e68 "><span>Macro</span></td>
+<td class="entry cellrowborder" style="text-align:left;vertical-align:middle;" headers="d87407e70 "><span>Inserts a software breakpoint instruction when building in Debug mode</span></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="related-links">
+<ul class="ullinks">
+<li class="link ulchildlink"><strong><a href="GUID-76AC2CF8-EF78-49D0-8123-4FBCCD8EFE2E.html">SYS_DEBUG_Initialize Function</a></strong><br />
+</li>
+<li class="link ulchildlink"><strong><a href="GUID-0AAFE706-5859-4761-97D4-223C2EF91279.html">SYS_DEBUG_Status Function</a></strong><br />
+</li>
+<li class="link ulchildlink"><strong><a href="GUID-090F979E-B329-47FA-B6CA-D7BE390EAB02.html">SYS_DEBUG_ErrorLevelSet Function</a></strong><br />
+</li>
+<li class="link ulchildlink"><strong><a href="GUID-01431AF2-8257-4F6A-8069-1B2CB1BD7B5D.html">SYS_DEBUG_ErrorLevelGet Function</a></strong><br />
+</li>
+<li class="link ulchildlink"><strong><a href="GUID-DD1D5912-45D3-4227-8720-01869BD15139.html">SYS_DEBUG_Redirect Function</a></strong><br />
+</li>
+<li class="link ulchildlink"><strong><a href="GUID-E21F3B3B-3CAA-4C6B-8B66-56BF29565731.html">SYS_DEBUG_ConsoleInstanceGet Function</a></strong><br />
+</li>
+<li class="link ulchildlink"><strong><a href="GUID-BA771AE9-3E03-4F87-BE24-51D33B871898.html">SYS_ERROR_LEVEL Enum</a></strong><br />
+</li>
+<li class="link ulchildlink"><strong><a href="GUID-8E283F11-3204-43A3-86D5-10CF8066E03F.html">SYS_DEBUG_INDEX_0 Macro</a></strong><br />
+</li>
+<li class="link ulchildlink"><strong><a href="GUID-09E87B48-98E8-49F7-BBBD-6C049105F75C.html">SYS_DEBUG_MESSAGE Macro</a></strong><br />
+</li>
+<li class="link ulchildlink"><strong><a href="GUID-223F4EC1-EFAC-46A1-BF77-0DB6B8CB27BB.html">SYS_DEBUG_PRINT Macro</a></strong><br />
+</li>
+<li class="link ulchildlink"><strong><a href="GUID-F4092B61-8FC4-4D6E-A043-E20E2965D24D.html">SYS_DEBUG_BreakPoint Macro</a></strong><br />
+</li>
+</ul>
+
+<div class="familylinks">
+<div class="parentlink"><strong>Parent topic:</strong> <a class="link" href="GUID-4F625306-2206-49B1-8846-60C97E40A440.html">Debug System Service</a></div>
+</div>
+</div></body>
+</html>

@@ -1,0 +1,379 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+
+<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE11" /><meta name="copyright" content="(C) Copyright 2022" />
+<meta name="DC.rights.owner" content="(C) Copyright 2022" />
+<meta name="DC.type" content="topic" />
+<meta name="DC.title" content="Configuring The Library" />
+<meta name="DC.relation" scheme="URI" content="GUID-89A8332D-B4D0-4989-8602-EACDE3EE74AC.html" />
+<meta name="DC.format" content="XHTML" />
+<meta name="DC.identifier" content="configuring-the-library" />
+<link rel="stylesheet" type="text/css" href="stylesheets/commonltr.css" />
+<link rel="stylesheet" type="text/css" href="stylesheets/atmel.css" />
+<link rel="stylesheet" type="text/css" href="./stylesheets/common-extended.css" /><title>Configuring The Library</title>
+<meta name="Microsoft.Help.Id" content="GUID-EDFB1AB8-CD6B-446F-8E25-F2167287A1AF-configuring-the-library" />
+<meta name="Microsoft.Help.TocParent" content="GUID-EDFB1AB8-CD6B-446F-8E25-F2167287A1AF" />
+<meta name="Microsoft.Help.TocOrder" content="0" />
+<meta name="Microsoft.Help.Locale" content="en-US" />
+<meta name="Microsoft.Help.TopicLocale" content="en-US" />
+<meta name="Microsoft.Help.DisplayVersion" content="MPLAB® Harmony Core Library Reference A 11/2021" />
+<script language="javascript">
+       
+       if (window.parent.location.protocol != 'file:') {
+				document.addEventListener('click', function(e) {
+				    if (e.target) {
+               if (e.target.nodeName == "A" ) {
+                    if (!e.target.target) {
+                      e.preventDefault();
+                      e.stopPropagation();
+                              
+                      var origUrl = window.parent.location.href.substr(0, window.parent.location.href.indexOf("?"));
+                      if (origUrl.length === 0) {
+                          origUrl = window.parent.location.href;
+                      }
+                      var href= e.target.getAttribute("href");
+                      var parts = href.split("#");
+          
+                      var url = "";
+                      if (parts.length == 2 ) {
+                        if (!parts[0].length) {
+                            url = window.parent.location.search.replace('?','')
+                        } else {
+                            url = parts[0].replace('.html','');
+                        }
+                      } else {
+                        url = parts[0].replace('.html','');
+                      }
+
+                      if (parts.length == 2) {
+                          url += "#" + parts[1];
+                      }
+    
+                      window.parent.location.href = origUrl + "?" + url;
+
+                      return false;
+                    }
+               }
+            }
+				});
+			}
+
+		</script><script language="javascript">
+        function cpy(id, button) {
+        
+            var element = document.getElementById(id);
+            var content = element.getAttribute("content");
+            var textArea = document.createElement("textarea");
+            
+            // Place in the top-left corner of screen regardless of scroll position.
+            textArea.style.position = 'fixed';
+            textArea.style.top = 0;
+            textArea.style.left = 0;
+            
+            // Ensure it has a small width and height. Setting to 1px / 1em
+            // doesn't work as this gives a negative w/h on some browsers.
+            textArea.style.width = '2em';
+            textArea.style.height = '2em';
+            
+            // We don't need padding, reducing the size if it does flash render.
+            textArea.style.padding = 0;
+            
+            // Clean up any borders.
+            textArea.style.border = 'none';
+            textArea.style.outline = 'none';
+            textArea.style.boxShadow = 'none';
+            
+            // Avoid flash of the white box if rendered for any reason.
+            textArea.style.background = 'transparent';
+            
+            
+            textArea.value = content;
+            
+            document.body.appendChild(textArea);
+            textArea.focus();
+            textArea.select();
+            
+            try {
+               var successful = document.execCommand('copy');
+               var msg = successful ? 'successful' : 'unsuccessful';
+               if (!button.classList.contains("copied")){
+                  button.textContent = "Copied";
+                  button.classList.add("copied");
+                  setTimeout(function(){
+                    button.textContent = "Copy";
+                    button.classList.remove("copied");
+                  },1000);
+               }
+            } catch (err) {
+              console.log('Oops, unable to copy');
+            }
+            
+            document.body.removeChild(textArea);
+        }
+      </script><script language="javascript">
+          
+          // Add the MathML namespace to html
+          var html = document.getElementsByTagName("html")[0],
+          head = document.getElementsByTagName("head")[0];
+          
+          var mathJax = document.createElement("script");
+          mathJax.src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-MML-AM_CHTML";
+          head.appendChild(mathJax);
+          
+          html.setAttribute("xmlns:m","http://www.w3.org/1998/Math/MathML");
+          
+          function inIframe() { try { return window.self !== window.top; } catch (e) { return true; } }
+          
+          if (!inIframe()) { 
+          
+          var Default = "index.html?GUID-BB7E4A95-11F5-4B68-AB77-983B571454FF"; 
+          
+          var displaylocation = "value" + window.location.href;
+          
+          var GUIDS = displaylocation.split('GUID');          
+          
+          if (displaylocation.indexOf('#GUID') != -1) {            
+          var First = GUIDS[1].split('.html');  
+          if (GUIDS[3]){First = GUIDS[2].split('.html');}
+          if (GUIDS[4]){First = GUIDS[3].split('.html');}
+          if (GUIDS[5]){First = GUIDS[4].split('.html');}
+          
+          var Second = GUIDS[2].split('#');   
+          if (GUIDS[3]){Second = GUIDS[3].split('#');}
+          if (GUIDS[4]){Second = GUIDS[4].split('#');}
+          if (GUIDS[5]){Second = GUIDS[5].split('#');}
+          
+          Default = "index.html?" + "GUID" + First[0] + "GUID" + Second[0];     
+          }                    
+          window.top.location = Default;
+          }       
+          
+        </script><style xml:space="">
+        
+          button.copy-code{
+            display:none;
+            padding:0.7em 1.4em;
+            margin:0 0.3em 0.3em 0;
+            border-radius:0.15em;
+            box-sizing: border-box;
+            text-decoration:none;
+            font-family:'Roboto',sans-serif;
+            text-transform:uppercase;
+            font-weight:400;
+            color:#FFFFFF;
+            background-color:#9c9c9c;
+            box-shadow:inset 0 -0.6em 0 -0.35em rgba(0,0,0,0.17);
+            text-align:center;
+            position:relative;
+            border: 0;
+            float: right;
+            border-radius: .5em;
+            cursor: pointer;
+          }
+          button.copy-code:active{
+            top:0.1em;
+          }
+          
+          pre:hover button.copy-code{
+            display: inline-block !important;
+          }
+          button.copy-code.copied {
+            cursor: default !important;
+          }
+          
+          
+          @media all and (max-width:30em){
+            button.copy-code{
+              display:block;
+              margin:0.4em auto;
+            }
+          }
+        
+        
+      </style></head>
+<body id="configuring-the-library">
+<h1 class="title topictitle1" id="ariaid-title1">Configuring The Library</h1><div class="body"><p class="p">SDSPI Driver Library should be configured via MHC. The following figures show the MHC configuration window for SDSPI driver and brief description.</p>
+<p class="p"><strong class="ph b">Common User Configuration for all Instances</strong></p>
+<ul class="ul"><li class="li"><p class="p"><strong class="ph b">Driver Mode:</strong></p>
+<ul class="ul"><li class="li"><p class="p">Allows User to select the mode of driver(Asynchronous or Synchronous). This setting is common for all the instances.</p>
+</li>
+<li class="li"><p class="p">When the SDSPI driver is used with SPI driver, the SPI driver inherits the driver mode from the SDSPI driver. That is, if the SDSPI driver is configured for Asynchronous mode then the SPI driver is automatically configured for Asynchronous mode and vice-versa.</p>
+</li>
+</ul>
+</li>
+</ul>
+<p class="p"><strong class="ph b">Instance Specific User Configurations</strong></p>
+<p class="p"><strong class="ph b">Asynchronous Mode with SPI PLIB and File-System</strong></p>
+<br /><img class="image" src="GUID-5AB3357B-B99B-40BD-9BB5-571972032327-low.png" alt="drv_sdspi_mhc_config_async_with_spi_fs" /><br /><p class="p"><strong class="ph b">Asynchronous Mode with SPI Driver and File-System </strong></p>
+<br /><img class="image" src="GUID-CCF36945-4485-4C08-B3AC-3B6B422C35A8-low.png" alt="drv_sdspi_mhc_config_async_with_spiDriver_fs" /><br /><p class="p"><strong class="ph b">Synchronous Mode with SPI PLIB, RTOS and File-System</strong></p>
+<br /><img class="image" src="GUID-E1D53FF2-96B7-4DE8-ACC4-E452E7F3FF5D-low.png" alt="drv_sdspi_mhc_config_sync_with_spi_rtos_fs" /><br /><p class="p"><strong class="ph b">Synchronous Mode with SPI Driver, RTOS and File-System </strong></p>
+<br /><img class="image" src="GUID-04746BDE-2D13-46F9-A5BA-542094419515-low.png" alt="drv_sdspi_mhc_config_sync_with_spiDriver_rtos_fs" /><br /><ul class="ul"><li class="li"><p class="p"><strong class="ph b">PLIB Used:</strong></p>
+<ul class="ul"><li class="li"><p class="p">This option is displayed only when SDSPI driver is connected to SPI PLIB</p>
+</li>
+<li class="li"><p class="p">Indicates the SPI peripheral instance used by the SDSPI driver</p>
+</li>
+</ul>
+</li>
+<li class="li"><p class="p"><strong class="ph b">SPI Driver Instance Used:</strong></p>
+<ul class="ul"><li class="li"><p class="p">This option is displayed only when SDSPI driver is connected to SPI Driver</p>
+</li>
+<li class="li"><p class="p">Indicates the SPI driver instance used by the SDSPI driver</p>
+</li>
+</ul>
+</li>
+<li class="li"><p class="p"><strong class="ph b">Number of Clients:</strong></p>
+<ul class="ul"><li class="li"><p class="p">Specifies number of clients that can access the specific instance of the driver</p>
+</li>
+</ul>
+</li>
+<li class="li"><p class="p"><strong class="ph b">SD Card Speed (Hz):</strong></p>
+<ul class="ul"><li class="li"><p class="p">The maximum SPI speed at which the SDSPI driver interacts with the SD Card</p>
+</li>
+<li class="li"><p class="p">SDSPI driver overrides the SPI PLIB clock speed settings</p>
+</li>
+</ul>
+</li>
+<li class="li"><p class="p"><strong class="ph b">Transfer Queue Size:</strong></p>
+<ul class="ul"><li class="li"><p class="p">Specifies maximum number of requests that can be queued</p>
+</li>
+<li class="li"><p class="p">This Configuration is displayed only in <strong class="ph b">Asynchronous mode</strong></p>
+</li>
+</ul>
+</li>
+<li class="li"><p class="p"><strong class="ph b">Card Detection Method:</strong></p>
+<ul class="ul"><li class="li"><p class="p">Card detection method used. For SDSPI driver command-response based polling method is used for card insertion/removal</p>
+</li>
+</ul>
+</li>
+<li class="li"><p class="p"><strong class="ph b">Polling Interval (ms):</strong></p>
+<ul class="ul"><li class="li"><p class="p">Rate at which the SDSPI driver checks for card insertion and removal</p>
+</li>
+</ul>
+</li>
+<li class="li"><p class="p"><strong class="ph b">File system for SDSPI Driver Enabled:</strong></p>
+<ul class="ul"><li class="li"><p class="p">Indicates whether SDSPI driver will register its services with the file system or not.</p>
+</li>
+<li class="li"><p class="p">This option is automatically checked when the file system is connected to the SDSPI driver.</p>
+</li>
+</ul>
+</li>
+<li class="li"><p class="p"><strong class="ph b">Chip Select Pin:</strong></p>
+<ul class="ul"><li class="li"><p class="p">The SD Card chip select pin</p>
+</li>
+</ul>
+</li>
+<li class="li"><p class="p"><strong class="ph b">Use Write Protect Pin (Active High)?</strong></p>
+<ul class="ul"><li class="li"><p class="p">Enable write protection check</p>
+</li>
+<li class="li"><p class="p"><strong class="ph b">Write Protect Pin (Active High):</strong></p>
+<ul class="ul"><li class="li"><p class="p">The selected write protect pin must be configured as GPIO input under the Pin Settings window</p>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="li"><p class="p"><strong class="ph b">Use DMA for Transmit and Receive?:</strong></p>
+<ul class="ul"><li class="li"><p class="p">Enable/disable DMA usage by the SDSPI driver. This option is available only when SDSPI driver is used with SPI PLIB.</p>
+</li>
+<li class="li"><p class="p">When SDSPI is used with SPI driver, the DMA must be configured in the SPI driver configuration.</p>
+</li>
+<li class="li"><p class="p"><strong class="ph b">DMA Channel For Transmit:</strong></p>
+<ul class="ul"><li class="li"><p class="p">Indicates the DMA channel the SDSPI driver will use for transmission</p>
+</li>
+</ul>
+</li>
+<li class="li"><p class="p"><strong class="ph b">DMA Channel For Receive:</strong></p>
+<ul class="ul"><li class="li"><p class="p">Indicates the DMA channel the SDSPI driver will use for reception</p>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="li"><p class="p"><strong class="ph b">RTOS Settings:</strong></p>
+<ul class="ul"><li class="li"><p class="p"><strong class="ph b">Stack Size (in bytes):</strong></p>
+<ul class="ul"><li class="li"><p class="p">Specifies the number of bytes to be allocated on the stack for the SDSPI driver task of the instance</p>
+</li>
+</ul>
+</li>
+<li class="li"><p class="p"><strong class="ph b">Task Priority:</strong></p>
+<ul class="ul"><li class="li"><p class="p">Specifies priority for the SDSPI driver task thread. The value can vary based on RTOS used</p>
+</li>
+</ul>
+</li>
+<li class="li"><p class="p"><strong class="ph b">Use Task Delay?</strong></p>
+<ul class="ul"><li class="li"><p class="p">When enabled the SDSPI driver task will be scheduled out voluntarily after every run based on the delay configured.</p>
+</li>
+<li class="li"><p class="p"><strong class="ph b">Task Delay (ms):</strong></p>
+<ul class="ul"><li class="li"><p class="p">Indicates the amount of time for which the SDSPI RTOS thread is put in blocked state by the scheduler before it is run again</p>
+</li>
+<li class="li"><p class="p">This inturn controls the rate at which the SDSPI driver checks for the SD Card attach/detach status</p>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p class="p"><strong class="ph b">RTOS Settings For MicriumOS-III RTOS</strong></p>
+<p class="p">Below additional options are visible in <strong class="ph b">drivers instance RTOS settings</strong> when the MicriumOS-III is added into project graph</p>
+<br /><img class="image" src="GUID-B3EFA16B-3DAF-49D1-9E11-DBA535F90156-low.png" alt="rtos_settings_micrium_os_iii" /><br /><ul class="ul"><li class="li"><p class="p"><strong class="ph b">Maximum Message Queue Size:</strong></p>
+<ul class="ul"><li class="li"><p class="p">This argument specifies the maximum number of messages that the task can receive through internal message queue.</p>
+<ul class="ul"><li class="li"><p class="p">A MicriumOS-III task contains an optional internal message queue (if OS_CFG_TASK_Q_EN is set to DEF_ENABLED in os_cfg.h).</p>
+</li>
+</ul>
+</li>
+<li class="li"><p class="p">The user may specify that the task is unable to receive messages by setting this argument to 0</p>
+</li>
+</ul>
+</li>
+<li class="li"><p class="p"><strong class="ph b">Task Time Quanta:</strong></p>
+<ul class="ul"><li class="li"><p class="p">The amount of time (in clock ticks) for the time quanta when Round Robin is enabled.</p>
+</li>
+<li class="li"><p class="p">If you specify 0, then the default time quanta will be used which is the tick rate divided by 10.</p>
+</li>
+</ul>
+</li>
+<li class="li"><p class="p"><strong class="ph b">Task Specific Options:</strong></p>
+<ul class="ul"><li class="li"><p class="p">Contains task-specific options. Each option consists of one bit. The option is selected when the bit is set.</p>
+</li>
+<li class="li"><p class="p">The current version of MicriumOS-III supports the following options:</p>
+<ul class="ul"><li class="li"><p class="p"><strong class="ph b">Stack checking is allowed for the task:</strong></p>
+<ul class="ul"><li class="li"><p class="p">Specifies whether stack checking is allowed for the task</p>
+</li>
+</ul>
+</li>
+<li class="li"><p class="p"><strong class="ph b">Stack needs to be cleared:</strong></p>
+<ul class="ul"><li class="li"><p class="p">Specifies whether the stack needs to be cleared</p>
+</li>
+</ul>
+</li>
+<li class="li"><p class="p"><strong class="ph b">Floating-point registers needs to be saved:</strong></p>
+<ul class="ul"><li class="li"><p class="p">Specifies whether floating-point registers are saved.</p>
+</li>
+<li class="li"><p class="p">This option is only valid if the processor has floating-point hardware and the processor-specific code saves the floating-point registers</p>
+</li>
+</ul>
+</li>
+<li class="li"><p class="p"><strong class="ph b">TLS (Thread Local Storage) support needed for the task:</strong></p>
+<ul class="ul"><li class="li"><p class="p">If the caller doesn�t want or need TLS (Thread Local Storage) support for the task being created.</p>
+</li>
+<li class="li"><p class="p">If you do not include this option, TLS will be supported by default. TLS support was added in V3.03.00</p>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="related-links">
+<div class="familylinks">
+<div class="parentlink"><strong>Parent topic:</strong> <a class="link" href="GUID-89A8332D-B4D0-4989-8602-EACDE3EE74AC.html">SDSPI Driver</a></div>
+</div>
+</div></body>
+</html>

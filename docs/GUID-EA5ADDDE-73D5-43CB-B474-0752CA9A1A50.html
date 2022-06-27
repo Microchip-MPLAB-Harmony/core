@@ -1,0 +1,266 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+
+<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE11" /><meta name="copyright" content="(C) Copyright 2022" />
+<meta name="DC.rights.owner" content="(C) Copyright 2022" />
+<meta name="DC.type" content="topic" />
+<meta name="DC.title" content="System Service Libraries" />
+<meta name="DC.relation" scheme="URI" content="GUID-C04D97AB-D6E0-4CF5-9A80-CA64E36B6199.html" />
+<meta name="DC.relation" scheme="URI" content="GUID-B6B51E48-2D3D-42F8-8493-3405F1639A9E.html" />
+<meta name="DC.relation" scheme="URI" content="GUID-4522BF0A-636F-448D-B87F-2342F8CBEB00.html" />
+<meta name="DC.relation" scheme="URI" content="GUID-09F65940-7D05-4F78-81C9-6356B65DEF21.html" />
+<meta name="DC.relation" scheme="URI" content="GUID-C8EFF72A-1BBB-416E-BF89-EEA2B23EB27D.html" />
+<meta name="DC.relation" scheme="URI" content="GUID-4F625306-2206-49B1-8846-60C97E40A440.html" />
+<meta name="DC.relation" scheme="URI" content="GUID-DB773A68-76AC-4900-8C7C-3AC9C38BE0BD.html" />
+<meta name="DC.relation" scheme="URI" content="GUID-066D09D2-5550-49D9-ADA2-60A702DB243E.html" />
+<meta name="DC.relation" scheme="URI" content="GUID-AB36B81D-DB1C-43F0-950E-1E302FC77832.html" />
+<meta name="DC.relation" scheme="URI" content="GUID-89291D9B-92F4-4472-BAE0-9F007571CD35.html" />
+<meta name="DC.relation" scheme="URI" content="GUID-9B151BD6-CAB6-497E-867F-9D9543CB51A6.html" />
+<meta name="DC.relation" scheme="URI" content="GUID-05D0B89A-EE4D-46D4-B58F-7402C56061AE.html" />
+<meta name="DC.format" content="XHTML" />
+<meta name="DC.identifier" content="system-service-libraries" />
+<link rel="stylesheet" type="text/css" href="stylesheets/commonltr.css" />
+<link rel="stylesheet" type="text/css" href="stylesheets/atmel.css" />
+<link rel="stylesheet" type="text/css" href="./stylesheets/common-extended.css" /><title>System Service Libraries</title>
+<meta name="Microsoft.Help.Id" content="GUID-EDFB1AB8-CD6B-446F-8E25-F2167287A1AF-system-service-libraries" />
+<meta name="Microsoft.Help.TocParent" content="GUID-EDFB1AB8-CD6B-446F-8E25-F2167287A1AF" />
+<meta name="Microsoft.Help.TocOrder" content="0" />
+<meta name="Microsoft.Help.Locale" content="en-US" />
+<meta name="Microsoft.Help.TopicLocale" content="en-US" />
+<meta name="Microsoft.Help.DisplayVersion" content="MPLAB® Harmony Core Library Reference A 11/2021" />
+<script language="javascript">
+       
+       if (window.parent.location.protocol != 'file:') {
+				document.addEventListener('click', function(e) {
+				    if (e.target) {
+               if (e.target.nodeName == "A" ) {
+                    if (!e.target.target) {
+                      e.preventDefault();
+                      e.stopPropagation();
+                              
+                      var origUrl = window.parent.location.href.substr(0, window.parent.location.href.indexOf("?"));
+                      if (origUrl.length === 0) {
+                          origUrl = window.parent.location.href;
+                      }
+                      var href= e.target.getAttribute("href");
+                      var parts = href.split("#");
+          
+                      var url = "";
+                      if (parts.length == 2 ) {
+                        if (!parts[0].length) {
+                            url = window.parent.location.search.replace('?','')
+                        } else {
+                            url = parts[0].replace('.html','');
+                        }
+                      } else {
+                        url = parts[0].replace('.html','');
+                      }
+
+                      if (parts.length == 2) {
+                          url += "#" + parts[1];
+                      }
+    
+                      window.parent.location.href = origUrl + "?" + url;
+
+                      return false;
+                    }
+               }
+            }
+				});
+			}
+
+		</script><script language="javascript">
+        function cpy(id, button) {
+        
+            var element = document.getElementById(id);
+            var content = element.getAttribute("content");
+            var textArea = document.createElement("textarea");
+            
+            // Place in the top-left corner of screen regardless of scroll position.
+            textArea.style.position = 'fixed';
+            textArea.style.top = 0;
+            textArea.style.left = 0;
+            
+            // Ensure it has a small width and height. Setting to 1px / 1em
+            // doesn't work as this gives a negative w/h on some browsers.
+            textArea.style.width = '2em';
+            textArea.style.height = '2em';
+            
+            // We don't need padding, reducing the size if it does flash render.
+            textArea.style.padding = 0;
+            
+            // Clean up any borders.
+            textArea.style.border = 'none';
+            textArea.style.outline = 'none';
+            textArea.style.boxShadow = 'none';
+            
+            // Avoid flash of the white box if rendered for any reason.
+            textArea.style.background = 'transparent';
+            
+            
+            textArea.value = content;
+            
+            document.body.appendChild(textArea);
+            textArea.focus();
+            textArea.select();
+            
+            try {
+               var successful = document.execCommand('copy');
+               var msg = successful ? 'successful' : 'unsuccessful';
+               if (!button.classList.contains("copied")){
+                  button.textContent = "Copied";
+                  button.classList.add("copied");
+                  setTimeout(function(){
+                    button.textContent = "Copy";
+                    button.classList.remove("copied");
+                  },1000);
+               }
+            } catch (err) {
+              console.log('Oops, unable to copy');
+            }
+            
+            document.body.removeChild(textArea);
+        }
+      </script><script language="javascript">
+          
+          // Add the MathML namespace to html
+          var html = document.getElementsByTagName("html")[0],
+          head = document.getElementsByTagName("head")[0];
+          
+          var mathJax = document.createElement("script");
+          mathJax.src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-MML-AM_CHTML";
+          head.appendChild(mathJax);
+          
+          html.setAttribute("xmlns:m","http://www.w3.org/1998/Math/MathML");
+          
+          function inIframe() { try { return window.self !== window.top; } catch (e) { return true; } }
+          
+          if (!inIframe()) { 
+          
+          var Default = "index.html?GUID-EA5ADDDE-73D5-43CB-B474-0752CA9A1A50"; 
+          
+          var displaylocation = "value" + window.location.href;
+          
+          var GUIDS = displaylocation.split('GUID');          
+          
+          if (displaylocation.indexOf('#GUID') != -1) {            
+          var First = GUIDS[1].split('.html');  
+          if (GUIDS[3]){First = GUIDS[2].split('.html');}
+          if (GUIDS[4]){First = GUIDS[3].split('.html');}
+          if (GUIDS[5]){First = GUIDS[4].split('.html');}
+          
+          var Second = GUIDS[2].split('#');   
+          if (GUIDS[3]){Second = GUIDS[3].split('#');}
+          if (GUIDS[4]){Second = GUIDS[4].split('#');}
+          if (GUIDS[5]){Second = GUIDS[5].split('#');}
+          
+          Default = "index.html?" + "GUID" + First[0] + "GUID" + Second[0];     
+          }                    
+          window.top.location = Default;
+          }       
+          
+        </script><style xml:space="">
+        
+          button.copy-code{
+            display:none;
+            padding:0.7em 1.4em;
+            margin:0 0.3em 0.3em 0;
+            border-radius:0.15em;
+            box-sizing: border-box;
+            text-decoration:none;
+            font-family:'Roboto',sans-serif;
+            text-transform:uppercase;
+            font-weight:400;
+            color:#FFFFFF;
+            background-color:#9c9c9c;
+            box-shadow:inset 0 -0.6em 0 -0.35em rgba(0,0,0,0.17);
+            text-align:center;
+            position:relative;
+            border: 0;
+            float: right;
+            border-radius: .5em;
+            cursor: pointer;
+          }
+          button.copy-code:active{
+            top:0.1em;
+          }
+          
+          pre:hover button.copy-code{
+            display: inline-block !important;
+          }
+          button.copy-code.copied {
+            cursor: default !important;
+          }
+          
+          
+          @media all and (max-width:30em){
+            button.copy-code{
+              display:block;
+              margin:0.4em auto;
+            }
+          }
+        
+        
+      </style></head>
+<body id="system-service-libraries">
+<h1 class="title topictitle1" id="ariaid-title1">System Service Libraries</h1><div class="body"><p class="p">MPLAB Harmony provides system service libraries to support common functionality and manage resources that are shared by multiple drivers, libraries, and other modules.</p>
+<p class="p">A system service encapsulates code that manages a shared resource or implements a common capability in a single location so that it does not need to be replicated by individual drivers and libraries. This feature eliminates duplicated code and creates consistency across all modules, and also helps to eliminate potential conflicts and complex configuration issues and runtime interactions, resulting in a smaller and simpler overall solution.</p>
+<p class="p">System services may directly manage one or more peripherals or core processor capabilities by utilizing peripheral libraries, special function registers, special CPU instructions, or coprocessor registers. Some system services may utilize drivers, other system services, or even entire middleware stacks to share or emulate a common resource.</p>
+<p class="p">System services may be implemented statically (possibly generated by the MPLAB Harmony Configurator (MHC)) or dynamically to support multiple channels and instances like a driver. However, system services will not normally provide common Open and Close functions like a driver.</p>
+<p class="p">In general, the distinguishing feature of a system service is that it implements a common capability that would otherwise "cut horizontally" across multiple modules in a system, causing interoperability and compatibility conflicts if the capability were implemented by other libraries.</p>
+<p class="p">System service functions use the following naming convention:</p>
+<p class="p"><strong class="ph b">SYS_&lt;module-abbreviation&gt;_<span class="xref"></span>&lt;operation&gt;</strong></p>
+<p class="p">Where,</p>
+<ul class="ul"><li class="li"><p class="p"><strong class="ph b">SYS_</strong> indicates that this is a system service function</p>
+</li>
+<li class="li"><p class="p"><strong class="ph b">&lt;module-abbreviation&gt;</strong> is the abbreviated name of the system service module to which this function belongs</p>
+</li>
+<li class="li"><p class="p"><strong class="ph b"><span class="xref"></span></strong> is an optional short (or shortened) name that identifies the feature of the associated system service module to which this function refers. The feature short name will appear in the name of all functions that interact with or provide access to that particular feature.</p>
+</li>
+<li class="li"><p class="p"><strong class="ph b">&lt;operation&gt;</strong> is a verb that identifies the action taken by the function.</p>
+</li>
+</ul>
+<p class="p">For example, <strong class="ph b">SYS_TIME_TimerStart</strong>, where:</p>
+<ul class="ul"><li class="li"><p class="p"><strong class="ph b">&lt;module-abbreviation&gt;</strong> = TIME, which indicates that this is a Time System Service function</p>
+</li>
+<li class="li"><p class="p"><strong class="ph b">&lt;feature-short-name&gt;</strong> = Timer, which indicates that this function controls the Time feature of the Timer System Service</p>
+</li>
+<li class="li"><p class="p"><strong class="ph b">&lt;operation&gt;</strong> = Start, which indicates that this function starts the software timer created with Time System Service.</p>
+</li>
+</ul>
+<p class="p"><strong class="ph b">Below are the System Service libraries that are available in MPLAB Harmony 3 Core</strong></p>
+</div>
+<div class="related-links">
+<ul class="ullinks">
+<li class="link ulchildlink"><strong><a href="GUID-B6B51E48-2D3D-42F8-8493-3405F1639A9E.html">Common System Services Library</a></strong><br />
+</li>
+<li class="link ulchildlink"><strong><a href="GUID-4522BF0A-636F-448D-B87F-2342F8CBEB00.html">Cache System Service</a></strong><br />
+</li>
+<li class="link ulchildlink"><strong><a href="GUID-09F65940-7D05-4F78-81C9-6356B65DEF21.html">Command Processor System Service</a></strong><br />
+</li>
+<li class="link ulchildlink"><strong><a href="GUID-C8EFF72A-1BBB-416E-BF89-EEA2B23EB27D.html">Console System Service</a></strong><br />
+</li>
+<li class="link ulchildlink"><strong><a href="GUID-4F625306-2206-49B1-8846-60C97E40A440.html">Debug System Service</a></strong><br />
+</li>
+<li class="link ulchildlink"><strong><a href="GUID-DB773A68-76AC-4900-8C7C-3AC9C38BE0BD.html">Direct Memory Access (DMA) System Service</a></strong><br />
+</li>
+<li class="link ulchildlink"><strong><a href="GUID-066D09D2-5550-49D9-ADA2-60A702DB243E.html">File System Service</a></strong><br />
+</li>
+<li class="link ulchildlink"><strong><a href="GUID-AB36B81D-DB1C-43F0-950E-1E302FC77832.html">Interrupt System Service</a></strong><br />
+</li>
+<li class="link ulchildlink"><strong><a href="GUID-89291D9B-92F4-4472-BAE0-9F007571CD35.html">Ports System Service</a></strong><br />
+</li>
+<li class="link ulchildlink"><strong><a href="GUID-9B151BD6-CAB6-497E-867F-9D9543CB51A6.html">Reset System Service</a></strong><br />
+</li>
+<li class="link ulchildlink"><strong><a href="GUID-05D0B89A-EE4D-46D4-B58F-7402C56061AE.html">Time System Service</a></strong><br />
+</li>
+</ul>
+
+<div class="familylinks">
+<div class="parentlink"><strong>Parent topic:</strong> <a class="link" href="GUID-C04D97AB-D6E0-4CF5-9A80-CA64E36B6199.html">MPLAB® Harmony Core Library</a></div>
+</div>
+</div></body>
+</html>

@@ -1,0 +1,240 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+
+<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE11" /><meta name="copyright" content="(C) Copyright 2022" />
+<meta name="DC.rights.owner" content="(C) Copyright 2022" />
+<meta name="DC.type" content="topic" />
+<meta name="DC.title" content="Semaphore Operations" />
+<meta name="DC.relation" scheme="URI" content="GUID-0EE2CCDD-3C1B-4DA6-90EB-50B9B67AC895.html" />
+<meta name="DC.format" content="XHTML" />
+<meta name="DC.identifier" content="semaphore-operations" />
+<link rel="stylesheet" type="text/css" href="stylesheets/commonltr.css" />
+<link rel="stylesheet" type="text/css" href="stylesheets/atmel.css" />
+<link rel="stylesheet" type="text/css" href="./stylesheets/common-extended.css" /><title>Semaphore Operations</title>
+<meta name="Microsoft.Help.Id" content="GUID-EDFB1AB8-CD6B-446F-8E25-F2167287A1AF-semaphore-operations" />
+<meta name="Microsoft.Help.TocParent" content="GUID-EDFB1AB8-CD6B-446F-8E25-F2167287A1AF" />
+<meta name="Microsoft.Help.TocOrder" content="0" />
+<meta name="Microsoft.Help.Locale" content="en-US" />
+<meta name="Microsoft.Help.TopicLocale" content="en-US" />
+<meta name="Microsoft.Help.DisplayVersion" content="MPLAB® Harmony Core Library Reference A 11/2021" />
+<script language="javascript">
+       
+       if (window.parent.location.protocol != 'file:') {
+				document.addEventListener('click', function(e) {
+				    if (e.target) {
+               if (e.target.nodeName == "A" ) {
+                    if (!e.target.target) {
+                      e.preventDefault();
+                      e.stopPropagation();
+                              
+                      var origUrl = window.parent.location.href.substr(0, window.parent.location.href.indexOf("?"));
+                      if (origUrl.length === 0) {
+                          origUrl = window.parent.location.href;
+                      }
+                      var href= e.target.getAttribute("href");
+                      var parts = href.split("#");
+          
+                      var url = "";
+                      if (parts.length == 2 ) {
+                        if (!parts[0].length) {
+                            url = window.parent.location.search.replace('?','')
+                        } else {
+                            url = parts[0].replace('.html','');
+                        }
+                      } else {
+                        url = parts[0].replace('.html','');
+                      }
+
+                      if (parts.length == 2) {
+                          url += "#" + parts[1];
+                      }
+    
+                      window.parent.location.href = origUrl + "?" + url;
+
+                      return false;
+                    }
+               }
+            }
+				});
+			}
+
+		</script><script language="javascript">
+        function cpy(id, button) {
+        
+            var element = document.getElementById(id);
+            var content = element.getAttribute("content");
+            var textArea = document.createElement("textarea");
+            
+            // Place in the top-left corner of screen regardless of scroll position.
+            textArea.style.position = 'fixed';
+            textArea.style.top = 0;
+            textArea.style.left = 0;
+            
+            // Ensure it has a small width and height. Setting to 1px / 1em
+            // doesn't work as this gives a negative w/h on some browsers.
+            textArea.style.width = '2em';
+            textArea.style.height = '2em';
+            
+            // We don't need padding, reducing the size if it does flash render.
+            textArea.style.padding = 0;
+            
+            // Clean up any borders.
+            textArea.style.border = 'none';
+            textArea.style.outline = 'none';
+            textArea.style.boxShadow = 'none';
+            
+            // Avoid flash of the white box if rendered for any reason.
+            textArea.style.background = 'transparent';
+            
+            
+            textArea.value = content;
+            
+            document.body.appendChild(textArea);
+            textArea.focus();
+            textArea.select();
+            
+            try {
+               var successful = document.execCommand('copy');
+               var msg = successful ? 'successful' : 'unsuccessful';
+               if (!button.classList.contains("copied")){
+                  button.textContent = "Copied";
+                  button.classList.add("copied");
+                  setTimeout(function(){
+                    button.textContent = "Copy";
+                    button.classList.remove("copied");
+                  },1000);
+               }
+            } catch (err) {
+              console.log('Oops, unable to copy');
+            }
+            
+            document.body.removeChild(textArea);
+        }
+      </script><script language="javascript">
+          
+          // Add the MathML namespace to html
+          var html = document.getElementsByTagName("html")[0],
+          head = document.getElementsByTagName("head")[0];
+          
+          var mathJax = document.createElement("script");
+          mathJax.src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-MML-AM_CHTML";
+          head.appendChild(mathJax);
+          
+          html.setAttribute("xmlns:m","http://www.w3.org/1998/Math/MathML");
+          
+          function inIframe() { try { return window.self !== window.top; } catch (e) { return true; } }
+          
+          if (!inIframe()) { 
+          
+          var Default = "index.html?GUID-959D7A17-0006-48BC-B5B5-00FB6D26B38D"; 
+          
+          var displaylocation = "value" + window.location.href;
+          
+          var GUIDS = displaylocation.split('GUID');          
+          
+          if (displaylocation.indexOf('#GUID') != -1) {            
+          var First = GUIDS[1].split('.html');  
+          if (GUIDS[3]){First = GUIDS[2].split('.html');}
+          if (GUIDS[4]){First = GUIDS[3].split('.html');}
+          if (GUIDS[5]){First = GUIDS[4].split('.html');}
+          
+          var Second = GUIDS[2].split('#');   
+          if (GUIDS[3]){Second = GUIDS[3].split('#');}
+          if (GUIDS[4]){Second = GUIDS[4].split('#');}
+          if (GUIDS[5]){Second = GUIDS[5].split('#');}
+          
+          Default = "index.html?" + "GUID" + First[0] + "GUID" + Second[0];     
+          }                    
+          window.top.location = Default;
+          }       
+          
+        </script><style xml:space="">
+        
+          button.copy-code{
+            display:none;
+            padding:0.7em 1.4em;
+            margin:0 0.3em 0.3em 0;
+            border-radius:0.15em;
+            box-sizing: border-box;
+            text-decoration:none;
+            font-family:'Roboto',sans-serif;
+            text-transform:uppercase;
+            font-weight:400;
+            color:#FFFFFF;
+            background-color:#9c9c9c;
+            box-shadow:inset 0 -0.6em 0 -0.35em rgba(0,0,0,0.17);
+            text-align:center;
+            position:relative;
+            border: 0;
+            float: right;
+            border-radius: .5em;
+            cursor: pointer;
+          }
+          button.copy-code:active{
+            top:0.1em;
+          }
+          
+          pre:hover button.copy-code{
+            display: inline-block !important;
+          }
+          button.copy-code.copied {
+            cursor: default !important;
+          }
+          
+          
+          @media all and (max-width:30em){
+            button.copy-code{
+              display:block;
+              margin:0.4em auto;
+            }
+          }
+        
+        
+      </style></head>
+<body id="semaphore-operations">
+<h1 class="title topictitle1" id="ariaid-title1">Semaphore Operations</h1><div class="body"><p class="p">The semaphore implements a method for thread synchronization. This synchronization can be either between one thread and another or between an ISR and a thread. A semaphore once signalled will unblock the highest priority thread currently pending on it.</p>
+<p class="p">A semaphore can be used to lock a shared resource, although it is more normal to use a mutex for such an activity. Once obtained a semaphore should be posted back to enable it to be retaken at a later time or in another thread.</p>
+<pre class="pre codeblock language-c"><button title="Copy Code" class="copy-code" onclick="cpy('d24744e14', this);">Copy</button><code id="d24744e14" content="/* mainline code prior to OS start */&#xA;    /* declare a variable of type semaphore handle */&#xA;    OSAL_SEM_DECLARE(semSync);&#xA;    /* create the semaphore */&#xA;    OSAL_SEM_Create(&amp;semSync, OSAL_SEM_TYPE_BINARY, 0, 0);&#xA;&#xA;&#xA;/* thread one */&#xA;    ...&#xA;    /* take the semaphore without waiting */&#xA;    OSAL_SEM_Pend(semSync, 0);&#xA;    ... perform some actions&#xA;    /* return the semaphore */&#xA;    OSAL_SEM_Post(semSync);&#xA;    ...&#xA;&#xA;/* thread two must not execute until thread one has finished its operations*/&#xA;    ...&#xA;    /* block on the semaphore */&#xA;    OSAL_SEM_Pend(semSync, OSAL_WAIT_FOREVER);&#xA;    ... perform some more actions&#xA;    /* return the semaphore */&#xA;    OSAL_SEM_Post(semSync);"><span class="ph token comment">/* mainline code prior to OS start */</span>
+    <span class="ph token comment">/* declare a variable of type semaphore handle */</span>
+    <span class="ph token function">OSAL_SEM_DECLARE</span><span class="ph token punctuation">(</span>semSync<span class="ph token punctuation">)</span><span class="ph token punctuation">;</span>
+    <span class="ph token comment">/* create the semaphore */</span>
+    <span class="ph token function">OSAL_SEM_Create</span><span class="ph token punctuation">(</span><span class="ph token operator">&amp;</span>semSync<span class="ph token punctuation">,</span> OSAL_SEM_TYPE_BINARY<span class="ph token punctuation">,</span> <span class="ph token number">0</span><span class="ph token punctuation">,</span> <span class="ph token number">0</span><span class="ph token punctuation">)</span><span class="ph token punctuation">;</span>
+
+
+<span class="ph token comment">/* thread one */</span>
+    <span class="ph token punctuation">.</span><span class="ph token punctuation">.</span><span class="ph token punctuation">.</span>
+    <span class="ph token comment">/* take the semaphore without waiting */</span>
+    <span class="ph token function">OSAL_SEM_Pend</span><span class="ph token punctuation">(</span>semSync<span class="ph token punctuation">,</span> <span class="ph token number">0</span><span class="ph token punctuation">)</span><span class="ph token punctuation">;</span>
+    <span class="ph token punctuation">.</span><span class="ph token punctuation">.</span><span class="ph token punctuation">.</span> perform some actions
+    <span class="ph token comment">/* return the semaphore */</span>
+    <span class="ph token function">OSAL_SEM_Post</span><span class="ph token punctuation">(</span>semSync<span class="ph token punctuation">)</span><span class="ph token punctuation">;</span>
+    <span class="ph token punctuation">.</span><span class="ph token punctuation">.</span><span class="ph token punctuation">.</span>
+
+<span class="ph token comment">/* thread two must not execute until thread one has finished its operations*/</span>
+    <span class="ph token punctuation">.</span><span class="ph token punctuation">.</span><span class="ph token punctuation">.</span>
+    <span class="ph token comment">/* block on the semaphore */</span>
+    <span class="ph token function">OSAL_SEM_Pend</span><span class="ph token punctuation">(</span>semSync<span class="ph token punctuation">,</span> OSAL_WAIT_FOREVER<span class="ph token punctuation">)</span><span class="ph token punctuation">;</span>
+    <span class="ph token punctuation">.</span><span class="ph token punctuation">.</span><span class="ph token punctuation">.</span> perform some more actions
+    <span class="ph token comment">/* return the semaphore */</span>
+    <span class="ph token function">OSAL_SEM_Post</span><span class="ph token punctuation">(</span>semSync<span class="ph token punctuation">)</span><span class="ph token punctuation">;</span></code></pre><p class="p">A semaphore can be signalled multiple times and so provides a method for an ISR to release a thread waiting on it. Even though the blocked thread never returns the semaphore, because the asynchronous ISR repeatedly posts it the next time the thread wants to pend on the semaphore it will be available.</p>
+<p class="p">By moving the majority of interrupt service processing from the ISR to a high priority thread the system response time is improved and the eventual processing can take advantage of OSAL features such as mutexes and queues which would normally be harder to implement inside the ISR. This technique is known as deferred interrupt processing.</p>
+<pre class="pre codeblock language-c"><button title="Copy Code" class="copy-code" onclick="cpy('d24744e170', this);">Copy</button><code id="d24744e170" content="/* an example interrupt handler called from an ISR that performs task synchronization using a semaphore */&#xA;void _ISRTasksRX(void) /* N.B. pseudo-code ISR */&#xA;{&#xA;    ...&#xA;&#xA;    _DRV_USART_InterruptSourceStatusClear(_DRV_USART_GET_INT_SRC_RX(_DRV_USART_OBJ(dObj, rxInterruptSource)));&#xA;&#xA;    /* Release the receive semaphore unblocking any tasks */&#xA;    OSAL_SEM_PostISR(_DRV_USART_OBJ(dObj, rxSemID));&#xA;&#xA;} /* DRV_USART_TasksRX */"><span class="ph token comment">/* an example interrupt handler called from an ISR that performs task synchronization using a semaphore */</span>
+<span class="ph token keyword">void</span> <span class="ph token function">_ISRTasksRX</span><span class="ph token punctuation">(</span><span class="ph token keyword">void</span><span class="ph token punctuation">)</span> <span class="ph token comment">/* N.B. pseudo-code ISR */</span>
+<span class="ph token punctuation">{</span>
+    <span class="ph token punctuation">.</span><span class="ph token punctuation">.</span><span class="ph token punctuation">.</span>
+
+    <span class="ph token function">_DRV_USART_InterruptSourceStatusClear</span><span class="ph token punctuation">(</span><span class="ph token function">_DRV_USART_GET_INT_SRC_RX</span><span class="ph token punctuation">(</span><span class="ph token function">_DRV_USART_OBJ</span><span class="ph token punctuation">(</span>dObj<span class="ph token punctuation">,</span> rxInterruptSource<span class="ph token punctuation">)</span><span class="ph token punctuation">)</span><span class="ph token punctuation">)</span><span class="ph token punctuation">;</span>
+
+    <span class="ph token comment">/* Release the receive semaphore unblocking any tasks */</span>
+    <span class="ph token function">OSAL_SEM_PostISR</span><span class="ph token punctuation">(</span><span class="ph token function">_DRV_USART_OBJ</span><span class="ph token punctuation">(</span>dObj<span class="ph token punctuation">,</span> rxSemID<span class="ph token punctuation">)</span><span class="ph token punctuation">)</span><span class="ph token punctuation">;</span>
+
+<span class="ph token punctuation">}</span> <span class="ph token comment">/* DRV_USART_TasksRX */</span></code></pre></div>
+<div class="related-links">
+<div class="familylinks">
+<div class="parentlink"><strong>Parent topic:</strong> <a class="link" href="GUID-0EE2CCDD-3C1B-4DA6-90EB-50B9B67AC895.html">Using The Library</a></div>
+</div>
+</div></body>
+</html>

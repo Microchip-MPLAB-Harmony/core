@@ -1,0 +1,302 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+
+<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE11" /><meta name="copyright" content="(C) Copyright 2022" />
+<meta name="DC.rights.owner" content="(C) Copyright 2022" />
+<meta name="DC.type" content="topic" />
+<meta name="DC.title" content="SYS_FS_ERROR Enum" />
+<meta name="DC.relation" scheme="URI" content="GUID-42556FDF-A632-49FE-8A5E-9303A926578C.html" />
+<meta name="DC.format" content="XHTML" />
+<meta name="DC.identifier" content="sys-fs-error-enum" />
+<link rel="stylesheet" type="text/css" href="stylesheets/commonltr.css" />
+<link rel="stylesheet" type="text/css" href="stylesheets/atmel.css" />
+<link rel="stylesheet" type="text/css" href="./stylesheets/common-extended.css" /><title>SYS_FS_ERROR Enum</title>
+<meta name="Microsoft.Help.Id" content="GUID-EDFB1AB8-CD6B-446F-8E25-F2167287A1AF-sys-fs-error-enum" />
+<meta name="Microsoft.Help.TocParent" content="GUID-EDFB1AB8-CD6B-446F-8E25-F2167287A1AF" />
+<meta name="Microsoft.Help.TocOrder" content="0" />
+<meta name="Microsoft.Help.Locale" content="en-US" />
+<meta name="Microsoft.Help.TopicLocale" content="en-US" />
+<meta name="Microsoft.Help.DisplayVersion" content="MPLAB® Harmony Core Library Reference A 11/2021" />
+<script language="javascript">
+       
+       if (window.parent.location.protocol != 'file:') {
+				document.addEventListener('click', function(e) {
+				    if (e.target) {
+               if (e.target.nodeName == "A" ) {
+                    if (!e.target.target) {
+                      e.preventDefault();
+                      e.stopPropagation();
+                              
+                      var origUrl = window.parent.location.href.substr(0, window.parent.location.href.indexOf("?"));
+                      if (origUrl.length === 0) {
+                          origUrl = window.parent.location.href;
+                      }
+                      var href= e.target.getAttribute("href");
+                      var parts = href.split("#");
+          
+                      var url = "";
+                      if (parts.length == 2 ) {
+                        if (!parts[0].length) {
+                            url = window.parent.location.search.replace('?','')
+                        } else {
+                            url = parts[0].replace('.html','');
+                        }
+                      } else {
+                        url = parts[0].replace('.html','');
+                      }
+
+                      if (parts.length == 2) {
+                          url += "#" + parts[1];
+                      }
+    
+                      window.parent.location.href = origUrl + "?" + url;
+
+                      return false;
+                    }
+               }
+            }
+				});
+			}
+
+		</script><script language="javascript">
+        function cpy(id, button) {
+        
+            var element = document.getElementById(id);
+            var content = element.getAttribute("content");
+            var textArea = document.createElement("textarea");
+            
+            // Place in the top-left corner of screen regardless of scroll position.
+            textArea.style.position = 'fixed';
+            textArea.style.top = 0;
+            textArea.style.left = 0;
+            
+            // Ensure it has a small width and height. Setting to 1px / 1em
+            // doesn't work as this gives a negative w/h on some browsers.
+            textArea.style.width = '2em';
+            textArea.style.height = '2em';
+            
+            // We don't need padding, reducing the size if it does flash render.
+            textArea.style.padding = 0;
+            
+            // Clean up any borders.
+            textArea.style.border = 'none';
+            textArea.style.outline = 'none';
+            textArea.style.boxShadow = 'none';
+            
+            // Avoid flash of the white box if rendered for any reason.
+            textArea.style.background = 'transparent';
+            
+            
+            textArea.value = content;
+            
+            document.body.appendChild(textArea);
+            textArea.focus();
+            textArea.select();
+            
+            try {
+               var successful = document.execCommand('copy');
+               var msg = successful ? 'successful' : 'unsuccessful';
+               if (!button.classList.contains("copied")){
+                  button.textContent = "Copied";
+                  button.classList.add("copied");
+                  setTimeout(function(){
+                    button.textContent = "Copy";
+                    button.classList.remove("copied");
+                  },1000);
+               }
+            } catch (err) {
+              console.log('Oops, unable to copy');
+            }
+            
+            document.body.removeChild(textArea);
+        }
+      </script><script language="javascript">
+          
+          // Add the MathML namespace to html
+          var html = document.getElementsByTagName("html")[0],
+          head = document.getElementsByTagName("head")[0];
+          
+          var mathJax = document.createElement("script");
+          mathJax.src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-MML-AM_CHTML";
+          head.appendChild(mathJax);
+          
+          html.setAttribute("xmlns:m","http://www.w3.org/1998/Math/MathML");
+          
+          function inIframe() { try { return window.self !== window.top; } catch (e) { return true; } }
+          
+          if (!inIframe()) { 
+          
+          var Default = "index.html?GUID-D84144C8-6208-429C-99C3-0F280E644638"; 
+          
+          var displaylocation = "value" + window.location.href;
+          
+          var GUIDS = displaylocation.split('GUID');          
+          
+          if (displaylocation.indexOf('#GUID') != -1) {            
+          var First = GUIDS[1].split('.html');  
+          if (GUIDS[3]){First = GUIDS[2].split('.html');}
+          if (GUIDS[4]){First = GUIDS[3].split('.html');}
+          if (GUIDS[5]){First = GUIDS[4].split('.html');}
+          
+          var Second = GUIDS[2].split('#');   
+          if (GUIDS[3]){Second = GUIDS[3].split('#');}
+          if (GUIDS[4]){Second = GUIDS[4].split('#');}
+          if (GUIDS[5]){Second = GUIDS[5].split('#');}
+          
+          Default = "index.html?" + "GUID" + First[0] + "GUID" + Second[0];     
+          }                    
+          window.top.location = Default;
+          }       
+          
+        </script><style xml:space="">
+        
+          button.copy-code{
+            display:none;
+            padding:0.7em 1.4em;
+            margin:0 0.3em 0.3em 0;
+            border-radius:0.15em;
+            box-sizing: border-box;
+            text-decoration:none;
+            font-family:'Roboto',sans-serif;
+            text-transform:uppercase;
+            font-weight:400;
+            color:#FFFFFF;
+            background-color:#9c9c9c;
+            box-shadow:inset 0 -0.6em 0 -0.35em rgba(0,0,0,0.17);
+            text-align:center;
+            position:relative;
+            border: 0;
+            float: right;
+            border-radius: .5em;
+            cursor: pointer;
+          }
+          button.copy-code:active{
+            top:0.1em;
+          }
+          
+          pre:hover button.copy-code{
+            display: inline-block !important;
+          }
+          button.copy-code.copied {
+            cursor: default !important;
+          }
+          
+          
+          @media all and (max-width:30em){
+            button.copy-code{
+              display:block;
+              margin:0.4em auto;
+            }
+          }
+        
+        
+      </style></head>
+<body id="sys-fs-error-enum">
+<h1 class="title topictitle1" id="ariaid-title1">SYS_FS_ERROR Enum</h1><div class="body"></div>
+<div class="related-links">
+<div class="familylinks">
+<div class="parentlink"><strong>Parent topic:</strong> <a class="link" href="GUID-42556FDF-A632-49FE-8A5E-9303A926578C.html">Library Interface</a></div>
+</div>
+</div><div class="topic nested1" aria-labelledby="ariaid-title2" id="c"><h2 class="title topictitle2" id="ariaid-title2">C</h2><div class="body"><pre class="pre codeblock language-c"><button title="Copy Code" class="copy-code" onclick="cpy('d194523e21', this);">Copy</button><code id="d194523e21" content="typedef enum&#xA;{&#xA;    /* Success */&#xA;    SYS_FS_ERROR_OK = 0,&#xA;    /* (1) A hard error occurred in the low level disk I/O layer */&#xA;    SYS_FS_ERROR_DISK_ERR,&#xA;    /* (2) Assertion failed */&#xA;    SYS_FS_ERROR_INT_ERR,&#xA;    /* (3) The physical drive cannot work */&#xA;    SYS_FS_ERROR_NOT_READY,&#xA;    /* (4) Could not find the file */&#xA;    SYS_FS_ERROR_NO_FILE,&#xA;    /* (5) Could not find the path */&#xA;    SYS_FS_ERROR_NO_PATH,&#xA;    /* (6) The path name format is invalid */&#xA;    SYS_FS_ERROR_INVALID_NAME,&#xA;    /* (7) Access denied due to prohibited access or directory full */&#xA;    SYS_FS_ERROR_DENIED,&#xA;    /* (8) Access denied due to prohibited access */&#xA;    SYS_FS_ERROR_EXIST,&#xA;    /* (9) The file/directory object is invalid */&#xA;    SYS_FS_ERROR_INVALID_OBJECT,&#xA;    /* (10) The physical drive is write protected */&#xA;    SYS_FS_ERROR_WRITE_PROTECTED,&#xA;    /* (11) The logical drive number is invalid */&#xA;    SYS_FS_ERROR_INVALID_DRIVE,&#xA;    /* (12) The volume has no work area */&#xA;    SYS_FS_ERROR_NOT_ENABLED,&#xA;    /* (13) There is no valid volume */&#xA;    SYS_FS_ERROR_NO_FILESYSTEM,&#xA;    /* (14) The Format() aborted due to any parameter error */&#xA;    SYS_FS_ERROR_FORMAT_ABORTED,&#xA;    /* (15) Could not get a grant to access the volume within defined period */&#xA;    SYS_FS_ERROR_TIMEOUT,&#xA;    /* (16) The operation is rejected according to the file sharing policy */&#xA;    SYS_FS_ERROR_LOCKED,&#xA;    /* (17) LFN working buffer could not be allocated */&#xA;    SYS_FS_ERROR_NOT_ENOUGH_CORE,&#xA;    /* (18) Number of open files */&#xA;    SYS_FS_ERROR_TOO_MANY_OPEN_FILES,&#xA;    /* (19) Given parameter is invalid */&#xA;    SYS_FS_ERROR_INVALID_PARAMETER,&#xA;    /* (20) Too many mounts requested. Not enough free volume available */&#xA;    SYS_FS_ERROR_NOT_ENOUGH_FREE_VOLUME,&#xA;    /* (21) Requested native file system is not supported */&#xA;    SYS_FS_ERROR_FS_NOT_SUPPORTED,&#xA;    /* (22) Requested native file system does not match the format of volume */&#xA;    SYS_FS_ERROR_FS_NOT_MATCH_WITH_VOLUME,&#xA;    /* (23) Function not supported in native file system layer */&#xA;    SYS_FS_ERROR_NOT_SUPPORTED_IN_NATIVE_FS,&#xA;    &#xA;    /* Below enumerations constants are generated for littleFS only */&#xA;    &#xA;    /* (24) Error during device operation*/&#xA;    SYS_FS_ERROR_IO,&#xA;    /* (25) Corrupted*/&#xA;    SYS_FS_ERROR_CORRUPT,&#xA;    /* (26) No directory entry*/&#xA;    SYS_FS_ERROR_NOENT,&#xA;    /* (27) Entry already exists*/&#xA;    SYS_FS_ERROR_ALREADY_EXIST,&#xA;    /* (28) Entry is not a dir*/&#xA;    SYS_FS_ERROR_NOTDIR,&#xA;    /* (29) Entry is a dir*/&#xA;    SYS_FS_ERROR_ISDIR,&#xA;    /* (30) Dir is not empty*/&#xA;    SYS_FS_ERROR_NOTEMPTY,&#xA;    /* (31) Bad file number*/&#xA;    SYS_FS_ERROR_BADF,&#xA;    /* (32) File too large*/&#xA;    SYS_FS_ERROR_FBIG,&#xA;    /* (33) Invalid parameter*/&#xA;    SYS_FS_ERROR_INVAL,&#xA;    /* (34) No space left on device*/&#xA;    SYS_FS_ERROR_NOSPC,&#xA;    /* (35) No more memory available*/&#xA;    SYS_FS_ERROR_NOMEM,&#xA;    /* (36) No data/attr available*/&#xA;    SYS_FS_ERROR_NOATTR,&#xA;    /* (37) File name too long*/&#xA;    SYS_FS_ERROR_NAMETOOLONG&#xA;} SYS_FS_ERROR;&#xA;"><span class="ph token keyword">typedef</span> <span class="ph token keyword">enum</span>
+<span class="ph token punctuation">{</span>
+    <span class="ph token comment">/* Success */</span>
+    SYS_FS_ERROR_OK <span class="ph token operator">=</span> <span class="ph token number">0</span><span class="ph token punctuation">,</span>
+    <span class="ph token comment">/* (1) A hard error occurred in the low level disk I/O layer */</span>
+    SYS_FS_ERROR_DISK_ERR<span class="ph token punctuation">,</span>
+    <span class="ph token comment">/* (2) Assertion failed */</span>
+    SYS_FS_ERROR_INT_ERR<span class="ph token punctuation">,</span>
+    <span class="ph token comment">/* (3) The physical drive cannot work */</span>
+    SYS_FS_ERROR_NOT_READY<span class="ph token punctuation">,</span>
+    <span class="ph token comment">/* (4) Could not find the file */</span>
+    SYS_FS_ERROR_NO_FILE<span class="ph token punctuation">,</span>
+    <span class="ph token comment">/* (5) Could not find the path */</span>
+    SYS_FS_ERROR_NO_PATH<span class="ph token punctuation">,</span>
+    <span class="ph token comment">/* (6) The path name format is invalid */</span>
+    SYS_FS_ERROR_INVALID_NAME<span class="ph token punctuation">,</span>
+    <span class="ph token comment">/* (7) Access denied due to prohibited access or directory full */</span>
+    SYS_FS_ERROR_DENIED<span class="ph token punctuation">,</span>
+    <span class="ph token comment">/* (8) Access denied due to prohibited access */</span>
+    SYS_FS_ERROR_EXIST<span class="ph token punctuation">,</span>
+    <span class="ph token comment">/* (9) The file/directory object is invalid */</span>
+    SYS_FS_ERROR_INVALID_OBJECT<span class="ph token punctuation">,</span>
+    <span class="ph token comment">/* (10) The physical drive is write protected */</span>
+    SYS_FS_ERROR_WRITE_PROTECTED<span class="ph token punctuation">,</span>
+    <span class="ph token comment">/* (11) The logical drive number is invalid */</span>
+    SYS_FS_ERROR_INVALID_DRIVE<span class="ph token punctuation">,</span>
+    <span class="ph token comment">/* (12) The volume has no work area */</span>
+    SYS_FS_ERROR_NOT_ENABLED<span class="ph token punctuation">,</span>
+    <span class="ph token comment">/* (13) There is no valid volume */</span>
+    SYS_FS_ERROR_NO_FILESYSTEM<span class="ph token punctuation">,</span>
+    <span class="ph token comment">/* (14) The Format() aborted due to any parameter error */</span>
+    SYS_FS_ERROR_FORMAT_ABORTED<span class="ph token punctuation">,</span>
+    <span class="ph token comment">/* (15) Could not get a grant to access the volume within defined period */</span>
+    SYS_FS_ERROR_TIMEOUT<span class="ph token punctuation">,</span>
+    <span class="ph token comment">/* (16) The operation is rejected according to the file sharing policy */</span>
+    SYS_FS_ERROR_LOCKED<span class="ph token punctuation">,</span>
+    <span class="ph token comment">/* (17) LFN working buffer could not be allocated */</span>
+    SYS_FS_ERROR_NOT_ENOUGH_CORE<span class="ph token punctuation">,</span>
+    <span class="ph token comment">/* (18) Number of open files */</span>
+    SYS_FS_ERROR_TOO_MANY_OPEN_FILES<span class="ph token punctuation">,</span>
+    <span class="ph token comment">/* (19) Given parameter is invalid */</span>
+    SYS_FS_ERROR_INVALID_PARAMETER<span class="ph token punctuation">,</span>
+    <span class="ph token comment">/* (20) Too many mounts requested. Not enough free volume available */</span>
+    SYS_FS_ERROR_NOT_ENOUGH_FREE_VOLUME<span class="ph token punctuation">,</span>
+    <span class="ph token comment">/* (21) Requested native file system is not supported */</span>
+    SYS_FS_ERROR_FS_NOT_SUPPORTED<span class="ph token punctuation">,</span>
+    <span class="ph token comment">/* (22) Requested native file system does not match the format of volume */</span>
+    SYS_FS_ERROR_FS_NOT_MATCH_WITH_VOLUME<span class="ph token punctuation">,</span>
+    <span class="ph token comment">/* (23) Function not supported in native file system layer */</span>
+    SYS_FS_ERROR_NOT_SUPPORTED_IN_NATIVE_FS<span class="ph token punctuation">,</span>
+    
+    <span class="ph token comment">/* Below enumerations constants are generated for littleFS only */</span>
+    
+    <span class="ph token comment">/* (24) Error during device operation*/</span>
+    SYS_FS_ERROR_IO<span class="ph token punctuation">,</span>
+    <span class="ph token comment">/* (25) Corrupted*/</span>
+    SYS_FS_ERROR_CORRUPT<span class="ph token punctuation">,</span>
+    <span class="ph token comment">/* (26) No directory entry*/</span>
+    SYS_FS_ERROR_NOENT<span class="ph token punctuation">,</span>
+    <span class="ph token comment">/* (27) Entry already exists*/</span>
+    SYS_FS_ERROR_ALREADY_EXIST<span class="ph token punctuation">,</span>
+    <span class="ph token comment">/* (28) Entry is not a dir*/</span>
+    SYS_FS_ERROR_NOTDIR<span class="ph token punctuation">,</span>
+    <span class="ph token comment">/* (29) Entry is a dir*/</span>
+    SYS_FS_ERROR_ISDIR<span class="ph token punctuation">,</span>
+    <span class="ph token comment">/* (30) Dir is not empty*/</span>
+    SYS_FS_ERROR_NOTEMPTY<span class="ph token punctuation">,</span>
+    <span class="ph token comment">/* (31) Bad file number*/</span>
+    SYS_FS_ERROR_BADF<span class="ph token punctuation">,</span>
+    <span class="ph token comment">/* (32) File too large*/</span>
+    SYS_FS_ERROR_FBIG<span class="ph token punctuation">,</span>
+    <span class="ph token comment">/* (33) Invalid parameter*/</span>
+    SYS_FS_ERROR_INVAL<span class="ph token punctuation">,</span>
+    <span class="ph token comment">/* (34) No space left on device*/</span>
+    SYS_FS_ERROR_NOSPC<span class="ph token punctuation">,</span>
+    <span class="ph token comment">/* (35) No more memory available*/</span>
+    SYS_FS_ERROR_NOMEM<span class="ph token punctuation">,</span>
+    <span class="ph token comment">/* (36) No data/attr available*/</span>
+    SYS_FS_ERROR_NOATTR<span class="ph token punctuation">,</span>
+    <span class="ph token comment">/* (37) File name too long*/</span>
+    SYS_FS_ERROR_NAMETOOLONG
+<span class="ph token punctuation">}</span> SYS_FS_ERROR<span class="ph token punctuation">;</span>
+</code></pre></div>
+</div>
+<div class="topic nested1" aria-labelledby="ariaid-title3" id="summary"><h2 class="title topictitle2" id="ariaid-title3">Summary</h2><div class="body"><p class="p">Lists the various error cases.</p>
+</div>
+</div>
+<div class="topic nested1" aria-labelledby="ariaid-title4" id="description"><h2 class="title topictitle2" id="ariaid-title4">Description</h2><div class="body"><p class="p">This enumeration lists the various error cases. When the application calls
+for a file system function which has a return type of SYS_FS_RESULT and if
+the return value is SYS_FS_RES_FAILURE, the application can know the
+specific reason for failure by calling the SYS_FS_FileError function.</p>
+<p class="p">The return value of SYS_FS_FileError function will be one of the enumeration of
+type SYS_FS_ERROR.</p>
+</div>
+</div>
+<div class="topic nested1" aria-labelledby="ariaid-title5" id="remarks"><h2 class="title topictitle2" id="ariaid-title5">Remarks</h2><div class="body"><p class="p">None.</p>
+</div>
+</div>
+</body>
+</html>

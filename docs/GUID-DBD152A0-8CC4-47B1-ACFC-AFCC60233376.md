@@ -1,0 +1,84 @@
+# DRV\_USART\_WriteBufferAdd Function
+
+**Parent topic:**[Library Interface](GUID-80FC4C27-64D2-411F-BE4A-4C4A8BD80604.md)
+
+## C
+
+```c
+void DRV_USART_WriteBufferAdd
+(
+    const DRV_HANDLE handle,
+    void* buffer,
+    size_t size,
+    DRV_USART_BUFFER_HANDLE* bufferHandle
+);
+```
+
+## Summary
+
+Queues a write operation.
+
+## Description
+
+This function schedules a non-blocking write operation. The function returns<br />with a valid buffer handle in the bufferHandle argument if the write request<br />was scheduled successfully. The function adds the request to the driver<br />instance queue and returns immediately. While the request is in the<br />queue, the application buffer is owned by the driver and should not be<br />modified. On returning, the bufferHandle parameter may be<br />DRV\_USART\_BUFFER\_HANDLE\_INVALID for the following reasons:
+
+-   if a buffer could not be allocated to the request because the queue is full
+
+-   if the input buffer handle is NULL
+
+-   if the input buffer pointer is NULL
+
+-   if the buffer size \(number of bytes to write\) is 0
+
+-   if the driver handle is invalid
+
+
+If the requesting client registered an event callback with the driver, the<br />driver will issue a DRV\_USART\_BUFFER\_EVENT\_COMPLETE event if the buffer was<br />processed successfully or a DRV\_USART\_BUFFER\_EVENT\_ERROR event if the buffer<br />was not processed successfully.
+
+## Precondition
+
+DRV\_USART\_Open must have been called to obtain a valid opened device handle.
+
+## Parameters
+
+|Param|Description|
+|-----|-----------|
+|handle|Handle of the communication channel as return by the DRV\_USART\_Open function.|
+|buffer|Data to be transmitted.|
+|size|Buffer size in bytes.|
+|bufferHandle|Pointer to an argument that will contain the return buffer handle.|
+
+## Returns
+
+The bufferHandle parameter will contain the return buffer handle. This will be DRV\_USART\_BUFFER\_HANDLE\_INVALID if the function was not successful.
+
+## Example
+
+```c
+MY_APP_OBJ myAppObj;
+uint8_t mybuffer[MY_BUFFER_SIZE];
+DRV_USART_BUFFER_HANDLE bufferHandle;
+
+// myUSARTHandle is the handle returned
+// by the DRV_USART_Open function.
+
+DRV_USART_WriteBufferAdd(
+    myUSARThandle,
+    myBuffer,
+    MY_BUFFER_SIZE,
+    &bufferHandle
+);
+
+if(bufferHandle == DRV_USART_BUFFER_HANDLE_INVALID)
+{
+    // Error handling here
+}
+
+// Event is received when
+// the buffer is processed.
+```
+
+## Remarks
+
+This function is thread safe in a RTOS application. It can be called from within the USART Driver Buffer Event Handler that is registered by this client. It should not be called in the event handler associated with another USART driver instance. It should not otherwise be called directly in an ISR.
+

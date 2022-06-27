@@ -1,0 +1,335 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+
+<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE11" /><meta name="copyright" content="(C) Copyright 2022" />
+<meta name="DC.rights.owner" content="(C) Copyright 2022" />
+<meta name="DC.type" content="topic" />
+<meta name="DC.title" content="Using The Library" />
+<meta name="DC.relation" scheme="URI" content="GUID-05D0B89A-EE4D-46D4-B58F-7402C56061AE.html" />
+<meta name="DC.format" content="XHTML" />
+<meta name="DC.identifier" content="using-the-library" />
+<link rel="stylesheet" type="text/css" href="stylesheets/commonltr.css" />
+<link rel="stylesheet" type="text/css" href="stylesheets/atmel.css" />
+<link rel="stylesheet" type="text/css" href="./stylesheets/common-extended.css" /><title>Using The Library</title>
+<meta name="Microsoft.Help.Id" content="GUID-EDFB1AB8-CD6B-446F-8E25-F2167287A1AF-using-the-library" />
+<meta name="Microsoft.Help.TocParent" content="GUID-EDFB1AB8-CD6B-446F-8E25-F2167287A1AF" />
+<meta name="Microsoft.Help.TocOrder" content="0" />
+<meta name="Microsoft.Help.Locale" content="en-US" />
+<meta name="Microsoft.Help.TopicLocale" content="en-US" />
+<meta name="Microsoft.Help.DisplayVersion" content="MPLAB® Harmony Core Library Reference A 11/2021" />
+<script language="javascript">
+       
+       if (window.parent.location.protocol != 'file:') {
+				document.addEventListener('click', function(e) {
+				    if (e.target) {
+               if (e.target.nodeName == "A" ) {
+                    if (!e.target.target) {
+                      e.preventDefault();
+                      e.stopPropagation();
+                              
+                      var origUrl = window.parent.location.href.substr(0, window.parent.location.href.indexOf("?"));
+                      if (origUrl.length === 0) {
+                          origUrl = window.parent.location.href;
+                      }
+                      var href= e.target.getAttribute("href");
+                      var parts = href.split("#");
+          
+                      var url = "";
+                      if (parts.length == 2 ) {
+                        if (!parts[0].length) {
+                            url = window.parent.location.search.replace('?','')
+                        } else {
+                            url = parts[0].replace('.html','');
+                        }
+                      } else {
+                        url = parts[0].replace('.html','');
+                      }
+
+                      if (parts.length == 2) {
+                          url += "#" + parts[1];
+                      }
+    
+                      window.parent.location.href = origUrl + "?" + url;
+
+                      return false;
+                    }
+               }
+            }
+				});
+			}
+
+		</script><script language="javascript">
+        function cpy(id, button) {
+        
+            var element = document.getElementById(id);
+            var content = element.getAttribute("content");
+            var textArea = document.createElement("textarea");
+            
+            // Place in the top-left corner of screen regardless of scroll position.
+            textArea.style.position = 'fixed';
+            textArea.style.top = 0;
+            textArea.style.left = 0;
+            
+            // Ensure it has a small width and height. Setting to 1px / 1em
+            // doesn't work as this gives a negative w/h on some browsers.
+            textArea.style.width = '2em';
+            textArea.style.height = '2em';
+            
+            // We don't need padding, reducing the size if it does flash render.
+            textArea.style.padding = 0;
+            
+            // Clean up any borders.
+            textArea.style.border = 'none';
+            textArea.style.outline = 'none';
+            textArea.style.boxShadow = 'none';
+            
+            // Avoid flash of the white box if rendered for any reason.
+            textArea.style.background = 'transparent';
+            
+            
+            textArea.value = content;
+            
+            document.body.appendChild(textArea);
+            textArea.focus();
+            textArea.select();
+            
+            try {
+               var successful = document.execCommand('copy');
+               var msg = successful ? 'successful' : 'unsuccessful';
+               if (!button.classList.contains("copied")){
+                  button.textContent = "Copied";
+                  button.classList.add("copied");
+                  setTimeout(function(){
+                    button.textContent = "Copy";
+                    button.classList.remove("copied");
+                  },1000);
+               }
+            } catch (err) {
+              console.log('Oops, unable to copy');
+            }
+            
+            document.body.removeChild(textArea);
+        }
+      </script><script language="javascript">
+          
+          // Add the MathML namespace to html
+          var html = document.getElementsByTagName("html")[0],
+          head = document.getElementsByTagName("head")[0];
+          
+          var mathJax = document.createElement("script");
+          mathJax.src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-MML-AM_CHTML";
+          head.appendChild(mathJax);
+          
+          html.setAttribute("xmlns:m","http://www.w3.org/1998/Math/MathML");
+          
+          function inIframe() { try { return window.self !== window.top; } catch (e) { return true; } }
+          
+          if (!inIframe()) { 
+          
+          var Default = "index.html?GUID-EE734734-7914-41BF-8AF2-8275506BBED4"; 
+          
+          var displaylocation = "value" + window.location.href;
+          
+          var GUIDS = displaylocation.split('GUID');          
+          
+          if (displaylocation.indexOf('#GUID') != -1) {            
+          var First = GUIDS[1].split('.html');  
+          if (GUIDS[3]){First = GUIDS[2].split('.html');}
+          if (GUIDS[4]){First = GUIDS[3].split('.html');}
+          if (GUIDS[5]){First = GUIDS[4].split('.html');}
+          
+          var Second = GUIDS[2].split('#');   
+          if (GUIDS[3]){Second = GUIDS[3].split('#');}
+          if (GUIDS[4]){Second = GUIDS[4].split('#');}
+          if (GUIDS[5]){Second = GUIDS[5].split('#');}
+          
+          Default = "index.html?" + "GUID" + First[0] + "GUID" + Second[0];     
+          }                    
+          window.top.location = Default;
+          }       
+          
+        </script><style xml:space="">
+        
+          button.copy-code{
+            display:none;
+            padding:0.7em 1.4em;
+            margin:0 0.3em 0.3em 0;
+            border-radius:0.15em;
+            box-sizing: border-box;
+            text-decoration:none;
+            font-family:'Roboto',sans-serif;
+            text-transform:uppercase;
+            font-weight:400;
+            color:#FFFFFF;
+            background-color:#9c9c9c;
+            box-shadow:inset 0 -0.6em 0 -0.35em rgba(0,0,0,0.17);
+            text-align:center;
+            position:relative;
+            border: 0;
+            float: right;
+            border-radius: .5em;
+            cursor: pointer;
+          }
+          button.copy-code:active{
+            top:0.1em;
+          }
+          
+          pre:hover button.copy-code{
+            display: inline-block !important;
+          }
+          button.copy-code.copied {
+            cursor: default !important;
+          }
+          
+          
+          @media all and (max-width:30em){
+            button.copy-code{
+              display:block;
+              margin:0.4em auto;
+            }
+          }
+        
+        
+      </style></head>
+<body id="using-the-library">
+<h1 class="title topictitle1" id="ariaid-title1">Using The Library</h1><div class="body"><p class="p">The Time System Service provides alarm and delay functionalities to multiple clients. In addition, it also provides APIs to read the counter value which can be used to measure the time period between two events.</p>
+<p class="p"><strong class="ph b">Alarm</strong></p>
+<ul class="ul"><li class="li"><p class="p">For single/one-shot alarms, the application must register a callback. Once the requested time period elapses, the application is notified by calling the registered callback. After the callback is given, the internal timer object is destroyed by Time System Service, making it available for application to request new alarms/delays.</p>
+</li>
+<li class="li"><p class="p">For periodic alarms, the application can either register a callback or can choose to poll the status of the alarm. Once the requested time period elapses, the application is notified by calling the callback if registered by the application. In case the application wants to poll the status of the alarm it can do so by calling the status API provided by the library.</p>
+</li>
+<li class="li"><p class="p">Application can use the delay functionality by using the delay related APIs and then polling the status of the requested delay. Calling the status API after the delay has expired will destroy the internal timer object making it available for new alarms/delays.</p>
+</li>
+<li class="li"><p class="p">The library also provides counter functionality, that can be used by the application to measure the time elapsed between the two events. The counter functionality does not require a dedicated timer object and is always available.</p>
+</li>
+</ul>
+<p class="p"><strong class="ph b">Example application demonstrating the multi-client system timer functionality</strong></p>
+<p class="p">This application demonstrates timer functionality (with two clients to the Time System Service) by periodically printing a message on console every two seconds and blinking an LED every one second</p>
+<pre class="pre codeblock language-c"><button title="Copy Code" class="copy-code" onclick="cpy('d85627e33', this);">Copy</button><code id="d85627e33" content="#define LED_BLINK_RATE_MS         1000&#xA;#define CONSOLE_PRINT_RATE_MS     2000&#xA;#define SINGLE_SHOT_TIMER_MS      100&#xA;#define SWITCH_DELAY_MS           500&#xA;&#xA;typedef struct&#xA;{&#xA;    /* The application's current state */&#xA;    APP_STATES state;&#xA;&#xA;    SYS_TIME_HANDLE tmr1Handle;&#xA;    volatile bool tmr1Expired;&#xA;&#xA;    SYS_TIME_HANDLE tmr2Handle;&#xA;    volatile bool tmr2Expired;&#xA;&#xA;    SYS_TIME_HANDLE tmr3Handle;&#xA;    volatile bool tmr3Expired;&#xA;&#xA;    SYS_TIME_HANDLE tmr4Handle;&#xA;    uint64_t prevCounterVal;&#xA;&#xA;} APP_DATA;&#xA;&#xA;APP_DATA appData;&#xA;&#xA;void Timer1_Callback ( uintptr_t context )&#xA;{&#xA;    appData.tmr1Expired = true;&#xA;}&#xA;&#xA;void Timer2_Callback ( uintptr_t context )&#xA;{&#xA;    appData.tmr2Expired = true;&#xA;}&#xA;&#xA;void Timer3_Callback ( uintptr_t context )&#xA;{&#xA;    appData.tmr3Expired = true;&#xA;}&#xA;&#xA;void APP_Initialize ( void )&#xA;{&#xA;    /* Place the App state machine in its initial state. */&#xA;    appData.state = APP_STATE_INIT;&#xA;    appData.state = APP_STATE_INIT;&#xA;    appData.tmr1Handle = SYS_TIME_HANDLE_INVALID;&#xA;    appData.tmr2Handle = SYS_TIME_HANDLE_INVALID;&#xA;    appData.tmr3Handle = SYS_TIME_HANDLE_INVALID;&#xA;    appData.tmr4Handle = SYS_TIME_HANDLE_INVALID;&#xA;    appData.tmr1Expired = false;&#xA;    appData.tmr2Expired = false;&#xA;    appData.tmr3Expired = false;&#xA;}&#xA;&#xA;void APP_Tasks ( void )&#xA;{&#xA;    uint64_t diffCount = 0;&#xA;&#xA;    /* Check the application's current state. */&#xA;    switch ( appData.state )&#xA;    {&#xA;        /* Application's initial state. */&#xA;        case APP_STATE_INIT:&#xA;        {&#xA;            appData.tmr1Handle = SYS_TIME_CallbackRegisterMS(Timer1_Callback, 0, LED_BLINK_RATE_MS, SYS_TIME_PERIODIC);&#xA;            appData.tmr2Handle = SYS_TIME_CallbackRegisterMS(Timer2_Callback, 0, CONSOLE_PRINT_RATE_MS, SYS_TIME_PERIODIC);&#xA;&#xA;            if ((appData.tmr1Handle != SYS_TIME_HANDLE_INVALID) &amp;&amp; (appData.tmr2Handle != SYS_TIME_HANDLE_INVALID))&#xA;            {&#xA;&#xA;                appData.state = APP_STATE_SERVICE_TASKS;&#xA;            }&#xA;            break;&#xA;        }&#xA;&#xA;        case APP_STATE_SERVICE_TASKS:&#xA;        {&#xA;            if(appData.tmr1Expired == true)&#xA;            {&#xA;                /* Toggle LED periodically */&#xA;                appData.tmr1Expired = false;&#xA;                LED_TOGGLE();&#xA;            }&#xA;            if(appData.tmr2Expired == true)&#xA;            {&#xA;                printf(&#34;Message printed every %d ms \r\n&#34;, CONSOLE_PRINT_RATE_MS);&#xA;                appData.tmr2Expired = false;&#xA;            }&#xA;            if(appData.tmr3Expired == true)&#xA;            {&#xA;                printf(&#34;Single shot timer of %d ms expired \r\n&#34;, SINGLE_SHOT_TIMER_MS);&#xA;                appData.tmr3Expired = false;&#xA;            }&#xA;            if(SWITCH_GET() == SWITCH_STATUS_PRESSED)&#xA;            {&#xA;                /* Wait on delay */&#xA;                appData.prevCounterVal = SYS_TIME_Counter64Get();&#xA;&#xA;                SYS_TIME_DelayMS(SWITCH_DELAY_MS, &amp;appData.tmr4Handle);&#xA;                while(SYS_TIME_DelayIsComplete(appData.tmr4Handle) == false);&#xA;&#xA;                diffCount = (SYS_TIME_Counter64Get() - appData.prevCounterVal);&#xA;                printf(&#34;Delay time = %d ms\r\n&#34;, (int)SYS_TIME_CountToMS(diffCount));&#xA;&#xA;                appData.tmr3Handle = SYS_TIME_CallbackRegisterMS(Timer3_Callback, 0, SINGLE_SHOT_TIMER_MS, SYS_TIME_SINGLE);&#xA;            }&#xA;            break;&#xA;        }&#xA;&#xA;        /* The default state should never be executed. */&#xA;        default:&#xA;        {&#xA;            break;&#xA;        }&#xA;&#xA;    }&#xA;}&#xA;"><span class="ph token macro property">#<span class="ph token directive keyword">define</span> LED_BLINK_RATE_MS         1000</span>
+<span class="ph token macro property">#<span class="ph token directive keyword">define</span> CONSOLE_PRINT_RATE_MS     2000</span>
+<span class="ph token macro property">#<span class="ph token directive keyword">define</span> SINGLE_SHOT_TIMER_MS      100</span>
+<span class="ph token macro property">#<span class="ph token directive keyword">define</span> SWITCH_DELAY_MS           500</span>
+
+<span class="ph token keyword">typedef</span> <span class="ph token keyword">struct</span>
+<span class="ph token punctuation">{</span>
+    <span class="ph token comment">/* The application's current state */</span>
+    APP_STATES state<span class="ph token punctuation">;</span>
+
+    SYS_TIME_HANDLE tmr1Handle<span class="ph token punctuation">;</span>
+    <span class="ph token keyword">volatile</span> bool tmr1Expired<span class="ph token punctuation">;</span>
+
+    SYS_TIME_HANDLE tmr2Handle<span class="ph token punctuation">;</span>
+    <span class="ph token keyword">volatile</span> bool tmr2Expired<span class="ph token punctuation">;</span>
+
+    SYS_TIME_HANDLE tmr3Handle<span class="ph token punctuation">;</span>
+    <span class="ph token keyword">volatile</span> bool tmr3Expired<span class="ph token punctuation">;</span>
+
+    SYS_TIME_HANDLE tmr4Handle<span class="ph token punctuation">;</span>
+    uint64_t prevCounterVal<span class="ph token punctuation">;</span>
+
+<span class="ph token punctuation">}</span> APP_DATA<span class="ph token punctuation">;</span>
+
+APP_DATA appData<span class="ph token punctuation">;</span>
+
+<span class="ph token keyword">void</span> Timer1_Callback <span class="ph token punctuation">(</span> uintptr_t context <span class="ph token punctuation">)</span>
+<span class="ph token punctuation">{</span>
+    appData<span class="ph token punctuation">.</span>tmr1Expired <span class="ph token operator">=</span> true<span class="ph token punctuation">;</span>
+<span class="ph token punctuation">}</span>
+
+<span class="ph token keyword">void</span> Timer2_Callback <span class="ph token punctuation">(</span> uintptr_t context <span class="ph token punctuation">)</span>
+<span class="ph token punctuation">{</span>
+    appData<span class="ph token punctuation">.</span>tmr2Expired <span class="ph token operator">=</span> true<span class="ph token punctuation">;</span>
+<span class="ph token punctuation">}</span>
+
+<span class="ph token keyword">void</span> Timer3_Callback <span class="ph token punctuation">(</span> uintptr_t context <span class="ph token punctuation">)</span>
+<span class="ph token punctuation">{</span>
+    appData<span class="ph token punctuation">.</span>tmr3Expired <span class="ph token operator">=</span> true<span class="ph token punctuation">;</span>
+<span class="ph token punctuation">}</span>
+
+<span class="ph token keyword">void</span> APP_Initialize <span class="ph token punctuation">(</span> <span class="ph token keyword">void</span> <span class="ph token punctuation">)</span>
+<span class="ph token punctuation">{</span>
+    <span class="ph token comment">/* Place the App state machine in its initial state. */</span>
+    appData<span class="ph token punctuation">.</span>state <span class="ph token operator">=</span> APP_STATE_INIT<span class="ph token punctuation">;</span>
+    appData<span class="ph token punctuation">.</span>state <span class="ph token operator">=</span> APP_STATE_INIT<span class="ph token punctuation">;</span>
+    appData<span class="ph token punctuation">.</span>tmr1Handle <span class="ph token operator">=</span> SYS_TIME_HANDLE_INVALID<span class="ph token punctuation">;</span>
+    appData<span class="ph token punctuation">.</span>tmr2Handle <span class="ph token operator">=</span> SYS_TIME_HANDLE_INVALID<span class="ph token punctuation">;</span>
+    appData<span class="ph token punctuation">.</span>tmr3Handle <span class="ph token operator">=</span> SYS_TIME_HANDLE_INVALID<span class="ph token punctuation">;</span>
+    appData<span class="ph token punctuation">.</span>tmr4Handle <span class="ph token operator">=</span> SYS_TIME_HANDLE_INVALID<span class="ph token punctuation">;</span>
+    appData<span class="ph token punctuation">.</span>tmr1Expired <span class="ph token operator">=</span> false<span class="ph token punctuation">;</span>
+    appData<span class="ph token punctuation">.</span>tmr2Expired <span class="ph token operator">=</span> false<span class="ph token punctuation">;</span>
+    appData<span class="ph token punctuation">.</span>tmr3Expired <span class="ph token operator">=</span> false<span class="ph token punctuation">;</span>
+<span class="ph token punctuation">}</span>
+
+<span class="ph token keyword">void</span> APP_Tasks <span class="ph token punctuation">(</span> <span class="ph token keyword">void</span> <span class="ph token punctuation">)</span>
+<span class="ph token punctuation">{</span>
+    uint64_t diffCount <span class="ph token operator">=</span> <span class="ph token number">0</span><span class="ph token punctuation">;</span>
+
+    <span class="ph token comment">/* Check the application's current state. */</span>
+    <span class="ph token keyword">switch</span> <span class="ph token punctuation">(</span> appData<span class="ph token punctuation">.</span>state <span class="ph token punctuation">)</span>
+    <span class="ph token punctuation">{</span>
+        <span class="ph token comment">/* Application's initial state. */</span>
+        <span class="ph token keyword">case</span> APP_STATE_INIT<span class="ph token operator">:</span>
+        <span class="ph token punctuation">{</span>
+            appData<span class="ph token punctuation">.</span>tmr1Handle <span class="ph token operator">=</span> <span class="ph token function">SYS_TIME_CallbackRegisterMS</span><span class="ph token punctuation">(</span>Timer1_Callback<span class="ph token punctuation">,</span> <span class="ph token number">0</span><span class="ph token punctuation">,</span> LED_BLINK_RATE_MS<span class="ph token punctuation">,</span> SYS_TIME_PERIODIC<span class="ph token punctuation">)</span><span class="ph token punctuation">;</span>
+            appData<span class="ph token punctuation">.</span>tmr2Handle <span class="ph token operator">=</span> <span class="ph token function">SYS_TIME_CallbackRegisterMS</span><span class="ph token punctuation">(</span>Timer2_Callback<span class="ph token punctuation">,</span> <span class="ph token number">0</span><span class="ph token punctuation">,</span> CONSOLE_PRINT_RATE_MS<span class="ph token punctuation">,</span> SYS_TIME_PERIODIC<span class="ph token punctuation">)</span><span class="ph token punctuation">;</span>
+
+            <span class="ph token keyword">if</span> <span class="ph token punctuation">(</span><span class="ph token punctuation">(</span>appData<span class="ph token punctuation">.</span>tmr1Handle <span class="ph token operator">!=</span> SYS_TIME_HANDLE_INVALID<span class="ph token punctuation">)</span> <span class="ph token operator">&amp;&amp;</span> <span class="ph token punctuation">(</span>appData<span class="ph token punctuation">.</span>tmr2Handle <span class="ph token operator">!=</span> SYS_TIME_HANDLE_INVALID<span class="ph token punctuation">)</span><span class="ph token punctuation">)</span>
+            <span class="ph token punctuation">{</span>
+
+                appData<span class="ph token punctuation">.</span>state <span class="ph token operator">=</span> APP_STATE_SERVICE_TASKS<span class="ph token punctuation">;</span>
+            <span class="ph token punctuation">}</span>
+            <span class="ph token keyword">break</span><span class="ph token punctuation">;</span>
+        <span class="ph token punctuation">}</span>
+
+        <span class="ph token keyword">case</span> APP_STATE_SERVICE_TASKS<span class="ph token operator">:</span>
+        <span class="ph token punctuation">{</span>
+            <span class="ph token keyword">if</span><span class="ph token punctuation">(</span>appData<span class="ph token punctuation">.</span>tmr1Expired <span class="ph token operator">==</span> true<span class="ph token punctuation">)</span>
+            <span class="ph token punctuation">{</span>
+                <span class="ph token comment">/* Toggle LED periodically */</span>
+                appData<span class="ph token punctuation">.</span>tmr1Expired <span class="ph token operator">=</span> false<span class="ph token punctuation">;</span>
+                <span class="ph token function">LED_TOGGLE</span><span class="ph token punctuation">(</span><span class="ph token punctuation">)</span><span class="ph token punctuation">;</span>
+            <span class="ph token punctuation">}</span>
+            <span class="ph token keyword">if</span><span class="ph token punctuation">(</span>appData<span class="ph token punctuation">.</span>tmr2Expired <span class="ph token operator">==</span> true<span class="ph token punctuation">)</span>
+            <span class="ph token punctuation">{</span>
+                <span class="ph token function">printf</span><span class="ph token punctuation">(</span><span class="ph token string">"Message printed every %d ms \r\n"</span><span class="ph token punctuation">,</span> CONSOLE_PRINT_RATE_MS<span class="ph token punctuation">)</span><span class="ph token punctuation">;</span>
+                appData<span class="ph token punctuation">.</span>tmr2Expired <span class="ph token operator">=</span> false<span class="ph token punctuation">;</span>
+            <span class="ph token punctuation">}</span>
+            <span class="ph token keyword">if</span><span class="ph token punctuation">(</span>appData<span class="ph token punctuation">.</span>tmr3Expired <span class="ph token operator">==</span> true<span class="ph token punctuation">)</span>
+            <span class="ph token punctuation">{</span>
+                <span class="ph token function">printf</span><span class="ph token punctuation">(</span><span class="ph token string">"Single shot timer of %d ms expired \r\n"</span><span class="ph token punctuation">,</span> SINGLE_SHOT_TIMER_MS<span class="ph token punctuation">)</span><span class="ph token punctuation">;</span>
+                appData<span class="ph token punctuation">.</span>tmr3Expired <span class="ph token operator">=</span> false<span class="ph token punctuation">;</span>
+            <span class="ph token punctuation">}</span>
+            <span class="ph token keyword">if</span><span class="ph token punctuation">(</span><span class="ph token function">SWITCH_GET</span><span class="ph token punctuation">(</span><span class="ph token punctuation">)</span> <span class="ph token operator">==</span> SWITCH_STATUS_PRESSED<span class="ph token punctuation">)</span>
+            <span class="ph token punctuation">{</span>
+                <span class="ph token comment">/* Wait on delay */</span>
+                appData<span class="ph token punctuation">.</span>prevCounterVal <span class="ph token operator">=</span> <span class="ph token function">SYS_TIME_Counter64Get</span><span class="ph token punctuation">(</span><span class="ph token punctuation">)</span><span class="ph token punctuation">;</span>
+
+                <span class="ph token function">SYS_TIME_DelayMS</span><span class="ph token punctuation">(</span>SWITCH_DELAY_MS<span class="ph token punctuation">,</span> <span class="ph token operator">&amp;</span>appData<span class="ph token punctuation">.</span>tmr4Handle<span class="ph token punctuation">)</span><span class="ph token punctuation">;</span>
+                <span class="ph token keyword">while</span><span class="ph token punctuation">(</span><span class="ph token function">SYS_TIME_DelayIsComplete</span><span class="ph token punctuation">(</span>appData<span class="ph token punctuation">.</span>tmr4Handle<span class="ph token punctuation">)</span> <span class="ph token operator">==</span> false<span class="ph token punctuation">)</span><span class="ph token punctuation">;</span>
+
+                diffCount <span class="ph token operator">=</span> <span class="ph token punctuation">(</span><span class="ph token function">SYS_TIME_Counter64Get</span><span class="ph token punctuation">(</span><span class="ph token punctuation">)</span> <span class="ph token operator">-</span> appData<span class="ph token punctuation">.</span>prevCounterVal<span class="ph token punctuation">)</span><span class="ph token punctuation">;</span>
+                <span class="ph token function">printf</span><span class="ph token punctuation">(</span><span class="ph token string">"Delay time = %d ms\r\n"</span><span class="ph token punctuation">,</span> <span class="ph token punctuation">(</span><span class="ph token keyword">int</span><span class="ph token punctuation">)</span><span class="ph token function">SYS_TIME_CountToMS</span><span class="ph token punctuation">(</span>diffCount<span class="ph token punctuation">)</span><span class="ph token punctuation">)</span><span class="ph token punctuation">;</span>
+
+                appData<span class="ph token punctuation">.</span>tmr3Handle <span class="ph token operator">=</span> <span class="ph token function">SYS_TIME_CallbackRegisterMS</span><span class="ph token punctuation">(</span>Timer3_Callback<span class="ph token punctuation">,</span> <span class="ph token number">0</span><span class="ph token punctuation">,</span> SINGLE_SHOT_TIMER_MS<span class="ph token punctuation">,</span> SYS_TIME_SINGLE<span class="ph token punctuation">)</span><span class="ph token punctuation">;</span>
+            <span class="ph token punctuation">}</span>
+            <span class="ph token keyword">break</span><span class="ph token punctuation">;</span>
+        <span class="ph token punctuation">}</span>
+
+        <span class="ph token comment">/* The default state should never be executed. */</span>
+        <span class="ph token keyword">default</span><span class="ph token operator">:</span>
+        <span class="ph token punctuation">{</span>
+            <span class="ph token keyword">break</span><span class="ph token punctuation">;</span>
+        <span class="ph token punctuation">}</span>
+
+    <span class="ph token punctuation">}</span>
+<span class="ph token punctuation">}</span>
+</code></pre></div>
+<div class="related-links">
+<div class="familylinks">
+<div class="parentlink"><strong>Parent topic:</strong> <a class="link" href="GUID-05D0B89A-EE4D-46D4-B58F-7402C56061AE.html">Time System Service</a></div>
+</div>
+</div></body>
+</html>

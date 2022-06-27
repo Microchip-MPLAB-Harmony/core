@@ -1,0 +1,815 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+
+<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE11" /><meta name="copyright" content="(C) Copyright 2022" />
+<meta name="DC.rights.owner" content="(C) Copyright 2022" />
+<meta name="DC.type" content="topic" />
+<meta name="DC.title" content="Library Interface" />
+<meta name="DC.relation" scheme="URI" content="GUID-066D09D2-5550-49D9-ADA2-60A702DB243E.html" />
+<meta name="DC.relation" scheme="URI" content="GUID-EBC86D7E-991E-4F99-B615-1764B5687E0F.html" />
+<meta name="DC.relation" scheme="URI" content="GUID-3365F9D0-51D1-4CD6-8ABE-36B90E11752E.html" />
+<meta name="DC.relation" scheme="URI" content="GUID-C3E440D0-2F73-4BA9-874A-A08D52EA87E3.html" />
+<meta name="DC.relation" scheme="URI" content="GUID-4CD57E60-CFCA-4413-A344-0BB9E1A05660.html" />
+<meta name="DC.relation" scheme="URI" content="GUID-760611CB-BB7F-4083-A98D-102D8A28E346.html" />
+<meta name="DC.relation" scheme="URI" content="GUID-B11944D6-E746-4D44-B1D6-9C1E12944351.html" />
+<meta name="DC.relation" scheme="URI" content="GUID-E8F31262-EEB7-495E-8292-1CE7D6BED8F6.html" />
+<meta name="DC.relation" scheme="URI" content="GUID-BEEC6E4A-AB22-424B-81C4-161E06B286B3.html" />
+<meta name="DC.relation" scheme="URI" content="GUID-8A597E0D-6D93-4722-84B7-6DBC83406F78.html" />
+<meta name="DC.relation" scheme="URI" content="GUID-B6E0D5A9-0560-44D9-A979-BA1CECDD2885.html" />
+<meta name="DC.relation" scheme="URI" content="GUID-92EA2E5D-4704-4D93-96DB-29FA4359A2AB.html" />
+<meta name="DC.relation" scheme="URI" content="GUID-C5423212-D6E4-4C4A-A935-BAE0D8E971D9.html" />
+<meta name="DC.relation" scheme="URI" content="GUID-79C0F4A4-9F81-4865-B6A6-2642F39E919F.html" />
+<meta name="DC.relation" scheme="URI" content="GUID-D7E32A8F-DC21-4E8D-ABE6-6AEE3FA0C89C.html" />
+<meta name="DC.relation" scheme="URI" content="GUID-9556A393-F301-40C0-8CCB-B49E9A0FC031.html" />
+<meta name="DC.relation" scheme="URI" content="GUID-F6E3750F-7E4C-4A6C-9993-3028AF3D5457.html" />
+<meta name="DC.relation" scheme="URI" content="GUID-E19AB663-B620-431F-988F-64E339B3010C.html" />
+<meta name="DC.relation" scheme="URI" content="GUID-68AF6796-DF3C-4742-81B5-555C359975D1.html" />
+<meta name="DC.relation" scheme="URI" content="GUID-40903D55-759F-49AF-BDF7-CD4E0693C394.html" />
+<meta name="DC.relation" scheme="URI" content="GUID-17500CE8-820C-482D-B721-87577B1FA289.html" />
+<meta name="DC.relation" scheme="URI" content="GUID-D34C151E-F128-4431-B0B3-6992EDD44D8F.html" />
+<meta name="DC.relation" scheme="URI" content="GUID-B84F5FC9-27E9-43D0-BF80-DDF4F8EBA4F1.html" />
+<meta name="DC.relation" scheme="URI" content="GUID-42C01AE8-60C8-4A86-91A7-56D9222CBFC7.html" />
+<meta name="DC.relation" scheme="URI" content="GUID-DE7E790A-ADA1-45B1-83C7-C072A270C6B1.html" />
+<meta name="DC.relation" scheme="URI" content="GUID-C0A3888C-CE30-403B-9AE7-042022369538.html" />
+<meta name="DC.relation" scheme="URI" content="GUID-09414A23-7390-4DBF-950D-F0BB8575A7B6.html" />
+<meta name="DC.relation" scheme="URI" content="GUID-C43ABFE3-58B7-4A30-840E-B2BBCCCDF33D.html" />
+<meta name="DC.relation" scheme="URI" content="GUID-85FC64CE-DADA-4F11-BBAC-9EF299544C00.html" />
+<meta name="DC.relation" scheme="URI" content="GUID-BB75D339-99C6-4EFA-8443-51B883E071F5.html" />
+<meta name="DC.relation" scheme="URI" content="GUID-D91142BC-8060-4E5E-A75A-F92BD776160A.html" />
+<meta name="DC.relation" scheme="URI" content="GUID-63D12AA9-FCFA-4183-9E63-F01D58DDF1B9.html" />
+<meta name="DC.relation" scheme="URI" content="GUID-8D636C6F-ECAD-4501-9CD1-E145B18D7256.html" />
+<meta name="DC.relation" scheme="URI" content="GUID-27A799DA-3CEE-457F-AFEE-819817CA5978.html" />
+<meta name="DC.relation" scheme="URI" content="GUID-0DECF377-6DF4-46B4-A309-5C08078198F0.html" />
+<meta name="DC.relation" scheme="URI" content="GUID-9001DC8C-6506-490D-B889-B8925C1192C3.html" />
+<meta name="DC.relation" scheme="URI" content="GUID-EE2B1E74-FD6E-4E67-B829-146AA4C02001.html" />
+<meta name="DC.relation" scheme="URI" content="GUID-49A215E2-6C03-4638-8DDF-D5E08D353B8C.html" />
+<meta name="DC.relation" scheme="URI" content="GUID-9A395A5B-24E8-474F-9FD0-FDA0DD7DF22A.html" />
+<meta name="DC.relation" scheme="URI" content="GUID-783A145F-F4AF-4AA7-B066-80BD9E439E00.html" />
+<meta name="DC.relation" scheme="URI" content="GUID-6D392610-20DC-4F38-9798-E5FF2BAA3E0A.html" />
+<meta name="DC.relation" scheme="URI" content="GUID-F724EC87-6DF5-4689-821F-2757C4994DA9.html" />
+<meta name="DC.relation" scheme="URI" content="GUID-95A8C5DF-C0ED-42F7-9C69-062984DBBEAB.html" />
+<meta name="DC.relation" scheme="URI" content="GUID-CC9DEE82-C59D-409F-81BD-347420DBAB94.html" />
+<meta name="DC.relation" scheme="URI" content="GUID-29718976-3953-4ACB-80D9-E4F98D7267EB.html" />
+<meta name="DC.relation" scheme="URI" content="GUID-788A2F8C-2432-42F2-9E49-35E431487E63.html" />
+<meta name="DC.relation" scheme="URI" content="GUID-6942E929-C41E-47A6-BDC6-72B98D966379.html" />
+<meta name="DC.relation" scheme="URI" content="GUID-8179778A-592C-4660-87E7-4AFDC27FA7B7.html" />
+<meta name="DC.relation" scheme="URI" content="GUID-053B53A0-6358-4572-87A9-D344535EECF0.html" />
+<meta name="DC.relation" scheme="URI" content="GUID-B19AE59E-6323-4584-8369-DF3831E9F1F4.html" />
+<meta name="DC.relation" scheme="URI" content="GUID-A7294804-5A6B-42F0-A7EC-9B78EEBC0C19.html" />
+<meta name="DC.relation" scheme="URI" content="GUID-E971A136-E792-4F48-9664-C4B0612DD46D.html" />
+<meta name="DC.relation" scheme="URI" content="GUID-A5F00E8D-8192-4978-8E5D-D7843B7046C0.html" />
+<meta name="DC.relation" scheme="URI" content="GUID-D84144C8-6208-429C-99C3-0F280E644638.html" />
+<meta name="DC.relation" scheme="URI" content="GUID-0F9DEE27-DE19-477C-9AD4-3F4E5C84CF8B.html" />
+<meta name="DC.relation" scheme="URI" content="GUID-BF3D7806-7DBE-4A2A-BA54-72EAF3659DBD.html" />
+<meta name="DC.relation" scheme="URI" content="GUID-7E8361E8-8372-4766-89EA-12D19F9DE0CD.html" />
+<meta name="DC.relation" scheme="URI" content="GUID-E77EF3AE-382C-4616-B57C-D573748C63A2.html" />
+<meta name="DC.relation" scheme="URI" content="GUID-CFDB12EA-C18C-4C53-A42B-5E0419E69632.html" />
+<meta name="DC.relation" scheme="URI" content="GUID-52A7B0F6-92F2-44FB-B4CF-363FB76CFCA7.html" />
+<meta name="DC.relation" scheme="URI" content="GUID-A6505482-D078-4796-9E2E-A224BB412F0A.html" />
+<meta name="DC.relation" scheme="URI" content="GUID-13815F0C-6C56-4478-979F-D2D1623BDF20.html" />
+<meta name="DC.relation" scheme="URI" content="GUID-FC8C727E-1368-48E2-88E3-C84B369ABE41.html" />
+<meta name="DC.relation" scheme="URI" content="GUID-BD3DA087-FB55-44E5-B3D7-47966581E0E5.html" />
+<meta name="DC.relation" scheme="URI" content="GUID-509CACEA-CB11-45C5-89F1-A1744632EECA.html" />
+<meta name="DC.relation" scheme="URI" content="GUID-2057DC7F-AF3F-4DA1-BBA9-E086A5B949E1.html" />
+<meta name="DC.relation" scheme="URI" content="GUID-8F64B44C-AAE7-48E6-A1DF-EA5D649F655D.html" />
+<meta name="DC.relation" scheme="URI" content="GUID-DAC3E906-7325-456B-A67A-B5F9FD901AC3.html" />
+<meta name="DC.relation" scheme="URI" content="GUID-6D8C930C-02AE-4657-B161-09CD0578C2E5.html" />
+<meta name="DC.relation" scheme="URI" content="GUID-1A26E4B2-B446-450A-BADF-0B0C5549FBA2.html" />
+<meta name="DC.relation" scheme="URI" content="GUID-BE94C6F4-3546-4F08-ACFC-B47A03E1E8E0.html" />
+<meta name="DC.relation" scheme="URI" content="GUID-7E038757-E53C-4A63-82DC-DF79418D9FDB.html" />
+<meta name="DC.relation" scheme="URI" content="GUID-A670ED1C-14B6-4AC7-9C14-8A16D69DF1A3.html" />
+<meta name="DC.relation" scheme="URI" content="GUID-3355F72A-0C28-43AD-877C-3B76EA782BCE.html" />
+<meta name="DC.relation" scheme="URI" content="GUID-BAC812A4-D8EE-4075-9E96-7B08D530A892.html" />
+<meta name="DC.relation" scheme="URI" content="GUID-9A7A8F80-564A-4CEC-AAB4-460526A7CBDC.html" />
+<meta name="DC.relation" scheme="URI" content="GUID-D904086C-E292-4B0F-ADB3-0633EAD4AB9B.html" />
+<meta name="DC.relation" scheme="URI" content="GUID-DE47A3D3-C32A-4ED6-A2B7-A5D16DBAEAD0.html" />
+<meta name="DC.relation" scheme="URI" content="GUID-ECC769B5-CCD6-4467-A9A4-1472CB4B2E29.html" />
+<meta name="DC.relation" scheme="URI" content="GUID-49B9B4AE-75C1-466E-A2AA-592725DCA8A8.html" />
+<meta name="DC.relation" scheme="URI" content="GUID-72155962-6FFE-4598-AE78-3C138ECA6E6C.html" />
+<meta name="DC.relation" scheme="URI" content="GUID-BA2537D5-FF83-42EA-AD5B-2D427CC91976.html" />
+<meta name="DC.relation" scheme="URI" content="GUID-1D9C329D-7D74-4D33-A711-A6F33A9714C5.html" />
+<meta name="DC.relation" scheme="URI" content="GUID-E830242B-F60A-4E37-99CA-BB6261C77502.html" />
+<meta name="DC.relation" scheme="URI" content="GUID-70F2B75F-672C-4723-84A5-9C5065059760.html" />
+<meta name="DC.relation" scheme="URI" content="GUID-560E0AF3-D3EA-43B8-92D8-A7E3CBB2FDDA.html" />
+<meta name="DC.relation" scheme="URI" content="GUID-ECF2920E-DC50-497B-8D2F-318D08D4C97F.html" />
+<meta name="DC.relation" scheme="URI" content="GUID-8AC15DAA-ECDD-4386-9F24-C84E3D544C53.html" />
+<meta name="DC.relation" scheme="URI" content="GUID-880E2678-2F2C-49D7-A20E-9D0F43DA8F94.html" />
+<meta name="DC.relation" scheme="URI" content="GUID-D5DA8FED-9161-4241-AC90-02C7928C8DEB.html" />
+<meta name="DC.format" content="XHTML" />
+<meta name="DC.identifier" content="library-interface" />
+<link rel="stylesheet" type="text/css" href="stylesheets/commonltr.css" />
+<link rel="stylesheet" type="text/css" href="stylesheets/atmel.css" />
+<link rel="stylesheet" type="text/css" href="./stylesheets/common-extended.css" /><title>Library Interface</title>
+<meta name="Microsoft.Help.Id" content="GUID-EDFB1AB8-CD6B-446F-8E25-F2167287A1AF-library-interface" />
+<meta name="Microsoft.Help.TocParent" content="GUID-EDFB1AB8-CD6B-446F-8E25-F2167287A1AF" />
+<meta name="Microsoft.Help.TocOrder" content="0" />
+<meta name="Microsoft.Help.Locale" content="en-US" />
+<meta name="Microsoft.Help.TopicLocale" content="en-US" />
+<meta name="Microsoft.Help.DisplayVersion" content="MPLAB® Harmony Core Library Reference A 11/2021" />
+<script language="javascript">
+       
+       if (window.parent.location.protocol != 'file:') {
+				document.addEventListener('click', function(e) {
+				    if (e.target) {
+               if (e.target.nodeName == "A" ) {
+                    if (!e.target.target) {
+                      e.preventDefault();
+                      e.stopPropagation();
+                              
+                      var origUrl = window.parent.location.href.substr(0, window.parent.location.href.indexOf("?"));
+                      if (origUrl.length === 0) {
+                          origUrl = window.parent.location.href;
+                      }
+                      var href= e.target.getAttribute("href");
+                      var parts = href.split("#");
+          
+                      var url = "";
+                      if (parts.length == 2 ) {
+                        if (!parts[0].length) {
+                            url = window.parent.location.search.replace('?','')
+                        } else {
+                            url = parts[0].replace('.html','');
+                        }
+                      } else {
+                        url = parts[0].replace('.html','');
+                      }
+
+                      if (parts.length == 2) {
+                          url += "#" + parts[1];
+                      }
+    
+                      window.parent.location.href = origUrl + "?" + url;
+
+                      return false;
+                    }
+               }
+            }
+				});
+			}
+
+		</script><script language="javascript">
+        function cpy(id, button) {
+        
+            var element = document.getElementById(id);
+            var content = element.getAttribute("content");
+            var textArea = document.createElement("textarea");
+            
+            // Place in the top-left corner of screen regardless of scroll position.
+            textArea.style.position = 'fixed';
+            textArea.style.top = 0;
+            textArea.style.left = 0;
+            
+            // Ensure it has a small width and height. Setting to 1px / 1em
+            // doesn't work as this gives a negative w/h on some browsers.
+            textArea.style.width = '2em';
+            textArea.style.height = '2em';
+            
+            // We don't need padding, reducing the size if it does flash render.
+            textArea.style.padding = 0;
+            
+            // Clean up any borders.
+            textArea.style.border = 'none';
+            textArea.style.outline = 'none';
+            textArea.style.boxShadow = 'none';
+            
+            // Avoid flash of the white box if rendered for any reason.
+            textArea.style.background = 'transparent';
+            
+            
+            textArea.value = content;
+            
+            document.body.appendChild(textArea);
+            textArea.focus();
+            textArea.select();
+            
+            try {
+               var successful = document.execCommand('copy');
+               var msg = successful ? 'successful' : 'unsuccessful';
+               if (!button.classList.contains("copied")){
+                  button.textContent = "Copied";
+                  button.classList.add("copied");
+                  setTimeout(function(){
+                    button.textContent = "Copy";
+                    button.classList.remove("copied");
+                  },1000);
+               }
+            } catch (err) {
+              console.log('Oops, unable to copy');
+            }
+            
+            document.body.removeChild(textArea);
+        }
+      </script><script language="javascript">
+          
+          // Add the MathML namespace to html
+          var html = document.getElementsByTagName("html")[0],
+          head = document.getElementsByTagName("head")[0];
+          
+          var mathJax = document.createElement("script");
+          mathJax.src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-MML-AM_CHTML";
+          head.appendChild(mathJax);
+          
+          html.setAttribute("xmlns:m","http://www.w3.org/1998/Math/MathML");
+          
+          function inIframe() { try { return window.self !== window.top; } catch (e) { return true; } }
+          
+          if (!inIframe()) { 
+          
+          var Default = "index.html?GUID-42556FDF-A632-49FE-8A5E-9303A926578C"; 
+          
+          var displaylocation = "value" + window.location.href;
+          
+          var GUIDS = displaylocation.split('GUID');          
+          
+          if (displaylocation.indexOf('#GUID') != -1) {            
+          var First = GUIDS[1].split('.html');  
+          if (GUIDS[3]){First = GUIDS[2].split('.html');}
+          if (GUIDS[4]){First = GUIDS[3].split('.html');}
+          if (GUIDS[5]){First = GUIDS[4].split('.html');}
+          
+          var Second = GUIDS[2].split('#');   
+          if (GUIDS[3]){Second = GUIDS[3].split('#');}
+          if (GUIDS[4]){Second = GUIDS[4].split('#');}
+          if (GUIDS[5]){Second = GUIDS[5].split('#');}
+          
+          Default = "index.html?" + "GUID" + First[0] + "GUID" + Second[0];     
+          }                    
+          window.top.location = Default;
+          }       
+          
+        </script><style xml:space="">
+        
+          button.copy-code{
+            display:none;
+            padding:0.7em 1.4em;
+            margin:0 0.3em 0.3em 0;
+            border-radius:0.15em;
+            box-sizing: border-box;
+            text-decoration:none;
+            font-family:'Roboto',sans-serif;
+            text-transform:uppercase;
+            font-weight:400;
+            color:#FFFFFF;
+            background-color:#9c9c9c;
+            box-shadow:inset 0 -0.6em 0 -0.35em rgba(0,0,0,0.17);
+            text-align:center;
+            position:relative;
+            border: 0;
+            float: right;
+            border-radius: .5em;
+            cursor: pointer;
+          }
+          button.copy-code:active{
+            top:0.1em;
+          }
+          
+          pre:hover button.copy-code{
+            display: inline-block !important;
+          }
+          button.copy-code.copied {
+            cursor: default !important;
+          }
+          
+          
+          @media all and (max-width:30em){
+            button.copy-code{
+              display:block;
+              margin:0.4em auto;
+            }
+          }
+        
+        
+      </style></head>
+<body id="library-interface">
+<h1 class="title topictitle1" id="ariaid-title1">Library Interface</h1><div class="body"><p class="p">File System Service library provides the following interfaces:</p>
+<p class="p"><strong class="ph b">SYS FS Functions</strong></p>
+<p class="p">These API's should be used from application layer to perform any file operation</p>
+
+<div class="tablenoborder"><table cellpadding="4" cellspacing="0" summary="" class="table" frame="border" border="1" rules="all"><col style="width:" /><col style="width:" /><thead class="thead" style="text-align:left;"><tr class="row"><th class="entry cellrowborder" style="text-align:left;vertical-align:middle;" id="d11780e23"><span>Name</span></th>
+<th class="entry cellrowborder" style="text-align:left;vertical-align:middle;" id="d11780e25"><span>Description</span></th>
+</tr>
+</thead>
+<tbody class="tbody"><tr class="row"><td class="entry cellrowborder" style="text-align:left;vertical-align:middle;" headers="d11780e23 "><span>SYS_FS_Initialize</span></td>
+<td class="entry cellrowborder" style="text-align:left;vertical-align:middle;" headers="d11780e25 "><span>Initializes the file system abstraction layer (sys_fs layer)</span></td>
+</tr>
+<tr class="row"><td class="entry cellrowborder" style="text-align:left;vertical-align:middle;" headers="d11780e23 "><span>SYS_FS_Tasks</span></td>
+<td class="entry cellrowborder" style="text-align:left;vertical-align:middle;" headers="d11780e25 "><span>Maintains the File System tasks and functionalities</span></td>
+</tr>
+<tr class="row"><td class="entry cellrowborder" style="text-align:left;vertical-align:middle;" headers="d11780e23 "><span>SYS_FS_Mount</span></td>
+<td class="entry cellrowborder" style="text-align:left;vertical-align:middle;" headers="d11780e25 "><span>Mounts the disk/volume with specified file system</span></td>
+</tr>
+<tr class="row"><td class="entry cellrowborder" style="text-align:left;vertical-align:middle;" headers="d11780e23 "><span>SYS_FS_Unmount</span></td>
+<td class="entry cellrowborder" style="text-align:left;vertical-align:middle;" headers="d11780e25 "><span>Unmounts the disk/volume for the file system</span></td>
+</tr>
+<tr class="row"><td class="entry cellrowborder" style="text-align:left;vertical-align:middle;" headers="d11780e23 "><span>SYS_FS_EventHandlerSet</span></td>
+<td class="entry cellrowborder" style="text-align:left;vertical-align:middle;" headers="d11780e25 "><span>Sets the pointer to the function (and it's context) to be called when mount/unmount event has occurred</span></td>
+</tr>
+<tr class="row"><td class="entry cellrowborder" style="text-align:left;vertical-align:middle;" headers="d11780e23 "><span>SYS_FS_FileOpen</span></td>
+<td class="entry cellrowborder" style="text-align:left;vertical-align:middle;" headers="d11780e25 "><span>Opens a file</span></td>
+</tr>
+<tr class="row"><td class="entry cellrowborder" style="text-align:left;vertical-align:middle;" headers="d11780e23 "><span>SYS_FS_FileClose</span></td>
+<td class="entry cellrowborder" style="text-align:left;vertical-align:middle;" headers="d11780e25 "><span>Closes a file</span></td>
+</tr>
+<tr class="row"><td class="entry cellrowborder" style="text-align:left;vertical-align:middle;" headers="d11780e23 "><span>SYS_FS_FileRead</span></td>
+<td class="entry cellrowborder" style="text-align:left;vertical-align:middle;" headers="d11780e25 "><span>Read data from the file</span></td>
+</tr>
+<tr class="row"><td class="entry cellrowborder" style="text-align:left;vertical-align:middle;" headers="d11780e23 "><span>SYS_FS_FileStat</span></td>
+<td class="entry cellrowborder" style="text-align:left;vertical-align:middle;" headers="d11780e25 "><span>Gets file status</span></td>
+</tr>
+<tr class="row"><td class="entry cellrowborder" style="text-align:left;vertical-align:middle;" headers="d11780e23 "><span>SYS_FS_FileSeek</span></td>
+<td class="entry cellrowborder" style="text-align:left;vertical-align:middle;" headers="d11780e25 "><span>Moves the file pointer by the requested offset</span></td>
+</tr>
+<tr class="row"><td class="entry cellrowborder" style="text-align:left;vertical-align:middle;" headers="d11780e23 "><span>SYS_FS_FileTell</span></td>
+<td class="entry cellrowborder" style="text-align:left;vertical-align:middle;" headers="d11780e25 "><span>Obtains the file pointer position</span></td>
+</tr>
+<tr class="row"><td class="entry cellrowborder" style="text-align:left;vertical-align:middle;" headers="d11780e23 "><span>SYS_FS_FileSize</span></td>
+<td class="entry cellrowborder" style="text-align:left;vertical-align:middle;" headers="d11780e25 "><span>Returns the size of the file in bytes</span></td>
+</tr>
+<tr class="row"><td class="entry cellrowborder" style="text-align:left;vertical-align:middle;" headers="d11780e23 "><span>SYS_FS_FileEOF</span></td>
+<td class="entry cellrowborder" style="text-align:left;vertical-align:middle;" headers="d11780e25 "><span>Checks for end of file</span></td>
+</tr>
+<tr class="row"><td class="entry cellrowborder" style="text-align:left;vertical-align:middle;" headers="d11780e23 "><span>SYS_FS_FileNameGet</span></td>
+<td class="entry cellrowborder" style="text-align:left;vertical-align:middle;" headers="d11780e25 "><span>Reads the file name</span></td>
+</tr>
+<tr class="row"><td class="entry cellrowborder" style="text-align:left;vertical-align:middle;" headers="d11780e23 "><span>SYS_FS_Error</span></td>
+<td class="entry cellrowborder" style="text-align:left;vertical-align:middle;" headers="d11780e25 "><span>Returns the last error</span></td>
+</tr>
+<tr class="row"><td class="entry cellrowborder" style="text-align:left;vertical-align:middle;" headers="d11780e23 "><span>SYS_FS_FileError</span></td>
+<td class="entry cellrowborder" style="text-align:left;vertical-align:middle;" headers="d11780e25 "><span>Returns the file specific error</span></td>
+</tr>
+<tr class="row"><td class="entry cellrowborder" style="text-align:left;vertical-align:middle;" headers="d11780e23 "><span>SYS_FS_FileStringGet</span></td>
+<td class="entry cellrowborder" style="text-align:left;vertical-align:middle;" headers="d11780e25 "><span>Reads a string from the file into a buffer</span></td>
+</tr>
+<tr class="row"><td class="entry cellrowborder" style="text-align:left;vertical-align:middle;" headers="d11780e23 "><span>SYS_FS_FileStringPut</span></td>
+<td class="entry cellrowborder" style="text-align:left;vertical-align:middle;" headers="d11780e25 "><span>Writes a string to a file</span></td>
+</tr>
+<tr class="row"><td class="entry cellrowborder" style="text-align:left;vertical-align:middle;" headers="d11780e23 "><span>SYS_FS_FileWrite</span></td>
+<td class="entry cellrowborder" style="text-align:left;vertical-align:middle;" headers="d11780e25 "><span>Writes data to the file</span></td>
+</tr>
+<tr class="row"><td class="entry cellrowborder" style="text-align:left;vertical-align:middle;" headers="d11780e23 "><span>SYS_FS_FileSync</span></td>
+<td class="entry cellrowborder" style="text-align:left;vertical-align:middle;" headers="d11780e25 "><span>Flushes the cached information when writing to a file</span></td>
+</tr>
+<tr class="row"><td class="entry cellrowborder" style="text-align:left;vertical-align:middle;" headers="d11780e23 "><span>SYS_FS_FileTruncate</span></td>
+<td class="entry cellrowborder" style="text-align:left;vertical-align:middle;" headers="d11780e25 "><span>Truncates a file</span></td>
+</tr>
+<tr class="row"><td class="entry cellrowborder" style="text-align:left;vertical-align:middle;" headers="d11780e23 "><span>SYS_FS_FileCharacterPut</span></td>
+<td class="entry cellrowborder" style="text-align:left;vertical-align:middle;" headers="d11780e25 "><span>Writes a character to a file</span></td>
+</tr>
+<tr class="row"><td class="entry cellrowborder" style="text-align:left;vertical-align:middle;" headers="d11780e23 "><span>SYS_FS_FilePrintf</span></td>
+<td class="entry cellrowborder" style="text-align:left;vertical-align:middle;" headers="d11780e25 "><span>Writes a formatted string into a file</span></td>
+</tr>
+<tr class="row"><td class="entry cellrowborder" style="text-align:left;vertical-align:middle;" headers="d11780e23 "><span>SYS_FS_FileTestError</span></td>
+<td class="entry cellrowborder" style="text-align:left;vertical-align:middle;" headers="d11780e25 "><span>Checks for errors in the file</span></td>
+</tr>
+<tr class="row"><td class="entry cellrowborder" style="text-align:left;vertical-align:middle;" headers="d11780e23 "><span>SYS_FS_DirOpen</span></td>
+<td class="entry cellrowborder" style="text-align:left;vertical-align:middle;" headers="d11780e25 "><span>Open a directory</span></td>
+</tr>
+<tr class="row"><td class="entry cellrowborder" style="text-align:left;vertical-align:middle;" headers="d11780e23 "><span>SYS_FS_DirClose</span></td>
+<td class="entry cellrowborder" style="text-align:left;vertical-align:middle;" headers="d11780e25 "><span>Closes an opened directory</span></td>
+</tr>
+<tr class="row"><td class="entry cellrowborder" style="text-align:left;vertical-align:middle;" headers="d11780e23 "><span>SYS_FS_DirRead</span></td>
+<td class="entry cellrowborder" style="text-align:left;vertical-align:middle;" headers="d11780e25 "><span>Reads the files and directories of the specified directory</span></td>
+</tr>
+<tr class="row"><td class="entry cellrowborder" style="text-align:left;vertical-align:middle;" headers="d11780e23 "><span>SYS_FS_DirRewind</span></td>
+<td class="entry cellrowborder" style="text-align:left;vertical-align:middle;" headers="d11780e25 "><span>Rewinds to the beginning of the directory</span></td>
+</tr>
+<tr class="row"><td class="entry cellrowborder" style="text-align:left;vertical-align:middle;" headers="d11780e23 "><span>SYS_FS_DirSearch</span></td>
+<td class="entry cellrowborder" style="text-align:left;vertical-align:middle;" headers="d11780e25 "><span>Searches for a file or directory</span></td>
+</tr>
+<tr class="row"><td class="entry cellrowborder" style="text-align:left;vertical-align:middle;" headers="d11780e23 "><span>SYS_FS_DirectoryMake</span></td>
+<td class="entry cellrowborder" style="text-align:left;vertical-align:middle;" headers="d11780e25 "><span>Creates a directory</span></td>
+</tr>
+<tr class="row"><td class="entry cellrowborder" style="text-align:left;vertical-align:middle;" headers="d11780e23 "><span>SYS_FS_DirectoryChange</span></td>
+<td class="entry cellrowborder" style="text-align:left;vertical-align:middle;" headers="d11780e25 "><span>Changes to a the directory specified</span></td>
+</tr>
+<tr class="row"><td class="entry cellrowborder" style="text-align:left;vertical-align:middle;" headers="d11780e23 "><span>SYS_FS_CurrentWorkingDirectoryGet</span></td>
+<td class="entry cellrowborder" style="text-align:left;vertical-align:middle;" headers="d11780e25 "><span>Gets the current working directory</span></td>
+</tr>
+<tr class="row"><td class="entry cellrowborder" style="text-align:left;vertical-align:middle;" headers="d11780e23 "><span>SYS_FS_FileDirectoryRemove</span></td>
+<td class="entry cellrowborder" style="text-align:left;vertical-align:middle;" headers="d11780e25 "><span>Removes a file or directory</span></td>
+</tr>
+<tr class="row"><td class="entry cellrowborder" style="text-align:left;vertical-align:middle;" headers="d11780e23 "><span>SYS_FS_FileDirectoryRenameMove</span></td>
+<td class="entry cellrowborder" style="text-align:left;vertical-align:middle;" headers="d11780e25 "><span>Renames or moves a file or directory</span></td>
+</tr>
+<tr class="row"><td class="entry cellrowborder" style="text-align:left;vertical-align:middle;" headers="d11780e23 "><span>SYS_FS_FileDirectoryModeSet</span></td>
+<td class="entry cellrowborder" style="text-align:left;vertical-align:middle;" headers="d11780e25 "><span>Sets the mode for the file or directory</span></td>
+</tr>
+<tr class="row"><td class="entry cellrowborder" style="text-align:left;vertical-align:middle;" headers="d11780e23 "><span>SYS_FS_FileDirectoryTimeSet</span></td>
+<td class="entry cellrowborder" style="text-align:left;vertical-align:middle;" headers="d11780e25 "><span>Sets or changes the time for a file or directory</span></td>
+</tr>
+<tr class="row"><td class="entry cellrowborder" style="text-align:left;vertical-align:middle;" headers="d11780e23 "><span>SYS_FS_CurrentDriveGet</span></td>
+<td class="entry cellrowborder" style="text-align:left;vertical-align:middle;" headers="d11780e25 "><span>Gets the current drive</span></td>
+</tr>
+<tr class="row"><td class="entry cellrowborder" style="text-align:left;vertical-align:middle;" headers="d11780e23 "><span>SYS_FS_CurrentDriveSet</span></td>
+<td class="entry cellrowborder" style="text-align:left;vertical-align:middle;" headers="d11780e25 "><span>Sets the drive</span></td>
+</tr>
+<tr class="row"><td class="entry cellrowborder" style="text-align:left;vertical-align:middle;" headers="d11780e23 "><span>SYS_FS_DriveLabelGet</span></td>
+<td class="entry cellrowborder" style="text-align:left;vertical-align:middle;" headers="d11780e25 "><span>Gets the drive label</span></td>
+</tr>
+<tr class="row"><td class="entry cellrowborder" style="text-align:left;vertical-align:middle;" headers="d11780e23 "><span>SYS_FS_DriveLabelSet</span></td>
+<td class="entry cellrowborder" style="text-align:left;vertical-align:middle;" headers="d11780e25 "><span>Sets the drive label</span></td>
+</tr>
+<tr class="row"><td class="entry cellrowborder" style="text-align:left;vertical-align:middle;" headers="d11780e23 "><span>SYS_FS_DriveFormat</span></td>
+<td class="entry cellrowborder" style="text-align:left;vertical-align:middle;" headers="d11780e25 "><span>Formats a drive</span></td>
+</tr>
+<tr class="row"><td class="entry cellrowborder" style="text-align:left;vertical-align:middle;" headers="d11780e23 "><span>SYS_FS_DrivePartition</span></td>
+<td class="entry cellrowborder" style="text-align:left;vertical-align:middle;" headers="d11780e25 "><span>Partitions a physical drive (media)</span></td>
+</tr>
+<tr class="row"><td class="entry cellrowborder" style="text-align:left;vertical-align:middle;" headers="d11780e23 "><span>SYS_FS_DriveSectorGet</span></td>
+<td class="entry cellrowborder" style="text-align:left;vertical-align:middle;" headers="d11780e25 "><span>Obtains total number of sectors and number of free sectors for the specified drive</span></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p class="p"><strong class="ph b">SYS FS Data types and constants</strong></p>
+
+<div class="tablenoborder"><table cellpadding="4" cellspacing="0" summary="" class="table" frame="border" border="1" rules="all"><col style="width:" /><col style="width:" /><col style="width:" /><thead class="thead" style="text-align:left;"><tr class="row"><th class="entry cellrowborder" style="text-align:left;vertical-align:middle;" id="d11780e256"><span>Name</span></th>
+<th class="entry cellrowborder" style="text-align:left;vertical-align:middle;" id="d11780e258"><span>Type</span></th>
+<th class="entry cellrowborder" style="text-align:left;vertical-align:middle;" id="d11780e260"><span>Description</span></th>
+</tr>
+</thead>
+<tbody class="tbody"><tr class="row"><td class="entry cellrowborder" style="text-align:left;vertical-align:middle;" headers="d11780e256 "><span>SYS_FS_HANDLE</span></td>
+<td class="entry cellrowborder" style="text-align:left;vertical-align:middle;" headers="d11780e258 "><span>Typedef</span></td>
+<td class="entry cellrowborder" style="text-align:left;vertical-align:middle;" headers="d11780e260 "><span>This type defines the file handle</span></td>
+</tr>
+<tr class="row"><td class="entry cellrowborder" style="text-align:left;vertical-align:middle;" headers="d11780e256 "><span>SYS_FS_HANDLE_INVALID</span></td>
+<td class="entry cellrowborder" style="text-align:left;vertical-align:middle;" headers="d11780e258 "><span>Macro</span></td>
+<td class="entry cellrowborder" style="text-align:left;vertical-align:middle;" headers="d11780e260 "><span>Invalid file handle</span></td>
+</tr>
+<tr class="row"><td class="entry cellrowborder" style="text-align:left;vertical-align:middle;" headers="d11780e256 "><span>SYS_FS_FILE_SYSTEM_TYPE</span></td>
+<td class="entry cellrowborder" style="text-align:left;vertical-align:middle;" headers="d11780e258 "><span>Enum</span></td>
+<td class="entry cellrowborder" style="text-align:left;vertical-align:middle;" headers="d11780e260 "><span>Enumerated data type identifying native file systems supported</span></td>
+</tr>
+<tr class="row"><td class="entry cellrowborder" style="text-align:left;vertical-align:middle;" headers="d11780e256 "><span>SYS_FS_FILE_DIR_ATTR</span></td>
+<td class="entry cellrowborder" style="text-align:left;vertical-align:middle;" headers="d11780e258 "><span>Enum</span></td>
+<td class="entry cellrowborder" style="text-align:left;vertical-align:middle;" headers="d11780e260 "><span>Enumerated data type identifying the various attributes for file/directory</span></td>
+</tr>
+<tr class="row"><td class="entry cellrowborder" style="text-align:left;vertical-align:middle;" headers="d11780e256 "><span>SYS_FS_FILE_SEEK_CONTROL</span></td>
+<td class="entry cellrowborder" style="text-align:left;vertical-align:middle;" headers="d11780e258 "><span>Enum</span></td>
+<td class="entry cellrowborder" style="text-align:left;vertical-align:middle;" headers="d11780e260 "><span>Lists the various modes of file seek</span></td>
+</tr>
+<tr class="row"><td class="entry cellrowborder" style="text-align:left;vertical-align:middle;" headers="d11780e256 "><span>SYS_FS_RESULT</span></td>
+<td class="entry cellrowborder" style="text-align:left;vertical-align:middle;" headers="d11780e258 "><span>Enum</span></td>
+<td class="entry cellrowborder" style="text-align:left;vertical-align:middle;" headers="d11780e260 "><span>Lists the various results of a file operation</span></td>
+</tr>
+<tr class="row"><td class="entry cellrowborder" style="text-align:left;vertical-align:middle;" headers="d11780e256 "><span>SYS_FS_FORMAT</span></td>
+<td class="entry cellrowborder" style="text-align:left;vertical-align:middle;" headers="d11780e258 "><span>Macros</span></td>
+<td class="entry cellrowborder" style="text-align:left;vertical-align:middle;" headers="d11780e260 "><span>Specifes the partitioning rule</span></td>
+</tr>
+<tr class="row"><td class="entry cellrowborder" style="text-align:left;vertical-align:middle;" headers="d11780e256 "><span>SYS_FS_FORMAT_PARAM</span></td>
+<td class="entry cellrowborder" style="text-align:left;vertical-align:middle;" headers="d11780e258 "><span>Struct</span></td>
+<td class="entry cellrowborder" style="text-align:left;vertical-align:middle;" headers="d11780e260 "><span>SYS FS Drive Format parameter structure</span></td>
+</tr>
+<tr class="row"><td class="entry cellrowborder" style="text-align:left;vertical-align:middle;" headers="d11780e256 "><span>SYS_FS_FILE_OPEN_ATTRIBUTES</span></td>
+<td class="entry cellrowborder" style="text-align:left;vertical-align:middle;" headers="d11780e258 "><span>Enum</span></td>
+<td class="entry cellrowborder" style="text-align:left;vertical-align:middle;" headers="d11780e260 "><span>Lists the various attributes (modes) in which a file can be opened</span></td>
+</tr>
+<tr class="row"><td class="entry cellrowborder" style="text-align:left;vertical-align:middle;" headers="d11780e256 "><span>SYS_FS_ERROR</span></td>
+<td class="entry cellrowborder" style="text-align:left;vertical-align:middle;" headers="d11780e258 "><span>Enum</span></td>
+<td class="entry cellrowborder" style="text-align:left;vertical-align:middle;" headers="d11780e260 "><span>Lists the various error cases</span></td>
+</tr>
+<tr class="row"><td class="entry cellrowborder" style="text-align:left;vertical-align:middle;" headers="d11780e256 "><span>SYS_FS_EVENT</span></td>
+<td class="entry cellrowborder" style="text-align:left;vertical-align:middle;" headers="d11780e258 "><span>Enum</span></td>
+<td class="entry cellrowborder" style="text-align:left;vertical-align:middle;" headers="d11780e260 "><span>Identifies the possible file system events</span></td>
+</tr>
+<tr class="row"><td class="entry cellrowborder" style="text-align:left;vertical-align:middle;" headers="d11780e256 "><span>SYS_FS_FUNCTIONS</span></td>
+<td class="entry cellrowborder" style="text-align:left;vertical-align:middle;" headers="d11780e258 "><span>Struct</span></td>
+<td class="entry cellrowborder" style="text-align:left;vertical-align:middle;" headers="d11780e260 "><span>SYS FS Function signature structure for native file systems</span></td>
+</tr>
+<tr class="row"><td class="entry cellrowborder" style="text-align:left;vertical-align:middle;" headers="d11780e256 "><span>SYS_FS_REGISTRATION_TABLE</span></td>
+<td class="entry cellrowborder" style="text-align:left;vertical-align:middle;" headers="d11780e258 "><span>Struct</span></td>
+<td class="entry cellrowborder" style="text-align:left;vertical-align:middle;" headers="d11780e260 "><span>The initialization members for File system layer</span></td>
+</tr>
+<tr class="row"><td class="entry cellrowborder" style="text-align:left;vertical-align:middle;" headers="d11780e256 "><span>SYS_FS_FSTAT</span></td>
+<td class="entry cellrowborder" style="text-align:left;vertical-align:middle;" headers="d11780e258 "><span>Struct</span></td>
+<td class="entry cellrowborder" style="text-align:left;vertical-align:middle;" headers="d11780e260 "><span>File System status</span></td>
+</tr>
+<tr class="row"><td class="entry cellrowborder" style="text-align:left;vertical-align:middle;" headers="d11780e256 "><span>SYS_FS_TIME</span></td>
+<td class="entry cellrowborder" style="text-align:left;vertical-align:middle;" headers="d11780e258 "><span>Union</span></td>
+<td class="entry cellrowborder" style="text-align:left;vertical-align:middle;" headers="d11780e260 "><span>The Union to specify the time for a file or directory</span></td>
+</tr>
+<tr class="row"><td class="entry cellrowborder" style="text-align:left;vertical-align:middle;" headers="d11780e256 "><span>SYS_FS_EVENT_HANDLER</span></td>
+<td class="entry cellrowborder" style="text-align:left;vertical-align:middle;" headers="d11780e258 "><span>Typedef</span></td>
+<td class="entry cellrowborder" style="text-align:left;vertical-align:middle;" headers="d11780e260 "><span>Pointer to the File system Handler function</span></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p class="p"><strong class="ph b">SYS FS Media Manager Functions</strong></p>
+<p class="p">These API's should not be direclty used from application layer. These can be used internally by media drivers
+and other clients within Harmony framework if needed.</p>
+
+<div class="tablenoborder"><table cellpadding="4" cellspacing="0" summary="" class="table" frame="border" border="1" rules="all"><col style="width:" /><col style="width:" /><thead class="thead" style="text-align:left;"><tr class="row"><th class="entry cellrowborder" style="text-align:left;vertical-align:middle;" id="d11780e387"><span>Name</span></th>
+<th class="entry cellrowborder" style="text-align:left;vertical-align:middle;" id="d11780e389"><span>Description</span></th>
+</tr>
+</thead>
+<tbody class="tbody"><tr class="row"><td class="entry cellrowborder" style="text-align:left;vertical-align:middle;" headers="d11780e387 "><span>SYS_FS_MEDIA_MANAGER_AddressGet</span></td>
+<td class="entry cellrowborder" style="text-align:left;vertical-align:middle;" headers="d11780e389 "><span>Gets the starting media address based on a disk number</span></td>
+</tr>
+<tr class="row"><td class="entry cellrowborder" style="text-align:left;vertical-align:middle;" headers="d11780e387 "><span>SYS_FS_MEDIA_MANAGER_CommandStatusGet</span></td>
+<td class="entry cellrowborder" style="text-align:left;vertical-align:middle;" headers="d11780e389 "><span>Gets the command status</span></td>
+</tr>
+<tr class="row"><td class="entry cellrowborder" style="text-align:left;vertical-align:middle;" headers="d11780e387 "><span>SYS_FS_MEDIA_MANAGER_Register</span></td>
+<td class="entry cellrowborder" style="text-align:left;vertical-align:middle;" headers="d11780e389 "><span>Function to register media drivers with the media manager</span></td>
+</tr>
+<tr class="row"><td class="entry cellrowborder" style="text-align:left;vertical-align:middle;" headers="d11780e387 "><span>SYS_FS_MEDIA_MANAGER_DeRegister</span></td>
+<td class="entry cellrowborder" style="text-align:left;vertical-align:middle;" headers="d11780e389 "><span>Function to De-register media drivers with the media manager</span></td>
+</tr>
+<tr class="row"><td class="entry cellrowborder" style="text-align:left;vertical-align:middle;" headers="d11780e387 "><span>SYS_FS_MEDIA_MANAGER_Read</span></td>
+<td class="entry cellrowborder" style="text-align:left;vertical-align:middle;" headers="d11780e389 "><span>Gets data from a specific media address</span></td>
+</tr>
+<tr class="row"><td class="entry cellrowborder" style="text-align:left;vertical-align:middle;" headers="d11780e387 "><span>SYS_FS_MEDIA_MANAGER_SectorRead</span></td>
+<td class="entry cellrowborder" style="text-align:left;vertical-align:middle;" headers="d11780e389 "><span>Reads a specified media sector</span></td>
+</tr>
+<tr class="row"><td class="entry cellrowborder" style="text-align:left;vertical-align:middle;" headers="d11780e387 "><span>SYS_FS_MEDIA_MANAGER_SectorWrite</span></td>
+<td class="entry cellrowborder" style="text-align:left;vertical-align:middle;" headers="d11780e389 "><span>Writes a sector to the specified media</span></td>
+</tr>
+<tr class="row"><td class="entry cellrowborder" style="text-align:left;vertical-align:middle;" headers="d11780e387 "><span>SYS_FS_MEDIA_MANAGER_VolumePropertyGet</span></td>
+<td class="entry cellrowborder" style="text-align:left;vertical-align:middle;" headers="d11780e389 "><span>Gets the volume property</span></td>
+</tr>
+<tr class="row"><td class="entry cellrowborder" style="text-align:left;vertical-align:middle;" headers="d11780e387 "><span>SYS_FS_MEDIA_MANAGER_MediaStatusGet</span></td>
+<td class="entry cellrowborder" style="text-align:left;vertical-align:middle;" headers="d11780e389 "><span>Gets the media status</span></td>
+</tr>
+<tr class="row"><td class="entry cellrowborder" style="text-align:left;vertical-align:middle;" headers="d11780e387 "><span>SYS_FS_MEDIA_MANAGER_EventHandlerSet</span></td>
+<td class="entry cellrowborder" style="text-align:left;vertical-align:middle;" headers="d11780e389 "><span>Register the event handler for Mount/Un-Mount events</span></td>
+</tr>
+<tr class="row"><td class="entry cellrowborder" style="text-align:left;vertical-align:middle;" headers="d11780e387 "><span>SYS_FS_MEDIA_MANAGER_RegisterTransferHandler</span></td>
+<td class="entry cellrowborder" style="text-align:left;vertical-align:middle;" headers="d11780e389 "><span>Register the event handler for data transfer events</span></td>
+</tr>
+<tr class="row"><td class="entry cellrowborder" style="text-align:left;vertical-align:middle;" headers="d11780e387 "><span>SYS_FS_MEDIA_MANAGER_GetMediaGeometry</span></td>
+<td class="entry cellrowborder" style="text-align:left;vertical-align:middle;" headers="d11780e389 "><span>Gets the media geometry information</span></td>
+</tr>
+<tr class="row"><td class="entry cellrowborder" style="text-align:left;vertical-align:middle;" headers="d11780e387 "><span>SYS_FS_MEDIA_MANAGER_TransferTask</span></td>
+<td class="entry cellrowborder" style="text-align:left;vertical-align:middle;" headers="d11780e389 "><span>Media manager transfer task function</span></td>
+</tr>
+<tr class="row"><td class="entry cellrowborder" style="text-align:left;vertical-align:middle;" headers="d11780e387 "><span>SYS_FS_MEDIA_MANAGER_Tasks</span></td>
+<td class="entry cellrowborder" style="text-align:left;vertical-align:middle;" headers="d11780e389 "><span>Media manager task function</span></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p class="p"><strong class="ph b">SYS FS Media Manager Data types and constants</strong></p>
+
+<div class="tablenoborder"><table cellpadding="4" cellspacing="0" summary="" class="table" frame="border" border="1" rules="all"><col style="width:" /><col style="width:" /><col style="width:" /><thead class="thead" style="text-align:left;"><tr class="row"><th class="entry cellrowborder" style="text-align:left;vertical-align:middle;" id="d11780e473"><span>Name</span></th>
+<th class="entry cellrowborder" style="text-align:left;vertical-align:middle;" id="d11780e475"><span>Type</span></th>
+<th class="entry cellrowborder" style="text-align:left;vertical-align:middle;" id="d11780e477"><span>Description</span></th>
+</tr>
+</thead>
+<tbody class="tbody"><tr class="row"><td class="entry cellrowborder" style="text-align:left;vertical-align:middle;" headers="d11780e473 "><span>SYS_FS_MEDIA_BLOCK_COMMAND_HANDLE</span></td>
+<td class="entry cellrowborder" style="text-align:left;vertical-align:middle;" headers="d11780e475 "><span>Typedef</span></td>
+<td class="entry cellrowborder" style="text-align:left;vertical-align:middle;" headers="d11780e477 "><span>Handle identifying block commands of the media</span></td>
+</tr>
+<tr class="row"><td class="entry cellrowborder" style="text-align:left;vertical-align:middle;" headers="d11780e473 "><span>SYS_FS_MEDIA_BLOCK_COMMAND_HANDLE_INVALID</span></td>
+<td class="entry cellrowborder" style="text-align:left;vertical-align:middle;" headers="d11780e475 "><span>Macro</span></td>
+<td class="entry cellrowborder" style="text-align:left;vertical-align:middle;" headers="d11780e477 "><span>Defines the invalid media block command handle</span></td>
+</tr>
+<tr class="row"><td class="entry cellrowborder" style="text-align:left;vertical-align:middle;" headers="d11780e473 "><span>SYS_FS_MEDIA_HANDLE</span></td>
+<td class="entry cellrowborder" style="text-align:left;vertical-align:middle;" headers="d11780e475 "><span>Typedef</span></td>
+<td class="entry cellrowborder" style="text-align:left;vertical-align:middle;" headers="d11780e477 "><span>Handle identifying the media registered with the media manager</span></td>
+</tr>
+<tr class="row"><td class="entry cellrowborder" style="text-align:left;vertical-align:middle;" headers="d11780e473 "><span>SYS_FS_MEDIA_HANDLE_INVALID</span></td>
+<td class="entry cellrowborder" style="text-align:left;vertical-align:middle;" headers="d11780e475 "><span>Macro</span></td>
+<td class="entry cellrowborder" style="text-align:left;vertical-align:middle;" headers="d11780e477 "><span>Defines the invalid media handle</span></td>
+</tr>
+<tr class="row"><td class="entry cellrowborder" style="text-align:left;vertical-align:middle;" headers="d11780e473 "><span>SYS_FS_MEDIA_BLOCK_EVENT</span></td>
+<td class="entry cellrowborder" style="text-align:left;vertical-align:middle;" headers="d11780e475 "><span>Enum</span></td>
+<td class="entry cellrowborder" style="text-align:left;vertical-align:middle;" headers="d11780e477 "><span>Identifies the possible events that can result from a request</span></td>
+</tr>
+<tr class="row"><td class="entry cellrowborder" style="text-align:left;vertical-align:middle;" headers="d11780e473 "><span>SYS_FS_MEDIA_PROPERTY</span></td>
+<td class="entry cellrowborder" style="text-align:left;vertical-align:middle;" headers="d11780e475 "><span>Enum</span></td>
+<td class="entry cellrowborder" style="text-align:left;vertical-align:middle;" headers="d11780e477 "><span>Contains information of property of a media</span></td>
+</tr>
+<tr class="row"><td class="entry cellrowborder" style="text-align:left;vertical-align:middle;" headers="d11780e473 "><span>SYS_FS_MEDIA_STATUS</span></td>
+<td class="entry cellrowborder" style="text-align:left;vertical-align:middle;" headers="d11780e475 "><span>Enum</span></td>
+<td class="entry cellrowborder" style="text-align:left;vertical-align:middle;" headers="d11780e477 "><span>The status of media</span></td>
+</tr>
+<tr class="row"><td class="entry cellrowborder" style="text-align:left;vertical-align:middle;" headers="d11780e473 "><span>SYS_FS_MEDIA_STATE</span></td>
+<td class="entry cellrowborder" style="text-align:left;vertical-align:middle;" headers="d11780e475 "><span>Enum</span></td>
+<td class="entry cellrowborder" style="text-align:left;vertical-align:middle;" headers="d11780e477 "><span>The enumeration for state of media</span></td>
+</tr>
+<tr class="row"><td class="entry cellrowborder" style="text-align:left;vertical-align:middle;" headers="d11780e473 "><span>SYS_FS_MEDIA_TYPE</span></td>
+<td class="entry cellrowborder" style="text-align:left;vertical-align:middle;" headers="d11780e475 "><span>Enum</span></td>
+<td class="entry cellrowborder" style="text-align:left;vertical-align:middle;" headers="d11780e477 "><span>The enumeration for type of media</span></td>
+</tr>
+<tr class="row"><td class="entry cellrowborder" style="text-align:left;vertical-align:middle;" headers="d11780e473 "><span>SYS_FS_MEDIA_COMMAND_STATUS</span></td>
+<td class="entry cellrowborder" style="text-align:left;vertical-align:middle;" headers="d11780e475 "><span>Enum</span></td>
+<td class="entry cellrowborder" style="text-align:left;vertical-align:middle;" headers="d11780e477 "><span>The enumeration for status of buffer</span></td>
+</tr>
+<tr class="row"><td class="entry cellrowborder" style="text-align:left;vertical-align:middle;" headers="d11780e473 "><span>SYS_FS_MEDIA_REGION_GEOMETRY</span></td>
+<td class="entry cellrowborder" style="text-align:left;vertical-align:middle;" headers="d11780e475 "><span>Typedef</span></td>
+<td class="entry cellrowborder" style="text-align:left;vertical-align:middle;" headers="d11780e477 "><span>Contains information of a sys media region</span></td>
+</tr>
+<tr class="row"><td class="entry cellrowborder" style="text-align:left;vertical-align:middle;" headers="d11780e473 "><span>SYS_FS_MEDIA_GEOMETRY</span></td>
+<td class="entry cellrowborder" style="text-align:left;vertical-align:middle;" headers="d11780e475 "><span>Typedef</span></td>
+<td class="entry cellrowborder" style="text-align:left;vertical-align:middle;" headers="d11780e477 "><span>Contains all the geometrical information of a media device</span></td>
+</tr>
+<tr class="row"><td class="entry cellrowborder" style="text-align:left;vertical-align:middle;" headers="d11780e473 "><span>SYS_FS_MEDIA_MOUNT_DATA</span></td>
+<td class="entry cellrowborder" style="text-align:left;vertical-align:middle;" headers="d11780e475 "><span>Struct</span></td>
+<td class="entry cellrowborder" style="text-align:left;vertical-align:middle;" headers="d11780e477 "><span>Structure to obtain the device and mount name of media</span></td>
+</tr>
+<tr class="row"><td class="entry cellrowborder" style="text-align:left;vertical-align:middle;" headers="d11780e473 "><span>SYS_FS_VOLUME_PROPERTY</span></td>
+<td class="entry cellrowborder" style="text-align:left;vertical-align:middle;" headers="d11780e475 "><span>Struct</span></td>
+<td class="entry cellrowborder" style="text-align:left;vertical-align:middle;" headers="d11780e477 "><span>Structure to obtain the property of volume</span></td>
+</tr>
+<tr class="row"><td class="entry cellrowborder" style="text-align:left;vertical-align:middle;" headers="d11780e473 "><span>SYS_FS_MEDIA_FUNCTIONS</span></td>
+<td class="entry cellrowborder" style="text-align:left;vertical-align:middle;" headers="d11780e475 "><span>Struct</span></td>
+<td class="entry cellrowborder" style="text-align:left;vertical-align:middle;" headers="d11780e477 "><span>Structure of function pointers for media driver</span></td>
+</tr>
+<tr class="row"><td class="entry cellrowborder" style="text-align:left;vertical-align:middle;" headers="d11780e473 "><span>SYS_FS_MEDIA_EVENT_HANDLER</span></td>
+<td class="entry cellrowborder" style="text-align:left;vertical-align:middle;" headers="d11780e475 "><span>Typedef</span></td>
+<td class="entry cellrowborder" style="text-align:left;vertical-align:middle;" headers="d11780e477 "><span>Pointer to the Media Event Handler function</span></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="related-links">
+<ul class="ullinks">
+<li class="link ulchildlink"><strong><a href="GUID-EBC86D7E-991E-4F99-B615-1764B5687E0F.html">SYS_FS_Initialize Function</a></strong><br />
+</li>
+<li class="link ulchildlink"><strong><a href="GUID-3365F9D0-51D1-4CD6-8ABE-36B90E11752E.html">SYS_FS_Tasks Function</a></strong><br />
+</li>
+<li class="link ulchildlink"><strong><a href="GUID-C3E440D0-2F73-4BA9-874A-A08D52EA87E3.html">SYS_FS_Mount Function</a></strong><br />
+</li>
+<li class="link ulchildlink"><strong><a href="GUID-4CD57E60-CFCA-4413-A344-0BB9E1A05660.html">SYS_FS_Unmount Function</a></strong><br />
+</li>
+<li class="link ulchildlink"><strong><a href="GUID-760611CB-BB7F-4083-A98D-102D8A28E346.html">SYS_FS_EventHandlerSet Function</a></strong><br />
+</li>
+<li class="link ulchildlink"><strong><a href="GUID-B11944D6-E746-4D44-B1D6-9C1E12944351.html">SYS_FS_FileOpen Function</a></strong><br />
+</li>
+<li class="link ulchildlink"><strong><a href="GUID-E8F31262-EEB7-495E-8292-1CE7D6BED8F6.html">SYS_FS_FileClose Function</a></strong><br />
+</li>
+<li class="link ulchildlink"><strong><a href="GUID-BEEC6E4A-AB22-424B-81C4-161E06B286B3.html">SYS_FS_FileRead Function</a></strong><br />
+</li>
+<li class="link ulchildlink"><strong><a href="GUID-8A597E0D-6D93-4722-84B7-6DBC83406F78.html">SYS_FS_FileStat Function</a></strong><br />
+</li>
+<li class="link ulchildlink"><strong><a href="GUID-B6E0D5A9-0560-44D9-A979-BA1CECDD2885.html">SYS_FS_FileSeek Function</a></strong><br />
+</li>
+<li class="link ulchildlink"><strong><a href="GUID-92EA2E5D-4704-4D93-96DB-29FA4359A2AB.html">SYS_FS_FileTell Function</a></strong><br />
+</li>
+<li class="link ulchildlink"><strong><a href="GUID-C5423212-D6E4-4C4A-A935-BAE0D8E971D9.html">SYS_FS_FileSize Function</a></strong><br />
+</li>
+<li class="link ulchildlink"><strong><a href="GUID-79C0F4A4-9F81-4865-B6A6-2642F39E919F.html">SYS_FS_FileEOF Function</a></strong><br />
+</li>
+<li class="link ulchildlink"><strong><a href="GUID-D7E32A8F-DC21-4E8D-ABE6-6AEE3FA0C89C.html">SYS_FS_FileNameGet Function</a></strong><br />
+</li>
+<li class="link ulchildlink"><strong><a href="GUID-9556A393-F301-40C0-8CCB-B49E9A0FC031.html">SYS_FS_Error Function</a></strong><br />
+</li>
+<li class="link ulchildlink"><strong><a href="GUID-F6E3750F-7E4C-4A6C-9993-3028AF3D5457.html">SYS_FS_FileError Function</a></strong><br />
+</li>
+<li class="link ulchildlink"><strong><a href="GUID-E19AB663-B620-431F-988F-64E339B3010C.html">SYS_FS_FileStringGet Function</a></strong><br />
+</li>
+<li class="link ulchildlink"><strong><a href="GUID-68AF6796-DF3C-4742-81B5-555C359975D1.html">SYS_FS_FileStringPut Function</a></strong><br />
+</li>
+<li class="link ulchildlink"><strong><a href="GUID-40903D55-759F-49AF-BDF7-CD4E0693C394.html">SYS_FS_FileWrite Function</a></strong><br />
+</li>
+<li class="link ulchildlink"><strong><a href="GUID-17500CE8-820C-482D-B721-87577B1FA289.html">SYS_FS_FileSync Function</a></strong><br />
+</li>
+<li class="link ulchildlink"><strong><a href="GUID-D34C151E-F128-4431-B0B3-6992EDD44D8F.html">SYS_FS_FileTruncate Function</a></strong><br />
+</li>
+<li class="link ulchildlink"><strong><a href="GUID-B84F5FC9-27E9-43D0-BF80-DDF4F8EBA4F1.html">SYS_FS_FileCharacterPut Function</a></strong><br />
+</li>
+<li class="link ulchildlink"><strong><a href="GUID-42C01AE8-60C8-4A86-91A7-56D9222CBFC7.html">SYS_FS_FilePrintf Function</a></strong><br />
+</li>
+<li class="link ulchildlink"><strong><a href="GUID-DE7E790A-ADA1-45B1-83C7-C072A270C6B1.html">SYS_FS_FileTestError Function</a></strong><br />
+</li>
+<li class="link ulchildlink"><strong><a href="GUID-C0A3888C-CE30-403B-9AE7-042022369538.html">SYS_FS_DirOpen Function</a></strong><br />
+</li>
+<li class="link ulchildlink"><strong><a href="GUID-09414A23-7390-4DBF-950D-F0BB8575A7B6.html">SYS_FS_DirClose Function</a></strong><br />
+</li>
+<li class="link ulchildlink"><strong><a href="GUID-C43ABFE3-58B7-4A30-840E-B2BBCCCDF33D.html">SYS_FS_DirRead Function</a></strong><br />
+</li>
+<li class="link ulchildlink"><strong><a href="GUID-85FC64CE-DADA-4F11-BBAC-9EF299544C00.html">SYS_FS_DirRewind Function</a></strong><br />
+</li>
+<li class="link ulchildlink"><strong><a href="GUID-BB75D339-99C6-4EFA-8443-51B883E071F5.html">SYS_FS_DirSearch Function</a></strong><br />
+</li>
+<li class="link ulchildlink"><strong><a href="GUID-D91142BC-8060-4E5E-A75A-F92BD776160A.html">SYS_FS_DirectoryMake Function</a></strong><br />
+</li>
+<li class="link ulchildlink"><strong><a href="GUID-63D12AA9-FCFA-4183-9E63-F01D58DDF1B9.html">SYS_FS_DirectoryChange Function</a></strong><br />
+</li>
+<li class="link ulchildlink"><strong><a href="GUID-8D636C6F-ECAD-4501-9CD1-E145B18D7256.html">SYS_FS_CurrentWorkingDirectoryGet Function</a></strong><br />
+</li>
+<li class="link ulchildlink"><strong><a href="GUID-27A799DA-3CEE-457F-AFEE-819817CA5978.html">SYS_FS_FileDirectoryRemove Function</a></strong><br />
+</li>
+<li class="link ulchildlink"><strong><a href="GUID-0DECF377-6DF4-46B4-A309-5C08078198F0.html">SYS_FS_FileDirectoryRenameMove Function</a></strong><br />
+</li>
+<li class="link ulchildlink"><strong><a href="GUID-9001DC8C-6506-490D-B889-B8925C1192C3.html">SYS_FS_FileDirectoryModeSet Function</a></strong><br />
+</li>
+<li class="link ulchildlink"><strong><a href="GUID-EE2B1E74-FD6E-4E67-B829-146AA4C02001.html">SYS_FS_FileDirectoryTimeSet Function</a></strong><br />
+</li>
+<li class="link ulchildlink"><strong><a href="GUID-49A215E2-6C03-4638-8DDF-D5E08D353B8C.html">SYS_FS_CurrentDriveGet Function</a></strong><br />
+</li>
+<li class="link ulchildlink"><strong><a href="GUID-9A395A5B-24E8-474F-9FD0-FDA0DD7DF22A.html">SYS_FS_CurrentDriveSet Function</a></strong><br />
+</li>
+<li class="link ulchildlink"><strong><a href="GUID-783A145F-F4AF-4AA7-B066-80BD9E439E00.html">SYS_FS_DriveLabelGet Function</a></strong><br />
+</li>
+<li class="link ulchildlink"><strong><a href="GUID-6D392610-20DC-4F38-9798-E5FF2BAA3E0A.html">SYS_FS_DriveLabelSet Function</a></strong><br />
+</li>
+<li class="link ulchildlink"><strong><a href="GUID-F724EC87-6DF5-4689-821F-2757C4994DA9.html">SYS_FS_DriveFormat Function</a></strong><br />
+</li>
+<li class="link ulchildlink"><strong><a href="GUID-95A8C5DF-C0ED-42F7-9C69-062984DBBEAB.html">SYS_FS_DrivePartition Function</a></strong><br />
+</li>
+<li class="link ulchildlink"><strong><a href="GUID-CC9DEE82-C59D-409F-81BD-347420DBAB94.html">SYS_FS_DriveSectorGet Function</a></strong><br />
+</li>
+<li class="link ulchildlink"><strong><a href="GUID-29718976-3953-4ACB-80D9-E4F98D7267EB.html">SYS_FS_HANDLE Typedef</a></strong><br />
+</li>
+<li class="link ulchildlink"><strong><a href="GUID-788A2F8C-2432-42F2-9E49-35E431487E63.html">SYS_FS_HANDLE_INVALID Macro</a></strong><br />
+</li>
+<li class="link ulchildlink"><strong><a href="GUID-6942E929-C41E-47A6-BDC6-72B98D966379.html">SYS_FS_FILE_SYSTEM_TYPE Enum</a></strong><br />
+</li>
+<li class="link ulchildlink"><strong><a href="GUID-8179778A-592C-4660-87E7-4AFDC27FA7B7.html">SYS_FS_FILE_DIR_ATTR Enum</a></strong><br />
+</li>
+<li class="link ulchildlink"><strong><a href="GUID-053B53A0-6358-4572-87A9-D344535EECF0.html">SYS_FS_FILE_SEEK_CONTROL Enum</a></strong><br />
+</li>
+<li class="link ulchildlink"><strong><a href="GUID-B19AE59E-6323-4584-8369-DF3831E9F1F4.html">SYS_FS_RESULT Enum</a></strong><br />
+</li>
+<li class="link ulchildlink"><strong><a href="GUID-A7294804-5A6B-42F0-A7EC-9B78EEBC0C19.html">SYS_FS_FORMAT Macros</a></strong><br />
+</li>
+<li class="link ulchildlink"><strong><a href="GUID-E971A136-E792-4F48-9664-C4B0612DD46D.html">SYS_FS_FORMAT_PARAM Struct</a></strong><br />
+</li>
+<li class="link ulchildlink"><strong><a href="GUID-A5F00E8D-8192-4978-8E5D-D7843B7046C0.html">SYS_FS_FILE_OPEN_ATTRIBUTES Enum</a></strong><br />
+</li>
+<li class="link ulchildlink"><strong><a href="GUID-D84144C8-6208-429C-99C3-0F280E644638.html">SYS_FS_ERROR Enum</a></strong><br />
+</li>
+<li class="link ulchildlink"><strong><a href="GUID-0F9DEE27-DE19-477C-9AD4-3F4E5C84CF8B.html">SYS_FS_EVENT Enum</a></strong><br />
+</li>
+<li class="link ulchildlink"><strong><a href="GUID-BF3D7806-7DBE-4A2A-BA54-72EAF3659DBD.html">SYS_FS_FUNCTIONS Struct</a></strong><br />
+</li>
+<li class="link ulchildlink"><strong><a href="GUID-7E8361E8-8372-4766-89EA-12D19F9DE0CD.html">SYS_FS_REGISTRATION_TABLE Struct</a></strong><br />
+</li>
+<li class="link ulchildlink"><strong><a href="GUID-E77EF3AE-382C-4616-B57C-D573748C63A2.html">SYS_FS_FSTAT Struct</a></strong><br />
+</li>
+<li class="link ulchildlink"><strong><a href="GUID-CFDB12EA-C18C-4C53-A42B-5E0419E69632.html">SYS_FS_TIME Union</a></strong><br />
+</li>
+<li class="link ulchildlink"><strong><a href="GUID-52A7B0F6-92F2-44FB-B4CF-363FB76CFCA7.html">SYS_FS_EVENT_HANDLER Typedef</a></strong><br />
+</li>
+<li class="link ulchildlink"><strong><a href="GUID-A6505482-D078-4796-9E2E-A224BB412F0A.html">SYS_FS_MEDIA_MANAGER_AddressGet Function</a></strong><br />
+</li>
+<li class="link ulchildlink"><strong><a href="GUID-13815F0C-6C56-4478-979F-D2D1623BDF20.html">SYS_FS_MEDIA_MANAGER_CommandStatusGet Function</a></strong><br />
+</li>
+<li class="link ulchildlink"><strong><a href="GUID-FC8C727E-1368-48E2-88E3-C84B369ABE41.html">SYS_FS_MEDIA_MANAGER_Register Function</a></strong><br />
+</li>
+<li class="link ulchildlink"><strong><a href="GUID-BD3DA087-FB55-44E5-B3D7-47966581E0E5.html">SYS_FS_MEDIA_MANAGER_DeRegister Function</a></strong><br />
+</li>
+<li class="link ulchildlink"><strong><a href="GUID-509CACEA-CB11-45C5-89F1-A1744632EECA.html">SYS_FS_MEDIA_MANAGER_Read Function</a></strong><br />
+</li>
+<li class="link ulchildlink"><strong><a href="GUID-2057DC7F-AF3F-4DA1-BBA9-E086A5B949E1.html">SYS_FS_MEDIA_MANAGER_SectorRead Function</a></strong><br />
+</li>
+<li class="link ulchildlink"><strong><a href="GUID-8F64B44C-AAE7-48E6-A1DF-EA5D649F655D.html">SYS_FS_MEDIA_MANAGER_SectorWrite Function</a></strong><br />
+</li>
+<li class="link ulchildlink"><strong><a href="GUID-DAC3E906-7325-456B-A67A-B5F9FD901AC3.html">SYS_FS_MEDIA_MANAGER_VolumePropertyGet Function</a></strong><br />
+</li>
+<li class="link ulchildlink"><strong><a href="GUID-6D8C930C-02AE-4657-B161-09CD0578C2E5.html">SYS_FS_MEDIA_MANAGER_MediaStatusGet Function</a></strong><br />
+</li>
+<li class="link ulchildlink"><strong><a href="GUID-1A26E4B2-B446-450A-BADF-0B0C5549FBA2.html">SYS_FS_MEDIA_MANAGER_EventHandlerSet Function</a></strong><br />
+</li>
+<li class="link ulchildlink"><strong><a href="GUID-BE94C6F4-3546-4F08-ACFC-B47A03E1E8E0.html">SYS_FS_MEDIA_MANAGER_RegisterTransferHandler Function</a></strong><br />
+</li>
+<li class="link ulchildlink"><strong><a href="GUID-7E038757-E53C-4A63-82DC-DF79418D9FDB.html">SYS_FS_MEDIA_MANAGER_GetMediaGeometry Function</a></strong><br />
+</li>
+<li class="link ulchildlink"><strong><a href="GUID-A670ED1C-14B6-4AC7-9C14-8A16D69DF1A3.html">SYS_FS_MEDIA_MANAGER_TransferTask Function</a></strong><br />
+</li>
+<li class="link ulchildlink"><strong><a href="GUID-3355F72A-0C28-43AD-877C-3B76EA782BCE.html">SYS_FS_MEDIA_MANAGER_Tasks Function</a></strong><br />
+</li>
+<li class="link ulchildlink"><strong><a href="GUID-BAC812A4-D8EE-4075-9E96-7B08D530A892.html">SYS_FS_MEDIA_BLOCK_COMMAND_HANDLE Typedef</a></strong><br />
+</li>
+<li class="link ulchildlink"><strong><a href="GUID-9A7A8F80-564A-4CEC-AAB4-460526A7CBDC.html">SYS_FS_MEDIA_BLOCK_COMMAND_HANDLE_INVALID Macro</a></strong><br />
+</li>
+<li class="link ulchildlink"><strong><a href="GUID-D904086C-E292-4B0F-ADB3-0633EAD4AB9B.html">SYS_FS_MEDIA_HANDLE Typedef</a></strong><br />
+</li>
+<li class="link ulchildlink"><strong><a href="GUID-DE47A3D3-C32A-4ED6-A2B7-A5D16DBAEAD0.html">SYS_FS_MEDIA_HANDLE_INVALID Macro</a></strong><br />
+</li>
+<li class="link ulchildlink"><strong><a href="GUID-ECC769B5-CCD6-4467-A9A4-1472CB4B2E29.html">SYS_FS_MEDIA_BLOCK_EVENT Enum</a></strong><br />
+</li>
+<li class="link ulchildlink"><strong><a href="GUID-49B9B4AE-75C1-466E-A2AA-592725DCA8A8.html">SYS_FS_MEDIA_PROPERTY Enum</a></strong><br />
+</li>
+<li class="link ulchildlink"><strong><a href="GUID-72155962-6FFE-4598-AE78-3C138ECA6E6C.html">SYS_FS_MEDIA_STATUS Enum</a></strong><br />
+</li>
+<li class="link ulchildlink"><strong><a href="GUID-BA2537D5-FF83-42EA-AD5B-2D427CC91976.html">SYS_FS_MEDIA_STATE Enum</a></strong><br />
+</li>
+<li class="link ulchildlink"><strong><a href="GUID-1D9C329D-7D74-4D33-A711-A6F33A9714C5.html">SYS_FS_MEDIA_TYPE Enum</a></strong><br />
+</li>
+<li class="link ulchildlink"><strong><a href="GUID-E830242B-F60A-4E37-99CA-BB6261C77502.html">SYS_FS_MEDIA_COMMAND_STATUS Enum</a></strong><br />
+</li>
+<li class="link ulchildlink"><strong><a href="GUID-70F2B75F-672C-4723-84A5-9C5065059760.html">SYS_FS_MEDIA_REGION_GEOMETRY Typedef</a></strong><br />
+</li>
+<li class="link ulchildlink"><strong><a href="GUID-560E0AF3-D3EA-43B8-92D8-A7E3CBB2FDDA.html">SYS_FS_MEDIA_GEOMETRY Typedef</a></strong><br />
+</li>
+<li class="link ulchildlink"><strong><a href="GUID-ECF2920E-DC50-497B-8D2F-318D08D4C97F.html">SYS_FS_MEDIA_MOUNT_DATA Struct</a></strong><br />
+</li>
+<li class="link ulchildlink"><strong><a href="GUID-8AC15DAA-ECDD-4386-9F24-C84E3D544C53.html">SYS_FS_VOLUME_PROPERTY Struct</a></strong><br />
+</li>
+<li class="link ulchildlink"><strong><a href="GUID-880E2678-2F2C-49D7-A20E-9D0F43DA8F94.html">SYS_FS_MEDIA_FUNCTIONS Struct</a></strong><br />
+</li>
+<li class="link ulchildlink"><strong><a href="GUID-D5DA8FED-9161-4241-AC90-02C7928C8DEB.html">SYS_FS_MEDIA_EVENT_HANDLER Typedef</a></strong><br />
+</li>
+</ul>
+
+<div class="familylinks">
+<div class="parentlink"><strong>Parent topic:</strong> <a class="link" href="GUID-066D09D2-5550-49D9-ADA2-60A702DB243E.html">File System Service</a></div>
+</div>
+</div></body>
+</html>
