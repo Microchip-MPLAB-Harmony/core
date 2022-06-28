@@ -29,10 +29,8 @@ The current known issues are as follows:
 
 - [MPLAB® X IDE v6.00](https://www.microchip.com/mplab/mplab-x-ide)
 - [MPLAB® XC32 C/C++ Compiler v4.10](https://www.microchip.com/mplab/compilers)
-- [IAR EWARM v9.10 or above](https://www.iar.com/iar-embedded-workbench/#!?architecture=Arm)
-- [KEIL MDK v5.35 or above](https://www2.keil.com/mdk5)
 - MPLAB® X IDE plug-ins:
-  - MPLAB® Code Configurator 5.1.9
+  - MPLAB® Code Configurator 5.1.9 or higher
 
 ### Notes
 
