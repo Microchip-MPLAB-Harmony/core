@@ -291,6 +291,8 @@ typedef struct
     bool                            drvInExclusiveMode;
 
     uint32_t                        exclusiveUseCntr;
+    
+    uint32_t                        transferObjLastUsedIndex;
 
     /* Mutex to protect access to the client objects */
     OSAL_MUTEX_DECLARE(mutexClientObjects);

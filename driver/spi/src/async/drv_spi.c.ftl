@@ -323,13 +323,12 @@ static DRV_SPI_CLIENT_OBJ * _DRV_SPI_DriverHandleValidate(DRV_HANDLE handle)
 
 static DRV_SPI_TRANSFER_OBJ* _DRV_SPI_FreeTransferObjGet(DRV_SPI_CLIENT_OBJ* clientObj)
 {
-	static uint32_t lastUsedIndex = 0;
 	uint32_t i;
 	uint32_t index;
     DRV_SPI_OBJ* dObj = (DRV_SPI_OBJ* )&gDrvSPIObj[clientObj->drvIndex];
     DRV_SPI_TRANSFER_OBJ* pTransferObj = (DRV_SPI_TRANSFER_OBJ*)dObj->transferObjPool;
 
-    for (i = 0, index = lastUsedIndex; i < dObj->transferObjPoolSize; i++, index++)
+    for (i = 0, index = dObj->transferObjLastUsedIndex; i < dObj->transferObjPoolSize; i++, index++)
     {
 		if (index >= dObj->transferObjPoolSize)
 		{
@@ -349,7 +348,7 @@ static DRV_SPI_TRANSFER_OBJ* _DRV_SPI_FreeTransferObjGet(DRV_SPI_CLIENT_OBJ* cli
             /* Update the token for next time */
             dObj->spiTokenCount = _DRV_SPI_UPDATE_TOKEN(dObj->spiTokenCount);
 			
-			lastUsedIndex = index + 1;
+			dObj->transferObjLastUsedIndex = index + 1;
 
             return &pTransferObj[index];
         }
@@ -1200,6 +1199,7 @@ SYS_MODULE_OBJ DRV_SPI_Initialize (
     dObj->interruptSources          = spiInit->interruptSources;
     dObj->drvInExclusiveMode        = false;
     dObj->exclusiveUseCntr          = 0;
+    dObj->transferObjLastUsedIndex  = 0;
 
 <#if core.PRODUCT_FAMILY?matches("PIC32M.*") == false>
 <#if core.DMA_ENABLE?has_content && DRV_SPI_SYS_DMA_ENABLE == true>
