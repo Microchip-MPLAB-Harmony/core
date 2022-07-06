@@ -323,7 +323,7 @@ static uint32_t SYS_TIME_GetElapsedCount(uint32_t hwTimerCurrentValue)
 {
     SYS_TIME_COUNTER_OBJ* counterObj = (SYS_TIME_COUNTER_OBJ* )&gSystemCounterObj;
     uint32_t elapsedCount = 0;
-	uint32_t hwTimerPreviousValue = counterObj->hwTimerPreviousValue;
+    uint32_t hwTimerPreviousValue = counterObj->hwTimerPreviousValue;
 
     /* Calculate the elapsed time since the last time the timers in the list
      * were updated. */
@@ -426,9 +426,9 @@ static void SYS_TIME_TimerAdd(SYS_TIME_TIMER_OBJ* newTimer)
 
     SYS_TIME_UpdateTimerList(elapsedCount);
 
-	interruptState = SYS_INT_Disable();	
-    counterObj->swCounter64 = counterObj->swCounter64 + elapsedCount;  
-	SYS_INT_Restore(interruptState);
+    interruptState = SYS_INT_Disable();
+    counterObj->swCounter64 = counterObj->swCounter64 + elapsedCount;
+    SYS_INT_Restore(interruptState);
 
     isHeadTimerUpdated = SYS_TIME_AddToList(newTimer);
 
@@ -527,8 +527,8 @@ static void SYS_TIME_PLIBCallback(uint32_t status, uintptr_t context)
     counterObj->hwTimerCurrentValue = counterObj->timePlib->timerCounterGet();
 
     elapsedCount = SYS_TIME_GetElapsedCount(counterObj->hwTimerCurrentValue);
-	
-	counterObj->swCounter64 = counterObj->swCounter64 + elapsedCount;  
+
+    counterObj->swCounter64 = counterObj->swCounter64 + elapsedCount;
 
     if (tmrActive != NULL)
     {
@@ -538,7 +538,7 @@ static void SYS_TIME_PLIBCallback(uint32_t status, uintptr_t context)
 
         counterObj->interruptNestingCount--;
     }
-    
+
     interruptState = SYS_INT_Disable();
     SYS_TIME_HwTimerCompareUpdate();
     SYS_INT_Restore(interruptState);
@@ -694,14 +694,14 @@ uint32_t SYS_TIME_FrequencyGet ( void )
 uint64_t SYS_TIME_Counter64Get ( void )
 {
     SYS_TIME_COUNTER_OBJ * counterObj = (SYS_TIME_COUNTER_OBJ *)&gSystemCounterObj;
-    uint64_t counter64 = 0;    
+    uint64_t counter64 = 0;
     uint32_t elapsedCount;
-	bool interruptState;
-    
+    bool interruptState;
+
+    interruptState = SYS_INT_Disable();
+
     elapsedCount = SYS_TIME_GetElapsedCount(counterObj->timePlib->timerCounterGet());
 
-	interruptState = SYS_INT_Disable();	
-	
     counter64 = counterObj->swCounter64 + elapsedCount;
 
     SYS_INT_Restore(interruptState);
@@ -722,7 +722,7 @@ void SYS_TIME_CounterSet ( uint32_t count )
 {
     bool interruptState;
 
-    interruptState = SYS_INT_Disable();	
+    interruptState = SYS_INT_Disable();
 
     gSystemCounterObj.swCounter64 = count;
 
