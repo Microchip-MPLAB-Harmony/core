@@ -257,6 +257,7 @@ bool DRV_SST26_Read( const DRV_HANDLE handle, void *rx_data, uint32_t rx_data_le
     qspi_memory_xfer.instruction = SST26_CMD_HIGH_SPEED_READ;
     qspi_memory_xfer.width = QUAD_CMD;
     qspi_memory_xfer.dummy_cycles = 6;
+    qspi_memory_xfer.addr_len = ADDRL_24_BIT;
 
     status = dObj->sst26Plib->MemoryRead(&qspi_memory_xfer, (uint32_t *)rx_data, rx_data_length, address);
 
@@ -283,6 +284,7 @@ bool DRV_SST26_PageWrite( const DRV_HANDLE handle, void *tx_data, uint32_t addre
 
     qspi_memory_xfer.instruction = SST26_CMD_PAGE_PROGRAM;
     qspi_memory_xfer.width = QUAD_CMD;
+    qspi_memory_xfer.addr_len = ADDRL_24_BIT;
 
     status = dObj->sst26Plib->MemoryWrite(&qspi_memory_xfer, (uint32_t *)tx_data, DRV_SST26_PAGE_SIZE, address);
 
@@ -303,6 +305,7 @@ static bool DRV_SST26_Erase( uint8_t instruction, uint32_t address )
     qspi_command_xfer.instruction = instruction;
     qspi_command_xfer.width = QUAD_CMD;
     qspi_command_xfer.addr_en = 1;
+    qspi_command_xfer.addr_len = ADDRL_24_BIT;
 
     status = dObj->sst26Plib->CommandWrite(&qspi_command_xfer, address);
 
