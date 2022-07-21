@@ -3,6 +3,22 @@
 
 # Microchip MPLAB® Harmony 3 Release Notes
 
+## Core Release v3.11.1
+
+### New Features
+- N/A
+
+### Bug fixes
+- Fixed issue in buffer allocation logic in Async SPI driver. This issue impacts when the driver is used in multi-instance mode.
+- Fixed a potential race condition in updating the 64-bit counter in the SYS TIME module
+- Minor updates to the SST26 driver
+
+### Known Issues
+- Same as v3.11.0
+
+### Development Tools
+- Same as v3.11.0
+
 ## Core Release v3.11.0
 
 ### New Features
