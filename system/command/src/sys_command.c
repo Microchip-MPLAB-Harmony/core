@@ -129,10 +129,11 @@ typedef struct
 typedef struct
 {
     int                         nCmds;          // number of commands available in the table
-    const SYS_CMD_DESCRIPTOR*   pCmd;      // pointer to an array of command descriptors
+    const SYS_CMD_DESCRIPTOR*   pCmd;           // pointer to an array of command descriptors
     const char*                 cmdGroupName;   // name identifying the commands
     const char*                 cmdMenuStr;     // help string
-
+    SYS_CMD_Callback            usrCallback;    // user callback if any
+    void*                       usrParam;       // user param
 } SYS_CMD_DESCRIPTOR_TABLE;                 // table containing the supported commands
 
 // *****************************************************************************
@@ -287,9 +288,11 @@ bool  SYS_CMD_ADDGRP(const SYS_CMD_DESCRIPTOR* pCmdTbl, int nCmds, const char* g
 {
     int i, groupIx = -1, emptyIx = -1;
     int insertIx;
+    SYS_CMD_Callback usrCallback = 0;
+    void* usrParam = 0;
 
     // Check if there is space for new command group; If this table already added, also simply update.
-    for (i=0; i<MAX_CMD_GROUP; i++)
+    for (i = 0; i < MAX_CMD_GROUP; i++)
     {
         if(_usrCmdTbl[i].pCmd == 0)
         {   // empty slot
@@ -303,6 +306,8 @@ bool  SYS_CMD_ADDGRP(const SYS_CMD_DESCRIPTOR* pCmdTbl, int nCmds, const char* g
             }
 
             groupIx = i;
+            usrCallback = _usrCmdTbl[i].usrCallback;
+            usrParam = _usrCmdTbl[i].usrParam;
             break;
         }
     }
@@ -325,6 +330,8 @@ bool  SYS_CMD_ADDGRP(const SYS_CMD_DESCRIPTOR* pCmdTbl, int nCmds, const char* g
     _usrCmdTbl[insertIx].nCmds = nCmds;
     _usrCmdTbl[insertIx].cmdGroupName = groupName;
     _usrCmdTbl[insertIx].cmdMenuStr = menuStr;
+    _usrCmdTbl[insertIx].usrCallback = usrCallback;
+    _usrCmdTbl[insertIx].usrParam = usrParam;
     return true;
 
 }
@@ -701,6 +708,61 @@ bool SYS_CMD_DELETE(SYS_CMD_DEVICE_NODE* pDeviceNode)
     return false;
 }
 
+SYS_CMD_HANDLE  SYS_CMD_CallbackRegister(const SYS_CMD_DESCRIPTOR* pCmdTbl, SYS_CMD_Callback func, void* hParam)
+{
+    SYS_CMD_HANDLE handle = 0;
+
+    if(func != 0)
+    {
+        int ix;
+        SYS_CMD_DESCRIPTOR_TABLE* pTbl = _usrCmdTbl;
+        for(ix = 0; ix < MAX_CMD_GROUP; ix++, pTbl++)
+        {
+            if(pTbl->pCmd == pCmdTbl)
+            {   // requested group
+                OSAL_CRITSECT_DATA_TYPE critSect =  OSAL_CRIT_Enter(OSAL_CRIT_TYPE_LOW);
+                if(pTbl->usrCallback == 0)
+                {
+                    pTbl->usrCallback = func;
+                    pTbl->usrParam = hParam;
+                    handle = pTbl;
+                }
+                OSAL_CRIT_Leave(OSAL_CRIT_TYPE_LOW, critSect);
+            }
+        }
+    }
+
+    return handle;
+}
+
+bool SYS_CMD_CallbackDeregister(SYS_CMD_HANDLE handle)
+{
+    bool res = false;
+
+    SYS_CMD_DESCRIPTOR_TABLE* xTbl = (SYS_CMD_DESCRIPTOR_TABLE*)handle;
+    
+    int nIx = xTbl - _usrCmdTbl;
+
+    if( 0 <= nIx && nIx < sizeof(_usrCmdTbl) / sizeof(*_usrCmdTbl))
+    {
+        SYS_CMD_DESCRIPTOR_TABLE* pTbl = _usrCmdTbl + nIx;
+
+        if(pTbl == xTbl)
+        {   // handle is correct
+            OSAL_CRITSECT_DATA_TYPE critSect =  OSAL_CRIT_Enter(OSAL_CRIT_TYPE_LOW);
+            if(pTbl->pCmd != 0 && pTbl->usrCallback != 0)
+            {   // in use
+                pTbl->usrCallback = 0;
+                res = true;
+            }
+            OSAL_CRIT_Leave(OSAL_CRIT_TYPE_LOW, critSect);
+        }
+    }
+
+    return res;
+}
+    
+
 // ignore the console handle for now, we support a single system console
 static void SendCommandMessage(const void* cmdIoParam, const char* message)
 {
@@ -874,6 +936,7 @@ static void ParseCmdBuffer(SYS_CMD_IO_DCPT* pCmdIO)
     int  argc = 0;
     char *argv[MAX_CMD_ARGS] = {0};
     char saveCmd[SYS_CMD_MAX_LENGTH + 1];
+    char usrSaveCmd[SYS_CMD_MAX_LENGTH + 1];
     const void* cmdIoParam = pCmdIO->devNode.cmdIoParam;
 
     int            ix, grp_ix;
@@ -881,14 +944,10 @@ static void ParseCmdBuffer(SYS_CMD_IO_DCPT* pCmdIO)
 
     strncpy(saveCmd, pCmdIO->cmdBuff, sizeof(saveCmd));     // make a copy of the command
 
-    // parse a command string to *argv[]
+    // standard parse a command string to *argv[]
     argc = StringToArgs(saveCmd, argv, MAX_CMD_ARGS);
 
-    if(argc > MAX_CMD_ARGS)
-    {
-        (*pCmdIO->devNode.pCmdApi->print)(cmdIoParam, "\n\r Too many arguments. Maximum args supported: %d!\r\n", MAX_CMD_ARGS);
-    }
-    else if(argc == 0)
+    if(argc == 0)
     {
         (*pCmdIO->devNode.pCmdApi->msg)(cmdIoParam, " *** Command Processor: Please type in a command***" LINE_TERM);
     }
@@ -898,7 +957,7 @@ static void ParseCmdBuffer(SYS_CMD_IO_DCPT* pCmdIO)
         {   // ok, there's smth here
             // add it to the history list
             histCmdNode* pN = CmdRemoveTail(&pCmdIO->histList);
-            strncpy(pN->cmdBuff, pCmdIO->cmdBuff, sizeof(saveCmd)); // Need save non-parsed string
+            strncpy(pN->cmdBuff, pCmdIO->cmdBuff, sizeof(pN->cmdBuff)); // Need save non-parsed string
             CmdAddHead(&pCmdIO->histList, pN);
             pCmdIO->currHistN = 0;
 
@@ -907,16 +966,42 @@ static void ParseCmdBuffer(SYS_CMD_IO_DCPT* pCmdIO)
             {
                 if(!strcmp(argv[0], pDcpt->cmdStr))
                 {   // command found
-                    (*pDcpt->cmdFnc)(&pCmdIO->devNode, argc, argv);     // call command handler
+                    if(argc > MAX_CMD_ARGS)
+                    {
+                        (*pCmdIO->devNode.pCmdApi->print)(cmdIoParam, "\n\r Too many arguments. Maximum args supported: %d!\r\n", MAX_CMD_ARGS);
+                    }
+                    else
+                    {   // OK, call command handler
+                        pDcpt->cmdFnc(&pCmdIO->devNode, argc, argv);
+                    }
                     return;
                 }
             }
+
             // search user commands
-            for (grp_ix=0; grp_ix < MAX_CMD_GROUP; grp_ix++)
+            SYS_CMD_DESCRIPTOR_TABLE* pTbl = _usrCmdTbl;
+            for (grp_ix = 0; grp_ix < MAX_CMD_GROUP; grp_ix++, pTbl++)
             {
-                if (_usrCmdTbl[grp_ix].pCmd == 0)
+                if (pTbl->pCmd == 0)
                 {
                     continue;
+                }
+
+                if (pTbl->usrCallback != 0)
+                {   // external parser; give it a fresh copy of the command
+                    strncpy(usrSaveCmd, pCmdIO->cmdBuff, sizeof(usrSaveCmd));
+                    if(pTbl->usrCallback(pTbl->pCmd, &pCmdIO->devNode, usrSaveCmd, sizeof(usrSaveCmd), pTbl->usrParam))
+                    {   // command processed externally
+                        return;
+                    }
+                    // reparse the user modified command
+                    argc = StringToArgs(usrSaveCmd, argv, MAX_CMD_ARGS);
+                }
+
+                if(argc > MAX_CMD_ARGS)
+                {
+                    (*pCmdIO->devNode.pCmdApi->print)(cmdIoParam, "\n\r Too many arguments. Maximum args supported: %d!\r\n", MAX_CMD_ARGS);
+                    return;
                 }
 
                 for(ix = 0, pDcpt = _usrCmdTbl[grp_ix].pCmd; ix < _usrCmdTbl[grp_ix].nCmds; ix++, pDcpt++)
@@ -924,7 +1009,7 @@ static void ParseCmdBuffer(SYS_CMD_IO_DCPT* pCmdIO)
                     if(!strcmp(argv[0], pDcpt->cmdStr))
                     {
                         // command found
-                        (*pDcpt->cmdFnc)(&pCmdIO->devNode, argc, argv);
+                        pDcpt->cmdFnc(&pCmdIO->devNode, argc, argv);
                         return;
                     }
                 }
@@ -1155,4 +1240,5 @@ static void CmdAdjustPointers(SYS_CMD_IO_DCPT* pCmdIO)
         pCmdIO->cmdEnd = pCmdIO->cmdPnt;
     }
 }
+
 
