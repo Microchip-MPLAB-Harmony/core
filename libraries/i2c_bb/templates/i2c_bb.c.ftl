@@ -66,7 +66,19 @@
 
 static I2CBB_OBJ ${I2CBB_INSTANCE_NAME?lower_case}Obj;
 
-const I2C_BB_TMR_PLIB_INTERFACE i2cTimerPlibAPI = {
+/* MISRA C-2012 Rule 11.3, 11.8 deviated below. Deviation record ID -  
+   H3_MISRAC_2012_R_11_3_DR_1 & H3_MISRAC_2012_R_11_8_DR_1*/
+<#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
+<#if core.COMPILER_CHOICE == "XC32">
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wunknown-pragmas"
+</#if>
+#pragma coverity compliance block \
+(deviate:1 "MISRA C-2012 Rule 11.1" "H3_MISRAC_2012_R_11_3_DR_1" )\
+(deviate:3 "MISRA C-2012 Rule 11.8" "H3_MISRAC_2012_R_11_8_DR_1" )
+</#if>
+
+static const I2C_BB_TMR_PLIB_INTERFACE i2cTimerPlibAPI = {
     .timerStart = (I2C_BB_TMR_PLIB_START)${.vars["${I2CBB_CONNECTED_TIMER?lower_case}"].TIMER_START_API_NAME},
 
     .timerStop = (I2C_BB_TMR_PLIB_STOP)${.vars["${I2CBB_CONNECTED_TIMER?lower_case}"].TIMER_STOP_API_NAME},
@@ -77,7 +89,7 @@ const I2C_BB_TMR_PLIB_INTERFACE i2cTimerPlibAPI = {
 };
 
 
-const I2C_BB_INIT i2cBBInitData =
+static const I2C_BB_INIT i2cBBInitData =
 {
     .i2cbbTmrPlib        = &i2cTimerPlibAPI,
     .i2cbbSDAPin         = I2C_BB_DATA_PIN,
@@ -89,14 +101,17 @@ const I2C_BB_INIT i2cBBInitData =
 static void ${I2CBB_INSTANCE_NAME}_InitiateTransfer(void)
 {
     uint32_t timerPeriod;
+    bool portpinread;
     I2C_BB_INIT* pInitData =(I2C_BB_INIT*)&i2cBBInitData;
 
     timerPeriod = ${I2CBB_INSTANCE_NAME?lower_case}Obj.timerSrcClkFreq/((${I2CBB_INSTANCE_NAME?lower_case}Obj.i2cClockSpeed)<<2);
 
     ${I2CBB_INSTANCE_NAME?lower_case}Obj.writeCount = 0;
     ${I2CBB_INSTANCE_NAME?lower_case}Obj.readCount = 0;
+    
+    portpinread = SYS_PORT_PinRead(pInitData->i2cbbSDAPin);
     /* send START command only if SCL and SDA are pulled high */
-    if ((SYS_PORT_PinRead(pInitData->i2cbbSCLPin) == HIGH) && (SYS_PORT_PinRead(pInitData->i2cbbSDAPin) == HIGH))
+    if ((SYS_PORT_PinRead(pInitData->i2cbbSCLPin) == HIGH) && (portpinread == HIGH))
     {
         ${I2CBB_INSTANCE_NAME?lower_case}Obj.i2cState = I2CBB_BUS_STATE_SDA_LOW_START;
         pInitData->i2cbbTmrPlib->timerStop();
@@ -137,7 +152,7 @@ static void ${I2CBB_INSTANCE_NAME}_tasks(void)
         }
         ${I2CBB_INSTANCE_NAME?lower_case}Obj.I2CSWData = ${I2CBB_INSTANCE_NAME?lower_case}Obj.address;
         if (${I2CBB_INSTANCE_NAME?lower_case}Obj.transferState == I2CBB_TRANSFER_STATE_READ) {
-          ${I2CBB_INSTANCE_NAME?lower_case}Obj.I2CSWData |= 0x01;
+          ${I2CBB_INSTANCE_NAME?lower_case}Obj.I2CSWData |= 0x01U;
         }
         ${I2CBB_INSTANCE_NAME?lower_case}Obj.i2cState = I2CBB_BUS_STATE_SCL_LOW_DATA_CHECK;
         break;
@@ -152,7 +167,7 @@ static void ${I2CBB_INSTANCE_NAME}_tasks(void)
         if (SYS_PORT_PinRead(pInitData->i2cbbSDAPin) == INPUT) {
           ${I2CBB_INSTANCE_NAME?lower_case}Obj.i2cState = I2CBB_BUS_STATE_SCL_HIGH_RESTART;
         } else {
-          if (!(${I2CBB_INSTANCE_NAME?lower_case}Obj.errorTimeOut--)) {
+          if ((${I2CBB_INSTANCE_NAME?lower_case}Obj.errorTimeOut--) == 0U) {
             ${I2CBB_INSTANCE_NAME?lower_case}Obj.errorStatus = I2CBB_ERROR_BUS;
             pInitData->i2cbbTmrPlib->timerStop();
              pInitData->i2cbbTmrPlib->timerPeriodset(0);
@@ -173,7 +188,7 @@ static void ${I2CBB_INSTANCE_NAME}_tasks(void)
         if (SYS_PORT_PinRead(pInitData->i2cbbSCLPin) == INPUT) {
           ${I2CBB_INSTANCE_NAME?lower_case}Obj.i2cState = I2CBB_BUS_STATE_SDA_LOW_START;
         } else {
-          if (!(${I2CBB_INSTANCE_NAME?lower_case}Obj.errorTimeOut--)) {
+          if ((${I2CBB_INSTANCE_NAME?lower_case}Obj.errorTimeOut--) == 0U) {
             ${I2CBB_INSTANCE_NAME?lower_case}Obj.errorStatus = I2CBB_ERROR_BUS;
             pInitData->i2cbbTmrPlib->timerStop();
              pInitData->i2cbbTmrPlib->timerPeriodset(0);
@@ -190,32 +205,37 @@ static void ${I2CBB_INSTANCE_NAME}_tasks(void)
         break;
 
       case I2CBB_BUS_STATE_SCL_LOW_DATA:
-        if (${I2CBB_INSTANCE_NAME?lower_case}Obj.I2CSWCounter > 1) {
-          if ((bool)(${I2CBB_INSTANCE_NAME?lower_case}Obj.I2CSWData & 0x80)) {
+        if (${I2CBB_INSTANCE_NAME?lower_case}Obj.I2CSWCounter > 1U) {
+          if ((bool)(${I2CBB_INSTANCE_NAME?lower_case}Obj.I2CSWData & 0x80U)) {
             SYS_PORT_PinInputEnable(pInitData->i2cbbSDAPin);
           } else {
             SYS_PORT_PinOutputEnable(pInitData->i2cbbSDAPin);
           }
         }
         // just before the 9th clock prepare for an acknowledge.
-        else if (${I2CBB_INSTANCE_NAME?lower_case}Obj.I2CSWCounter == 1) {
-          ${I2CBB_INSTANCE_NAME?lower_case}Obj._i2c_bit_written = 0;
+        else if (${I2CBB_INSTANCE_NAME?lower_case}Obj.I2CSWCounter == 1U) {
+          ${I2CBB_INSTANCE_NAME?lower_case}Obj.i2c_bit_written = 0;
           if ((${I2CBB_INSTANCE_NAME?lower_case}Obj.transferState == I2CBB_TRANSFER_STATE_READ) &&
             ((${I2CBB_INSTANCE_NAME?lower_case}Obj.readCount != ${I2CBB_INSTANCE_NAME?lower_case}Obj.readSize)
               &&
-              (${I2CBB_INSTANCE_NAME?lower_case}Obj.I2CSWData == 0xFF00))) {
+              (${I2CBB_INSTANCE_NAME?lower_case}Obj.I2CSWData == 0xFF00U))) {
             SYS_PORT_PinOutputEnable(pInitData->i2cbbSDAPin);
           } else {
             SYS_PORT_PinInputEnable(pInitData->i2cbbSDAPin);
           }
         }
+        else
+        {
+            /* Nothing to do */
+        }
         // After the 9th clock
-        if (${I2CBB_INSTANCE_NAME?lower_case}Obj.I2CSWCounter == 0) {
+        if (${I2CBB_INSTANCE_NAME?lower_case}Obj.I2CSWCounter == 0U) {
           if ((${I2CBB_INSTANCE_NAME?lower_case}Obj.writeCount != (${I2CBB_INSTANCE_NAME?lower_case}Obj.writeSize)) &&
             ((${I2CBB_INSTANCE_NAME?lower_case}Obj.I2CACKStatus == M_ACK))
             &&((${I2CBB_INSTANCE_NAME?lower_case}Obj.transferState == I2CBB_TRANSFER_STATE_WRITE) ||
               (${I2CBB_INSTANCE_NAME?lower_case}Obj.transferState == I2CBB_TRANSFER_STATE_WRITE_READ))) {
-            ${I2CBB_INSTANCE_NAME?lower_case}Obj.I2CSWData = * ${I2CBB_INSTANCE_NAME?lower_case}Obj.writeBuffer++;
+            ${I2CBB_INSTANCE_NAME?lower_case}Obj.I2CSWData = * ${I2CBB_INSTANCE_NAME?lower_case}Obj.writeBuffer;
+            ${I2CBB_INSTANCE_NAME?lower_case}Obj.writeBuffer++;
             ${I2CBB_INSTANCE_NAME?lower_case}Obj.i2cState = I2CBB_BUS_STATE_SCL_LOW_DATA;
             ${I2CBB_INSTANCE_NAME?lower_case}Obj.I2CSWCounter = 9;
             ${I2CBB_INSTANCE_NAME?lower_case}Obj.writeCount++;
@@ -252,9 +272,9 @@ static void ${I2CBB_INSTANCE_NAME}_tasks(void)
         break;
 
       case I2CBB_BUS_STATE_SCL_HIGH_DATA:
-        if ((${I2CBB_INSTANCE_NAME?lower_case}Obj._i2c_bit_written == 1)) {
+        if ((${I2CBB_INSTANCE_NAME?lower_case}Obj.i2c_bit_written == true)) {
           /* check the value of bit that is just written onto the bus */
-          if ((bool)(SYS_PORT_PinRead(pInitData->i2cbbSDAPin)) == (bool) ${I2CBB_INSTANCE_NAME?lower_case}Obj._i2c_bit_written) {
+          if ((bool)(SYS_PORT_PinRead(pInitData->i2cbbSDAPin)) == (bool) ${I2CBB_INSTANCE_NAME?lower_case}Obj.i2c_bit_written) {
             SYS_PORT_PinInputEnable(pInitData->i2cbbSCLPin);
             ${I2CBB_INSTANCE_NAME?lower_case}Obj.i2cState = I2CBB_BUS_STATE_SCL_HIGH_DATA_CHECK;
           } else {
@@ -273,12 +293,12 @@ static void ${I2CBB_INSTANCE_NAME}_tasks(void)
       case I2CBB_BUS_STATE_SCL_HIGH_DATA_CHECK:
         if (SYS_PORT_PinRead(pInitData->i2cbbSCLPin) == INPUT) {
           if ((${I2CBB_INSTANCE_NAME?lower_case}Obj.transferState == I2CBB_TRANSFER_STATE_READ) &&
-            (${I2CBB_INSTANCE_NAME?lower_case}Obj.I2CSWCounter > 0) &&
-            (${I2CBB_INSTANCE_NAME?lower_case}Obj.readSize > 0)) {
+            (${I2CBB_INSTANCE_NAME?lower_case}Obj.I2CSWCounter > 0U) &&
+            (${I2CBB_INSTANCE_NAME?lower_case}Obj.readSize > 0U)) {
             ${I2CBB_INSTANCE_NAME?lower_case}Obj.I2CReadData <<= 1;
-            ${I2CBB_INSTANCE_NAME?lower_case}Obj.I2CReadData |= SYS_PORT_PinRead(pInitData->i2cbbSDAPin);
+            ${I2CBB_INSTANCE_NAME?lower_case}Obj.I2CReadData |= (uint16_t)SYS_PORT_PinRead(pInitData->i2cbbSDAPin);
           }
-          if (${I2CBB_INSTANCE_NAME?lower_case}Obj.I2CSWCounter == 0) {
+          if (${I2CBB_INSTANCE_NAME?lower_case}Obj.I2CSWCounter == 0U) {
 <#if I2C_INCLUDE_FORCED_WRITE_API == false>
             ${I2CBB_INSTANCE_NAME?lower_case}Obj.I2CACKStatus = SYS_PORT_PinRead(pInitData->i2cbbSDAPin);
 <#else>
@@ -292,14 +312,15 @@ static void ${I2CBB_INSTANCE_NAME}_tasks(void)
             }
 </#if>
             if ((${I2CBB_INSTANCE_NAME?lower_case}Obj.transferState == I2CBB_TRANSFER_STATE_READ) &&
-              (${I2CBB_INSTANCE_NAME?lower_case}Obj.I2CSWData == 0xFE00)) {
-              * ${I2CBB_INSTANCE_NAME?lower_case}Obj.readBuffer++ = ${I2CBB_INSTANCE_NAME?lower_case}Obj.I2CReadData;
+              (${I2CBB_INSTANCE_NAME?lower_case}Obj.I2CSWData == 0xFE00U)) {
+              * ${I2CBB_INSTANCE_NAME?lower_case}Obj.readBuffer = (uint8_t)${I2CBB_INSTANCE_NAME?lower_case}Obj.I2CReadData;
+              ${I2CBB_INSTANCE_NAME?lower_case}Obj.readBuffer++;
             }
           }
           ${I2CBB_INSTANCE_NAME?lower_case}Obj.i2cState = I2CBB_BUS_STATE_SCL_LOW_DATA_CHECK;
           ${I2CBB_INSTANCE_NAME?lower_case}Obj.errorTimeOut = ERROR_TIMEOUT_COUNT;
         } else {
-          if (!(${I2CBB_INSTANCE_NAME?lower_case}Obj.errorTimeOut--)) {
+          if ((${I2CBB_INSTANCE_NAME?lower_case}Obj.errorTimeOut--) == 0U) {
             ${I2CBB_INSTANCE_NAME?lower_case}Obj.errorStatus = I2CBB_ERROR_BUS;
             pInitData->i2cbbTmrPlib->timerStop(); //stop and clear Timer
             pInitData->i2cbbTmrPlib->timerPeriodset(0);
@@ -326,7 +347,7 @@ static void ${I2CBB_INSTANCE_NAME}_tasks(void)
         if (SYS_PORT_PinRead(pInitData->i2cbbSCLPin) == INPUT) {
           ${I2CBB_INSTANCE_NAME?lower_case}Obj.i2cState = I2CBB_BUS_STATE_SDA_HIGH_STOP;
         } else {
-          if (!(${I2CBB_INSTANCE_NAME?lower_case}Obj.errorTimeOut--)) //decrement error counter
+          if ((${I2CBB_INSTANCE_NAME?lower_case}Obj.errorTimeOut--) == 0U) //decrement error counter
           {
             ${I2CBB_INSTANCE_NAME?lower_case}Obj.errorStatus = I2CBB_ERROR_BUS;
             pInitData->i2cbbTmrPlib->timerStop(); //stop and clear Timer
@@ -354,6 +375,10 @@ static void ${I2CBB_INSTANCE_NAME}_tasks(void)
               ${I2CBB_INSTANCE_NAME?lower_case}Obj.callback(${I2CBB_INSTANCE_NAME?lower_case}Obj.context);
             }
         }
+        else
+        {
+            /* Nothing to do */
+        }
 
 
 
@@ -369,6 +394,7 @@ static void ${I2CBB_INSTANCE_NAME}_tasks(void)
         break;
 
       default:
+               /* Do Nothing */
         break;
     }
 
@@ -380,26 +406,26 @@ static void ${I2CBB_INSTANCE_NAME}_eventHandler(uint32_t status, uintptr_t conte
 }
 
 <#if I2C_INCLUDE_FORCED_WRITE_API == true>
-static bool _${I2CBB_INSTANCE_NAME}_Write(uint16_t address, uint8_t *pdata, size_t length, bool isForceWrite)
+static bool ${I2CBB_INSTANCE_NAME}_Write_Internal(uint16_t address, uint8_t *pdata, size_t length, bool isForceWrite)
 {
+    bool write_check = false;
     // Check for ongoing transfer
-    if( ${I2CBB_INSTANCE_NAME?lower_case}Obj.i2cState != I2CBB_BUS_STATE_NULL_STATE )
+    if( ${I2CBB_INSTANCE_NAME?lower_case}Obj.i2cState == I2CBB_BUS_STATE_NULL_STATE )
     {
-        return false;
+        ${I2CBB_INSTANCE_NAME?lower_case}Obj.address=address << 1;
+        ${I2CBB_INSTANCE_NAME?lower_case}Obj.readBuffer=NULL;
+        ${I2CBB_INSTANCE_NAME?lower_case}Obj.readSize=0;
+        ${I2CBB_INSTANCE_NAME?lower_case}Obj.writeBuffer=pdata;
+        ${I2CBB_INSTANCE_NAME?lower_case}Obj.writeSize=length;
+        ${I2CBB_INSTANCE_NAME?lower_case}Obj.transferState= I2CBB_TRANSFER_STATE_WRITE;
+        ${I2CBB_INSTANCE_NAME?lower_case}Obj.errorStatus = I2CBB_ERROR_NONE;
+        ${I2CBB_INSTANCE_NAME?lower_case}Obj.forcedWrite = isForceWrite;
+
+        ${I2CBB_INSTANCE_NAME}_InitiateTransfer();
+        ${I2CBB_INSTANCE_NAME?lower_case}Obj.I2CSWCounter = 9;
+        write_check = true;
     }
-
-    ${I2CBB_INSTANCE_NAME?lower_case}Obj.address=address << 1;
-    ${I2CBB_INSTANCE_NAME?lower_case}Obj.readBuffer=NULL;
-    ${I2CBB_INSTANCE_NAME?lower_case}Obj.readSize=0;
-    ${I2CBB_INSTANCE_NAME?lower_case}Obj.writeBuffer=pdata;
-    ${I2CBB_INSTANCE_NAME?lower_case}Obj.writeSize=length;
-    ${I2CBB_INSTANCE_NAME?lower_case}Obj.transferState= I2CBB_TRANSFER_STATE_WRITE;
-    ${I2CBB_INSTANCE_NAME?lower_case}Obj.errorStatus = I2CBB_ERROR_NONE;
-    ${I2CBB_INSTANCE_NAME?lower_case}Obj.forcedWrite = isForceWrite;
-
-    ${I2CBB_INSTANCE_NAME}_InitiateTransfer();
-    ${I2CBB_INSTANCE_NAME?lower_case}Obj.I2CSWCounter = 9;
-    return true;
+    return write_check;
 }
 </#if>
 
@@ -416,47 +442,54 @@ void ${I2CBB_INSTANCE_NAME}_Initialize(void)
     pInitData->i2cbbTmrPlib->timerCallbackRegister(I2C_BB_eventHandler,(uintptr_t)0);
 }
 
+<#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
+#pragma coverity compliance end_block "MISRA C-2012 Rule 11.1"
+#pragma coverity compliance end_block "MISRA C-2012 Rule 11.8"
+<#if core.COMPILER_CHOICE == "XC32">
+#pragma GCC diagnostic pop
+</#if>    
+</#if> 
+/* MISRAC 2012 deviation block end */
+
 bool ${I2CBB_INSTANCE_NAME}_IsBusy(void)
 {
+    bool busycheck = false;
     if( ${I2CBB_INSTANCE_NAME?lower_case}Obj.i2cState != I2CBB_BUS_STATE_NULL_STATE )
     {
-        return true;
+        busycheck = true;
     }
-    else
-    {
-        return false;
-    }
+    return busycheck;    
 }
 
 bool ${I2CBB_INSTANCE_NAME}_Read(uint16_t address, uint8_t *pdata, size_t length)
 {
+    bool readcheck = false;
     // Check for ongoing transfer
-    if( ${I2CBB_INSTANCE_NAME?lower_case}Obj.i2cState != I2CBB_BUS_STATE_NULL_STATE )
+    if( ${I2CBB_INSTANCE_NAME?lower_case}Obj.i2cState == I2CBB_BUS_STATE_NULL_STATE )
     {
-        return false;
+        ${I2CBB_INSTANCE_NAME?lower_case}Obj.address=address << 1;
+        ${I2CBB_INSTANCE_NAME?lower_case}Obj.readBuffer=pdata;
+        ${I2CBB_INSTANCE_NAME?lower_case}Obj.readSize=length;
+        ${I2CBB_INSTANCE_NAME?lower_case}Obj.writeBuffer=NULL;
+        ${I2CBB_INSTANCE_NAME?lower_case}Obj.writeSize=0;
+        ${I2CBB_INSTANCE_NAME?lower_case}Obj.transferState= I2CBB_TRANSFER_STATE_READ;
+        ${I2CBB_INSTANCE_NAME?lower_case}Obj.errorStatus = I2CBB_ERROR_NONE;
+    <#if I2C_INCLUDE_FORCED_WRITE_API == true>
+        ${I2CBB_INSTANCE_NAME?lower_case}Obj.forcedWrite = false;
+    </#if>
+
+        ${I2CBB_INSTANCE_NAME}_InitiateTransfer();
+        ${I2CBB_INSTANCE_NAME?lower_case}Obj.I2CSWCounter = 9;
+
+        readcheck = true;
     }
-
-    ${I2CBB_INSTANCE_NAME?lower_case}Obj.address=address << 1;
-    ${I2CBB_INSTANCE_NAME?lower_case}Obj.readBuffer=pdata;
-    ${I2CBB_INSTANCE_NAME?lower_case}Obj.readSize=length;
-    ${I2CBB_INSTANCE_NAME?lower_case}Obj.writeBuffer=NULL;
-    ${I2CBB_INSTANCE_NAME?lower_case}Obj.writeSize=0;
-    ${I2CBB_INSTANCE_NAME?lower_case}Obj.transferState= I2CBB_TRANSFER_STATE_READ;
-    ${I2CBB_INSTANCE_NAME?lower_case}Obj.errorStatus = I2CBB_ERROR_NONE;
-<#if I2C_INCLUDE_FORCED_WRITE_API == true>
-    ${I2CBB_INSTANCE_NAME?lower_case}Obj.forcedWrite = false;
-</#if>
-
-    ${I2CBB_INSTANCE_NAME}_InitiateTransfer();
-    ${I2CBB_INSTANCE_NAME?lower_case}Obj.I2CSWCounter = 9;
-
-    return true;
+    return readcheck;
 }
 
 bool ${I2CBB_INSTANCE_NAME}_Write(uint16_t address, uint8_t *pdata, size_t length)
 {
     <#if I2C_INCLUDE_FORCED_WRITE_API == true>
-    return _${I2CBB_INSTANCE_NAME}_Write(address, pdata, length, false);
+    return ${I2CBB_INSTANCE_NAME}_Write_Internal(address, pdata, length, false);
     <#else>
     // Check for ongoing transfer
     if( ${I2CBB_INSTANCE_NAME?lower_case}Obj.i2cState != I2CBB_BUS_STATE_NULL_STATE )
@@ -481,47 +514,43 @@ bool ${I2CBB_INSTANCE_NAME}_Write(uint16_t address, uint8_t *pdata, size_t lengt
 <#if I2C_INCLUDE_FORCED_WRITE_API == true>
 bool ${I2CBB_INSTANCE_NAME}_WriteForced(uint16_t address, uint8_t *pdata, size_t length)
 {
-    return _${I2CBB_INSTANCE_NAME}_Write(address, pdata, length, true);
+    return ${I2CBB_INSTANCE_NAME}_Write_Internal(address, pdata, length, true);
 }
 </#if>
 
 bool ${I2CBB_INSTANCE_NAME}_WriteRead(uint16_t address, uint8_t *wdata, size_t wlength, uint8_t *rdata, size_t rlength)
 {
-
+    bool writereadcheck = false;
     // Check for ongoing transfer
-    if( ${I2CBB_INSTANCE_NAME?lower_case}Obj.i2cState != I2CBB_BUS_STATE_NULL_STATE )
+    if( ${I2CBB_INSTANCE_NAME?lower_case}Obj.i2cState == I2CBB_BUS_STATE_NULL_STATE )
     {
-        return false;
+        ${I2CBB_INSTANCE_NAME?lower_case}Obj.address=address << 1;
+        ${I2CBB_INSTANCE_NAME?lower_case}Obj.readBuffer=rdata;
+        ${I2CBB_INSTANCE_NAME?lower_case}Obj.readSize=rlength;
+        ${I2CBB_INSTANCE_NAME?lower_case}Obj.writeBuffer=wdata;
+        ${I2CBB_INSTANCE_NAME?lower_case}Obj.writeSize=wlength;
+        ${I2CBB_INSTANCE_NAME?lower_case}Obj.transferState= I2CBB_TRANSFER_STATE_WRITE_READ;
+        ${I2CBB_INSTANCE_NAME?lower_case}Obj.errorStatus = I2CBB_ERROR_NONE;
+    <#if I2C_INCLUDE_FORCED_WRITE_API == true>
+        ${I2CBB_INSTANCE_NAME?lower_case}Obj.forcedWrite = false;
+    </#if>
+
+        ${I2CBB_INSTANCE_NAME}_InitiateTransfer();
+        ${I2CBB_INSTANCE_NAME?lower_case}Obj.I2CSWCounter = 9;
+
+        writereadcheck = true;
     }
-
-    ${I2CBB_INSTANCE_NAME?lower_case}Obj.address=address << 1;
-    ${I2CBB_INSTANCE_NAME?lower_case}Obj.readBuffer=rdata;
-    ${I2CBB_INSTANCE_NAME?lower_case}Obj.readSize=rlength;
-    ${I2CBB_INSTANCE_NAME?lower_case}Obj.writeBuffer=wdata;
-    ${I2CBB_INSTANCE_NAME?lower_case}Obj.writeSize=wlength;
-    ${I2CBB_INSTANCE_NAME?lower_case}Obj.transferState= I2CBB_TRANSFER_STATE_WRITE_READ;
-    ${I2CBB_INSTANCE_NAME?lower_case}Obj.errorStatus = I2CBB_ERROR_NONE;
-<#if I2C_INCLUDE_FORCED_WRITE_API == true>
-    ${I2CBB_INSTANCE_NAME?lower_case}Obj.forcedWrite = false;
-</#if>
-
-    ${I2CBB_INSTANCE_NAME}_InitiateTransfer();
-    ${I2CBB_INSTANCE_NAME?lower_case}Obj.I2CSWCounter = 9;
-
-    return true;
+    return writereadcheck;
 }
 
 void ${I2CBB_INSTANCE_NAME}_CallbackRegister(I2CBB_CALLBACK callback, uintptr_t contextHandle)
 {
-    if (callback == NULL)
+    if (callback != NULL)
     {
-        return;
+        ${I2CBB_INSTANCE_NAME?lower_case}Obj.callback = callback;
+        ${I2CBB_INSTANCE_NAME?lower_case}Obj.context = contextHandle;
     }
-
-    ${I2CBB_INSTANCE_NAME?lower_case}Obj.callback = callback;
-    ${I2CBB_INSTANCE_NAME?lower_case}Obj.context = contextHandle;
 }
-
 
 
 I2CBB_ERROR ${I2CBB_INSTANCE_NAME}_ErrorGet(void)
@@ -542,7 +571,7 @@ bool ${I2CBB_INSTANCE_NAME}_TransferSetup(I2CBB_TRANSFER_SETUP* setup, uint32_t 
     }
 
     /* Save the tmrSrcClkFreq if it is non-zero */
-    if( tmrSrcClkFreq != 0)
+    if( tmrSrcClkFreq != 0U)
     {
         ${I2CBB_INSTANCE_NAME?lower_case}Obj.timerSrcClkFreq = tmrSrcClkFreq;
     }
