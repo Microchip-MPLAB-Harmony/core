@@ -39,8 +39,8 @@
 *******************************************************************************/
 //DOM-IGNORE-END
 
-#ifndef _EEPROM_EMULATOR_LOCAL_H
-#define _EEPROM_EMULATOR_LOCAL_H
+#ifndef EEPROM_EMULATOR_LOCAL_H
+#define EEPROM_EMULATOR_LOCAL_H
 
 #include "emulated_eeprom_definitions.h"
 #include "osal/osal.h"
@@ -49,16 +49,32 @@
 extern "C" {
 #endif
 
+/* MISRA C-2012 Rule 5.4 deviated:2 Deviation record ID -  H3_MISRAC_2012_R_5_4_DR_1 */
+<#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
+<#if core.COMPILER_CHOICE == "XC32">
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wunknown-pragmas"
+</#if>
+#pragma coverity compliance block deviate:2 "MISRA C-2012 Rule 5.4" "H3_MISRAC_2012_R_5_4_DR_1"    
+</#if>
 #define EEPROM_EMULATOR_ROW_SIZE                                ${EEPROM_EMULATOR_ROW_SIZE}
-#define EEPROM_EMULATOR_PAGES_PER_ROW                           ${EEPROM_EMULATOR_PAGES_PER_ROW}
-#define EEPROM_EMULATOR_PAGE_SIZE                               ${EEPROM_EMULATOR_PAGE_SIZE}
-#define EEPROM_EMULATOR_INVALID_PAGE_NUMBER                     0xFFFF
-#define EEPROM_EMULATOR_INVALID_ROW_NUMBER                      0xFFFF
-#define EEPROM_EMULATOR_HEADER_SIZE                             4
-#define EEPROM_EMULATOR_NUM_PHYSICAL_PAGES                      ${EEPROM_EMULATOR_NUM_PHYSICAL_PAGES}
-#define EEPROM_EMULATOR_NUM_LOGICAL_PAGES                       ${EEPROM_EMULATOR_NUM_LOGICAL_PAGES}
+#define EEPROM_EMULATOR_PAGES_PER_ROW                           ${EEPROM_EMULATOR_PAGES_PER_ROW}U
+#define EEPROM_EMULATOR_PAGE_SIZE                               ${EEPROM_EMULATOR_PAGE_SIZE}U
+#define EEPROM_EMULATOR_INVALID_PAGE_NUMBER                     0xFFFFU
+#define EEPROM_EMULATOR_INVALID_ROW_NUMBER                      0xFFFFU
+#define EEPROM_EMULATOR_HEADER_SIZE                             4U
+#define EEPROM_EMULATOR_NUM_PHYSICAL_PAGES                      ${EEPROM_EMULATOR_NUM_PHYSICAL_PAGES}U
+#define EEPROM_EMULATOR_NUM_LOGICAL_PAGES                       ${EEPROM_EMULATOR_NUM_LOGICAL_PAGES}U
 #define EEPROM_EMULATOR_LOGICAL_SIZE_BYTES                      ${EEPROM_EMULATOR_EEPROM_LOGICAL_SIZE}
 #define EEPROM_EMULATOR_NUM_LOGICAL_PAGES_PER_ROW               (EEPROM_EMULATOR_PAGES_PER_ROW>>1)
+
+<#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
+#pragma coverity compliance end_block "MISRA C-2012 Rule 5.4"
+<#if core.COMPILER_CHOICE == "XC32">
+#pragma GCC diagnostic pop
+</#if>    
+</#if>
+/* MISRAC 2012 deviation block end */
 
 <#if EEPROM_EMULATOR_MAIN_ARRAY_ENABLED?? && EEPROM_EMULATOR_RWWEE_ENABLED??>
 
@@ -114,7 +130,7 @@ typedef struct
 
     <#if EEPROM_EMULATOR_MAIN_ARRAY_ENABLED == true>
     <#lt>   /** Absolute byte pointer to the first byte of FLASH where the emulated EEPROM is stored. */
-    <#lt>   const EEPROM_PAGE* main_array;
+    <#lt>   EEPROM_PAGE* main_array;
     </#if>
 
     <#if EEPROM_EMULATOR_RWWEE_ENABLED == true>
@@ -159,4 +175,4 @@ typedef struct
 }
 #endif
 
-#endif /* _EEPROM_EMULATOR_LOCAL_H */
+#endif /* EEPROM_EMULATOR_LOCAL_H */

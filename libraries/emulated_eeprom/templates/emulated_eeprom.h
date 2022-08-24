@@ -39,8 +39,8 @@
 *******************************************************************************/
 //DOM-IGNORE-END
 
-#ifndef _EMULATED_EEPROM_H
-#define _EMULATED_EEPROM_H
+#ifndef EMULATED_EEPROM_H
+#define EMULATED_EEPROM_H
 
 #include <stdint.h>
 #include <stdbool.h>
@@ -82,8 +82,7 @@ extern "C" {
     Otherwise, returns SYS_MODULE_OBJ_INVALID.
 
   Example:
-    <code>
-    // The following code snippet shows an example I2C driver initialization.
+    <code>    
 
     sysObj.libEMULATED_EEPROM0 = EMU_EEPROM_Initialize(EMULATED_EEPROM0, (SYS_MODULE_INIT *)NULL);
 
@@ -121,7 +120,7 @@ SYS_MODULE_OBJ EMU_EEPROM_Initialize(const SYS_MODULE_INDEX drvIndex, const SYS_
     <code>
     if (EMU_EEPROM_StatusGet() == EMU_EEPROM_STATUS_ERR_BAD_FORMAT)
     {
-        //Format the EEPROM Emulation memory if the initialization failed
+        
         EMU_EEPROM_FormatMemory();
     }
     </code>
@@ -157,7 +156,7 @@ EMU_EEPROM_STATUS EMU_EEPROM_StatusGet( void );
     <code>
     if (EMU_EEPROM_Status() == SYS_STATUS_UNINITIALIZED)
     {
-        //Format the EEPROM Emulation memory if the initialization failed
+       
         EMU_EEPROM_FormatMemory();
     }
     </code>
@@ -268,7 +267,7 @@ EMU_EEPROM_STATUS EMU_EEPROM_PageBufferCommit(void);
     function should be called.
 */
 EMU_EEPROM_STATUS EMU_EEPROM_PageWrite(
-        const uint8_t logical_page,
+        const uint16_t logical_page,
         const uint8_t *const data);
 
 // *****************************************************************************
@@ -306,7 +305,7 @@ EMU_EEPROM_STATUS EMU_EEPROM_PageWrite(
     None
 */
 EMU_EEPROM_STATUS EMU_EEPROM_PageRead(
-        const uint8_t logical_page,
+        const uint16_t logical_page,
         uint8_t *const data);
 
 // *****************************************************************************
@@ -403,4 +402,4 @@ EMU_EEPROM_STATUS EMU_EEPROM_BufferRead(
 }
 #endif
 
-#endif /* _EMULATED_EEPROM_H */
+#endif /* EMULATED_EEPROM_H */

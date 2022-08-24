@@ -39,8 +39,8 @@
 *******************************************************************************/
 //DOM-IGNORE-END
 
-#ifndef _EMULATED_EEPROM_DEFINITIONS_H
-#define _EMULATED_EEPROM_DEFINITIONS_H
+#ifndef EMULATED_EEPROM_DEFINITIONS_H
+#define EMULATED_EEPROM_DEFINITIONS_H
 
 #include <stdint.h>
 #include <stdbool.h>
@@ -111,4 +111,4 @@ typedef struct
 }
 #endif
 
-#endif /* _EMULATED_EEPROM_DEFINITIONS_H */
+#endif /* EMULATED_EEPROM_DEFINITIONS_H */
