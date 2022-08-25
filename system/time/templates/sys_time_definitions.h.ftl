@@ -114,7 +114,7 @@ typedef struct
 // *****************************************************************************
 /* TIME system service Initialization Data Declaration */
 
-struct _SYS_TIME_INIT
+struct SYS_TIME_INIT_
 {
     /* Identifies the PLIB API set to be used by the system service to access
      * the peripheral. */
