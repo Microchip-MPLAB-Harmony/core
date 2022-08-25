@@ -91,6 +91,8 @@ def loadModule():
 
         {"name":"emulated_eeprom", "label": "Emulated EEPROM", "type":"library", "display_path":"", "actual_path":"", "instance":"single", "dependency":["MEMORY"], "condition":'emulated_eeprom_condition()'},
 
+        {"name":"sst39", "label": "SST39", "type":"driver", "display_path":"Parallel PROM", "actual_path":"parallel_prom", "instance":"single", "capability":["MEMORY"], "dependency":["HEMC_CS"], "condition":"True"},
+
         ]
 
     #load drivers and system services defined above

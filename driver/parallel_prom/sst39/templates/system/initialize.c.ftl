@@ -1,0 +1,1 @@
+    sysObj.drvSST39 = DRV_SST39_Initialize((SYS_MODULE_INDEX)DRV_SST39_INDEX, (SYS_MODULE_INIT *)&drvSST39InitData);
