@@ -160,11 +160,12 @@ def instantiateComponent(usartComponent, index):
 
     # Global Header Files
     usartHeaderFile = usartComponent.createFileSymbol("USART_HEADER", None)
-    usartHeaderFile.setSourcePath("driver/usart/drv_usart.h")
+    usartHeaderFile.setSourcePath("driver/usart/drv_usart.h.ftl")
     usartHeaderFile.setOutputName("drv_usart.h")
     usartHeaderFile.setDestPath("driver/usart/")
     usartHeaderFile.setProjectPath("config/" + configName + "/driver/usart/")
     usartHeaderFile.setType("HEADER")
+    usartHeaderFile.setMarkup(True)
     usartHeaderFile.setOverwrite(True)
 
     # System Template Files

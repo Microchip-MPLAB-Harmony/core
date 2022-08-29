@@ -71,12 +71,12 @@ static DRV_USART_OBJ gDrvUSARTObj[DRV_USART_INSTANCES_NUMBER] ;
 // *****************************************************************************
 // *****************************************************************************
 
-static inline uint32_t  _DRV_USART_MAKE_HANDLE(uint16_t token, uint8_t drvIndex, uint8_t clientIndex)
+static inline uint32_t  lDRV_USART_MAKE_HANDLE(uint16_t token, uint8_t drvIndex, uint8_t clientIndex)
 {
-    return ((token << 16) | (drvIndex << 8) | clientIndex);
+    return (((uint32_t)token << 16) | ((uint32_t)drvIndex << 8) | clientIndex);
 }
 
-static inline uint16_t _DRV_USART_UPDATE_TOKEN(uint16_t token)
+static inline uint16_t lDRV_USART_UPDATE_TOKEN(uint16_t token)
 {
     token++;
 
@@ -88,32 +88,32 @@ static inline uint16_t _DRV_USART_UPDATE_TOKEN(uint16_t token)
     return token;
 }
 
-static void _DRV_USART_TX_PLIB_CallbackHandler( uintptr_t context )
+static void lDRV_USART_TX_PLIB_CallbackHandler( uintptr_t context )
 {
     DRV_USART_OBJ *dObj = (DRV_USART_OBJ *)context;
 
     dObj->txRequestStatus = DRV_USART_REQUEST_STATUS_COMPLETE;
 
-    OSAL_SEM_PostISR(&dObj->txTransferDone);
+    (void) OSAL_SEM_PostISR(&dObj->txTransferDone);
 }
 
-static DRV_USART_ERROR _DRV_USART_GetErrorType(const uint32_t* remapError, uint32_t errorMask)
+static DRV_USART_ERROR lDRV_USART_GetErrorType(const uint32_t* remapError, uint32_t errorMask)
 {
     uint32_t i;
     DRV_USART_ERROR error = DRV_USART_ERROR_NONE;
 
-    for (i = 0; i < 3; i++)
+    for (i = 0U; i < 3U; i++)
     {
         if (remapError[i] == errorMask)
         {
-            error = (DRV_USART_ERROR)(i+1);
+            error = i+1U;
             break;
         }
     }
     return error;
 }
 
-static void _DRV_USART_RX_PLIB_CallbackHandler( uintptr_t context )
+static void lDRV_USART_RX_PLIB_CallbackHandler( uintptr_t context )
 {
     DRV_USART_OBJ *dObj = (DRV_USART_OBJ *)context;
     DRV_USART_CLIENT_OBJ* clientObj = (DRV_USART_CLIENT_OBJ*)dObj->currentRxClient;
@@ -128,15 +128,15 @@ static void _DRV_USART_RX_PLIB_CallbackHandler( uintptr_t context )
     }
     else
     {
-        clientObj->errors = _DRV_USART_GetErrorType(dObj->remapError, errorMask);
+        clientObj->errors = lDRV_USART_GetErrorType(dObj->remapError, errorMask);
         dObj->rxRequestStatus = DRV_USART_REQUEST_STATUS_ERROR;
     }
 
-    OSAL_SEM_PostISR(&dObj->rxTransferDone);
+    (void) OSAL_SEM_PostISR(&dObj->rxTransferDone);
 }
 
 <#if core.DMA_ENABLE?has_content && DRV_USART_SYS_DMA_ENABLE == true>
-static void _DRV_USART_TX_DMA_CallbackHandler(SYS_DMA_TRANSFER_EVENT event, uintptr_t context)
+static void lDRV_USART_TX_DMA_CallbackHandler(SYS_DMA_TRANSFER_EVENT event, uintptr_t context)
 {
     DRV_USART_OBJ *dObj = (DRV_USART_OBJ *)context;
 
@@ -149,10 +149,10 @@ static void _DRV_USART_TX_DMA_CallbackHandler(SYS_DMA_TRANSFER_EVENT event, uint
         dObj->txRequestStatus = DRV_USART_REQUEST_STATUS_ERROR;
     }
 
-    OSAL_SEM_PostISR(&dObj->txTransferDone);
+    (void) OSAL_SEM_PostISR(&dObj->txTransferDone);
 }
 
-static void _DRV_USART_RX_DMA_CallbackHandler(SYS_DMA_TRANSFER_EVENT event, uintptr_t context)
+static void lDRV_USART_RX_DMA_CallbackHandler(SYS_DMA_TRANSFER_EVENT event, uintptr_t context)
 {
     DRV_USART_OBJ *dObj = (DRV_USART_OBJ *)context;
 
@@ -165,11 +165,11 @@ static void _DRV_USART_RX_DMA_CallbackHandler(SYS_DMA_TRANSFER_EVENT event, uint
         dObj->rxRequestStatus = DRV_USART_REQUEST_STATUS_ERROR;
     }
 
-    OSAL_SEM_PostISR(&dObj->rxTransferDone);
+    (void) OSAL_SEM_PostISR(&dObj->rxTransferDone);
 }
 
 </#if>
-static DRV_USART_CLIENT_OBJ* _DRV_USART_DriverHandleValidate(DRV_HANDLE handle)
+static DRV_USART_CLIENT_OBJ* lDRV_USART_DriverHandleValidate(DRV_HANDLE handle)
 {
     /* This function returns the pointer to the client object that is
        associated with this handle if the handle is valid. Returns NULL
@@ -178,11 +178,11 @@ static DRV_USART_CLIENT_OBJ* _DRV_USART_DriverHandleValidate(DRV_HANDLE handle)
     uint32_t drvInstance = 0;
     DRV_USART_CLIENT_OBJ* clientObj = NULL;
 
-    if((handle != DRV_HANDLE_INVALID) && (handle != 0))
+    if((handle != DRV_HANDLE_INVALID) && (handle != 0U))
     {
         /* Extract the instance value from the handle */
         drvInstance = ((handle & DRV_USART_INSTANCE_INDEX_MASK) >> 8);
-        if (drvInstance >= DRV_USART_INSTANCES_NUMBER)
+        if (drvInstance >= (uint32_t)DRV_USART_INSTANCES_NUMBER)
         {
             return (NULL);
         }
@@ -208,13 +208,29 @@ static DRV_USART_CLIENT_OBJ* _DRV_USART_DriverHandleValidate(DRV_HANDLE handle)
 // *****************************************************************************
 // *****************************************************************************
 
+/* MISRA C-2012 Rule 10.4 False Positive:11 Deviation record ID -  H3_MISRAC_2012_R_10_4_DR_1 */
+<#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
+<#if core.COMPILER_CHOICE == "XC32">
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wunknown-pragmas"
+</#if>
+#pragma coverity compliance block fp:11 "MISRA C-2012 Rule 10.4" "H3_MISRAC_2012_R_10_4_DR_1"    
+</#if>
+
+/* MISRA C-2012 Rule 11.3, 11.8 deviated below. Deviation record ID -  
+H3_MISRAC_2012_R_11_3_DR_1 & H3_MISRAC_2012_R_11_8_DR_1*/
+<#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
+#pragma coverity compliance block \
+(deviate:1 "MISRA C-2012 Rule 11.3" "H3_MISRAC_2012_R_11_3_DR_1" )\
+(deviate:1 "MISRA C-2012 Rule 11.8" "H3_MISRAC_2012_R_11_8_DR_1" )   
+</#if>
 SYS_MODULE_OBJ DRV_USART_Initialize( const SYS_MODULE_INDEX drvIndex, const SYS_MODULE_INIT * const init )
 {
     DRV_USART_OBJ *dObj = NULL;
     DRV_USART_INIT *usartInit = (DRV_USART_INIT *)init ;
 
     /* Validate the request */
-    if(drvIndex >= DRV_USART_INSTANCES_NUMBER)
+    if(drvIndex >= (uint32_t)DRV_USART_INSTANCES_NUMBER)
     {
         //SYS_DEBUG(SYS_ERROR_ERROR, "Invalid driver instance");
         return SYS_MODULE_OBJ_INVALID;
@@ -233,8 +249,8 @@ SYS_MODULE_OBJ DRV_USART_Initialize( const SYS_MODULE_INDEX drvIndex, const SYS_
     dObj->clientObjPool         = usartInit->clientObjPool;
     dObj->nClientsMax           = usartInit->numClients;
     dObj->nClients              = 0;
-    dObj->currentRxClient       = (uintptr_t)NULL;
-    dObj->currentTxClient       = (uintptr_t)NULL;
+    dObj->currentRxClient       = 0U;
+    dObj->currentTxClient       = 0U;
     dObj->isExclusive           = false;
     dObj->usartTokenCount       = 1;
 <#if core.DMA_ENABLE?has_content && DRV_USART_SYS_DMA_ENABLE == true>
@@ -299,15 +315,15 @@ SYS_MODULE_OBJ DRV_USART_Initialize( const SYS_MODULE_INDEX drvIndex, const SYS_
 
         SYS_DMA_DataWidthSetup(dObj->txDMAChannel, SYS_DMA_WIDTH_8_BIT);
 </#if>
-        SYS_DMA_ChannelCallbackRegister(dObj->txDMAChannel, _DRV_USART_TX_DMA_CallbackHandler, (uintptr_t)dObj);
+        SYS_DMA_ChannelCallbackRegister(dObj->txDMAChannel, lDRV_USART_TX_DMA_CallbackHandler, (uintptr_t)dObj);
     }
     else
     {
-        dObj->usartPlib->writeCallbackRegister(_DRV_USART_TX_PLIB_CallbackHandler, (uintptr_t)dObj);
-        (void)_DRV_USART_TX_DMA_CallbackHandler;
+        (void) dObj->usartPlib->writeCallbackRegister(lDRV_USART_TX_PLIB_CallbackHandler, (uintptr_t)dObj);
+        (void)lDRV_USART_TX_DMA_CallbackHandler;
     }
 <#else>
-    dObj->usartPlib->writeCallbackRegister(_DRV_USART_TX_PLIB_CallbackHandler, (uintptr_t)dObj);
+    (void) dObj->usartPlib->writeCallbackRegister(lDRV_USART_TX_PLIB_CallbackHandler, (uintptr_t)dObj);
 </#if>
 
 <#if core.DMA_ENABLE?has_content && DRV_USART_SYS_DMA_ENABLE == true>
@@ -323,15 +339,15 @@ SYS_MODULE_OBJ DRV_USART_Initialize( const SYS_MODULE_INDEX drvIndex, const SYS_
         SYS_DMA_DataWidthSetup(dObj->rxDMAChannel, SYS_DMA_WIDTH_8_BIT);
 </#if>
 
-        SYS_DMA_ChannelCallbackRegister(dObj->rxDMAChannel, _DRV_USART_RX_DMA_CallbackHandler, (uintptr_t)dObj);
+        SYS_DMA_ChannelCallbackRegister(dObj->rxDMAChannel, lDRV_USART_RX_DMA_CallbackHandler, (uintptr_t)dObj);
     }
     else
     {
-        dObj->usartPlib->readCallbackRegister(_DRV_USART_RX_PLIB_CallbackHandler, (uintptr_t)dObj);
-        (void)_DRV_USART_RX_DMA_CallbackHandler;
+        dObj->usartPlib->readCallbackRegister(lDRV_USART_RX_PLIB_CallbackHandler, (uintptr_t)dObj);
+        (void)lDRV_USART_RX_DMA_CallbackHandler;
     }
 <#else>
-    dObj->usartPlib->readCallbackRegister(_DRV_USART_RX_PLIB_CallbackHandler, (uintptr_t)dObj);
+    dObj->usartPlib->readCallbackRegister(lDRV_USART_RX_PLIB_CallbackHandler, (uintptr_t)dObj);
 </#if>
 
     /* Update the status */
@@ -340,11 +356,16 @@ SYS_MODULE_OBJ DRV_USART_Initialize( const SYS_MODULE_INDEX drvIndex, const SYS_
     /* Return the object structure */
     return ( (SYS_MODULE_OBJ)drvIndex );
 }
+<#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
+#pragma coverity compliance end_block "MISRA C-2012 Rule 11.3"
+#pragma coverity compliance end_block "MISRA C-2012 Rule 11.8"   
+</#if> 
+/* MISRAC 2012 deviation block end */
 
 SYS_STATUS DRV_USART_Status( SYS_MODULE_OBJ object)
 {
     /* Validate the request */
-    if( (object == SYS_MODULE_OBJ_INVALID) || (object >= DRV_USART_INSTANCES_NUMBER) )
+    if( (object == SYS_MODULE_OBJ_INVALID) || (object >= (uint32_t)DRV_USART_INSTANCES_NUMBER) )
     {
         //SYS_DEBUG(SYS_ERROR_ERROR, "Invalid system object handle");
         return SYS_STATUS_UNINITIALIZED;
@@ -360,7 +381,7 @@ DRV_HANDLE DRV_USART_Open( const SYS_MODULE_INDEX drvIndex, const DRV_IO_INTENT 
     uint32_t iClient;
 
     /* Validate the request */
-    if (drvIndex >= DRV_USART_INSTANCES_NUMBER)
+    if (drvIndex >= (uint32_t)DRV_USART_INSTANCES_NUMBER)
     {
         //SYS_DEBUG(SYS_ERROR_ERROR, "Invalid Driver Instance");
         return DRV_HANDLE_INVALID;
@@ -386,16 +407,16 @@ DRV_HANDLE DRV_USART_Open( const SYS_MODULE_INDEX drvIndex, const DRV_IO_INTENT 
     {
         /* This means the another client has opened the driver in exclusive
            mode. The driver cannot be opened again */
-        OSAL_MUTEX_Unlock( &dObj->clientMutex);
+        (void) OSAL_MUTEX_Unlock( &dObj->clientMutex);
         return DRV_HANDLE_INVALID;
     }
 
-    if((dObj->nClients > 0) && (ioIntent & DRV_IO_INTENT_EXCLUSIVE))
+    if((dObj->nClients > 0U) && (((uint32_t)ioIntent & (uint32_t)DRV_IO_INTENT_EXCLUSIVE) != 0U))
     {
         /* This means the driver was already opened and another driver was
            trying to open it exclusively.  We cannot give exclusive access in
            this case */
-        OSAL_MUTEX_Unlock( &dObj->clientMutex);
+        (void) OSAL_MUTEX_Unlock( &dObj->clientMutex);
         return(DRV_HANDLE_INVALID);
     }
 
@@ -416,7 +437,7 @@ DRV_HANDLE DRV_USART_Open( const SYS_MODULE_INDEX drvIndex, const DRV_IO_INTENT 
 
             clientObj->errors       = DRV_USART_ERROR_NONE;
 
-            if(ioIntent & DRV_IO_INTENT_EXCLUSIVE)
+            if(((uint32_t)ioIntent & (uint32_t)DRV_IO_INTENT_EXCLUSIVE) != 0U)
             {
                 /* Set the driver exclusive flag */
                 dObj->isExclusive = true;
@@ -427,19 +448,26 @@ DRV_HANDLE DRV_USART_Open( const SYS_MODULE_INDEX drvIndex, const DRV_IO_INTENT 
             /* Generate and save client handle in the client object, which will
              * be then used to verify the validity of the client handle.
              */
-            clientObj->clientHandle = _DRV_USART_MAKE_HANDLE(dObj->usartTokenCount, drvIndex, iClient);
+            clientObj->clientHandle = lDRV_USART_MAKE_HANDLE(dObj->usartTokenCount, (uint8_t)drvIndex, (uint8_t)iClient);
 
             /* Increment the instance specific token counter */
-            dObj->usartTokenCount = _DRV_USART_UPDATE_TOKEN(dObj->usartTokenCount);
+            dObj->usartTokenCount = lDRV_USART_UPDATE_TOKEN(dObj->usartTokenCount);
 
             break;
         }
     }
 
-    OSAL_MUTEX_Unlock(&dObj->clientMutex);
+    (void) OSAL_MUTEX_Unlock(&dObj->clientMutex);
 
     /* Driver index is the handle */
-    return clientObj ? ((DRV_HANDLE)clientObj->clientHandle) : DRV_HANDLE_INVALID;
+    if(clientObj != NULL)
+    {
+        return ((DRV_HANDLE)clientObj->clientHandle); 
+    }
+    else
+    {
+        return DRV_HANDLE_INVALID;
+    }
 }
 
 bool DRV_USART_SerialSetup( const DRV_HANDLE handle, DRV_USART_SERIAL_SETUP* setup )
@@ -450,7 +478,7 @@ bool DRV_USART_SerialSetup( const DRV_HANDLE handle, DRV_USART_SERIAL_SETUP* set
     bool isSuccess = false;
 
     /* Validate the request */
-    clientObj = _DRV_USART_DriverHandleValidate(handle);
+    clientObj = lDRV_USART_DriverHandleValidate(handle);
     if ((clientObj != NULL) && (setup != NULL))
     {
         dObj = (DRV_USART_OBJ *)clientObj->hDriver;
@@ -480,7 +508,7 @@ void DRV_USART_Close( DRV_HANDLE handle )
     DRV_USART_OBJ* dObj;
 
     /* Validate the handle */
-    clientObj = _DRV_USART_DriverHandleValidate(handle);
+    clientObj = lDRV_USART_DriverHandleValidate(handle);
 
     if(clientObj != NULL)
     {
@@ -501,7 +529,7 @@ void DRV_USART_Close( DRV_HANDLE handle )
             clientObj->inUse = false;
 
             /* Release the instance specific mutex */
-            OSAL_MUTEX_Unlock( &dObj->clientMutex );
+            (void) OSAL_MUTEX_Unlock( &dObj->clientMutex );
         }
     }
 }
@@ -512,7 +540,7 @@ DRV_USART_ERROR DRV_USART_ErrorGet( const DRV_HANDLE handle )
     DRV_USART_ERROR errors = DRV_USART_ERROR_NONE;
 
     /* Validate the handle */
-    clientObj = _DRV_USART_DriverHandleValidate(handle);
+    clientObj = lDRV_USART_DriverHandleValidate(handle);
 
     if(clientObj != NULL)
     {
@@ -534,9 +562,9 @@ bool DRV_USART_WriteBuffer
     bool isSuccess = false;
 
     /* Validate the driver handle */
-    clientObj = _DRV_USART_DriverHandleValidate(handle);
+    clientObj = lDRV_USART_DriverHandleValidate(handle);
 
-    if((clientObj != NULL) && (numbytes != 0) && (buffer != NULL))
+    if((clientObj != NULL) && (numbytes != 0U) && (buffer != NULL))
     {
         dObj = clientObj->hDriver;
 
@@ -588,10 +616,10 @@ bool DRV_USART_WriteBuffer
             }
             else
             {
-                dObj->usartPlib->write(buffer, numbytes);
+                (void) dObj->usartPlib->write_t(buffer, numbytes);
             }
 <#else>
-            dObj->usartPlib->write(buffer, numbytes);
+            (void) dObj->usartPlib->write_t(buffer, numbytes);
 </#if>
 
             /* Wait for transfer to complete */
@@ -603,7 +631,7 @@ bool DRV_USART_WriteBuffer
                 }
             }
             /* Release transmit mutex */
-            OSAL_MUTEX_Unlock(&dObj->txTransferMutex);
+            (void) OSAL_MUTEX_Unlock(&dObj->txTransferMutex);
         }
     }
     return isSuccess;
@@ -621,9 +649,9 @@ bool DRV_USART_ReadBuffer
     bool isSuccess = false;
 
     /* Validate the driver handle */
-    clientObj = _DRV_USART_DriverHandleValidate(handle);
+    clientObj = lDRV_USART_DriverHandleValidate(handle);
 
-    if((clientObj != NULL) && (numbytes != 0) && (buffer != NULL))
+    if((clientObj != NULL) && (numbytes != 0U) && (buffer != NULL))
     {
         dObj = clientObj->hDriver;
 
@@ -675,10 +703,10 @@ bool DRV_USART_ReadBuffer
             }
             else
             {
-                dObj->usartPlib->read(buffer, numbytes);
+                (void) dObj->usartPlib->read_t(buffer, numbytes);
             }
 <#else>
-            dObj->usartPlib->read(buffer, numbytes);
+            (void) dObj->usartPlib->read_t(buffer, numbytes);
 </#if>
             /* Wait for transfer to complete */
             if (OSAL_SEM_Pend(&dObj->rxTransferDone, OSAL_WAIT_FOREVER) == OSAL_RESULT_TRUE)
@@ -690,8 +718,15 @@ bool DRV_USART_ReadBuffer
                 }
             }
             /* Release receive mutex */
-            OSAL_MUTEX_Unlock(&dObj->rxTransferMutex);
+            (void) OSAL_MUTEX_Unlock(&dObj->rxTransferMutex);
         }
     }
     return isSuccess;
 }
+<#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
+#pragma coverity compliance end_block "MISRA C-2012 Rule 10.4"
+<#if core.COMPILER_CHOICE == "XC32">
+#pragma GCC diagnostic pop
+</#if>   
+</#if>
+/* MISRAC 2012 deviation block end */

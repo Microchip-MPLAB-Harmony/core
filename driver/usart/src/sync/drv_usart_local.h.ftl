@@ -72,11 +72,11 @@
     None
 */
 
-#define DRV_USART_CLIENT_INDEX_MASK               (0x000000FF)
+#define DRV_USART_CLIENT_INDEX_MASK               (0x000000FFU)
 
-#define DRV_USART_INSTANCE_INDEX_MASK             (0x0000FF00)
+#define DRV_USART_INSTANCE_INDEX_MASK             (0x0000FF00U)
 
-#define DRV_USART_TOKEN_MASK                      (0xFFFF0000)
+#define DRV_USART_TOKEN_MASK                      (0xFFFF0000U)
 
 #define DRV_USART_TOKEN_MAX                       (DRV_USART_TOKEN_MASK >> 16)
 
