@@ -41,8 +41,8 @@
 *******************************************************************************/
 //DOM-IGNORE-END
 
-#ifndef _DRV_MX25L_H
-#define _DRV_MX25L_H
+#ifndef DRV_MX25L_H
+#define DRV_MX25L_H
 
 // *****************************************************************************
 // *****************************************************************************
@@ -155,9 +155,7 @@ typedef struct
     Otherwise it returns SYS_MODULE_OBJ_INVALID.
 
   Example:
-    <code>
-    // This code snippet shows an example of initializing the MX25L Driver
-    // with MX25L QSPI flash device attached.
+    <code>    
 
     SYS_MODULE_OBJ  objectHandle;
 
@@ -178,7 +176,7 @@ typedef struct
 
     if (SYS_MODULE_OBJ_INVALID == objectHandle)
     {
-        // Handle error
+        
     }
     </code>
 
@@ -238,7 +236,7 @@ SYS_MODULE_OBJ DRV_MX25L_Initialize
     handle = DRV_MX25L_Open(DRV_MX25L_INDEX);
     if (DRV_HANDLE_INVALID == handle)
     {
-        // Unable to open the driver
+       
     }
     </code>
 
@@ -273,7 +271,7 @@ DRV_HANDLE DRV_MX25L_Open( const SYS_MODULE_INDEX drvIndex, const DRV_IO_INTENT 
 
   Example:
     <code>
-    DRV_HANDLE handle;  // Returned from DRV_MX25L_Open
+    DRV_HANDLE handle;  
 
     DRV_MX25L_Close(handle);
     </code>
@@ -322,7 +320,7 @@ void DRV_MX25L_Close( const DRV_HANDLE handle );
 
     if (status == SYS_STATUS_READY)
     {
-        // MX25L driver is initialized and ready to accept requests.
+        
     }
     </code>
 
@@ -361,7 +359,7 @@ SYS_STATUS DRV_MX25L_Status( const SYS_MODULE_INDEX drvIndex );
     <code>
     if(DRV_MX25L_ResetFlash() == false)
     {
-        // Error handling here
+        
     }
 
     </code>
@@ -401,12 +399,12 @@ bool DRV_MX25L_ResetFlash(void);
   Example:
     <code>
 
-    DRV_HANDLE handle;  // Returned from DRV_MX25L_Open
+    DRV_HANDLE handle; 
     uint32_t jedec_id = 0;
 
     if(DRV_MX25L_ReadJedecId(handle, &jedec_id) == false)
     {
-        // Error handling here
+        
     }
 
     </code>
@@ -453,15 +451,14 @@ bool DRV_MX25L_ReadJedecId( const DRV_HANDLE handle, void *jedec_id );
   Example:
     <code>
 
-    DRV_HANDLE handle;  // Returned from DRV_MX25L_Open
+    DRV_HANDLE handle;  
     uint32_t sectorStart = 0;
 
     if(DRV_MX25L_SectorErase(handle, sectorStart) == false)
     {
-        // Error handling here
+        
     }
-
-    // Wait for erase to be completed
+   
     while(DRV_MX25L_TransferStatusGet(handle) == DRV_MX25L_TRANSFER_BUSY);
 
     </code>
@@ -511,15 +508,14 @@ bool DRV_MX25L_SectorErase( const DRV_HANDLE handle, uint32_t address );
   Example:
     <code>
 
-    DRV_HANDLE handle;  // Returned from DRV_MX25L_Open
+    DRV_HANDLE handle;  
     uint32_t blockStart = 0;
 
     if(DRV_MX25L_SectorErase(handle, blockStart) == false)
     {
-        // Error handling here
+       
     }
-
-    // Wait for erase to be completed
+    
     while(DRV_MX25L_TransferStatusGet(handle) == DRV_MX25L_TRANSFER_BUSY);
 
     </code>
@@ -566,14 +562,13 @@ bool DRV_MX25L_BlockErase( const DRV_HANDLE handle, uint32_t address );
   Example:
     <code>
 
-    DRV_HANDLE handle;  // Returned from DRV_MX25L_Open
+    DRV_HANDLE handle;  
 
     if(DRV_MX25L_ChipErase(handle) == false)
     {
-        // Error handling here
+        
     }
-
-    // Wait for erase to be completed
+    
     while(DRV_MX25L_TransferStatusGet(handle) == DRV_MX25L_TRANSFER_BUSY);
 
     </code>
@@ -626,14 +621,14 @@ bool DRV_MX25L_ChipErase( const DRV_HANDLE handle );
     #define BUFFER_SIZE  1024
     #define MEM_ADDRESS  0x0
 
-    DRV_HANDLE handle;  // Returned from DRV_MX25L_Open
+    DRV_HANDLE handle; 
     uint8_t CACHE_ALIGN readBuffer[BUFFER_SIZE];
 
     if (DRV_MX25L_Read(handle, (void *)&readBuffer, BUFFER_SIZE, MEM_ADDRESS) == false)
     {
-        // Error handling here
+       
     }
-
+    
     </code>
 
   Remarks:
@@ -695,16 +690,15 @@ bool DRV_MX25L_Read( const DRV_HANDLE handle, void *rx_data, uint32_t rx_data_le
     #define BUFFER_SIZE  1024
     #define MEM_ADDRESS  0x0
 
-    DRV_HANDLE handle;  // Returned from DRV_MX25L_Open
+    DRV_HANDLE handle; 
     uint8_t writeBuffer[BUFFER_SIZE];
     bool status = false;
 
     if(DRV_MX25L_SectorErase(handle) == false)
     {
-        // Error handling here
+        
     }
-
-    // Wait for erase to be completed
+    
     while(DRV_MX25L_TransferStatusGet(handle) == DRV_MX25L_TRANSFER_BUSY);
 
     for (uint32_t j = 0; j < BUFFER_SIZE; j += PAGE_SIZE)
@@ -715,14 +709,14 @@ bool DRV_MX25L_Read( const DRV_HANDLE handle, void *rx_data, uint32_t rx_data_le
             break;
         }
 
-        // Wait for write to be completed
+        
         while(DRV_MX25L_TransferStatusGet(handle) == DRV_MX25L_TRANSFER_BUSY);
         status = true;
     }
 
     if(status == false)
     {
-        // Error handling here
+        
     }
 
     </code>
@@ -765,11 +759,11 @@ bool DRV_MX25L_PageWrite( const DRV_HANDLE handle, void *tx_data, uint32_t addre
   Example:
     <code>
 
-    DRV_HANDLE handle;  // Returned from DRV_MX25L_Open
+    DRV_HANDLE handle;  
 
     if (DRV_MX25L_TransferStatusGet(handle) == DRV_MX25L_TRANSFER_COMPLETED)
     {
-        // Operation Done
+        
     }
     </code>
 
@@ -809,7 +803,7 @@ DRV_MX25L_TRANSFER_STATUS DRV_MX25L_TransferStatusGet( const DRV_HANDLE handle )
   Example:
     <code>
 
-    DRV_HANDLE handle;  // Returned from DRV_MX25L_Open
+    DRV_HANDLE handle;  
     DRV_MX25L_GEOMETRY mx25lFlashGeometry;
     uint32_t readBlockSize, writeBlockSize, eraseBlockSize;
     uint32_t nReadBlocks, nReadRegions, totalFlashSize;
@@ -838,7 +832,7 @@ bool DRV_MX25L_GeometryGet( const DRV_HANDLE handle, DRV_MX25L_GEOMETRY *geometr
 }
 #endif
 
-#endif // #ifndef _DRV_MX25L_H
+#endif // #ifndef DRV_MX25L_H
 /*******************************************************************************
  End of File
 */

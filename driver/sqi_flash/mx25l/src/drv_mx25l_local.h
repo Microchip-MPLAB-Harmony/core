@@ -39,8 +39,8 @@
 *******************************************************************************/
 //DOM-IGNORE-END
 
-#ifndef _DRV_MX25L_LOCAL_H
-#define _DRV_MX25L_LOCAL_H
+#ifndef DRV_MX25L_LOCAL_H
+#define DRV_MX25L_LOCAL_H
 
 // *****************************************************************************
 // *****************************************************************************
@@ -176,7 +176,7 @@ typedef struct
     const DRV_MX25L_PLIB_INTERFACE *mx25lPlib;
 } DRV_MX25L_OBJECT;
 
-#endif //#ifndef _DRV_MX25L_LOCAL_H
+#endif //#ifndef DRV_MX25L_LOCAL_H
 
 /*******************************************************************************
  End of File
