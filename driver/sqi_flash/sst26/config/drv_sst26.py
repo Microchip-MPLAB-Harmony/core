@@ -75,8 +75,8 @@ def sst26SourceFileGen(symbol, event):
 
     if (protocolUsed == "SQI"):
         if ("QSPI" in plib_used):
-            symbol.setSourcePath("driver/sqi_flash/sst26/src/drv_sst26_qspi.c")
-            symbol.setMarkup(False)
+            symbol.setSourcePath("driver/sqi_flash/sst26/src/drv_sst26_qspi.c.ftl")
+            symbol.setMarkup(True)
         elif ("SQI" in plib_used):
             if "CORTEX" in coreArch:
                 symbol.setSourcePath("driver/sqi_flash/sst26/src/drv_sst26_sqi_arm.c.ftl")
@@ -341,11 +341,12 @@ def instantiateComponent(sst26Component):
     configName = Variables.get("__CONFIGURATION_NAME")
 
     sst26HeaderFile = sst26Component.createFileSymbol("DRV_SST26_HEADER", None)
-    sst26HeaderFile.setSourcePath("driver/sqi_flash/sst26/drv_sst26.h")
+    sst26HeaderFile.setSourcePath("driver/sqi_flash/sst26/drv_sst26.h.ftl")
     sst26HeaderFile.setOutputName("drv_sst26.h")
     sst26HeaderFile.setDestPath("driver/sst26/")
     sst26HeaderFile.setProjectPath("config/" + configName + "/driver/sst26/")
     sst26HeaderFile.setType("HEADER")
+    sst26HeaderFile.setMarkup(True)
     sst26HeaderFile.setOverwrite(True)
 
     sst26HeaderLocalFile = sst26Component.createFileSymbol("DRV_SST26_HEADER_LOCAL", None)

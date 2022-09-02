@@ -23,8 +23,8 @@
 <#elseif DRV_SST26_INTERFACE_TYPE == "SPI_PLIB" >
     <#lt>const DRV_SST26_PLIB_INTERFACE drvSST26PlibAPI = {
     <#lt>    .writeRead          = (DRV_SST26_PLIB_WRITE_READ)${.vars["${DRV_SST26_PLIB?lower_case}"].SPI_PLIB_API_PREFIX}_WriteRead,
-    <#lt>    .write              = (DRV_SST26_PLIB_WRITE)${.vars["${DRV_SST26_PLIB?lower_case}"].SPI_PLIB_API_PREFIX}_Write,
-    <#lt>    .read               = (DRV_SST26_PLIB_READ)${.vars["${DRV_SST26_PLIB?lower_case}"].SPI_PLIB_API_PREFIX}_Read,
+    <#lt>    .write_t              = (DRV_SST26_PLIB_WRITE)${.vars["${DRV_SST26_PLIB?lower_case}"].SPI_PLIB_API_PREFIX}_Write,
+    <#lt>    .read_t               = (DRV_SST26_PLIB_READ)${.vars["${DRV_SST26_PLIB?lower_case}"].SPI_PLIB_API_PREFIX}_Read,
     <#lt>    .isBusy             = (DRV_SST26_PLIB_IS_BUSY)${.vars["${DRV_SST26_PLIB?lower_case}"].SPI_PLIB_API_PREFIX}_IsBusy,
     <#lt>    .callbackRegister   = (DRV_SST26_PLIB_CALLBACK_REGISTER)${.vars["${DRV_SST26_PLIB?lower_case}"].SPI_PLIB_API_PREFIX}_CallbackRegister,
     <#lt>};

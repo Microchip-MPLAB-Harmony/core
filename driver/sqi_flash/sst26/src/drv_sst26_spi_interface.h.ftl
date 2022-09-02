@@ -40,8 +40,8 @@
  *******************************************************************************/
 // DOM-IGNORE-END
 
-#ifndef _DRV_SST26_SPI_INTERFACE_H
-#define _DRV_SST26_SPI_INTERFACE_H
+#ifndef DRV_SST26_SPI_INTERFACE_H
+#define DRV_SST26_SPI_INTERFACE_H
 
 // *****************************************************************************
 // *****************************************************************************
@@ -65,31 +65,31 @@
 // *****************************************************************************
 // *****************************************************************************
 <#if DRV_SST26_INTERFACE_TYPE == "SPI_DRV">
-void _DRV_SST26_SPIDriverEventHandler(
+void DRV_SST26_SPIDriverEventHandler(
     DRV_SPI_TRANSFER_EVENT event,
     DRV_SPI_TRANSFER_HANDLE transferHandle,
     uintptr_t context
 );
 <#else>
 <#if DRV_SST26_TX_RX_DMA == true>
-void _DRV_SST26_TX_DMA_CallbackHandler(
+void DRV_SST26_TX_DMA_CallbackHandler(
     SYS_DMA_TRANSFER_EVENT event,
     uintptr_t context
 );
-void _DRV_SST26_RX_DMA_CallbackHandler(
+void DRV_SST26_RX_DMA_CallbackHandler(
     SYS_DMA_TRANSFER_EVENT event,
     uintptr_t context
 );
 <#else>
-void _DRV_SST26_SPIPlibCallbackHandler(uintptr_t context );
+void DRV_SST26_SPIPlibCallbackHandler(uintptr_t context );
 </#if>
 </#if>
 
-void _DRV_SST26_InterfaceInit(DRV_SST26_OBJECT* dObj, DRV_SST26_INIT* sst26Init);
+void DRV_SST26_InterfaceInit(DRV_SST26_OBJECT* dObj, DRV_SST26_INIT* sst26Init);
 
-bool _DRV_SST26_SPIWriteRead(
+bool DRV_SST26_SPIWriteRead(
     DRV_SST26_OBJECT* dObj,
     DRV_SST26_TRANSFER_OBJ* transferObj
 );
 
-#endif //#ifndef _DRV_SST26_SPI_INTERFACE_H
+#endif //#ifndef DRV_SST26_SPI_INTERFACE_H

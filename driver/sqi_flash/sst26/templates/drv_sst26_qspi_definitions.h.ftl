@@ -94,7 +94,7 @@ typedef bool (*DRV_SST26_PLIB_MEM_READ)( qspi_memory_xfer_t *qspi_memory_xfer, u
 /* Pointer to write to the specified address of the flash device. */
 typedef bool (*DRV_SST26_PLIB_MEM_WRITE)( qspi_memory_xfer_t *qspi_memory_xfer, uint32_t *tx_data, uint32_t tx_data_length, uint32_t address );
 
-typedef struct
+typedef struct 
 {
     /* Pointer to write command to QSPI slave device. */
     DRV_SST26_PLIB_CMD_WRITE CommandWrite;

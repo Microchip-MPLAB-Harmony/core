@@ -83,7 +83,7 @@ static uint32_t DRV_SST26_GetFlashSize( uint8_t deviceId )
 {
     uint8_t i = 0;
 
-    for (i = 0; i < 5; i++)
+    for (i = 0U; i < 5U; i++)
     {
         if (deviceId == gSstFlashIdSizeTable[i][0])
         {
@@ -98,9 +98,9 @@ static bool DRV_SST26_ResetFlash(void)
 {
     bool status = false;
 
-    memset((void *)&qspi_command_xfer, 0, sizeof(qspi_command_xfer_t));
+   (void) memset((void *)&qspi_command_xfer, 0, sizeof(qspi_command_xfer_t));
 
-    qspi_command_xfer.instruction = SST26_CMD_FLASH_RESET_ENABLE;
+    qspi_command_xfer.instruction = (uint8_t)SST26_CMD_FLASH_RESET_ENABLE;
     qspi_command_xfer.width = SINGLE_BIT_SPI;
 
     if (dObj->sst26Plib->CommandWrite(&qspi_command_xfer, 0) == false)
@@ -108,7 +108,7 @@ static bool DRV_SST26_ResetFlash(void)
         return status;
     }
 
-    qspi_command_xfer.instruction = SST26_CMD_FLASH_RESET;
+    qspi_command_xfer.instruction = (uint8_t)SST26_CMD_FLASH_RESET;
     qspi_command_xfer.width = SINGLE_BIT_SPI;
 
     status  = dObj->sst26Plib->CommandWrite(&qspi_command_xfer, 0);
@@ -120,9 +120,9 @@ static bool DRV_SST26_EnableQuadIO(void)
 {
     bool status = false;
 
-    memset((void *)&qspi_command_xfer, 0, sizeof(qspi_command_xfer_t));
+    (void) memset((void *)&qspi_command_xfer, 0, sizeof(qspi_command_xfer_t));
 
-    qspi_command_xfer.instruction = SST26_CMD_ENABLE_QUAD_IO;
+    qspi_command_xfer.instruction = (uint8_t)SST26_CMD_ENABLE_QUAD_IO;
     qspi_command_xfer.width = SINGLE_BIT_SPI;
 
     status  = dObj->sst26Plib->CommandWrite(&qspi_command_xfer, 0);
@@ -134,9 +134,9 @@ static bool DRV_SST26_WriteEnable(void)
 {
     bool status = false;
 
-    memset((void *)&qspi_command_xfer, 0, sizeof(qspi_command_xfer_t));
+    (void) memset((void *)&qspi_command_xfer, 0, sizeof(qspi_command_xfer_t));
 
-    qspi_command_xfer.instruction = SST26_CMD_WRITE_ENABLE;
+    qspi_command_xfer.instruction = (uint8_t)SST26_CMD_WRITE_ENABLE;
     qspi_command_xfer.width = QUAD_CMD;
 
     status  = dObj->sst26Plib->CommandWrite(&qspi_command_xfer, 0);
@@ -164,9 +164,9 @@ bool DRV_SST26_UnlockFlash( const DRV_HANDLE handle )
         return status;
     }
 
-    memset((void *)&qspi_command_xfer, 0, sizeof(qspi_command_xfer_t));
+    (void) memset((void *)&qspi_command_xfer, 0, sizeof(qspi_command_xfer_t));
 
-    qspi_command_xfer.instruction = SST26_CMD_UNPROTECT_GLOBAL;
+    qspi_command_xfer.instruction = (uint8_t)SST26_CMD_UNPROTECT_GLOBAL;
     qspi_command_xfer.width = QUAD_CMD;
 
     status  = dObj->sst26Plib->CommandWrite(&qspi_command_xfer, 0);
@@ -183,9 +183,9 @@ bool DRV_SST26_ReadJedecId( const DRV_HANDLE handle, void *jedec_id)
         return status;
     }
 
-    memset((void *)&qspi_register_xfer, 0, sizeof(qspi_register_xfer_t));
+    (void) memset((void *)&qspi_register_xfer, 0, sizeof(qspi_register_xfer_t));
 
-    qspi_register_xfer.instruction = SST26_CMD_QUAD_JEDEC_ID_READ;
+    qspi_register_xfer.instruction = (uint8_t)SST26_CMD_QUAD_JEDEC_ID_READ;
     qspi_register_xfer.width = QUAD_CMD;
     qspi_register_xfer.dummy_cycles = 2;
 
@@ -203,9 +203,9 @@ bool DRV_SST26_ReadStatus( const DRV_HANDLE handle, void *rx_data, uint32_t rx_d
         return status;
     }
 
-    memset((void *)&qspi_register_xfer, 0, sizeof(qspi_register_xfer_t));
+    (void) memset((void *)&qspi_register_xfer, 0, sizeof(qspi_register_xfer_t));
 
-    qspi_register_xfer.instruction = SST26_CMD_READ_STATUS_REG;
+    qspi_register_xfer.instruction = (uint8_t)SST26_CMD_READ_STATUS_REG;
     qspi_register_xfer.width = QUAD_CMD;
     qspi_register_xfer.dummy_cycles = 2;
 
@@ -235,10 +235,14 @@ DRV_SST26_TRANSFER_STATUS DRV_SST26_TransferStatusGet( const DRV_HANDLE handle )
         return status;
     }
 
-    if(reg_status & (1<<0))
+    if((reg_status & (1UL<<0)) != 0U)
+    {
         status = DRV_SST26_TRANSFER_BUSY;
+    }
     else
+    {
         status = DRV_SST26_TRANSFER_COMPLETED;
+    }
 
     return status;
 }
@@ -252,9 +256,9 @@ bool DRV_SST26_Read( const DRV_HANDLE handle, void *rx_data, uint32_t rx_data_le
         return status;
     }
 
-    memset((void *)&qspi_memory_xfer, 0, sizeof(qspi_memory_xfer_t));
+    (void) memset((void *)&qspi_memory_xfer, 0, sizeof(qspi_memory_xfer_t));
 
-    qspi_memory_xfer.instruction = SST26_CMD_HIGH_SPEED_READ;
+    qspi_memory_xfer.instruction = (uint8_t)SST26_CMD_HIGH_SPEED_READ;
     qspi_memory_xfer.width = QUAD_CMD;
     qspi_memory_xfer.dummy_cycles = 6;
     qspi_memory_xfer.addr_len = ADDRL_24_BIT;
@@ -280,9 +284,9 @@ bool DRV_SST26_PageWrite( const DRV_HANDLE handle, void *tx_data, uint32_t addre
         return status;
     }
 
-    memset((void *)&qspi_memory_xfer, 0, sizeof(qspi_memory_xfer_t));
+    (void) memset((void *)&qspi_memory_xfer, 0, sizeof(qspi_memory_xfer_t));
 
-    qspi_memory_xfer.instruction = SST26_CMD_PAGE_PROGRAM;
+    qspi_memory_xfer.instruction = (uint8_t)SST26_CMD_PAGE_PROGRAM;
     qspi_memory_xfer.width = QUAD_CMD;
     qspi_memory_xfer.addr_len = ADDRL_24_BIT;
 
@@ -321,7 +325,7 @@ bool DRV_SST26_SectorErase( const DRV_HANDLE handle, uint32_t address )
         return false;
     }
 
-    return (DRV_SST26_Erase(SST26_CMD_SECTOR_ERASE, address));
+    return (DRV_SST26_Erase((uint8_t)SST26_CMD_SECTOR_ERASE, address));
 }
 
 bool DRV_SST26_BulkErase( const DRV_HANDLE handle, uint32_t address )
@@ -331,7 +335,7 @@ bool DRV_SST26_BulkErase( const DRV_HANDLE handle, uint32_t address )
         return false;
     }
 
-    return (DRV_SST26_Erase(SST26_CMD_BULK_ERASE_64K, address));
+    return (DRV_SST26_Erase((uint8_t)SST26_CMD_BULK_ERASE_64K, address));
 }
 
 bool DRV_SST26_ChipErase( const DRV_HANDLE handle )
@@ -341,7 +345,7 @@ bool DRV_SST26_ChipErase( const DRV_HANDLE handle )
         return false;
     }
 
-    return (DRV_SST26_Erase(SST26_CMD_CHIP_ERASE, 0));
+    return (DRV_SST26_Erase((uint8_t)SST26_CMD_CHIP_ERASE, 0));
 }
 
 bool DRV_SST26_GeometryGet( const DRV_HANDLE handle, DRV_SST26_GEOMETRY *geometry )
@@ -356,7 +360,7 @@ bool DRV_SST26_GeometryGet( const DRV_HANDLE handle, DRV_SST26_GEOMETRY *geometr
 
     flash_size = DRV_SST26_GetFlashSize(jedec_id[2]);
 
-    if ((flash_size == 0) ||
+    if ((flash_size == 0U) ||
         (DRV_SST26_START_ADDRESS >= flash_size))
     {
         return false;
@@ -411,7 +415,7 @@ DRV_HANDLE DRV_SST26_Open( const SYS_MODULE_INDEX drvIndex, const DRV_IO_INTENT 
         return DRV_HANDLE_INVALID;
     }
 
-    if ((ioIntent & DRV_IO_INTENT_WRITE) == (DRV_IO_INTENT_WRITE))
+    if (((uint32_t)ioIntent & (uint32_t)DRV_IO_INTENT_WRITE) == ((uint32_t)DRV_IO_INTENT_WRITE))
     {
         /* Unlock the Flash */
         if (DRV_SST26_UnlockFlash((DRV_HANDLE)drvIndex) == false)
@@ -430,12 +434,22 @@ DRV_HANDLE DRV_SST26_Open( const SYS_MODULE_INDEX drvIndex, const DRV_IO_INTENT 
 void DRV_SST26_Close( const DRV_HANDLE handle )
 {
     if ( (handle != DRV_HANDLE_INVALID) &&
-         (dObj->nClients > 0))
+         (dObj->nClients > 0U))
     {
         dObj->nClients--;
     }
 }
-
+/* MISRA C-2012 Rule 11.3, 11.8 deviated below. Deviation record ID -  
+   H3_MISRAC_2012_R_11_3_DR_1 & H3_MISRAC_2012_R_11_8_DR_1*/
+<#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
+<#if core.COMPILER_CHOICE == "XC32">
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wunknown-pragmas"
+</#if>
+#pragma coverity compliance block \
+(deviate:1 "MISRA C-2012 Rule 11.3" "H3_MISRAC_2012_R_11_3_DR_1" )\
+(deviate:1 "MISRA C-2012 Rule 11.8" "H3_MISRAC_2012_R_11_8_DR_1" )   
+</#if>
 SYS_MODULE_OBJ DRV_SST26_Initialize
 (
     const SYS_MODULE_INDEX drvIndex,
@@ -467,6 +481,14 @@ SYS_MODULE_OBJ DRV_SST26_Initialize
     /* Return the driver index */
     return ( (SYS_MODULE_OBJ)drvIndex );
 }
+<#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
+#pragma coverity compliance end_block "MISRA C-2012 Rule 11.3"
+#pragma coverity compliance end_block "MISRA C-2012 Rule 11.8"
+<#if core.COMPILER_CHOICE == "XC32">
+#pragma GCC diagnostic pop
+</#if>    
+</#if>
+/* MISRAC 2012 deviation block end */ 
 
 SYS_STATUS DRV_SST26_Status( const SYS_MODULE_INDEX drvIndex )
 {

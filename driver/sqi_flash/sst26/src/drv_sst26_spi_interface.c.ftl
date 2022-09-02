@@ -60,7 +60,7 @@ extern void DRV_SST26_Handler(void);
 
 static uint8_t __ALIGNED(4) dummyDataBuffer[CACHE_ALIGNED_SIZE_GET(256)];
 
-static void _DRV_SST26_StartDMATransfer(DRV_SST26_OBJECT* dObj, DRV_SST26_TRANSFER_OBJ* transferObj)
+static void lDRV_SST26_StartDMATransfer(DRV_SST26_OBJECT* dObj, DRV_SST26_TRANSFER_OBJ* transferObj)
 {
     uint32_t size = 0;
     /* To avoid unused build error */
@@ -130,7 +130,7 @@ static void _DRV_SST26_StartDMATransfer(DRV_SST26_OBJECT* dObj, DRV_SST26_TRANSF
         }
     }
 }
-void _DRV_SST26_TX_DMA_CallbackHandler(
+void DRV_SST26_TX_DMA_CallbackHandler(
     SYS_DMA_TRANSFER_EVENT event,
     uintptr_t context
 )
@@ -138,7 +138,7 @@ void _DRV_SST26_TX_DMA_CallbackHandler(
     /* Do nothing */
 }
 
-void _DRV_SST26_RX_DMA_CallbackHandler(
+void DRV_SST26_RX_DMA_CallbackHandler(
     SYS_DMA_TRANSFER_EVENT event,
     uintptr_t context
 )
@@ -200,7 +200,7 @@ void _DRV_SST26_RX_DMA_CallbackHandler(
 
 static CACHE_ALIGN uint8_t txDummyData[CACHE_ALIGNED_SIZE_GET(4)];
 
-static void _DRV_SST26_StartDMATransfer(DRV_SST26_OBJECT* dObj, DRV_SST26_TRANSFER_OBJ* transferObj)
+static void lDRV_SST26_StartDMATransfer(DRV_SST26_OBJECT* dObj, DRV_SST26_TRANSFER_OBJ* transferObj)
 {
     uint32_t size = 0;
     /* To avoid unused build error */
@@ -269,7 +269,7 @@ static void _DRV_SST26_StartDMATransfer(DRV_SST26_OBJECT* dObj, DRV_SST26_TRANSF
     }
 }
 
-void _DRV_SST26_TX_DMA_CallbackHandler(
+void DRV_SST26_TX_DMA_CallbackHandler(
     SYS_DMA_TRANSFER_EVENT event,
     uintptr_t context
 )
@@ -289,7 +289,7 @@ void _DRV_SST26_TX_DMA_CallbackHandler(
     }
 }
 
-void _DRV_SST26_RX_DMA_CallbackHandler(
+void DRV_SST26_RX_DMA_CallbackHandler(
     SYS_DMA_TRANSFER_EVENT event,
     uintptr_t context
 )
@@ -322,7 +322,7 @@ void _DRV_SST26_RX_DMA_CallbackHandler(
 
 <#else>
 
-void _DRV_SST26_SPIPlibCallbackHandler(uintptr_t context )
+void DRV_SST26_SPIPlibCallbackHandler(uintptr_t context )
 {
     DRV_SST26_OBJECT* dObj = (DRV_SST26_OBJECT*)context;
 
@@ -334,22 +334,22 @@ void _DRV_SST26_SPIPlibCallbackHandler(uintptr_t context )
 </#if>
 
 <#else>
-void _DRV_SST26_SPIDriverEventHandler(
+void DRV_SST26_SPIDriverEventHandler(
     DRV_SPI_TRANSFER_EVENT event,
     DRV_SPI_TRANSFER_HANDLE transferHandle,
     uintptr_t context
 )
 {
-    DRV_SST26_OBJECT* dObj = (DRV_SST26_OBJECT*)context;
+    DRV_SST26_OBJECT* dObjt = (DRV_SST26_OBJECT*)context;
 
-    dObj->transferDataObj.txSize = dObj->transferDataObj.rxSize = 0;
-    dObj->transferDataObj.pTransmitData = dObj->transferDataObj.pReceiveData = NULL;
+    dObjt->transferDataObj.txSize = dObjt->transferDataObj.rxSize = 0;
+    dObjt->transferDataObj.pTransmitData = dObjt->transferDataObj.pReceiveData = NULL;
 
     DRV_SST26_Handler();
 }
 </#if>
 
-void _DRV_SST26_InterfaceInit(DRV_SST26_OBJECT* dObj, DRV_SST26_INIT* sst26Init)
+void DRV_SST26_InterfaceInit(DRV_SST26_OBJECT* dObj, DRV_SST26_INIT* sst26Init)
 {
 <#if core.PRODUCT_FAMILY?matches("PIC32M.*") == false && DRV_SST26_TX_RX_DMA == true>
     size_t  txDummyDataIdx;
@@ -380,15 +380,15 @@ void _DRV_SST26_InterfaceInit(DRV_SST26_OBJECT* dObj, DRV_SST26_INIT* sst26Init)
     SYS_DMA_DataWidthSetup(dObj->txDMAChannel, SYS_DMA_WIDTH_8_BIT);
 
     /* Register callbacks for DMA */
-    SYS_DMA_ChannelCallbackRegister(dObj->txDMAChannel, _DRV_SST26_TX_DMA_CallbackHandler, (uintptr_t)dObj);
-    SYS_DMA_ChannelCallbackRegister(dObj->rxDMAChannel, _DRV_SST26_RX_DMA_CallbackHandler, (uintptr_t)dObj);
+    SYS_DMA_ChannelCallbackRegister(dObj->txDMAChannel, DRV_SST26_TX_DMA_CallbackHandler, (uintptr_t)dObj);
+    SYS_DMA_ChannelCallbackRegister(dObj->rxDMAChannel, DRV_SST26_RX_DMA_CallbackHandler, (uintptr_t)dObj);
 <#else>
-    dObj->sst26Plib->callbackRegister(_DRV_SST26_SPIPlibCallbackHandler, (uintptr_t)dObj);
+    dObj->sst26Plib->callbackRegister(DRV_SST26_SPIPlibCallbackHandler, (uintptr_t)dObj);
 </#if>
 </#if>
 }
 
-bool _DRV_SST26_SPIWriteRead(
+bool DRV_SST26_SPIWriteRead(
     DRV_SST26_OBJECT* dObj,
     DRV_SST26_TRANSFER_OBJ* transferObj
 )
@@ -409,9 +409,9 @@ bool _DRV_SST26_SPIWriteRead(
     }
 <#else>
 <#if DRV_SST26_TX_RX_DMA == true>
-    _DRV_SST26_StartDMATransfer(dObj, transferObj);
+    lDRV_SST26_StartDMATransfer(dObj, transferObj);
 <#else>
-    dObj->sst26Plib->writeRead (transferObj->pTransmitData, transferObj->txSize, transferObj->pReceiveData, transferObj->rxSize);
+    (void) dObj->sst26Plib->writeRead (transferObj->pTransmitData, transferObj->txSize, transferObj->pReceiveData, transferObj->rxSize);
 </#if>
 </#if>
     return isSuccess;
