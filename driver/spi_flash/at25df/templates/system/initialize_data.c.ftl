@@ -5,10 +5,10 @@ const DRV_AT25DF_PLIB_INTERFACE drvAT25DFPlibAPI = {
     .writeRead = (DRV_AT25DF_PLIB_WRITE_READ)${.vars["${DRV_AT25DF_PLIB?lower_case}"].SPI_PLIB_API_PREFIX}_WriteRead,
 
     /* SPI PLIB Write function */
-    .write = (DRV_AT25DF_PLIB_WRITE)${.vars["${DRV_AT25DF_PLIB?lower_case}"].SPI_PLIB_API_PREFIX}_Write,
+    .write_t = (DRV_AT25DF_PLIB_WRITE)${.vars["${DRV_AT25DF_PLIB?lower_case}"].SPI_PLIB_API_PREFIX}_Write,
 
     /* SPI PLIB Read function */
-    .read = (DRV_AT25DF_PLIB_READ)${.vars["${DRV_AT25DF_PLIB?lower_case}"].SPI_PLIB_API_PREFIX}_Read,
+    .read_t = (DRV_AT25DF_PLIB_READ)${.vars["${DRV_AT25DF_PLIB?lower_case}"].SPI_PLIB_API_PREFIX}_Read,
 
     /* SPI PLIB Transfer Status function */
     .isBusy = (DRV_AT25DF_PLIB_IS_BUSY)${.vars["${DRV_AT25DF_PLIB?lower_case}"].SPI_PLIB_API_PREFIX}_IsBusy,

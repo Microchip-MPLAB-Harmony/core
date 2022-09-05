@@ -170,13 +170,13 @@ def instantiateComponent(at25dfComponent):
     at25dfSymHeaderDefFile.setOverwrite(True)
 
     at25dfSourceFile = at25dfComponent.createFileSymbol("AT25DF_SOURCE", None)
-    at25dfSourceFile.setSourcePath("driver/spi_flash/at25df/src/drv_at25df.c")
+    at25dfSourceFile.setSourcePath("driver/spi_flash/at25df/src/drv_at25df.c.ftl")
     at25dfSourceFile.setOutputName("drv_at25df.c")
     at25dfSourceFile.setDestPath("driver/spi_flash/at25df/src")
     at25dfSourceFile.setProjectPath("config/" + configName + "/driver/spi_flash/at25df/")
     at25dfSourceFile.setType("SOURCE")
     at25dfSourceFile.setOverwrite(True)
-    at25dfSourceFile.setMarkup(False)
+    at25dfSourceFile.setMarkup(True)
 
     at25dfAsyncSymHeaderLocalFile = at25dfComponent.createFileSymbol("DRV_AT25DF_HEADER_LOCAL", None)
     at25dfAsyncSymHeaderLocalFile.setSourcePath("driver/spi_flash/at25df/src/drv_at25df_local.h")
