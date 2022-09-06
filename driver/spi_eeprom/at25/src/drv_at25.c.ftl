@@ -64,14 +64,14 @@ static DRV_AT25_OBJ gDrvAT25Obj;
 // *****************************************************************************
 // *****************************************************************************
 
-static bool _DRV_AT25_ReadData(void* rxData, uint32_t rxDataLength)
+static bool lDRV_AT25_ReadData(void* rxData, uint32_t rxDataLength)
 {
     bool status = false;
 
     /* Assert Chip Select */
     SYS_PORT_PinClear(gDrvAT25Obj.chipSelectPin);
 
-    if (gDrvAT25Obj.spiPlib->read((uint8_t*)rxData, rxDataLength) == true)
+    if (gDrvAT25Obj.spiPlib->read_t((uint8_t*)rxData, rxDataLength) == true)
     {
         status = true;
     }
@@ -84,16 +84,16 @@ static bool _DRV_AT25_ReadData(void* rxData, uint32_t rxDataLength)
     return status;
 }
 
-static bool _DRV_AT25_WriteEnable(void)
+static bool lDRV_AT25_WriteEnable(void)
 {
     bool status = false;
 
-    gDrvAT25Obj.at25Command[0] = DRV_AT25_CMD_WRITE_ENABLE;
+    gDrvAT25Obj.at25Command[0] = (uint8_t)DRV_AT25_CMD_WRITE_ENABLE;
 
     /* Assert Chip Select */
     SYS_PORT_PinClear(gDrvAT25Obj.chipSelectPin);
 
-    if(gDrvAT25Obj.spiPlib->write(&gDrvAT25Obj.at25Command[0], 1) == true)
+    if(gDrvAT25Obj.spiPlib->write_t(&gDrvAT25Obj.at25Command[0], 1) == true)
     {
         status = true;
     }
@@ -106,28 +106,32 @@ static bool _DRV_AT25_WriteEnable(void)
     return status;
 }
 
-static bool _DRV_AT25_WriteMemoryAddress(uint8_t command, uint32_t address)
+static bool lDRV_AT25_WriteMemoryAddress(uint8_t command, uint32_t address)
 {
     bool status = false;
     uint32_t nBytes = 0;
 
-    gDrvAT25Obj.at25Command[nBytes++] = command;
+    gDrvAT25Obj.at25Command[nBytes] = command;
+    nBytes++;
 
-    if (gDrvAT25Obj.flashSize > 65536)
+    if (gDrvAT25Obj.flashSize > 65536U)
     {
-        gDrvAT25Obj.at25Command[nBytes++] = (uint8_t)(address>>16);
+        gDrvAT25Obj.at25Command[nBytes] = (uint8_t)(address>>16);
+        nBytes++;
     }
-    if (gDrvAT25Obj.flashSize > 256)
+    if (gDrvAT25Obj.flashSize > 256U)
     {
-        gDrvAT25Obj.at25Command[nBytes++] = (uint8_t)(address>>8);
+        gDrvAT25Obj.at25Command[nBytes] = (uint8_t)(address>>8);
+        nBytes++;
     }
-    gDrvAT25Obj.at25Command[nBytes++] = (uint8_t)(address);
+    gDrvAT25Obj.at25Command[nBytes] = (uint8_t)(address);
+    nBytes++;
 
     /* Assert Chip Select */
     SYS_PORT_PinClear(gDrvAT25Obj.chipSelectPin);
 
     /* Send page write or read command and memory address */
-    if(gDrvAT25Obj.spiPlib->write(gDrvAT25Obj.at25Command, nBytes) == true)
+    if(gDrvAT25Obj.spiPlib->write_t(gDrvAT25Obj.at25Command, nBytes) == true)
     {
         status = true;
     }
@@ -140,7 +144,7 @@ static bool _DRV_AT25_WriteMemoryAddress(uint8_t command, uint32_t address)
     return status;
 }
 
-static bool _DRV_AT25_WriteData(void* txData, uint32_t txDataLength, uint32_t address )
+static bool lDRV_AT25_WriteData(void* txData, uint32_t txDataLength, uint32_t address )
 {
     bool status = false;
     uint32_t nTransferBytes = 0;
@@ -158,7 +162,7 @@ static bool _DRV_AT25_WriteData(void* txData, uint32_t txDataLength, uint32_t ad
     /* Assert Chip Select */
     SYS_PORT_PinClear(gDrvAT25Obj.chipSelectPin);
     /* Send data */
-    if (gDrvAT25Obj.spiPlib->write((uint8_t*)txData, nTransferBytes) == true)
+    if (gDrvAT25Obj.spiPlib->write_t((uint8_t*)txData, nTransferBytes) == true)
     {
         status = true;
     }
@@ -170,7 +174,7 @@ static bool _DRV_AT25_WriteData(void* txData, uint32_t txDataLength, uint32_t ad
     return status;
 }
 
-static bool _DRV_AT25_Write( void* txData, uint32_t txDataLength, uint32_t address )
+static bool lDRV_AT25_Write( void* txData, uint32_t txDataLength, uint32_t address )
 {
     bool status = false;
 
@@ -192,7 +196,7 @@ static bool _DRV_AT25_Write( void* txData, uint32_t txDataLength, uint32_t addre
     /* Start the transfer by submitting a Write Enable request. Further commands
      * will be issued from the interrupt context.
     */
-    if (_DRV_AT25_WriteEnable() == false)
+    if (lDRV_AT25_WriteEnable() == false)
     {
         gDrvAT25Obj.transferStatus = DRV_AT25_TRANSFER_STATUS_ERROR;
     }
@@ -204,11 +208,19 @@ static bool _DRV_AT25_Write( void* txData, uint32_t txDataLength, uint32_t addre
     return status;
 }
 
-static bool _DRV_AT25_ReadStatus(void)
+/* MISRA C-2012 Rule 10.4 False positive:2 Deviation record ID -  H3_MISRAC_2012_R_10_4_DR_1 */
+<#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
+<#if core.COMPILER_CHOICE == "XC32">
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wunknown-pragmas"
+</#if>
+#pragma coverity compliance block fp:2 "MISRA C-2012 Rule 10.4" "H3_MISRAC_2012_R_10_4_DR_1"    
+</#if>
+static bool lDRV_AT25_ReadStatus(void)
 {
     bool status = false;
 
-    gDrvAT25Obj.at25Command[0] = DRV_AT25_CMD_READ_STATUS_REG;
+    gDrvAT25Obj.at25Command[0] = (uint8_t)DRV_AT25_CMD_READ_STATUS_REG;
 
     /* Assert Chip Select */
     SYS_PORT_PinClear(gDrvAT25Obj.chipSelectPin);
@@ -227,7 +239,7 @@ static bool _DRV_AT25_ReadStatus(void)
     return status;
 }
 
-static void _DRV_AT25_Handler( void )
+static void lDRV_AT25_Handler( void )
 {
     switch(gDrvAT25Obj.state)
     {
@@ -235,7 +247,7 @@ static void _DRV_AT25_Handler( void )
             /* De-assert the chip select */
             SYS_PORT_PinSet(gDrvAT25Obj.chipSelectPin);
             /* Send page write command and memory address */
-            if (_DRV_AT25_WriteMemoryAddress(DRV_AT25_CMD_PAGE_PROGRAM, \
+            if (lDRV_AT25_WriteMemoryAddress((uint8_t)DRV_AT25_CMD_PAGE_PROGRAM, \
                     gDrvAT25Obj.memoryAddr) == true)
             {
                 gDrvAT25Obj.state = DRV_AT25_STATE_WRITE_DATA;
@@ -247,7 +259,7 @@ static void _DRV_AT25_Handler( void )
             break;
         case DRV_AT25_STATE_WRITE_DATA:
 
-            if (_DRV_AT25_WriteData(gDrvAT25Obj.bufferAddr, \
+            if (lDRV_AT25_WriteData(gDrvAT25Obj.bufferAddr, \
                     gDrvAT25Obj.nPendingBytes, gDrvAT25Obj.memoryAddr) == true)
             {
                 gDrvAT25Obj.state = DRV_AT25_STATE_CHECK_WRITE_STATUS;
@@ -261,7 +273,7 @@ static void _DRV_AT25_Handler( void )
             /* De-assert the chip select */
             SYS_PORT_PinSet(gDrvAT25Obj.chipSelectPin);
             /* Read the status of EEPROM internal write cycle */
-            if (_DRV_AT25_ReadStatus() == true)
+            if (lDRV_AT25_ReadStatus() == true)
             {
                 gDrvAT25Obj.state = DRV_AT25_STATE_WAIT_WRITE_COMPLETE;
             }
@@ -274,10 +286,10 @@ static void _DRV_AT25_Handler( void )
             /* De-assert the chip select */
             SYS_PORT_PinSet(gDrvAT25Obj.chipSelectPin);
             /* Check the busy bit in the status register. 0 = Ready, 1 = busy*/
-            if (gDrvAT25Obj.at25Command[2] & 0x01)
+            if ((gDrvAT25Obj.at25Command[2] & 0x01U) != 0U)
             {
                 /* Keep reading the status of EEPROM internal write cycle */
-                if (_DRV_AT25_ReadStatus() == false)
+                if (lDRV_AT25_ReadStatus() == false)
                 {
                     gDrvAT25Obj.transferStatus = DRV_AT25_TRANSFER_STATUS_ERROR;
                 }
@@ -285,10 +297,10 @@ static void _DRV_AT25_Handler( void )
             else
             {
                 /* Internal write complete. Now check if more data pending */
-                if (gDrvAT25Obj.nPendingBytes)
+                if ((gDrvAT25Obj.nPendingBytes) != 0U)
                 {
                     /* Enable writing to EEPROM */
-                    if (_DRV_AT25_WriteEnable() == false)
+                    if (lDRV_AT25_WriteEnable() == false)
                     {
                         gDrvAT25Obj.transferStatus = DRV_AT25_TRANSFER_STATUS_ERROR;
                     }
@@ -306,7 +318,7 @@ static void _DRV_AT25_Handler( void )
 
         case DRV_AT25_STATE_READ_DATA:
 
-            if (_DRV_AT25_ReadData((void*)gDrvAT25Obj.bufferAddr, gDrvAT25Obj.nPendingBytes) == true)
+            if (lDRV_AT25_ReadData((void*)gDrvAT25Obj.bufferAddr, gDrvAT25Obj.nPendingBytes) == true)
             {
                 gDrvAT25Obj.state = DRV_AT25_STATE_WAIT_READ_COMPLETE;
             }
@@ -323,19 +335,27 @@ static void _DRV_AT25_Handler( void )
             break;
 
         default:
+                /* Nothing to do*/
             break;
     }
 }
+<#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
+#pragma coverity compliance end_block "MISRA C-2012 Rule 10.4"
+<#if core.COMPILER_CHOICE == "XC32">
+#pragma GCC diagnostic pop
+</#if>    
+</#if>
+/* MISRAC 2012 deviation block end */
 
 /* This function will be called by SPI PLIB when transfer is completed */
-static void _SPIEventHandler(uintptr_t context )
+static void lSPIEventHandler(uintptr_t context )
 {
-    _DRV_AT25_Handler ();
+    lDRV_AT25_Handler ();
 
     /* If transfer is complete, notify the application */
     if (gDrvAT25Obj.transferStatus != DRV_AT25_TRANSFER_STATUS_BUSY)
     {
-        if (gDrvAT25Obj.eventHandler)
+        if ((gDrvAT25Obj.eventHandler) != NULL)
         {
             gDrvAT25Obj.eventHandler(gDrvAT25Obj.transferStatus, gDrvAT25Obj.context);
         }
@@ -347,6 +367,17 @@ static void _SPIEventHandler(uintptr_t context )
 // Section: DRV_AT25 Driver Global Functions
 // *****************************************************************************
 // *****************************************************************************
+/* MISRA C-2012 Rule 11.3, 11.8 deviated below. Deviation record ID -  
+  H3_MISRAC_2012_R_11_3_DR_1 & H3_MISRAC_2012_R_11_8_DR_1*/
+<#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
+<#if core.COMPILER_CHOICE == "XC32">
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wunknown-pragmas"
+</#if>
+#pragma coverity compliance block \
+(deviate:1 "MISRA C-2012 Rule 11.3" "H3_MISRAC_2012_R_11_3_DR_1" )\
+(deviate:1 "MISRA C-2012 Rule 11.8" "H3_MISRAC_2012_R_11_8_DR_1" )   
+</#if>
 
 SYS_MODULE_OBJ DRV_AT25_Initialize(
     const SYS_MODULE_INDEX drvIndex,
@@ -382,7 +413,7 @@ SYS_MODULE_OBJ DRV_AT25_Initialize(
     gDrvAT25Obj.holdPin               = at25Init->holdPin;
     gDrvAT25Obj.writeProtectPin       = at25Init->writeProtectPin;
 
-    gDrvAT25Obj.spiPlib->callbackRegister(_SPIEventHandler, (uintptr_t)NULL);
+    gDrvAT25Obj.spiPlib->callbackRegister(lSPIEventHandler, 0U);
 
     /* De-assert Chip Select, Hold and Write protect pin to begin with. */
     SYS_PORT_PinSet(gDrvAT25Obj.chipSelectPin);
@@ -403,6 +434,14 @@ SYS_MODULE_OBJ DRV_AT25_Initialize(
     return ( (SYS_MODULE_OBJ)drvIndex );
 
 }
+<#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
+#pragma coverity compliance end_block "MISRA C-2012 Rule 11.3"
+#pragma coverity compliance end_block "MISRA C-2012 Rule 11.8"
+<#if core.COMPILER_CHOICE == "XC32">
+#pragma GCC diagnostic pop
+</#if>    
+</#if>
+/* MISRAC 2012 deviation block end */
 
 SYS_STATUS DRV_AT25_Status( const SYS_MODULE_INDEX drvIndex )
 {
@@ -434,7 +473,7 @@ DRV_HANDLE DRV_AT25_Open(
 
 void DRV_AT25_Close( const DRV_HANDLE handle )
 {
-    if((handle != DRV_HANDLE_INVALID) && (handle == 0))
+    if((handle != DRV_HANDLE_INVALID) && (handle == 0U))
     {
         gDrvAT25Obj.nClients--;
     }
@@ -446,7 +485,7 @@ void DRV_AT25_EventHandlerSet(
     const uintptr_t context
 )
 {
-    if((handle != DRV_HANDLE_INVALID) && (handle == 0))
+    if((handle != DRV_HANDLE_INVALID) && (handle == 0U))
     {
         gDrvAT25Obj.eventHandler = eventHandler;
         gDrvAT25Obj.context = context;
@@ -462,8 +501,8 @@ bool DRV_AT25_Read(
 {
     bool isRequestAccepted = false;
 
-    if((handle == DRV_HANDLE_INVALID) || (handle > 0) || (rxData == NULL) \
-            || (rxDataLength == 0) || (gDrvAT25Obj.transferStatus == DRV_AT25_TRANSFER_STATUS_BUSY))
+    if((handle == DRV_HANDLE_INVALID) || (handle > 0U) || (rxData == NULL) \
+            || (rxDataLength == 0U) || (gDrvAT25Obj.transferStatus == DRV_AT25_TRANSFER_STATUS_BUSY))
     {
         return isRequestAccepted;
     }
@@ -483,7 +522,7 @@ bool DRV_AT25_Read(
 
     gDrvAT25Obj.state = DRV_AT25_STATE_READ_DATA;
 
-    if (_DRV_AT25_WriteMemoryAddress(DRV_AT25_CMD_READ, address) == true)
+    if (lDRV_AT25_WriteMemoryAddress((uint8_t)DRV_AT25_CMD_READ, address) == true)
     {
         isRequestAccepted = true;
     }
@@ -497,14 +536,14 @@ bool DRV_AT25_Read(
 
 bool DRV_AT25_Write( const DRV_HANDLE handle, void *txData, uint32_t txDataLength, uint32_t address )
 {
-    if((handle == DRV_HANDLE_INVALID) || (handle > 0) || (txData == NULL) \
-            || (txDataLength == 0) || (gDrvAT25Obj.transferStatus == DRV_AT25_TRANSFER_STATUS_BUSY))
+    if((handle == DRV_HANDLE_INVALID) || (handle > 0U) || (txData == NULL) \
+            || (txDataLength == 0U) || (gDrvAT25Obj.transferStatus == DRV_AT25_TRANSFER_STATUS_BUSY))
     {
         return false;
     }
     else
     {
-        return _DRV_AT25_Write(txData, txDataLength, address);
+        return lDRV_AT25_Write(txData, txDataLength, address);
     }
 }
 
@@ -515,7 +554,7 @@ bool DRV_AT25_PageWrite(const DRV_HANDLE handle, void *txData, uint32_t address 
 
 DRV_AT25_TRANSFER_STATUS DRV_AT25_TransferStatusGet(const DRV_HANDLE handle)
 {
-    if((handle == DRV_HANDLE_INVALID) || (handle > 0))
+    if((handle == DRV_HANDLE_INVALID) || (handle > 0U))
     {
         return DRV_AT25_TRANSFER_STATUS_ERROR;
     }
@@ -529,14 +568,14 @@ bool DRV_AT25_GeometryGet(const DRV_HANDLE handle, DRV_AT25_GEOMETRY *geometry)
 {
     uint32_t flash_size = 0;
 
-    if((handle == DRV_HANDLE_INVALID) || (handle > 0))
+    if((handle == DRV_HANDLE_INVALID) || (handle > 0U))
     {
         return false;
     }
 
     flash_size = gDrvAT25Obj.flashSize;
 
-    if ((flash_size == 0) ||
+    if ((flash_size == 0U) ||
         (gDrvAT25Obj.blockStartAddress >= flash_size))
     {
         return false;

@@ -180,13 +180,13 @@ def instantiateComponent(at25Component):
     at25SymHeaderDefFile.setOverwrite(True)
 
     at25SourceFile = at25Component.createFileSymbol("AT25_SOURCE", None)
-    at25SourceFile.setSourcePath("driver/spi_eeprom/at25/src/drv_at25.c")
+    at25SourceFile.setSourcePath("driver/spi_eeprom/at25/src/drv_at25.c.ftl")
     at25SourceFile.setOutputName("drv_at25.c")
     at25SourceFile.setDestPath("driver/at25/src")
     at25SourceFile.setProjectPath("config/" + configName + "/driver/at25/")
     at25SourceFile.setType("SOURCE")
     at25SourceFile.setOverwrite(True)
-    at25SourceFile.setMarkup(False)
+    at25SourceFile.setMarkup(True)
 
     at25AsyncSymHeaderLocalFile = at25Component.createFileSymbol("DRV_AT25_HEADER_LOCAL", None)
     at25AsyncSymHeaderLocalFile.setSourcePath("driver/spi_eeprom/at25/src/drv_at25_local.h")
