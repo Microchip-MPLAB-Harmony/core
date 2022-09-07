@@ -170,7 +170,7 @@ static bool lDRV_SPI_StartDMATransfer(
         SYS_DMA_DataWidthSetup(dObj->rxDMAChannel, SYS_DMA_WIDTH_16_BIT);
         SYS_DMA_DataWidthSetup(dObj->txDMAChannel, SYS_DMA_WIDTH_16_BIT);
     }
-	else
+    else
     {
         SYS_DMA_DataWidthSetup(dObj->rxDMAChannel, SYS_DMA_WIDTH_32_BIT);
         SYS_DMA_DataWidthSetup(dObj->txDMAChannel, SYS_DMA_WIDTH_32_BIT);
@@ -272,7 +272,7 @@ static bool lDRV_SPI_StartDMATransfer(
         SYS_DMA_DataWidthSetup(dObj->rxDMAChannel, SYS_DMA_WIDTH_16_BIT);
         SYS_DMA_DataWidthSetup(dObj->txDMAChannel, SYS_DMA_WIDTH_16_BIT);
     }
-	else
+    else
     {
         SYS_DMA_DataWidthSetup(dObj->rxDMAChannel, SYS_DMA_WIDTH_32_BIT);
         SYS_DMA_DataWidthSetup(dObj->txDMAChannel, SYS_DMA_WIDTH_32_BIT);
@@ -883,8 +883,6 @@ void DRV_SPI_Close( DRV_HANDLE handle )
 bool DRV_SPI_TransferSetup( const DRV_HANDLE handle, DRV_SPI_TRANSFER_SETUP* setup )
 {
     DRV_SPI_CLIENT_OBJ* clientObj = NULL;
-    DRV_SPI_OBJ* dObj = (DRV_SPI_OBJ *)NULL;
-    DRV_SPI_TRANSFER_SETUP setupRemap;
     bool isSuccess = false;
 
     /* Validate the handle */
@@ -892,24 +890,14 @@ bool DRV_SPI_TransferSetup( const DRV_HANDLE handle, DRV_SPI_TRANSFER_SETUP* set
 
     if((clientObj != NULL) && (setup != NULL))
     {
-        dObj = clientObj->dObj;
+        /* Save the required setup in client object which can be used while
+        processing queue requests. */
+        clientObj->setup = *setup;
 
-        setupRemap = *setup;
+        /* Update the flag denoting that setup has been changed dynamically */
+        clientObj->setupChanged = true;
 
-        setupRemap.clockPolarity = (DRV_SPI_CLOCK_POLARITY)dObj->remapClockPolarity[setup->clockPolarity];
-        setupRemap.clockPhase = (DRV_SPI_CLOCK_PHASE)dObj->remapClockPhase[setup->clockPhase];
-        setupRemap.dataBits = (DRV_SPI_DATA_BITS)dObj->remapDataBits[setup->dataBits];
-
-        if ((setupRemap.clockPhase != DRV_SPI_CLOCK_PHASE_INVALID) && (setupRemap.clockPolarity != DRV_SPI_CLOCK_POLARITY_INVALID)
-            && (setupRemap.dataBits != DRV_SPI_DATA_BITS_INVALID))
-        {
-            /* Save the required setup in client object which can be used while
-             * processing queue requests.
-             */
-            clientObj->setup = setupRemap;
-            clientObj->setupChanged = true;
-            isSuccess = true;
-        }
+        isSuccess = true;
     }
     return isSuccess;
 }
@@ -933,6 +921,7 @@ bool DRV_SPI_WriteReadTransfer(const DRV_HANDLE handle,
 {
     DRV_SPI_CLIENT_OBJ* clientObj = (DRV_SPI_CLIENT_OBJ *)NULL;
     DRV_SPI_OBJ* dObj = (DRV_SPI_OBJ *)NULL;
+    DRV_SPI_TRANSFER_SETUP setupRemap;
     bool isTransferInProgress = false;
     bool isSuccess = false;
     static bool isExclusiveUseMutexAcquired = false;
@@ -965,7 +954,12 @@ bool DRV_SPI_WriteReadTransfer(const DRV_HANDLE handle,
             setup has been changed dynamically for the client */
             if ((dObj->activeClient != (uintptr_t)clientObj) || (clientObj->setupChanged == true))
             {
-                (void) dObj->spiPlib->setup(&clientObj->setup, USE_FREQ_CONFIGURED_IN_CLOCK_MANAGER);
+                setupRemap = clientObj->setup;
+                setupRemap.clockPolarity = (DRV_SPI_CLOCK_POLARITY)dObj->remapClockPolarity[clientObj->setup.clockPolarity];
+                setupRemap.clockPhase = (DRV_SPI_CLOCK_PHASE)dObj->remapClockPhase[clientObj->setup.clockPhase];
+                setupRemap.dataBits = (DRV_SPI_DATA_BITS)dObj->remapDataBits[clientObj->setup.dataBits];
+
+                dObj->spiPlib->setup(&setupRemap, USE_FREQ_CONFIGURED_IN_CLOCK_MANAGER);
                 clientObj->setupChanged = false;
             }
 
@@ -991,12 +985,12 @@ bool DRV_SPI_WriteReadTransfer(const DRV_HANDLE handle,
                 rxSize = rxSize << 1;
                 txSize = txSize << 1;
             }
-			else if ((clientObj->setup.dataBits > DRV_SPI_DATA_BITS_16) && (clientObj->setup.dataBits <= DRV_SPI_DATA_BITS_32))
-			{
-				/* Both SPI and DMA PLIB expect size in terms of bytes, hence multiply transmit and receive sizes by 2 */
+            else if ((clientObj->setup.dataBits > DRV_SPI_DATA_BITS_16) && (clientObj->setup.dataBits <= DRV_SPI_DATA_BITS_32))
+            {
+                /* Both SPI and DMA PLIB expect size in terms of bytes, hence multiply transmit and receive sizes by 2 */
                 rxSize = rxSize << 2;
                 txSize = txSize << 2;
-			}
+            }
             else
             {
                 /* Nothing to do */

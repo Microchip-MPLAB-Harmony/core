@@ -261,7 +261,7 @@ static void lDRV_SPI_EnableInterrupts(DRV_SPI_OBJ* dObj)
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Wunknown-pragmas"
 </#if>
-#pragma coverity compliance block fp:7 "MISRA C-2012 Rule 10.4" "H3_MISRAC_2012_R_10_4_DR_1"    
+#pragma coverity compliance block fp:7 "MISRA C-2012 Rule 10.4" "H3_MISRAC_2012_R_10_4_DR_1"
 </#if>
 static bool lDRV_SPI_ResourceLock(DRV_SPI_OBJ * dObj)
 {
@@ -331,19 +331,19 @@ static DRV_SPI_CLIENT_OBJ * lDRV_SPI_DriverHandleValidate(DRV_HANDLE handle)
 
 static DRV_SPI_TRANSFER_OBJ* lDRV_SPI_FreeTransferObjGet(DRV_SPI_CLIENT_OBJ* clientObj)
 {
-	uint32_t i;
-	uint32_t index;
+    uint32_t i;
+    uint32_t index;
     DRV_SPI_OBJ* dObj = (DRV_SPI_OBJ* )&gDrvSPIObj[clientObj->drvIndex];
     DRV_SPI_TRANSFER_OBJ* pTransferObj = (DRV_SPI_TRANSFER_OBJ*)dObj->transferObjPool;
 
-    i = 0; 
-    index = dObj->transferObjLastUsedIndex; 
+    i = 0;
+    index = dObj->transferObjLastUsedIndex;
     while(i < dObj->transferObjPoolSize)
     {
-		if (index >= dObj->transferObjPoolSize)
-		{
-			index = 0;
-		}
+        if (index >= dObj->transferObjPoolSize)
+        {
+            index = 0;
+        }
         if (pTransferObj[index].inUse == false)
         {
             pTransferObj[index].inUse = true;
@@ -357,22 +357,22 @@ static DRV_SPI_TRANSFER_OBJ* lDRV_SPI_FreeTransferObjGet(DRV_SPI_CLIENT_OBJ* cli
 
             /* Update the token for next time */
             dObj->spiTokenCount = lDRV_SPI_UPDATE_TOKEN(dObj->spiTokenCount);
-			
-			dObj->transferObjLastUsedIndex = index + 1U;
+
+            dObj->transferObjLastUsedIndex = index + 1U;
 
             return &pTransferObj[index];
         }
-        i++; 
+        i++;
         index++;
     }
     return NULL;
 }
-/* MISRA C-2012 Rule 11.3, 11.8 deviated below. Deviation record ID -  
+/* MISRA C-2012 Rule 11.3, 11.8 deviated below. Deviation record ID -
    H3_MISRAC_2012_R_11_3_DR_1 & H3_MISRAC_2012_R_11_8_DR_1*/
 <#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
 #pragma coverity compliance block \
 (deviate:4 "MISRA C-2012 Rule 11.3" "H3_MISRAC_2012_R_11_3_DR_1" )\
-(deviate:1 "MISRA C-2012 Rule 11.8" "H3_MISRAC_2012_R_11_8_DR_1" )   
+(deviate:1 "MISRA C-2012 Rule 11.8" "H3_MISRAC_2012_R_11_8_DR_1" )
 </#if>
 
 static bool lDRV_SPI_TransferObjAddToList(
@@ -519,11 +519,11 @@ static void lDRV_SPI_StartDMATransfer(DRV_SPI_TRANSFER_OBJ* transferObj)
         SYS_DMA_DataWidthSetup(dObj->rxDMAChannel, SYS_DMA_WIDTH_16_BIT);
         SYS_DMA_DataWidthSetup(dObj->txDMAChannel, SYS_DMA_WIDTH_16_BIT);
     }
-	else
-	{
-		SYS_DMA_DataWidthSetup(dObj->rxDMAChannel, SYS_DMA_WIDTH_32_BIT);
+    else
+    {
+        SYS_DMA_DataWidthSetup(dObj->rxDMAChannel, SYS_DMA_WIDTH_32_BIT);
         SYS_DMA_DataWidthSetup(dObj->txDMAChannel, SYS_DMA_WIDTH_32_BIT);
-	}
+    }
 
     if ((transferObj->txPending > 0) && (transferObj->rxPending > 0))
     {
@@ -629,11 +629,11 @@ static void lDRV_SPI_StartDMATransfer(DRV_SPI_TRANSFER_OBJ* transferObj)
         SYS_DMA_DataWidthSetup(dObj->rxDMAChannel, SYS_DMA_WIDTH_16_BIT);
         SYS_DMA_DataWidthSetup(dObj->txDMAChannel, SYS_DMA_WIDTH_16_BIT);
     }
-	else
-	{
-		SYS_DMA_DataWidthSetup(dObj->rxDMAChannel, SYS_DMA_WIDTH_32_BIT);
+    else
+    {
+        SYS_DMA_DataWidthSetup(dObj->rxDMAChannel, SYS_DMA_WIDTH_32_BIT);
         SYS_DMA_DataWidthSetup(dObj->txDMAChannel, SYS_DMA_WIDTH_32_BIT);
-	}
+    }
 
     if (transferObj->rxSize == 0)
     {
@@ -684,6 +684,7 @@ static void lDRV_SPI_UpdateTransferSetupAndAssertCS(
 {
     DRV_SPI_OBJ* dObj;
     DRV_SPI_CLIENT_OBJ* clientObj;
+    DRV_SPI_TRANSFER_SETUP setupRemap;
 
     /* Get the client object that owns this buffer */
     clientObj = &((DRV_SPI_CLIENT_OBJ *)gDrvSPIObj[((transferObj->clientHandle & DRV_SPI_INSTANCE_MASK) >> 8)].clientObjPool)
@@ -695,7 +696,12 @@ static void lDRV_SPI_UpdateTransferSetupAndAssertCS(
      * setup has been changed dynamically for the client */
     if((transferObj->clientHandle != dObj->lastClientHandle) || (clientObj->setupChanged == true))
     {
-        (void) dObj->spiPlib->setup(&clientObj->setup, USE_FREQ_CONFIGURED_IN_CLOCK_MANAGER);
+        setupRemap = clientObj->setup;
+        setupRemap.clockPolarity = (DRV_SPI_CLOCK_POLARITY)dObj->remapClockPolarity[clientObj->setup.clockPolarity];
+        setupRemap.clockPhase = (DRV_SPI_CLOCK_PHASE)dObj->remapClockPhase[clientObj->setup.clockPhase];
+        setupRemap.dataBits = (DRV_SPI_DATA_BITS)dObj->remapDataBits[clientObj->setup.dataBits];
+
+        dObj->spiPlib->setup(&setupRemap, USE_FREQ_CONFIGURED_IN_CLOCK_MANAGER);
         dObj->lastClientHandle = transferObj->clientHandle;
         clientObj->setupChanged = false;
     }
@@ -1264,8 +1270,8 @@ SYS_MODULE_OBJ DRV_SPI_Initialize (
 }
 <#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
 #pragma coverity compliance end_block "MISRA C-2012 Rule 11.3"
-#pragma coverity compliance end_block "MISRA C-2012 Rule 11.8"   
-</#if> 
+#pragma coverity compliance end_block "MISRA C-2012 Rule 11.8"
+</#if>
 /* MISRAC 2012 deviation block end */
 
 SYS_STATUS DRV_SPI_Status( SYS_MODULE_OBJ object)
@@ -1353,7 +1359,7 @@ DRV_HANDLE DRV_SPI_Open(
             /* We have found a client object, now release the mutex */
             (void) OSAL_MUTEX_Unlock(&(dObj->mutexClientObjects));
 
-            temp = (uint32_t)ioIntent | (uint32_t)DRV_IO_INTENT_NONBLOCKING; 
+            temp = (uint32_t)ioIntent | (uint32_t)DRV_IO_INTENT_NONBLOCKING;
             /* This driver will always work in Non-Blocking mode */
             clientObj->ioIntent             = (DRV_IO_INTENT)(temp);
 
@@ -1443,7 +1449,7 @@ void DRV_SPI_Close( DRV_HANDLE handle )
 #pragma coverity compliance end_block "MISRA C-2012 Rule 10.4"
 <#if core.COMPILER_CHOICE == "XC32">
 #pragma GCC diagnostic pop
-</#if>    
+</#if>
 </#if>
 /* MISRAC 2012 deviation block end */
 
@@ -1486,8 +1492,6 @@ bool DRV_SPI_TransferSetup (
 )
 {
     DRV_SPI_CLIENT_OBJ* clientObj = NULL;
-    DRV_SPI_OBJ* dObj = (DRV_SPI_OBJ*)NULL;
-    DRV_SPI_TRANSFER_SETUP setupRemap;
     bool isSuccess = false;
 
     /* Validate the driver handle */
@@ -1495,26 +1499,14 @@ bool DRV_SPI_TransferSetup (
 
     if((clientObj != NULL) && (setup != NULL))
     {
-        dObj = (DRV_SPI_OBJ*)&gDrvSPIObj[clientObj->drvIndex];
+        /* Save the required setup in client object which can be used while
+        processing queue requests. */
+        clientObj->setup = *setup;
 
-        setupRemap = *setup;
+        /* Update the flag denoting that setup has been changed dynamically */
+        clientObj->setupChanged = true;
 
-        setupRemap.clockPolarity = (DRV_SPI_CLOCK_POLARITY)dObj->remapClockPolarity[setup->clockPolarity];
-        setupRemap.clockPhase = (DRV_SPI_CLOCK_PHASE)dObj->remapClockPhase[setup->clockPhase];
-        setupRemap.dataBits = (DRV_SPI_DATA_BITS)dObj->remapDataBits[setup->dataBits];
-
-        if ((setupRemap.clockPhase != DRV_SPI_CLOCK_PHASE_INVALID) && (setupRemap.clockPolarity != DRV_SPI_CLOCK_POLARITY_INVALID)
-                && (setupRemap.dataBits != DRV_SPI_DATA_BITS_INVALID))
-        {
-            /* Save the required setup in client object which can be used while
-            processing queue requests. */
-            clientObj->setup = setupRemap;
-
-            /* Update the flag denoting that setup has been changed dynamically */
-            clientObj->setupChanged = true;
-
-            isSuccess = true;
-        }
+        isSuccess = true;
     }
     return isSuccess;
 }
@@ -1584,11 +1576,11 @@ void DRV_SPI_WriteReadTransferAdd (
         transferObj->event          = DRV_SPI_TRANSFER_EVENT_PENDING;
         transferObj->clientHandle   = handle;
 
-		if (clientObj->setup.dataBits == DRV_SPI_DATA_BITS_8)
-		{
-			transferObj->txSize = txSize;
+        if (clientObj->setup.dataBits == DRV_SPI_DATA_BITS_8)
+        {
+            transferObj->txSize = txSize;
             transferObj->rxSize = rxSize;
-		}
+        }
         else if (clientObj->setup.dataBits <= DRV_SPI_DATA_BITS_16)
         {
             /* Both SPI and DMA PLIB expect size to be in terms of bytes */
