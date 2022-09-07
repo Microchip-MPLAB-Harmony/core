@@ -185,11 +185,12 @@ def instantiateComponent(spiComponentCommon):
 
     # Global Header Files
     spiSymHeaderFile = spiComponentCommon.createFileSymbol("DRV_SPI_HEADER", None)
-    spiSymHeaderFile.setSourcePath("driver/spi/drv_spi.h")
+    spiSymHeaderFile.setSourcePath("driver/spi/drv_spi.h.ftl")
     spiSymHeaderFile.setOutputName("drv_spi.h")
     spiSymHeaderFile.setDestPath("driver/spi/")
     spiSymHeaderFile.setProjectPath("config/" + configName + "/driver/spi/")
     spiSymHeaderFile.setType("HEADER")
+    spiSymHeaderFile.setMarkup(True)
     spiSymHeaderFile.setOverwrite(True)
 
     spiSymHeaderDefFile = spiComponentCommon.createFileSymbol("DRV_SPI_DEF", None)

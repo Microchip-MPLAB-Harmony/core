@@ -81,12 +81,12 @@ static CACHE_ALIGN uint8_t txDummyData[CACHE_ALIGNED_SIZE_GET(4)];
 // *****************************************************************************
 // *****************************************************************************
 
-static inline uint32_t  _DRV_SPI_MAKE_HANDLE(uint16_t token, uint8_t drvIndex, uint8_t clientIndex)
+static inline uint32_t  lDRV_SPI_MAKE_HANDLE(uint16_t token, uint8_t drvIndex, uint8_t clientIndex)
 {
-    return ((token << 16) | (drvIndex << 8) | clientIndex);
+    return (((uint32_t)token << 16) | ((uint32_t)drvIndex << 8) | clientIndex);
 }
 
-static inline uint16_t _DRV_SPI_UPDATE_TOKEN(uint16_t token)
+static inline uint16_t lDRV_SPI_UPDATE_TOKEN(uint16_t token)
 {
     token++;
 
@@ -98,7 +98,7 @@ static inline uint16_t _DRV_SPI_UPDATE_TOKEN(uint16_t token)
     return token;
 }
 
-static DRV_SPI_CLIENT_OBJ* _DRV_SPI_DriverHandleValidate(DRV_HANDLE handle)
+static DRV_SPI_CLIENT_OBJ* lDRV_SPI_DriverHandleValidate(DRV_HANDLE handle)
 {
     /* This function returns the pointer to the client object that is
        associated with this handle if the handle is valid. Returns NULL
@@ -107,7 +107,7 @@ static DRV_SPI_CLIENT_OBJ* _DRV_SPI_DriverHandleValidate(DRV_HANDLE handle)
     uint32_t drvInstance = 0;
     DRV_SPI_CLIENT_OBJ* clientObj = (DRV_SPI_CLIENT_OBJ*)NULL;
 
-    if((handle != DRV_HANDLE_INVALID) && (handle != 0))
+    if((handle != DRV_HANDLE_INVALID) && (handle != 0U))
     {
         /* Extract the drvInstance value from the handle */
         drvInstance = ((handle & DRV_SPI_INSTANCE_INDEX_MASK) >> 8);
@@ -136,7 +136,7 @@ static DRV_SPI_CLIENT_OBJ* _DRV_SPI_DriverHandleValidate(DRV_HANDLE handle)
 
 <#if core.DMA_ENABLE?has_content && DRV_SPI_SYS_DMA_ENABLE == true>
 <#if core.PRODUCT_FAMILY?matches("PIC32M.*") == true>
-static bool _DRV_SPI_StartDMATransfer(
+static bool lDRV_SPI_StartDMATransfer(
     DRV_SPI_OBJ* dObj,
     void* pTransmitData,
     size_t txSize,
@@ -231,7 +231,7 @@ static bool _DRV_SPI_StartDMATransfer(
     return true;
 }
 <#else>
-static bool _DRV_SPI_StartDMATransfer(
+static bool lDRV_SPI_StartDMATransfer(
     DRV_SPI_OBJ* dObj,
     void* pTransmitData,
     size_t txSize,
@@ -339,7 +339,7 @@ static bool _DRV_SPI_StartDMATransfer(
 </#if>
 </#if>
 
-static void _DRV_SPI_PlibCallbackHandler(uintptr_t contextHandle)
+static void lDRV_SPI_PlibCallbackHandler(uintptr_t contextHandle)
 {
     DRV_SPI_OBJ* dObj = (DRV_SPI_OBJ *)contextHandle;
     DRV_SPI_CLIENT_OBJ* clientObj = (DRV_SPI_CLIENT_OBJ *)NULL;
@@ -362,8 +362,17 @@ static void _DRV_SPI_PlibCallbackHandler(uintptr_t contextHandle)
     dObj->transferStatus = DRV_SPI_TRANSFER_STATUS_COMPLETE;
 
     /* Unblock the application thread */
-    OSAL_SEM_PostISR( &dObj->transferDone);
+    (void) OSAL_SEM_PostISR( &dObj->transferDone);
 }
+
+/* MISRA C-2012 Rule 10.4 False positive:4  Deviation record ID -  H3_MISRAC_2012_R_10_4_DR_1 */
+<#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
+<#if core.COMPILER_CHOICE == "XC32">
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wunknown-pragmas"
+</#if>
+#pragma coverity compliance block fp:4 "MISRA C-2012 Rule 10.4" "H3_MISRAC_2012_R_10_4_DR_1"    
+</#if>
 
 /* Locks the SPI driver for exclusive use by a client */
 static bool DRV_SPI_ExclusiveUse( const DRV_HANDLE handle, bool useExclusive )
@@ -373,7 +382,7 @@ static bool DRV_SPI_ExclusiveUse( const DRV_HANDLE handle, bool useExclusive )
     bool isSuccess = false;
 
     /* Validate the driver handle */
-    clientObj = _DRV_SPI_DriverHandleValidate(handle);
+    clientObj = lDRV_SPI_DriverHandleValidate(handle);
 
     if (clientObj != NULL)
     {
@@ -409,15 +418,15 @@ static bool DRV_SPI_ExclusiveUse( const DRV_HANDLE handle, bool useExclusive )
         {
             if (dObj->exclusiveUseClientHandle == handle)
             {
-                if (dObj->exclusiveUseCntr > 0)
+                if (dObj->exclusiveUseCntr > 0U)
                 {
                     dObj->exclusiveUseCntr--;
-                    if (dObj->exclusiveUseCntr == 0)
+                    if (dObj->exclusiveUseCntr == 0U)
                     {
                         dObj->exclusiveUseClientHandle = DRV_HANDLE_INVALID;
                         dObj->drvInExclusiveMode = false;
 
-                        OSAL_MUTEX_Unlock( &dObj->mutexExclusiveUse);
+                        (void) OSAL_MUTEX_Unlock( &dObj->mutexExclusiveUse);
                     }
                 }
                 isSuccess = true;
@@ -430,7 +439,7 @@ static bool DRV_SPI_ExclusiveUse( const DRV_HANDLE handle, bool useExclusive )
 
 <#if core.DMA_ENABLE?has_content && DRV_SPI_SYS_DMA_ENABLE == true>
 <#if core.PRODUCT_FAMILY?matches("PIC32M.*") == true>
-void _DRV_SPI_TX_DMA_CallbackHandler(
+void lDRV_SPI_TX_DMA_CallbackHandler(
     SYS_DMA_TRANSFER_EVENT event,
     uintptr_t context
 )
@@ -438,7 +447,7 @@ void _DRV_SPI_TX_DMA_CallbackHandler(
     /* Do nothing */
 }
 
-void _DRV_SPI_RX_DMA_CallbackHandler(
+void lDRV_SPI_RX_DMA_CallbackHandler(
     SYS_DMA_TRANSFER_EVENT event,
     uintptr_t context
 )
@@ -516,12 +525,12 @@ void _DRV_SPI_RX_DMA_CallbackHandler(
         }
 
         /* Unblock the application thread */
-        OSAL_SEM_PostISR( &dObj->transferDone);
+        (void) OSAL_SEM_PostISR( &dObj->transferDone);
     }
 }
 
 <#else>
-void _DRV_SPI_TX_DMA_CallbackHandler(SYS_DMA_TRANSFER_EVENT event, uintptr_t context)
+void lDRV_SPI_TX_DMA_CallbackHandler(SYS_DMA_TRANSFER_EVENT event, uintptr_t context)
 {
     DRV_SPI_OBJ* dObj = (DRV_SPI_OBJ *)context;
 
@@ -538,7 +547,7 @@ void _DRV_SPI_TX_DMA_CallbackHandler(SYS_DMA_TRANSFER_EVENT event, uintptr_t con
     }
 }
 
-void _DRV_SPI_RX_DMA_CallbackHandler(SYS_DMA_TRANSFER_EVENT event, uintptr_t context)
+void lDRV_SPI_RX_DMA_CallbackHandler(SYS_DMA_TRANSFER_EVENT event, uintptr_t context)
 {
     DRV_SPI_OBJ* dObj = (DRV_SPI_OBJ *)context;
     DRV_SPI_CLIENT_OBJ* clientObj = (DRV_SPI_CLIENT_OBJ *)NULL;
@@ -584,7 +593,7 @@ void _DRV_SPI_RX_DMA_CallbackHandler(SYS_DMA_TRANSFER_EVENT event, uintptr_t con
         }
 
         /* Unblock the application thread */
-        OSAL_SEM_PostISR( &dObj->transferDone);
+        (void) OSAL_SEM_PostISR( &dObj->transferDone);
     }
 }
 </#if>
@@ -595,6 +604,13 @@ void _DRV_SPI_RX_DMA_CallbackHandler(SYS_DMA_TRANSFER_EVENT event, uintptr_t con
 // *****************************************************************************
 // *****************************************************************************
 
+/* MISRA C-2012 Rule 11.3, 11.8 deviated below. Deviation record ID -  
+   H3_MISRAC_2012_R_11_3_DR_1 & H3_MISRAC_2012_R_11_8_DR_1*/
+<#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
+#pragma coverity compliance block \
+(deviate:1 "MISRA C-2012 Rule 11.3" "H3_MISRAC_2012_R_11_3_DR_1" )\
+(deviate:1 "MISRA C-2012 Rule 11.8" "H3_MISRAC_2012_R_11_8_DR_1" )   
+</#if>
 SYS_MODULE_OBJ DRV_SPI_Initialize( const SYS_MODULE_INDEX drvIndex, const SYS_MODULE_INIT * const init )
 {
     DRV_SPI_OBJ* dObj     = (DRV_SPI_OBJ *)NULL;
@@ -626,7 +642,7 @@ SYS_MODULE_OBJ DRV_SPI_Initialize( const SYS_MODULE_INDEX drvIndex, const SYS_MO
     dObj->clientObjPool         = spiInit->clientObjPool;
     dObj->nClientsMax           = spiInit->numClients;
     dObj->nClients              = 0;
-    dObj->activeClient          = (uintptr_t)NULL;
+    dObj->activeClient          = 0U;
     dObj->spiTokenCount         = 1;
     dObj->isExclusive           = false;
 <#if core.DMA_ENABLE?has_content && DRV_SPI_SYS_DMA_ENABLE == true>
@@ -690,22 +706,22 @@ SYS_MODULE_OBJ DRV_SPI_Initialize( const SYS_MODULE_INDEX drvIndex, const SYS_MO
     if((dObj->txDMAChannel != SYS_DMA_CHANNEL_NONE) && (dObj->rxDMAChannel != SYS_DMA_CHANNEL_NONE))
     {
         /* Register call-backs with the DMA System Service */
-        SYS_DMA_ChannelCallbackRegister(dObj->txDMAChannel, _DRV_SPI_TX_DMA_CallbackHandler, (uintptr_t)dObj);
+        SYS_DMA_ChannelCallbackRegister(dObj->txDMAChannel, lDRV_SPI_TX_DMA_CallbackHandler, (uintptr_t)dObj);
 
-        SYS_DMA_ChannelCallbackRegister(dObj->rxDMAChannel, _DRV_SPI_RX_DMA_CallbackHandler, (uintptr_t)dObj);
+        SYS_DMA_ChannelCallbackRegister(dObj->rxDMAChannel, lDRV_SPI_RX_DMA_CallbackHandler, (uintptr_t)dObj);
     }
     else
     {
         /* Register a callback with PLIB.
          * dObj as a context parameter will be used to distinguish the events
          * from different instances. */
-        dObj->spiPlib->callbackRegister(&_DRV_SPI_PlibCallbackHandler, (uintptr_t)dObj);
+        dObj->spiPlib->callbackRegister(&lDRV_SPI_PlibCallbackHandler, (uintptr_t)dObj);
     }
 <#else>
     /* Register a callback with PLIB.
      * dObj as a context parameter will be used to distinguish the events
      * from different instances. */
-    dObj->spiPlib->callbackRegister(&_DRV_SPI_PlibCallbackHandler, (uintptr_t)dObj);
+    dObj->spiPlib->callbackRegister(&lDRV_SPI_PlibCallbackHandler, (uintptr_t)dObj);
 
 </#if>
     dObj->inUse = true;
@@ -716,6 +732,12 @@ SYS_MODULE_OBJ DRV_SPI_Initialize( const SYS_MODULE_INDEX drvIndex, const SYS_MO
     /* Return the object structure */
     return ( (SYS_MODULE_OBJ)drvIndex );
 }
+
+<#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
+#pragma coverity compliance end_block "MISRA C-2012 Rule 11.3"
+#pragma coverity compliance end_block "MISRA C-2012 Rule 11.8"   
+</#if> 
+/* MISRAC 2012 deviation block end */
 
 SYS_STATUS DRV_SPI_Status( SYS_MODULE_OBJ object)
 {
@@ -762,16 +784,16 @@ DRV_HANDLE DRV_SPI_Open( const SYS_MODULE_INDEX drvIndex, const DRV_IO_INTENT io
     {
         /* This means the another client has opened the driver in exclusive
            mode. So the driver cannot be opened by any other client. */
-        OSAL_MUTEX_Unlock( &dObj->clientMutex);
+        (void) OSAL_MUTEX_Unlock( &dObj->clientMutex);
         return DRV_HANDLE_INVALID;
     }
 
-    if((dObj->nClients > 0) && (ioIntent & DRV_IO_INTENT_EXCLUSIVE))
+    if((dObj->nClients > 0U) && (((uint32_t)ioIntent & (uint32_t)DRV_IO_INTENT_EXCLUSIVE) != 0U))
     {
         /* This means the driver was already opened and another driver was
            trying to open it exclusively.  We cannot give exclusive access in
            this case */
-        OSAL_MUTEX_Unlock( &dObj->clientMutex);
+        (void) OSAL_MUTEX_Unlock( &dObj->clientMutex);
         return DRV_HANDLE_INVALID;
     }
 
@@ -787,7 +809,7 @@ DRV_HANDLE DRV_SPI_Open( const SYS_MODULE_INDEX drvIndex, const DRV_IO_INTENT io
             clientObj->setup.chipSelect = SYS_PORT_PIN_NONE;
             clientObj->setupChanged = false;
 
-            if(ioIntent & DRV_IO_INTENT_EXCLUSIVE)
+            if(((uint32_t)ioIntent & (uint32_t)DRV_IO_INTENT_EXCLUSIVE) != 0U)
             {
                 /* Set the driver exclusive flag */
                 dObj->isExclusive = true;
@@ -798,19 +820,19 @@ DRV_HANDLE DRV_SPI_Open( const SYS_MODULE_INDEX drvIndex, const DRV_IO_INTENT io
             /* Generate and save the client handle in the client object, which will
              * be then used to verify the validity of the client handle.
              */
-            clientObj->clientHandle = (DRV_HANDLE)_DRV_SPI_MAKE_HANDLE(dObj->spiTokenCount, (uint8_t)drvIndex, iClient);
+            clientObj->clientHandle = (DRV_HANDLE)lDRV_SPI_MAKE_HANDLE(dObj->spiTokenCount, (uint8_t)drvIndex, iClient);
 
             /* Increment the instance specific token counter */
-            dObj->spiTokenCount = _DRV_SPI_UPDATE_TOKEN(dObj->spiTokenCount);
+            dObj->spiTokenCount = lDRV_SPI_UPDATE_TOKEN(dObj->spiTokenCount);
 
             break;
         }
     }
 
-    OSAL_MUTEX_Unlock(&dObj->clientMutex);
+    (void) OSAL_MUTEX_Unlock(&dObj->clientMutex);
 
     /* Driver index is the handle */
-    return clientObj ? ((DRV_HANDLE)clientObj->clientHandle) : DRV_HANDLE_INVALID;
+    return (clientObj != NULL) ? ((DRV_HANDLE)clientObj->clientHandle) : DRV_HANDLE_INVALID;
 }
 
 void DRV_SPI_Close( DRV_HANDLE handle )
@@ -823,7 +845,7 @@ void DRV_SPI_Close( DRV_HANDLE handle )
     DRV_SPI_OBJ* dObj;
 
     /* Validate the handle */
-    clientObj = _DRV_SPI_DriverHandleValidate(handle);
+    clientObj = lDRV_SPI_DriverHandleValidate(handle);
 
     if(clientObj != NULL)
     {
@@ -840,7 +862,7 @@ void DRV_SPI_Close( DRV_HANDLE handle )
                 dObj->exclusiveUseClientHandle = DRV_HANDLE_INVALID;
 
                 /* Release the exclusive use mutex (if held by the client) */
-                OSAL_MUTEX_Unlock( &dObj->mutexExclusiveUse);
+                (void) OSAL_MUTEX_Unlock( &dObj->mutexExclusiveUse);
             }
 
             /* Reduce the number of clients */
@@ -853,7 +875,7 @@ void DRV_SPI_Close( DRV_HANDLE handle )
             clientObj->inUse = false;
 
             /* Release the client mutex */
-            OSAL_MUTEX_Unlock( &dObj->clientMutex );
+            (void) OSAL_MUTEX_Unlock( &dObj->clientMutex );
         }
     }
 }
@@ -866,7 +888,7 @@ bool DRV_SPI_TransferSetup( const DRV_HANDLE handle, DRV_SPI_TRANSFER_SETUP* set
     bool isSuccess = false;
 
     /* Validate the handle */
-    clientObj = _DRV_SPI_DriverHandleValidate(handle);
+    clientObj = lDRV_SPI_DriverHandleValidate(handle);
 
     if((clientObj != NULL) && (setup != NULL))
     {
@@ -916,10 +938,10 @@ bool DRV_SPI_WriteReadTransfer(const DRV_HANDLE handle,
     static bool isExclusiveUseMutexAcquired = false;
 
     /* Validate the driver handle */
-    clientObj = _DRV_SPI_DriverHandleValidate(handle);
+    clientObj = lDRV_SPI_DriverHandleValidate(handle);
 
-    if((clientObj != NULL) && (((txSize > 0) && (pTransmitData != NULL)) ||
-        ((rxSize > 0) && (pReceiveData != NULL)))
+    if((clientObj != NULL) && (((txSize > 0U) && (pTransmitData != NULL)) ||
+        ((rxSize > 0U) && (pReceiveData != NULL)))
     )
     {
         dObj = clientObj->dObj;
@@ -943,7 +965,7 @@ bool DRV_SPI_WriteReadTransfer(const DRV_HANDLE handle,
             setup has been changed dynamically for the client */
             if ((dObj->activeClient != (uintptr_t)clientObj) || (clientObj->setupChanged == true))
             {
-                dObj->spiPlib->setup(&clientObj->setup, _USE_FREQ_CONFIGURED_IN_CLOCK_MANAGER);
+                (void) dObj->spiPlib->setup(&clientObj->setup, USE_FREQ_CONFIGURED_IN_CLOCK_MANAGER);
                 clientObj->setupChanged = false;
             }
 
@@ -975,6 +997,10 @@ bool DRV_SPI_WriteReadTransfer(const DRV_HANDLE handle,
                 rxSize = rxSize << 2;
                 txSize = txSize << 2;
 			}
+            else
+            {
+                /* Nothing to do */
+            }
 
 <#if core.DMA_ENABLE?has_content && DRV_SPI_SYS_DMA_ENABLE == true>
             if((dObj->txDMAChannel != SYS_DMA_CHANNEL_NONE) && ((dObj->rxDMAChannel != SYS_DMA_CHANNEL_NONE)))
@@ -984,7 +1010,7 @@ bool DRV_SPI_WriteReadTransfer(const DRV_HANDLE handle,
                 dObj->pTransmitData = pTransmitData;
 </#if>
 
-                if (_DRV_SPI_StartDMATransfer(dObj, pTransmitData, txSize, pReceiveData, rxSize) == true)
+                if (lDRV_SPI_DriverHandleValidate(dObj, pTransmitData, txSize, pReceiveData, rxSize) == true)
                 {
                     isTransferInProgress = true;
                 }
@@ -1017,18 +1043,25 @@ bool DRV_SPI_WriteReadTransfer(const DRV_HANDLE handle,
             }
 
             /* Release the mutex to allow other clients/threads to access the PLIB */
-            OSAL_MUTEX_Unlock(&dObj->transferMutex);
+            (void) OSAL_MUTEX_Unlock(&dObj->transferMutex);
         }
 
         if (isExclusiveUseMutexAcquired == true)
         {
             isExclusiveUseMutexAcquired = false;
 
-            OSAL_MUTEX_Unlock( &dObj->mutexExclusiveUse);
+            (void) OSAL_MUTEX_Unlock( &dObj->mutexExclusiveUse);
         }
     }
     return isSuccess;
 }
+<#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
+#pragma coverity compliance end_block "MISRA C-2012 Rule 10.4"
+<#if core.COMPILER_CHOICE == "XC32">
+#pragma GCC diagnostic pop
+</#if>    
+</#if>
+/* MISRAC 2012 deviation block end */
 
 bool DRV_SPI_Lock( const DRV_HANDLE handle, bool lock )
 {

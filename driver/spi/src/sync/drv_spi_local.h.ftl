@@ -39,8 +39,8 @@
 *******************************************************************************/
 //DOM-IGNORE-END
 
-#ifndef _DRV_SPI_LOCAL_H
-#define _DRV_SPI_LOCAL_H
+#ifndef DRV_SPI_LOCAL_H
+#define DRV_SPI_LOCAL_H
 
 // *****************************************************************************
 // *****************************************************************************
@@ -71,12 +71,12 @@
     None
 */
 
-#define DRV_SPI_CLIENT_INDEX_MASK               (0x000000FF)
-#define DRV_SPI_INSTANCE_INDEX_MASK             (0x0000FF00)
-#define DRV_SPI_TOKEN_MASK                      (0xFFFF0000)
-#define DRV_SPI_TOKEN_MAX                       (0x0000FFFF)
+#define DRV_SPI_CLIENT_INDEX_MASK               (0x000000FFU)
+#define DRV_SPI_INSTANCE_INDEX_MASK             (0x0000FF00U)
+#define DRV_SPI_TOKEN_MASK                      (0xFFFF0000U)
+#define DRV_SPI_TOKEN_MAX                       (0x0000FFFFU)
 
-#define _USE_FREQ_CONFIGURED_IN_CLOCK_MANAGER   0
+#define USE_FREQ_CONFIGURED_IN_CLOCK_MANAGER   0
 
 typedef enum
 {
@@ -224,7 +224,7 @@ typedef struct
     None.
 */
 
-typedef struct _DRV_SPI_CLIENT_OBJ
+typedef struct DRV_SPI_CLIENT_OBJ_T
 {
     /* The hardware instance object associated with the client */
     DRV_SPI_OBJ*                   dObj;
@@ -248,4 +248,4 @@ typedef struct _DRV_SPI_CLIENT_OBJ
 
 } DRV_SPI_CLIENT_OBJ;
 
-#endif //#ifndef _DRV_SPI_LOCAL_H
+#endif //#ifndef DRV_SPI_LOCAL_H
