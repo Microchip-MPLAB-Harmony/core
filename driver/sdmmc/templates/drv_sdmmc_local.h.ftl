@@ -42,8 +42,8 @@
 //DOM-IGNORE-END
 
 
-#ifndef _DRV_SDMMC_LOCAL_H
-#define _DRV_SDMMC_LOCAL_H
+#ifndef DRV_SDMMC_LOCAL_H
+#define DRV_SDMMC_LOCAL_H
 
 
 // *****************************************************************************
@@ -66,81 +66,81 @@
 // *****************************************************************************
 // *****************************************************************************
 /* SDMMC Driver Handle Macros*/
-#define DRV_SDMMC_INDEX_MASK                   (0x000000FF)
-#define DRV_SDMMC_INSTANCE_MASK                (0x0000FF00)
-#define DRV_SDMMC_TOKEN_MAX                    (0xFFFF)
+#define DRV_SDMMC_INDEX_MASK                     (0x000000FFU)
+#define DRV_SDMMC_INSTANCE_MASK                  (0x0000FF00U)
+#define DRV_SDMMC_TOKEN_MAX                      (0xFFFFU)
 
-#define DRV_SDMMC_COMMAND_STATUS_SUCCESS         0x00
-#define DRV_SDMMC_COMMAND_STATUS_ERROR           0x01
-#define DRV_SDMMC_COMMAND_STATUS_TIMEOUT_ERROR   0x02
-#define DRV_SDMMC_COMMAND_STATUS_CRC_ERROR       0x03
+#define DRV_SDMMC_COMMAND_STATUS_SUCCESS         (0x00U)
+#define DRV_SDMMC_COMMAND_STATUS_ERROR           (0x01)
+#define DRV_SDMMC_COMMAND_STATUS_TIMEOUT_ERROR   (0x02U)
+#define DRV_SDMMC_COMMAND_STATUS_CRC_ERROR       (0x03)
 
-#define DRV_SDMMC_COMMAND_TIMEOUT_ERROR          0x0001
-#define DRV_SDMMC_COMMAND_CRC_ERROR              0x0002
-#define DRV_SDMMC_COMMAND_END_BIT_ERROR          0x0004
-#define DRV_SDMMC_COMMAND_INDEX_ERROR            0x0008
+#define DRV_SDMMC_COMMAND_TIMEOUT_ERROR          (0x0001U)
+#define DRV_SDMMC_COMMAND_CRC_ERROR              (0x0002U)
+#define DRV_SDMMC_COMMAND_END_BIT_ERROR          (0x0004)
+#define DRV_SDMMC_COMMAND_INDEX_ERROR            (0x0008)
 // Using the reserved bit to indicate card removal event
-#define DRV_SDMMC_CARD_REMOVAL_ERROR             0x8000
-#define DRV_SDMMC_ANY_COMMAND_ERRORS             0x800F
-#define DRV_SDMMC_DATA_TIMEOUT_ERROR             0x0010
-#define DRV_SDMMC_DATA_CRC_ERROR                 0x0020
-#define DRV_SDMMC_DATA_END_BIT_ERROR             0x0040
-#define DRV_SDMMC_ADMA_ERROR                     0x0200
-#define DRV_SDMMC_ANY_DATA_ERRORS                0x8270
+#define DRV_SDMMC_CARD_REMOVAL_ERROR             (0x8000U)
+#define DRV_SDMMC_ANY_COMMAND_ERRORS             (0x800FU)
+#define DRV_SDMMC_DATA_TIMEOUT_ERROR             (0x0010)
+#define DRV_SDMMC_DATA_CRC_ERROR                 (0x0020)
+#define DRV_SDMMC_DATA_END_BIT_ERROR             (0x0040)
+#define DRV_SDMMC_ADMA_ERROR                     (0x0200)
+#define DRV_SDMMC_ANY_DATA_ERRORS                (0x8270U)
 
 #define DRV_SDMMC_CSD_BUFFER_LEN                 (16)
 #define DRV_SDMMC_CID_BUFFER_LEN                 (16)
-#define DRV_SDMMC_SCR_BUFFER_LEN                 (CACHE_ALIGNED_SIZE_GET(8))
+#define DRV_SDMMC_SCR_BUFFER_LEN                 (CACHE_ALIGNED_SIZE_GET(8U))
 #define DRV_SDMMC_SWITCH_STATUS_BUFFER_LEN       (64)
 
 // Section: OCR register bits
-#define DRV_SDMMC_OCR_VDD_170_195     (1U <<  7)
-#define DRV_SDMMC_OCR_VDD_200_270     (0x7F1U << 8)
-#define DRV_SDMMC_OCR_VDD_27_28       (1U << 15)
-#define DRV_SDMMC_OCR_VDD_28_29       (1U << 16)
-#define DRV_SDMMC_OCR_VDD_29_30       (1U << 17)
-#define DRV_SDMMC_OCR_VDD_30_31       (1U << 18)
-#define DRV_SDMMC_OCR_VDD_31_32       (1U << 19)
-#define DRV_SDMMC_OCR_VDD_32_33       (1U << 20)
-#define DRV_SDMMC_OCR_VDD_33_34       (1U << 21)
-#define DRV_SDMMC_OCR_VDD_34_35       (1U << 22)
-#define DRV_SDMMC_OCR_VDD_35_36       (1U << 23)
-#define DRV_SDMMC_OCR_ACCESS_MODE     (3U << 29)
-#define DRV_SDMMC_OCR_ACCESS_SECTOR   (2U << 29)
-#define DRV_SDMMC_OCR_NBUSY           (1U << 31)
+#define DRV_SDMMC_OCR_VDD_170_195                (1UL <<  7)
+#define DRV_SDMMC_OCR_VDD_200_270                (0x7F1U << 8)
+#define DRV_SDMMC_OCR_VDD_27_28                  (1UL << 15)
+#define DRV_SDMMC_OCR_VDD_28_29                  (1UL << 16)
+#define DRV_SDMMC_OCR_VDD_29_30                  (1UL << 17)
+#define DRV_SDMMC_OCR_VDD_30_31                  (1UL << 18)
+#define DRV_SDMMC_OCR_VDD_31_32                  (1UL << 19)
+#define DRV_SDMMC_OCR_VDD_32_33                  (1UL << 20)
+#define DRV_SDMMC_OCR_VDD_33_34                  (1UL << 21)
+#define DRV_SDMMC_OCR_VDD_34_35                  (1UL << 22)
+#define DRV_SDMMC_OCR_VDD_35_36                  (1UL << 23)
+#define DRV_SDMMC_OCR_ACCESS_MODE                (3UL << 29)
+#define DRV_SDMMC_OCR_ACCESS_SECTOR              (2UL << 29)
+#define DRV_SDMMC_OCR_NBUSY                      (1UL << 31)
 
 /* R1 error bits for eMMC */
-#define DRV_SDMMC_R1_E_ADDRESS_OUT_OF_RANGE   (1U << 31)
-#define DRV_SDMMC_R1_E_ADDRESS_ MISALIGN      (1U << 30)
-#define DRV_SDMMC_R1_E_BLOCK_LEN_ERROR        (1U << 29)
-#define DRV_SDMMC_R1_E_ERASE_SEQ_ERROR        (1U << 28)
-#define DRV_SDMMC_R1_E_ERASE_PARAM            (1U << 27)
-#define DRV_SDMMC_R1_E_WP_VIOLATION           (1U << 26)
-#define DRV_SDMMC_R1_E_LOCK_UNLOCK_FAILED     (1U << 24)
-#define DRV_SDMMC_R1_E_COM_CRC_ERROR          (1U << 23)
-#define DRV_SDMMC_R1_E_ILLEGAL_COMMAND        (1U << 22)
-#define DRV_SDMMC_R1_E_DEVICE_ECC_FAILED      (1U << 21)
-#define DRV_SDMMC_R1_E_CC_ERROR               (1U << 20)
-#define DRV_SDMMC_R1_E_ERROR                  (1U << 19)
-#define DRV_SDMMC_R1_E_CID_CSD_OVERWRITE      (1U << 16)
-#define DRV_SDMMC_R1_E_WP_ERASE_SKIP          (1U << 15)
-#define DRV_SDMMC_R1_E_SWITCH_STATE           (1U << 7)
+#define DRV_SDMMC_R1_E_ADDRESS_OUT_OF_RANGE      (1UL << 31)
+#define DRV_SDMMC_R1_E_ADDRESS_ MISALIGN         (1UL << 30)
+#define DRV_SDMMC_R1_E_BLOCK_LEN_ERROR           (1UL << 29)
+#define DRV_SDMMC_R1_E_ERASE_SEQ_ERROR           (1UL << 28)
+#define DRV_SDMMC_R1_E_ERASE_PARAM               (1UL << 27)
+#define DRV_SDMMC_R1_E_WP_VIOLATION              (1UL << 26)
+#define DRV_SDMMC_R1_E_LOCK_UNLOCK_FAILED        (1UL << 24)
+#define DRV_SDMMC_R1_E_COM_CRC_ERROR             (1UL << 23)
+#define DRV_SDMMC_R1_E_ILLEGAL_COMMAND           (1UL << 22)
+#define DRV_SDMMC_R1_E_DEVICE_ECC_FAILED         (1UL << 21)
+#define DRV_SDMMC_R1_E_CC_ERROR                  (1UL << 20)
+#define DRV_SDMMC_R1_E_ERROR                     (1UL << 19)
+#define DRV_SDMMC_R1_E_CID_CSD_OVERWRITE         (1UL << 16)
+#define DRV_SDMMC_R1_E_WP_ERASE_SKIP             (1UL << 15)
+#define DRV_SDMMC_R1_E_SWITCH_STATE              (1UL << 7)
 
-#define DRV_SDMMC_R1_S_DEVICE_IS_LOCKED       (1U << 25)
+#define DRV_SDMMC_R1_S_DEVICE_IS_LOCKED          (1UL << 25)
 
-#define DRV_SDMMC_DEVICE_RCA_POS       (16U)
-#define DRV_SDMMC_DEVICE_RCA_VAL(rca)  (rca << DRV_SDMMC_DEVICE_RCA_POS)
+#define DRV_SDMMC_DEVICE_RCA_POS                 (16U)
+#define DRV_SDMMC_DEVICE_RCA_VAL(rca)            ((rca) << DRV_SDMMC_DEVICE_RCA_POS)
 
 
 #define DRV_SDMMC_TRAN_SPEED_UNIT_POS  (0x0U)
 #define DRV_SDMMC_TRAN_SPEED_UNIT_MASK ((0x7U) << DRV_SDMMC_TRAN_SPEED_UNIT_POS)
-#define DRV_SDMMC_TRAN_SPEED_UNIT_VAL(transSpeed) ((transSpeed & DRV_SDMMC_TRAN_SPEED_UNIT_MASK) >> DRV_SDMMC_TRAN_SPEED_UNIT_POS)
+#define DRV_SDMMC_TRAN_SPEED_UNIT_VAL(transSpeed) (((transSpeed) & (DRV_SDMMC_TRAN_SPEED_UNIT_MASK)) >> DRV_SDMMC_TRAN_SPEED_UNIT_POS)
 
 #define DRV_SDMMC_TRAN_SPEED_MULT_POS  (0x3U)
 #define DRV_SDMMC_TRAN_SPEED_MULT_MASK ((0x7U) << DRV_SDMMC_TRAN_SPEED_MULT_POS)
-#define DRV_SDMMC_TRAN_SPEED_MULT_VAL(transSpeed) ((transSpeed & DRV_SDMMC_TRAN_SPEED_MULT_MASK) >> DRV_SDMMC_TRAN_SPEED_MULT_POS)
+#define DRV_SDMMC_TRAN_SPEED_MULT_VAL(transSpeed) (((transSpeed) & (DRV_SDMMC_TRAN_SPEED_MULT_MASK)) >> DRV_SDMMC_TRAN_SPEED_MULT_POS)
 
-#define DRV_SDMMC_EMMC_RCA             (2U)
+#define DRV_SDMMC_EMMC_RCA             (2UL)
 #define DRV_SDMMC_SEND_RCA_ARG         DRV_SDMMC_DEVICE_RCA_VAL(DRV_SDMMC_EMMC_RCA)
 
 
@@ -159,42 +159,42 @@
 
 
 
-#define DRV_SDMMC_EXT_CSD_CMD_SET_NORMAL            (1<<0)
-#define DRV_SDMMC_EXT_CSD_CMD_SET_SECURE            (1<<1)
-#define DRV_SDMMC_EXT_CSD_CMD_SET_CPSECURE          (1<<2)
+#define DRV_SDMMC_EXT_CSD_CMD_SET_NORMAL            (1UL<<0)
+#define DRV_SDMMC_EXT_CSD_CMD_SET_SECURE            (1UL<<1)
+#define DRV_SDMMC_EXT_CSD_CMD_SET_CPSECURE          (1UL<<2)
 
-#define DRV_SDMMC_EXT_CSD_BUS_WIDTH                 183 /* R/W */
-#define DRV_SDMMC_EXT_CSD_HS_TIMING                 185 /* R/W */
+#define DRV_SDMMC_EXT_CSD_BUS_WIDTH                 (183UL) /* R/W */
+#define DRV_SDMMC_EXT_CSD_HS_TIMING                 (185UL) /* R/W */
 
-#define DRV_SDMMC_EXT_CSD_BUS_WIDTH_1               0   /* Card is in 1 bit mode */
-#define DRV_SDMMC_EXT_CSD_BUS_WIDTH_4               1   /* Card is in 4 bit mode */
-#define DRV_SDMMC_EXT_CSD_BUS_WIDTH_8               2   /* Card is in 8 bit mode */
-#define DRV_SDMMC_EXT_CSD_DDR_BUS_WIDTH_4           5   /* Card is in 4 bit DDR mode */
-#define DRV_SDMMC_EXT_CSD_DDR_BUS_WIDTH_8           6   /* Card is in 8 bit DDR mode */
+#define DRV_SDMMC_EXT_CSD_BUS_WIDTH_1               (0)   /* Card is in 1 bit mode */
+#define DRV_SDMMC_EXT_CSD_BUS_WIDTH_4               (1)   /* Card is in 4 bit mode */
+#define DRV_SDMMC_EXT_CSD_BUS_WIDTH_8               (2)   /* Card is in 8 bit mode */
+#define DRV_SDMMC_EXT_CSD_DDR_BUS_WIDTH_4           (5)   /* Card is in 4 bit DDR mode */
+#define DRV_SDMMC_EXT_CSD_DDR_BUS_WIDTH_8           (6 )  /* Card is in 8 bit DDR mode */
 #define DRV_SDMMC_EXT_CSD_BUS_WIDTH_STROBE BIT(7)   /* Enhanced strobe mode */
 
-#define DRV_SDMMC_EXT_CSD_TIMING_BC                 0   /* Backwards compatility */
-#define DRV_SDMMC_EXT_CSD_TIMING_HS                 1   /* High speed */
-#define DRV_SDMMC_EXT_CSD_TIMING_HS200              2   /* HS200 */
-#define DRV_SDMMC_EXT_CSD_TIMING_HS400              3   /* HS400 */
-#define DRV_SDMMC_EXT_CSD_DRV_STR_SHIFT             4   /* Driver Strength shift */
+#define DRV_SDMMC_EXT_CSD_TIMING_BC                 (0)   /* Backwards compatility */
+#define DRV_SDMMC_EXT_CSD_TIMING_HS                 (1UL)   /* High speed */
+#define DRV_SDMMC_EXT_CSD_TIMING_HS200              (2)   /* HS200 */
+#define DRV_SDMMC_EXT_CSD_TIMING_HS400              (3)   /* HS400 */
+#define DRV_SDMMC_EXT_CSD_DRV_STR_SHIFT             (4)   /* Driver Strength shift */
 
-#define DRV_SDMMC_SWITCH_MODE_CMD_SET       0x00    /* Change the command set */
-#define DRV_SDMMC_SWITCH_MODE_SET_BITS  0x01    /* Set bits which are 1 in value */
-#define DRV_SDMMC_SWITCH_MODE_CLEAR_BITS    0x02    /* Clear bits which are 1 in value */
-#define DRV_SDMMC_SWITCH_MODE_WRITE_BYTE    0x03    /* Set target to value */
+#define DRV_SDMMC_SWITCH_MODE_CMD_SET               (0x00)    /* Change the command set */
+#define DRV_SDMMC_SWITCH_MODE_SET_BITS              (0x01)    /* Set bits which are 1 in value */
+#define DRV_SDMMC_SWITCH_MODE_CLEAR_BITS            (0x02)    /* Clear bits which are 1 in value */
+#define DRV_SDMMC_SWITCH_MODE_WRITE_BYTE            (0x03UL)    /* Set target to value */
 
-#define DRV_SDMMC_EXT_CSD_GET_HS_SUPPORT(extcsdPtr) (0 != (extcsdPtr[196] & 0x01))
+#define DRV_SDMMC_EXT_CSD_GET_HS_SUPPORT(extcsdPtr) (0U != (extcsdPtr[196] & 0x01U))
 #define DRV_SDMMC_EXT_CSD_GET_SEC_COUNT(extcsdPtr)   ((uint32_t)(extcsdPtr[215] << 24) |\
                                                       (uint32_t)(extcsdPtr[214] << 16) |\
                                                       (uint32_t)(extcsdPtr[213] << 8) |\
                                                       (uint32_t)(extcsdPtr[212]))
 
 #define CMD6_EXT_CSD_MODE_ARGU(set, index, value) \
-        ((DRV_SDMMC_SWITCH_MODE_WRITE_BYTE << 24) | \
-          (index << 16) | \
-          (value << 8) | \
-          set)
+        (((DRV_SDMMC_SWITCH_MODE_WRITE_BYTE) << 24) | \
+          ((index) << 16) | \
+          ((value) << 8) | \
+          (set))
 
 #define DRV_SDMMC_SWITCH_HS_ARGU CMD6_EXT_CSD_MODE_ARGU(DRV_SDMMC_EXT_CSD_CMD_SET_NORMAL,\
                                                         DRV_SDMMC_EXT_CSD_HS_TIMING,\
@@ -204,11 +204,11 @@
                                                                          busWidth)
 
 
-#define DRV_SDMMC_EXT_CSD_RESP_SIZE            (512U)
+#define DRV_SDMMC_EXT_CSD_RESP_SIZE            (512)
 
 #define DRV_SDMMC_CMD_ARG_NULL                 (0U)
 
-#define DRV_SDMMC_CLOCK_FREQ_400_KHZ           (400000)
+#define DRV_SDMMC_CLOCK_FREQ_400_KHZ           (400000U)
 #define DRV_SDMMC_CLOCK_FREQ_DS_25_MHZ         (25000000)
 #define DRV_SDMMC_CLOCK_FREQ_HS_50_MHZ         (50000000)
 
@@ -229,7 +229,7 @@
 */
 #define GEOMETRY_TABLE_READ_ENTRY   (0)
 #define GEOMETRY_TABLE_WRITE_ENTRY  (1)
-#define GEOMETRY_TABLE_ERASE_ENTRY  (2)
+#define GEOMETRY_TABLE_ERASE_ENTRY  (2U)
 
 // *****************************************************************************
 // *****************************************************************************
@@ -688,4 +688,4 @@ typedef struct
 
 } DRV_SDMMC_OBJ;
 
-#endif //#ifndef _DRV_SDMMC_LOCAL_H
+#endif //#ifndef DRV_SDMMC_LOCAL_H
