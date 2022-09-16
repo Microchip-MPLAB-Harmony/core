@@ -82,7 +82,7 @@ static void DRV_SDSPI_TimerCallback( uintptr_t context )
   Remarks:
 */
 
-void _DRV_SDSPI_SPIDriverEventHandler(
+void DRV_SDSPI_SPIDriverEventHandler(
     DRV_SPI_TRANSFER_EVENT event,
     DRV_SPI_TRANSFER_HANDLE transferHandle,
     uintptr_t context
@@ -114,7 +114,7 @@ void _DRV_SDSPI_SPIDriverEventHandler(
   Remarks:
 */
 
-bool _DRV_SDSPI_SPIWrite(
+bool DRV_SDSPI_SPIWrite(
     DRV_SDSPI_OBJ* dObj,
     void* pWriteBuffer,
     uint32_t nBytes
@@ -152,7 +152,7 @@ bool _DRV_SDSPI_SPIWrite(
   Remarks:
 */
 
-bool _DRV_SDSPI_SPIRead(
+bool DRV_SDSPI_SPIRead(
     DRV_SDSPI_OBJ* dObj,
     void* pReadBuffer,
     uint32_t nBytes
@@ -177,7 +177,7 @@ bool _DRV_SDSPI_SPIRead(
     return isSuccess;
 }
 
-bool _DRV_SDSPI_SPIWriteWithChipSelectDisabled(
+bool DRV_SDSPI_SPIWriteWithChipSelectDisabled(
     DRV_SDSPI_OBJ* dObj,
     void* pWriteBuffer,
     uint32_t nBytes
@@ -187,7 +187,7 @@ bool _DRV_SDSPI_SPIWriteWithChipSelectDisabled(
     DRV_SPI_TRANSFER_HANDLE wrTransferHandle;
 
     /* Disable Chip Select */
-    _DRV_SDSPI_SPISpeedSetup(dObj, _DRV_SDSPI_SPI_INITIAL_SPEED, SYS_PORT_PIN_NONE);
+    (void) DRV_SDSPI_SPISpeedSetup(dObj, DRV_SDSPI_SPI_INITIAL_SPEED, SYS_PORT_PIN_NONE);
 
     dObj->spiTransferStatus = DRV_SDSPI_SPI_TRANSFER_STATUS_IN_PROGRESS;
 
@@ -202,7 +202,7 @@ bool _DRV_SDSPI_SPIWriteWithChipSelectDisabled(
         dObj->spiTransferStatus = DRV_SDSPI_SPI_TRANSFER_STATUS_ERROR;
 
         /* Re-enable Chip Select */
-        _DRV_SDSPI_SPISpeedSetup(dObj, _DRV_SDSPI_SPI_INITIAL_SPEED, dObj->chipSelectPin);
+        (void) DRV_SDSPI_SPISpeedSetup(dObj, DRV_SDSPI_SPI_INITIAL_SPEED, dObj->chipSelectPin);
     }
 
     return isSuccess;
@@ -222,7 +222,7 @@ bool _DRV_SDSPI_SPIWriteWithChipSelectDisabled(
 
 */
 
-bool _DRV_SDSPI_SPISpeedSetup(
+bool DRV_SDSPI_SPISpeedSetup(
     DRV_SDSPI_OBJ* const dObj,
     uint32_t clockFrequency,
     SYS_PORT_PIN chipSelectPin
@@ -261,7 +261,7 @@ bool _DRV_SDSPI_SPISpeedSetup(
     None
 */
 
-bool _DRV_SDSPI_SPIExclusiveAccess(DRV_SDSPI_OBJ* const dObj, bool isExclusive)
+bool DRV_SDSPI_SPIExclusiveAccess(DRV_SDSPI_OBJ* const dObj, bool isExclusive)
 {
     return DRV_SPI_Lock(dObj->spiDrvHandle, isExclusive);
 }
@@ -279,7 +279,7 @@ bool _DRV_SDSPI_SPIExclusiveAccess(DRV_SDSPI_OBJ* const dObj, bool isExclusive)
   Remarks:
 
 */
-bool _DRV_SDSPI_CardDetectPollingTimerStart(
+bool DRV_SDSPI_CardDetectPollingTimerStart(
     DRV_SDSPI_OBJ* const dObj,
     uint32_t period
 )
@@ -311,7 +311,7 @@ bool _DRV_SDSPI_CardDetectPollingTimerStart(
   Remarks:
 
 */
-bool _DRV_SDSPI_CmdResponseTimerStart(
+bool DRV_SDSPI_CmdResponseTimerStart(
     DRV_SDSPI_OBJ* const dObj,
     uint32_t period
 )
@@ -342,13 +342,13 @@ bool _DRV_SDSPI_CmdResponseTimerStart(
 
 */
 
-bool _DRV_SDSPI_CmdResponseTimerStop( DRV_SDSPI_OBJ* const dObj )
+bool DRV_SDSPI_CmdResponseTimerStop( DRV_SDSPI_OBJ* const dObj )
 {
     bool isSuccess = false;
 
     if (dObj->cmdRespTmrHandle != SYS_TIME_HANDLE_INVALID)
     {
-        SYS_TIME_TimerDestroy(dObj->cmdRespTmrHandle);
+        (void) SYS_TIME_TimerDestroy(dObj->cmdRespTmrHandle);
         isSuccess = true;
     }
 
@@ -368,7 +368,7 @@ bool _DRV_SDSPI_CmdResponseTimerStop( DRV_SDSPI_OBJ* const dObj )
 
 */
 
-bool _DRV_SDSPI_TimerStart(
+bool DRV_SDSPI_TimerStart(
     DRV_SDSPI_OBJ* const dObj,
     uint32_t period
 )
@@ -400,13 +400,13 @@ bool _DRV_SDSPI_TimerStart(
 
 */
 
-bool _DRV_SDSPI_TimerStop( DRV_SDSPI_OBJ* const dObj )
+bool DRV_SDSPI_TimerStop( DRV_SDSPI_OBJ* const dObj )
 {
     bool isSuccess = false;
 
     if (dObj->timerHandle != SYS_TIME_HANDLE_INVALID)
     {
-        SYS_TIME_TimerDestroy(dObj->timerHandle);
+        (void) SYS_TIME_TimerDestroy(dObj->timerHandle);
         isSuccess = true;
     }
 
