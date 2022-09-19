@@ -104,7 +104,7 @@ static void DRV_SDSPI_TimerCallback( uintptr_t context )
 
 */
 
-void _DRV_SDSPI_SPIPlibCallbackHandler( uintptr_t context )
+void DRV_SDSPI_SPIPlibCallbackHandler( uintptr_t context )
 {
     DRV_SDSPI_OBJ* dObj = (DRV_SDSPI_OBJ *)context;
 
@@ -136,7 +136,7 @@ void _DRV_SDSPI_SPIPlibCallbackHandler( uintptr_t context )
 
 */
 
-void _DRV_SDSPI_RX_DMA_CallbackHandler(
+void DRV_SDSPI_RX_DMA_CallbackHandler(
     SYS_DMA_TRANSFER_EVENT event,
     uintptr_t context
 )
@@ -242,7 +242,7 @@ void _DRV_SDSPI_RX_DMA_CallbackHandler(
 
 */
 
-void _DRV_SDSPI_TX_DMA_CallbackHandler(
+void DRV_SDSPI_TX_DMA_CallbackHandler(
     SYS_DMA_TRANSFER_EVENT event,
     uintptr_t context
 )
@@ -385,7 +385,7 @@ static bool _DRV_SDSPI_DMA_Read(
 
 */
 
-void _DRV_SDSPI_RX_DMA_CallbackHandler(
+void DRV_SDSPI_RX_DMA_CallbackHandler(
     SYS_DMA_TRANSFER_EVENT event,
     uintptr_t context
 )
@@ -421,7 +421,7 @@ void _DRV_SDSPI_RX_DMA_CallbackHandler(
 
 */
 
-void _DRV_SDSPI_TX_DMA_CallbackHandler(
+void DRV_SDSPI_TX_DMA_CallbackHandler(
     SYS_DMA_TRANSFER_EVENT event,
     uintptr_t context
 )
@@ -558,7 +558,7 @@ static bool _DRV_SDSPI_DMA_Read(
     complete.
 */
 
-bool _DRV_SDSPI_SPIBlockWrite(
+bool DRV_SDSPI_SPIBlockWrite(
     DRV_SDSPI_OBJ* dObj,
     void* pWriteBuffer
 )
@@ -574,7 +574,7 @@ bool _DRV_SDSPI_SPIBlockWrite(
     /* If enabled, used DMA for block transfers */
     if ((dObj->txDMAChannel != SYS_DMA_CHANNEL_NONE) && (dObj->rxDMAChannel != SYS_DMA_CHANNEL_NONE ))
     {
-        if (_DRV_SDSPI_DMA_Write(dObj, pWriteBuffer, _DRV_SDSPI_MEDIA_BLOCK_SIZE) == false)
+        if (_DRV_SDSPI_DMA_Write(dObj, pWriteBuffer, DRV_SDSPI_MEDIA_BLOCK_SIZE) == false)
         {
             SYS_PORT_PinSet(dObj->chipSelectPin);
             return isSuccess;
@@ -582,14 +582,14 @@ bool _DRV_SDSPI_SPIBlockWrite(
     }
     else
     {
-        if (dObj->spiPlib->write (pWriteBuffer, _DRV_SDSPI_MEDIA_BLOCK_SIZE) == false)
+        if (dObj->spiPlib->write (pWriteBuffer, DRV_SDSPI_MEDIA_BLOCK_SIZE) == false)
         {
             SYS_PORT_PinSet(dObj->chipSelectPin);
             return isSuccess;
         }
     }
 <#else>
-    if (dObj->spiPlib->write (pWriteBuffer, _DRV_SDSPI_MEDIA_BLOCK_SIZE) == false)
+    if (dObj->spiPlib->write (pWriteBuffer, DRV_SDSPI_MEDIA_BLOCK_SIZE) == false)
     {
         SYS_PORT_PinSet(dObj->chipSelectPin);
         return isSuccess;
@@ -623,7 +623,7 @@ bool _DRV_SDSPI_SPIBlockWrite(
     This is a blocking implementation. This function does not block on a semaphore.
 */
 
-bool _DRV_SDSPI_SPIWrite(
+bool DRV_SDSPI_SPIWrite(
     DRV_SDSPI_OBJ* dObj,
     void* pWriteBuffer,
     uint32_t nBytes
@@ -692,7 +692,7 @@ bool _DRV_SDSPI_SPIWrite(
     complete.
 */
 
-bool _DRV_SDSPI_SPIBlockRead(
+bool DRV_SDSPI_SPIBlockRead(
     DRV_SDSPI_OBJ* dObj,
     void* pReadBuffer
 )
@@ -708,7 +708,7 @@ bool _DRV_SDSPI_SPIBlockRead(
     /* If enabled, used DMA for block transfers */
     if ((dObj->txDMAChannel != SYS_DMA_CHANNEL_NONE) && (dObj->rxDMAChannel != SYS_DMA_CHANNEL_NONE ))
     {
-        if (_DRV_SDSPI_DMA_Read(dObj, pReadBuffer, _DRV_SDSPI_MEDIA_BLOCK_SIZE) == false)
+        if (_DRV_SDSPI_DMA_Read(dObj, pReadBuffer, DRV_SDSPI_MEDIA_BLOCK_SIZE) == false)
         {
             SYS_PORT_PinSet(dObj->chipSelectPin);
             return isSuccess;
@@ -716,7 +716,7 @@ bool _DRV_SDSPI_SPIBlockRead(
     }
     else
     {
-        if (dObj->spiPlib->read(pReadBuffer, _DRV_SDSPI_MEDIA_BLOCK_SIZE) == false)
+        if (dObj->spiPlib->read(pReadBuffer, DRV_SDSPI_MEDIA_BLOCK_SIZE) == false)
         {
             SYS_PORT_PinSet(dObj->chipSelectPin);
             return isSuccess;
@@ -724,7 +724,7 @@ bool _DRV_SDSPI_SPIBlockRead(
     }
 
 <#else>
-    if (dObj->spiPlib->read(pReadBuffer, _DRV_SDSPI_MEDIA_BLOCK_SIZE) == false)
+    if (dObj->spiPlib->read(pReadBuffer, DRV_SDSPI_MEDIA_BLOCK_SIZE) == false)
     {
         SYS_PORT_PinSet(dObj->chipSelectPin);
         return isSuccess;
@@ -759,7 +759,7 @@ bool _DRV_SDSPI_SPIBlockRead(
     This is a blocking implementation. This function does not block on a semaphore.
 */
 
-bool _DRV_SDSPI_SPIRead(
+bool DRV_SDSPI_SPIRead(
     DRV_SDSPI_OBJ* dObj,
     void* pReadBuffer,
     uint32_t nBytes
@@ -815,7 +815,7 @@ bool _DRV_SDSPI_SPIRead(
     return isSuccess;
 }
 
-bool _DRV_SDSPI_SPIWriteWithChipSelectDisabled(
+bool DRV_SDSPI_SPIWriteWithChipSelectDisabled(
     DRV_SDSPI_OBJ* dObj,
     void* pWriteBuffer,
     uint32_t nBytes
@@ -876,7 +876,7 @@ bool _DRV_SDSPI_SPIWriteWithChipSelectDisabled(
   Remarks:
 
 */
-bool _DRV_SDSPI_CardDetectPollingTimerStart(
+bool DRV_SDSPI_CardDetectPollingTimerStart(
     DRV_SDSPI_OBJ* const dObj,
     uint32_t period
 )
@@ -908,7 +908,7 @@ bool _DRV_SDSPI_CardDetectPollingTimerStart(
   Remarks:
 
 */
-bool _DRV_SDSPI_CmdResponseTimerStart(
+bool DRV_SDSPI_CmdResponseTimerStart(
     DRV_SDSPI_OBJ* const dObj,
     uint32_t period
 )
@@ -939,7 +939,7 @@ bool _DRV_SDSPI_CmdResponseTimerStart(
 
 */
 
-bool _DRV_SDSPI_CmdResponseTimerStop( DRV_SDSPI_OBJ* const dObj )
+bool DRV_SDSPI_CmdResponseTimerStop( DRV_SDSPI_OBJ* const dObj )
 {
     bool isSuccess = false;
 
@@ -965,7 +965,7 @@ bool _DRV_SDSPI_CmdResponseTimerStop( DRV_SDSPI_OBJ* const dObj )
 
 */
 
-bool _DRV_SDSPI_TimerStart(
+bool DRV_SDSPI_TimerStart(
     DRV_SDSPI_OBJ* const dObj,
     uint32_t period
 )
@@ -997,7 +997,7 @@ bool _DRV_SDSPI_TimerStart(
 
 */
 
-bool _DRV_SDSPI_TimerStop( DRV_SDSPI_OBJ* const dObj )
+bool DRV_SDSPI_TimerStop( DRV_SDSPI_OBJ* const dObj )
 {
     bool isSuccess = false;
 
@@ -1024,7 +1024,7 @@ bool _DRV_SDSPI_TimerStop( DRV_SDSPI_OBJ* const dObj )
 
 */
 
-bool _DRV_SDSPI_SPISpeedSetup(
+bool DRV_SDSPI_SPISpeedSetup(
     DRV_SDSPI_OBJ* const dObj,
     uint32_t clockFrequency
 )

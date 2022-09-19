@@ -112,26 +112,26 @@ static CACHE_ALIGN uint8_t  txCommonDummyData[CACHE_ALIGNED_SIZE_GET(4)];
 // *****************************************************************************
 // *****************************************************************************
 
-static inline uint32_t _DRV_SDSPI_MAKE_HANDLE(
+static inline uint32_t lDRV_SDSPI_MAKE_HANDLE(
     uint16_t token,
     uint8_t drvIndex,
     uint8_t clientIndex
 )
 {
-    return ((token << 16) | (drvIndex << 8) | clientIndex);
+    return (((uint32_t)token << 16) | ((uint32_t)drvIndex << 8) | clientIndex);
 }
 
-static inline uint16_t _DRV_SDSPI_UPDATE_TOKEN( uint16_t token )
+static inline uint16_t lDRV_SDSPI_UPDATE_TOKEN( uint16_t token )
 {
     token++;
-    if (token >= _DRV_SDSPI_TOKEN_MAX)
+    if (token >= DRV_SDSPI_TOKEN_MAX)
     {
         token = 1;
     }
     return token;
 }
 
-static DRV_SDSPI_CLIENT_OBJ* _DRV_SDSPI_DriverHandleValidate( DRV_HANDLE handle )
+static DRV_SDSPI_CLIENT_OBJ* lDRV_SDSPI_DriverHandleValidate( DRV_HANDLE handle )
 {
     /* This function returns the pointer to the client object that is
      * associated with this handle if the handle is valid. Returns NULL
@@ -140,24 +140,24 @@ static DRV_SDSPI_CLIENT_OBJ* _DRV_SDSPI_DriverHandleValidate( DRV_HANDLE handle 
     uint32_t drvInstance = 0;
     DRV_SDSPI_CLIENT_OBJ* clientObj = (DRV_SDSPI_CLIENT_OBJ*)NULL;
 
-    if((handle != DRV_HANDLE_INVALID) && (handle != 0))
+    if((handle != DRV_HANDLE_INVALID) && (handle != 0U))
     {
         /* Extract the drvInstance value from the handle */
-        drvInstance = ((handle & _DRV_SDSPI_INSTANCE_INDEX_MASK) >> 8);
+        drvInstance = ((handle & DRV_SDSPI_INSTANCE_INDEX_MASK) >> 8);
 
         if (drvInstance >= DRV_SDSPI_INSTANCES_NUMBER)
         {
             return (NULL);
         }
 
-        if ((handle & _DRV_SDSPI_CLIENT_INDEX_MASK) >= gDrvSDSPIObj[drvInstance].nClientsMax)
+        if ((handle & DRV_SDSPI_CLIENT_INDEX_MASK) >= gDrvSDSPIObj[drvInstance].nClientsMax)
         {
             return (NULL);
         }
 
         /* Extract the client index and obtain the client object */
         clientObj = &((DRV_SDSPI_CLIENT_OBJ *)gDrvSDSPIObj[drvInstance].clientObjPool)\
-                [handle & _DRV_SDSPI_CLIENT_INDEX_MASK];
+                [handle & DRV_SDSPI_CLIENT_INDEX_MASK];
 
         if ((clientObj->clientHandle != handle) || (clientObj->inUse == false))
         {
@@ -168,7 +168,7 @@ static DRV_SDSPI_CLIENT_OBJ* _DRV_SDSPI_DriverHandleValidate( DRV_HANDLE handle 
     return(clientObj);
 }
 
-static uint32_t _DRV_SDSPI_ProcessCSD(uint8_t* csdPtr)
+static uint32_t lDRV_SDSPI_ProcessCSD(uint8_t* csdPtr)
 {
     uint32_t discCapacity;
     uint8_t cSizeMultiplier;
@@ -192,10 +192,10 @@ static uint32_t _DRV_SDSPI_ProcessCSD(uint8_t* csdPtr)
     {
         /* Note: This is a workaround. Some cards issue data start token
         before sending the 16 byte csd data and some don't. */
-        csdPtr = csdPtr + 1;
+        csdPtr++;
     }
 
-    if (csdPtr[0] & _DRV_SDSPI_CHECK_V2_DEVICE)
+    if ((csdPtr[0] & DRV_SDSPI_CHECK_V2_DEVICE) != 0U)
     {
         /* Check CSD_STRUCTURE field for v2+ struct device */
         /* Must be a v2 device (or a reserved higher version, that
@@ -204,8 +204,8 @@ static uint32_t _DRV_SDSPI_ProcessCSD(uint8_t* csdPtr)
            number in bit position 69:48.  This is different from v1.
            It spans bytes 7, 8, and 9 of the response.
          */
-        cSize = (((uint32_t)csdPtr[7] & 0x3F) << 16) | ((uint16_t)csdPtr[8] << 8) | csdPtr[9];
-        discCapacity = ((uint32_t)(cSize + 1) * (uint16_t)(1024u));
+        cSize = (((uint32_t)csdPtr[7] & 0x3FU) << 16) | ((uint16_t)csdPtr[8] << 8) | csdPtr[9];
+        discCapacity = ((uint32_t)(cSize + 1U) * (uint16_t)(1024u));
     }
     else /* Not a V2 device, Must be a V1 device */
     {
@@ -214,21 +214,21 @@ static uint32_t _DRV_SDSPI_ProcessCSD(uint8_t* csdPtr)
            Although it is only a 12-bit number, it spans bytes 6, 7,
            and 8, since it isn't byte aligned.
          */
-        cSize = csdPtr[6] & 0x3;
+        cSize = (uint32_t)csdPtr[6] & 0x3U;
         cSize <<= 8;
         cSize |= csdPtr[7];
         cSize <<= 2;
-        cSize |= (csdPtr[8] >> 6);
+        cSize |= (uint32_t)csdPtr[8] >> 6;
         /* Extract the C_SIZE_MULT field from the response.  It is a
            3-bit number in bit position 49:47 */
-        cSizeMultiplier = (csdPtr[9] & 0x03) << 1;
-        cSizeMultiplier |= ((csdPtr[10] & 0x80) >> 7);
+        cSizeMultiplier = (csdPtr[9] & 0x03U) << 1;
+        cSizeMultiplier |= ((csdPtr[10] & 0x80U) >> 7);
 
         /* Extract the BLOCK_LEN field from the response. It is a
            4-bit number in bit position 83:80
          */
-        blockLength = csdPtr[5] & 0x0F;
-        blockLength = 1 << (blockLength - 9);
+        blockLength = (uint16_t)csdPtr[5] & 0x0FU;
+        blockLength = (uint16_t)(1UL << (blockLength - 9U));
 
         /* Calculate the capacity (see SD card physical layer simplified
            spec 2.0, section 5.3.2). In USB mass storage applications,
@@ -237,14 +237,14 @@ static uint32_t _DRV_SDSPI_ProcessCSD(uint8_t* csdPtr)
            to get called).
          */
 
-        mult = 1 << (cSizeMultiplier + 2);
-        discCapacity = (((uint32_t)(cSize + 1) * mult) * blockLength);
+        mult = 1UL << (cSizeMultiplier + 2U);
+        discCapacity = (((uint32_t)(cSize + 1U) * mult) * blockLength);
     }
 
     return discCapacity;
 }
 
-static bool _DRV_SDSPI_CommandSend(
+static bool lDRV_SDSPI_CommandSend(
     DRV_SDSPI_OBJ* const dObj,
     uint8_t command,
     uint32_t arg
@@ -253,17 +253,17 @@ static bool _DRV_SDSPI_CommandSend(
     uint32_t i;
     bool isSuccess = false;
     uint32_t nBytes = DRV_SDSPI_PACKET_SIZE;
-    uint32_t ncrTries = _DRV_SDSPI_COMMAND_RESPONSE_TRIES;
+    uint32_t ncrTries = DRV_SDSPI_COMMAND_RESPONSE_TRIES;
 
     <#if DRV_SDSPI_INTERFACE_TYPE == "SPI_DRV">
-    if (_DRV_SDSPI_SPIExclusiveAccess(dObj, true) == false)
+    if (DRV_SDSPI_SPIExclusiveAccess(dObj, true) == false)
     {
         return isSuccess;
     }
     </#if>
 
     /* Frame the command */
-    dObj->cmdRespBuffer[0] = (gDrvSDSPICmdTable[command].commandCode | DRV_SDSPI_TRANSMIT_SET);
+    dObj->cmdRespBuffer[0] = ((uint8_t)gDrvSDSPICmdTable[command].commandCode | DRV_SDSPI_TRANSMIT_SET);
     /* SD Card expects argument in big-endian format */
     dObj->cmdRespBuffer[1] = ((uint8_t*)&arg)[3];
     dObj->cmdRespBuffer[2] = ((uint8_t*)&arg)[2];
@@ -273,16 +273,16 @@ static bool _DRV_SDSPI_CommandSend(
     /* Dummy data. Only used in case of DRV_SDSPI_STOP_TRANSMISSION */
     dObj->cmdRespBuffer[6] = 0xFF;
 
-    if(command == DRV_SDSPI_STOP_TRANSMISSION)
+    if(command == (uint8_t)DRV_SDSPI_STOP_TRANSMISSION)
     {
         /* Transmit an extra byte before reading the response for Stop Transmission command */
-        nBytes += 1;
+        nBytes += 1U;
     }
     /* Send the command bytes */
-    if (_DRV_SDSPI_SPIWrite(dObj, (void*)dObj->cmdRespBuffer, nBytes) == false)
+    if (DRV_SDSPI_SPIWrite(dObj, (void*)dObj->cmdRespBuffer, nBytes) == false)
     {
         <#if DRV_SDSPI_INTERFACE_TYPE == "SPI_DRV">
-        _DRV_SDSPI_SPIExclusiveAccess(dObj, false);
+        (void) DRV_SDSPI_SPIExclusiveAccess(dObj, false);
         </#if>
         return isSuccess;
     }
@@ -290,23 +290,27 @@ static bool _DRV_SDSPI_CommandSend(
      /* Wait for a response from SD Card. Try Ncr times before giving up. */
     for (i = 0; i < ncrTries; i++)
     {
-        if (_DRV_SDSPI_SPIRead(dObj, (void*)dObj->cmdRespBuffer, 1) == false)
+        if (DRV_SDSPI_SPIRead(dObj, (void*)dObj->cmdRespBuffer, 1) == false)
         {
             <#if DRV_SDSPI_INTERFACE_TYPE == "SPI_DRV">
-            _DRV_SDSPI_SPIExclusiveAccess(dObj, false);
+            (void) DRV_SDSPI_SPIExclusiveAccess(dObj, false);
             </#if>
             return isSuccess;
         }
-        else if (dObj->cmdRespBuffer[0] != 0xFF)
+        else if (dObj->cmdRespBuffer[0] != 0xFFU)
         {
             break;
         }
+        else
+        {
+            /* Nothing to do */
+        }
     }
 
-    if (dObj->cmdRespBuffer[0] == 0xFF)
+    if (dObj->cmdRespBuffer[0] == 0xFFU)
     {
         <#if DRV_SDSPI_INTERFACE_TYPE == "SPI_DRV">
-        _DRV_SDSPI_SPIExclusiveAccess(dObj, false);
+        (void) DRV_SDSPI_SPIExclusiveAccess(dObj, false);
         </#if>
         return isSuccess;
     }
@@ -320,10 +324,10 @@ static bool _DRV_SDSPI_CommandSend(
          * Wait until the busy status (indicated by 0x00 response) is cleared.
          * Recommended timeout is 100 ms.
          */
-        if (_DRV_SDSPI_CmdResponseTimerStart(dObj, _DRV_SDSPI_R1B_RESP_TIMEOUT) == false)
+        if (DRV_SDSPI_CmdResponseTimerStart(dObj, DRV_SDSPI_R1B_RESP_TIMEOUT) == false)
         {
             <#if DRV_SDSPI_INTERFACE_TYPE == "SPI_DRV">
-            _DRV_SDSPI_SPIExclusiveAccess(dObj, false);
+            (void) DRV_SDSPI_SPIExclusiveAccess(dObj, false);
             </#if>
             return isSuccess;
         }
@@ -331,22 +335,22 @@ static bool _DRV_SDSPI_CommandSend(
         {
             do
             {
-                if (_DRV_SDSPI_SPIRead(dObj, (void*)dObj->cmdRespBuffer, 1) == false)
+                if (DRV_SDSPI_SPIRead(dObj, (void*)dObj->cmdRespBuffer, 1) == false)
                 {
                     <#if DRV_SDSPI_INTERFACE_TYPE == "SPI_DRV">
-                    _DRV_SDSPI_SPIExclusiveAccess(dObj, false);
+                    (void) DRV_SDSPI_SPIExclusiveAccess(dObj, false);
                     </#if>
                     return isSuccess;
                 }
-            } while ((dObj->cmdRespTmrExpired == false) && (dObj->cmdRespBuffer[0] != 0x00));
+            } while ((dObj->cmdRespTmrExpired == false) && (dObj->cmdRespBuffer[0] != 0x00U));
 
-            _DRV_SDSPI_CmdResponseTimerStop(dObj);
+            (void) DRV_SDSPI_CmdResponseTimerStop(dObj);
 
             /* Return failure if the card is busy even after waiting for 100ms */
-            if (dObj->cmdRespBuffer[0] == 0x00)
+            if (dObj->cmdRespBuffer[0] == 0x00U)
             {
                 <#if DRV_SDSPI_INTERFACE_TYPE == "SPI_DRV">
-                _DRV_SDSPI_SPIExclusiveAccess(dObj, false);
+                (void) DRV_SDSPI_SPIExclusiveAccess(dObj, false);
                 </#if>
                 return isSuccess;
             }
@@ -356,15 +360,15 @@ static bool _DRV_SDSPI_CommandSend(
     {
         /* Get the total length of response bytes. Note that R1 is already read,
          * hence subtract one byte from the total response length */
-        nBytes = gDrvSDSPICmdTable[command].responseLength - 1;
+        nBytes = gDrvSDSPICmdTable[command].responseLength - 1U;
 
         /* Now, receive remaining response bytes (if any) + send the dummy byte.
         * Device requires at least 8 clock pulses after the response has been sent,
         * before it can process the next command */
-        if (_DRV_SDSPI_SPIRead(dObj, (void*)&dObj->cmdRespBuffer[0], (nBytes + 1)) == false)
+        if (DRV_SDSPI_SPIRead(dObj, (void*)&dObj->cmdRespBuffer[0], (nBytes + 1U)) == false)
         {
             <#if DRV_SDSPI_INTERFACE_TYPE == "SPI_DRV">
-            _DRV_SDSPI_SPIExclusiveAccess(dObj, false);
+            (void) DRV_SDSPI_SPIExclusiveAccess(dObj, false);
             </#if>
             return isSuccess;
         }
@@ -379,13 +383,13 @@ static bool _DRV_SDSPI_CommandSend(
     isSuccess = true;
 
     <#if DRV_SDSPI_INTERFACE_TYPE == "SPI_DRV">
-    _DRV_SDSPI_SPIExclusiveAccess(dObj, false);
+    (void) DRV_SDSPI_SPIExclusiveAccess(dObj, false);
     </#if>
 
     return isSuccess;
 }
 
-static bool _DRV_SDSPI_SendInitClockPulses(DRV_SDSPI_OBJ* const dObj)
+static bool lDRV_SDSPI_SendInitClockPulses(DRV_SDSPI_OBJ* const dObj)
 {
     uint8_t i;
 
@@ -396,15 +400,15 @@ static bool _DRV_SDSPI_SendInitClockPulses(DRV_SDSPI_OBJ* const dObj)
     }
 
     /* Generate 74 clock pulses with CS = HIGH */
-    return _DRV_SDSPI_SPIWriteWithChipSelectDisabled(dObj, (void*)dObj->cmdRespBuffer, MEDIA_INIT_ARRAY_SIZE);
+    return DRV_SDSPI_SPIWriteWithChipSelectDisabled(dObj, (void*)dObj->cmdRespBuffer, MEDIA_INIT_ARRAY_SIZE);
 }
 
-static bool _DRV_SDSPI_EnterIdleState(DRV_SDSPI_OBJ* const dObj)
+static bool lDRV_SDSPI_EnterIdleState(DRV_SDSPI_OBJ* const dObj)
 {
     bool isSuccess = false;
     DRV_SDSPI_RESPONSE_1* r1Response = (DRV_SDSPI_RESPONSE_1*)&dObj->cmdResponse[0];
 
-    if (_DRV_SDSPI_CommandSend(dObj, DRV_SDSPI_GO_IDLE_STATE, 0) == true)
+    if (lDRV_SDSPI_CommandSend(dObj, (uint8_t)DRV_SDSPI_GO_IDLE_STATE, 0) == true)
     {
         if (r1Response->inIdleState == CMD_R1_END_BIT_SET)
         {
@@ -414,7 +418,7 @@ static bool _DRV_SDSPI_EnterIdleState(DRV_SDSPI_OBJ* const dObj)
     return isSuccess;
 }
 
-static bool _DRV_SDSPI_CheckIFCondition(DRV_SDSPI_OBJ* const dObj)
+static bool lDRV_SDSPI_CheckIFCondition(DRV_SDSPI_OBJ* const dObj)
 {
     bool isSuccess = false;
     DRV_SDSPI_RESPONSE_1* r1Response = (DRV_SDSPI_RESPONSE_1*)&dObj->cmdResponse[0];
@@ -431,16 +435,16 @@ static bool _DRV_SDSPI_CheckIFCondition(DRV_SDSPI_OBJ* const dObj)
         v1.x spec device, then it may respond with invalid command.  If it is
         a v2.0 spec SD card, then it is mandatory that the card respond to CMD8
     */
-    if (_DRV_SDSPI_CommandSend(dObj, DRV_SDSPI_SEND_IF_COND, 0x000001AA) == true)
+    if (lDRV_SDSPI_CommandSend(dObj, (uint8_t)DRV_SDSPI_SEND_IF_COND, 0x000001AA) == true)
     {
-        if (r1Response->illegalCommand == false)
+        if (r1Response->illegalCommand == (uint8_t)false)
         {
             /* Version 2.0 SD Memory Card (SDSC, SDHC/SDXC).
              * The CCS bit in response to CMD58 will indicate if its a SDSC (CCS = 0).
              * OR a SDHC/SDXC (CCS = 1) card
              * Check the echoed pattern and the echoed VCA (Card accepted voltage range)
             */
-            if ((dObj->cmdResponse[1] == 0xAA) && ((dObj->cmdResponse[2] & 0x0F) == 0x01))
+            if ((dObj->cmdResponse[1] == 0xAAU) && ((dObj->cmdResponse[2] & 0x0FU) == 0x01U))
             {
                 /* Card with compatible voltage range.
                  * Set sdHcHost to 1. This will be used in HCS bit of the ACMD41
@@ -467,7 +471,7 @@ static bool _DRV_SDSPI_CheckIFCondition(DRV_SDSPI_OBJ* const dObj)
     return isSuccess;
 }
 
-static bool _DRV_SDSPI_SendACMD41(DRV_SDSPI_OBJ* const dObj)
+static bool lDRV_SDSPI_SendACMD41(DRV_SDSPI_OBJ* const dObj)
 {
     bool isSuccess = false;
     DRV_SDSPI_RESPONSE_1* r1Response = (DRV_SDSPI_RESPONSE_1*)&dObj->cmdResponse[0];
@@ -478,7 +482,7 @@ static bool _DRV_SDSPI_SendACMD41(DRV_SDSPI_OBJ* const dObj)
     /* Note: When sending ACMD41, the HCS bit is bit 30, and must be = 1 to
      * tell SD card that the host supports SDHC/SDXC */
 
-    if (_DRV_SDSPI_TimerStart(dObj, _DRV_SDSPI_APP_CMD_RESP_TIMEOUT_IN_MS) == false)
+    if (DRV_SDSPI_TimerStart(dObj, DRV_SDSPI_APP_CMD_RESP_TIMEOUT_IN_MS) == false)
     {
         /* Could not start the timer */
         return isSuccess;
@@ -486,21 +490,21 @@ static bool _DRV_SDSPI_SendACMD41(DRV_SDSPI_OBJ* const dObj)
 
     do
     {
-        if (_DRV_SDSPI_CommandSend(dObj, DRV_SDSPI_APP_CMD, 0) == false)
+        if (lDRV_SDSPI_CommandSend(dObj, (uint8_t)DRV_SDSPI_APP_CMD, 0) == false)
         {
-            _DRV_SDSPI_TimerStop(dObj);
+            (void) DRV_SDSPI_TimerStop(dObj);
             return isSuccess;
         }
 
-        if (_DRV_SDSPI_CommandSend(dObj, DRV_SDSPI_SD_SEND_OP_COND, dObj->sdHcHost << 30) == false)
+        if (lDRV_SDSPI_CommandSend(dObj, (uint8_t)DRV_SDSPI_SD_SEND_OP_COND, (uint32_t)dObj->sdHcHost << 30) == false)
         {
-            _DRV_SDSPI_TimerStop(dObj);
+            (void) DRV_SDSPI_TimerStop(dObj);
             return isSuccess;
         }
 
     }while ((r1Response->inIdleState == CMD_R1_END_BIT_SET) && (dObj->timerExpired == false));
 
-    _DRV_SDSPI_TimerStop(dObj);
+    (void) DRV_SDSPI_TimerStop(dObj);
 
     if (dObj->timerExpired == false)
     {
@@ -510,12 +514,12 @@ static bool _DRV_SDSPI_SendACMD41(DRV_SDSPI_OBJ* const dObj)
     return isSuccess;
 }
 
-static bool _DRV_SDSPI_ReadOCR(DRV_SDSPI_OBJ* const dObj)
+static bool lDRV_SDSPI_ReadOCR(DRV_SDSPI_OBJ* const dObj)
 {
     bool isSuccess = false;
     uint32_t ocrRegister;
 
-    if (_DRV_SDSPI_CommandSend(dObj, DRV_SDSPI_READ_OCR, 0x00) == true)
+    if (lDRV_SDSPI_CommandSend(dObj, (uint8_t)DRV_SDSPI_READ_OCR, 0x00) == true)
     {
         /* OCR[31] = Card power up status bit (1 = ready, 0 = busy)
            OCR[30] = Card Capacity Status CCS (1 = SDHC/SDXC, 0 = SDSC).
@@ -526,9 +530,9 @@ static bool _DRV_SDSPI_ReadOCR(DRV_SDSPI_OBJ* const dObj)
         ocrRegister = (((uint32_t)dObj->cmdResponse[4] << 24)|((uint32_t)dObj->cmdResponse[3] << 16) |
                 ((uint32_t)dObj->cmdResponse[2] << 8) | ((uint32_t)dObj->cmdResponse[1]));
 
-        if (ocrRegister & (0x01U << 31))
+        if ((ocrRegister & (0x01U << 31)) != 0U)
         {
-            if (ocrRegister & (0x01U << 30))
+            if ((ocrRegister & (0x01U << 30)) != 0U)
             {
                 dObj->sdCardType = DRV_SDSPI_MODE_HC;
             }
@@ -543,89 +547,89 @@ static bool _DRV_SDSPI_ReadOCR(DRV_SDSPI_OBJ* const dObj)
     return isSuccess;
 }
 
-static bool _DRV_SDSPI_ReadCSD(DRV_SDSPI_OBJ* const dObj)
+static bool lDRV_SDSPI_ReadCSD(DRV_SDSPI_OBJ* const dObj)
 {
     bool isSuccess = false;
 
     <#if DRV_SDSPI_INTERFACE_TYPE == "SPI_DRV">
-    if (_DRV_SDSPI_SPIExclusiveAccess(dObj, true) == false)
+    if (DRV_SDSPI_SPIExclusiveAccess(dObj, true) == false)
     {
         return isSuccess;
     }
     </#if>
-    if (_DRV_SDSPI_CommandSend(dObj, DRV_SDSPI_SEND_CSD, 0x00) == true)
+    if (lDRV_SDSPI_CommandSend(dObj, (uint8_t)DRV_SDSPI_SEND_CSD, 0x00) == true)
     {
         /* Data token(1) + CSD(16) + CRC(2) + Dummy(1) = 20 Bytes */
-        if (_DRV_SDSPI_SPIRead(dObj, (void*)dObj->cmdRespBuffer, _DRV_SDSPI_CSD_READ_SIZE) == true)
+        if (DRV_SDSPI_SPIRead(dObj, (void*)dObj->cmdRespBuffer, DRV_SDSPI_CSD_READ_SIZE) == true)
         {
-            memcpy(dObj->csdData, (const void*)dObj->cmdRespBuffer, _DRV_SDSPI_CSD_READ_SIZE);
+            (void) memcpy(dObj->csdData, (const void*)dObj->cmdRespBuffer, DRV_SDSPI_CSD_READ_SIZE);
             /* Process the received CSD data from the SD Card */
-            dObj->discCapacity = _DRV_SDSPI_ProcessCSD(dObj->csdData);
+            dObj->discCapacity = lDRV_SDSPI_ProcessCSD(dObj->csdData);
             isSuccess = true;
         }
     }
     <#if DRV_SDSPI_INTERFACE_TYPE == "SPI_DRV">
-    _DRV_SDSPI_SPIExclusiveAccess(dObj, false);
+    (void) DRV_SDSPI_SPIExclusiveAccess(dObj, false);
     </#if>
     return isSuccess;
 }
 
-static bool _DRV_SDSPI_ReadCID(DRV_SDSPI_OBJ* const dObj)
+static bool lDRV_SDSPI_ReadCID(DRV_SDSPI_OBJ* const dObj)
 {
     bool isSuccess = false;
 
     <#if DRV_SDSPI_INTERFACE_TYPE == "SPI_DRV">
-    if (_DRV_SDSPI_SPIExclusiveAccess(dObj, true) == false)
+    if (DRV_SDSPI_SPIExclusiveAccess(dObj, true) == false)
     {
         return isSuccess;
     }
     </#if>
-    if (_DRV_SDSPI_CommandSend(dObj, DRV_SDSPI_SEND_CID, 0x00) == true)
+    if (lDRV_SDSPI_CommandSend(dObj, (uint8_t)DRV_SDSPI_SEND_CID, 0x00) == true)
     {
         /* Data token(1) + CID(16) + CRC(2) + Dummy(1) = 20 Bytes */
-        if (_DRV_SDSPI_SPIRead(dObj, (void*)dObj->cmdRespBuffer, _DRV_SDSPI_CID_READ_SIZE) == true)
+        if (DRV_SDSPI_SPIRead(dObj, (void*)dObj->cmdRespBuffer, DRV_SDSPI_CID_READ_SIZE) == true)
         {
-            memcpy(dObj->cidData, (const void*)dObj->cmdRespBuffer, _DRV_SDSPI_CID_READ_SIZE);
+            (void) memcpy(dObj->cidData, (const void*)dObj->cmdRespBuffer, DRV_SDSPI_CID_READ_SIZE);
             isSuccess = true;
         }
     }
     <#if DRV_SDSPI_INTERFACE_TYPE == "SPI_DRV">
-    _DRV_SDSPI_SPIExclusiveAccess(dObj, false);
+    (void) DRV_SDSPI_SPIExclusiveAccess(dObj, false);
     </#if>
     return isSuccess;
 }
 
-static bool _DRV_SDSPI_TurnOffCRC(DRV_SDSPI_OBJ* const dObj)
+static bool lDRV_SDSPI_TurnOffCRC(DRV_SDSPI_OBJ* const dObj)
 {
     /* Turn off CRC7 if we can, might be an invalid cmd on some cards (CMD59). */
     /* Note: POR default for the media is normally with CRC checking off in SPI
      * mode anyway, so this is typically redundant */
 
-    return _DRV_SDSPI_CommandSend(dObj, DRV_SDSPI_CRC_ON_OFF, 0x00);
+    return lDRV_SDSPI_CommandSend(dObj, (uint8_t)DRV_SDSPI_CRC_ON_OFF, 0x00);
 }
 
-static bool _DRV_SDSPI_SetBlockLen(DRV_SDSPI_OBJ* const dObj)
+static bool lDRV_SDSPI_SetBlockLen(DRV_SDSPI_OBJ* const dObj)
 {
     /* Set the block length to media sector size. It should be already set to this. */
-    return _DRV_SDSPI_CommandSend(dObj, DRV_SDSPI_SET_BLOCKLEN, _DRV_SDSPI_MEDIA_BLOCK_SIZE);
+    return lDRV_SDSPI_CommandSend(dObj, (uint8_t)DRV_SDSPI_SET_BLOCKLEN, DRV_SDSPI_MEDIA_BLOCK_SIZE);
 }
 
-static void _DRV_SDSPI_CheckWriteProtectStatus
+static void lDRV_SDSPI_CheckWriteProtectStatus
 (
     DRV_SDSPI_OBJ *dObj
 )
 {
-    dObj->isWriteProtected = false;
+    dObj->isWriteProtected = 0U;
 
     /* Check if the Write Protect check is enabled */
-    if (_DRV_SDSPI_EnableWriteProtectCheck())
+    if (DRV_SDSPI_EnableWriteProtectCheck())
     {
         /* Read from the pin */
-        dObj->isWriteProtected = SYS_PORT_PinRead (dObj->writeProtectPin);
+        dObj->isWriteProtected = (uint8_t)(SYS_PORT_PinRead (dObj->writeProtectPin));
     }
 }
 
-static bool _DRV_SDSPI_ReadResponseWithTimeout(
+static bool lDRV_SDSPI_ReadResponseWithTimeout(
     DRV_SDSPI_OBJ* const dObj,
     uint8_t expectedResponse,
     uint32_t timeout
@@ -634,7 +638,7 @@ static bool _DRV_SDSPI_ReadResponseWithTimeout(
     uint8_t i;
     bool isSuccess = false;
 
-    if (_DRV_SDSPI_TimerStart(dObj, timeout) == false)
+    if (DRV_SDSPI_TimerStart(dObj, timeout) == false)
     {
         /* Could not start the timer */
         return isSuccess;
@@ -643,22 +647,22 @@ static bool _DRV_SDSPI_ReadResponseWithTimeout(
     /* Wait for the SD card to send the data start token: 0xFE */
     do
     {
-        if (_DRV_SDSPI_SPIRead(dObj, (void*)dObj->cmdRespBuffer, 1) == false)
+        if (DRV_SDSPI_SPIRead(dObj, (void*)dObj->cmdRespBuffer, 1) == false)
         {
-            _DRV_SDSPI_TimerStop(dObj);
+            (void) DRV_SDSPI_TimerStop(dObj);
             return isSuccess;
         }
     }while ((dObj->cmdRespBuffer[0] != expectedResponse) && (dObj->timerExpired == false));
 
-    _DRV_SDSPI_TimerStop(dObj);
+    (void) DRV_SDSPI_TimerStop(dObj);
 
     /* It could happen that timer timed out while this thread was swapped out.
        Make sure we read the status once after the timeout */
     if ((dObj->timerExpired == true) && (dObj->cmdRespBuffer[0] != expectedResponse))
     {
-        for (i = 0; i < 2; i++)
+        for (i = 0; i < 2U; i++)
         {
-            if (_DRV_SDSPI_SPIRead(dObj, (void*)dObj->cmdRespBuffer, 1) == true)
+            if (DRV_SDSPI_SPIRead(dObj, (void*)dObj->cmdRespBuffer, 1) == true)
             {
                 if (dObj->cmdRespBuffer[0] == expectedResponse)
                 {
@@ -680,13 +684,13 @@ static bool _DRV_SDSPI_ReadResponseWithTimeout(
     return isSuccess;
 }
 
-static bool _DRV_SDSPI_PollBusyStatus( DRV_SDSPI_OBJ* const dObj )
+static bool lDRV_SDSPI_PollBusyStatus( DRV_SDSPI_OBJ* const dObj )
 {
     bool isSuccess = false;
 
     /* Poll the status of the SD card's internal write cycle.
      * SD card indicates busy by sending 0x00 */
-    if (_DRV_SDSPI_ReadResponseWithTimeout(dObj, 0xFF, _DRV_SDSPI_WRITE_TIMEOUT_IN_MS) == true)
+    if (lDRV_SDSPI_ReadResponseWithTimeout(dObj, 0xFF, DRV_SDSPI_WRITE_TIMEOUT_IN_MS) == true)
     {
         isSuccess = true;
     }
@@ -694,7 +698,7 @@ static bool _DRV_SDSPI_PollBusyStatus( DRV_SDSPI_OBJ* const dObj )
     return isSuccess;
 }
 
-static bool _DRV_SDSPI_ReadBlock(
+static bool lDRV_SDSPI_ReadBlock(
     DRV_SDSPI_OBJ* const dObj,
     void* targetBuffer
 )
@@ -702,13 +706,13 @@ static bool _DRV_SDSPI_ReadBlock(
     bool isSuccess = false;
 
     /* Wait for the SD card to send the data start token: 0xFE */
-    if (_DRV_SDSPI_ReadResponseWithTimeout(dObj, DRV_SDSPI_DATA_START_TOKEN, _DRV_SDSPI_READ_TIMEOUT_IN_MS) == true)
+    if (lDRV_SDSPI_ReadResponseWithTimeout(dObj, DRV_SDSPI_DATA_START_TOKEN, DRV_SDSPI_READ_TIMEOUT_IN_MS) == true)
     {
          /* Token received, now read one block of data */
-        if (_DRV_SDSPI_SPIBlockRead(dObj, targetBuffer) == true)
+        if (DRV_SDSPI_SPIBlockRead(dObj, targetBuffer) == true)
         {
             /* Data received, now read and discard the dummy CRC bytes */
-            if (_DRV_SDSPI_SPIRead(dObj, (void*)dObj->cmdRespBuffer, 2) == true)
+            if (DRV_SDSPI_SPIRead(dObj, (void*)dObj->cmdRespBuffer, 2) == true)
             {
                 isSuccess = true;
             }
@@ -718,7 +722,7 @@ static bool _DRV_SDSPI_ReadBlock(
     return isSuccess;
 }
 
-static bool _DRV_SDSPI_WriteBlock(
+static bool lDRV_SDSPI_WriteBlock(
     DRV_SDSPI_OBJ* const dObj,
     void* sourceBuffer,
     DRV_SDSPI_COMMANDS command
@@ -736,13 +740,13 @@ static bool _DRV_SDSPI_WriteBlock(
     }
 
     /* Send the Data Start token */
-    if (_DRV_SDSPI_SPIWrite(dObj, (void*)dObj->cmdRespBuffer, 1) == false)
+    if (DRV_SDSPI_SPIWrite(dObj, (void*)dObj->cmdRespBuffer, 1) == false)
     {
         return isSuccess;
     }
 
     /* Write one block of data */
-    if (_DRV_SDSPI_SPIBlockWrite(dObj, sourceBuffer) == false)
+    if (DRV_SDSPI_SPIBlockWrite(dObj, sourceBuffer) == false)
     {
         return isSuccess;
     }
@@ -751,20 +755,20 @@ static bool _DRV_SDSPI_WriteBlock(
     dObj->cmdRespBuffer[0] = 0xFF;
     dObj->cmdRespBuffer[1] = 0xFF;
 
-    if (_DRV_SDSPI_SPIWrite(dObj, (void*)dObj->cmdRespBuffer, 2) == false)
+    if (DRV_SDSPI_SPIWrite(dObj, (void*)dObj->cmdRespBuffer, 2) == false)
     {
         return isSuccess;
     }
 
     /* Read the data response token and then poll busy status of the SD Card */
-    if (_DRV_SDSPI_SPIRead(dObj, (void*)dObj->cmdRespBuffer, 1) == true)
+    if (DRV_SDSPI_SPIRead(dObj, (void*)dObj->cmdRespBuffer, 1) == true)
     {
         if ((dObj->cmdRespBuffer[0] & DRV_SDSPI_WRITE_RESPONSE_TOKEN_MASK) ==
                 DRV_SDSPI_DATA_ACCEPTED)
         {
             /* Card accepted the data, now poll the BUSY status of the SD card's
              * internal write cycle */
-            if (_DRV_SDSPI_PollBusyStatus(dObj) == true)
+            if (lDRV_SDSPI_PollBusyStatus(dObj) == true)
             {
                 isSuccess = true;
             }
@@ -774,7 +778,7 @@ static bool _DRV_SDSPI_WriteBlock(
     return isSuccess;
 }
 
-static bool _DRV_SDSPI_Write(
+static bool lDRV_SDSPI_Write(
     DRV_SDSPI_OBJ* const dObj,
     void* sourceBuffer,
     uint32_t blockStart,
@@ -804,7 +808,7 @@ static bool _DRV_SDSPI_Write(
 
     DRV_SDSPI_COMMANDS writeCommand = DRV_SDSPI_WRITE_SINGLE_BLOCK;
 
-    if (nBlock > 1)
+    if (nBlock > 1U)
     {
         writeCommand = DRV_SDSPI_WRITE_MULTI_BLOCK;
     }
@@ -818,11 +822,11 @@ static bool _DRV_SDSPI_Write(
     }
 
     /* Send the single/multi-block write command */
-    if (_DRV_SDSPI_CommandSend(dObj, writeCommand, blockStart) == true)
+    if (lDRV_SDSPI_CommandSend(dObj, (uint8_t)writeCommand, blockStart) == true)
     {
         /* Verify the response */
         r1Response = (DRV_SDSPI_RESPONSE_1*)&dObj->cmdResponse[0];
-        if (r1Response->byte != 0x00)
+        if (r1Response->byte != 0x00U)
         {
             return isSuccess;
         }
@@ -830,9 +834,9 @@ static bool _DRV_SDSPI_Write(
         for (i = 0; i < nBlock; i++)
         {
             /* Write a single block of data */
-            if (_DRV_SDSPI_WriteBlock(dObj, sourceBuffer, writeCommand) == true)
+            if (lDRV_SDSPI_WriteBlock(dObj, sourceBuffer, writeCommand) == true)
             {
-                sourceBuffer = (void *)((uint8_t *)sourceBuffer + _DRV_SDSPI_MEDIA_BLOCK_SIZE);
+                sourceBuffer = (void *)((uint8_t *)sourceBuffer + DRV_SDSPI_MEDIA_BLOCK_SIZE);
             }
             else
             {
@@ -846,10 +850,10 @@ static bool _DRV_SDSPI_Write(
             dObj->cmdRespBuffer[0] = DRV_SDSPI_DATA_STOP_TRAN_TOKEN;
             dObj->cmdRespBuffer[1] = 0xFF;
 
-            if (_DRV_SDSPI_SPIWrite(dObj, (void*)dObj->cmdRespBuffer, 2) == true)
+            if (DRV_SDSPI_SPIWrite(dObj, (void*)dObj->cmdRespBuffer, 2) == true)
             {
                 /* Poll the SD Card busy status */
-                if (_DRV_SDSPI_PollBusyStatus(dObj) == true)
+                if (lDRV_SDSPI_PollBusyStatus(dObj) == true)
                 {
                     isSuccess = true;
                 }
@@ -859,7 +863,7 @@ static bool _DRV_SDSPI_Write(
         {
             /* Send a dummy data byte */
             dObj->cmdRespBuffer[0] = 0xFF;
-            if (true == _DRV_SDSPI_SPIWrite(dObj, (void*)dObj->cmdRespBuffer, 1))
+            if (true == DRV_SDSPI_SPIWrite(dObj, (void*)dObj->cmdRespBuffer, 1))
             {
                 isSuccess = true;
             }
@@ -868,7 +872,7 @@ static bool _DRV_SDSPI_Write(
     return isSuccess;
 }
 
-static bool _DRV_SDSPI_Read(
+static bool lDRV_SDSPI_Read(
     DRV_SDSPI_OBJ* const dObj,
     void* targetBuffer,
     uint32_t blockStart,
@@ -894,7 +898,7 @@ static bool _DRV_SDSPI_Read(
      * <-Send Dummy Byte
      */
 
-    if (nBlock > 1)
+    if (nBlock > 1U)
     {
         readCommand = DRV_SDSPI_READ_MULTI_BLOCK;
     }
@@ -908,11 +912,11 @@ static bool _DRV_SDSPI_Read(
     }
 
     /* Send the single/multi-block read command */
-    if (_DRV_SDSPI_CommandSend(dObj, readCommand, blockStart) == true)
+    if (lDRV_SDSPI_CommandSend(dObj, (uint8_t)readCommand, blockStart) == true)
     {
         /* Verify the response */
         r1Response = (DRV_SDSPI_RESPONSE_1*)&dObj->cmdResponse[0];
-        if (r1Response->byte != 0x00)
+        if (r1Response->byte != 0x00U)
         {
             /* Perhaps the card isn't initialized or present */
             return isSuccess;
@@ -921,9 +925,9 @@ static bool _DRV_SDSPI_Read(
         for (i = 0; i < nBlock; i++)
         {
             /* Read a single block of data */
-            if (_DRV_SDSPI_ReadBlock(dObj, targetBuffer) == true)
+            if (lDRV_SDSPI_ReadBlock(dObj, targetBuffer) == true)
             {
-                targetBuffer = (void *)((uint8_t *)targetBuffer + _DRV_SDSPI_MEDIA_BLOCK_SIZE);
+                targetBuffer = (void *)((uint8_t *)targetBuffer + DRV_SDSPI_MEDIA_BLOCK_SIZE);
             }
             else
             {
@@ -933,14 +937,14 @@ static bool _DRV_SDSPI_Read(
         /* For a multi-block read, send the Stop Command */
         if (readCommand == DRV_SDSPI_READ_MULTI_BLOCK)
         {
-            if (false == _DRV_SDSPI_CommandSend(dObj, DRV_SDSPI_STOP_TRANSMISSION, 0x00))
+            if (false == lDRV_SDSPI_CommandSend(dObj, (uint8_t)DRV_SDSPI_STOP_TRANSMISSION, 0x00))
             {
                 return isSuccess;
             }
         }
         /* Send a dummy data byte */
         dObj->cmdRespBuffer[0] = 0xFF;
-        if (true == _DRV_SDSPI_SPIWrite(dObj, (void*)dObj->cmdRespBuffer, 1))
+        if (true == DRV_SDSPI_SPIWrite(dObj, (void*)dObj->cmdRespBuffer, 1))
         {
             isSuccess = true;
         }
@@ -948,7 +952,7 @@ static bool _DRV_SDSPI_Read(
     return isSuccess;
 }
 
-static bool _DRV_SDSPI_SetupXfer (
+static bool lDRV_SDSPI_SetupXfer (
     const DRV_HANDLE handle,
     DRV_SDSPI_COMMAND_HANDLE* commandHandle,
     DRV_SDSPI_OPERATION_TYPE opType,
@@ -958,11 +962,11 @@ static bool _DRV_SDSPI_SetupXfer (
 )
 {
     bool isSuccess = false;
-    DRV_SDSPI_CLIENT_OBJ* clientObj = _DRV_SDSPI_DriverHandleValidate(handle);
+    DRV_SDSPI_CLIENT_OBJ* clientObj = lDRV_SDSPI_DriverHandleValidate(handle);
     DRV_SDSPI_OBJ* dObj = NULL;
     DRV_SDSPI_EVENT evtStatus = DRV_SDSPI_EVENT_COMMAND_ERROR;
 
-    if (commandHandle)
+    if (commandHandle != NULL)
     {
         *commandHandle = DRV_SDSPI_COMMAND_HANDLE_INVALID;
     }
@@ -981,26 +985,34 @@ static bool _DRV_SDSPI_SetupXfer (
         return isSuccess;
     }
 
-    if (buffer == NULL || nBlock == 0)
+    if ((buffer == NULL) || (nBlock == 0U))
+    {
         return isSuccess;
+    }
 
     if (opType == DRV_SDSPI_OPERATION_TYPE_READ)
     {
         if (((blockStart + nBlock) > dObj->mediaGeometryTable[SYS_MEDIA_GEOMETRY_TABLE_READ_ENTRY].numBlocks))
+        {
             return isSuccess;
+        }
     }
     else
     {
         if (((blockStart + nBlock) > dObj->mediaGeometryTable[SYS_MEDIA_GEOMETRY_TABLE_WRITE_ENTRY].numBlocks))
+        {
             return isSuccess;
+        }
 
         /* Return error if the card is write protected */
-        if (dObj->isWriteProtected)
+        if ((dObj->isWriteProtected) != 0U)
+        {
             return isSuccess;
+        }
     }
 
     <#if DRV_SDSPI_INTERFACE_TYPE == "SPI_DRV">
-    if (_DRV_SDSPI_SPIExclusiveAccess(dObj, true) == false)
+    if (DRV_SDSPI_SPIExclusiveAccess(dObj, true) == false)
     {
         return isSuccess;
     }
@@ -1010,24 +1022,24 @@ static bool _DRV_SDSPI_SetupXfer (
     if (OSAL_MUTEX_Lock(&dObj->transferMutex, OSAL_WAIT_FOREVER ) != OSAL_RESULT_TRUE)
     {
         <#if DRV_SDSPI_INTERFACE_TYPE == "SPI_DRV">
-        _DRV_SDSPI_SPIExclusiveAccess(dObj, false);
+        (void) DRV_SDSPI_SPIExclusiveAccess(dObj, false);
         </#if>
         return isSuccess;
     }
 
-    if (commandHandle)
+    if (commandHandle != NULL)
     {
         dObj->cmdStatus = DRV_SDSPI_COMMAND_IN_PROGRESS;
         /* Command accepted, assign a unique command handle */
-        dObj->commandHandle = _DRV_SDSPI_MAKE_HANDLE(dObj->commandToken, clientObj->drvIndex, 0);
+        dObj->commandHandle = lDRV_SDSPI_MAKE_HANDLE(dObj->commandToken, clientObj->drvIndex, 0);
         *commandHandle = dObj->commandHandle;
         /* Update the token number. */
-        dObj->commandToken = _DRV_SDSPI_UPDATE_TOKEN(dObj->commandToken);
+        dObj->commandToken = lDRV_SDSPI_UPDATE_TOKEN(dObj->commandToken);
     }
 
     if (opType == DRV_SDSPI_OPERATION_TYPE_READ)
     {
-        if (_DRV_SDSPI_Read(dObj, buffer, blockStart, nBlock) == true)
+        if (lDRV_SDSPI_Read(dObj, buffer, blockStart, nBlock) == true)
         {
             isSuccess = true;
             evtStatus = DRV_SDSPI_EVENT_COMMAND_COMPLETE;
@@ -1035,14 +1047,14 @@ static bool _DRV_SDSPI_SetupXfer (
     }
     else
     {
-        if (_DRV_SDSPI_Write(dObj, buffer, blockStart, nBlock) == true)
+        if (lDRV_SDSPI_Write(dObj, buffer, blockStart, nBlock) == true)
         {
             isSuccess = true;
             evtStatus = DRV_SDSPI_EVENT_COMMAND_COMPLETE;
         }
     }
 
-    if (commandHandle)
+    if (commandHandle != NULL)
     {
         dObj->cmdStatus = DRV_SDSPI_COMMAND_COMPLETED;
     }
@@ -1057,10 +1069,10 @@ static bool _DRV_SDSPI_SetupXfer (
         );
     }
 
-    OSAL_MUTEX_Unlock(&dObj->transferMutex);
+    (void) OSAL_MUTEX_Unlock(&dObj->transferMutex);
 
     <#if DRV_SDSPI_INTERFACE_TYPE == "SPI_DRV">
-    _DRV_SDSPI_SPIExclusiveAccess(dObj, false);
+    (void) DRV_SDSPI_SPIExclusiveAccess(dObj, false);
     </#if>
 
     return isSuccess;
@@ -1074,7 +1086,7 @@ void DRV_SDSPI_Read (
     uint32_t nBlock
 )
 {
-    (void) _DRV_SDSPI_SetupXfer(
+    (void) lDRV_SDSPI_SetupXfer(
                 handle,
                 commandHandle,
                 DRV_SDSPI_OPERATION_TYPE_READ,
@@ -1092,7 +1104,7 @@ void DRV_SDSPI_Write(
     uint32_t nBlock
 )
 {
-    (void) _DRV_SDSPI_SetupXfer(
+    (void) lDRV_SDSPI_SetupXfer(
                 handle,
                 commandHandle,
                 DRV_SDSPI_OPERATION_TYPE_WRITE,
@@ -1102,45 +1114,45 @@ void DRV_SDSPI_Write(
             );
 }
 
-static void _DRV_SDSPI_UpdateGeometry( DRV_SDSPI_OBJ *dObj )
+static void lDRV_SDSPI_UpdateGeometry( DRV_SDSPI_OBJ *dObj )
 {
     uint8_t i = 0;
 
     /* Update the Media Geometry Table */
-    for (i = 0; i <= SYS_MEDIA_GEOMETRY_TABLE_ERASE_ENTRY; i++)
+    for (i = 0; i <= (uint8_t)SYS_MEDIA_GEOMETRY_TABLE_ERASE_ENTRY; i++)
     {
         dObj->mediaGeometryTable[i].blockSize = 512;
         dObj->mediaGeometryTable[i].numBlocks = dObj->discCapacity;
     }
 
     /* Update the Media Geometry Main Structure */
-    dObj->mediaGeometryObj.mediaProperty = (SYS_MEDIA_PROPERTY)(SYS_MEDIA_READ_IS_BLOCKING | SYS_MEDIA_WRITE_IS_BLOCKING),
+    dObj->mediaGeometryObj.mediaProperty = (SYS_MEDIA_PROPERTY)((uint32_t)SYS_MEDIA_READ_IS_BLOCKING | (uint32_t)SYS_MEDIA_WRITE_IS_BLOCKING);
 
     /* Number of read, write and erase entries in the table */
-    dObj->mediaGeometryObj.numReadRegions = 1,
-    dObj->mediaGeometryObj.numWriteRegions = 1,
-    dObj->mediaGeometryObj.numEraseRegions = 1,
+    dObj->mediaGeometryObj.numReadRegions = 1;
+    dObj->mediaGeometryObj.numWriteRegions = 1;
+    dObj->mediaGeometryObj.numEraseRegions = 1;
     dObj->mediaGeometryObj.geometryTable = (SYS_MEDIA_REGION_GEOMETRY *)&dObj->mediaGeometryTable;
 }
 
-static void _DRV_SDSPI_MediaInitialize( SYS_MODULE_OBJ object )
+static void lDRV_SDSPI_MediaInitialize( SYS_MODULE_OBJ object )
 {
     DRV_SDSPI_OBJ *dObj;
-    dObj = (DRV_SDSPI_OBJ*)_DRV_SDSPI_INSTANCE_GET(object);
+    dObj = (DRV_SDSPI_OBJ*)DRV_SDSPI_INSTANCE_GET(object);
 
     switch(dObj->mediaInitState)
     {
         case DRV_SDSPI_INIT_SPI:
 
 <#if DRV_SDSPI_INTERFACE_TYPE == "SPI_PLIB">
-            _DRV_SDSPI_SPISpeedSetup(dObj, _DRV_SDSPI_SPI_INITIAL_SPEED);
+            (void) DRV_SDSPI_SPISpeedSetup(dObj, DRV_SDSPI_SPI_INITIAL_SPEED);
 </#if>
             dObj->sdCardType = DRV_SDSPI_MODE_NORMAL;
             dObj->mediaInitState = DRV_SDSPI_INIT_RAMP_TIME;
             /* Fall through */
         case DRV_SDSPI_INIT_RAMP_TIME:
             /* Send 74 clock pulses */
-            if (_DRV_SDSPI_SendInitClockPulses(dObj) == false)
+            if (lDRV_SDSPI_SendInitClockPulses(dObj) == false)
             {
                 /* Stay in the same state */
                 break;
@@ -1152,7 +1164,7 @@ static void _DRV_SDSPI_MediaInitialize( SYS_MODULE_OBJ object )
             /* Fall through */
         case DRV_SDSPI_INIT_RESET_SDCARD:
             /* Send CMD_0 */
-            if (_DRV_SDSPI_EnterIdleState(dObj) == false)
+            if (lDRV_SDSPI_EnterIdleState(dObj) == false)
             {
                 dObj->mediaInitState = DRV_SDSPI_INIT_RAMP_TIME;
                 break;
@@ -1165,7 +1177,7 @@ static void _DRV_SDSPI_MediaInitialize( SYS_MODULE_OBJ object )
 
         case DRV_SDSPI_INIT_CHK_IFACE_CONDITION:
             /* Send CMD_8 */
-            if (_DRV_SDSPI_CheckIFCondition(dObj) == false)
+            if (lDRV_SDSPI_CheckIFCondition(dObj) == false)
             {
                 dObj->mediaInitState = DRV_SDSPI_INIT_ERROR;
                 break;
@@ -1178,7 +1190,7 @@ static void _DRV_SDSPI_MediaInitialize( SYS_MODULE_OBJ object )
 
         case DRV_SDSPI_INIT_SEND_ACMD41:
             /* Send CMD_55 (0x77) + ACMD_41 (0x69) */
-            if (_DRV_SDSPI_SendACMD41(dObj) == false)
+            if (lDRV_SDSPI_SendACMD41(dObj) == false)
             {
                 dObj->mediaInitState = DRV_SDSPI_INIT_ERROR;
                 break;
@@ -1191,7 +1203,7 @@ static void _DRV_SDSPI_MediaInitialize( SYS_MODULE_OBJ object )
 
         case DRV_SDSPI_INIT_READ_OCR:
             /* Send CMD 58 (0x3A) */
-            if (_DRV_SDSPI_ReadOCR(dObj) == false)
+            if (lDRV_SDSPI_ReadOCR(dObj) == false)
             {
                 dObj->mediaInitState = DRV_SDSPI_INIT_ERROR;
                 break;
@@ -1205,9 +1217,9 @@ static void _DRV_SDSPI_MediaInitialize( SYS_MODULE_OBJ object )
         case DRV_SDSPI_INIT_INCR_CLOCK_SPEED:
             /* Initialization complete. We can now operate at higher SPI speeds. */
 <#if DRV_SDSPI_INTERFACE_TYPE == "SPI_PLIB">
-            _DRV_SDSPI_SPISpeedSetup(dObj, dObj->sdcardSpeedHz);
+            (void) DRV_SDSPI_SPISpeedSetup(dObj, dObj->sdcardSpeedHz);
 <#else>
-            _DRV_SDSPI_SPISpeedSetup(dObj, dObj->sdcardSpeedHz, dObj->chipSelectPin);
+            (void) DRV_SDSPI_SPISpeedSetup(dObj, dObj->sdcardSpeedHz, dObj->chipSelectPin);
 </#if>
 
             dObj->mediaInitState = DRV_SDSPI_INIT_READ_CSD;
@@ -1215,7 +1227,7 @@ static void _DRV_SDSPI_MediaInitialize( SYS_MODULE_OBJ object )
 
         case DRV_SDSPI_INIT_READ_CSD:
             /* Send CMD 9 (0x49) */
-            if (_DRV_SDSPI_ReadCSD(dObj) == false)
+            if (lDRV_SDSPI_ReadCSD(dObj) == false)
             {
                 dObj->mediaInitState = DRV_SDSPI_INIT_ERROR;
                 break;
@@ -1228,7 +1240,7 @@ static void _DRV_SDSPI_MediaInitialize( SYS_MODULE_OBJ object )
 
         case DRV_SDSPI_INIT_READ_CID:
             /* Send CMD 10 (0x4A) */
-            if (_DRV_SDSPI_ReadCID(dObj) == false)
+            if (lDRV_SDSPI_ReadCID(dObj) == false)
             {
                 dObj->mediaInitState = DRV_SDSPI_INIT_ERROR;
                 break;
@@ -1241,7 +1253,7 @@ static void _DRV_SDSPI_MediaInitialize( SYS_MODULE_OBJ object )
 
         case DRV_SDSPI_INIT_TURN_OFF_CRC:
             /* Send CMD 59 (0x7B) */
-            if (_DRV_SDSPI_TurnOffCRC(dObj) == false)
+            if (lDRV_SDSPI_TurnOffCRC(dObj) == false)
             {
                 dObj->mediaInitState = DRV_SDSPI_INIT_ERROR;
                 break;
@@ -1254,7 +1266,7 @@ static void _DRV_SDSPI_MediaInitialize( SYS_MODULE_OBJ object )
 
         case DRV_SDSPI_INIT_SET_BLOCKLEN:
             /* Send CMD 16 (0x50)*/
-            if (_DRV_SDSPI_SetBlockLen(dObj) == false)
+            if (lDRV_SDSPI_SetBlockLen(dObj) == false)
             {
                 dObj->mediaInitState = DRV_SDSPI_INIT_ERROR;
             }
@@ -1275,28 +1287,28 @@ static void _DRV_SDSPI_MediaInitialize( SYS_MODULE_OBJ object )
     }
 }
 
-static DRV_SDSPI_ATTACH _DRV_SDSPI_MediaCommandDetect ( SYS_MODULE_OBJ object )
+static DRV_SDSPI_ATTACH lDRV_SDSPI_MediaCommandDetect ( SYS_MODULE_OBJ object )
 {
     DRV_SDSPI_OBJ* dObj;
     DRV_SDSPI_ATTACH isCardAttached = DRV_SDSPI_IS_DETACHED;
 
-    dObj = (DRV_SDSPI_OBJ*)_DRV_SDSPI_INSTANCE_GET(object);
+    dObj = (DRV_SDSPI_OBJ*)DRV_SDSPI_INSTANCE_GET(object);
 
     switch ( dObj->cmdDetectState )
     {
         case DRV_SDSPI_CMD_DETECT_START_INIT:
             /* Reset to the initial SPI speed*/
 <#if DRV_SDSPI_INTERFACE_TYPE == "SPI_PLIB">
-            _DRV_SDSPI_SPISpeedSetup(dObj, _DRV_SDSPI_SPI_INITIAL_SPEED);
+            (void) DRV_SDSPI_SPISpeedSetup(dObj, DRV_SDSPI_SPI_INITIAL_SPEED);
 </#if>
             dObj->cmdDetectState = DRV_SDSPI_CMD_DETECT_CHECK_FOR_CARD;
             /* Fall through */
         case DRV_SDSPI_CMD_DETECT_CHECK_FOR_CARD:
 
-            if (_DRV_SDSPI_SendInitClockPulses(dObj) == true)
+            if (lDRV_SDSPI_SendInitClockPulses(dObj) == true)
             {
                 /* Send CMD_0 */
-                if (_DRV_SDSPI_EnterIdleState(dObj) == true)
+                if (lDRV_SDSPI_EnterIdleState(dObj) == true)
                 {
                     isCardAttached = DRV_SDSPI_IS_ATTACHED;
                 }
@@ -1305,27 +1317,28 @@ static DRV_SDSPI_ATTACH _DRV_SDSPI_MediaCommandDetect ( SYS_MODULE_OBJ object )
 
         case DRV_SDSPI_CMD_DETECT_CHECK_FOR_DETACH:
             /* Make sure no read/write transfer is currently in progress */
-            if (_DRV_SDSPI_CommandSend(dObj, DRV_SDSPI_SEND_CID, 0x00) == true)
+            if (lDRV_SDSPI_CommandSend(dObj, (uint8_t)DRV_SDSPI_SEND_CID, 0x00) == true)
             {
                 /* Data token(1) + CID(16) + CRC(2) + Dummy(1) = 20 Bytes */
-                if (_DRV_SDSPI_SPIRead(dObj, (void*)dObj->cmdRespBuffer, _DRV_SDSPI_CID_READ_SIZE) == true)
+                if (DRV_SDSPI_SPIRead(dObj, (void*)dObj->cmdRespBuffer, DRV_SDSPI_CID_READ_SIZE) == true)
                 {
-                    if (memcmp(dObj->cidData, (const void*)dObj->cmdRespBuffer, _DRV_SDSPI_CID_READ_SIZE - 1) == 0)
+                    if (memcmp(dObj->cidData, (const void*)dObj->cmdRespBuffer, DRV_SDSPI_CID_READ_SIZE - 1) == 0)
                     {
                         isCardAttached = DRV_SDSPI_IS_ATTACHED;
                     }
                 }
             }
         default:
+                   /* Nothing to do */
             break;
     }
     return isCardAttached;
 }
 
-static void _DRV_SDSPI_AttachDetachTasks ( SYS_MODULE_OBJ object )
+static void lDRV_SDSPI_AttachDetachTasks ( SYS_MODULE_OBJ object )
 {
     DRV_SDSPI_OBJ* dObj;
-    dObj = (DRV_SDSPI_OBJ*)_DRV_SDSPI_INSTANCE_GET(object);
+    dObj = (DRV_SDSPI_OBJ*)DRV_SDSPI_INSTANCE_GET(object);
 
     /* Block other clients/threads from accessing the SD Card */
     if (OSAL_MUTEX_Lock(&dObj->transferMutex, OSAL_WAIT_FOREVER ) != OSAL_RESULT_TRUE)
@@ -1338,7 +1351,7 @@ static void _DRV_SDSPI_AttachDetachTasks ( SYS_MODULE_OBJ object )
 <#if DRV_SDSPI_INTERFACE_TYPE == "SPI_DRV">
         case DRV_SDSPI_TASK_OPEN_SPI:
             /* Open the SPI driver */
-            dObj->spiDrvHandle = DRV_SPI_Open(dObj->spiDrvIndex, DRV_IO_INTENT_READWRITE);
+            dObj->spiDrvHandle = DRV_SPI_Open((uint16_t)dObj->spiDrvIndex, DRV_IO_INTENT_READWRITE);
             if (dObj->spiDrvHandle != DRV_HANDLE_INVALID)
             {
                 dObj->taskState = DRV_SDSPI_TASK_START_POLLING_TIMER;
@@ -1346,7 +1359,7 @@ static void _DRV_SDSPI_AttachDetachTasks ( SYS_MODULE_OBJ object )
             break;
 </#if>
         case DRV_SDSPI_TASK_START_POLLING_TIMER:
-            if (_DRV_SDSPI_CardDetectPollingTimerStart(dObj, dObj->pollingIntervalMs) == true)
+            if (DRV_SDSPI_CardDetectPollingTimerStart(dObj, dObj->pollingIntervalMs) == true)
             {
                 dObj->taskState = DRV_SDSPI_TASK_CHECK_DEVICE;
             }
@@ -1360,16 +1373,16 @@ static void _DRV_SDSPI_AttachDetachTasks ( SYS_MODULE_OBJ object )
                 dObj->taskState = DRV_SDSPI_TASK_START_POLLING_TIMER;
 
                 <#if DRV_SDSPI_INTERFACE_TYPE == "SPI_DRV">
-                if (_DRV_SDSPI_SPIExclusiveAccess(dObj, true) == false)
+                if (DRV_SDSPI_SPIExclusiveAccess(dObj, true) == false)
                 {
                     return;
                 }
                 </#if>
 
-                dObj->isAttached = _DRV_SDSPI_MediaCommandDetect (object);
+                dObj->isAttached = lDRV_SDSPI_MediaCommandDetect (object);
 
                 <#if DRV_SDSPI_INTERFACE_TYPE == "SPI_DRV">
-                _DRV_SDSPI_SPIExclusiveAccess(dObj, false);
+                (void) DRV_SDSPI_SPIExclusiveAccess(dObj, false);
                 </#if>
 
                 if (dObj->isAttachedLastStatus != dObj->isAttached)
@@ -1393,27 +1406,27 @@ static void _DRV_SDSPI_AttachDetachTasks ( SYS_MODULE_OBJ object )
 
         case DRV_SDSPI_TASK_MEDIA_INIT:
             <#if DRV_SDSPI_INTERFACE_TYPE == "SPI_DRV">
-            if (_DRV_SDSPI_SPIExclusiveAccess(dObj, true) == false)
+            if (DRV_SDSPI_SPIExclusiveAccess(dObj, true) == false)
             {
                 return;
             }
             </#if>
 
             /* Update the card details to the internal data structure */
-            _DRV_SDSPI_MediaInitialize (object);
+            lDRV_SDSPI_MediaInitialize (object);
 
             <#if DRV_SDSPI_INTERFACE_TYPE == "SPI_DRV">
-            _DRV_SDSPI_SPIExclusiveAccess(dObj, false);
+            (void) DRV_SDSPI_SPIExclusiveAccess(dObj, false);
             </#if>
 
             /* Once the initialization is complete, move to the next stage */
             if (dObj->mediaInitState == DRV_SDSPI_INIT_SD_INIT_DONE)
             {
                 /* Check and update the card's write protected status */
-                _DRV_SDSPI_CheckWriteProtectStatus (dObj);
+                lDRV_SDSPI_CheckWriteProtectStatus (dObj);
 
                 /* Update the Media Geometry structure */
-                _DRV_SDSPI_UpdateGeometry (dObj);
+                lDRV_SDSPI_UpdateGeometry (dObj);
 
                 /* State that the device is attached. */
                 dObj->mediaState = DRV_SDSPI_IS_ATTACHED;
@@ -1423,24 +1436,30 @@ static void _DRV_SDSPI_AttachDetachTasks ( SYS_MODULE_OBJ object )
             else if (dObj->mediaInitState == DRV_SDSPI_INIT_ERROR)
             {
                 /* The SD card is probably removed. Go back and check for card insertion. */
-                dObj->isAttachedLastStatus = dObj->isAttached = DRV_SDSPI_IS_DETACHED;
+                dObj->isAttachedLastStatus = DRV_SDSPI_IS_DETACHED;
+                dObj->isAttached = DRV_SDSPI_IS_DETACHED;
                 dObj->cmdDetectState = DRV_SDSPI_CMD_DETECT_START_INIT;
                 dObj->taskState = DRV_SDSPI_TASK_START_POLLING_TIMER;
+            }
+            else
+            {
+                /* Nothing to do */
             }
             break;
 
         case DRV_SDSPI_TASK_IDLE:
         default:
+                    /* Nothing to do */
             break;
     }
 
     /* Release the Mutex to allow other clients/threads to access the SD Card */
-    OSAL_MUTEX_Unlock(&dObj->transferMutex);
+    (void) OSAL_MUTEX_Unlock(&dObj->transferMutex);
 }
 
 void DRV_SDSPI_Tasks ( SYS_MODULE_OBJ object )
 {
-    _DRV_SDSPI_AttachDetachTasks (object);
+    lDRV_SDSPI_AttachDetachTasks (object);
 }
 
 // *****************************************************************************
@@ -1599,17 +1618,17 @@ SYS_MODULE_OBJ DRV_SDSPI_Initialize(
         );
 </#if>
 
-        SYS_DMA_ChannelCallbackRegister(dObj->txDMAChannel, _DRV_SDSPI_TX_DMA_CallbackHandler, (uintptr_t)dObj);
-        SYS_DMA_ChannelCallbackRegister(dObj->rxDMAChannel, _DRV_SDSPI_RX_DMA_CallbackHandler, (uintptr_t)dObj);
+        SYS_DMA_ChannelCallbackRegister(dObj->txDMAChannel, DRV_SDSPI_TX_DMA_CallbackHandler, (uintptr_t)dObj);
+        SYS_DMA_ChannelCallbackRegister(dObj->rxDMAChannel, DRV_SDSPI_RX_DMA_CallbackHandler, (uintptr_t)dObj);
     }
     else
     {
         /* Register call-back with the SPI PLIB */
-        dObj->spiPlib->callbackRegister(_DRV_SDSPI_SPIPlibCallbackHandler, (uintptr_t)dObj);
+        dObj->spiPlib->callbackRegister(DRV_SDSPI_SPIPlibCallbackHandler, (uintptr_t)dObj);
     }
 <#else>
     /* Register call-back with the SPI PLIB */
-    dObj->spiPlib->callbackRegister(_DRV_SDSPI_SPIPlibCallbackHandler, (uintptr_t)dObj);
+    dObj->spiPlib->callbackRegister(DRV_SDSPI_SPIPlibCallbackHandler, (uintptr_t)dObj);
 </#if>
 </#if>
 
@@ -1659,9 +1678,9 @@ DRV_HANDLE DRV_SDSPI_Open(
     if((dObj->inUse == false) ||
        (dObj->isExclusive == true) ||
        (dObj->nClients >= dObj->nClientsMax) ||
-       ((dObj->nClients > 0) && (ioIntent & DRV_IO_INTENT_EXCLUSIVE)))
+       ((dObj->nClients > 0U) && (((uint32_t)ioIntent & (uint32_t)DRV_IO_INTENT_EXCLUSIVE) != 0U)))
     {
-        OSAL_MUTEX_Unlock( &dObj->clientMutex);
+        (void) OSAL_MUTEX_Unlock( &dObj->clientMutex);
         return DRV_HANDLE_INVALID;
     }
 
@@ -1675,9 +1694,9 @@ DRV_HANDLE DRV_SDSPI_Open(
             clientObj->inUse        = true;
             clientObj->context      = 0;
             clientObj->intent       = ioIntent;
-            clientObj->drvIndex     = drvIndex;
+            clientObj->drvIndex     = (uint8_t)drvIndex;
 
-            if(ioIntent & DRV_IO_INTENT_EXCLUSIVE)
+            if(((uint32_t)ioIntent & (uint32_t)DRV_IO_INTENT_EXCLUSIVE) != 0U)
             {
                 /* Set the driver exclusive flag */
                 dObj->isExclusive = true;
@@ -1688,19 +1707,19 @@ DRV_HANDLE DRV_SDSPI_Open(
             /* Generate and save the client handle in the client object, which will
              * be then used to verify the validity of the client handle.
              */
-            clientObj->clientHandle = (DRV_HANDLE)_DRV_SDSPI_MAKE_HANDLE(dObj->clientToken,
+            clientObj->clientHandle = (DRV_HANDLE)lDRV_SDSPI_MAKE_HANDLE(dObj->clientToken,
                     (uint8_t)drvIndex, iClient);
 
             /* Increment the instance specific token counter */
-            dObj->clientToken = _DRV_SDSPI_UPDATE_TOKEN(dObj->clientToken);
+            dObj->clientToken = lDRV_SDSPI_UPDATE_TOKEN(dObj->clientToken);
             break;
         }
     }
 
-    OSAL_MUTEX_Unlock(&dObj->clientMutex);
+    (void) OSAL_MUTEX_Unlock(&dObj->clientMutex);
 
     /* Driver index is the handle */
-    return clientObj ? ((DRV_HANDLE)clientObj->clientHandle) : DRV_HANDLE_INVALID;
+    return (clientObj != NULL) ? ((DRV_HANDLE)clientObj->clientHandle) : DRV_HANDLE_INVALID;
 }
 
 SYS_STATUS DRV_SDSPI_Status( SYS_MODULE_OBJ object )
@@ -1721,7 +1740,7 @@ void DRV_SDSPI_Close( const DRV_HANDLE handle )
     DRV_SDSPI_OBJ* dObj;
 
     /* Validate the handle */
-    clientObj = _DRV_SDSPI_DriverHandleValidate(handle);
+    clientObj = lDRV_SDSPI_DriverHandleValidate(handle);
 
     if(clientObj != NULL)
     {
@@ -1740,7 +1759,7 @@ void DRV_SDSPI_Close( const DRV_HANDLE handle )
             clientObj->inUse = false;
 
             /* Release the client mutex */
-            OSAL_MUTEX_Unlock( &dObj->clientMutex );
+            (void) OSAL_MUTEX_Unlock( &dObj->clientMutex );
         }
     }
 }
@@ -1752,7 +1771,7 @@ bool DRV_SDSPI_SyncRead (
     uint32_t nBlock
 )
 {
-    return _DRV_SDSPI_SetupXfer(
+    return lDRV_SDSPI_SetupXfer(
                 handle,
                 NULL,
                 DRV_SDSPI_OPERATION_TYPE_READ,
@@ -1769,7 +1788,7 @@ bool DRV_SDSPI_SyncWrite(
     uint32_t nBlock
 )
 {
-    return _DRV_SDSPI_SetupXfer(
+    return lDRV_SDSPI_SetupXfer(
                 handle,
                 NULL,
                 DRV_SDSPI_OPERATION_TYPE_WRITE,
@@ -1785,7 +1804,7 @@ bool DRV_SDSPI_IsAttached( const DRV_HANDLE handle )
     DRV_SDSPI_OBJ* dObj;
 
     /* Validate the driver handle */
-    clientObj = _DRV_SDSPI_DriverHandleValidate(handle);
+    clientObj = lDRV_SDSPI_DriverHandleValidate(handle);
     if (clientObj == NULL)
     {
         return false;
@@ -1793,7 +1812,7 @@ bool DRV_SDSPI_IsAttached( const DRV_HANDLE handle )
     else
     {
         dObj = (DRV_SDSPI_OBJ*)&gDrvSDSPIObj[clientObj->drvIndex];
-        return dObj->mediaState;
+        return (bool)dObj->mediaState;
     }
 }
 
@@ -1802,9 +1821,11 @@ bool DRV_SDSPI_IsWriteProtected( const DRV_HANDLE handle )
     DRV_SDSPI_CLIENT_OBJ* clientObj;
     DRV_SDSPI_OBJ* dObj;
 
-    clientObj = _DRV_SDSPI_DriverHandleValidate (handle);
+    clientObj = lDRV_SDSPI_DriverHandleValidate (handle);
     if (clientObj == NULL)
+    {
         return false;
+    }
 
     dObj = (DRV_SDSPI_OBJ*)&gDrvSDSPIObj[clientObj->drvIndex];
 
@@ -1813,7 +1834,7 @@ bool DRV_SDSPI_IsWriteProtected( const DRV_HANDLE handle )
         return false;
     }
 
-    return dObj->isWriteProtected;
+    return (bool)dObj->isWriteProtected;
 }
 
 SYS_MEDIA_GEOMETRY* DRV_SDSPI_GeometryGet ( const DRV_HANDLE handle )
@@ -1821,7 +1842,7 @@ SYS_MEDIA_GEOMETRY* DRV_SDSPI_GeometryGet ( const DRV_HANDLE handle )
     DRV_SDSPI_CLIENT_OBJ* clientObj;
     DRV_SDSPI_OBJ* dObj;
 
-    clientObj = _DRV_SDSPI_DriverHandleValidate (handle);
+    clientObj = lDRV_SDSPI_DriverHandleValidate (handle);
     if (clientObj != NULL)
     {
         dObj = (DRV_SDSPI_OBJ*)&gDrvSDSPIObj[clientObj->drvIndex];
@@ -1840,7 +1861,7 @@ void DRV_SDSPI_EventHandlerSet
 {
     DRV_SDSPI_CLIENT_OBJ* clientObj;
 
-    clientObj = _DRV_SDSPI_DriverHandleValidate (handle);
+    clientObj = lDRV_SDSPI_DriverHandleValidate (handle);
     if (clientObj != NULL)
     {
         /* Set the event handler */
@@ -1858,7 +1879,7 @@ DRV_SDSPI_COMMAND_STATUS DRV_SDSPI_CommandStatusGet(
     DRV_SDSPI_OBJ* dObj;
     DRV_SDSPI_COMMAND_STATUS status = DRV_SDSPI_COMMAND_COMPLETED;
 
-    clientObj = _DRV_SDSPI_DriverHandleValidate (handle);
+    clientObj = lDRV_SDSPI_DriverHandleValidate (handle);
 
     if (clientObj != NULL)
     {

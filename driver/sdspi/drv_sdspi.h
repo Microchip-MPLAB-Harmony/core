@@ -40,8 +40,8 @@
  *******************************************************************************/
 // DOM-IGNORE-END
 
-#ifndef _DRV_SDSPI_H
-#define _DRV_SDSPI_H
+#ifndef DRV_SDSPI_H
+#define DRV_SDSPI_H
 
 // *****************************************************************************
 // *****************************************************************************
@@ -219,21 +219,18 @@ typedef SYS_MEDIA_BLOCK_COMMAND_HANDLE  DRV_SDSPI_COMMAND_HANDLE;
         DRV_SDSPI_COMMAND_HANDLE commandHandle,
         uintptr_t contextHandle
     )
-    {
-        // contextHandle points to myAppObj.
+    { 
 
         switch(event)
         {
             case DRV_SDSPI_EVENT_COMMAND_COMPLETE:
             {
-                // This means the data was transferred successfully
                 break;
             }
 
             case DRV_SDSPI_EVENT_COMMAND_ERROR:
             {
-                // Error handling here
-                break;
+               break;
             }
 
             default:
@@ -289,48 +286,48 @@ typedef SYS_MEDIA_EVENT_HANDLER     DRV_SDSPI_EVENT_HANDLER;
     SYS_MODULE_OBJ      objectHandle;
 
     DRV_SDSPI_PLIB_INTERFACE drvSDSPI0PlibAPI = {
-        // SPI PLIB WriteRead function
+       
         .writeRead = (DRV_SDSPI_WRITEREAD)SPI0_WriteRead,
-        // SPI PLIB Write function
+        
         .write = (DRV_SDSPI_WRITE)SPI0_Write,
-        // SPI PLIB Read function
+        
         .read = (DRV_SDSPI_READ)SPI0_Read,
-        // SPI PLIB Transfer Status function
+        
         .isBusy = (DRV_SDSPI_IS_BUSY)SPI0_IsBusy,
-        // SPI PLIB Transfer Setup function
+        
         .transferSetup = (DRV_SDSPI_SETUP)SPI0_TransferSetup,
-        // SPI PLIB Callback Register
+        
         .callbackRegister = (DRV_SDSPI_CALLBACK_REGISTER)SPI0_CallbackRegister,
     };
 
     DRV_SDSPI_INIT drvSDSPI0InitData = {
-        // SD Card SPI PLIB API interface
+       
         .spiPlib            = &drvSDSPI0PlibAPI,
         .remapDataBits = drvSDSPI0remapDataBits,
         .remapClockPolarity = drvSDSPI0remapClockPolarity,
         .remapClockPhase = drvSDSPI0remapClockPhase,
-        // SDSPI Number of clients
+        
         .numClients         = DRV_SDSPI_CLIENTS_NUMBER_IDX0,
-        // SDSPI Client Objects Pool
+        
         .clientObjPool      = (uintptr_t)&drvSDSPI0ClientObjPool[0],
         .chipSelectPin      = DRV_SDSPI_CHIP_SELECT_PIN_IDX0,
         .SDSPISpeedHz      = DRV_SDSPI_SPEED_HZ_IDX0,
         .writeProtectPin    = SYS_PORT_PIN_NONE,
         .isFsEnabled   = DRV_SDSPI_REGISTER_WITH_FS_IDX0,
-        // DMA Channel for Transmit
+       
         .txDMAChannel = DRV_SDSPI_XMIT_DMA_CH_IDX0,
-        // DMA Channel for Receive
+       
         .rxDMAChannel  = DRV_SDSPI_RCV_DMA_CH_IDX0,
-        // SPI Transmit Register
+       
         .txAddress = (void *)&(SPI0_REGS->SPI_TDR),
-        // SPI Receive Register
+       
         .rxAddress  = (void *)&(SPI0_REGS->SPI_RDR),
     };
 
     objectHandle = DRV_SDSPI_Initialize(DRV_SDSPI_INDEX_0, (SYS_MODULE_INIT *)&drvSDSPI0InitData);
     if (objectHandle == SYS_MODULE_OBJ_INVALID)
     {
-        // Handle error
+        
     }
     </code>
 
@@ -379,21 +376,21 @@ SYS_MODULE_OBJ DRV_SDSPI_Initialize(
 
   Example:
     <code>
-    SYS_MODULE_OBJ      object;     // Returned from DRV_SDSPI_Initialize
+    SYS_MODULE_OBJ      object;     
     SYS_STATUS          status;
 
     status = DRV_SDSPI_Status(object);
 
     if (status == SYS_STATUS_READY)
     {
-        // Driver is initialized and ready.
+        
     }
     </code>
 
   Remarks:
     This operation can be used to determine if the driver is initialized or not.
 */
-SYS_STATUS DRV_SDSPI_Status( const SYS_MODULE_OBJ object );
+SYS_STATUS DRV_SDSPI_Status( SYS_MODULE_OBJ object );
 
 // *****************************************************************************
 /* Function:
@@ -436,7 +433,7 @@ SYS_STATUS DRV_SDSPI_Status( const SYS_MODULE_OBJ object );
 
     if (handle == DRV_HANDLE_INVALID)
     {
-        // Unable to open the driver
+        
     }
     </code>
 
@@ -476,7 +473,7 @@ DRV_HANDLE DRV_SDSPI_Open(const SYS_MODULE_INDEX drvIndex, const DRV_IO_INTENT i
 
   Example:
     <code>
-    DRV_HANDLE handle;  // Returned from DRV_SDSPI_Open
+    DRV_HANDLE handle;  
 
     DRV_SDSPI_Close (handle);
     </code>
@@ -521,14 +518,12 @@ void DRV_SDSPI_Close(const DRV_HANDLE handle);
 
   Example:
     <code>
-    //sysObj.drvSDSPI0 is returned by the driver initialization routine
-
-    //For synchronous driver
+    
     while(1)
     {
         DRV_SDSPI_Tasks(sysObj.drvSDSPI0);
 
-        // Yield and allow other threads to run
+        
         vTaskDelay(100 / portTICK_PERIOD_MS);
     }
     </code>
@@ -589,19 +584,17 @@ void DRV_SDSPI_Tasks ( SYS_MODULE_OBJ object );
     #define MY_BUFFER_SIZE 1024
     uint8_t CACHE_ALIGN myBuffer[MY_BUFFER_SIZE];
 
-    // Address must be block aligned.
+    
     uint32_t blockStart = 0x00;
-    uint32_t nBlock = 2;
-
-    // mySDSPIHandle is the handle returned by the DRV_SDSPI_Open function.
+    uint32_t nBlock = 2;    
 
     if (DRV_SDSPI_SyncRead(mySDSPIHandle, myBuffer, blockStart, nBlock) == true)
     {
-        // Read successful
+        
     }
     else
     {
-        // Error handling here
+        
     }
 
     </code>
@@ -672,34 +665,29 @@ bool DRV_SDSPI_SyncRead (
     <code>
     uint8_t CACHE_ALIGN myBuffer[MY_BUFFER_SIZE];
 
-    // address should be block aligned.
+   
     uint32_t blockStart = 0x00;
     uint32_t nBlock = 2;
     DRV_SDSPI_COMMAND_HANDLE commandHandle;
-    MY_APP_OBJ myAppObj;
-
-    // Event is received when
-    // the buffer is processed.
+    MY_APP_OBJ myAppObj;   
+   
 
     void APP_SDSPIEventHandler(
         DRV_SDSPI_EVENT event,
         DRV_SDSPI_COMMAND_HANDLE commandHandle,
         uintptr_t contextHandle
     )
-    {
-        // contextHandle points to myAppObj.
+    {      
 
         switch(event)
         {
             case DRV_SDSPI_EVENT_COMMAND_COMPLETE:
             {
-                // This means the data was transferred successfully
                 break;
             }
 
             case DRV_SDSPI_EVENT_COMMAND_ERROR:
             {
-                // Error handling here
                 break;
             }
 
@@ -709,22 +697,18 @@ bool DRV_SDSPI_SyncRead (
             }
         }
     }
-
-    // mySDSPIHandle is the handle returned
-    // by the DRV_SDSPI_Open function.
-
-    // Client registers an event handler with driver
+    
     DRV_SDSPI_EventHandlerSet(mySDSPIHandle, APP_SDSPIEventHandler, (uintptr_t)&myAppObj);
 
     DRV_SDSPI_AsyncRead(mySDSPIHandle, &commandHandle, &myBuffer[0], blockStart, nBlock);
 
     if(commandHandle == DRV_SDMMC_COMMAND_HANDLE_INVALID)
     {
-        // Error handling here
+        
     }
     else
     {
-        // Read Successfully queued
+        
     }
     </code>
 
@@ -791,20 +775,19 @@ void DRV_SDSPI_AsyncRead
 
     #define MY_BUFFER_SIZE          1024
     uint8_t CACHE_ALIGN myBuffer[MY_BUFFER_SIZE];
-
-    // Address must be block aligned.
+   
     uint32_t blockStart = 0x00;
     uint32_t nBlock = 2;
 
-    // mySDSPIHandle is the handle returned by the DRV_SDSPI_Open function.
+    
 
     if (DRV_SDSPI_SyncWrite(mySDSPIHandle, myBuffer, blockStart, nBlock) == true)
     {
-        // Write is successful
+       
     }
     else
     {
-        // Error handling here
+        
     }
     </code>
 
@@ -880,35 +863,28 @@ bool DRV_SDSPI_SyncWrite(
     <code>
 
     uint8_t CACHE_ALIGN myBuffer[MY_BUFFER_SIZE];
-
-    // address should be block aligned.
+    
     uint32_t blockStart = 0x00;
     uint32_t nBlock = 2;
     DRV_SDSPI_COMMAND_HANDLE commandHandle;
-    MY_APP_OBJ myAppObj;
-
-    // Event is received when
-    // the buffer is processed.
+    MY_APP_OBJ myAppObj;    
 
     void APP_SDSPIEventHandler(
         DRV_SDSPI_EVENT event,
         DRV_SDSPI_COMMAND_HANDLE commandHandle,
         uintptr_t contextHandle
     )
-    {
-        // contextHandle points to myAppObj.
+    {   
 
         switch(event)
         {
             case DRV_SDSPI_EVENT_COMMAND_COMPLETE:
-            {
-                // This means the data was transferred successfully
+            {               
                 break;
             }
 
             case DRV_SDSPI_EVENT_COMMAND_ERROR:
-            {
-                // Error handling here
+            {               
                 break;
             }
 
@@ -918,18 +894,14 @@ bool DRV_SDSPI_SyncWrite(
             }
         }
     }
-
-    // mySDSPIHandle is the handle returned
-    // by the DRV_SDSPI_Open function.
-
-    // Client registers an event handler with driver
+    
     DRV_SDSPI_EventHandlerSet(mySDSPIHandle, APP_SDSPIEventHandler, (uintptr_t)&myAppObj);
 
     DRV_SDSPI_AsyncWrite(mySDSPIHandle, &commandHandle, &myBuffer[0], blockStart, nBlock);
 
     if(commandHandle == DRV_SDSPI_COMMAND_HANDLE_INVALID)
     {
-        // Error handling here
+       
     }
     </code>
 
@@ -978,13 +950,12 @@ void DRV_SDSPI_AsyncWrite
     <code>
 
     bool isSDSPIAttached;
-
-    // mySDSPIHandle is the handle returned by the DRV_SDSPI_Open function.
+    
     isSDSPIAttached = DRV_SDSPI_IsAttached(mySDSPIHandle);
 
     if (isSDSPIAttached == true)
     {
-        // SD Card is attached and initialized by the SDSPI driver.
+        
     }
 
     </code>
@@ -1032,13 +1003,12 @@ bool DRV_SDSPI_IsAttached(const DRV_HANDLE handle);
   Example:
     <code>
 
-    bool isWriteProtected;
-    // mySDSPIHandle is the handle returned by the DRV_SDSPI_Open function.
+    bool isWriteProtected;   
     isWriteProtected = DRV_SDSPI_IsWriteProtected(mySDSPIHandle);
 
     if (isWriteProtected == true)
     {
-        //SD Card is write protected.
+        
     }
 
     </code>
@@ -1085,8 +1055,7 @@ bool DRV_SDSPI_IsWriteProtected( const DRV_HANDLE handle );
     SYS_MEDIA_GEOMETRY * SDSPIGeometry;
     uint32_t readBlockSize, writeBlockSize, eraseBlockSize;
     uint32_t nReadBlocks, nReadRegions, totalSize;
-
-    // mySDSPIHandle is the handle returned by the DRV_SDSPI_Open function.
+   
     SDSPIGeometry = DRV_SDSPI_GeometryGet(mySDSPIHandle);
 
     readBlockSize  = SDSPIGeometry->geometryTable->blockSize;
@@ -1155,29 +1124,26 @@ SYS_MEDIA_GEOMETRY * DRV_SDSPI_GeometryGet ( const DRV_HANDLE handle );
     None.
 
   Example:
-    <code>
-    // Event is received when
-    // the buffer is processed.
+    <code>    
 
     void APP_SDSPIEventHandler(
         DRV_SDSPI_EVENT event,
         DRV_SDSPI_COMMAND_HANDLE commandHandle,
         uintptr_t contextHandle
     )
-    {
-        // contextHandle points to myAppObj.
+    {       
 
         switch(event)
         {
             case DRV_SDSPI_EVENT_COMMAND_COMPLETE:
             {
-                // This means the data was transferred successfully
+                
                 break;
             }
 
             case DRV_SDSPI_EVENT_COMMAND_ERROR:
             {
-                // Error handling here
+               
                 break;
             }
 
@@ -1187,11 +1153,7 @@ SYS_MEDIA_GEOMETRY * DRV_SDSPI_GeometryGet ( const DRV_HANDLE handle );
             }
         }
     }
-
-    // mySDSPIHandle is the handle returned
-    // by the DRV_SDSPI_Open function.
-
-    // Client registers an event handler with driver
+    
     DRV_SDSPI_EventHandlerSet(mySDSPIHandle, APP_SDSPIEventHandler, (uintptr_t)&myAppObj);
     </code>
 
@@ -1376,7 +1338,7 @@ void DRV_SDSPI_Write(
 }
 #endif
 
-#endif // #ifndef _DRV_SDSPI_H
+#endif // #ifndef DRV_SDSPI_H
 /*******************************************************************************
  End of File
 */

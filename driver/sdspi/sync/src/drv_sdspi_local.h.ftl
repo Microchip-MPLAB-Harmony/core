@@ -39,8 +39,8 @@
  *******************************************************************************/
 // DOM-IGNORE-END
 
-#ifndef _DRV_SDSPI_LOCAL_H
-#define _DRV_SDSPI_LOCAL_H
+#ifndef DRV_SDSPI_LOCAL_H
+#define DRV_SDSPI_LOCAL_H
 
 // *****************************************************************************
 // *****************************************************************************
@@ -61,56 +61,56 @@
 // *****************************************************************************
 // *****************************************************************************
 
-#define _DRV_SDSPI_CLIENT_INDEX_MASK               (0x000000FF)
-#define _DRV_SDSPI_INSTANCE_INDEX_MASK             (0x0000FF00)
-#define _DRV_SDSPI_TOKEN_MASK                      (0xFFFF0000)
-#define _DRV_SDSPI_TOKEN_MAX                       (0x0000FFFF)
+#define DRV_SDSPI_CLIENT_INDEX_MASK               (0x000000FFU)
+#define DRV_SDSPI_INSTANCE_INDEX_MASK             (0x0000FF00U)
+#define DRV_SDSPI_TOKEN_MASK                      (0xFFFF0000U)
+#define DRV_SDSPI_TOKEN_MAX                       (0x0000FFFFU)
 
-#define _DRV_SDSPI_INSTANCE_GET(object)            &gDrvSDSPIObj[object]
+#define DRV_SDSPI_INSTANCE_GET(object)            &gDrvSDSPIObj[object]
 
-#define _DRV_SDSPI_COMMAND_RESPONSE_TRIES           (8)
-#define _DRV_SDSPI_R1B_RESP_TIMEOUT                (100)
+#define DRV_SDSPI_COMMAND_RESPONSE_TRIES           (8)
+#define DRV_SDSPI_R1B_RESP_TIMEOUT                (100)
 
-#define _DRV_SDSPI_READ_TIMEOUT_IN_MS              (250)
-#define _DRV_SDSPI_WRITE_TIMEOUT_IN_MS             (250)
+#define DRV_SDSPI_READ_TIMEOUT_IN_MS              (250)
+#define DRV_SDSPI_WRITE_TIMEOUT_IN_MS             (250)
 
-#define _DRV_SDSPI_APP_CMD_RESP_TIMEOUT_IN_MS      (1000)
-#define _DRV_SDSPI_CSD_TOKEN_TIMEOUT_IN_MS         (1000)
+#define DRV_SDSPI_APP_CMD_RESP_TIMEOUT_IN_MS      (1000)
+#define DRV_SDSPI_CSD_TOKEN_TIMEOUT_IN_MS         (1000)
 
 #if defined (DRV_SDSPI_ENABLE_WRITE_PROTECT_CHECK)
-    #define _DRV_SDSPI_EnableWriteProtectCheck() true
+    #define DRV_SDSPI_EnableWriteProtectCheck() true
 #else
-    #define _DRV_SDSPI_EnableWriteProtectCheck() false
+    #define DRV_SDSPI_EnableWriteProtectCheck() false
 #endif
 
 /* This macro holds the value of the initial communication speed with SD card.
  * SD card only work at <=400kHz SPI frequency during initialization.
 */
-#define _DRV_SDSPI_SPI_INITIAL_SPEED                            (400000)
+#define DRV_SDSPI_SPI_INITIAL_SPEED                            (400000)
 
 /* No of bytes to be read for SD card CSD. */
-#define _DRV_SDSPI_CSD_READ_SIZE                                (20)
+#define DRV_SDSPI_CSD_READ_SIZE                                (20)
 
 /* No of bytes to be read for SD card CSD. */
-#define _DRV_SDSPI_CID_READ_SIZE                                (20)
+#define DRV_SDSPI_CID_READ_SIZE                                (20)
 
 /* SD card V2 device type Check. */
-#define _DRV_SDSPI_CHECK_V2_DEVICE                              (0xC0)
+#define DRV_SDSPI_CHECK_V2_DEVICE                              (0xC0U)
 
 /* SD card Block size */
-#define _DRV_SDSPI_MEDIA_BLOCK_SIZE                             (512)
+#define DRV_SDSPI_MEDIA_BLOCK_SIZE                             (512)
 
 /* SD card transmit bit position. */
-#define DRV_SDSPI_TRANSMIT_SET                                  (0x40)
+#define DRV_SDSPI_TRANSMIT_SET                                  (0x40U)
 
 /* Write response token bit mask.*/
-#define DRV_SDSPI_WRITE_RESPONSE_TOKEN_MASK                     (0x1F)
+#define DRV_SDSPI_WRITE_RESPONSE_TOKEN_MASK                     (0x1FU)
 
 /* SPI Bus floating */
 #define DRV_SDSPI_MMC_FLOATING_BUS                              (0xFF)
 
 /* SD card start single data block token. */
-#define DRV_SDSPI_DATA_START_TOKEN                              (0xFE)
+#define DRV_SDSPI_DATA_START_TOKEN                              (0xFEU)
 
 /* SD card start multiple blocks token. */
 #define DRV_SDSPI_DATA_START_MULTI_BLOCK_TOKEN                  (0xFC)
@@ -119,16 +119,16 @@
 #define DRV_SDSPI_DATA_STOP_TRAN_TOKEN                          (0xFD)
 
 /* SD card data accepted token. */
-#define DRV_SDSPI_DATA_ACCEPTED                                 (0x05)
+#define DRV_SDSPI_DATA_ACCEPTED                                 (0x05U)
 
 /* SD card R1 response end bit. */
-#define CMD_R1_END_BIT_SET                                      (0x01)
+#define CMD_R1_END_BIT_SET                                      (0x01U)
 
 /* SD card initial packet size. */
 #define DRV_SDSPI_PACKET_SIZE                                   (6)
 
 /* SD card Media initialization array size. */
-#define MEDIA_INIT_ARRAY_SIZE                                   (10)
+#define MEDIA_INIT_ARRAY_SIZE                                   (10U)
 
 /* SD card Media detect retry period in Milliseconds. */
 #define MEDIA_DETECT_RETRY_PERIOD_MS                            (5)
@@ -733,9 +733,9 @@ typedef struct
     /* SD card type, will be updated by initialization function */
     DRV_SDSPI_TYPE                      sdCardType;
 
-    uint8_t                             csdData[_DRV_SDSPI_CSD_READ_SIZE];
+    uint8_t                             csdData[DRV_SDSPI_CSD_READ_SIZE];
 
-    uint8_t                             cidData[_DRV_SDSPI_CID_READ_SIZE];
+    uint8_t                             cidData[DRV_SDSPI_CID_READ_SIZE];
 
     uint8_t                             cmdResponse[5];
 
@@ -804,7 +804,7 @@ typedef struct
 } DRV_SDSPI_OBJ;
 
 /* SD Card Driver Client Object. */
-typedef struct _DRV_SDSPI_CLIENT_OBJ_STRUCT
+typedef struct DRV_SDSPI_CLIENT_OBJ_STRUCT_T
 {
     /* The hardware instance index associate with the client */
     uint8_t                                        drvIndex;
@@ -826,4 +826,4 @@ typedef struct _DRV_SDSPI_CLIENT_OBJ_STRUCT
 
 } DRV_SDSPI_CLIENT_OBJ;
 
-#endif //#ifndef _DRV_SDSPI_LOCAL_H
+#endif //#ifndef DRV_SDSPI_LOCAL_H

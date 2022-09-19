@@ -40,8 +40,8 @@
  *******************************************************************************/
 // DOM-IGNORE-END
 
-#ifndef _DRV_SDSPI_DRIVER_INTERFACE_H
-#define _DRV_SDSPI_DRIVER_INTERFACE_H
+#ifndef DRV_SDSPI_DRIVER_INTERFACE_H
+#define DRV_SDSPI_DRIVER_INTERFACE_H
 
 // *****************************************************************************
 // *****************************************************************************
@@ -70,7 +70,7 @@
     handler (in the callback registered by SPI Driver) once the transfer is complete.
 */
 
-bool _DRV_SDSPI_SPIBlockWrite(
+bool DRV_SDSPI_SPIBlockWrite(
     DRV_SDSPI_OBJ* dObj,
     void* pWriteBuffer
 );
@@ -88,7 +88,7 @@ bool _DRV_SDSPI_SPIBlockWrite(
     handler (in the callback registered by SPI Driver) once the transfer is complete.
 */
 
-bool _DRV_SDSPI_SPIWrite(
+bool DRV_SDSPI_SPIWrite(
     DRV_SDSPI_OBJ* dObj,
     void* pWriteBuffer,
     uint32_t nBytes
@@ -107,7 +107,7 @@ bool _DRV_SDSPI_SPIWrite(
     handler (in the callback registered by SPI Driver) once the transfer is complete.
 */
 
-bool _DRV_SDSPI_SPIWriteWithChipSelectDisabled(
+bool DRV_SDSPI_SPIWriteWithChipSelectDisabled(
     DRV_SDSPI_OBJ* dObj,
     void* pWriteBuffer,
     uint32_t nBytes
@@ -126,7 +126,7 @@ bool _DRV_SDSPI_SPIWriteWithChipSelectDisabled(
     handler (in the callback registered by SPI Driver) once the transfer is complete.
 */
 
-bool _DRV_SDSPI_SPIBlockRead(
+bool DRV_SDSPI_SPIBlockRead(
     DRV_SDSPI_OBJ* dObj,
     void* pReadBuffer
 );
@@ -144,7 +144,7 @@ bool _DRV_SDSPI_SPIBlockRead(
     handler (in the callback registered by SPI Driver) once the transfer is complete.
 */
 
-bool _DRV_SDSPI_SPIRead(
+bool DRV_SDSPI_SPIRead(
     DRV_SDSPI_OBJ* dObj,
     void* pReadBuffer,
     uint32_t nBytes
@@ -163,7 +163,7 @@ bool _DRV_SDSPI_SPIRead(
   Remarks:
     None
 */
-bool _DRV_SDSPI_SPIExclusiveAccess(DRV_SDSPI_OBJ* const dObj, bool isExclusive);
+bool DRV_SDSPI_SPIExclusiveAccess(DRV_SDSPI_OBJ* const dObj, bool isExclusive);
 
 // *****************************************************************************
 /* Card Insertion/Removal Polling Timer
@@ -179,7 +179,7 @@ bool _DRV_SDSPI_SPIExclusiveAccess(DRV_SDSPI_OBJ* const dObj, bool isExclusive);
 
 */
 
-bool _DRV_SDSPI_CardDetectPollingTimerStart(
+bool DRV_SDSPI_CardDetectPollingTimerStart(
     DRV_SDSPI_OBJ* const dObj,
     uint32_t period
 );
@@ -197,7 +197,7 @@ bool _DRV_SDSPI_CardDetectPollingTimerStart(
 
 */
 
-bool _DRV_SDSPI_TimerStart(
+bool DRV_SDSPI_TimerStart(
     DRV_SDSPI_OBJ* const dObj,
     uint32_t period
 );
@@ -214,7 +214,7 @@ bool _DRV_SDSPI_TimerStart(
   Remarks:
 
 */
-bool _DRV_SDSPI_CmdResponseTimerStart(
+bool DRV_SDSPI_CmdResponseTimerStart(
     DRV_SDSPI_OBJ* const dObj,
     uint32_t period
 );
@@ -232,7 +232,7 @@ bool _DRV_SDSPI_CmdResponseTimerStart(
 
 */
 
-bool _DRV_SDSPI_TimerStop( DRV_SDSPI_OBJ* const dObj );
+bool DRV_SDSPI_TimerStop( DRV_SDSPI_OBJ* const dObj );
 
 // *****************************************************************************
 /* SD Card Command-Response Timer Stop
@@ -246,7 +246,7 @@ bool _DRV_SDSPI_TimerStop( DRV_SDSPI_OBJ* const dObj );
   Remarks:
 
 */
-bool _DRV_SDSPI_CmdResponseTimerStop( DRV_SDSPI_OBJ* const dObj );
+bool DRV_SDSPI_CmdResponseTimerStop( DRV_SDSPI_OBJ* const dObj );
 
 // *****************************************************************************
 /* SD Card SPI Speed Setup
@@ -262,10 +262,10 @@ bool _DRV_SDSPI_CmdResponseTimerStop( DRV_SDSPI_OBJ* const dObj );
 
 */
 
-bool _DRV_SDSPI_SPISpeedSetup(
+bool DRV_SDSPI_SPISpeedSetup(
     DRV_SDSPI_OBJ* const dObj,
     uint32_t clockFrequency,
     SYS_PORT_PIN chipSelectPin
 );
 
-#endif //#ifndef _DRV_SDSPI_DRIVER_INTERFACE_H
+#endif //#ifndef DRV_SDSPI_DRIVER_INTERFACE_H
