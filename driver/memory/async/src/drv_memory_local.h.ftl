@@ -39,8 +39,8 @@
 *******************************************************************************/
 //DOM-IGNORE-END
 
-#ifndef _DRV_MEMORY_LOCAL_H
-#define _DRV_MEMORY_LOCAL_H
+#ifndef DRV_MEMORY_LOCAL_H
+#define DRV_MEMORY_LOCAL_H
 
 // *****************************************************************************
 // *****************************************************************************
@@ -74,28 +74,28 @@
   Remarks:
     None
 */
-#define DRV_MEMORY_INDEX_MASK                           (0x000000FF)
-#define DRV_MEMORY_INSTANCE_INDEX_MASK                  (0x0000FF00)
-#define DRV_MEMORY_TOKEN_MASK                           (0xFFFF0000)
+#define DRV_MEMORY_INDEX_MASK                           (0x000000FFU)
+#define DRV_MEMORY_INSTANCE_INDEX_MASK                  (0x0000FF00U)
+#define DRV_MEMORY_TOKEN_MASK                           (0xFFFF0000U)
 #define DRV_MEMORY_TOKEN_MAX                            (DRV_MEMORY_TOKEN_MASK >> 16)
-#define DRV_MEMORY_MAKE_HANDLE(token, instance, index)  ((token) << 16 | (instance << 8) | (index))
+#define DRV_MEMORY_MAKE_HANDLE(token, instance, index)  (((token) << 16) | ((instance) << 8) | (index))
 
 /* MEMORY Driver operations. */
 typedef enum
 {
     /* Request is read operation. */
-    DRV_MEMORY_OPERATION_TYPE_READ = 0,
+    DRV_MEM_OP_TYPE_READ = 0,
 
     /* Request is write operation. */
-    DRV_MEMORY_OPERATION_TYPE_WRITE,
+    DRV_MEM_OP_TYPE_WRITE,
 
     /* Request is erase operation. */
-    DRV_MEMORY_OPERATION_TYPE_ERASE,
+    DRV_MEM_OP_TYPE_ERASE,
 
     /* Request is erase write operation. */
-    DRV_MEMORY_OPERATION_TYPE_ERASE_WRITE
+    DRV_MEM_OP_TYPE_ERASE_WRITE
 
-} DRV_MEMORY_OPERATION_TYPE;
+} DRV_MEM_OP_TYPE;
 
 /* MEMORY Driver write states. */
 typedef enum
@@ -201,7 +201,7 @@ typedef struct DRV_MEMORY_CLIENT_OBJ_STRUCT
  * MEMORY Driver Buffer Object that services
  * a driver request.
  ******************************************/
-typedef struct _DRV_MEMORY_BUFFER_OBJECT
+typedef struct DRV_MEMORY_BUFFER_OBJECT_T
 {
     /* Buffer Object array index */
     uint32_t index;
@@ -225,10 +225,10 @@ typedef struct _DRV_MEMORY_BUFFER_OBJECT
     uint32_t nBlocks;
 
     /* Operation type - read/write/erase/erasewrite */
-    DRV_MEMORY_OPERATION_TYPE opType;
+    DRV_MEM_OP_TYPE opType;
 
     /* Pointer to the next buffer in the queue */
-    struct _DRV_MEMORY_BUFFER_OBJECT *next;
+    struct DRV_MEMORY_BUFFER_OBJECT_T *next;
 
 } DRV_MEMORY_BUFFER_OBJECT;
 
@@ -363,7 +363,7 @@ typedef MEMORY_DEVICE_TRANSFER_STATUS (*DRV_MEMORY_TransferOperation)(
     uint32_t nBlocks
 );
 
-#endif //#ifndef _DRV_MEMORY_LOCAL_H
+#endif //#ifndef DRV_MEMORY_LOCAL_H
 
 /*******************************************************************************
  End of File
