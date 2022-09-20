@@ -301,11 +301,12 @@ def instantiateComponent(memoryComponent, index):
     configName = Variables.get("__CONFIGURATION_NAME")
 
     memoryHeaderFile = memoryComponent.createFileSymbol("DRV_MEMORY_HEADER", None)
-    memoryHeaderFile.setSourcePath("driver/memory/drv_memory.h")
+    memoryHeaderFile.setSourcePath("driver/memory/drv_memory.h.ftl")
     memoryHeaderFile.setOutputName("drv_memory.h")
     memoryHeaderFile.setDestPath("driver/memory/")
     memoryHeaderFile.setProjectPath("config/" + configName + "/driver/memory/")
     memoryHeaderFile.setType("HEADER")
+    memoryHeaderFile.setMarkup(True)
     memoryHeaderFile.setOverwrite(True)
 
     memoryHeaderDefFile = memoryComponent.createFileSymbol("DRV_MEMORY_HEADER_DEF", None)

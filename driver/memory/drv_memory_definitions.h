@@ -39,8 +39,8 @@
 * THAT YOU HAVE PAID DIRECTLY TO MICROCHIP FOR THIS SOFTWARE.
 *******************************************************************************/
 //DOM-IGNORE-END
-#ifndef _DRV_MEMORY_DEFINITIONS_H
-#define _DRV_MEMORY_DEFINITIONS_H
+#ifndef DRV_MEMORY_DEFINITIONS_H
+#define DRV_MEMORY_DEFINITIONS_H
 
 // *****************************************************************************
 // *****************************************************************************
@@ -241,7 +241,7 @@ typedef struct
 }
 #endif
 
-#endif // #ifndef _DRV_MEMORY_DEFINITIONS_H
+#endif // #ifndef DRV_MEMORY_DEFINITIONS_H
 /*******************************************************************************
  End of File
 */

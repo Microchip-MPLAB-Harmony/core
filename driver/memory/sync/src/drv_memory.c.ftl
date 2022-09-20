@@ -73,7 +73,7 @@ static MEMORY_DEVICE_TRANSFER_STATUS DRV_MEMORY_HandleRead
 (
     DRV_MEMORY_OBJECT *dObj,
     uint8_t *data,
-    uint32_t blockAddress,
+    uint32_t blockStart,
     uint32_t nBlocks
 );
 
@@ -81,7 +81,7 @@ static MEMORY_DEVICE_TRANSFER_STATUS DRV_MEMORY_HandleWrite
 (
     DRV_MEMORY_OBJECT *dObj,
     uint8_t *data,
-    uint32_t blockAddress,
+    uint32_t blockStart,
     uint32_t nBlocks
 );
 
@@ -89,14 +89,14 @@ static MEMORY_DEVICE_TRANSFER_STATUS DRV_MEMORY_HandleErase
 (
     DRV_MEMORY_OBJECT *dObj,
     uint8_t *data,
-    uint32_t blockAddress,
+    uint32_t blockStart,
     uint32_t nBlocks
 );
 static MEMORY_DEVICE_TRANSFER_STATUS DRV_MEMORY_HandleEraseWrite
 (
     DRV_MEMORY_OBJECT *dObj,
     uint8_t *data,
-    uint32_t blockAddress,
+    uint32_t blockStart,
     uint32_t nBlocks
 );
 
@@ -118,13 +118,13 @@ static void DRV_MEMORY_EventHandler( MEMORY_DEVICE_TRANSFER_STATUS status, uintp
 {
     DRV_MEMORY_OBJECT *dObj = (DRV_MEMORY_OBJECT *)context;
     dObj->isTransferDone = true;
-    OSAL_SEM_PostISR(&dObj->transferDone);
+    (void) OSAL_SEM_PostISR(&dObj->transferDone);
 }
 
 static void DRV_MEMORY_TimerHandler( uintptr_t context )
 {
     DRV_MEMORY_OBJECT *dObj = (DRV_MEMORY_OBJECT *)context;
-    OSAL_SEM_PostISR(&dObj->transferDone);
+    (void) OSAL_SEM_PostISR(&dObj->transferDone);
 }
 
 static inline uint16_t DRV_MEMORY_UPDATE_TOKEN(uint16_t token)
@@ -157,7 +157,7 @@ static void DRV_MEMORY_AllocateBufferObject
 
     bufferObj = &dObj->currentBufObj;
 
-    bufferObj->commandHandle = DRV_MEMORY_MAKE_HANDLE(dObj->bufferToken, clientObj->drvIndex, 0);
+    bufferObj->commandHandle = DRV_MEMORY_MAKE_HANDLE((uint32_t)dObj->bufferToken, (uint32_t)clientObj->drvIndex, 0U);
     bufferObj->hClient       = clientObj;
     bufferObj->buffer        = buffer;
     bufferObj->blockStart    = blockStart;
@@ -189,10 +189,10 @@ static DRV_MEMORY_CLIENT_OBJECT * DRV_MEMORY_DriverHandleValidate
     DRV_MEMORY_OBJECT *dObj = NULL;
 
     /* Validate the handle */
-    if ((handle != DRV_HANDLE_INVALID) && (handle != 0))
+    if ((handle != DRV_HANDLE_INVALID) && (handle != 0U))
     {
-        instance = ((handle & DRV_MEMORY_INSTANCE_INDEX_MASK) >> 8);
-        clientIndex = (handle & DRV_MEMORY_INDEX_MASK);
+        instance = (uint8_t)((handle & DRV_MEMORY_INSTANCE_INDEX_MASK) >> 8);
+        clientIndex = (uint8_t)(handle & DRV_MEMORY_INDEX_MASK);
 
         if (instance >= DRV_MEMORY_INSTANCES_NUMBER)
         {
@@ -250,7 +250,7 @@ static bool DRV_MEMORY_UpdateGeometry( DRV_MEMORY_OBJECT *dObj )
     dObj->eraseBlockSize = memoryDeviceGeometry.erase_blockSize;
 
     /* Update the Media Geometry Main Structure */
-    dObj->mediaGeometryObj.mediaProperty = (SYS_MEDIA_PROPERTY)(SYS_MEDIA_READ_IS_BLOCKING | SYS_MEDIA_WRITE_IS_BLOCKING);
+    dObj->mediaGeometryObj.mediaProperty = (SYS_MEDIA_PROPERTY)((uint32_t)SYS_MEDIA_READ_IS_BLOCKING | (uint32_t)SYS_MEDIA_WRITE_IS_BLOCKING);
 
     /* Number of read, write and erase entries in the table */
     dObj->mediaGeometryObj.numReadRegions = memoryDeviceGeometry.numReadRegions;
@@ -262,7 +262,19 @@ static bool DRV_MEMORY_UpdateGeometry( DRV_MEMORY_OBJECT *dObj )
 
     return true;
 }
-
+/* MISRA C-2012 Rule 16.1, 16.3, 16.5 and 16.6 deviated below. 
+   Deviation record ID -  H3_MISRAC_2012_R_11_3_DR_1 & H3_MISRAC_2012_R_11_8_DR_1*/
+<#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
+<#if core.COMPILER_CHOICE == "XC32">
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wunknown-pragmas"
+</#if>
+#pragma coverity compliance block \
+(deviate:4 "MISRA C-2012 Rule 16.1" "H3_MISRAC_2012_R_16_1_DR_1" )\
+(deviate:8 "MISRA C-2012 Rule 16.3" "H3_MISRAC_2012_R_16_3_DR_1" )\
+(deviate:4 "MISRA C-2012 Rule 16.5" "H3_MISRAC_2012_R_16_5_DR_1" )\
+(deviate:3 "MISRA C-2012 Rule 16.6" "H3_MISRAC_2012_R_16_6_DR_1" )    
+</#if>
 static MEMORY_DEVICE_TRANSFER_STATUS DRV_MEMORY_HandleRead
 (
     DRV_MEMORY_OBJECT *dObj,
@@ -271,7 +283,7 @@ static MEMORY_DEVICE_TRANSFER_STATUS DRV_MEMORY_HandleRead
     uint32_t nBlocks
 )
 {
-    uint32_t transferStatus = MEMORY_DEVICE_TRANSFER_ERROR_UNKNOWN;
+    uint32_t transferStatus = (uint32_t)MEMORY_DEVICE_TRANSFER_ERROR_UNKNOWN;
     uint32_t address = 0;
 
     switch (dObj->readState)
@@ -289,7 +301,7 @@ static MEMORY_DEVICE_TRANSFER_STATUS DRV_MEMORY_HandleRead
             if (dObj->memoryDevice->Read(dObj->memDevHandle, (void *)data, nBlocks, address) == true)
             {
                 dObj->readState = DRV_MEMORY_READ_MEM_STATUS;
-                transferStatus = MEMORY_DEVICE_TRANSFER_BUSY;
+                transferStatus = (uint32_t)MEMORY_DEVICE_TRANSFER_BUSY;
                 /* Fall through For immediate check */
             }
             else
@@ -317,7 +329,7 @@ static MEMORY_DEVICE_TRANSFER_STATUS DRV_MEMORY_HandleWrite
     uint32_t nBlocks
 )
 {
-    uint32_t transferStatus = MEMORY_DEVICE_TRANSFER_ERROR_UNKNOWN;
+    uint32_t transferStatus = (uint32_t)MEMORY_DEVICE_TRANSFER_ERROR_UNKNOWN;
 
     switch (dObj->writeState)
     {
@@ -338,7 +350,7 @@ static MEMORY_DEVICE_TRANSFER_STATUS DRV_MEMORY_HandleWrite
             if (dObj->memoryDevice->PageWrite(dObj->memDevHandle, (void *)dObj->writePtr, dObj->blockAddress) == true)
             {
                 dObj->writeState = DRV_MEMORY_WRITE_MEM_STATUS;
-                transferStatus = MEMORY_DEVICE_TRANSFER_BUSY;
+                transferStatus = (uint32_t)MEMORY_DEVICE_TRANSFER_BUSY;
                 /* Fall through For immediate check */
             }
             else
@@ -352,18 +364,18 @@ static MEMORY_DEVICE_TRANSFER_STATUS DRV_MEMORY_HandleWrite
         {
             transferStatus = dObj->memoryDevice->TransferStatusGet(dObj->memDevHandle);
 
-            if (transferStatus == MEMORY_DEVICE_TRANSFER_COMPLETED)
+            if (transferStatus == (uint32_t)MEMORY_DEVICE_TRANSFER_COMPLETED)
             {
                 dObj->nBlocks--;
 
-                if (dObj->nBlocks != 0)
+                if (dObj->nBlocks != 0U)
                 {
                     /* There is still data to be programmed. */
                     dObj->blockAddress += dObj->writeBlockSize;
                     dObj->writePtr += dObj->writeBlockSize;
 
                     dObj->writeState = DRV_MEMORY_WRITE_MEM;
-                    transferStatus = MEMORY_DEVICE_TRANSFER_BUSY;
+                    transferStatus = (uint32_t)MEMORY_DEVICE_TRANSFER_BUSY;
                 }
             }
 
@@ -382,7 +394,7 @@ static MEMORY_DEVICE_TRANSFER_STATUS DRV_MEMORY_HandleErase
     uint32_t nBlocks
 )
 {
-    uint32_t transferStatus = MEMORY_DEVICE_TRANSFER_ERROR_UNKNOWN;
+    uint32_t transferStatus = (uint32_t)MEMORY_DEVICE_TRANSFER_ERROR_UNKNOWN;
 
     switch (dObj->eraseState)
     {
@@ -401,7 +413,7 @@ static MEMORY_DEVICE_TRANSFER_STATUS DRV_MEMORY_HandleErase
             if (dObj->memoryDevice->SectorErase(dObj->memDevHandle, dObj->blockAddress) == true)
             {
                 dObj->eraseState = DRV_MEMORY_ERASE_CMD_STATUS;
-                transferStatus = MEMORY_DEVICE_TRANSFER_BUSY;
+                transferStatus = (uint32_t)MEMORY_DEVICE_TRANSFER_BUSY;
                 /* Fall through For immediate check */
             }
             else
@@ -415,17 +427,17 @@ static MEMORY_DEVICE_TRANSFER_STATUS DRV_MEMORY_HandleErase
         {
             transferStatus = dObj->memoryDevice->TransferStatusGet(dObj->memDevHandle);
 
-            if (transferStatus == MEMORY_DEVICE_TRANSFER_COMPLETED)
+            if (transferStatus == (uint32_t)MEMORY_DEVICE_TRANSFER_COMPLETED)
             {
                 dObj->nBlocks--;
 
-                if (dObj->nBlocks != 0)
+                if (dObj->nBlocks != 0U)
                 {
                     /* There is still data to be programmed. */
                     dObj->blockAddress += dObj->eraseBlockSize;
 
                     dObj->eraseState = DRV_MEMORY_ERASE_CMD;
-                    transferStatus = MEMORY_DEVICE_TRANSFER_BUSY;
+                    transferStatus = (uint32_t)MEMORY_DEVICE_TRANSFER_BUSY;
                 }
             }
 
@@ -445,10 +457,10 @@ static MEMORY_DEVICE_TRANSFER_STATUS DRV_MEMORY_HandleEraseWrite
 )
 {
     DRV_MEMORY_BUFFER_OBJECT *bufferObj = &dObj->currentBufObj;
-    uint8_t pagesPerSector = (dObj->eraseBlockSize / dObj->writeBlockSize);
+    uint8_t pagesPerSector = (uint8_t)(dObj->eraseBlockSize / dObj->writeBlockSize);
     uint32_t readBlockStart = 0;
 
-    uint32_t transferStatus = MEMORY_DEVICE_TRANSFER_ERROR_UNKNOWN;
+    uint32_t transferStatus = (uint32_t)MEMORY_DEVICE_TRANSFER_ERROR_UNKNOWN;
 
     switch (dObj->ewState)
     {
@@ -481,7 +493,7 @@ static MEMORY_DEVICE_TRANSFER_STATUS DRV_MEMORY_HandleEraseWrite
                 dObj->writePtr = bufferObj->buffer;
                 dObj->ewState = DRV_MEMORY_EW_ERASE_SECTOR;
 
-                transferStatus = MEMORY_DEVICE_TRANSFER_BUSY;
+                transferStatus = (uint32_t)MEMORY_DEVICE_TRANSFER_BUSY;
 
                 break;
             }
@@ -493,18 +505,18 @@ static MEMORY_DEVICE_TRANSFER_STATUS DRV_MEMORY_HandleEraseWrite
         {
             readBlockStart = (dObj->sectorNumber * dObj->eraseBlockSize);
 
-            transferStatus = DRV_MEMORY_HandleRead (dObj, dObj->ewBuffer, readBlockStart, dObj->eraseBlockSize);
+            transferStatus = (uint32_t)DRV_MEMORY_HandleRead (dObj, dObj->ewBuffer, readBlockStart, dObj->eraseBlockSize);
 
-            if (transferStatus == MEMORY_DEVICE_TRANSFER_COMPLETED)
+            if (transferStatus == (uint32_t)MEMORY_DEVICE_TRANSFER_COMPLETED)
             {
                 /* Find the offset from which the data is to be overlaid. */
                 dObj->blockOffsetInSector *= dObj->writeBlockSize;
 
-                memcpy ((void *)&dObj->ewBuffer[dObj->blockOffsetInSector], (const void *)bufferObj->buffer, dObj->nBlocksToWrite * dObj->writeBlockSize);
+                (void) memcpy ((void *)&dObj->ewBuffer[dObj->blockOffsetInSector], (const void *)bufferObj->buffer, dObj->nBlocksToWrite * dObj->writeBlockSize);
 
                 dObj->ewState = DRV_MEMORY_EW_ERASE_SECTOR;
 
-                transferStatus = MEMORY_DEVICE_TRANSFER_BUSY;
+                transferStatus = (uint32_t)MEMORY_DEVICE_TRANSFER_BUSY;
 
                 /* Fall through for Erase operation. */
             }
@@ -516,23 +528,23 @@ static MEMORY_DEVICE_TRANSFER_STATUS DRV_MEMORY_HandleEraseWrite
 
         case DRV_MEMORY_EW_ERASE_SECTOR:
         {
-            transferStatus = DRV_MEMORY_HandleErase(dObj, NULL, dObj->sectorNumber, 1);
-            if (transferStatus == MEMORY_DEVICE_TRANSFER_COMPLETED)
+            transferStatus = (uint32_t)DRV_MEMORY_HandleErase(dObj, NULL, dObj->sectorNumber, 1);
+            if (transferStatus == (uint32_t)MEMORY_DEVICE_TRANSFER_COMPLETED)
             {
                 dObj->ewState = DRV_MEMORY_EW_WRITE_SECTOR;
 
-                transferStatus = MEMORY_DEVICE_TRANSFER_BUSY;
+                transferStatus = (uint32_t)MEMORY_DEVICE_TRANSFER_BUSY;
             }
             break;
         }
 
         case DRV_MEMORY_EW_WRITE_SECTOR:
         {
-            transferStatus = DRV_MEMORY_HandleWrite (dObj, dObj->writePtr, dObj->sectorNumber * pagesPerSector, pagesPerSector);
+            transferStatus = (uint32_t)DRV_MEMORY_HandleWrite (dObj, dObj->writePtr, dObj->sectorNumber * pagesPerSector, pagesPerSector);
 
-            if (transferStatus == MEMORY_DEVICE_TRANSFER_COMPLETED)
+            if (transferStatus == (uint32_t)MEMORY_DEVICE_TRANSFER_COMPLETED)
             {
-                if ((bufferObj->nBlocks - dObj->nBlocksToWrite) == 0)
+                if ((bufferObj->nBlocks - dObj->nBlocksToWrite) == 0U)
                 {
                     /* This is the last write operation. */
                     break;
@@ -545,7 +557,7 @@ static MEMORY_DEVICE_TRANSFER_STATUS DRV_MEMORY_HandleEraseWrite
                 bufferObj->buffer += (dObj->nBlocksToWrite * dObj->writeBlockSize);
                 dObj->ewState = DRV_MEMORY_EW_INIT;
 
-                transferStatus = MEMORY_DEVICE_TRANSFER_BUSY;
+                transferStatus = (uint32_t)MEMORY_DEVICE_TRANSFER_BUSY;
             }
 
             break;
@@ -554,6 +566,18 @@ static MEMORY_DEVICE_TRANSFER_STATUS DRV_MEMORY_HandleEraseWrite
 
     return ((MEMORY_DEVICE_TRANSFER_STATUS)transferStatus);
 }
+/* MISRA C-2012 Rule 10.4 deviated below. False Positive record ID -  H3_MISRAC_2012_R_10_4_DR_1 */
+<#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
+#pragma coverity compliance block fp:9 "MISRA C-2012 Rule 10.4" "H3_MISRAC_2012_R_10_4_DR_1"        
+</#if>
+
+<#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
+#pragma coverity compliance end_block "MISRA C-2012 Rule 16.1"
+#pragma coverity compliance end_block "MISRA C-2012 Rule 16.3"
+#pragma coverity compliance end_block "MISRA C-2012 Rule 16.5"
+#pragma coverity compliance end_block "MISRA C-2012 Rule 16.6" 
+</#if> 
+/* MISRAC 2012 deviation block end */
 
 static bool DRV_MEMORY_StartXfer( DRV_MEMORY_OBJECT *dObj )
 {
@@ -578,7 +602,7 @@ static bool DRV_MEMORY_StartXfer( DRV_MEMORY_OBJECT *dObj )
 
     while (transferStatus == MEMORY_DEVICE_TRANSFER_BUSY)
     {
-        if ((dObj->isMemDevInterruptEnabled == false) && (dObj->memDevStatusPollUs > 0))
+        if ((dObj->isMemDevInterruptEnabled == false) && (dObj->memDevStatusPollUs > 0U))
         {
             handle = SYS_TIME_CallbackRegisterUS(DRV_MEMORY_TimerHandler, (uintptr_t)dObj, dObj->memDevStatusPollUs, SYS_TIME_SINGLE);
 
@@ -591,14 +615,14 @@ static bool DRV_MEMORY_StartXfer( DRV_MEMORY_OBJECT *dObj )
             */
             if (OSAL_RESULT_TRUE == OSAL_SEM_Pend( &dObj->transferDone, OSAL_WAIT_FOREVER ))
             {
-                    SYS_TIME_TimerDestroy(handle);
+                    (void) SYS_TIME_TimerDestroy(handle);
             }
             else
             {
                 return false;
             }
         }
-        else if ((dObj->isMemDevInterruptEnabled == true) && (dObj->memDevStatusPollUs == 0))
+        else if ((dObj->isMemDevInterruptEnabled == true) && (dObj->memDevStatusPollUs == 0U))
         {
             if (dObj->isTransferDone == false)
             {
@@ -610,6 +634,10 @@ static bool DRV_MEMORY_StartXfer( DRV_MEMORY_OBJECT *dObj )
                     return false;
                 }
             }
+        }
+        else
+        {
+            /* Nothing to do */
         }
 
         transferStatus = gMemoryXferFuncPtr[bufferObj->opType](dObj, &bufferObj->buffer[0], bufferObj->blockStart, bufferObj->nBlocks);
@@ -626,6 +654,10 @@ static bool DRV_MEMORY_StartXfer( DRV_MEMORY_OBJECT *dObj )
         /* The operation has failed. */
         bufferObj->status = DRV_MEMORY_COMMAND_ERROR_UNKNOWN;
         event = DRV_MEMORY_EVENT_COMMAND_ERROR;
+    }
+    else
+    {
+        /* Nothing to do */
     }
 
     clientObj = (DRV_MEMORY_CLIENT_OBJECT *)bufferObj->hClient;
@@ -670,7 +702,7 @@ static bool DRV_MEMORY_SetupXfer
     }
 
     /* Check if the driver was opened with read intent */
-    if (!(clientObj->intent & io_intent))
+    if (((uint32_t)clientObj->intent & (uint32_t)io_intent) == 0U)
     {
         SYS_DEBUG_MESSAGE(SYS_ERROR_INFO, "Memory Driver Opened with invalid intent.\n");
         return isSuccess;
@@ -684,7 +716,7 @@ static bool DRV_MEMORY_SetupXfer
         return isSuccess;
     }
 
-    if ((nBlock == 0) || ((blockStart + nBlock) > dObj->mediaGeometryTable[geometry_type].numBlocks))
+    if ((nBlock == 0U) || ((blockStart + nBlock) > dObj->mediaGeometryTable[geometry_type].numBlocks))
     {
         SYS_DEBUG_MESSAGE(SYS_ERROR_INFO, "Memory Driver Invalid Block parameters.\n");
         return isSuccess;
@@ -697,12 +729,16 @@ static bool DRV_MEMORY_SetupXfer
         {
             if (opType == DRV_MEMORY_OPERATION_TYPE_ERASE)
             {
-                OSAL_MUTEX_Unlock(&dObj->transferMutex);
+                (void) OSAL_MUTEX_Unlock(&dObj->transferMutex);
                 return isSuccess;
             }
             else if (opType == DRV_MEMORY_OPERATION_TYPE_ERASE_WRITE)
             {
                 opType = DRV_MEMORY_OPERATION_TYPE_WRITE;
+            }
+            else
+            {
+                /* Nothing to do */
             }
 
         }
@@ -711,7 +747,7 @@ static bool DRV_MEMORY_SetupXfer
 
         isSuccess = DRV_MEMORY_StartXfer(dObj);
 
-        OSAL_MUTEX_Unlock(&dObj->transferMutex);
+        (void) OSAL_MUTEX_Unlock(&dObj->transferMutex);
     }
 
     return isSuccess;
@@ -723,6 +759,8 @@ static bool DRV_MEMORY_SetupXfer
 // *****************************************************************************
 // *****************************************************************************
 
+void DRV_MEMORY_RegisterWithSysFs (const SYS_MODULE_INDEX drvIndex, uint8_t mediaType);
+
 __WEAK void DRV_MEMORY_RegisterWithSysFs
 (
     const SYS_MODULE_INDEX drvIndex,
@@ -731,6 +769,16 @@ __WEAK void DRV_MEMORY_RegisterWithSysFs
 {
 
 }
+/* 
+ * MISRA C-2012 Rule 11.1,11.3, and 11.8 deviated below. Deviation record ID -   
+ * H3_MISRAC_2012_R_11_1_DR_1, H3_MISRAC_2012_R_11_3_DR_1 & H3_MISRAC_2012_R_11_8_DR_1
+ */
+<#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
+#pragma coverity compliance block \
+(deviate:1 "MISRA C-2012 Rule 11.1" "H3_MISRAC_2012_R_11_1_DR_1" )\
+(deviate:1 "MISRA C-2012 Rule 11.3" "H3_MISRAC_2012_R_11_3_DR_1" )\
+(deviate:2 "MISRA C-2012 Rule 11.8" "H3_MISRAC_2012_R_11_8_DR_1" )   
+</#if>    
 
 SYS_MODULE_OBJ DRV_MEMORY_Initialize
 (
@@ -847,7 +895,7 @@ static SYS_STATUS DRV_MEMORY_IsReady(DRV_MEMORY_OBJECT *dObj)
 
     if (dObj->memoryDevice->Open != NULL)
     {
-        dObj->memDevHandle = dObj->memoryDevice->Open(dObj->memDevIndex, (DRV_IO_INTENT)(DRV_IO_INTENT_READWRITE | DRV_IO_INTENT_EXCLUSIVE));
+        dObj->memDevHandle = dObj->memoryDevice->Open(dObj->memDevIndex, (DRV_IO_INTENT)((uint32_t)DRV_IO_INTENT_READWRITE | (uint32_t)DRV_IO_INTENT_EXCLUSIVE));
 
         if (dObj->memDevHandle == DRV_HANDLE_INVALID)
         {
@@ -910,15 +958,15 @@ DRV_HANDLE DRV_MEMORY_Open
     if (dObj->isExclusive)
     {
         SYS_DEBUG_MESSAGE(SYS_ERROR_INFO, "DRV_MEMORY_Open(): Driver is already open in exclusive mode.\n");
-        OSAL_MUTEX_Unlock( &dObj->clientMutex);
+        (void) OSAL_MUTEX_Unlock( &dObj->clientMutex);
         return DRV_HANDLE_INVALID;
     }
 
     /* Driver has already been opened and cannot be opened exclusively */
-    if ((dObj->numClients > 0) && (ioIntent & DRV_IO_INTENT_EXCLUSIVE))
+    if ((dObj->numClients > 0U) && (((uint32_t)ioIntent & (uint32_t)DRV_IO_INTENT_EXCLUSIVE) != 0U))
     {
         SYS_DEBUG_MESSAGE(SYS_ERROR_INFO, "DRV_MEMORY_Open(): Driver is already open. Can't be opened in exclusive mode.\n");
-        OSAL_MUTEX_Unlock( &dObj->clientMutex);
+        (void) OSAL_MUTEX_Unlock( &dObj->clientMutex);
         return DRV_HANDLE_INVALID;
     }
 
@@ -931,11 +979,11 @@ DRV_HANDLE DRV_MEMORY_Open
 
             /* Found a client object that can be used */
             clientObj->inUse = true;
-            clientObj->drvIndex = drvIndex;
+            clientObj->drvIndex = (uint8_t)drvIndex;
             clientObj->intent = ioIntent;
             clientObj->transferHandler = NULL;
 
-            if (ioIntent & DRV_IO_INTENT_EXCLUSIVE)
+            if (((uint32_t)ioIntent & (uint32_t)DRV_IO_INTENT_EXCLUSIVE) != 0U)
             {
                 /* Driver was opened in exclusive mode */
                 dObj->isExclusive = true;
@@ -943,7 +991,7 @@ DRV_HANDLE DRV_MEMORY_Open
 
             dObj->numClients ++;
 
-            clientObj->clientHandle = DRV_MEMORY_MAKE_HANDLE(dObj->clientToken, drvIndex, iClient);
+            clientObj->clientHandle = DRV_MEMORY_MAKE_HANDLE((uint32_t)dObj->clientToken, (uint32_t)drvIndex, iClient);
 
             dObj->clientToken = DRV_MEMORY_UPDATE_TOKEN(dObj->clientToken);
 
@@ -962,9 +1010,9 @@ DRV_HANDLE DRV_MEMORY_Open
         }
     }
 
-    OSAL_MUTEX_Unlock(&dObj->clientMutex);
+    (void) OSAL_MUTEX_Unlock(&dObj->clientMutex);
 
-    return clientObj ? ((DRV_HANDLE)clientObj->clientHandle) : DRV_HANDLE_INVALID;
+    return (clientObj != NULL) ? ((DRV_HANDLE)clientObj->clientHandle) : DRV_HANDLE_INVALID;
 }
 
 void DRV_MEMORY_Close
@@ -997,7 +1045,7 @@ void DRV_MEMORY_Close
         clientObj->inUse = false;
 
         /* Release the instance specific mutex */
-        OSAL_MUTEX_Unlock( &dObj->clientMutex );
+        (void) OSAL_MUTEX_Unlock( &dObj->clientMutex );
     }
 }
 
@@ -1010,7 +1058,7 @@ void DRV_MEMORY_Read
     uint32_t nBlock
 )
 {
-    DRV_MEMORY_SetupXfer(handle, commandHandle, targetBuffer, blockStart, nBlock,
+    (void) DRV_MEMORY_SetupXfer(handle, commandHandle, targetBuffer, blockStart, nBlock,
             SYS_MEDIA_GEOMETRY_TABLE_READ_ENTRY,
             DRV_MEMORY_OPERATION_TYPE_READ,
             DRV_IO_INTENT_READ);
@@ -1039,7 +1087,7 @@ void DRV_MEMORY_Write
     uint32_t nBlock
 )
 {
-    DRV_MEMORY_SetupXfer(handle, commandHandle, sourceBuffer, blockStart, nBlock,
+    (void) DRV_MEMORY_SetupXfer(handle, commandHandle, sourceBuffer, blockStart, nBlock,
             SYS_MEDIA_GEOMETRY_TABLE_WRITE_ENTRY,
             DRV_MEMORY_OPERATION_TYPE_WRITE,
             DRV_IO_INTENT_WRITE);
@@ -1067,7 +1115,7 @@ void DRV_MEMORY_Erase
     uint32_t nBlock
 )
 {
-    DRV_MEMORY_SetupXfer(handle, commandHandle, NULL, blockStart, nBlock,
+    (void) DRV_MEMORY_SetupXfer(handle, commandHandle, NULL, blockStart, nBlock,
             SYS_MEDIA_GEOMETRY_TABLE_ERASE_ENTRY,
             DRV_MEMORY_OPERATION_TYPE_ERASE,
             DRV_IO_INTENT_WRITE);
@@ -1095,7 +1143,7 @@ void DRV_MEMORY_EraseWrite
     uint32_t nBlock
 )
 {
-    DRV_MEMORY_SetupXfer(handle, commandHandle, sourceBuffer, blockStart, nBlock,
+    (void) DRV_MEMORY_SetupXfer(handle, commandHandle, sourceBuffer, blockStart, nBlock,
             SYS_MEDIA_GEOMETRY_TABLE_WRITE_ENTRY,
             DRV_MEMORY_OPERATION_TYPE_ERASE_WRITE,
             DRV_IO_INTENT_WRITE);
@@ -1148,11 +1196,15 @@ DRV_MEMORY_COMMAND_STATUS DRV_MEMORY_CommandStatusGet
             /* Return the last known buffer object status */
             status = (dObj->currentBufObj.status);
         }
-        OSAL_MUTEX_Unlock(&dObj->transferMutex);
+        (void) OSAL_MUTEX_Unlock(&dObj->transferMutex);
     }
 
     return status;
 }
+<#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
+#pragma coverity compliance end_block "MISRA C-2012 Rule 10.4"  
+</#if>
+/* MISRAC 2012 deviation block end */
 
 void DRV_MEMORY_TransferHandlerSet
 (
@@ -1176,7 +1228,15 @@ void DRV_MEMORY_TransferHandlerSet
     clientObj->transferHandler = (DRV_MEMORY_TRANSFER_HANDLER)transferHandler;
     clientObj->context = context;
 }
-
+<#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
+#pragma coverity compliance end_block "MISRA C-2012 Rule 11.1"
+#pragma coverity compliance end_block "MISRA C-2012 Rule 11.3"
+#pragma coverity compliance end_block "MISRA C-2012 Rule 11.8"
+<#if core.COMPILER_CHOICE == "XC32">
+#pragma GCC diagnostic pop
+</#if>    
+</#if> 
+/* MISRAC 2012 deviation block end */
 SYS_MEDIA_GEOMETRY * DRV_MEMORY_GeometryGet
 (
     const DRV_HANDLE handle
@@ -1238,7 +1298,7 @@ uintptr_t DRV_MEMORY_AddressGet
     if (clientObj == NULL)
     {
         SYS_DEBUG_MESSAGE(SYS_ERROR_INFO, "DRV_MEMORY_AddressGet(): Invalid driver handle.\n");
-        return (uintptr_t)NULL;
+        return (0U);
     }
 
     dObj = &gDrvMemoryObj[clientObj->drvIndex];
