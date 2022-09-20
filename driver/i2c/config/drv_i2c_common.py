@@ -101,11 +101,12 @@ def instantiateComponent(i2cComponentCommon):
 
     # Global Header Files
     i2cSymHeaderFile = i2cComponentCommon.createFileSymbol("DRV_I2C_FILE_MAIN_HEADER", None)
-    i2cSymHeaderFile.setSourcePath("driver/i2c/drv_i2c.h")
+    i2cSymHeaderFile.setSourcePath("driver/i2c/drv_i2c.h.ftl")
     i2cSymHeaderFile.setOutputName("drv_i2c.h")
     i2cSymHeaderFile.setDestPath("driver/i2c/")
     i2cSymHeaderFile.setProjectPath("config/" + configName + "/driver/i2c/")
     i2cSymHeaderFile.setType("HEADER")
+    i2cSymHeaderFile.setMarkup(True)
     i2cSymHeaderFile.setOverwrite(True)
 
     i2cSymHeaderDefFile = i2cComponentCommon.createFileSymbol("DRV_I2C_FILE_DEF_HEADER", None)
@@ -130,11 +131,12 @@ def instantiateComponent(i2cComponentCommon):
     i2cAsyncSymSourceFile.setDependencies(asyncFileGen, ["DRV_I2C_MODE"])
 
     i2cAsyncSymHeaderLocalFile = i2cComponentCommon.createFileSymbol("DRV_I2C_ASYNC_HEADER", None)
-    i2cAsyncSymHeaderLocalFile.setSourcePath("driver/i2c/src/async/drv_i2c_local.h")
+    i2cAsyncSymHeaderLocalFile.setSourcePath("driver/i2c/src/async/drv_i2c_local.h.ftl")
     i2cAsyncSymHeaderLocalFile.setOutputName("drv_i2c_local.h")
     i2cAsyncSymHeaderLocalFile.setDestPath("driver/i2c/src")
     i2cAsyncSymHeaderLocalFile.setProjectPath("config/" + configName + "/driver/i2c/")
     i2cAsyncSymHeaderLocalFile.setType("SOURCE")
+    i2cAsyncSymHeaderLocalFile.setMarkup(True)
     i2cAsyncSymHeaderLocalFile.setOverwrite(True)
     i2cAsyncSymHeaderLocalFile.setEnabled((i2cMode.getValue() == "Asynchronous"))
     i2cAsyncSymHeaderLocalFile.setDependencies(asyncFileGen, ["DRV_I2C_MODE"])
@@ -152,11 +154,12 @@ def instantiateComponent(i2cComponentCommon):
     i2cSyncSymSourceFile.setDependencies(syncFileGen, ["DRV_I2C_MODE"])
 
     i2cSyncSymHeaderLocalFile = i2cComponentCommon.createFileSymbol("DRV_I2C_SYNC_HEADER", None)
-    i2cSyncSymHeaderLocalFile.setSourcePath("driver/i2c/src/sync/drv_i2c_local.h")
+    i2cSyncSymHeaderLocalFile.setSourcePath("driver/i2c/src/sync/drv_i2c_local.h.ftl")
     i2cSyncSymHeaderLocalFile.setOutputName("drv_i2c_local.h")
     i2cSyncSymHeaderLocalFile.setDestPath("driver/i2c/src")
     i2cSyncSymHeaderLocalFile.setProjectPath("config/" + configName + "/driver/i2c/")
     i2cSyncSymHeaderLocalFile.setType("SOURCE")
+    i2cSyncSymHeaderLocalFile.setMarkup(True)
     i2cSyncSymHeaderLocalFile.setOverwrite(True)
     i2cSyncSymHeaderLocalFile.setEnabled((i2cMode.getValue() == "Synchronous"))
     i2cSyncSymHeaderLocalFile.setDependencies(syncFileGen, ["DRV_I2C_MODE"])

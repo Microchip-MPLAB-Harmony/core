@@ -39,8 +39,8 @@
 *******************************************************************************/
 //DOM-IGNORE-END
 
-#ifndef _DRV_I2C_LOCAL_H
-#define _DRV_I2C_LOCAL_H
+#ifndef DRV_I2C_LOCAL_H
+#define DRV_I2C_LOCAL_H
 
 
 // *****************************************************************************
@@ -74,9 +74,9 @@
     None
 */
 
-#define DRV_I2C_CLIENT_INDEX_MASK               (0x000000FF)
-#define DRV_I2C_INSTANCE_INDEX_MASK             (0x0000FF00)
-#define DRV_I2C_TOKEN_MASK                      (0xFFFF0000)
+#define DRV_I2C_CLIENT_INDEX_MASK               (0x000000FFU)
+#define DRV_I2C_INSTANCE_INDEX_MASK             (0x0000FF00U)
+#define DRV_I2C_TOKEN_MASK                      (0xFFFF0000U)
 #define DRV_I2C_TOKEN_MAX                       (DRV_I2C_TOKEN_MASK >> 16)
 
 // *****************************************************************************
@@ -91,20 +91,19 @@
   Remarks:
     None.
 */
-
 typedef enum
 {
     /* Indicates this buffer was submitted by a read function */
-    DRV_I2C_TRANSFER_OBJ_FLAG_READ = 1 << 0,
+    DRV_I2C_TRANSFER_OBJ_FLAG_RD = 1 << 0,
 
     /* Indicates this buffer was submitted by a write function */
-    DRV_I2C_TRANSFER_OBJ_FLAG_WRITE = 1 << 1,
+    DRV_I2C_TRANSFER_OBJ_FLAG_WR = 1 << 1,
 
     /* Indicates this buffer was submitted by a write followed by read function */
-    DRV_I2C_TRANSFER_OBJ_FLAG_WRITE_READ = 1 << 2,
+    DRV_I2C_TRANSFER_OBJ_FLAG_WR_RD = 1 << 2,
 
     /* Indicates this buffer was submitted by a force write function */
-    DRV_I2C_TRANSFER_OBJ_FLAG_WRITE_FORCED = 1 << 3,
+    DRV_I2C_TRANSFER_OBJ_FLAG_WR_FRCD = 1 << 3,
 
 } DRV_I2C_TRANSFER_OBJ_FLAGS;
 
@@ -232,4 +231,4 @@ typedef struct
 
 } DRV_I2C_CLIENT_OBJ;
 
-#endif //#ifndef _DRV_I2C_LOCAL_H
+#endif //#ifndef DRV_I2C_LOCAL_H
