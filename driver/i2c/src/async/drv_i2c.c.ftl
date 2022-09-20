@@ -64,12 +64,12 @@ static DRV_I2C_OBJ gDrvI2CObj[DRV_I2C_INSTANCES_NUMBER] ;
 // *****************************************************************************
 // *****************************************************************************
 
-static inline uint32_t _DRV_I2C_MAKE_HANDLE(uint16_t token, uint8_t drvIndex, uint8_t index)
+static inline uint32_t lDRV_I2C_MAKE_HANDLE(uint16_t token, uint8_t drvIndex, uint8_t index)
 {
-    return ((token << 16) | (drvIndex << 8) | index);
+    return (((uint32_t)token << 16) | ((uint32_t)drvIndex << 8) | index);
 }
 
-static inline uint16_t _DRV_I2C_UPDATE_TOKEN(uint16_t token)
+static inline uint16_t lDRV_I2C_UPDATE_TOKEN(uint16_t token)
 {
     token++;
     if (token >= DRV_I2C_TOKEN_MAX)
@@ -80,7 +80,7 @@ static inline uint16_t _DRV_I2C_UPDATE_TOKEN(uint16_t token)
     return token;
 }
 
-static DRV_I2C_CLIENT_OBJ* _DRV_I2C_DriverHandleValidate(DRV_HANDLE handle)
+static DRV_I2C_CLIENT_OBJ* lDRV_I2C_DriverHandleValidate(DRV_HANDLE handle)
 {
     /* This function returns the pointer to the client object that is
        associated with this handle if the handle is valid. Returns NULL
@@ -89,7 +89,7 @@ static DRV_I2C_CLIENT_OBJ* _DRV_I2C_DriverHandleValidate(DRV_HANDLE handle)
     uint32_t drvInstance = 0;
     DRV_I2C_CLIENT_OBJ* clientObj = NULL;
 
-    if((handle != DRV_HANDLE_INVALID) && (handle != 0))
+    if((handle != DRV_HANDLE_INVALID) && (handle != 0U))
     {
         /* Extract the drvInstance value from the handle */
         drvInstance = ((handle & DRV_I2C_INSTANCE_MASK) >> 8);
@@ -115,8 +115,16 @@ static DRV_I2C_CLIENT_OBJ* _DRV_I2C_DriverHandleValidate(DRV_HANDLE handle)
 
     return(clientObj);
 }
+ /* MISRA C-2012 Rule 10.4 False positive:5 Deviation record ID -  H3_MISRAC_2012_R_10_4_DR_1 */
+<#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
+<#if core.COMPILER_CHOICE == "XC32">
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wunknown-pragmas"
+</#if>
+#pragma coverity compliance block fp:5 "MISRA C-2012 Rule 10.4" "H3_MISRAC_2012_R_10_4_DR_1"        
+</#if>
 
-static bool _DRV_I2C_ResourceLock(DRV_I2C_OBJ * dObj)
+static bool lDRV_I2C_ResourceLock(DRV_I2C_OBJ * dObj)
 {
     bool interruptStatus;
     const DRV_I2C_INTERRUPT_SOURCES* intInfo = dObj->interruptSources;
@@ -126,7 +134,7 @@ static bool _DRV_I2C_ResourceLock(DRV_I2C_OBJ * dObj)
        context of this I2C driver. But we must make
        sure that if we are in interrupt, then we should
        not modify mutexes. */
-    if(dObj->interruptNestingCount == 0)
+    if(dObj->interruptNestingCount == 0U)
     {
         /* Grab a mutex. This is okay because we are not in an interrupt context */
         if(OSAL_MUTEX_Lock(&(dObj->mutexTransferObjects), OSAL_WAIT_FOREVER) == OSAL_RESULT_FALSE)
@@ -169,7 +177,7 @@ static bool _DRV_I2C_ResourceLock(DRV_I2C_OBJ * dObj)
     return true;
 }
 
-static void _DRV_I2C_ResourceUnlock(DRV_I2C_OBJ * dObj)
+static void lDRV_I2C_ResourceUnlock(DRV_I2C_OBJ * dObj)
 {
     bool interruptStatus;
     const DRV_I2C_INTERRUPT_SOURCES* intInfo = dObj->interruptSources;
@@ -206,14 +214,14 @@ static void _DRV_I2C_ResourceUnlock(DRV_I2C_OBJ * dObj)
         SYS_INT_Restore(interruptStatus);
     }
 
-    if(dObj->interruptNestingCount == 0)
+    if(dObj->interruptNestingCount == 0U)
     {
         /* Release mutex */
-        OSAL_MUTEX_Unlock(&(dObj->mutexTransferObjects));
+        (void) OSAL_MUTEX_Unlock(&(dObj->mutexTransferObjects));
     }
 }
 
-static DRV_I2C_TRANSFER_OBJ* _DRV_I2C_FreeTransferObjGet(DRV_I2C_CLIENT_OBJ* clientObj)
+static DRV_I2C_TRANSFER_OBJ* lDRV_I2C_FreeTransferObjGet(DRV_I2C_CLIENT_OBJ* clientObj)
 {
     uint32_t index;
     DRV_I2C_OBJ* dObj = (DRV_I2C_OBJ* )&gDrvI2CObj[clientObj->drvIndex];
@@ -229,11 +237,11 @@ static DRV_I2C_TRANSFER_OBJ* _DRV_I2C_FreeTransferObjGet(DRV_I2C_CLIENT_OBJ* cli
             /* Generate a unique buffer handle consisting of an incrementing
              * token counter, driver index and the buffer index.
              */
-            pTransferObj[index].transferHandle = (DRV_I2C_TRANSFER_HANDLE)_DRV_I2C_MAKE_HANDLE(
-                dObj->i2cTokenCount, (uint8_t)clientObj->drvIndex, index);
+            pTransferObj[index].transferHandle = (DRV_I2C_TRANSFER_HANDLE)lDRV_I2C_MAKE_HANDLE(
+                dObj->i2cTokenCount, (uint8_t)clientObj->drvIndex, (uint8_t)index);
 
             /* Update the token for next time */
-            dObj->i2cTokenCount = _DRV_I2C_UPDATE_TOKEN(dObj->i2cTokenCount);
+            dObj->i2cTokenCount = lDRV_I2C_UPDATE_TOKEN(dObj->i2cTokenCount);
 
             return &pTransferObj[index];
         }
@@ -241,7 +249,7 @@ static DRV_I2C_TRANSFER_OBJ* _DRV_I2C_FreeTransferObjGet(DRV_I2C_CLIENT_OBJ* cli
     return NULL;
 }
 
-static bool _DRV_I2C_TransferObjAddToList(
+static bool lDRV_I2C_TransferObjAddToList(
     DRV_I2C_OBJ* dObj,
     DRV_I2C_TRANSFER_OBJ* transferObj
 )
@@ -278,7 +286,7 @@ static bool _DRV_I2C_TransferObjAddToList(
     return isFirstTransferInList;
 }
 
-static DRV_I2C_TRANSFER_OBJ* _DRV_I2C_TransferObjListGet( DRV_I2C_OBJ* dObj )
+static DRV_I2C_TRANSFER_OBJ* lDRV_I2C_TransferObjListGet( DRV_I2C_OBJ* dObj )
 {
     DRV_I2C_TRANSFER_OBJ* pTransferObj = NULL;
 
@@ -288,7 +296,7 @@ static DRV_I2C_TRANSFER_OBJ* _DRV_I2C_TransferObjListGet( DRV_I2C_OBJ* dObj )
     return pTransferObj;
 }
 
-static void _DRV_I2C_RemoveTransferObjFromList( DRV_I2C_OBJ* dObj )
+static void lDRV_I2C_RemoveTransferObjFromList( DRV_I2C_OBJ* dObj )
 {
     DRV_I2C_TRANSFER_OBJ** pTransferObjList;
 
@@ -308,7 +316,7 @@ static void _DRV_I2C_RemoveTransferObjFromList( DRV_I2C_OBJ* dObj )
     }
 }
 
-static void _DRV_I2C_RemoveClientTransfersFromList(
+static void lDRV_I2C_RemoveClientTransfersFromList(
     DRV_I2C_OBJ* dObj,
     DRV_I2C_CLIENT_OBJ* clientObj
 )
@@ -344,7 +352,7 @@ static void _DRV_I2C_RemoveClientTransfersFromList(
     }
 }
 
-static void _DRV_I2C_ClientCallback(DRV_I2C_OBJ* dObj, DRV_I2C_CLIENT_OBJ* clientObj, DRV_I2C_TRANSFER_OBJ* transferObj)
+static void lDRV_I2C_ClientCallback(DRV_I2C_OBJ* dObj, DRV_I2C_CLIENT_OBJ* clientObj, DRV_I2C_TRANSFER_OBJ* transferObj)
 {
     DRV_I2C_TRANSFER_EVENT event;
     DRV_I2C_TRANSFER_HANDLE transferHandle;
@@ -368,7 +376,7 @@ static void _DRV_I2C_ClientCallback(DRV_I2C_OBJ* dObj, DRV_I2C_CLIENT_OBJ* clien
      * This is done before giving callback to allow application to use the freed
      * buffer and queue in a new request from within the callback */
 
-    _DRV_I2C_RemoveTransferObjFromList(dObj);
+    lDRV_I2C_RemoveTransferObjFromList(dObj);
 
     if(clientObj->eventHandler != NULL)
     {
@@ -380,7 +388,7 @@ static void _DRV_I2C_ClientCallback(DRV_I2C_OBJ* dObj, DRV_I2C_CLIENT_OBJ* clien
     }
 }
 
-static void _DRV_I2C_NextTransferInitiate(DRV_I2C_OBJ* dObj, DRV_I2C_CLIENT_OBJ* clientObj)
+static void lDRV_I2C_NextTransferInitiate(DRV_I2C_OBJ* dObj, DRV_I2C_CLIENT_OBJ* clientObj)
 {
     DRV_I2C_TRANSFER_OBJ* transferObj = NULL;
     bool transferStatus = true;
@@ -390,7 +398,7 @@ static void _DRV_I2C_NextTransferInitiate(DRV_I2C_OBJ* dObj, DRV_I2C_CLIENT_OBJ*
         transferStatus = true;
 
         /* Get the transfer object at the head of the list */
-        transferObj = _DRV_I2C_TransferObjListGet(dObj);
+        transferObj = lDRV_I2C_TransferObjListGet(dObj);
 
         /* Process the next transfer buffer */
         if((transferObj != NULL) && (transferObj->currentState == DRV_I2C_TRANSFER_OBJ_IS_IN_QUEUE))
@@ -403,29 +411,29 @@ static void _DRV_I2C_NextTransferInitiate(DRV_I2C_OBJ* dObj, DRV_I2C_CLIENT_OBJ*
             if (dObj->currentTransferSetup.clockSpeed != clientObj->transferSetup.clockSpeed)
             {
                 /* Set the new transfer setup */
-                dObj->i2cPlib->transferSetup(&clientObj->transferSetup, 0);
+                (void) dObj->i2cPlib->transferSetup(&clientObj->transferSetup, 0);
 
                 dObj->currentTransferSetup.clockSpeed = clientObj->transferSetup.clockSpeed;
             }
 
             switch(transferObj->flag)
             {
-                case DRV_I2C_TRANSFER_OBJ_FLAG_READ:
+                case DRV_I2C_TRANSFER_OBJ_FLAG_RD:
                     transferObj->currentState = DRV_I2C_TRANSFER_OBJ_IS_PROCESSING;
-                    transferStatus = dObj->i2cPlib->read(transferObj->slaveAddress, transferObj->readBuffer, transferObj->readSize);
+                    transferStatus = dObj->i2cPlib->read_t(transferObj->slaveAddress, transferObj->readBuffer, transferObj->readSize);
                     break;
 
-                case DRV_I2C_TRANSFER_OBJ_FLAG_WRITE:
+                case DRV_I2C_TRANSFER_OBJ_FLAG_WR:
                     transferObj->currentState = DRV_I2C_TRANSFER_OBJ_IS_PROCESSING;
-                    transferStatus = dObj->i2cPlib->write(transferObj->slaveAddress, transferObj->writeBuffer, transferObj->writeSize);
+                    transferStatus = dObj->i2cPlib->write_t(transferObj->slaveAddress, transferObj->writeBuffer, transferObj->writeSize);
                     break;
     <#if DRV_I2C_FORCED_WRITE_API_GENERATE != 0>
-                case DRV_I2C_TRANSFER_OBJ_FLAG_WRITE_FORCED:
+                case DRV_I2C_TRANSFER_OBJ_FLAG_WR_FRCD:
                     transferObj->currentState = DRV_I2C_TRANSFER_OBJ_IS_PROCESSING;
                     transferStatus = dObj->i2cPlib->writeForced(transferObj->slaveAddress, transferObj->writeBuffer, transferObj->writeSize);
                     break;
     </#if>
-                case DRV_I2C_TRANSFER_OBJ_FLAG_WRITE_READ:
+                case DRV_I2C_TRANSFER_OBJ_FLAG_WR_RD:
                     transferObj->currentState = DRV_I2C_TRANSFER_OBJ_IS_PROCESSING;
                     transferStatus = dObj->i2cPlib->writeRead(transferObj->slaveAddress, transferObj->writeBuffer, transferObj->writeSize, transferObj->readBuffer, transferObj->readSize);
                     break;
@@ -435,13 +443,13 @@ static void _DRV_I2C_NextTransferInitiate(DRV_I2C_OBJ* dObj, DRV_I2C_CLIENT_OBJ*
             }
             if (transferStatus == false)
             {
-                _DRV_I2C_ClientCallback(dObj, clientObj, transferObj);
+                lDRV_I2C_ClientCallback(dObj, clientObj, transferObj);
             }
         }
     }while(transferStatus == false);
 }
 
-static void _DRV_I2C_PLibCallbackHandler( uintptr_t contextHandle )
+static void lDRV_I2C_PLibCallbackHandler( uintptr_t contextHandle )
 {
     DRV_I2C_OBJ* dObj = (DRV_I2C_OBJ *)contextHandle;
     DRV_I2C_CLIENT_OBJ* clientObj = NULL;
@@ -455,7 +463,7 @@ static void _DRV_I2C_PLibCallbackHandler( uintptr_t contextHandle )
     }
 
     // Get the transfer object at the head of the list
-    transferObj = _DRV_I2C_TransferObjListGet(dObj);
+    transferObj = lDRV_I2C_TransferObjListGet(dObj);
 
     // Get the client object that owns this buffer
     clientObj = &((DRV_I2C_CLIENT_OBJ *)gDrvI2CObj[((transferObj->clientHandle & DRV_I2C_INSTANCE_MASK) >> 8)].clientObjPool)
@@ -464,15 +472,15 @@ static void _DRV_I2C_PLibCallbackHandler( uintptr_t contextHandle )
     /* Check if the client that submitted the request is active? */
     if (clientObj->clientHandle == transferObj->clientHandle)
     {
-        _DRV_I2C_ClientCallback(dObj, clientObj, transferObj);
+        lDRV_I2C_ClientCallback(dObj, clientObj, transferObj);
     }
     else
     {
         /* The client has probably closed the driver. Free the completed buffer */
-        _DRV_I2C_RemoveTransferObjFromList(dObj);
+        lDRV_I2C_RemoveTransferObjFromList(dObj);
     }
 
-    _DRV_I2C_NextTransferInitiate(dObj, clientObj);
+    lDRV_I2C_NextTransferInitiate(dObj, clientObj);
 }
 
 // *****************************************************************************
@@ -480,14 +488,26 @@ static void _DRV_I2C_PLibCallbackHandler( uintptr_t contextHandle )
 // Section: I2C Driver Common Interface Implementation
 // *****************************************************************************
 // *****************************************************************************
-
 SYS_MODULE_OBJ DRV_I2C_Initialize(
     const SYS_MODULE_INDEX drvIndex,
     const SYS_MODULE_INIT* const init
 )
 {
     DRV_I2C_OBJ* dObj     = NULL;
+/* MISRA C-2012 Rule 11.3, 11.8 deviated below. Deviation record ID -  H3_MISRAC_2012_R_11_3_DR_1 & H3_MISRAC_2012_R_11_8_DR_1*/
+<#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
+#pragma coverity compliance block \
+(deviate "MISRA C-2012 Rule 11.3" "H3_MISRAC_2012_R_11_3_DR_1" )\
+(deviate "MISRA C-2012 Rule 11.8" "H3_MISRAC_2012_R_11_8_DR_1" )   
+</#if> 
+   
     DRV_I2C_INIT* i2cInit = (DRV_I2C_INIT*)init;
+    
+<#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
+#pragma coverity compliance end_block "MISRA C-2012 Rule 11.3"
+#pragma coverity compliance end_block "MISRA C-2012 Rule 11.8"
+</#if> 
+/* MISRAC 2012 deviation block end */
 
     /* Validate the request */
     if(drvIndex >= DRV_I2C_INSTANCES_NUMBER)
@@ -534,7 +554,7 @@ SYS_MODULE_OBJ DRV_I2C_Initialize(
     /* Register a callback with the underlying PLIB.
      * dObj as a context parameter will be used to distinguish the events
      * from different instances. */
-    dObj->i2cPlib->callbackRegister(_DRV_I2C_PLibCallbackHandler, (uintptr_t)dObj);
+    dObj->i2cPlib->callbackRegister(lDRV_I2C_PLibCallbackHandler, (uintptr_t)dObj);
 
     /* Update the status */
     dObj->status = SYS_STATUS_READY;
@@ -546,7 +566,7 @@ SYS_MODULE_OBJ DRV_I2C_Initialize(
 SYS_STATUS DRV_I2C_Status( const SYS_MODULE_OBJ object)
 {
     /* Validate the request */
-    if( (object == SYS_MODULE_OBJ_INVALID) || (object >= DRV_I2C_INSTANCES_NUMBER) )
+    if( (object == (uint32_t)SYS_MODULE_OBJ_INVALID) || (object >= DRV_I2C_INSTANCES_NUMBER) )
     {
         return SYS_STATUS_UNINITIALIZED;
     }
@@ -561,7 +581,7 @@ DRV_HANDLE DRV_I2C_Open(
 {
     DRV_I2C_CLIENT_OBJ* clientObj;
     DRV_I2C_OBJ* dObj = NULL;
-    uint32_t iClient;
+    uint32_t iClient,tempioIntent = 0;
 
     /* Validate the request */
     if (drvIndex >= DRV_I2C_INSTANCES_NUMBER)
@@ -579,21 +599,21 @@ DRV_HANDLE DRV_I2C_Open(
 
     if((dObj->status != SYS_STATUS_READY) || (dObj->inUse == false))
     {
-        OSAL_MUTEX_Unlock(&(dObj->mutexClientObjects));
+        (void) OSAL_MUTEX_Unlock(&(dObj->mutexClientObjects));
         return DRV_HANDLE_INVALID;
     }
 
     if(dObj->isExclusive == true)
     {
         /* Driver is already opened with exclusive access. Hence, cannot be opened again*/
-        OSAL_MUTEX_Unlock(&(dObj->mutexClientObjects));
+        (void) OSAL_MUTEX_Unlock(&(dObj->mutexClientObjects));
         return DRV_HANDLE_INVALID;
     }
 
-    if((dObj->nClients > 0) && (ioIntent & DRV_IO_INTENT_EXCLUSIVE))
+    if((dObj->nClients > 0U) && (((uint32_t)ioIntent & (uint32_t)DRV_IO_INTENT_EXCLUSIVE) != 0U))
     {
         /* Exclusive access is requested while the driver is already opened by other client */
-        OSAL_MUTEX_Unlock(&(dObj->mutexClientObjects));
+        (void) OSAL_MUTEX_Unlock(&(dObj->mutexClientObjects));
         return DRV_HANDLE_INVALID;
     }
 
@@ -606,7 +626,7 @@ DRV_HANDLE DRV_I2C_Open(
             /* This means we have a free client object to use */
             clientObj->inUse = true;
 
-            if(ioIntent & DRV_IO_INTENT_EXCLUSIVE)
+            if(((uint32_t)ioIntent & (uint32_t)DRV_IO_INTENT_EXCLUSIVE) != 0U)
             {
                 /* Set the driver exclusive flag */
                 dObj->isExclusive = true;
@@ -615,26 +635,27 @@ DRV_HANDLE DRV_I2C_Open(
             dObj->nClients ++;
 
             /* Generate the client handle */
-            clientObj->clientHandle = (DRV_HANDLE)_DRV_I2C_MAKE_HANDLE(dObj->i2cTokenCount, (uint8_t)drvIndex, iClient);
+            clientObj->clientHandle = (DRV_HANDLE)lDRV_I2C_MAKE_HANDLE(dObj->i2cTokenCount, (uint8_t)drvIndex, (uint8_t)iClient);
 
             /* Increment the instance specific token counter */
-            dObj->i2cTokenCount = _DRV_I2C_UPDATE_TOKEN(dObj->i2cTokenCount);
+            dObj->i2cTokenCount = lDRV_I2C_UPDATE_TOKEN(dObj->i2cTokenCount);
 
             /* We have found a client object, now release the mutex */
-            OSAL_MUTEX_Unlock(&(dObj->mutexClientObjects));
+            (void) OSAL_MUTEX_Unlock(&(dObj->mutexClientObjects));
 
             clientObj->drvIndex                 = drvIndex;
-            clientObj->ioIntent                 = (DRV_IO_INTENT)(ioIntent | DRV_IO_INTENT_NONBLOCKING);
+            tempioIntent = (uint32_t)ioIntent | (uint32_t)DRV_IO_INTENT_NONBLOCKING;
+            clientObj->ioIntent                 = (DRV_IO_INTENT)(tempioIntent);
             clientObj->transferSetup.clockSpeed = dObj->initI2CClockSpeed;
             clientObj->eventHandler             = NULL;
-            clientObj->context                  = (uintptr_t)NULL;
+            clientObj->context                  = 0U;
 
             return ((DRV_HANDLE) clientObj->clientHandle );
         }
     }
 
     /* Could not find a client object. Release the mutex and return with an invalid handle. */
-    OSAL_MUTEX_Unlock(&(dObj->mutexClientObjects));
+    (void) OSAL_MUTEX_Unlock(&(dObj->mutexClientObjects));
 
     return DRV_HANDLE_INVALID;
 }
@@ -648,7 +669,7 @@ void DRV_I2C_Close( const DRV_HANDLE handle )
     DRV_I2C_CLIENT_OBJ* clientObj;
 
     /* Validate the handle */
-    clientObj = _DRV_I2C_DriverHandleValidate(handle);
+    clientObj = lDRV_I2C_DriverHandleValidate(handle);
     if(clientObj == NULL)
     {
         /* Driver handle is not valid */
@@ -666,16 +687,16 @@ void DRV_I2C_Close( const DRV_HANDLE handle )
     /* We will be removing the transfers queued by the client. Guard the linked list
      * against interrupts and/or other threads trying to modify the linked list.
      */
-    if (_DRV_I2C_ResourceLock(dObj) == false)
+    if (lDRV_I2C_ResourceLock(dObj) == false)
     {
         return;
     }
 
     /* Remove all buffers that this client owns from the driver queue */
 
-    _DRV_I2C_RemoveClientTransfersFromList(dObj, clientObj);
+    lDRV_I2C_RemoveClientTransfersFromList(dObj, clientObj);
 
-    _DRV_I2C_ResourceUnlock(dObj);
+    lDRV_I2C_ResourceUnlock(dObj);
 
     /* Reduce the number of clients */
     dObj->nClients --;
@@ -689,10 +710,17 @@ void DRV_I2C_Close( const DRV_HANDLE handle )
     /* Free the client object */
     clientObj->inUse = false;
 
-    OSAL_MUTEX_Unlock(&(dObj->mutexClientObjects));
+    (void) OSAL_MUTEX_Unlock(&(dObj->mutexClientObjects));
 
     return;
 }
+<#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
+#pragma coverity compliance end_block "MISRA C-2012 Rule 10.4"
+<#if core.COMPILER_CHOICE == "XC32">
+#pragma GCC diagnostic pop
+</#if>    
+</#if>
+/* MISRAC 2012 deviation block end */
 
 void DRV_I2C_TransferEventHandlerSet(
     const DRV_HANDLE handle,
@@ -704,7 +732,7 @@ void DRV_I2C_TransferEventHandlerSet(
     DRV_I2C_OBJ* dObj = NULL;
 
     /* Validate the handle */
-    clientObj = _DRV_I2C_DriverHandleValidate(handle);
+    clientObj = lDRV_I2C_DriverHandleValidate(handle);
 
     if (clientObj == NULL)
     {
@@ -713,7 +741,7 @@ void DRV_I2C_TransferEventHandlerSet(
 
     dObj = &gDrvI2CObj[clientObj->drvIndex];
 
-    if(_DRV_I2C_ResourceLock(dObj) == false)
+    if(lDRV_I2C_ResourceLock(dObj) == false)
     {
         return;
     }
@@ -721,7 +749,7 @@ void DRV_I2C_TransferEventHandlerSet(
     clientObj->eventHandler = eventHandler;
     clientObj->context = context;
 
-    _DRV_I2C_ResourceUnlock(dObj);
+    lDRV_I2C_ResourceUnlock(dObj);
 }
 
 bool DRV_I2C_TransferSetup( const DRV_HANDLE handle, DRV_I2C_TRANSFER_SETUP* setup )
@@ -734,7 +762,7 @@ bool DRV_I2C_TransferSetup( const DRV_HANDLE handle, DRV_I2C_TRANSFER_SETUP* set
     }
 
     /* Validate the driver handle */
-    clientObj = _DRV_I2C_DriverHandleValidate(handle);
+    clientObj = lDRV_I2C_DriverHandleValidate(handle);
 
     if(clientObj == NULL)
     {
@@ -764,13 +792,13 @@ DRV_I2C_ERROR DRV_I2C_ErrorGet( const DRV_I2C_TRANSFER_HANDLE transferHandle )
 
     dObj = (DRV_I2C_OBJ*)&gDrvI2CObj[drvInstance];
 
-    if(_DRV_I2C_ResourceLock(dObj) == false)
+    if(lDRV_I2C_ResourceLock(dObj) == false)
     {
         return errors;
     }
 
     /* Extract transfer buffer index value from the transfer handle */
-    transferIndex = transferHandle & DRV_I2C_INDEX_MASK;
+    transferIndex = (uint8_t)(transferHandle & DRV_I2C_INDEX_MASK);
 
     /* Validate the transferIndex and corresponding request */
     if(transferIndex < dObj->transferObjPoolSize)
@@ -782,12 +810,12 @@ DRV_I2C_ERROR DRV_I2C_ErrorGet( const DRV_I2C_TRANSFER_HANDLE transferHandle )
         }
     }
 
-    _DRV_I2C_ResourceUnlock(dObj);
+    lDRV_I2C_ResourceUnlock(dObj);
 
     return errors;
 }
 
-static void _DRV_I2C_WriteReadTransferAdd (
+static void lDRV_I2C_WriteReadTransferAdd (
     const DRV_HANDLE handle,
     const uint16_t address,
     void* const writeBuffer,
@@ -812,29 +840,29 @@ static void _DRV_I2C_WriteReadTransferAdd (
     *transferHandle = DRV_I2C_TRANSFER_HANDLE_INVALID;
 
     /* Validate the driver handle */
-    clientObj = _DRV_I2C_DriverHandleValidate(handle);
+    clientObj = lDRV_I2C_DriverHandleValidate(handle);
     if(clientObj == NULL)
     {
         return;
     }
 
-    if (transferFlags == DRV_I2C_TRANSFER_OBJ_FLAG_READ)
+    if (transferFlags == DRV_I2C_TRANSFER_OBJ_FLAG_RD)
     {
-        if((readSize == 0) || (readBuffer == NULL))
+        if((readSize == 0U) || (readBuffer == NULL))
         {
             return;
         }
     }
-    else if ((transferFlags == DRV_I2C_TRANSFER_OBJ_FLAG_WRITE) || (transferFlags == DRV_I2C_TRANSFER_OBJ_FLAG_WRITE_FORCED))
+    else if ((transferFlags == DRV_I2C_TRANSFER_OBJ_FLAG_WR) || (transferFlags == DRV_I2C_TRANSFER_OBJ_FLAG_WR_FRCD))
     {
-        if((writeSize == 0) || (writeBuffer == NULL))
+        if((writeSize == 0U) || (writeBuffer == NULL))
         {
             return;
         }
     }
     else
     {
-        if((writeSize == 0) || (writeBuffer == NULL) || (readSize == 0) || (readBuffer == NULL))
+        if((writeSize == 0U) || (writeBuffer == NULL) || (readSize == 0U) || (readBuffer == NULL))
         {
             return;
         }
@@ -844,7 +872,7 @@ static void _DRV_I2C_WriteReadTransferAdd (
     dObj = &gDrvI2CObj[clientObj->drvIndex];
 
 <#if DRV_I2C_FORCED_WRITE_API_GENERATE != 0>
-    if (transferFlags == DRV_I2C_TRANSFER_OBJ_FLAG_WRITE_FORCED)
+    if (transferFlags == DRV_I2C_TRANSFER_OBJ_FLAG_WR_FRCD)
     {
         /* Return error if the PLIB is not enabled to generate the I2C Forced Write API */
         if (dObj->i2cPlib->writeForced == NULL)
@@ -854,17 +882,17 @@ static void _DRV_I2C_WriteReadTransferAdd (
     }
 </#if>
 
-    if(_DRV_I2C_ResourceLock(dObj) == false)
+    if(lDRV_I2C_ResourceLock(dObj) == false)
     {
         return;
     }
 
     /* Get a free transfer object */
-    transferObj = _DRV_I2C_FreeTransferObjGet(clientObj);
+    transferObj = lDRV_I2C_FreeTransferObjGet(clientObj);
 
     if(transferObj == NULL)
     {
-        _DRV_I2C_ResourceUnlock(dObj);
+        lDRV_I2C_ResourceUnlock(dObj);
         return;
     }
 
@@ -883,7 +911,7 @@ static void _DRV_I2C_WriteReadTransferAdd (
     *transferHandle = transferObj->transferHandle;
 
     /* Add the buffer object to the transfer buffer list */
-    if (_DRV_I2C_TransferObjAddToList(dObj, transferObj) == true)
+    if (lDRV_I2C_TransferObjAddToList(dObj, transferObj) == true)
     {
         /* This is the first request in the queue, hence initiate a PLIB transfer */
 
@@ -891,16 +919,16 @@ static void _DRV_I2C_WriteReadTransferAdd (
         if (dObj->currentTransferSetup.clockSpeed != clientObj->transferSetup.clockSpeed)
         {
             /* Set the new transfer setup */
-            dObj->i2cPlib->transferSetup(&clientObj->transferSetup, 0);
+            (void) dObj->i2cPlib->transferSetup(&clientObj->transferSetup, 0);
 
             dObj->currentTransferSetup.clockSpeed = clientObj->transferSetup.clockSpeed;
         }
 
         transferObj->currentState = DRV_I2C_TRANSFER_OBJ_IS_PROCESSING;
 
-        if (transferFlags == DRV_I2C_TRANSFER_OBJ_FLAG_READ)
+        if (transferFlags == DRV_I2C_TRANSFER_OBJ_FLAG_RD)
         {
-            if (dObj->i2cPlib->read(
+            if (dObj->i2cPlib->read_t(
                 transferObj->slaveAddress,
                 transferObj->readBuffer,
                 transferObj->readSize
@@ -909,9 +937,9 @@ static void _DRV_I2C_WriteReadTransferAdd (
                 transferError = true;
             }
         }
-        else if (transferFlags == DRV_I2C_TRANSFER_OBJ_FLAG_WRITE)
+        else if (transferFlags == DRV_I2C_TRANSFER_OBJ_FLAG_WR)
         {
-            if (dObj->i2cPlib->write(
+            if (dObj->i2cPlib->write_t(
                 transferObj->slaveAddress,
                 transferObj->writeBuffer,
                 transferObj->writeSize
@@ -921,7 +949,7 @@ static void _DRV_I2C_WriteReadTransferAdd (
             }
         }
 <#if DRV_I2C_FORCED_WRITE_API_GENERATE != 0>
-        else if (transferFlags == DRV_I2C_TRANSFER_OBJ_FLAG_WRITE_FORCED)
+        else if (transferFlags == DRV_I2C_TRANSFER_OBJ_FLAG_WR_FRCD)
         {
             if (dObj->i2cPlib->writeForced(
                 transferObj->slaveAddress,
@@ -961,11 +989,11 @@ static void _DRV_I2C_WriteReadTransferAdd (
                 transferObj->event = DRV_I2C_TRANSFER_EVENT_ERROR;
             }
 
-            _DRV_I2C_RemoveTransferObjFromList(dObj);
+            lDRV_I2C_RemoveTransferObjFromList(dObj);
         }
     }
 
-    _DRV_I2C_ResourceUnlock(dObj);
+    lDRV_I2C_ResourceUnlock(dObj);
 }
 
 void DRV_I2C_ReadTransferAdd(
@@ -976,8 +1004,8 @@ void DRV_I2C_ReadTransferAdd(
     DRV_I2C_TRANSFER_HANDLE* const transferHandle
 )
 {
-    _DRV_I2C_WriteReadTransferAdd(handle, address, NULL, 0,
-        buffer, size, transferHandle, DRV_I2C_TRANSFER_OBJ_FLAG_READ);
+    lDRV_I2C_WriteReadTransferAdd(handle, address, NULL, 0,
+        buffer, size, transferHandle, DRV_I2C_TRANSFER_OBJ_FLAG_RD);
 }
 <#if DRV_I2C_FORCED_WRITE_API_GENERATE != 0>
 
@@ -989,8 +1017,8 @@ void DRV_I2C_ForcedWriteTransferAdd(
     DRV_I2C_TRANSFER_HANDLE* const transferHandle
 )
 {
-    _DRV_I2C_WriteReadTransferAdd(handle, address, buffer, size,
-        NULL, 0, transferHandle, DRV_I2C_TRANSFER_OBJ_FLAG_WRITE_FORCED);
+    lDRV_I2C_WriteReadTransferAdd(handle, address, buffer, size,
+        NULL, 0, transferHandle, DRV_I2C_TRANSFER_OBJ_FLAG_WR_FRCD);
 }
 </#if>
 
@@ -1002,8 +1030,8 @@ void DRV_I2C_WriteTransferAdd(
     DRV_I2C_TRANSFER_HANDLE* const transferHandle
 )
 {
-    _DRV_I2C_WriteReadTransferAdd(handle, address, buffer, size,
-        NULL, 0, transferHandle, DRV_I2C_TRANSFER_OBJ_FLAG_WRITE);
+    lDRV_I2C_WriteReadTransferAdd(handle, address, buffer, size,
+        NULL, 0, transferHandle, DRV_I2C_TRANSFER_OBJ_FLAG_WR);
 }
 
 void DRV_I2C_WriteReadTransferAdd (
@@ -1016,8 +1044,8 @@ void DRV_I2C_WriteReadTransferAdd (
     DRV_I2C_TRANSFER_HANDLE* const transferHandle
 )
 {
-    _DRV_I2C_WriteReadTransferAdd(handle, address, writeBuffer, writeSize,
-        readBuffer, readSize, transferHandle, DRV_I2C_TRANSFER_OBJ_FLAG_WRITE_READ);
+    lDRV_I2C_WriteReadTransferAdd(handle, address, writeBuffer, writeSize,
+        readBuffer, readSize, transferHandle, DRV_I2C_TRANSFER_OBJ_FLAG_WR_RD);
 }
 
 void DRV_I2C_QueuePurge(const DRV_HANDLE handle)
@@ -1027,7 +1055,7 @@ void DRV_I2C_QueuePurge(const DRV_HANDLE handle)
     DRV_I2C_OBJ* dObj = NULL;
     bool topOfQueueUpdated = false;
 
-    clientObj = _DRV_I2C_DriverHandleValidate(handle);
+    clientObj = lDRV_I2C_DriverHandleValidate(handle);
 
     if(clientObj == NULL)
     {
@@ -1037,13 +1065,13 @@ void DRV_I2C_QueuePurge(const DRV_HANDLE handle)
     /* Get the driver object from the client handle */
     dObj = &gDrvI2CObj[clientObj->drvIndex];
 
-    if(_DRV_I2C_ResourceLock(dObj) == false)
+    if(lDRV_I2C_ResourceLock(dObj) == false)
     {
         return;
     }
 
     // Get the transfer object at the head of the list
-    transferObj = _DRV_I2C_TransferObjListGet(dObj);
+    transferObj = lDRV_I2C_TransferObjListGet(dObj);
 
     /* Make sure the ongoing request belongs to the client that called this API and is currently with the PLIB */
     if ( (dObj->i2cPlib->transferAbort != NULL) && (transferObj != NULL) && (transferObj->clientHandle == clientObj->clientHandle) && (transferObj->currentState == DRV_I2C_TRANSFER_OBJ_IS_PROCESSING) )
@@ -1052,21 +1080,21 @@ void DRV_I2C_QueuePurge(const DRV_HANDLE handle)
         dObj->i2cPlib->transferAbort();
 
         /* Remove the transfer object at the top of the list */
-        _DRV_I2C_RemoveTransferObjFromList(dObj);
+        lDRV_I2C_RemoveTransferObjFromList(dObj);
 
         topOfQueueUpdated = true;
     }
 
     /* Remove all the transfers belonging to this client from the linked list */
-    _DRV_I2C_RemoveClientTransfersFromList(dObj, clientObj);
+    lDRV_I2C_RemoveClientTransfersFromList(dObj, clientObj);
 
     if (topOfQueueUpdated == true)
     {
         /* Since top of the queue is updated, force start the next transfer in the queue if any */
-        _DRV_I2C_NextTransferInitiate(dObj, clientObj);
+        lDRV_I2C_NextTransferInitiate(dObj, clientObj);
     }
 
-    _DRV_I2C_ResourceUnlock(dObj);
+    lDRV_I2C_ResourceUnlock(dObj);
 }
 
 DRV_I2C_TRANSFER_EVENT DRV_I2C_TransferStatusGet(
@@ -1088,13 +1116,13 @@ DRV_I2C_TRANSFER_EVENT DRV_I2C_TransferStatusGet(
 
     dObj = (DRV_I2C_OBJ*)&gDrvI2CObj[drvInstance];
 
-    if(_DRV_I2C_ResourceLock(dObj) == false)
+    if(lDRV_I2C_ResourceLock(dObj) == false)
     {
         return event;
     }
 
     /* Extract transfer buffer index value from the transfer handle */
-    transferIndex = transferHandle & DRV_I2C_INDEX_MASK;
+    transferIndex = (uint8_t)(transferHandle & DRV_I2C_INDEX_MASK);
 
     /* Validate the transferIndex and corresponding request */
     if(transferIndex < dObj->transferObjPoolSize)
@@ -1109,7 +1137,7 @@ DRV_I2C_TRANSFER_EVENT DRV_I2C_TransferStatusGet(
         }
     }
 
-    _DRV_I2C_ResourceUnlock(dObj);
+    lDRV_I2C_ResourceUnlock(dObj);
 
     return event;
 }
