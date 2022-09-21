@@ -41,8 +41,8 @@
 *******************************************************************************/
 //DOM-IGNORE-END
 
-#ifndef _DRV_NAND_FLASH_H
-#define _DRV_NAND_FLASH_H
+#ifndef DRV_NAND_FLASH_H
+#define DRV_NAND_FLASH_H
 
 // *****************************************************************************
 // *****************************************************************************
@@ -191,9 +191,7 @@ typedef struct
     Otherwise it returns SYS_MODULE_OBJ_INVALID.
 
   Example:
-    <code>
-    // This code snippet shows an example of initializing the NAND FLASH Driver
-    // with NAND FLASH device attached.
+    <code>    
 
     SYS_MODULE_OBJ  objectHandle;
 
@@ -227,7 +225,7 @@ typedef struct
 
     if (SYS_MODULE_OBJ_INVALID == objectHandle)
     {
-        // Handle error
+       
     }
     </code>
 
@@ -290,7 +288,7 @@ SYS_MODULE_OBJ DRV_NAND_FLASH_Initialize
     handle = DRV_NAND_FLASH_Open((SYS_MODULE_INDEX)DRV_NAND_FLASH_INDEX, DRV_IO_INTENT_READWRITE);
     if (DRV_HANDLE_INVALID == handle)
     {
-        // Unable to open the driver
+        
     }
     </code>
 
@@ -327,7 +325,7 @@ DRV_HANDLE DRV_NAND_FLASH_Open( const SYS_MODULE_INDEX drvIndex, const DRV_IO_IN
 
   Example:
     <code>
-    DRV_HANDLE handle;  // Returned from DRV_NAND_FLASH_Open
+    DRV_HANDLE handle;  
 
     DRV_NAND_FLASH_Close(handle);
     </code>
@@ -408,10 +406,10 @@ SYS_STATUS DRV_NAND_FLASH_Status( const SYS_MODULE_INDEX drvIndex );
 
   Example:
     <code>
-    DRV_HANDLE handle;  // Returned from DRV_NAND_FLASH_Open
+    DRV_HANDLE handle;  
     if(true != DRV_NAND_FLASH_ResetFlash(handle))
     {
-        // Error handling here
+        
     }
     </code>
 
@@ -457,11 +455,11 @@ bool DRV_NAND_FLASH_ResetFlash(const DRV_HANDLE handle);
   Example:
     <code>
 
-    DRV_HANDLE handle;  // Returned from DRV_NAND_FLASH_Open
+    DRV_HANDLE handle; 
 
     if (DRV_NAND_FLASH_TRANSFER_COMPLETED == DRV_NAND_FLASH_TransferStatusGet(handle))
     {
-        // Operation Done
+       
     }
     </code>
 
@@ -501,11 +499,11 @@ DRV_NAND_FLASH_TRANSFER_STATUS DRV_NAND_FLASH_TransferStatusGet(const DRV_HANDLE
 
     #define NAND_FLASH_ADDR_ONFI_SIGNATURE    0x20
     uint32_t readId = 0;
-    DRV_HANDLE handle;  // Returned from DRV_NAND_FLASH_Open
+    DRV_HANDLE handle;  
 
     if (DRV_NAND_FLASH_IdRead(handle, &readId, NAND_FLASH_ADDR_ONFI_SIGNATURE))
     {
-        // ID read successfully
+        
     }
     </code>
 
@@ -546,11 +544,11 @@ bool DRV_NAND_FLASH_IdRead(const DRV_HANDLE handle, uint32_t *readId, uint8_t ad
     i.e. Disable NAND Flash ECC controller if NAND Flash supports internal ECC controller
     #define NAND_FLASH_TARGET_DISABLE_INTERNAL_ECC    0x90
     uint8_t featureData[4] = {0, 0, 0, 0};
-    DRV_HANDLE handle;  // Returned from DRV_NAND_FLASH_Open
+    DRV_HANDLE handle;  
 
     if (DRV_NAND_FLASH_FeatureSet(handle, featureData, sizeof(featureData), NAND_FLASH_TARGET_DISABLE_INTERNAL_ECC))
     {
-        // Flash internal ECC controller is disabled
+       
     }
     </code>
 
@@ -591,11 +589,11 @@ bool DRV_NAND_FLASH_FeatureSet(const DRV_HANDLE handle, uint8_t *featureData, ui
     i.e. Read NAND Flash ECC controller if NAND Flash supports internal ECC controller
     #define NAND_FLASH_TARGET_DISABLE_INTERNAL_ECC    0x90
     uint8_t featureData[4];
-    DRV_HANDLE handle;  // Returned from DRV_NAND_FLASH_Open
+    DRV_HANDLE handle;  
 
     if (DRV_NAND_FLASH_FeatureGet(handle, featureData, sizeof(featureData), NAND_FLASH_TARGET_DISABLE_INTERNAL_ECC))
     {
-        // Feature data read successfully
+        
     }
     </code>
 
@@ -635,12 +633,12 @@ bool DRV_NAND_FLASH_FeatureGet(const DRV_HANDLE handle, uint8_t *featureData, ui
   Example:
     <code>
 
-    DRV_HANDLE handle;  // Returned from DRV_NAND_FLASH_Open
+    DRV_HANDLE handle;  
     uint8_t parameterPage[116];
 
     if (DRV_NAND_FLASH_ParameterPageRead(handle, parameterPage, sizeof(parameterPage)))
     {
-        // Parameter page read successfully
+        
     }
     </code>
 
@@ -686,12 +684,12 @@ bool DRV_NAND_FLASH_ParameterPageRead(const DRV_HANDLE handle, uint8_t *paramete
   Example:
     <code>
 
-    DRV_HANDLE handle;  // Returned from DRV_NAND_FLASH_Open
+    DRV_HANDLE handle;  
     DRV_NAND_FLASH_GEOMETRY nandFlashFlashGeometry;
 
     if (DRV_NAND_FLASH_GeometryGet(handle, &nandFlashFlashGeometry))
     {
-        // Geometry read successfully
+       
     }
     </code>
 
@@ -729,10 +727,10 @@ bool DRV_NAND_FLASH_GeometryGet( const DRV_HANDLE handle, DRV_NAND_FLASH_GEOMETR
     <code>
 
     uint16_t blockNum = 0;
-    DRV_HANDLE handle;  // Returned from DRV_NAND_FLASH_Open
+    DRV_HANDLE handle;  
 
     if (DRV_NAND_FLASH_SkipBlock_BlockCheck(handle, blockNum))
-        // Block is good
+        
     }
     </code>
 
@@ -772,10 +770,10 @@ bool DRV_NAND_FLASH_SkipBlock_BlockCheck(const DRV_HANDLE handle, uint16_t block
     <code>
 
     uint16_t blockNum = 0;
-    DRV_HANDLE handle;  // Returned from DRV_NAND_FLASH_Open
+    DRV_HANDLE handle;  
 
     if (DRV_NAND_FLASH_SkipBlock_BlockTag(handle, blockNum, 1))
-        // Block is tagged as bad
+        
     }
     </code>
 
@@ -815,11 +813,11 @@ bool DRV_NAND_FLASH_SkipBlock_BlockTag(const DRV_HANDLE handle, uint16_t blockNu
     <code>
 
     uint16_t blockNum = 0;
-    DRV_HANDLE handle;  // Returned from DRV_NAND_FLASH_Open
+    DRV_HANDLE handle;  
 
     if(DRV_NAND_FLASH_SkipBlock_BlockErase(handle, blockNum, 0))
     {
-        // Block erase is successfully completed
+        
     }
 
     </code>
@@ -872,14 +870,14 @@ bool DRV_NAND_FLASH_SkipBlock_BlockErase(const DRV_HANDLE handle, uint16_t block
   Example:
     <code>
 
-    DRV_HANDLE handle;  // Returned from DRV_NAND_FLASH_Open
+    DRV_HANDLE handle;  
     uint16_t blockNum = 3;
     uint16_t pageNum = 0;
     static uint8_t pageBuffer[4096 + 224];
 
     if (DRV_NAND_FLASH_SkipBlock_PageRead(handle, blockNum, pageNum, pageBuffer, 0, 0))
     {
-        // Page read successfully completed
+       
     }
 
     </code>
@@ -927,13 +925,13 @@ bool DRV_NAND_FLASH_SkipBlock_PageRead(
   Example:
     <code>
 
-    DRV_HANDLE handle;  // Returned from DRV_NAND_FLASH_Open
+    DRV_HANDLE handle; 
     uint16_t blockNum = 3;
     static uint8_t blockBuffer[262144 + 14336];
 
     if (DRV_NAND_FLASH_SkipBlock_BlockRead(handle, blockNum, blockBuffer, 0))
     {
-        // Block read successfully completed
+        
     }
 
     </code>
@@ -983,7 +981,7 @@ bool DRV_NAND_FLASH_SkipBlock_BlockRead(const DRV_HANDLE handle, uint16_t blockN
   Example:
     <code>
 
-    DRV_HANDLE handle;  // Returned from DRV_NAND_FLASH_Open
+    DRV_HANDLE handle;  
     uint16_t blockNum = 3;
     uint16_t pageNum = 0;
     static uint8_t pageBuffer[4096 + 224];
@@ -991,7 +989,7 @@ bool DRV_NAND_FLASH_SkipBlock_BlockRead(const DRV_HANDLE handle, uint16_t blockN
     memset(pageBuffer, 0x55, sizeof(pageBuffer));
     if (DRV_NAND_FLASH_SkipBlock_PageWrite(handle, blockNum, pageNum, pageBuffer, 0, 0))
     {
-        // Page write successfully completed
+        
     }
 
     </code>
@@ -1040,7 +1038,7 @@ bool DRV_NAND_FLASH_SkipBlock_PageWrite(
   Example:
     <code>
 
-    DRV_HANDLE handle;  // Returned from DRV_NAND_FLASH_Open
+    DRV_HANDLE handle;  
     uint16_t blockNum = 3;
     static uint8_t blockBuffer[262144 + 14336];
 
@@ -1048,7 +1046,7 @@ bool DRV_NAND_FLASH_SkipBlock_PageWrite(
 
     if (DRV_NAND_FLASH_SkipBlock_BlockWrite(handle, blockNum, blockBuffer, 0))
     {
-        // Block write successfully completed
+        
     }
 
     </code>
@@ -1065,7 +1063,7 @@ bool DRV_NAND_FLASH_SkipBlock_BlockWrite(const DRV_HANDLE handle, uint16_t block
 }
 #endif
 
-#endif // #ifndef _DRV_NAND_FLASH_H
+#endif // #ifndef DRV_NAND_FLASH_H
 /*******************************************************************************
  End of File
 */

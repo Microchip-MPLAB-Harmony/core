@@ -156,11 +156,12 @@ def instantiateComponent(nandFlashComponent):
     nandFlashSourceFile.setMarkup(True)
 
     nandFlashPmeccSourceFile = nandFlashComponent.createFileSymbol("DRV_NAND_FLASH_PMECC_SOURCE", None)
-    nandFlashPmeccSourceFile.setSourcePath("driver/smc_flash/nand_flash/src/drv_nand_flash_pmecc.c")
+    nandFlashPmeccSourceFile.setSourcePath("driver/smc_flash/nand_flash/src/drv_nand_flash_pmecc.c.ftl")
     nandFlashPmeccSourceFile.setOutputName("drv_nand_flash_pmecc.c")
     nandFlashPmeccSourceFile.setDestPath("driver/smc_flash/nand_flash/src/")
     nandFlashPmeccSourceFile.setProjectPath("config/" + configName + "/driver/smc_flash/nand_flash/")
     nandFlashPmeccSourceFile.setType("SOURCE")
+    nandFlashPmeccSourceFile.setMarkup(True)
     nandFlashPmeccSourceFile.setOverwrite(True)
     nandFlashPmeccSourceFile.setEnabled(nandEnablePMECC.getValue())
     nandFlashPmeccSourceFile.setDependencies(nandFlashFileSymbolEnable, ["DRV_NAND_FLASH_PMECC_ENABLE"])

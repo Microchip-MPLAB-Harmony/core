@@ -39,8 +39,8 @@
 *******************************************************************************/
 //DOM-IGNORE-END
 
-#ifndef _DRV_NAND_FLASH_LOCAL_H
-#define _DRV_NAND_FLASH_LOCAL_H
+#ifndef DRV_NAND_FLASH_LOCAL_H
+#define DRV_NAND_FLASH_LOCAL_H
 
 // *****************************************************************************
 // *****************************************************************************
@@ -80,7 +80,6 @@
   Remarks:
     None
 */
-
 typedef enum
 {
     /* Read command for cycle1 */
@@ -93,10 +92,10 @@ typedef enum
     NAND_FLASH_CMD_COPYBACK_READ = 0x35,
 
     /* Change read column (Random data read) command for cycle 1 */
-    NAND_FLASH_CMD_CHANGE_READ_COLUMN1 = 0x05,
+    NAND_FLASH_CMD_CHANGE_RD_CLMN1 = 0x05,
 
     /* Change read column (Random data read) command for cycle 2 */
-    NAND_FLASH_CMD_CHANGE_READ_COLUMN2 = 0xE0,
+    NAND_FLASH_CMD_CHANGE_RD_CLMN2 = 0xE0,
 
     /* Read cache enhanced (Read page cache random) command for cycle 2 */
     NAND_FLASH_CMD_READ_CACHE_ENHANCED = 0x31,
@@ -129,19 +128,19 @@ typedef enum
     NAND_FLASH_CMD_PAGE_PROGRAM2 = 0x10,
 
     /* Page program interleaved command for cycle 2 */
-    NAND_FLASH_CMD_PAGE_PROGRAM_INTERLEAVED = 0x11,
+    NAND_FLASH_CMD_PAGE_PRGM_INTERLEAVE = 0x11,
 
     /* Page cache program command for cycle 2 */
     NAND_FLASH_CMD_PAGE_CACHE_PROGRAM = 0x15,
 
     /* Copyback program command for cycle 1 */
-    NAND_FLASH_CMD_COPYBACK_PROGRAM1 = 0x85,
+    NAND_FLASH_CMD_CPYBACK_PRGM1 = 0x85,
 
     /* Copyback program command for cycle 2 */
-    NAND_FLASH_CMD_COPYBACK_PROGRAM2 = 0x10,
+    NAND_FLASH_CMD_CPYBACK_PRGM2 = 0x10,
 
     /* Copyback program interleaved command for cycle 2 */
-    NAND_FLASH_CMD_COPYBACK_PROGRAM_INTERLEAVED = 0x11,
+    NAND_FLASH_CMD_CPYBACK_PRGM_INTERLEAVE = 0x11,
 
     /* Change write column (Random data input) command for cycle 1 */
     NAND_FLASH_CMD_CHANGE_WRITE_COLUMN = 0x85,
@@ -182,6 +181,8 @@ typedef struct
 
     /* Indicates the number of clients that have opened this driver */
     size_t nClients;
+    
+    SYS_DMA_CHANNEL txrxDMAChannel;
 
 <#if core.DMA_ENABLE?has_content && DRV_NAND_FLASH_TX_RX_DMA?? && DRV_NAND_FLASH_TX_RX_DMA == true>
     /* NAND Flash transfer status. Used for DMA operation only */
@@ -197,7 +198,7 @@ typedef struct
 }
 #endif
 
-#endif //#ifndef _DRV_NAND_FLASH_LOCAL_H
+#endif //#ifndef DRV_NAND_FLASH_LOCAL_H
 
 /*******************************************************************************
  End of File

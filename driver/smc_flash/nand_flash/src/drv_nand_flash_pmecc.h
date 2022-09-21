@@ -39,8 +39,8 @@
 *******************************************************************************/
 //DOM-IGNORE-END
 
-#ifndef _DRV_NAND_FLASH_PMECC_H
-#define _DRV_NAND_FLASH_PMECC_H
+#ifndef DRV_NAND_FLASH_PMECC_H
+#define DRV_NAND_FLASH_PMECC_H
 
 // *****************************************************************************
 // *****************************************************************************
@@ -108,7 +108,7 @@ bool DRV_NAND_FLASH_PmeccDescSetup(uint32_t pageSize, uint16_t spareSize, DRV_NA
 }
 #endif
 
-#endif //#ifndef _DRV_NAND_FLASH_PMECC_H
+#endif //#ifndef DRV_NAND_FLASH_PMECC_H
 
 /*******************************************************************************
  End of File

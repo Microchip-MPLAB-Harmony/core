@@ -84,7 +84,6 @@
   Remarks:
     None.
 */
-
 /* Pointer to get EBI Address to SMC NAND Flash device. */
 typedef uint32_t (*DRV_NAND_FLASH_PLIB_DATA_ADDRESS_GET)(uint8_t chipSelect);
 
@@ -95,10 +94,10 @@ typedef void (*DRV_NAND_FLASH_PLIB_CMD_WRITE)(uint32_t dataAddress, uint8_t comm
 typedef void (*DRV_NAND_FLASH_PLIB_CMD_WRITE16)(uint32_t dataAddress, uint16_t command);
 
 /* Pointer to 8-bit write address to SMC NAND Flash device. */
-typedef void (*DRV_NAND_FLASH_PLIB_ADDRESS_WRITE)(uint32_t dataAddress, uint8_t address);
+typedef void (*DRV_NAND_FLASH_PLIB_ADDR_WR)(uint32_t dataAddress, uint8_t address);
 
 /* Pointer to 16-bit write address to SMC NAND Flash device. */
-typedef void (*DRV_NAND_FLASH_PLIB_ADDRESS_WRITE16)(uint32_t dataAddress, uint16_t address);
+typedef void (*DRV_NAND_FLASH_PLIB_ADDR_WR16)(uint32_t dataAddress, uint16_t address);
 
 /* Pointer to 8-bit write data to SMC NAND Flash device. */
 typedef void (*DRV_NAND_FLASH_PLIB_DATA_WRITE)(uint32_t dataAddress, uint8_t data);
@@ -129,10 +128,10 @@ typedef int16_t (*DRV_NAND_FLASH_PLIB_REMAINDER_GET)(uint32_t sector, uint32_t r
 typedef uint8_t (*DRV_NAND_FLASH_PLIB_ECC_GET)(uint32_t sector, uint32_t byteIndex);
 
 /* Pointer to PMERRLOC error location for NAND Flash device. */
-typedef uint32_t (*DRV_NAND_FLASH_PLIB_ERROR_LOCATION_GET)(uint8_t position);
+typedef uint32_t (*DRV_NAND_FLASH_PLIB_ERR_LOC_GET)(uint8_t position);
 
 /* Pointer to PMERRLOC error location disable for NAND Flash device. */
-typedef void (*DRV_NAND_FLASH_PLIB_ERROR_LOCATION_DISABLE)(void);
+typedef void (*DRV_NAND_FLASH_PLIB_ERR_LOC_DIS)(void);
 
 /* Pointer to PMERRLOC sigma for NAND Flash device. */
 typedef void (*DRV_NAND_FLASH_PLIB_SIGMA_SET)(uint32_t sigmaVal, uint32_t sigmaNum);
@@ -153,10 +152,10 @@ typedef struct
     DRV_NAND_FLASH_PLIB_CMD_WRITE16 CommandWrite16;
 
     /* Pointer to 8-bit write address to SMC NAND Flash device. */
-    DRV_NAND_FLASH_PLIB_ADDRESS_WRITE AddressWrite;
+    DRV_NAND_FLASH_PLIB_ADDR_WR AddressWrite;
 
     /* Pointer to 16-bit write address to SMC NAND Flash device. */
-    DRV_NAND_FLASH_PLIB_ADDRESS_WRITE16 AddressWrite16;
+    DRV_NAND_FLASH_PLIB_ADDR_WR16 AddressWrite16;
 
     /* Pointer to 8-bit write data to SMC NAND Flash device. */
     DRV_NAND_FLASH_PLIB_DATA_WRITE DataWrite;
@@ -187,16 +186,16 @@ typedef struct
     DRV_NAND_FLASH_PLIB_ECC_GET ECCGet;
 
     /* Pointer to PMERRLOC error location get for NAND Flash device. */
-    DRV_NAND_FLASH_PLIB_ERROR_LOCATION_GET ErrorLocationGet;
+    DRV_NAND_FLASH_PLIB_ERR_LOC_GET ErrorLocationGet;
 
     /* Pointer to PMERRLOC error location disable for NAND Flash device. */
-    DRV_NAND_FLASH_PLIB_ERROR_LOCATION_DISABLE ErrorLocationDisable;
+    DRV_NAND_FLASH_PLIB_ERR_LOC_DIS ErrorLocationDisable;
 
     /* Pointer to PMERRLOC sigma for NAND Flash device. */
     DRV_NAND_FLASH_PLIB_SIGMA_SET SigmaSet;
 
     /* Pointer to PMERRLOC find number of roots for NAND Flash device. */
-    DRV_NAND_FLASH_PLIB_EL_FIND_NO_OF_ROOTS ErrorLocationFindNumOfRoots;
+    DRV_NAND_FLASH_PLIB_EL_FIND_NO_OF_ROOTS ErrorLocationFindNumOfRoots;  
 </#if>
 } DRV_NAND_FLASH_PLIB_INTERFACE;
 

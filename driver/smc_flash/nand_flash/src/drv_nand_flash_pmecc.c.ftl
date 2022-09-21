@@ -3155,7 +3155,14 @@ static const uint16_t pmeccGf1024[2][PMECC_GF_1024_SIZE] = {
 // Section: NAND FLASH Driver PMECC Local Functions
 // *****************************************************************************
 // *****************************************************************************
-
+/* MISRA C-2012 Rule 11.3 deviated:4 Deviation record ID -  H3_MISRAC_2012_R_11_3_DR_1 */
+<#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
+<#if core.COMPILER_CHOICE == "XC32">
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wunknown-pragmas"
+</#if>
+#pragma coverity compliance block deviate:4 "MISRA C-2012 Rule 11.3" "H3_MISRAC_2012_R_11_3_DR_1"    
+</#if>
 static void DRV_NAND_FLASH_PmeccGetGf512Tables(const int16_t **alphaTo, const int16_t **indexOf)
 {
     *indexOf = (const int16_t*)&(pmeccGf512[0]);
@@ -3167,46 +3174,76 @@ static void DRV_NAND_FLASH_PmeccGetGf1024Tables(const int16_t **alphaTo, const i
     *indexOf = (const int16_t*)&(pmeccGf1024[0]);
     *alphaTo = (const int16_t*)&(pmeccGf1024[1]);
 }
+<#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
+#pragma coverity compliance end_block "MISRA C-2012 Rule 11.3"
+<#if core.COMPILER_CHOICE == "XC32">
+#pragma GCC diagnostic pop
+</#if>    
+/* MISRAC 2012 deviation block end */
+</#if>
 
+/* MISRA C-2012 Rule 10.1, 10.3, 10.4, 10.8, and 14.3 deviated below. 
+  Deviation record ID - H3_MISRAC_2012_R_10_1_DR_1, H3_MISRAC_2012_R_10_3_DR_1,
+  H3_MISRAC_2012_R_10_4_DR_1, H3_MISRAC_2012_R_10_8_DR_1 and H3_MISRAC_2012_R_14_3_DR_1*/
+<#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
+<#if core.COMPILER_CHOICE == "XC32">
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wunknown-pragmas"
+</#if>
+#pragma coverity compliance block \
+(deviate:26 "MISRA C-2012 Rule 10.1" "H3_MISRAC_2012_R_10_1_DR_1" )\
+(deviate:5 "MISRA C-2012 Rule 10.3" "H3_MISRAC_2012_R_10_3_DR_1" )\
+(deviate:1 "MISRA C-2012 Rule 10.4" "H3_MISRAC_2012_R_10_4_DR_1" )\
+(deviate:3 "MISRA C-2012 Rule 10.8" "H3_MISRAC_2012_R_10_8_DR_1" )\
+(deviate:1 "MISRA C-2012 Rule 14.3" "H3_MISRAC_2012_R_14_3_DR_1" )  
+</#if>
 static void DRV_NAND_FLASH_GenPartialSyndromes(uint32_t sector)
 {
     uint32_t remainderNum = 0;
 
     /* Fill odd syndromes */
-    for (remainderNum = 0; remainderNum < gDrvNandPmeccDescriptor.tt; remainderNum++)
+    for (remainderNum = 0; remainderNum < (uint32_t)gDrvNandPmeccDescriptor.tt; remainderNum++)
     {
-        gDrvNandPmeccDescriptor.partialSyn[1 + (2 * remainderNum)] = dPmeccObj->nandFlashPlib->RemainderGet(sector, remainderNum);
+        gDrvNandPmeccDescriptor.partialSyn[1U + (2U * remainderNum)] = dPmeccObj->nandFlashPlib->RemainderGet(sector, remainderNum);
     }
 }
 
 static uint32_t DRV_NAND_FLASH_Substitute(void)
 {
     int32_t i = 0, j = 0;
-    int16_t *si = 0;
+    int16_t *si = NULL;
     int16_t *partialSyn = gDrvNandPmeccDescriptor.partialSyn;
     const int16_t *alphaTo = gDrvNandPmeccDescriptor.alphaTo;
     const int16_t *indexOf = gDrvNandPmeccDescriptor.indexOf;
 
     /* si[] is a table that holds the current syndrome value, an element of that table belongs to the field.*/
-    memset(gDrvNandPmeccDescriptor.si, 0, sizeof(gDrvNandPmeccDescriptor.si));
+    (void) memset(gDrvNandPmeccDescriptor.si, 0, sizeof(gDrvNandPmeccDescriptor.si));
     si = gDrvNandPmeccDescriptor.si;
 
     /* Computation 2t syndromes based on S(x) */
     /* Odd syndromes */
-    for (i = 1; i <= 2 * gDrvNandPmeccDescriptor.tt - 1; i = i + 2) {
+    for (i = 1; i <= ((2 * gDrvNandPmeccDescriptor.tt) - 1); i = i + 2) 
+    {
         si[i] = 0;
-        for (j = 0; j < gDrvNandPmeccDescriptor.mm; j++) {
-            if (partialSyn[i] & ((uint16_t)0x1 << j))
+        for (j = 0; j < gDrvNandPmeccDescriptor.mm; j++) 
+        {
+            if (((uint16_t)partialSyn[i] & ((uint16_t)0x1 << j)) != 0U)
+            {
                 si[i] = alphaTo[(i * j)] ^ si[i];
+            }
         }
     }
     /* Even syndrome = (Odd syndrome) ** 2 */
-    for (i = 2; i <= 2 * gDrvNandPmeccDescriptor.tt; i = i + 2) {
+    for (i = 2; i <= (2 * gDrvNandPmeccDescriptor.tt); i = i + 2) 
+    {
         j = i / 2;
-        if (si[j] == 0) {
+        if (si[j] == 0) 
+        {
             si[i] = 0;
-        } else {
-            si[i] = alphaTo[(2 * indexOf[si[j]]) % gDrvNandPmeccDescriptor.nn];
+        } 
+        else 
+        {
+            si[i] = alphaTo[(2 * indexOf[si[j]]) % (int16_t)gDrvNandPmeccDescriptor.nn];
         }
     }
     return 0;
@@ -3218,7 +3255,7 @@ static uint32_t DRV_NAND_FLASH_GetSigma(void)
     int32_t i = 0, j = 0, k = 0;
     int16_t *lmu = gDrvNandPmeccDescriptor.lmu;
     int16_t *si = gDrvNandPmeccDescriptor.si;
-    int16_t tt = gDrvNandPmeccDescriptor.tt;
+    int16_t tt = (int16_t)gDrvNandPmeccDescriptor.tt;
 
     int32_t mu[PMECC_NB_ERROR_MAX + 1]; /* mu */
     int32_t dmu[PMECC_NB_ERROR_MAX + 1]; /* discrepancy */
@@ -3234,8 +3271,10 @@ static uint32_t DRV_NAND_FLASH_GetSigma(void)
     /* Actually -1/2 */
     /* Sigma(x) set to 1 */
 
-    for (i = 0; i < (2 * PMECC_NB_ERROR_MAX + 1); i++)
+    for (i = 0; i < ((2 * PMECC_NB_ERROR_MAX) + 1); i++)
+    {
         gDrvNandPmeccDescriptor.smu[0][i] = 0;
+    }
     gDrvNandPmeccDescriptor.smu[0][0] = 1;
 
     /* discrepancy set to 1 */
@@ -3245,7 +3284,7 @@ static uint32_t DRV_NAND_FLASH_GetSigma(void)
     lmu[0] = 0;
 
     /* delta set to -1 */
-    delta[0]  = (mu[0] * 2 - lmu[0]) >> 1;
+    delta[0]  = ((mu[0] * 2) - lmu[0]) >> 1;
 
     /* -- Second Row -- */
 
@@ -3253,8 +3292,10 @@ static uint32_t DRV_NAND_FLASH_GetSigma(void)
     mu[1] = 0;
 
     /* Sigma(x) set to 1 */
-    for (i = 0; i < (2 * PMECC_NB_ERROR_MAX + 1); i++)
+    for (i = 0; i < ((2 * PMECC_NB_ERROR_MAX) + 1); i++)
+    {
         gDrvNandPmeccDescriptor.smu[1][i] = 0;
+    }
     gDrvNandPmeccDescriptor.smu[1][0] = 1;
 
     /* discrepancy set to S1 */
@@ -3264,11 +3305,13 @@ static uint32_t DRV_NAND_FLASH_GetSigma(void)
     lmu[1] = 0;
 
     /* delta set to 0 */
-    delta[1]  = (mu[1] * 2 - lmu[1]) >> 1;
+    delta[1]  = ((mu[1] * 2) - lmu[1]) >> 1;
 
     /* Init the Sigma(x) last row */
-    for (i = 0; i < (2 * PMECC_NB_ERROR_MAX + 1); i++)
+    for (i = 0; i < ((2 * PMECC_NB_ERROR_MAX) + 1); i++)
+    {
         gDrvNandPmeccDescriptor.smu[tt + 1][i] = 0;
+    }
 
     for (i = 1; i <= tt; i++) {
         mu[i+1] = i << 1;
@@ -3278,17 +3321,26 @@ static uint32_t DRV_NAND_FLASH_GetSigma(void)
         /* check if discrepancy is set to 0 */
         if ( dmu[i] == 0) {
             dmu_0_count++;
-            if ((tt - (lmu[i] >> 1) - 1) & 0x1) {
-                if (dmu_0_count == (uint32_t)((tt - (lmu[i] >> 1) - 1) / 2) + 2) {
-                    for (j = 0; j <= (lmu[i] >> 1) + 1; j++)
+            if (((tt - (lmu[i] >> 1) - 1) & 0x1) != 0)
+            {
+                if (dmu_0_count == (uint32_t)((tt - (lmu[i] >> 1) - 1) / 2) + 2U) 
+                {
+                    for (j = 0; j <= ((lmu[i] >> 1) + 1); j++)
+                    {
                         gDrvNandPmeccDescriptor.smu[tt+1][j] = gDrvNandPmeccDescriptor.smu[i][j];
+                    }
                     lmu[tt + 1] = lmu[i];
                     return 0;
                 }
-            } else {
-                if (dmu_0_count == (uint32_t)((tt - (lmu[i] >> 1) - 1) / 2) + 1) {
-                    for (j = 0; j <= (lmu[i] >> 1) + 1; j++)
+            } 
+            else 
+            {
+                if (dmu_0_count == (uint32_t)((tt - (lmu[i] >> 1) - 1) / 2) + 1U) 
+                {
+                    for (j = 0; j <= ((lmu[i] >> 1) + 1); j++)
+                    {
                         gDrvNandPmeccDescriptor.smu[tt + 1][j] = gDrvNandPmeccDescriptor.smu[i][j];
+                    }
                     lmu[tt + 1] = lmu[i];
                     return 0;
                 }
@@ -3296,17 +3348,24 @@ static uint32_t DRV_NAND_FLASH_GetSigma(void)
 
             /* copy polynom */
             for (j = 0; j <= (lmu[i] >> 1); j++)
+            {
                 gDrvNandPmeccDescriptor.smu[i + 1][j] = gDrvNandPmeccDescriptor.smu[i][j];
+            }
 
             /* copy previous polynom order to the next */
             lmu[i + 1] = lmu[i];
-        } else {
+        } 
+        else 
+        {
             /* find largest delta with dmu != 0 */
             ro = 0;
             largest = -1;
-            for (j = 0; j < i; j++) {
-                if (dmu[j]) {
-                    if (delta[j] > largest) {
+            for (j = 0; j < i; j++) 
+            {
+                if ((dmu[j]) != 0)  
+                {
+                    if (delta[j] > largest) 
+                    {
                         largest = delta[j];
                         ro = j;
                     }
@@ -3318,23 +3377,34 @@ static uint32_t DRV_NAND_FLASH_GetSigma(void)
 
             /* Compute degree of the new smu polynomial */
             if ((lmu[i] >> 1) > ((lmu[ro] >> 1) + diff))
+            {
                 lmu[i + 1] = lmu[i];
+            }
             else
-                lmu[i + 1] = ((lmu[ro] >> 1) + diff) * 2;
+            {
+                lmu[i + 1] = (int16_t)(((lmu[ro] >> 1) + diff) * 2);
+            }
 
             /* Init smu[i+1] with 0 */
-            for (k = 0; k < (2 * PMECC_NB_ERROR_MAX + 1); k++)
+            for (k = 0; k < ((2 * PMECC_NB_ERROR_MAX) + 1); k++)
+            {
                 gDrvNandPmeccDescriptor.smu[i+1][k] = 0;
+            }
 
             /* Compute smu[i+1] */
-            for (k = 0; k <= (lmu[ro] >> 1); k++) {
-                if (gDrvNandPmeccDescriptor.smu[ro][k] && dmu[i])
+            for (k = 0; k <= (lmu[ro] >> 1); k++) 
+            {
+                if ((gDrvNandPmeccDescriptor.smu[ro][k] != 0) && (dmu[i] != 0))
+                {
                     gDrvNandPmeccDescriptor.smu[i + 1][k + diff] = gDrvNandPmeccDescriptor.alphaTo[(gDrvNandPmeccDescriptor.indexOf[dmu[i]] +
                             (gDrvNandPmeccDescriptor.nn - gDrvNandPmeccDescriptor.indexOf[dmu[ro]]) +
                             gDrvNandPmeccDescriptor.indexOf[gDrvNandPmeccDescriptor.smu[ro][k]]) % gDrvNandPmeccDescriptor.nn];
+                }
             }
             for (k = 0; k <= (lmu[i] >> 1); k++)
+            {
                 gDrvNandPmeccDescriptor.smu[i+1][k] ^= gDrvNandPmeccDescriptor.smu[i][k];
+            }
         }
 
         /*************************************************/
@@ -3342,17 +3412,27 @@ static uint32_t DRV_NAND_FLASH_GetSigma(void)
         /*      And L(mu)                                */
         /*************************************************/
         /* In either case compute delta */
-        delta[i + 1] = (mu[i + 1] * 2 - lmu[i + 1]) >> 1;
+        delta[i + 1] = ((mu[i + 1] * 2) - lmu[i + 1]) >> 1;
 
         /* Do not compute discrepancy for the last iteration */
-        if (i < tt) {
-            for (k = 0 ; k <= (lmu[i + 1] >> 1); k++) {
+        if (i < tt) 
+        {
+            for (k = 0 ; k <= (lmu[i + 1] >> 1); k++) 
+            {
                 if (k == 0)
-                    dmu[i + 1] = si[2 * (i - 1) + 3];
+                {
+                    dmu[i + 1] = si[(2 * (i - 1)) + 3];
+                }
                 /* check if one operand of the multiplier is null, its index is -1 */
-                else if (gDrvNandPmeccDescriptor.smu[i+1][k] && si[2 * (i - 1) + 3 - k])
+                else if ((gDrvNandPmeccDescriptor.smu[i+1][k] != 0) && (si[(2 * (i - 1)) + 3 - k] != 0))
+                {
                     dmu[i + 1] = gDrvNandPmeccDescriptor.alphaTo[(gDrvNandPmeccDescriptor.indexOf[gDrvNandPmeccDescriptor.smu[i + 1][k]] +
-                            gDrvNandPmeccDescriptor.indexOf[si[2 * (i - 1) + 3 - k]]) % gDrvNandPmeccDescriptor.nn] ^ dmu[i + 1];
+                            gDrvNandPmeccDescriptor.indexOf[si[(2 * (i - 1)) + 3 - k]]) % (int16_t)gDrvNandPmeccDescriptor.nn] ^ dmu[i + 1];
+                }
+                else
+                {
+                    /* Nothing to do */
+                }
             }
         }
     }
@@ -3388,26 +3468,26 @@ static void DRV_NAND_FLASH_ErrorCorrection(uint32_t sectorBaseAddress, uint32_t 
     uint32_t errorPos = 0;
     uint32_t bytePos = 0;
     uint32_t bitPos = 0;
-    uint8_t *data = 0;
+    uint8_t *data = NULL;
 
     for (count = 0; count < errorNumber; count++)
     {
         errorPos = dPmeccObj->nandFlashPlib->ErrorLocationGet(count);
-        bytePos = (errorPos - 1) >> 3;
-        bitPos = (errorPos - 1) & 7;
+        bytePos = (errorPos - 1U) >> 3;
+        bitPos = (errorPos - 1U) & 7U;
 
         /* If error is located in the data area (not in ECC) */
-        if (bytePos < DRV_NAND_FLASH_PMECC_SECTOR_SIZE)
+        if (bytePos < (uint32_t)DRV_NAND_FLASH_PMECC_SECTOR_SIZE)
         {
             data = (uint8_t *)(sectorBaseAddress + bytePos);
 
-            if (*data & (1 << bitPos))
+            if ((*data & (1UL << bitPos)) != 0U)
             {
-                *data &= (0xff ^ (1 << bitPos));
+                *data &= (uint8_t)(0xffU ^ (1UL << bitPos));
             }
             else
             {
-                *data |= (1 << bitPos);
+                *data |= (uint8_t)(1UL << bitPos);
             }
         }
     }
@@ -3423,7 +3503,7 @@ bool DRV_NAND_FLASH_PmeccDescSetup(uint32_t pageSize, uint16_t spareSize, DRV_NA
 {
     dPmeccObj = dObj;
 
-    if ((pageSize / DRV_NAND_FLASH_PMECC_SECTOR_SIZE) != DRV_NAND_FLASH_PMECC_NUMBER_OF_SECTORS)
+    if ((pageSize / (uint32_t)DRV_NAND_FLASH_PMECC_SECTOR_SIZE) != (uint32_t)DRV_NAND_FLASH_PMECC_NUMBER_OF_SECTORS)
     {
         return false;
     }
@@ -3439,7 +3519,7 @@ bool DRV_NAND_FLASH_PmeccDescSetup(uint32_t pageSize, uint16_t spareSize, DRV_NA
         DRV_NAND_FLASH_PmeccGetGf1024Tables(&gDrvNandPmeccDescriptor.alphaTo, &gDrvNandPmeccDescriptor.indexOf);
     }
 
-    gDrvNandPmeccDescriptor.nn = (1 << gDrvNandPmeccDescriptor.mm) - 1;
+    gDrvNandPmeccDescriptor.nn = (1UL << gDrvNandPmeccDescriptor.mm) - 1;
     gDrvNandPmeccDescriptor.tt = DRV_NAND_FLASH_PMECC_ECC_ERR_CAPABILITY;
 
     if (DRV_NAND_FLASH_PMECC_ECC_SPARE_SIZE !=
@@ -3449,7 +3529,7 @@ bool DRV_NAND_FLASH_PmeccDescSetup(uint32_t pageSize, uint16_t spareSize, DRV_NA
         return false;
     }
 
-    if ((DRV_NAND_FLASH_PMECC_ECC_START_ADDR + DRV_NAND_FLASH_PMECC_ECC_SPARE_SIZE) > spareSize)
+    if ((DRV_NAND_FLASH_PMECC_ECC_START_ADDR + (uint16_t)DRV_NAND_FLASH_PMECC_ECC_SPARE_SIZE) > spareSize)
     {
         return false;
     }
@@ -3463,17 +3543,17 @@ bool DRV_NAND_FLASH_PmeccCorrection(uint32_t pmeccStatus, uint32_t pageBuffer)
     uint32_t sectorBaseAddress = 0;
     int32_t errorNumber = 0;
 
-    for (sector = 0; sector < DRV_NAND_FLASH_PMECC_NUMBER_OF_SECTORS; sector++)
+    for (sector = 0; sector < (uint32_t)DRV_NAND_FLASH_PMECC_NUMBER_OF_SECTORS; sector++)
     {
-        if (pmeccStatus & 0x1)
+        if ((pmeccStatus & 0x1U) != 0U)
         {
-            sectorBaseAddress = pageBuffer + sector * DRV_NAND_FLASH_PMECC_SECTOR_SIZE;
+            sectorBaseAddress = (pageBuffer + (sector * (uint32_t)DRV_NAND_FLASH_PMECC_SECTOR_SIZE));
             /* Call Partial syndrome */
             DRV_NAND_FLASH_GenPartialSyndromes(sector);
             /* Call substitute */
-            DRV_NAND_FLASH_Substitute();
+            (void) DRV_NAND_FLASH_Substitute();
             /* Get Sigma */
-            DRV_NAND_FLASH_GetSigma();
+            (void) DRV_NAND_FLASH_GetSigma();
             /* Find error location. Number of bits of the sector + ecc */
             errorNumber = DRV_NAND_FLASH_ErrorLocation(DRV_NAND_FLASH_PMECC_SECTOR_SIZE * 8 + gDrvNandPmeccDescriptor.tt * gDrvNandPmeccDescriptor.mm);
             if (errorNumber == -1)
@@ -3491,3 +3571,15 @@ bool DRV_NAND_FLASH_PmeccCorrection(uint32_t pmeccStatus, uint32_t pageBuffer)
 
     return true;
 }
+
+<#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
+#pragma coverity compliance end_block "MISRA C-2012 Rule 10.1"
+#pragma coverity compliance end_block "MISRA C-2012 Rule 10.3"
+#pragma coverity compliance end_block "MISRA C-2012 Rule 10.4"
+#pragma coverity compliance end_block "MISRA C-2012 Rule 10.8"
+#pragma coverity compliance end_block "MISRA C-2012 Rule 14.3"
+<#if core.COMPILER_CHOICE == "XC32">
+#pragma GCC diagnostic pop
+</#if>    
+</#if> 
+/* MISRAC 2012 deviation block end */
