@@ -162,13 +162,13 @@ def instantiateComponent(at24Component):
     at24SymHeaderDefFile.setOverwrite(True)
 
     at24SourceFile = at24Component.createFileSymbol("AT24_SOURCE", None)
-    at24SourceFile.setSourcePath("driver/i2c_eeprom/at24/src/drv_at24.c")
+    at24SourceFile.setSourcePath("driver/i2c_eeprom/at24/src/drv_at24.c.ftl")
     at24SourceFile.setOutputName("drv_at24.c")
     at24SourceFile.setDestPath("driver/at24/src")
     at24SourceFile.setProjectPath("config/" + configName + "/driver/at24/")
     at24SourceFile.setType("SOURCE")
     at24SourceFile.setOverwrite(True)
-    at24SourceFile.setMarkup(False)
+    at24SourceFile.setMarkup(True)
 
     at24AsyncSymHeaderLocalFile = at24Component.createFileSymbol("DRV_AT24_HEADER_LOCAL", None)
     at24AsyncSymHeaderLocalFile.setSourcePath("driver/i2c_eeprom/at24/src/drv_at24_local.h")

@@ -75,19 +75,19 @@ typedef enum
 
 }DRV_AT24_I2C_ERROR;
 
-typedef void (* DRV_AT24_PLIB_CALLBACK)( uintptr_t );
+typedef void (* DRV_AT24_PLIB_CALLBACK)( uintptr_t contextHandle);
 
-typedef bool (* DRV_AT24_PLIB_WRITE_READ)(uint16_t , uint8_t* , uint32_t , uint8_t* , uint32_t);
+typedef bool (* DRV_AT24_PLIB_WRITE_READ)(uint16_t address, uint8_t *wdata, uint32_t wlength, uint8_t *rdata, uint32_t rlength);
 
-typedef bool (* DRV_AT24_PLIB_WRITE)(uint16_t , uint8_t* , uint32_t );
+typedef bool (* DRV_AT24_PLIB_WRITE)(uint16_t address, uint8_t *pdata, uint32_t length);
 
-typedef bool (* DRV_AT24_PLIB_READ)(uint16_t , uint8_t* , uint32_t);
+typedef bool (* DRV_AT24_PLIB_READ)(uint16_t address, uint8_t *pdata, uint32_t length);
 
 typedef bool (* DRV_AT24_PLIB_IS_BUSY)(void);
 
 typedef DRV_AT24_I2C_ERROR (* DRV_AT24_PLIB_ERROR_GET)(void);
 
-typedef void (* DRV_AT24_PLIB_CALLBACK_REGISTER)(DRV_AT24_PLIB_CALLBACK, uintptr_t);
+typedef void (* DRV_AT24_PLIB_CALLBACK_REGISTER)(DRV_AT24_PLIB_CALLBACK callback, uintptr_t contextHandle);
 
 // *****************************************************************************
 /* AT24 Driver PLIB Interface Data
@@ -109,10 +109,10 @@ typedef struct
     DRV_AT24_PLIB_WRITE_READ               writeRead;
 
     /* AT24 PLIB write API */
-    DRV_AT24_PLIB_WRITE                     write;
+    DRV_AT24_PLIB_WRITE                     write_t;
 
     /* AT24 PLIB read API */
-    DRV_AT24_PLIB_READ                      read;
+    DRV_AT24_PLIB_READ                      read_t;
 
     /* AT24 PLIB Transfer status API */
     DRV_AT24_PLIB_IS_BUSY                   isBusy;

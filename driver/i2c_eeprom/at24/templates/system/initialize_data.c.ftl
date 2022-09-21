@@ -7,10 +7,10 @@ const DRV_AT24_PLIB_INTERFACE drvAT24PlibAPI = {
     .writeRead = (DRV_AT24_PLIB_WRITE_READ)${.vars["${DRV_AT24_PLIB?lower_case}"].I2C_PLIB_API_PREFIX}_WriteRead,
 
     /* I2C PLIB Write function */
-    .write = (DRV_AT24_PLIB_WRITE)${.vars["${DRV_AT24_PLIB?lower_case}"].I2C_PLIB_API_PREFIX}_Write,
+    .write_t = (DRV_AT24_PLIB_WRITE)${.vars["${DRV_AT24_PLIB?lower_case}"].I2C_PLIB_API_PREFIX}_Write,
 
     /* I2C PLIB Read function */
-    .read = (DRV_AT24_PLIB_READ)${.vars["${DRV_AT24_PLIB?lower_case}"].I2C_PLIB_API_PREFIX}_Read,
+    .read_t = (DRV_AT24_PLIB_READ)${.vars["${DRV_AT24_PLIB?lower_case}"].I2C_PLIB_API_PREFIX}_Read,
 
     /* I2C PLIB Transfer Status function */
     .isBusy = (DRV_AT24_PLIB_IS_BUSY)${.vars["${DRV_AT24_PLIB?lower_case}"].I2C_PLIB_API_PREFIX}_IsBusy,

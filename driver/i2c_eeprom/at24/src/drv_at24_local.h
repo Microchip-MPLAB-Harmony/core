@@ -39,8 +39,8 @@
 *******************************************************************************/
 //DOM-IGNORE-END
 
-#ifndef _DRV_AT24_LOCAL_H
-#define _DRV_AT24_LOCAL_H
+#ifndef DRV_AT24_LOCAL_H
+#define DRV_AT24_LOCAL_H
 
 
 // *****************************************************************************
@@ -151,4 +151,4 @@ typedef struct
 } DRV_AT24_OBJ;
 
 
-#endif //#ifndef _DRV_AT24C_LOCAL_H
+#endif //#ifndef DRV_AT24C_LOCAL_H

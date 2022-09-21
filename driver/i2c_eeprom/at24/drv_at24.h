@@ -40,8 +40,8 @@
 *******************************************************************************/
 //DOM-IGNORE-END
 
-#ifndef _DRV_AT24_H
-#define _DRV_AT24_H
+#ifndef DRV_AT24_H
+#define DRV_AT24_H
 
 // *****************************************************************************
 // *****************************************************************************
@@ -167,14 +167,12 @@ typedef struct
         switch(event)
         {
             case DRV_AT24_TRANSFER_STATUS_COMPLETED:
-
-                // Handle the transfer complete event.
+               
                 break;
 
             case DRV_AT24_TRANSFER_STATUS_ERROR:
             default:
-
-                // Handle error.
+               
                 break;
         }
     }
@@ -298,7 +296,7 @@ SYS_MODULE_OBJ DRV_AT24_Initialize( const SYS_MODULE_INDEX drvIndex, const SYS_M
 
     if (status == SYS_STATUS_READY)
     {
-        // AT24 driver is initialized and ready to accept requests.
+        
     }
     </code>
 
@@ -354,8 +352,7 @@ SYS_STATUS DRV_AT24_Status( const SYS_MODULE_INDEX drvIndex );
     handle = DRV_AT24_Open(DRV_AT24_INDEX, DRV_IO_INTENT_READWRITE);
     if (handle == DRV_HANDLE_INVALID)
     {
-        // Unable to open the driver
-        // May be the driver is not initialized
+        
     }
     </code>
 
@@ -387,8 +384,7 @@ DRV_HANDLE DRV_AT24_Open(const SYS_MODULE_INDEX drvIndex, const DRV_IO_INTENT io
     None.
 
   Example:
-    <code>
-    // 'handle', returned from the DRV_AT24_Open
+    <code>  
 
     DRV_AT24_Close(handle);
 
@@ -443,18 +439,15 @@ void DRV_AT24_Close(const DRV_HANDLE handle);
     #define MEM_ADDRESS  0x00
 
     uint8_t readBuffer[BUFFER_SIZE];
-
-    // myHandle is the handle returned from DRV_AT24_Open API.
-    // In the below example, the transfer status is polled. However, application can
-    // register a callback and get notified when the transfer is complete.
+  
 
     if (DRV_AT24_Read(myHandle, readBuffer, BUFFER_SIZE, MEM_ADDRESS) != true)
     {
-        // Error handling here
+       
     }
     else
     {
-        // Wait for read to be completed
+       
         while(DRV_AT24_TransferStatusGet(myHandle) == DRV_AT24_TRANSFER_STATUS_BUSY);
     }
 
@@ -512,17 +505,15 @@ bool DRV_AT24_Read(const DRV_HANDLE handle, void *rxData, uint32_t rxDataLength,
 
     uint8_t CACHE_ALIGN writeBuffer[BUFFER_SIZE];
 
-    // myHandle is the handle returned from DRV_AT24_Open API.
-    // In the below example, the transfer status is polled. However, application can
-    // register a callback and get notified when the transfer is complete.
+  
 
     if (DRV_AT24_Write(myHandle, writeBuffer, BUFFER_SIZE, MEM_ADDRESS) != true)
     {
-        // Error handling here
+       
     }
     else
     {
-        // Wait for write to be completed
+       
         while(DRV_AT24_TransferStatusGet(myHandle) == DRV_AT24_TRANSFER_STATUS_BUSY);
     }
     </code>
@@ -580,18 +571,15 @@ bool DRV_AT24_Write(const DRV_HANDLE handle, void *txData, uint32_t txDataLength
     #define MEM_ADDRESS  0x00
 
     uint8_t CACHE_ALIGN writeBuffer[PAGE_SIZE];
-
-    // myHandle is the handle returned from DRV_AT24_Open API.
-    // In the below example, the transfer status is polled. However, application can
-    // register a callback and get notified when the transfer is complete.
+  
 
     if (DRV_AT24_PageWrite(myHandle, writeBuffer, MEM_ADDRESS) != true)
     {
-        // Error handling here
+       
     }
     else
     {
-        // Wait for write to be completed
+        
         while(DRV_AT24_TransferStatusGet(myHandle) == DRV_AT24_TRANSFER_STATUS_BUSY);
     }
     </code>
@@ -624,12 +612,11 @@ bool DRV_AT24_PageWrite(const DRV_HANDLE handle, void *txData, uint32_t address 
     One of the status element from the enum DRV_AT24_TRANSFER_STATUS.
 
   Example:
-    <code>
-    // myHandle is the handle returned from DRV_AT24_Open API.
+    <code> 
 
     if (DRV_AT24_TransferStatusGet(myHandle) == DRV_AT24_TRANSFER_STATUS_COMPLETED)
     {
-        // Operation Done
+       
     }
     </code>
 
@@ -683,41 +670,36 @@ DRV_AT24_TRANSFER_STATUS DRV_AT24_TransferStatusGet(const DRV_HANDLE handle);
     #define BUFFER_SIZE  256
     #define MEM_ADDRESS  0x0
 
-    // myAppObj is an application specific state data object.
+ 
     MY_APP_OBJ myAppObj;
 
     uint8_t myBuffer[BUFFER_SIZE];
-
-    // myHandle is the handle returned from DRV_AT24_Open API.
-
-    // Client registers an event handler with driver. This is done once
+   
 
     DRV_AT24_EventHandlerSet( myHandle, APP_AT24TransferEventHandler, (uintptr_t)&myAppObj );
 
     if (DRV_AT24_Read(myHandle, myBuffer, BUFFER_SIZE, MEM_ADDRESS) == false)
     {
-        // Error handling here
+       
     }
 
-    // The registered event handler is called when the request is complete.
 
     void APP_AT24TransferEventHandler(DRV_AT24_TRANSFER_STATUS event, uintptr_t context)
     {
-        // The context handle was set to an application specific
-        // object. It is now retrievable easily in the event handler.
+        
         MY_APP_OBJ* pMyAppObj = (MY_APP_OBJ *) context;
 
         switch(event)
         {
             case DRV_AT24_TRANSFER_STATUS_COMPLETED:
             {
-                // This means the data was transferred.
+              
                 break;
             }
 
             case DRV_AT24_TRANSFER_STATUS_ERROR:
             {
-                // Error handling here.
+               
                 break;
             }
 
@@ -769,9 +751,7 @@ void DRV_AT24_EventHandlerSet(
 
     DRV_AT24_GEOMETRY eepromGeometry;
     uint32_t readBlockSize, writeBlockSize, eraseBlockSize;
-    uint32_t nReadBlocks, nReadRegions, totalFlashSize;
-
-    // myHandle is the handle returned from DRV_AT24_Open API.
+    uint32_t nReadBlocks, nReadRegions, totalFlashSize;  
 
     DRV_AT24_GeometryGet(myHandle, &eepromGeometry);
 
@@ -798,7 +778,7 @@ bool DRV_AT24_GeometryGet(const DRV_HANDLE handle, DRV_AT24_GEOMETRY *geometry);
 
 #include "driver/at24/src/drv_at24_local.h"
 
-#endif // #ifndef _DRV_AT24_H
+#endif // #ifndef DRV_AT24_H
 /*******************************************************************************
  End of File
 */

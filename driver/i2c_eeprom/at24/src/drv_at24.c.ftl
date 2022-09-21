@@ -67,21 +67,21 @@ static DRV_AT24_OBJ gDrvAT24Obj;
   * Submits a dummy I2C request to read the status of EEPROM internal write.
   * Returns true if the requested is accepted, false otherwise.
   */
-static uint8_t _DRV_AT24_ReadStatus(void)
+static uint8_t lDRV_AT24_ReadStatus(void)
 {
     gDrvAT24Obj.writeBuffer[0] = 0x00;
 
     /* Submit a dummy write to check internal write cycle status */
-    if (gDrvAT24Obj.i2cPlib->write(gDrvAT24Obj.slaveAddress, \
-            gDrvAT24Obj.writeBuffer, 1) == true)
+    if (gDrvAT24Obj.i2cPlib->write_t(gDrvAT24Obj.slaveAddress, \
+            gDrvAT24Obj.writeBuffer, 1U))
     {
-        return true;
+        return (1U);
     }
 
-    return false;
+    return (0U);
 }
 
-static bool _DRV_AT24_Write(
+static bool lDRV_AT24_Write(
     void* txData,
     uint32_t txDataLength,
     uint32_t address
@@ -109,20 +109,22 @@ static bool _DRV_AT24_Write(
 
     slaveAddr = gDrvAT24Obj.slaveAddress;
     /* Frame the EEPROM address */
-    if (gDrvAT24Obj.flashSize > 131072)    /* For 18-bit address */
+    if (gDrvAT24Obj.flashSize > 131072U)    /* For 18-bit address */
     {
-        slaveAddr |= ((unsigned char*)&address)[2] & 0x02;
+        slaveAddr |= ((uint16_t)((unsigned char*)&address)[2] & 0x02U);
     }
-    if (gDrvAT24Obj.flashSize > 65536)     /* For 17-bit address */
+    if (gDrvAT24Obj.flashSize > 65536U)     /* For 17-bit address */
     {
-        slaveAddr |= ((unsigned char*)&address)[2] & 0x01;
+        slaveAddr |= ((uint16_t)((unsigned char*)&address)[2] & 0x01U);
     }
-    if (gDrvAT24Obj.flashSize > 256)       /* For 16-bit address */
+    if (gDrvAT24Obj.flashSize > 256U)       /* For 16-bit address */
     {
-        gDrvAT24Obj.writeBuffer[nBytes++] = (address & 0x0000FF00) >> 8;
+        gDrvAT24Obj.writeBuffer[nBytes] = (uint8_t)((address & 0x0000FF00U) >> 8);
+        nBytes++;
     }
     /* For 8-bit address */
-    gDrvAT24Obj.writeBuffer[nBytes++] = (address & 0x000000FF);
+    gDrvAT24Obj.writeBuffer[nBytes] = (uint8_t)((address & 0x000000FFU));
+    nBytes++;
 
     for (i = 0 ; i < nTransferBytes; i++)
     {
@@ -136,8 +138,8 @@ static bool _DRV_AT24_Write(
     gDrvAT24Obj.command = DRV_AT24_CMD_WRITE;
 
     /* Submit a write request to I2C PLIB */
-    if (gDrvAT24Obj.i2cPlib->write(slaveAddr, \
-            (uint8_t*)gDrvAT24Obj.writeBuffer, (nBytes + nTransferBytes)) == true)
+    if (gDrvAT24Obj.i2cPlib->write_t(slaveAddr, \
+            (uint8_t*)gDrvAT24Obj.writeBuffer, (nBytes + nTransferBytes)))
     {
         isRequestAccepted = true;
     }
@@ -149,7 +151,7 @@ static bool _DRV_AT24_Write(
     return isRequestAccepted;
 }
 
-static void _DRV_AT24_Handler(DRV_AT24_I2C_ERROR transferStatus)
+static void lDRV_AT24_Handler(DRV_AT24_I2C_ERROR transferStatus)
 {
     switch(gDrvAT24Obj.command)
     {
@@ -157,7 +159,7 @@ static void _DRV_AT24_Handler(DRV_AT24_I2C_ERROR transferStatus)
             if (transferStatus == DRV_AT24_I2C_ERROR_NONE)
             {
                 /* Read the status of EEPROM internal write cycle */
-                if (_DRV_AT24_ReadStatus() == false)
+                if (lDRV_AT24_ReadStatus() == 0U)
                 {
                     gDrvAT24Obj.transferStatus = DRV_AT24_TRANSFER_STATUS_ERROR;
                 }
@@ -175,9 +177,9 @@ static void _DRV_AT24_Handler(DRV_AT24_I2C_ERROR transferStatus)
             if (transferStatus == DRV_AT24_I2C_ERROR_NONE)
             {
                 /* Internal write complete. Now check if more data pending */
-                if (gDrvAT24Obj.nPendingBytes)
+                if (gDrvAT24Obj.nPendingBytes != 0U)
                 {
-                    if (_DRV_AT24_Write(gDrvAT24Obj.nextBufferAddr,
+                    if (lDRV_AT24_Write(gDrvAT24Obj.nextBufferAddr,
                             gDrvAT24Obj.nPendingBytes,
                             gDrvAT24Obj.nextMemoryAddr) == false)
                     {
@@ -192,7 +194,7 @@ static void _DRV_AT24_Handler(DRV_AT24_I2C_ERROR transferStatus)
             else
             {
                 /* Keep reading the status of EEPROM internal write cycle */
-                if (_DRV_AT24_ReadStatus() == false)
+                if (lDRV_AT24_ReadStatus() == 0U)
                 {
                     gDrvAT24Obj.transferStatus = DRV_AT24_TRANSFER_STATUS_ERROR;
                 }
@@ -210,19 +212,20 @@ static void _DRV_AT24_Handler(DRV_AT24_I2C_ERROR transferStatus)
 
             break;
         default:
+                 /* Nothing to do */
             break;
     }
 }
 
 /* This function will be called by I2C PLIB when transfer is completed */
-static void _I2CEventHandler(uintptr_t context )
+static void lI2CEventHandler(uintptr_t context )
 {
-    _DRV_AT24_Handler(gDrvAT24Obj.i2cPlib->errorGet());
+    lDRV_AT24_Handler(gDrvAT24Obj.i2cPlib->errorGet());
 
     /* If transfer is complete, notify the application */
     if (gDrvAT24Obj.transferStatus != DRV_AT24_TRANSFER_STATUS_BUSY)
     {
-        if (gDrvAT24Obj.eventHandler)
+        if (gDrvAT24Obj.eventHandler != NULL)
         {
             gDrvAT24Obj.eventHandler(gDrvAT24Obj.transferStatus, gDrvAT24Obj.context);
         }
@@ -240,7 +243,28 @@ SYS_MODULE_OBJ DRV_AT24_Initialize(
     const SYS_MODULE_INIT * const init
 )
 {
+  
+/* MISRA C-2012 Rule 11.3, 11.8 deviated below. Deviation record ID -  H3_MISRAC_2012_R_11_3_DR_1 & H3_MISRAC_2012_R_11_8_DR_1*/
+<#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
+<#if core.COMPILER_CHOICE == "XC32">
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wunknown-pragmas"
+</#if>
+#pragma coverity compliance block \
+(deviate "MISRA C-2012 Rule 11.3" "H3_MISRAC_2012_R_11_3_DR_1" )\
+(deviate "MISRA C-2012 Rule 11.8" "H3_MISRAC_2012_R_11_8_DR_1" )   
+</#if>
+
     DRV_AT24_INIT *at24Init = (DRV_AT24_INIT *)init;
+    
+<#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
+#pragma coverity compliance end_block "MISRA C-2012 Rule 11.3"
+#pragma coverity compliance end_block "MISRA C-2012 Rule 11.8"
+<#if core.COMPILER_CHOICE == "XC32">
+#pragma GCC diagnostic pop
+</#if>    
+</#if> 
+/* MISRAC 2012 deviation block end */
 
     /* Validate the request */
     if(drvIndex >= DRV_AT24_INSTANCES_NUMBER)
@@ -268,7 +292,7 @@ SYS_MODULE_OBJ DRV_AT24_Initialize(
     gDrvAT24Obj.eventHandler               = NULL;
     gDrvAT24Obj.context                    = 0;
 
-    gDrvAT24Obj.i2cPlib->callbackRegister(_I2CEventHandler, (uintptr_t)NULL);
+    gDrvAT24Obj.i2cPlib->callbackRegister(lI2CEventHandler, 0U);
 
     /* Update the status */
     gDrvAT24Obj.status                     = SYS_STATUS_READY;
@@ -296,7 +320,7 @@ DRV_HANDLE DRV_AT24_Open(
     }
 
     if((gDrvAT24Obj.status != SYS_STATUS_READY) || \
-            (gDrvAT24Obj.inUse == false) || \
+            (!(gDrvAT24Obj.inUse)) || \
             (gDrvAT24Obj.nClients >= gDrvAT24Obj.nClientsMax))
     {
         return DRV_HANDLE_INVALID;
@@ -309,7 +333,7 @@ DRV_HANDLE DRV_AT24_Open(
 
 void DRV_AT24_Close( const DRV_HANDLE handle )
 {
-    if((handle != DRV_HANDLE_INVALID) && (handle == 0))
+    if((handle != DRV_HANDLE_INVALID) && (handle == 0U))
     {
         gDrvAT24Obj.nClients--;
     }
@@ -321,8 +345,8 @@ void DRV_AT24_EventHandlerSet(
     const uintptr_t context
 )
 {
-    if((handle != DRV_HANDLE_INVALID) && (handle == 0) && \
-            gDrvAT24Obj.transferStatus != DRV_AT24_TRANSFER_STATUS_BUSY)
+    if((handle != DRV_HANDLE_INVALID) && (handle == 0U) && \
+            (gDrvAT24Obj.transferStatus != DRV_AT24_TRANSFER_STATUS_BUSY))
     {
         gDrvAT24Obj.eventHandler = eventHandler;
         gDrvAT24Obj.context = context;
@@ -340,8 +364,8 @@ bool DRV_AT24_Read(
     uint32_t nBytes = 0;
     uint16_t slaveAddr;
 
-    if((handle == DRV_HANDLE_INVALID) || (handle > 0) || (rxData == NULL) || \
-            (rxDataLength == 0) || (gDrvAT24Obj.transferStatus == DRV_AT24_TRANSFER_STATUS_BUSY))
+    if((handle == DRV_HANDLE_INVALID) || (handle > 0U) || (rxData == NULL) || \
+            (rxDataLength == 0U) || (gDrvAT24Obj.transferStatus == DRV_AT24_TRANSFER_STATUS_BUSY))
     {
         return isRequestAccepted;
     }
@@ -356,25 +380,27 @@ bool DRV_AT24_Read(
 
     /* Frame the EEPROM address */
     slaveAddr = gDrvAT24Obj.slaveAddress;
-    if (gDrvAT24Obj.flashSize > 131072)    /* For 18-bit address */
+    if (gDrvAT24Obj.flashSize > 131072U)    /* For 18-bit address */
     {
-        slaveAddr |= ((unsigned char*)&address)[2] & 0x02;
+        slaveAddr |= ((uint16_t)((unsigned char*)&address)[2] & 0x02U);
     }
-    if (gDrvAT24Obj.flashSize > 65536)     /* For 17-bit address */
+    if (gDrvAT24Obj.flashSize > 65536U)     /* For 17-bit address */
     {
-        slaveAddr |= ((unsigned char*)&address)[2] & 0x01;
+        slaveAddr |= ((uint16_t)((unsigned char*)&address)[2] & 0x01U);
     }
-    if (gDrvAT24Obj.flashSize > 256)       /* For 16-bit address */
+    if (gDrvAT24Obj.flashSize > 256U)       /* For 16-bit address */
     {
-        gDrvAT24Obj.writeBuffer[nBytes++] = (address & 0x0000FF00) >> 8;
+        gDrvAT24Obj.writeBuffer[nBytes] = (uint8_t)((address & 0x0000FF00U) >> 8);
+        nBytes++;
     }
     /* For 8-bit address */
-    gDrvAT24Obj.writeBuffer[nBytes++] = (address & 0x000000FF);
-
+    gDrvAT24Obj.writeBuffer[nBytes] = (uint8_t)((address & 0x000000FFU));
+    nBytes++;
+    
     gDrvAT24Obj.command = DRV_AT24_CMD_READ;
 
     if(gDrvAT24Obj.i2cPlib->writeRead(slaveAddr, \
-            (uint8_t*)gDrvAT24Obj.writeBuffer, nBytes, rxData, rxDataLength) == true)
+            (uint8_t*)gDrvAT24Obj.writeBuffer, nBytes, rxData, rxDataLength))
     {
         isRequestAccepted = true;
     }
@@ -393,10 +419,10 @@ bool DRV_AT24_Write(
     uint32_t address
 )
 {
-    if((handle != DRV_HANDLE_INVALID) && (handle == 0) && (txData != NULL) \
-            && (txDataLength != 0) && (gDrvAT24Obj.transferStatus != DRV_AT24_TRANSFER_STATUS_BUSY))
+    if((handle != DRV_HANDLE_INVALID) && (handle == 0U) && (txData != NULL) \
+            && (txDataLength != 0U) && (gDrvAT24Obj.transferStatus != DRV_AT24_TRANSFER_STATUS_BUSY))
     {
-        return _DRV_AT24_Write(txData, txDataLength, address);
+        return lDRV_AT24_Write(txData, txDataLength, address);
     }
     else
     {
@@ -411,7 +437,7 @@ bool DRV_AT24_PageWrite(const DRV_HANDLE handle, void *txData, uint32_t address 
 
 DRV_AT24_TRANSFER_STATUS DRV_AT24_TransferStatusGet(const DRV_HANDLE handle)
 {
-    if((handle != DRV_HANDLE_INVALID) && (handle == 0))
+    if((handle != DRV_HANDLE_INVALID) && (handle == 0U))
     {
         return gDrvAT24Obj.transferStatus;
     }
@@ -425,14 +451,14 @@ bool DRV_AT24_GeometryGet(const DRV_HANDLE handle, DRV_AT24_GEOMETRY *geometry)
 {
     uint32_t flash_size = 0;
 
-    if((handle == DRV_HANDLE_INVALID) || (handle > 0))
+    if((handle == DRV_HANDLE_INVALID) || (handle > 0U))
     {
         return false;
     }
 
     flash_size = gDrvAT24Obj.flashSize;
 
-    if ((flash_size == 0) ||
+    if ((flash_size == 0U) ||
         (gDrvAT24Obj.blockStartAddress >= flash_size))
     {
         return false;
@@ -467,4 +493,4 @@ bool DRV_AT24_GeometryGet(const DRV_HANDLE handle, DRV_AT24_GEOMETRY *geometry)
     geometry->blockStartAddress = gDrvAT24Obj.blockStartAddress;
 
     return true;
-}
+} 
