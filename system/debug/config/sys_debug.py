@@ -73,11 +73,12 @@ def instantiateComponent(debugComponent):
     debugHeaderLocalFile.setOverwrite(True)
 
     debugSourceFile = debugComponent.createFileSymbol("SYS_DEBUG_SOURCE", None)
-    debugSourceFile.setSourcePath("system/debug/src/sys_debug.c")
+    debugSourceFile.setSourcePath("system/debug/src/sys_debug.c.ftl")
     debugSourceFile.setOutputName("sys_debug.c")
     debugSourceFile.setDestPath("system/debug/src")
     debugSourceFile.setProjectPath("config/" + configName + "/system/debug/")
     debugSourceFile.setType("SOURCE")
+    debugSourceFile.setMarkup(True)
     debugSourceFile.setOverwrite(True)
 
     debugSystemDefObjFile = debugComponent.createFileSymbol("SYS_CONSOLE_SYS_DEF_OBJ", None)
