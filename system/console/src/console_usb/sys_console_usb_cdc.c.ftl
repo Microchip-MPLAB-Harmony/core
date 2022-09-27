@@ -79,7 +79,7 @@
 static CONS_USB_CDC_DEVICE gConsoleUSBCdcData;
 
 /* Return the pointer to the USB CDC instance specific data */
-#define CONSOLE_USB_CDC_GET_INSTANCE(index)    (index >= SYS_CONSOLE_USB_CDC_MAX_INSTANCES)? NULL : &gConsoleUSBCdcData.cdcInstance[index]
+#define CONSOLE_USB_CDC_GET_INSTANCE(index)    ((index) >= (SYS_CONSOLE_USB_CDC_MAX_INSTANCES))? (NULL) : (&gConsoleUSBCdcData.cdcInstance[index])
 
 /* Expose the USB CDC console layer APIs to the Console System Service */
 const SYS_CONSOLE_DEV_DESC sysConsoleUSBCdcDevDesc =
@@ -87,10 +87,10 @@ const SYS_CONSOLE_DEV_DESC sysConsoleUSBCdcDevDesc =
     .consoleDevice              = SYS_CONSOLE_DEV_USB_CDC,
     .intent                     = DRV_IO_INTENT_READWRITE,
     .init                       = Console_USB_CDC_Initialize,
-    .read                       = Console_USB_CDC_Read,
+    .read_t                       = Console_USB_CDC_Read,
     .readFreeBufferCountGet     = Console_USB_CDC_ReadFreeBufferCountGet,
     .readCountGet               = Console_USB_CDC_ReadCountGet,
-    .write                      = Console_USB_CDC_Write,
+    .write_t                      = Console_USB_CDC_Write,
     .writeFreeBufferCountGet    = Console_USB_CDC_WriteFreeBufferCountGet,
     .writeCountGet              = Console_USB_CDC_WriteCountGet,
     .task                       = Console_USB_CDC_Tasks,
@@ -127,7 +127,7 @@ USB_DEVICE_CDC_EVENT_RESPONSE USBDeviceCDCEventHandler
              * USB_DEVICE_ControlSend() function to send the data to
              * host.  */
 
-            USB_DEVICE_ControlSend(gConsoleUSBCdcData.deviceHandle,
+            (void) USB_DEVICE_ControlSend(gConsoleUSBCdcData.deviceHandle,
                     &cdcInstance->getLineCodingData, sizeof(USB_CDC_LINE_CODING));
 
             break;
@@ -139,7 +139,7 @@ USB_DEVICE_CDC_EVENT_RESPONSE USBDeviceCDCEventHandler
              * USB_DEVICE_ControlReceive() function to receive the
              * data from the host */
 
-            USB_DEVICE_ControlReceive(gConsoleUSBCdcData.deviceHandle,
+            (void) USB_DEVICE_ControlReceive(gConsoleUSBCdcData.deviceHandle,
                     &cdcInstance->setLineCodingData, sizeof(USB_CDC_LINE_CODING));
 
             break;
@@ -152,7 +152,7 @@ USB_DEVICE_CDC_EVENT_RESPONSE USBDeviceCDCEventHandler
 
             controlLineStateData = (USB_CDC_CONTROL_LINE_STATE *)pData;
 
-            if (controlLineStateData->dtr == 1)
+            if (controlLineStateData->dtr == 1U)
             {
                 cdcInstance->isPortOpened = true;
             }
@@ -161,7 +161,7 @@ USB_DEVICE_CDC_EVENT_RESPONSE USBDeviceCDCEventHandler
                 cdcInstance->isPortOpened = false;
             }
 
-            USB_DEVICE_ControlStatus(gConsoleUSBCdcData.deviceHandle, USB_DEVICE_CONTROL_STATUS_OK);
+            (void) USB_DEVICE_ControlStatus(gConsoleUSBCdcData.deviceHandle, USB_DEVICE_CONTROL_STATUS_OK);
 
             break;
 
@@ -171,7 +171,7 @@ USB_DEVICE_CDC_EVENT_RESPONSE USBDeviceCDCEventHandler
              * specified duration be sent. Read the break duration */
 
             /* Complete the control transfer by sending a ZLP  */
-            USB_DEVICE_ControlStatus(gConsoleUSBCdcData.deviceHandle, USB_DEVICE_CONTROL_STATUS_OK);
+            (void) USB_DEVICE_ControlStatus(gConsoleUSBCdcData.deviceHandle, USB_DEVICE_CONTROL_STATUS_OK);
 
             break;
 
@@ -189,7 +189,7 @@ USB_DEVICE_CDC_EVENT_RESPONSE USBDeviceCDCEventHandler
             /* The data stage of the last control transfer is
              * complete. For now we accept all the data */
 
-            USB_DEVICE_ControlStatus(gConsoleUSBCdcData.deviceHandle, USB_DEVICE_CONTROL_STATUS_OK);
+            (void) USB_DEVICE_ControlStatus(gConsoleUSBCdcData.deviceHandle, USB_DEVICE_CONTROL_STATUS_OK);
             break;
 
         case USB_DEVICE_CDC_EVENT_CONTROL_TRANSFER_DATA_SENT:
@@ -207,6 +207,7 @@ USB_DEVICE_CDC_EVENT_RESPONSE USBDeviceCDCEventHandler
             break;
 
         default:
+                /* Nothing to do */
             break;
     }
 
@@ -252,7 +253,7 @@ void USBDeviceEventHandler
             /* Check the configuration. We only support configuration 1 */
             configuredEventData = (USB_DEVICE_EVENT_DATA_CONFIGURED*)eventData;
 
-            if ( configuredEventData->configurationValue == 1)
+            if ( configuredEventData->configurationValue == 1U)
             {
                 /* Register the CDC Device application event handler here.
                  * Note how the cdcInstance object pointer is passed as the
@@ -264,7 +265,7 @@ void USBDeviceEventHandler
                 for (i = 0; i < SYS_CONSOLE_USB_CDC_MAX_INSTANCES; i++)
                 {
                     cdcInstance = CONSOLE_USB_CDC_GET_INSTANCE(i);
-                    USB_DEVICE_CDC_EventHandlerSet(cdcInstance->cdcInstanceIndex, USBDeviceCDCEventHandler, (uintptr_t)cdcInstance);
+                    (void) USB_DEVICE_CDC_EventHandlerSet(cdcInstance->cdcInstanceIndex, USBDeviceCDCEventHandler, (uintptr_t)cdcInstance);
                 }
             }
 
@@ -299,27 +300,34 @@ void USBDeviceEventHandler
         case USB_DEVICE_EVENT_RESUMED:
         case USB_DEVICE_EVENT_ERROR:
         default:
-
+                  /* Nothing to do */
             break;
     }
 }
 
+/* MISRA C-2012 Rule 10.4 False positive:2 Deviation record ID -  H3_MISRAC_2012_R_10_4_DR_1 */
+<#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
+<#if core.COMPILER_CHOICE == "XC32">
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wunknown-pragmas"
+</#if>
+#pragma coverity compliance block fp:2 "MISRA C-2012 Rule 10.4" "H3_MISRAC_2012_R_10_4_DR_1"    
+</#if>
+
 static bool Console_USB_CDC_ResourceLock(CONS_USB_CDC_INSTANCE* cdcInstance)
 {
+    bool CheckLock = true;
     if(OSAL_MUTEX_Lock(&(cdcInstance->mutexTransferObjects), OSAL_WAIT_FOREVER) == OSAL_RESULT_FALSE)
     {
-        return false;
-    }
-    else
-    {
-        return true;
-    }
+        CheckLock = false;
+    }    
+    return CheckLock;    
 }
 
 static void Console_USB_CDC_ResourceUnlock(CONS_USB_CDC_INSTANCE* cdcInstance)
 {
     /* Release mutex */
-    OSAL_MUTEX_Unlock(&(cdcInstance->mutexTransferObjects));
+    (void) OSAL_MUTEX_Unlock(&(cdcInstance->mutexTransferObjects));
 }
 
 static bool Console_USB_CDC_Reset(CONS_USB_CDC_INSTANCE* cdcInstance)
@@ -330,7 +338,7 @@ static bool Console_USB_CDC_Reset(CONS_USB_CDC_INSTANCE* cdcInstance)
 
     if(gConsoleUSBCdcData.isConfigured == false)
     {
-        Console_USB_CDC_ResourceLock(cdcInstance);
+        (void) Console_USB_CDC_ResourceLock(cdcInstance);
 
         cdcInstance->state = CONSOLE_USB_CDC_STATE_WAIT_FOR_CONFIGURATION;
         cdcInstance->readTransferHandle = USB_DEVICE_CDC_TRANSFER_HANDLE_INVALID;
@@ -357,7 +365,7 @@ static bool Console_USB_CDC_RxPushByte(uint32_t index, uint8_t rdByte)
     bool isSuccess = false;
     CONS_USB_CDC_INSTANCE* cdcInstance = CONSOLE_USB_CDC_GET_INSTANCE(index);
 
-    tempInIndex = cdcInstance->rdInIndex + 1;
+    tempInIndex = cdcInstance->rdInIndex + 1U;
 
     if (tempInIndex >= cdcInstance->consoleReadBufferSize)
     {
@@ -434,12 +442,14 @@ ssize_t Console_USB_CDC_Read(uint32_t index, void* pRdBuffer, size_t count)
         return -1;
     }
 
-    while (nBytesRead < count)
+    while (nBytesRead < (ssize_t)count)
     {
         if (cdcInstance->rdOutIndex != cdcInstance->rdInIndex)
         {
             /* Copy data from the ring buffer to the application buffer */
-            pRdBuff[nBytesRead++] = cdcInstance->consoleReadBuffer[cdcInstance->rdOutIndex++];
+            pRdBuff[nBytesRead] = cdcInstance->consoleReadBuffer[cdcInstance->rdOutIndex];
+            nBytesRead++;
+            cdcInstance->rdOutIndex++;
 
             if (cdcInstance->rdOutIndex >= cdcInstance->consoleReadBufferSize)
             {
@@ -462,6 +472,7 @@ ssize_t Console_USB_CDC_ReadCountGet(uint32_t index)
 {
     ssize_t nUnreadBytesAvailable = 0;
     CONS_USB_CDC_INSTANCE* cdcInstance = CONSOLE_USB_CDC_GET_INSTANCE(index);
+    uint32_t temp;
 
     if (cdcInstance == NULL)
     {
@@ -475,11 +486,13 @@ ssize_t Console_USB_CDC_ReadCountGet(uint32_t index)
 
     if ( cdcInstance->rdInIndex >=  cdcInstance->rdOutIndex)
     {
-        nUnreadBytesAvailable =  cdcInstance->rdInIndex -  cdcInstance->rdOutIndex;
+        temp = cdcInstance->rdInIndex -  cdcInstance->rdOutIndex;
+        nUnreadBytesAvailable =  (ssize_t)temp;
     }
     else
     {
-        nUnreadBytesAvailable =  (cdcInstance->consoleReadBufferSize -  cdcInstance->rdOutIndex) + cdcInstance->rdInIndex;
+        temp = (cdcInstance->consoleReadBufferSize -  cdcInstance->rdOutIndex) + cdcInstance->rdInIndex;
+        nUnreadBytesAvailable = (ssize_t)temp;
     }
 
     Console_USB_CDC_ResourceUnlock(cdcInstance);
@@ -502,7 +515,7 @@ ssize_t Console_USB_CDC_ReadFreeBufferCountGet(uint32_t index)
 
     if (nUnreadBytesAvailable >= 0)
     {
-        nUnreadBytesAvailable = (cdcInstance->consoleReadBufferSize - 1) - nUnreadBytesAvailable;
+        nUnreadBytesAvailable = ((ssize_t)cdcInstance->consoleReadBufferSize - 1) - nUnreadBytesAvailable;
     }
 
     return nUnreadBytesAvailable;
@@ -516,7 +529,8 @@ static bool Console_USB_CDC_TxPullByte(uint32_t index, uint8_t* pWrByte)
 
     if (cdcInstance->wrOutIndex != cdcInstance->wrInIndex)
     {
-        *pWrByte = cdcInstance->consoleWriteBuffer[cdcInstance->wrOutIndex++];
+        *pWrByte = cdcInstance->consoleWriteBuffer[cdcInstance->wrOutIndex];
+        cdcInstance->wrOutIndex++;
 
         if (cdcInstance->wrOutIndex >= cdcInstance->consoleWriteBufferSize)
         {
@@ -535,7 +549,7 @@ static bool Console_USB_CDC_TxPushByte(uint32_t index, uint8_t wrByte)
     bool isSuccess = false;
     CONS_USB_CDC_INSTANCE* cdcInstance = CONSOLE_USB_CDC_GET_INSTANCE(index);
 
-    tempInIndex = cdcInstance->wrInIndex + 1;
+    tempInIndex = cdcInstance->wrInIndex + 1U;
 
     if (tempInIndex >= cdcInstance->consoleWriteBufferSize)
     {
@@ -555,17 +569,20 @@ static bool Console_USB_CDC_TxPushByte(uint32_t index, uint8_t wrByte)
     return isSuccess;
 }
 
-static ssize_t _Console_USB_CDC_WriteCountGet(CONS_USB_CDC_INSTANCE* cdcInstance)
+static ssize_t lConsole_USB_CDC_WriteCountGet(CONS_USB_CDC_INSTANCE* cdcInstance)
 {
     ssize_t nPendingTxBytes = 0;
+    uint32_t temp;
 
     if ( cdcInstance->wrInIndex >=  cdcInstance->wrOutIndex)
     {
-        nPendingTxBytes =  cdcInstance->wrInIndex -  cdcInstance->wrOutIndex;
+        temp = cdcInstance->wrInIndex -  cdcInstance->wrOutIndex;
+        nPendingTxBytes = (ssize_t)temp;
     }
     else
     {
-        nPendingTxBytes =  (cdcInstance->consoleWriteBufferSize -  cdcInstance->wrOutIndex) + cdcInstance->wrInIndex;
+        temp = (cdcInstance->consoleWriteBufferSize -  cdcInstance->wrOutIndex) + cdcInstance->wrInIndex;
+        nPendingTxBytes =  (ssize_t)temp;
     }
 
     return nPendingTxBytes;
@@ -574,14 +591,14 @@ static ssize_t _Console_USB_CDC_WriteCountGet(CONS_USB_CDC_INSTANCE* cdcInstance
 static bool Console_USB_CDC_WriteSubmit(uint32_t index)
 {
     ssize_t nWriteBytesPending = 0;
-    uint32_t i;
+    int32_t i;
     uint8_t wrByte;
     bool isSuccess = true;
     USB_DEVICE_CDC_RESULT result;
 
     CONS_USB_CDC_INSTANCE* cdcInstance = CONSOLE_USB_CDC_GET_INSTANCE(index);
 
-    nWriteBytesPending = _Console_USB_CDC_WriteCountGet(cdcInstance);
+    nWriteBytesPending = lConsole_USB_CDC_WriteCountGet(cdcInstance);
 
     if (nWriteBytesPending > 0)
     {
@@ -602,7 +619,7 @@ static bool Console_USB_CDC_WriteSubmit(uint32_t index)
         cdcInstance->isWriteScheduled = true;
 
         result = USB_DEVICE_CDC_Write(cdcInstance->cdcInstanceIndex,
-                &cdcInstance->writeTransferHandle, cdcInstance->cdcWriteBuffer, nWriteBytesPending,
+                &cdcInstance->writeTransferHandle, cdcInstance->cdcWriteBuffer, (size_t)nWriteBytesPending,
                 USB_DEVICE_CDC_TRANSFER_FLAGS_DATA_COMPLETE);
 
         if ((result != USB_DEVICE_CDC_RESULT_OK) || (cdcInstance->writeTransferHandle == USB_DEVICE_CDC_TRANSFER_HANDLE_INVALID))
@@ -659,13 +676,17 @@ ssize_t Console_USB_CDC_WriteCountGet(uint32_t index)
         return -1;
     }
 
-    nPendingTxBytes = _Console_USB_CDC_WriteCountGet(cdcInstance);
+    nPendingTxBytes = lConsole_USB_CDC_WriteCountGet(cdcInstance);
 
     Console_USB_CDC_ResourceUnlock(cdcInstance);
 
     return nPendingTxBytes;
 }
 
+/* MISRA C-2012 Rule 11.8 deviated:1 Deviation record ID -  H3_MISRAC_2012_R_11_8_DR_1 */
+<#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
+#pragma coverity compliance block deviate:1 "MISRA C-2012 Rule 11.8" "H3_MISRAC_2012_R_11_8_DR_1"    
+</#if>
 ssize_t Console_USB_CDC_Write(uint32_t index, const void* pWrBuffer, size_t size )
 {
     ssize_t nBytesWritten  = 0;
@@ -682,7 +703,7 @@ ssize_t Console_USB_CDC_Write(uint32_t index, const void* pWrBuffer, size_t size
         return -1;
     }
 
-    while (nBytesWritten < size)
+    while (nBytesWritten < (ssize_t)size)
     {
         if (Console_USB_CDC_TxPushByte(index, pWrBuff[nBytesWritten]) == true)
         {
@@ -707,13 +728,17 @@ ssize_t Console_USB_CDC_Write(uint32_t index, const void* pWrBuffer, size_t size
             cdcInstance->isWriteScheduled = false;
         }
 
-        Console_USB_CDC_WriteSubmit(index);
+        (void) Console_USB_CDC_WriteSubmit(index);
     }
 
     Console_USB_CDC_ResourceUnlock(cdcInstance);
 
     return nBytesWritten;
 }
+<#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
+#pragma coverity compliance end_block "MISRA C-2012 Rule 11.8"
+</#if>
+/* MISRAC 2012 deviation block end */
 
 ssize_t Console_USB_CDC_WriteFreeBufferCountGet(uint32_t index)
 {
@@ -729,7 +754,7 @@ ssize_t Console_USB_CDC_WriteFreeBufferCountGet(uint32_t index)
 
     if (nPendingTxBytes >= 0)
     {
-        nPendingTxBytes = (cdcInstance->consoleWriteBufferSize - 1) - nPendingTxBytes;
+        nPendingTxBytes = ((ssize_t)cdcInstance->consoleWriteBufferSize - 1) - nPendingTxBytes;
     }
 
     return nPendingTxBytes;
@@ -797,6 +822,13 @@ void Console_USB_CDC_Initialize (uint32_t index, const void* initData)
     cdcInstance->rdInIndex              = 0;
     cdcInstance->rdOutIndex             = 0;
 }
+<#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
+#pragma coverity compliance end_block "MISRA C-2012 Rule 10.4"
+<#if core.COMPILER_CHOICE == "XC32">
+#pragma GCC diagnostic pop
+</#if>    
+</#if>
+/* MISRAC 2012 deviation block end */
 
 void Console_USB_CDC_Tasks(uint32_t index, SYS_MODULE_OBJ object)
 {
@@ -890,11 +922,12 @@ void Console_USB_CDC_Tasks(uint32_t index, SYS_MODULE_OBJ object)
 
         case CONSOLE_USB_CDC_STATE_OPERATIONAL_ERROR:
             /* Try again */
-            Console_USB_CDC_Reset(cdcInstance);
+            (void) Console_USB_CDC_Reset(cdcInstance);
             cdcInstance->state = CONSOLE_USB_CDC_STATE_WAIT_FOR_CONFIGURATION;
             break;
 
         default:
+               /* Nothing to do */
             break;
     }
 }

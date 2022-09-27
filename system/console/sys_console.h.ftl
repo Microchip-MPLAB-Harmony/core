@@ -119,6 +119,15 @@
   Remarks:
     None.
 */
+
+/* MISRA C-2012 Rule 20.5 deviated:2 Deviation record ID -  H3_MISRAC_2012_R_20_5_DR_1 */
+<#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
+<#if core.COMPILER_CHOICE == "XC32">
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wunknown-pragmas"
+</#if>
+#pragma coverity compliance block deviate:2 "MISRA C-2012 Rule 20.5" "H3_MISRAC_2012_R_20_5_DR_1"    
+</#if>
 #ifdef SYS_CONSOLE_PRINT
     #undef SYS_CONSOLE_PRINT
     #define SYS_CONSOLE_PRINT(fmt, ...)                 SYS_CONSOLE_Print(SYS_CONSOLE_DEFAULT_INSTANCE, fmt, ##__VA_ARGS__)
@@ -145,6 +154,14 @@
 #else
     #define SYS_CONSOLE_MESSAGE(message)                SYS_CONSOLE_Message(SYS_CONSOLE_DEFAULT_INSTANCE, message)
 #endif
+
+<#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
+#pragma coverity compliance end_block "MISRA C-2012 Rule 20.5"
+<#if core.COMPILER_CHOICE == "XC32">
+#pragma GCC diagnostic pop
+</#if>    
+</#if>
+/* MISRAC 2012 deviation block end */
 
 // *****************************************************************************
 /*  Console Status enumeration
@@ -287,13 +304,13 @@ typedef struct
 
     SYS_CONSOLE_INIT_FPTR init;
 
-    SYS_CONSOLE_READ_FPTR read;
+    SYS_CONSOLE_READ_FPTR read_t;
 
     SYS_CONSOLE_READ_COUNT_GET_FPTR readCountGet;
 
     SYS_CONSOLE_READ_FREE_BUFF_COUNT_GET_FPTR readFreeBufferCountGet;
 
-    SYS_CONSOLE_WRITE_FPTR write;
+    SYS_CONSOLE_WRITE_FPTR write_t;
 
     SYS_CONSOLE_WRITE_COUNT_GET_FPTR writeCountGet;
 
@@ -365,6 +382,9 @@ typedef struct
 // *****************************************************************************
 // *****************************************************************************
 
+/* Declared in console device implementation (sys_console_usb_cdc.c) */
+extern const SYS_CONSOLE_DEV_DESC sysConsoleUSBCdcDevDesc;
+
 // *****************************************************************************
 /* Function:
     SYS_MODULE_OBJ SYS_CONSOLE_Initialize(
@@ -399,8 +419,7 @@ typedef struct
   Example:
     <code>
     SYS_MODULE_OBJ  objectHandle;
-
-    // Populate the console initialization structure
+   
     const SYS_CONSOLE_INIT sysConsole0Init =
     {
         .deviceInitData = (void*)&sysConsole0UARTInitData,
@@ -411,7 +430,7 @@ typedef struct
     objectHandle = SYS_CONSOLE_Initialize(SYS_CONSOLE_INDEX_0, (SYS_MODULE_INIT *)&sysConsole0Init);
     if (objectHandle == SYS_MODULE_OBJ_INVALID)
     {
-        // Handle error
+        
     }
     </code>
 
@@ -446,13 +465,12 @@ SYS_MODULE_OBJ SYS_CONSOLE_Initialize(
 
   Example:
     <code>
-    SYS_MODULE_OBJ object;     // Returned from SYS_CONSOLE_Initialize
+    SYS_MODULE_OBJ object;     
 
     while (true)
     {
         SYS_CONSOLE_Tasks (object);
-
-        // Do other tasks
+        
     }
     </code>
 
@@ -499,14 +517,13 @@ void SYS_CONSOLE_Tasks ( SYS_MODULE_OBJ object );
 
   Example:
     <code>
-    // Given "object" returned from SYS_CONSOLE_Initialize
-
+   
     SYS_STATUS          consStatus;
 
     consStatus = SYS_CONSOLE_Status (object);
     if (consStatus == SYS_STATUS_READY)
     {
-        // Console is initialized and is ready to accept client requests.
+       
     }
     </code>
 
@@ -544,10 +561,7 @@ SYS_STATUS SYS_CONSOLE_Status( SYS_MODULE_OBJ object );
 
     if (myConsoleHandle != SYS_CONSOLE_HANDLE_INVALID)
     {
-        // Found a valid handle to the console instance
-
-        // Write some data over the USB console
-        SYS_CONSOLE_Write(myConsoleHandle, data, 10);
+       SYS_CONSOLE_Write(myConsoleHandle, data, 10);
     }
     </code>
 
@@ -581,8 +595,7 @@ SYS_CONSOLE_HANDLE SYS_CONSOLE_HandleGet( const SYS_MODULE_INDEX index);
     <code>
     SYS_CONSOLE_HANDLE myConsoleHandle;
     SYS_CONSOLE_DEVICE myConsoleDevType
-
-    // myConsoleHandle is assumed to be a valid console handle
+   
     myConsoleDevType = SYS_CONSOLE_DeviceGet(myConsoleHandle);
     </code>
 
@@ -630,15 +643,14 @@ SYS_CONSOLE_DEVICE SYS_CONSOLE_DeviceGet( const SYS_CONSOLE_HANDLE handle);
 
   Example:
     <code>
-    ssize_t nr;     //indicates the actual number of bytes read
+    ssize_t nr;     
     char myBuffer[MY_BUFFER_SIZE];
     SYS_CONSOLE_HANDLE myConsoleHandle;
-
-    // myConsoleHandle is assumed to be pointing to a valid console handle
+   
     nr = SYS_CONSOLE_Read( myConsoleHandle, myBuffer, MY_BUFFER_SIZE );
     if (nr == -1)
     {
-        // Handle error
+        
     }
     </code>
 
@@ -682,16 +694,15 @@ ssize_t SYS_CONSOLE_Read( const SYS_CONSOLE_HANDLE handle, void* buf, size_t cou
     ssize_t nr;
     char myBuffer[] = "message";
     SYS_CONSOLE_HANDLE myConsoleHandle;
-
-    // myConsoleHandle is assumed to be a valid console handle
+  
     nr = SYS_CONSOLE_Write( myConsoleHandle, myBuffer, strlen(myBuffer) );
     if (nr == -1)
     {
-        // Handle error
+       
     }
     if (nr != strlen(myBuffer))
     {
-        // Try send the remaining data after some time.
+       
     }
     </code>
 
@@ -727,14 +738,12 @@ ssize_t SYS_CONSOLE_Write( const SYS_CONSOLE_HANDLE handle, const void* buf, siz
   Example:
     <code>
     SYS_CONSOLE_HANDLE myConsoleHandle;
-    bool status;
-
-    // myConsoleHandle is assumed to be a valid console handle
+    bool status;   
 
     status = SYS_CONSOLE_Flush(myConsoleHandle);
     if (status == false)
     {
-        // Handle error
+        
     }
     </code>
 
@@ -771,12 +780,11 @@ bool SYS_CONSOLE_Flush(const SYS_CONSOLE_HANDLE handle);
     <code>
     ssize_t nr;
     SYS_CONSOLE_HANDLE myConsoleHandle;
-
-    // myConsoleHandle is assumed to be a valid console handle
+   
     nr = SYS_CONSOLE_ReadFreeBufferCountGet(myConsoleHandle);
     if (nr == -1)
     {
-        // Handle error
+        
     }
     </code>
 
@@ -813,15 +821,13 @@ ssize_t SYS_CONSOLE_ReadFreeBufferCountGet(const SYS_CONSOLE_HANDLE handle);
     ssize_t nBytesRead;
     char myBuffer[100];
     SYS_CONSOLE_HANDLE myConsoleHandle;
-
-    // Get the number of bytes available in the receive buffer.
+   
     nUnreadBytes = SYS_CONSOLE_ReadCountGet(myConsoleHandle);
 
     if (nUnreadBytes == -1)
     {
-        // Handle error
-    }
-    // Read the available data into the application buffer.
+        
+    }  
     SYS_CONSOLE_Read( myConsoleHandle, 0, myBuffer, nUnreadBytes );
     </code>
 
@@ -860,13 +866,11 @@ ssize_t SYS_CONSOLE_ReadCountGet(const SYS_CONSOLE_HANDLE handle);
     ssize_t nFreeSpace;
     char myBuffer[100];
     SYS_CONSOLE_HANDLE myConsoleHandle;
-
-    // Get the number of bytes of free space available in the transmit buffer.
+  
     nFreeSpace = SYS_CONSOLE_WriteFreeBufferCountGet(myConsoleHandle);
 
     if ((nFreeSpace >= sizeof(myBuffer)) && (nFreeSpace!= -1))
-    {
-        // Write the application buffer
+    {       
         SYS_CONSOLE_Write( myConsoleHandle, myBuffer, sizeof(myBuffer) );
     }
     </code>
@@ -907,11 +911,11 @@ ssize_t SYS_CONSOLE_WriteFreeBufferCountGet(const SYS_CONSOLE_HANDLE handle);
 
     if (nTxBytesPending == -1)
     {
-        // API reported error
+       
     }
     if (nTxBytesPending == 0)
     {
-        // All the data has been written to the console
+       
     }
     </code>
 
@@ -955,7 +959,6 @@ ssize_t SYS_CONSOLE_WriteCountGet(const SYS_CONSOLE_HANDLE handle);
 
     if (myConsoleHandle != SYS_CONSOLE_HANDLE_INVALID)
     {
-        // Found a valid handle to the console instance
         SYS_CONSOLE_Print(myConsoleHandle, "Enter %d characters", num_bytes_to_enter);
     }
     </code>

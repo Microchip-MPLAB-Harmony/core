@@ -122,19 +122,21 @@ def instantiateComponent(consoleComponent):
     configName = Variables.get("__CONFIGURATION_NAME")
 
     consoleHeaderFile = consoleComponent.createFileSymbol("SYS_CONSOLE_HEADER", None)
-    consoleHeaderFile.setSourcePath("system/console/sys_console.h")
+    consoleHeaderFile.setSourcePath("system/console/sys_console.h.ftl")
     consoleHeaderFile.setOutputName("sys_console.h")
     consoleHeaderFile.setDestPath("system/console/")
     consoleHeaderFile.setProjectPath("config/" + configName + "/system/console/")
     consoleHeaderFile.setType("HEADER")
+    consoleHeaderFile.setMarkup(True)
     consoleHeaderFile.setOverwrite(True)
 
     consoleSourceFile = consoleComponent.createFileSymbol("SYS_CONSOLE_SOURCE", None)
-    consoleSourceFile.setSourcePath("system/console/src/sys_console.c")
+    consoleSourceFile.setSourcePath("system/console/src/sys_console.c.ftl")
     consoleSourceFile.setOutputName("sys_console.c")
     consoleSourceFile.setDestPath("system/console/src")
     consoleSourceFile.setProjectPath("config/" + configName + "/system/console/")
     consoleSourceFile.setType("SOURCE")
+    consoleSourceFile.setMarkup(True)
     consoleSourceFile.setOverwrite(True)
 
     consoleHeaderLocalFile = consoleComponent.createFileSymbol("SYS_CONSOLE_UART_LOCAL", None)

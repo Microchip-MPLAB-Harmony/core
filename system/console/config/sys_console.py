@@ -339,11 +339,12 @@ def instantiateComponent(consoleComponent, index):
     consoleUARTDefinitionsHeaderFile.setDependencies(uartConsoleFileGen, ["SYS_CONSOLE_DEVICE_SET"])
 
     consoleUARTSourceFile = consoleComponent.createFileSymbol("SYS_CONSOLE_UART_SOURCE", None)
-    consoleUARTSourceFile.setSourcePath("system/console/src/console_uart/sys_console_uart.c")
+    consoleUARTSourceFile.setSourcePath("system/console/src/console_uart/sys_console_uart.c.ftl")
     consoleUARTSourceFile.setOutputName("sys_console_uart.c")
     consoleUARTSourceFile.setDestPath("system/console/src")
     consoleUARTSourceFile.setProjectPath("config/" + configName + "/system/console/")
     consoleUARTSourceFile.setType("SOURCE")
+    consoleUARTSourceFile.setMarkup(True)
     consoleUARTSourceFile.setOverwrite(True)
     consoleUARTSourceFile.setDependencies(uartConsoleFileGen, ["SYS_CONSOLE_DEVICE_SET"])
 
@@ -368,11 +369,12 @@ def instantiateComponent(consoleComponent, index):
     consoleUSBDefinitionsHeaderFile.setDependencies(usbCDCConsoleFileGen, ["SYS_CONSOLE_DEVICE_SET"])
 
     consoleUSBSourceFile = consoleComponent.createFileSymbol("SYS_CONSOLE_USB_CDC_SOURCE", None)
-    consoleUSBSourceFile.setSourcePath("system/console/src/console_usb/sys_console_usb_cdc.c")
+    consoleUSBSourceFile.setSourcePath("system/console/src/console_usb/sys_console_usb_cdc.c.ftl")
     consoleUSBSourceFile.setOutputName("sys_console_usb_cdc.c")
     consoleUSBSourceFile.setDestPath("system/console/src")
     consoleUSBSourceFile.setProjectPath("config/" + configName + "/system/console/")
     consoleUSBSourceFile.setType("SOURCE")
+    consoleUSBSourceFile.setMarkup(True)
     consoleUSBSourceFile.setOverwrite(True)
     consoleUSBSourceFile.setDependencies(usbCDCConsoleFileGen, ["SYS_CONSOLE_DEVICE_SET"])
 
