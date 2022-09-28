@@ -103,17 +103,17 @@ void SYS_DMA_AddressingModeSetup(SYS_DMA_CHANNEL channel, SYS_DMA_SOURCE_ADDRESS
 		}	
 	}	 
 	config = (config & ~0x77) | ( (ras_value << 4) | was_value );
-	${core.DMA_INSTANCE_NAME}_ChannelSettingsSet((${core.DMA_NAME}_CHANNEL)channel, (${core.DMA_NAME}_CHANNEL_CONFIG)config);
+	(void) ${core.DMA_INSTANCE_NAME}_ChannelSettingsSet((${core.DMA_NAME}_CHANNEL)channel, (${core.DMA_NAME}_CHANNEL_CONFIG)config);
 	
 <#else>
 	uint32_t config;
 
     config = (uint32_t)${core.DMA_INSTANCE_NAME}_ChannelSettingsGet((${core.DMA_NAME}_CHANNEL)channel);
-    config &= ~(${core.DMA_SRC_AM_MASK} | ${core.DMA_DST_AM_MASK});
+    config &= ~(${core.DMA_SRC_AM_MASK}U | ${core.DMA_DST_AM_MASK}U);
 
     config |= (uint32_t)sourceAddrMode | (uint32_t)destAddrMode;
 
-    ${core.DMA_INSTANCE_NAME}_ChannelSettingsSet((${core.DMA_NAME}_CHANNEL)channel, (${core.DMA_NAME}_CHANNEL_CONFIG)config);
+    (void) ${core.DMA_INSTANCE_NAME}_ChannelSettingsSet((${core.DMA_NAME}_CHANNEL)channel, (${core.DMA_NAME}_CHANNEL_CONFIG)config);
 </#if>	
 </#if>	
 }
@@ -162,17 +162,17 @@ void SYS_DMA_DataWidthSetup(SYS_DMA_CHANNEL channel, SYS_DMA_WIDTH dataWidth)
 	
 	
 	config = (config & ~0x77) | ( (ras_value << 4) | was_value );
-	${core.DMA_INSTANCE_NAME}_ChannelSettingsSet((${core.DMA_NAME}_CHANNEL)channel, (${core.DMA_NAME}_CHANNEL_CONFIG)config);
+	(void) ${core.DMA_INSTANCE_NAME}_ChannelSettingsSet((${core.DMA_NAME}_CHANNEL)channel, (${core.DMA_NAME}_CHANNEL_CONFIG)config);
 	    
 <#else>
 	uint32_t config;
 
     config = (uint32_t)${core.DMA_INSTANCE_NAME}_ChannelSettingsGet((${core.DMA_NAME}_CHANNEL)channel);
 
-    config &= ~(${core.DMA_DATA_WIDTH_MASK});
+    config &= ~(${core.DMA_DATA_WIDTH_MASK}U);
     config |= (uint32_t)dataWidth;
 
-    ${core.DMA_INSTANCE_NAME}_ChannelSettingsSet((${core.DMA_NAME}_CHANNEL)channel, (${core.DMA_NAME}_CHANNEL_CONFIG)config);
+    (void) ${core.DMA_INSTANCE_NAME}_ChannelSettingsSet((${core.DMA_NAME}_CHANNEL)channel, (${core.DMA_NAME}_CHANNEL_CONFIG)config);
 </#if>	
 </#if>	
 }

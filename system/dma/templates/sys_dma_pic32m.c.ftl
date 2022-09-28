@@ -110,19 +110,23 @@ bool SYS_DMA_ChannelTransfer (SYS_DMA_CHANNEL channel, const void *srcAddr, cons
 <#if (core.DMA_ENABLE?has_content) && (core.DMA_ENABLE = true)>
     if ((gSysDMAChannelObj[channel].srcAddrMode == SYS_DMA_SOURCE_ADDRESSING_MODE_FIXED) && (gSysDMAChannelObj[channel].destAddrMode == SYS_DMA_DESTINATION_ADDRESSING_MODE_FIXED))
     {
-        ${DMA_INSTANCE_NAME}_ChannelTransfer((${DMA_NAME}_CHANNEL)channel, srcAddr, gSysDMAChannelObj[channel].dataWidth, destAddr, gSysDMAChannelObj[channel].dataWidth, gSysDMAChannelObj[channel].dataWidth);
+        (void) ${DMA_INSTANCE_NAME}_ChannelTransfer((${DMA_NAME}_CHANNEL)channel, srcAddr, (size_t)gSysDMAChannelObj[channel].dataWidth, destAddr, (size_t)gSysDMAChannelObj[channel].dataWidth, (size_t)gSysDMAChannelObj[channel].dataWidth);
     }
     else if((gSysDMAChannelObj[channel].srcAddrMode == SYS_DMA_SOURCE_ADDRESSING_MODE_FIXED) && (gSysDMAChannelObj[channel].destAddrMode == SYS_DMA_DESTINATION_ADDRESSING_MODE_INCREMENTED))
     {
-        ${DMA_INSTANCE_NAME}_ChannelTransfer((${DMA_NAME}_CHANNEL)channel, srcAddr, gSysDMAChannelObj[channel].dataWidth, destAddr, blockSize, gSysDMAChannelObj[channel].dataWidth);
+        (void) ${DMA_INSTANCE_NAME}_ChannelTransfer((${DMA_NAME}_CHANNEL)channel, srcAddr, (size_t)gSysDMAChannelObj[channel].dataWidth, destAddr, blockSize, (size_t)gSysDMAChannelObj[channel].dataWidth);
     }
     else if ((gSysDMAChannelObj[channel].srcAddrMode == SYS_DMA_SOURCE_ADDRESSING_MODE_INCREMENTED) && (gSysDMAChannelObj[channel].destAddrMode == SYS_DMA_DESTINATION_ADDRESSING_MODE_FIXED))
     {
-        ${DMA_INSTANCE_NAME}_ChannelTransfer((${DMA_NAME}_CHANNEL)channel, srcAddr, blockSize, destAddr, gSysDMAChannelObj[channel].dataWidth, gSysDMAChannelObj[channel].dataWidth);
+        (void) ${DMA_INSTANCE_NAME}_ChannelTransfer((${DMA_NAME}_CHANNEL)channel, srcAddr, blockSize, destAddr, (size_t)gSysDMAChannelObj[channel].dataWidth, (size_t)gSysDMAChannelObj[channel].dataWidth);
     }
     else if ((gSysDMAChannelObj[channel].srcAddrMode == SYS_DMA_SOURCE_ADDRESSING_MODE_INCREMENTED) && (gSysDMAChannelObj[channel].destAddrMode == SYS_DMA_DESTINATION_ADDRESSING_MODE_INCREMENTED))
     {
-        ${DMA_INSTANCE_NAME}_ChannelTransfer((${DMA_NAME}_CHANNEL)channel, srcAddr, blockSize, destAddr, blockSize, blockSize);
+        (void) ${DMA_INSTANCE_NAME}_ChannelTransfer((${DMA_NAME}_CHANNEL)channel, srcAddr, blockSize, destAddr, blockSize, blockSize);
+    }
+    else
+    {
+        /* Nothing to do */
     }
 </#if>
     return true;

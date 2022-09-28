@@ -136,6 +136,15 @@ typedef enum
    Remarks:
     None.
 */
+/* MISRA C-2012 Rule 5.2 deviated:8 Deviation record ID -  H3_MISRAC_2012_R_5_2_DR_1 */
+<#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
+<#if core.COMPILER_CHOICE == "XC32">
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wunknown-pragmas"
+</#if>
+#pragma coverity compliance block deviate:8 "MISRA C-2012 Rule 5.2" "H3_MISRAC_2012_R_5_2_DR_1"    
+</#if>
+
 typedef enum
 {
 <#if core.DMA_SRC_FIXED_AM_VALUE?has_content>
@@ -180,6 +189,10 @@ typedef enum
     SYS_DMA_DESTINATION_ADDRESSING_MODE_NONE = -1
 
 } SYS_DMA_DESTINATION_ADDRESSING_MODE;
+<#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
+#pragma coverity compliance end_block "MISRA C-2012 Rule 5.2"
+</#if>
+/* MISRAC 2012 deviation block end */
 
 // *****************************************************************************
 /* DMA data width
@@ -304,20 +317,16 @@ typedef void (*SYS_DMA_CHANNEL_CALLBACK) (SYS_DMA_TRANSFER_EVENT event, uintptr_
     {
         switch(event)
         {
-            case SYS_DMA_TRANSFER_COMPLETE:
-                // This means the data was transferred.
+            case SYS_DMA_TRANSFER_COMPLETE:                
                 break;
 
-            case SYS_DMA_TRANSFER_ERROR:
-                // Error handling here.
+            case SYS_DMA_TRANSFER_ERROR:               
                 break;
 
             default:
                 break;
         }
-    }
-
-    // User registers an event handler with DMA channel. This is done once.
+    }    
     SYS_DMA_ChannelCallbackRegister(channel, APP_DMA_TransferEventHandler,
             (uintptr_t)&myAppObj);
     </code>
@@ -325,6 +334,13 @@ typedef void (*SYS_DMA_CHANNEL_CALLBACK) (SYS_DMA_TRANSFER_EVENT event, uintptr_
   Remarks:
     None.
  */
+/* MISRA C-2012 Rule 5.5, 8.6 deviated below. Deviation record ID -  
+   H3_MISRAC_2012_R_5_5_DR_1 & H3_MISRAC_2012_R_8_6_DR_1*/
+<#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
+#pragma coverity compliance block \
+(deviate:1 "MISRA C-2012 Rule 5.5" "H3_MISRAC_2012_R_5_5_DR_1" )\
+(deviate:1 "MISRA C-2012 Rule 8.6" "H3_MISRAC_2012_R_8_6_DR_1" )   
+</#if>
 
 void SYS_DMA_ChannelCallbackRegister (SYS_DMA_CHANNEL channel, const SYS_DMA_CHANNEL_CALLBACK eventHandler, const uintptr_t contextHandle);
 
@@ -370,25 +386,23 @@ void SYS_DMA_ChannelCallbackRegister (SYS_DMA_CHANNEL channel, const SYS_DMA_CHA
     False - If previous transfer is in progress and the request is rejected.
 
   Example:
-    <code>
-    // Transfer 10 bytes of data to UART TX using DMA channel 1
+    <code>   
     MY_APP_OBJ myAppObj;
     uint8_t buf[10] = {0,1,2,3,4,5,6,7,8,9};
     void *srcAddr = (uint8_t *) buf;
     void *destAddr = (uin8_t*) &U1TXREG;
     size_t size = 10;
-
-    // User registers an event handler with PLIB. This is done once.
+    
     SYS_DMA_ChannelCallbackRegister(APP_DMA_TransferEventHandler,
         (uintptr_t)&myAppObj);
 
     if (SYS_DMA_ChannelTransfer(SYS_DMA_CHANNEL_1, srcAddr, destAddr, size) == true)
     {
-        // do something else
+        
     }
     else
     {
-        // try again?
+       
     }
     </code>
 
@@ -439,7 +453,7 @@ bool SYS_DMA_ChannelTransfer (SYS_DMA_CHANNEL channel, const void *srcAddr, cons
 
   Example:
     <code>
-    // Transfer 10 bytes of data to UART TX using DMA channel 1
+    
     MY_APP_OBJ myAppObj;
     uint8_t buf[10] = {0,1,2,3,4,5,6,7,8,9};
     void *srcAddr = (uint8_t *) buf;
@@ -489,6 +503,15 @@ bool SYS_DMA_ChannelIsBusy (SYS_DMA_CHANNEL channel);
 */
 
 void SYS_DMA_ChannelDisable (SYS_DMA_CHANNEL channel);
+
+<#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
+#pragma coverity compliance end_block "MISRA C-2012 Rule 5.5"
+#pragma coverity compliance end_block "MISRA C-2012 Rule 8.6"
+<#if core.COMPILER_CHOICE == "XC32">
+#pragma GCC diagnostic pop
+</#if>    
+</#if> 
+/* MISRAC 2012 deviation block end */
 
 //******************************************************************************
 /* Function:
