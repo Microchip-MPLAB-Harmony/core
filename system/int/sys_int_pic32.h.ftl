@@ -47,18 +47,17 @@
 #ifndef SYS_INT_H    // Guards against multiple inclusion
 #define SYS_INT_H
 
-
 // *****************************************************************************
 // *****************************************************************************
 // Section: Included Files
 // *****************************************************************************
 // *****************************************************************************
 
-/*  This section lists the other files that are included in this file.
-*/
-
+#include <stddef.h>
+#include <stdint.h>
 #include <stdbool.h>
 #include "device.h"
+#include "peripheral/evic/plib_evic.h"
 
 // DOM-IGNORE-BEGIN
 #ifdef __cplusplus  // Provide C++ Compatibility
@@ -68,40 +67,11 @@
 #endif
 // DOM-IGNORE-END
 
-
-// *****************************************************************************
-// *****************************************************************************
-// Section: Data Types
-// *****************************************************************************
-// *****************************************************************************
-
-// *****************************************************************************
-/* Interrupt Sources
-
-   Summary:
-    Defines the data type for all the interrupt sources associated with the
-       interrupt controller of the device.
-
-   Description:
-    This data type can be used with interface functions to enable, disable,
-       set, clear and to get status of any particular interrupt source.
-
-   Remarks:
-    This data type is defined using the CMSIS data type that defines the
-    interrupt sources set available.
-*/
-
-typedef IRQn_Type INT_SOURCE;
-
-
 // *****************************************************************************
 // *****************************************************************************
 // Section: Interface Routines
 // *****************************************************************************
 // *****************************************************************************
-/* The following functions make up the methods (set of possible operations) of
-   this interface.
-*/
 
 // *****************************************************************************
 /* Function:
@@ -132,7 +102,6 @@ typedef IRQn_Type INT_SOURCE;
 */
 
 void SYS_INT_Enable( void );
-
 
 // *****************************************************************************
 /* Function:
@@ -165,13 +134,9 @@ void SYS_INT_Enable( void );
   Example:
     <code>
       bool interruptState;
-
-      // Save global interrupt state and disable interrupt
+     
       interruptState = SYS_INT_Disable();
-
-      // Critical Section
-
-      // Restore interrupt state
+      
       SYS_INT_Restore(interruptState)
     </code>
 
@@ -181,7 +146,6 @@ void SYS_INT_Enable( void );
 */
 
 bool SYS_INT_Disable( void );
-
 
 // *****************************************************************************
 /* Function:
@@ -207,7 +171,7 @@ bool SYS_INT_Disable( void );
     <code>
        if(true == SYS_INT_IsEnabled())
        {
-             // Gloable Interrupt is enabled
+             
        }
     </code>
 
@@ -215,8 +179,19 @@ bool SYS_INT_Disable( void );
     None.
 */
 
-bool SYS_INT_IsEnabled( void );
+/* MISRA C-2012 Rule 5.5, 8.6 deviated below. Deviation record ID -  
+   H3_MISRAC_2012_R_5_5_DR_1 & H3_MISRAC_2012_R_8_6_DR_1*/
+<#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
+<#if core.COMPILER_CHOICE == "XC32">
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wunknown-pragmas"
+</#if>
+#pragma coverity compliance block \
+(deviate:6 "MISRA C-2012 Rule 5.5" "H3_MISRAC_2012_R_5_5_DR_1" )\
+(deviate:6 "MISRA C-2012 Rule 8.6" "H3_MISRAC_2012_R_8_6_DR_1" )   
+</#if>
 
+bool SYS_INT_IsEnabled( void );
 
 // *****************************************************************************
 /* Function:
@@ -241,13 +216,10 @@ bool SYS_INT_IsEnabled( void );
   Example:
     <code>
       bool interruptState;
+      
+      interruptState = SYS_INT_Disable();      
 
-      // Save global interrupt state and disable interrupt
-      interruptState = SYS_INT_Disable();
-
-      // Critical Section
-
-      // Restore interrupt state
+      
       SYS_INT_Restore(interruptState)
     </code>
 
@@ -256,7 +228,6 @@ bool SYS_INT_IsEnabled( void );
 */
 
 void SYS_INT_Restore( bool state );
-
 
 // *****************************************************************************
 /* Function:
@@ -291,7 +262,6 @@ void SYS_INT_Restore( bool state );
 */
 
 void SYS_INT_SourceEnable( INT_SOURCE source );
-
 
 // *****************************************************************************
 /* Function:
@@ -330,10 +300,9 @@ void SYS_INT_SourceEnable( INT_SOURCE source );
 
 bool SYS_INT_SourceDisable( INT_SOURCE source );
 
-
 // *****************************************************************************
 /* Function:
-    void SYS_INT_SourceRestore( INT_SOURCE source, bool state )
+    void SYS_INT_SourceRestore( INT_SOURCE source, bool status )
 
    Summary:
     Restores an interrupt vector to the state specified in the parameter.
@@ -353,23 +322,18 @@ bool SYS_INT_SourceDisable( INT_SOURCE source );
 
   Example:
     <code>
-      bool aState;
+      bool status;
 
-      // Save interrupt vector state and disable interrupt
-      aState = SYS_INT_SourceDisable( aSrcId );
-
-      // Critical Section
-
-      // Restore interrupt vector state
-      SYS_INT_SourceRestore( aSrcId, aState )
+      status = SYS_INT_SourceDisable( aSrcId );
+      
+      SYS_INT_SourceRestore( aSrcId, status )
     </code>
 
   Remarks:
     None.
 */
 
-void SYS_INT_SourceRestore( INT_SOURCE source, bool aState );
-
+void SYS_INT_SourceRestore( INT_SOURCE source, bool status );
 
 // *****************************************************************************
 /* Function:
@@ -405,7 +369,6 @@ void SYS_INT_SourceRestore( INT_SOURCE source, bool aState );
 
 bool SYS_INT_SourceIsEnabled( INT_SOURCE source );
 
-
 // *****************************************************************************
 /* Function:
     bool SYS_INT_SourceStatusGet( INT_SOURCE source )
@@ -439,7 +402,6 @@ bool SYS_INT_SourceIsEnabled( INT_SOURCE source );
 
 bool SYS_INT_SourceStatusGet( INT_SOURCE source );
 
-
 // *****************************************************************************
 /* Function:
     void SYS_INT_SourceStatusSet( INT_SOURCE source )
@@ -463,8 +425,7 @@ bool SYS_INT_SourceStatusGet( INT_SOURCE source );
     None.
 
   Example:
-    <code>
-       //Trigger USART0 ISR handler manually
+    <code>      
     SYS_INT_SourceStatusSet(USART0_IRQn);
     </code>
 
@@ -473,7 +434,6 @@ bool SYS_INT_SourceStatusGet( INT_SOURCE source );
 */
 
 void SYS_INT_SourceStatusSet( INT_SOURCE source );
-
 
 // *****************************************************************************
 /* Function:
@@ -497,8 +457,7 @@ void SYS_INT_SourceStatusSet( INT_SOURCE source );
     None.
 
   Example:
-    <code>
-       //Clear a pending interrupt.
+    <code>      
        SYS_INT_SourceStatusClear(USART0_IRQn);
     </code>
 
@@ -508,6 +467,14 @@ void SYS_INT_SourceStatusSet( INT_SOURCE source );
 
 void SYS_INT_SourceStatusClear( INT_SOURCE source );
 
+<#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
+#pragma coverity compliance end_block "MISRA C-2012 Rule 5.5"
+#pragma coverity compliance end_block "MISRA C-2012 Rule 8.6"
+<#if core.COMPILER_CHOICE == "XC32">
+#pragma GCC diagnostic pop
+</#if>    
+</#if> 
+/* MISRAC 2012 deviation block end */
 
 #include "sys_int_mapping.h"
 

@@ -77,7 +77,7 @@ bool SYS_INT_SourceDisable( INT_SOURCE source )
     bool interruptStatus;
 
     /* Save the interrupt status and then Disable the global interrupt */
-    interruptStatus = (bool)(( uint32_t )__builtin_disable_interrupts() & 0x01);
+    interruptStatus = (bool)(( uint32_t )__builtin_disable_interrupts() & 0x01U);
 
     /* get the interrupt status of this source before disable is called */
     intSrcStatus = SYS_INT_SourceIsEnabled(source);

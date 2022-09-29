@@ -64,11 +64,12 @@ elif "PIC32M" in Database.getSymbolValue("core", "PRODUCT_FAMILY"):
     sysIntHeaderFile = "sys_int_pic32"
 
 intHeaderFile = harmonyCoreComponent.createFileSymbol("INT_HEADER", None)
-intHeaderFile.setSourcePath("system/int/" + sysIntHeaderFile + ".h")
+intHeaderFile.setSourcePath("system/int/" + sysIntHeaderFile + ".h.ftl")
 intHeaderFile.setOutputName("sys_int.h")
 intHeaderFile.setDestPath("system/int/")
 intHeaderFile.setProjectPath("config/" + configName + "/system/int/")
 intHeaderFile.setType("HEADER")
+intHeaderFile.setMarkup(True)
 intHeaderFile.setOverwrite(True)
 intHeaderFile.setEnabled(False)
 intHeaderFile.setDependencies(genSysIntFiles, ["ENABLE_SYS_INT"])
