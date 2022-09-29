@@ -148,11 +148,12 @@ osalHeaderFreeRtosFile.setOverwrite(True)
 osalHeaderFreeRtosFile.setEnabled(False)
 
 osalSourceFreeRtosFile = harmonyCoreComponent.createFileSymbol("OSAL_FREERTOS_C", None)
-osalSourceFreeRtosFile.setSourcePath("osal/src/osal_freertos.c")
+osalSourceFreeRtosFile.setSourcePath("osal/src/osal_freertos.c.ftl")
 osalSourceFreeRtosFile.setOutputName("osal_freertos.c")
 osalSourceFreeRtosFile.setDestPath("osal/")
 osalSourceFreeRtosFile.setProjectPath("config/" + configName + "/osal/")
 osalSourceFreeRtosFile.setType("SOURCE")
+osalSourceFreeRtosFile.setMarkup(True)
 osalSourceFreeRtosFile.setOverwrite(True)
 osalSourceFreeRtosFile.setEnabled(False)
 

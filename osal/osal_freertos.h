@@ -39,8 +39,8 @@
 *******************************************************************************/
 // DOM-IGNORE-END
 
-#ifndef _OSAL_FREERTOS_H
-#define _OSAL_FREERTOS_H
+#ifndef OSAL_FREERTOS_H
+#define OSAL_FREERTOS_H
 
 #ifdef __cplusplus
 extern "C" {
@@ -152,8 +152,7 @@ OSAL_RESULT OSAL_Initialize(void);
     const char* -   Name of the underlying RTOS or NULL
 
   Example:
-    <code>
-    // get the RTOS name
+    <code>    
     const char* sName;
 
     sName = OSAL_Name();
@@ -184,7 +183,7 @@ __STATIC_INLINE __attribute__((always_inline)) const char* OSAL_Name (void)
 }
 #endif
 
-#endif // _OSAL_FREERTOS_H
+#endif // OSAL_FREERTOS_H
 
 /*******************************************************************************
  End of File

@@ -21,8 +21,8 @@
 * THAT YOU HAVE PAID DIRECTLY TO MICROCHIP FOR THIS SOFTWARE.
 *******************************************************************************/
 
-#ifndef __OSAL_DEFINITIONS_H
-#define __OSAL_DEFINITIONS_H
+#ifndef OSAL_DEFINITIONS_H
+#define OSAL_DEFINITIONS_H
 
 <#if SELECT_RTOS == "BareMetal">
 #include "osal/osal_impl_basic.h"
@@ -39,4 +39,4 @@
 <#if SELECT_RTOS == "MbedOS">
 #include "osal/osal_mbedos.h"
 </#if>
-#endif//__OSAL_DEFINITIONS_H
+#endif// OSAL_DEFINITIONS_H
