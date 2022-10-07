@@ -26,19 +26,19 @@
 
 typedef struct
 {
-    uint8_t inUse;
+    bool inUse;
     FATFS volObj;
 } FATFS_VOLUME_OBJECT;
 
 typedef struct
 {
-    uint8_t inUse;
+    bool inUse;
     FIL fileObj;
 } FATFS_FILE_OBJECT;
 
 typedef struct
 {
-    uint8_t inUse;
+    bool inUse;
     DIR dirObj;
 } FATFS_DIR_OBJECT;
 
@@ -46,8 +46,6 @@ static FATFS_VOLUME_OBJECT CACHE_ALIGN FATFSVolume[SYS_FS_VOLUME_NUMBER];
 static FATFS_FILE_OBJECT CACHE_ALIGN FATFSFileObject[SYS_FS_MAX_FILES];
 static FATFS_DIR_OBJECT CACHE_ALIGN FATFSDirObject[SYS_FS_MAX_FILES];
 static uint8_t startupflag = 0;
-
-typedef UINT(*STREAM_FUNC)(const BYTE*,UINT);
 
 int FATFS_mount ( uint8_t vol )
 {
@@ -58,7 +56,7 @@ int FATFS_mount ( uint8_t vol )
 
     uint8_t index = 0;
 
-    if(0 == startupflag)
+    if(0U == startupflag)
     {
         startupflag = 1;
         for(index = 0; index != SYS_FS_VOLUME_NUMBER ; index++ )
@@ -73,15 +71,15 @@ int FATFS_mount ( uint8_t vol )
     }
 
     /* Check if the drive number is valid */
-    if (vol >= SYS_FS_VOLUME_NUMBER)
+    if (vol >= (uint8_t)SYS_FS_VOLUME_NUMBER)
     {
-        return FR_INVALID_DRIVE;
+        return (int)FR_INVALID_DRIVE;
     }
 
     /* If the volume specified is already in use, then return failure, as we cannot mount it again */
     if(FATFSVolume[vol].inUse == true)
     {
-        return FR_INVALID_DRIVE;
+        return (int)FR_INVALID_DRIVE;
     }
     else
     {
@@ -111,13 +109,13 @@ int FATFS_unmount ( uint8_t vol )
 
     if (vol >= SYS_FS_VOLUME_NUMBER)
     {
-        return FR_INVALID_DRIVE;
+        return (int)FR_INVALID_DRIVE;
     }
 
     /* If the volume specified not in use, then return failure, as we cannot unmount mount a free volume */
     if(FATFSVolume[vol].inUse == false)
     {
-        return FR_INVALID_DRIVE;
+        return (int)FR_INVALID_DRIVE;
     }
 
     path[0] = '0' + vol;
@@ -133,7 +131,7 @@ int FATFS_unmount ( uint8_t vol )
 
         for(hFATfs = 0; hFATfs < SYS_FS_MAX_FILES; hFATfs++)
         {
-            if(FATFSFileObject[hFATfs].inUse)
+            if(FATFSFileObject[hFATfs].inUse != false)
             {
                 if (FATFSFileObject[hFATfs].fileObj.obj.fs == NULL)
                 {
@@ -143,8 +141,12 @@ int FATFS_unmount ( uint8_t vol )
                 {
                     FATFSFileObject[hFATfs].inUse = false;
                 }
+                else
+                {
+                    /* Nothing to do */
+                }
             }
-            if(FATFSDirObject[hFATfs].inUse)
+            if(FATFSDirObject[hFATfs].inUse != false)
             {
                 if (FATFSDirObject[hFATfs].dirObj.obj.fs == NULL)
                 {
@@ -154,12 +156,25 @@ int FATFS_unmount ( uint8_t vol )
                 {
                     FATFSDirObject[hFATfs].inUse = false;
                 }
+                else
+                {
+                    /* Nothing to do */
+                }
             }
         }
     }
 
     return ((int)res);
 }
+
+/* MISRA C-2012 Rule 2.1 deviated:1 Deviation record ID -  H3_MISRAC_2012_R_2_1_DR_1 */
+<#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
+<#if core.COMPILER_CHOICE == "XC32">
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wunknown-pragmas"
+</#if>
+#pragma coverity compliance block deviate:1 "MISRA C-2012 Rule 2.1" "H3_MISRAC_2012_R_2_1_DR_1"    
+</#if>
 
 int FATFS_open (
     uintptr_t handle,   /* Pointer to the blank file object */
@@ -170,28 +185,29 @@ int FATFS_open (
     FRESULT res = FR_INT_ERR;
     uint32_t index = 0;
     FIL *fp = NULL;
+    SYS_FS_FILE_OPEN_ATTRIBUTES modeCheck = mode;
 
     /* Convert the SYS_FS file open attributes to FAT FS attributes */
-    switch(mode)
+    switch(modeCheck)
     {
         case SYS_FS_FILE_OPEN_READ:
-            mode = FA_READ;
+            mode = (uint8_t)FA_READ;
             break;
 <#if SYS_FS_FAT_READONLY == false>
         case SYS_FS_FILE_OPEN_WRITE:
-            mode = FA_WRITE | FA_CREATE_ALWAYS;
+            mode =  (uint8_t)FA_WRITE | (uint8_t)FA_CREATE_ALWAYS;
             break;
         case SYS_FS_FILE_OPEN_APPEND:
-            mode = FA_WRITE | FA_OPEN_APPEND;
+            mode = (uint8_t)FA_WRITE | (uint8_t)FA_OPEN_APPEND;
             break;
         case SYS_FS_FILE_OPEN_READ_PLUS:
-            mode = FA_READ | FA_WRITE;
+            mode = (uint8_t)FA_READ | (uint8_t)FA_WRITE;
             break;
         case SYS_FS_FILE_OPEN_WRITE_PLUS:
-            mode = FA_READ | FA_WRITE | FA_CREATE_ALWAYS;
+            mode = (uint8_t)FA_READ | (uint8_t)FA_WRITE | (uint8_t)FA_CREATE_ALWAYS;
             break;
         case SYS_FS_FILE_OPEN_APPEND_PLUS:
-            mode = FA_READ | FA_WRITE | FA_OPEN_APPEND;
+            mode = (uint8_t)FA_READ | (uint8_t)FA_WRITE | (uint8_t)FA_OPEN_APPEND;
             break;
 </#if>
         default:
@@ -220,6 +236,16 @@ int FATFS_open (
     return ((int)res);
 }
 
+<#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
+#pragma coverity compliance end_block "MISRA C-2012 Rule 2.1"
+</#if>
+/* MISRAC 2012 deviation block end */
+
+/* MISRA C-2012 Rule 11.3 deviated:1 Deviation record ID -  H3_MISRAC_2012_R_11_3_DR_1 */
+<#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
+#pragma coverity compliance block deviate:1 "MISRA C-2012 Rule 11.3" "H3_MISRAC_2012_R_11_3_DR_1"    
+</#if>
+
 int FATFS_read (
     uintptr_t handle, /* Pointer to the file object */
     void* buff,       /* Pointer to data buffer */
@@ -236,6 +262,14 @@ int FATFS_read (
     return ((int)res);
 }
 
+<#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
+#pragma coverity compliance end_block "MISRA C-2012 Rule 11.3"
+<#if core.COMPILER_CHOICE == "XC32">
+#pragma GCC diagnostic pop
+</#if>    
+</#if>
+/* MISRAC 2012 deviation block end */
+
 int FATFS_close (
     uintptr_t handle /* Pointer to the file object to be closed */
 )
@@ -246,7 +280,7 @@ int FATFS_close (
 
     if(ptr->inUse == false)
     {
-        return FR_INVALID_OBJECT;
+        return (int)FR_INVALID_OBJECT;
     }
 
     res = f_close(fp);
@@ -356,7 +390,7 @@ int FATFS_opendir (
 
     if(index >= SYS_FS_MAX_FILES)
     {
-        return FR_INVALID_OBJECT;
+        return (int)FR_INVALID_OBJECT;
     }
 
     res = f_opendir(dp, (const TCHAR *)path);
@@ -406,9 +440,9 @@ int FATFS_closedir (
     FATFS_DIR_OBJECT *ptr = (FATFS_DIR_OBJECT *)handle;
     DIR *dp = &ptr->dirObj;
 
-    if(ptr->inUse == false)
+    if(ptr->inUse ==  false)
     {
-        return FR_INVALID_OBJECT;
+        return (int)FR_INVALID_OBJECT;
     }
 
     res = f_closedir(dp);
@@ -644,7 +678,7 @@ int FATFS_mkfs (
     /* Check if the drive number is valid */
     if (vol >= SYS_FS_VOLUME_NUMBER)
     {
-        return FR_INVALID_DRIVE;
+        return (int)FR_INVALID_DRIVE;
     }
 
     path[0] = '0' + vol;
@@ -696,7 +730,7 @@ int FATFS_getclusters (
     }
 
     /* Get total sectors and free sectors */
-    *tot_sec = (fs->n_fatent - 2) * fs->csize;
+    *tot_sec = (fs->n_fatent - 2U) * fs->csize;
     *free_sec = clst * fs->csize;
 
     return ((int)res);

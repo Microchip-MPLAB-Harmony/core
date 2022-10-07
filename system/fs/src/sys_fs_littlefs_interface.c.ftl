@@ -25,13 +25,14 @@
 #include "system/fs/littlefs/lfs_bdio.h"
 #include "system/fs/sys_fs.h"
 
+
 // include littlefs license in the binary
 <#if core.COMPILER_CHOICE == "IAR">
 __root const char* szLicense =\
 <#elseif core.COMPILER_CHOICE == "KEIL">
-const char* szLicense __attribute__ ((used)) =\
+ const char* szLicense __attribute__ ((used)) =\
 <#else>
-const char* szLicense __attribute__ ((keep)) =\
+ const char* szLicense __attribute__ ((keep)) =\
 </#if>
 "Copyright (c) 2017, Arm Limited. All rights reserved.\
 Redistribution and use in source and binary forms, with or without modification, are permitted provided that the following conditions are met:\
@@ -52,19 +53,19 @@ ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.";
 
 typedef struct
 {
-    uint8_t inUse;
+    bool inUse;
     lfs_t volObj;
 } LITTLEFS_VOLUME_OBJECT;
 
 typedef struct
 {
-    uint8_t inUse;
+    bool inUse;
     lfs_file_t fileObj;
 } LITTLEFS_FILE_OBJECT;
 
 typedef struct
 {
-    uint8_t inUse;
+    bool inUse;
     lfs_dir_t dirObj;
 } LITTLEFS_DIR_OBJECT;
 
@@ -81,11 +82,11 @@ static uint8_t startupflag = 0;
 #define     LFS_CACHE_SIZE   2048
 #define     LFS_LOOKAHEAD_SIZE   64
 
-uint8_t ReadBuf[LFS_CACHE_SIZE] = {0};
-uint8_t ProgBuf[LFS_CACHE_SIZE] = {0};
-uint8_t LookaheadBuf[LFS_LOOKAHEAD_SIZE] = {0};
+static uint8_t ReadBuf[LFS_CACHE_SIZE] = {0};
+static uint8_t ProgBuf[LFS_CACHE_SIZE] = {0};
+static uint8_t LookaheadBuf[LFS_LOOKAHEAD_SIZE] = {0};
 
-BLOCK_DEV bd;
+static BLOCK_DEV bd;
 static const struct lfs_config cfg = {
         .context        = &bd,
         .read           = lfs_bdio_read,
@@ -106,43 +107,72 @@ static const struct lfs_config cfg = {
 
 static SYS_FS_ERROR LFS_Err_To_SYSFS_Err(enum lfs_error err)
 {
-    switch (err)
+    
+    if ( err == LFS_ERR_OK)
     {
-        case LFS_ERR_OK:
-            return SYS_FS_ERROR_OK;
-        case LFS_ERR_IO:
-            return SYS_FS_ERROR_IO;
-        case LFS_ERR_CORRUPT:
-            return SYS_FS_ERROR_CORRUPT;
-        case LFS_ERR_NOENT:
-            return SYS_FS_ERROR_NOENT;
-        case LFS_ERR_EXIST:
-            return SYS_FS_ERROR_EXIST;
-        case LFS_ERR_NOTDIR:
-            return SYS_FS_ERROR_NOTDIR;
-        case LFS_ERR_ISDIR:
-            return SYS_FS_ERROR_ISDIR;
-        case LFS_ERR_NOTEMPTY:
-            return SYS_FS_ERROR_NOTEMPTY;
-        case LFS_ERR_BADF:
-            return SYS_FS_ERROR_BADF;
-        case LFS_ERR_FBIG:
-            return SYS_FS_ERROR_FBIG;
-        case LFS_ERR_INVAL:
-            return SYS_FS_ERROR_INVAL;
-        case LFS_ERR_NOSPC:
-            return SYS_FS_ERROR_NOSPC;
-        case LFS_ERR_NOMEM:
-            return SYS_FS_ERROR_NOMEM;
-        case LFS_ERR_NOATTR:
-            return SYS_FS_ERROR_NOATTR;
-        case LFS_ERR_NAMETOOLONG:
-            return SYS_FS_ERROR_NAMETOOLONG;
-        default:
-            return SYS_FS_ERROR_INVAL;
-            
+        return SYS_FS_ERROR_OK;
     }
-    return SYS_FS_ERROR_INVAL;
+    else if ( err == LFS_ERR_IO)
+    {
+        return SYS_FS_ERROR_IO;
+    }
+    else if ( err == LFS_ERR_CORRUPT)
+    {
+        return SYS_FS_ERROR_CORRUPT;
+    }
+    else if ( err == LFS_ERR_NOENT)
+    {
+        return SYS_FS_ERROR_NOENT;
+    }
+    else if ( err == LFS_ERR_EXIST)
+    {
+        return SYS_FS_ERROR_EXIST;
+    }
+    else if ( err == LFS_ERR_NOTDIR)
+    {
+        return SYS_FS_ERROR_NOTDIR;
+    }
+    else if ( err == LFS_ERR_ISDIR)
+    {
+        return SYS_FS_ERROR_ISDIR;
+    }
+    else if ( err == LFS_ERR_NOTEMPTY)
+    {
+        return SYS_FS_ERROR_NOTEMPTY;
+    }
+    else if ( err == LFS_ERR_BADF)
+    {
+        return SYS_FS_ERROR_BADF;
+    }
+    else if ( err == LFS_ERR_FBIG)
+    {
+        return SYS_FS_ERROR_FBIG;
+    }
+    else if ( err == LFS_ERR_INVAL)
+    {
+        return SYS_FS_ERROR_INVAL;
+    }
+    else if ( err == LFS_ERR_NOSPC)
+    {
+        return SYS_FS_ERROR_NOSPC;
+    }
+    else if ( err == LFS_ERR_NOMEM)
+    {
+        return SYS_FS_ERROR_NOMEM;
+    }
+    else if ( err == LFS_ERR_NOATTR)
+    {
+        return SYS_FS_ERROR_NOATTR;
+    }
+    else if ( err == LFS_ERR_NAMETOOLONG)
+    {
+        return SYS_FS_ERROR_NAMETOOLONG;
+    }
+    else
+    {
+        return SYS_FS_ERROR_INVAL;
+    }       
+       
 }
 
 int LITTLEFS_mount ( uint8_t vol )
@@ -151,7 +181,7 @@ int LITTLEFS_mount ( uint8_t vol )
     enum lfs_error res = LFS_ERR_INVAL; 
     uint8_t index = 0;
 
-    if(0 == startupflag)
+    if(0U == startupflag)
     {
         startupflag = 1;
         for(index = 0; index != SYS_FS_VOLUME_NUMBER ; index++ )
@@ -168,13 +198,13 @@ int LITTLEFS_mount ( uint8_t vol )
     /* Check if the drive number is valid */
     if (vol >= SYS_FS_VOLUME_NUMBER)
     {
-        return LFS_ERR_INVAL;
+        return (int)LFS_ERR_INVAL;
     }
 
     /* If the volume specified is already in use, then return failure, as we cannot mount it again */
     if(LITTLEFSVolume[vol].inUse == true)
     {
-        return LFS_ERR_EXIST;
+        return (int)LFS_ERR_EXIST;
     }
     else
     {
@@ -183,9 +213,9 @@ int LITTLEFS_mount ( uint8_t vol )
 
     bd.disk_num = vol;
         
-    lfs_bdio_initilize(0);	/* Initialize the physical drive */
+    (void) lfs_bdio_initilize(0);   /* Initialize the physical drive */
     
-    res = lfs_mount(fs, &cfg);
+    res = (enum lfs_error)lfs_mount(fs, &cfg);
     
 
     if (res == LFS_ERR_OK)
@@ -193,7 +223,7 @@ int LITTLEFS_mount ( uint8_t vol )
         LITTLEFSVolume[vol].inUse = true;
     }
 
-    return (LFS_Err_To_SYSFS_Err(res));
+    return ((int)LFS_Err_To_SYSFS_Err(res));
 }
 
 int LITTLEFS_unmount ( uint8_t vol )
@@ -207,13 +237,13 @@ int LITTLEFS_unmount ( uint8_t vol )
 
     if (vol >= SYS_FS_VOLUME_NUMBER)
     {
-        return LFS_ERR_INVAL;
+        return (int)LFS_ERR_INVAL;
     }
 
     /* If the volume specified not in use, then return failure, as we cannot unmount mount a free volume */
     if(LITTLEFSVolume[vol].inUse == false)
     {
-        return LFS_ERR_INVAL;
+        return (int)LFS_ERR_INVAL;
     }
     
     // free the volume
@@ -221,23 +251,37 @@ int LITTLEFS_unmount ( uint8_t vol )
 
     for(cnt = 0; cnt < SYS_FS_MAX_FILES; cnt++)
     {
-        if(LFSFileObject[cnt].inUse)
+        if(LFSFileObject[cnt].inUse != false)
         {
-            memset(&LFSFileObject[cnt].fileObj, 0, sizeof(LFSFileObject[cnt].fileObj));
+            (void) memset(&LFSFileObject[cnt].fileObj, 0, sizeof(LFSFileObject[cnt].fileObj));
             LFSFileObject[cnt].inUse = false;
         }
-        if(LFSDirObject[cnt].inUse)
+        if(LFSDirObject[cnt].inUse != false)
         {
-            memset(&LFSDirObject[cnt].dirObj, 0, sizeof(LFSDirObject[cnt].dirObj));
+            (void) memset(&LFSDirObject[cnt].dirObj, 0, sizeof(LFSDirObject[cnt].dirObj));
             LFSDirObject[cnt].inUse = false;
         }
     }
 
-    res = lfs_unmount(fs);
+    res = (enum lfs_error)lfs_unmount(fs);
+    
+    /* For MISRA C satisfy used this condition */
+    if ( (uint8_t)res == 0U)
+    {
+       /* Do nothing */ 
+    }
 
-    return (LFS_Err_To_SYSFS_Err(res));
+    return ((int)LFS_Err_To_SYSFS_Err(res));
 }
 
+/* MISRA C-2012 Rule 2.1 deviated:1 Deviation record ID -  H3_MISRAC_2012_R_2_1_DR_1 */
+<#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
+<#if core.COMPILER_CHOICE == "XC32">
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wunknown-pragmas"
+</#if>
+#pragma coverity compliance block deviate:1 "MISRA C-2012 Rule 2.1" "H3_MISRAC_2012_R_2_1_DR_1"    
+</#if>
 int LITTLEFS_open (
     uintptr_t handle,   /* Pointer to the blank file object */
     const char * path,  /* Pointer to the file name */
@@ -245,11 +289,13 @@ int LITTLEFS_open (
 )
 {
     uint8_t volumeNum = 0;
+    uint32_t temp;
     int flags;
     lfs_t *fs = NULL;
     lfs_file_t* fp = NULL;
+    SYS_FS_FILE_OPEN_ATTRIBUTES mode_Check = mode;
 
-    volumeNum = path[0] - '0';
+    volumeNum = ((uint8_t)path[0] - (uint8_t)'0');
     
     fs = &LITTLEFSVolume[volumeNum].volObj;
 
@@ -258,31 +304,35 @@ int LITTLEFS_open (
     
 
     /* Convert the SYS_FS file open attributes to FAT FS attributes */
-    switch(mode)
+    switch(mode_Check)
     {
         case SYS_FS_FILE_OPEN_READ:
-            flags = LFS_O_RDONLY;
+            flags = (int)LFS_O_RDONLY;
             break;
 <#if SYS_FS_LFS_READONLY == false>
         case SYS_FS_FILE_OPEN_WRITE:
-            flags = LFS_O_WRONLY | LFS_O_CREAT;
+            temp  = (uint32_t)LFS_O_WRONLY | (uint32_t)LFS_O_CREAT;
+            flags = (int)temp;
             break;
         case SYS_FS_FILE_OPEN_APPEND:
-            flags = LFS_O_WRONLY | LFS_O_APPEND;
+            temp  = (uint32_t)LFS_O_WRONLY | (uint32_t)LFS_O_APPEND;
+            flags = (int)temp;
             break;
         case SYS_FS_FILE_OPEN_READ_PLUS:
-            flags = LFS_O_RDWR;
+            flags = (int)LFS_O_RDWR;
             break;
         case SYS_FS_FILE_OPEN_WRITE_PLUS:
-            flags = LFS_O_RDWR | LFS_O_CREAT;
+            temp  =  (uint32_t)LFS_O_RDWR | (uint32_t)LFS_O_CREAT;
+            flags = (int)temp;
             break;
         case SYS_FS_FILE_OPEN_APPEND_PLUS:
-            flags = LFS_O_RDWR | LFS_O_APPEND;
+            temp  = (uint32_t)LFS_O_RDWR | (uint32_t)LFS_O_APPEND;
+            flags = (int)temp;
             break;
 </#if>
         default:
-            return (LFS_Err_To_SYSFS_Err(res));
-            break;
+            return ((int)LFS_Err_To_SYSFS_Err(res)); 
+            break;            
     }
 
     for (index = 0; index < SYS_FS_MAX_FILES; index++)
@@ -295,16 +345,30 @@ int LITTLEFS_open (
             break;
         }
     }
-
-    res = lfs_file_open(fs, fp, (const char *)path + 2, flags);
-
-    if (res != 0)
+    
+    if (index < SYS_FS_MAX_FILES)
     {
-        LFSFileObject[index].inUse = false;
+        res = (enum lfs_error)lfs_file_open(fs, fp, (const char *)path + 2, flags);
+
+       if ((int)res != 0)
+        {
+            LFSFileObject[index].inUse = false;
+        }
+        
+        return ((int)LFS_Err_To_SYSFS_Err(res));
     }
- 
-    return (LFS_Err_To_SYSFS_Err(res));
+    else
+    {
+        return (int)SYS_FS_ERROR_NOSPC;
+    }    
 }
+<#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
+#pragma coverity compliance end_block "MISRA C-2012 Rule 2.1"
+<#if core.COMPILER_CHOICE == "XC32">
+#pragma GCC diagnostic pop
+</#if>    
+</#if>
+/* MISRAC 2012 deviation block end */
 
 int LITTLEFS_read (
     uintptr_t handle, /* Pointer to the file object */
@@ -326,15 +390,15 @@ int LITTLEFS_read (
     
     if (lfs_ret < 0)
     {
-        res = lfs_ret;
+        res = (enum lfs_error)lfs_ret;
         *br = 0;
     }
     else
     {
-        *br = lfs_ret;
+        *br = (uint32_t)lfs_ret;
     }
     
-    return (LFS_Err_To_SYSFS_Err(res));
+    return ((int)LFS_Err_To_SYSFS_Err(res));
 
 }
 
@@ -351,16 +415,16 @@ int LITTLEFS_close (
 
     if(ptr->inUse == false)
     {
-        return LFS_ERR_IO;
+        return (int)LFS_ERR_IO;
     }
 
-    res = lfs_file_close(fs, fp);
+    res = (enum lfs_error)lfs_file_close(fs, fp);
 
     if (res == LFS_ERR_OK)
     {
         ptr->inUse = false;
     }
-    return (LFS_Err_To_SYSFS_Err(res));
+    return ((int)LFS_Err_To_SYSFS_Err(res));
 
 }
 
@@ -377,14 +441,18 @@ int LITTLEFS_lseek (
 
     fs = &LITTLEFSVolume[0].volObj;
 
-    offset = lfs_file_seek(fs, fp, ofs, LFS_SEEK_SET);
+    offset = (lfs_soff_t)lfs_file_seek(fs, fp, (lfs_soff_t)ofs, (int)LFS_SEEK_SET);
 
     if (offset >= 0)
+    {
         res = LFS_ERR_OK;
+    }
     else
+    {
         res = LFS_ERR_IO;
+    }
     
-    return (LFS_Err_To_SYSFS_Err(res));
+    return ((int)LFS_Err_To_SYSFS_Err(res));
 }
 
 int LITTLEFS_stat (
@@ -395,20 +463,26 @@ int LITTLEFS_stat (
     
     enum lfs_error res = LFS_ERR_OK;
     LITTLEFS_STATUS *stat = (LITTLEFS_STATUS *)fileInfo;
-    struct lfs_info info;
+    struct lfs_info info = {0};
     uint8_t volumeNum = 0;
     lfs_t *fs = NULL;
     uint16_t fileLen = 0;
     
-    volumeNum = path[0] - '0';
+    volumeNum = ((uint8_t)path[0] - (uint8_t)'0');
     fs = &LITTLEFSVolume[volumeNum].volObj;
 
-    res = lfs_stat(fs, (const char *)path + 3, &info);
+    res = (enum lfs_error)lfs_stat(fs, (const char *)path + 3, &info);
     
-    fileLen = strlen (info.name);
+    /* For MISRA C satisfy used this condition */
+    if ( (uint8_t)res == 0U)
+    {
+       /* Do nothing */ 
+    }
+    
+    fileLen = (uint16_t)strlen (info.name);
 
 <#if SYS_FS_LFN_ENABLE == true>
-    if (stat->lfname && stat->lfsize)
+    if (((stat->lfname) != NULL) && ((stat->lfsize) != 0U))
     {
         if (fileLen > stat->lfsize)
         {
@@ -417,25 +491,25 @@ int LITTLEFS_stat (
         else
         {
             /* Populate the file details. */
-            strncpy (stat->lfname, info.name, fileLen);
+            (void) strncpy (stat->lfname, info.name, fileLen);
             stat->lfname[fileLen] = '\0';
         }
     }
 </#if>
 
     /* Check if the name of the file is longer than the SFN 8.3 format. */
-    if (fileLen > 12)
+    if (fileLen > 12U)
     {
         fileLen = 12;
     }
 
     /* Populate the file details. */
-    strncpy (stat->fname, info.name, fileLen);
+    (void) strncpy (stat->fname, info.name, fileLen);
     stat->fname[fileLen] = '\0';        
     stat->fsize = info.size;
 
     
-    return (LFS_Err_To_SYSFS_Err(res));
+    return ((int)LFS_Err_To_SYSFS_Err(res));
 
 }
 
@@ -464,17 +538,17 @@ int LITTLEFS_opendir (
 
     if(index >= SYS_FS_MAX_FILES)
     {
-        return LFS_ERR_INVAL;
+        return (int)LFS_ERR_INVAL;
     }
 
-    res = lfs_dir_open(fs, dp, path+2);
+    res = (enum lfs_error)lfs_dir_open(fs, dp, path+2);
 
     if (res != LFS_ERR_OK)
     {
         LFSDirObject[index].inUse = false;
     }
 
-    return (LFS_Err_To_SYSFS_Err(res));
+    return ((int)LFS_Err_To_SYSFS_Err(res));
 
 }
 
@@ -503,45 +577,57 @@ int LITTLEFS_readdir (
         res = lfs_dir_read(fs, dp, &info);      // return 1 if success
     }
     
-    if ( info.type == LFS_TYPE_DIR)
-        fileStat->fattrib = SYS_FS_ATTR_DIR;
-    else if ( info.type == LFS_TYPE_REG)
-        fileStat->fattrib = SYS_FS_ATTR_FILE;
-                  
-    fileStat->fsize = info.size;
-	
-<#if SYS_FS_LFN_ENABLE == true>
-	
-    if (fileStat->lfsize < strlen(info.name))
+    if ( info.type == (uint8_t)LFS_TYPE_DIR)
     {
-        fileLen = fileStat->lfsize;
+        fileStat->fattrib = (uint8_t)SYS_FS_ATTR_DIR;
+    }
+    else if ( info.type == (uint8_t)LFS_TYPE_REG)
+    {
+        fileStat->fattrib = (uint8_t)SYS_FS_ATTR_FILE;
     }
     else
     {
-        fileLen = strlen(info.name);
+        /* Nothing to do */
+    }
+                  
+    fileStat->fsize = info.size;
+    
+<#if SYS_FS_LFN_ENABLE == true>
+    
+    if (fileStat->lfsize < strlen(info.name))
+    {
+        fileLen = (uint16_t)fileStat->lfsize;
+    }
+    else
+    {
+        fileLen = (uint16_t)strlen(info.name);
     }
     if ((res ==  1) && (fileStat->lfname != NULL))
     {
-        memcpy(fileStat->lfname, info.name, fileLen);
-	    fileStat->lfname[fileLen] = '\0';
+        (void) memcpy(fileStat->lfname, info.name, fileLen);
+        fileStat->lfname[fileLen] = '\0';
     }
     else if (fileStat->lfname != NULL)
     {
         /* Use fileStat->fname instead */
         fileStat->lfname[0] = '\0';
     }
+    else
+    {
+        /* nothing to do */
+    }
 </#if>
-	
-    if (strlen(info.name) > 12)
+    
+    if (strlen(info.name) > 12U)
     {
         fileLen = 12;
     }
     else
     {
-        fileLen = strlen(info.name);
+        fileLen = (uint16_t)strlen(info.name);
     }
 
-    memcpy(fileStat->fname, info.name, fileLen);
+    (void) memcpy(fileStat->fname, info.name, fileLen);
     fileStat->fname[fileLen] = '\0';
     
     return (res == 1) ? 0 : 1;
@@ -560,17 +646,17 @@ int LITTLEFS_closedir (
     
     if(ptr->inUse == false)
     {
-        return LFS_ERR_INVAL;
+        return (int)LFS_ERR_INVAL;
     }
 
-    res = lfs_dir_close(fs, dp);
+    res = (enum lfs_error)lfs_dir_close(fs, dp);
 
     if (res == LFS_ERR_OK)
     {
         ptr->inUse = false;
     }
 
-    return (LFS_Err_To_SYSFS_Err(res));
+    return ((int)LFS_Err_To_SYSFS_Err(res));
 }
 
 <#if SYS_FS_LFS_READONLY == false>
@@ -593,15 +679,15 @@ int LITTLEFS_write (
     
     if (lfs_ret < 0)
     {
-        res = lfs_ret;
+        res = (enum lfs_error)lfs_ret;
         *bw = 0;
     }
     else
     {
-        *bw = lfs_ret;
+        *bw = (uint32_t)lfs_ret;
     }
    
-    return (LFS_Err_To_SYSFS_Err(res));
+    return ((int)LFS_Err_To_SYSFS_Err(res));
 }
 </#if>
 
@@ -610,10 +696,20 @@ uint32_t LITTLEFS_tell(uintptr_t handle)
     LITTLEFS_FILE_OBJECT *ptr = (LITTLEFS_FILE_OBJECT *)handle;
     lfs_file_t *fp = &ptr->fileObj;
     lfs_t *fs = NULL;
+    int32_t temp_errcheck;
 
     fs = &LITTLEFSVolume[0].volObj;
-
-    return(lfs_file_tell(fs, fp));
+    
+    /* For MISRA C satisfy used this code */
+    temp_errcheck = lfs_file_tell(fs, fp);
+    
+    /* For MISRA C satisfy used this condition */
+    if( temp_errcheck == 0)
+    {
+        /* Do nothing */
+    }
+   
+    return((uint32_t)temp_errcheck);
 }
 
 bool LITTLEFS_eof(uintptr_t handle)
@@ -626,9 +722,13 @@ bool LITTLEFS_eof(uintptr_t handle)
     fs = &LITTLEFSVolume[0].volObj;
 
      if (lfs_file_tell(fs, fp) ==  lfs_file_size(fs, fp))
+     {
          result = true;
+     }
      else
+     {
          result = false;
+     }
      
     return (result);
 }
@@ -638,11 +738,20 @@ uint32_t LITTLEFS_size(uintptr_t handle)
     LITTLEFS_FILE_OBJECT *ptr = (LITTLEFS_FILE_OBJECT *)handle;
     lfs_file_t *fp = &ptr->fileObj;
     lfs_t *fs = NULL;
+    int32_t temp_errcheck;
 
     fs = &LITTLEFSVolume[0].volObj;
     
-    return lfs_file_size(fs, fp);
-
+    /* For MISRA C satisfy used this code */
+    temp_errcheck = lfs_file_size(fs, fp);
+    
+    /* For MISRA C satisfy used this condition */
+    if( temp_errcheck == 0)
+    {
+        /* Do nothing */
+    }
+    
+    return (uint32_t)temp_errcheck;
 }
 
 <#if SYS_FS_LFS_READONLY == false>
@@ -654,9 +763,15 @@ int LITTLEFS_mkdir (
     enum lfs_error res = LFS_ERR_INVAL;
 
     fs = &LITTLEFSVolume[0].volObj;
-    res = lfs_mkdir(fs, path+2);
+    res = (enum lfs_error)lfs_mkdir(fs, path+2);
+    
+    /* For MISRA C satisfy used this condition */
+    if ( (uint8_t)res == 0U)
+    {
+       /* Do nothing */ 
+    }
 
-    return (LFS_Err_To_SYSFS_Err(res));
+    return ((int)LFS_Err_To_SYSFS_Err(res));
 }
 
 int LITTLEFS_remove (
@@ -668,9 +783,15 @@ int LITTLEFS_remove (
     
     fs = &LITTLEFSVolume[0].volObj;
 
-    res = lfs_remove(fs, path+2);
+    res = (enum lfs_error)lfs_remove(fs, path+2);
+    
+    /* For MISRA C satisfy used this condition */
+    if ( (uint8_t)res == 0U)
+    {
+       /* Do nothing */ 
+    }
 
-    return (LFS_Err_To_SYSFS_Err(res));
+    return ((int)LFS_Err_To_SYSFS_Err(res));
 }
 
 int LITTLEFS_truncate (
@@ -688,9 +809,17 @@ int LITTLEFS_truncate (
     fpos = lfs_file_tell(fs, fp);
     
     if (fpos >=0)
-        res = lfs_file_truncate(fs, fp, fpos);
+    {
+        res = (enum lfs_error)lfs_file_truncate(fs, fp, (uint32_t)fpos);
+        
+        /* For MISRA C satisfy used this condition */
+        if ( (uint8_t)res == 0U)
+        {
+           /* Do nothing */ 
+        }
+    }
 
-    return (LFS_Err_To_SYSFS_Err(res));
+    return ((int)LFS_Err_To_SYSFS_Err(res));
 }
 
 int LITTLEFS_rename (
@@ -703,9 +832,15 @@ int LITTLEFS_rename (
     
     fs = &LITTLEFSVolume[0].volObj;
     
-    res = lfs_rename(fs, path_old, path_new);
+    res = (enum lfs_error)lfs_rename(fs, path_old, path_new);
+    
+    /* For MISRA C satisfy used this condition */
+    if ( (uint8_t)res == 0U)
+    {
+       /* Do nothing */ 
+    }
 
-    return (LFS_Err_To_SYSFS_Err(res));
+    return ((int)LFS_Err_To_SYSFS_Err(res));
 }
 
 int LITTLEFS_sync (
@@ -719,9 +854,15 @@ int LITTLEFS_sync (
 
     fs = &LITTLEFSVolume[0].volObj;
 
-    res = lfs_file_sync(fs, fp);
+    res = (LITTLEFS_ERR)lfs_file_sync(fs, fp);
     
-    return (LFS_Err_To_SYSFS_Err(res));
+    /* For MISRA C satisfy used this condition */
+    if ( (uint8_t)res == 0U)
+    {
+       /* Do nothing */ 
+    }
+    
+    return ((int)LFS_Err_To_SYSFS_Err(res));
 }
 
 int LITTLEFS_mkfs (
@@ -737,14 +878,20 @@ int LITTLEFS_mkfs (
     /* Check if the drive number is valid */
     if (vol >= SYS_FS_VOLUME_NUMBER)
     {
-        return LFS_ERR_INVAL;
+        return (int)LFS_ERR_INVAL;
     }
 
     fs = &LITTLEFSVolume[vol].volObj;
 
-    res = lfs_format(fs, &cfg );
+    res = (LITTLEFS_ERR)lfs_format(fs, &cfg );
+    
+    /* For MISRA C satisfy used this condition */
+    if ( (uint8_t)res == 0U)
+    {
+       /* Do nothing */ 
+    }
 
-    return (LFS_Err_To_SYSFS_Err(res));
+    return ((int)LFS_Err_To_SYSFS_Err(res));
 
 }
 </#if>

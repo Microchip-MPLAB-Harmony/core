@@ -41,8 +41,8 @@
 
 /* File System Service Configuration */
 
-#define SYS_FS_MEDIA_NUMBER               ${SYS_FS_INSTANCES_NUMBER}
-#define SYS_FS_VOLUME_NUMBER              ${SYS_FS_TOTAL_VOLUMES}
+#define SYS_FS_MEDIA_NUMBER               (${SYS_FS_INSTANCES_NUMBER}U)
+#define SYS_FS_VOLUME_NUMBER              (${SYS_FS_TOTAL_VOLUMES}U)
 
 <#if SYS_FS_AUTO_MOUNT == true>
     <#lt>#define SYS_FS_AUTOMOUNT_ENABLE           true
@@ -50,17 +50,17 @@
 <#else>
     <#lt>#define SYS_FS_AUTOMOUNT_ENABLE           false
 </#if>
-#define SYS_FS_MAX_FILES                  ${SYS_FS_MAX_FILES}
-#define SYS_FS_MAX_FILE_SYSTEM_TYPE       ${SYS_FS_MAX_FILE_SYSTEM_TYPE}
-#define SYS_FS_MEDIA_MAX_BLOCK_SIZE       ${SYS_FS_MEDIA_MAX_BLOCK_SIZE}
-#define SYS_FS_MEDIA_MANAGER_BUFFER_SIZE  ${SYS_FS_MEDIA_MANAGER_BUFFER_SIZE}
+#define SYS_FS_MAX_FILES                  (${SYS_FS_MAX_FILES}U)
+#define SYS_FS_MAX_FILE_SYSTEM_TYPE       (${SYS_FS_MAX_FILE_SYSTEM_TYPE}U)
+#define SYS_FS_MEDIA_MAX_BLOCK_SIZE       (${SYS_FS_MEDIA_MAX_BLOCK_SIZE})
+#define SYS_FS_MEDIA_MANAGER_BUFFER_SIZE  (${SYS_FS_MEDIA_MANAGER_BUFFER_SIZE})
 <#if SYS_FS_LFN_ENABLE == true>
-    <#lt>#define SYS_FS_USE_LFN                    1
+    <#lt>#define SYS_FS_USE_LFN                    (1)
 <#else>
-    <#lt>#define SYS_FS_USE_LFN                    0
+    <#lt>#define SYS_FS_USE_LFN                    (0)
 </#if>
-#define SYS_FS_FILE_NAME_LEN              ${SYS_FS_FILE_NAME_LEN}
-#define SYS_FS_CWD_STRING_LEN             ${SYS_FS_CWD_STRING_LEN}
+#define SYS_FS_FILE_NAME_LEN              (${SYS_FS_FILE_NAME_LEN}U)
+#define SYS_FS_CWD_STRING_LEN             (${SYS_FS_CWD_STRING_LEN})
 
 <#if (HarmonyCore.SELECT_RTOS)?? && HarmonyCore.SELECT_RTOS != "BareMetal">
     <#lt>/* File System RTOS Configurations*/

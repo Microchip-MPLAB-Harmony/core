@@ -22,8 +22,8 @@
  *******************************************************************************/
 
 
-#ifndef _SYS_FS_FAT_INTERFACE_H
-#define _SYS_FS_FAT_INTERFACE_H
+#ifndef SYS_FS_FAT_INTERFACE_H
+#define SYS_FS_FAT_INTERFACE_H
 
 #include "system/fs/fat_fs/file_system/ff.h"
 
@@ -48,7 +48,7 @@ int FATFS_close (uintptr_t handle);
 
 int FATFS_lseek (uintptr_t handle, uint32_t ofs);
 
-int FATFS_stat (const char* path, uintptr_t ptr);
+int FATFS_stat (const char* path, uintptr_t fileInfo);
 
 int FATFS_getlabel (const char* path, char* label, uint32_t* vsn);
 
@@ -58,7 +58,7 @@ char* FATFS_gets (char* buff, int len, uintptr_t handle);
 
 int FATFS_opendir (uintptr_t handle, const char* path);
 
-int FATFS_readdir (uintptr_t handle, uintptr_t fno);
+int FATFS_readdir (uintptr_t handle, uintptr_t fileInfo);
 
 int FATFS_closedir (uintptr_t handle);
 
@@ -87,7 +87,7 @@ int FATFS_chdrive (uint8_t drv);
 
     <#lt>int FATFS_chmod (const char* path, uint8_t attr, uint8_t mask);
 
-    <#lt>int FATFS_utime (const char* path, const uintptr_t fno);
+    <#lt>int FATFS_utime (const char* path, const uintptr_t ptr);
 
     <#lt>int FATFS_rename (const char* path_old, const char* path_new);
 
@@ -97,13 +97,13 @@ int FATFS_chdrive (uint8_t drv);
 
     <#lt>int FATFS_puts (const char* str, uintptr_t handle);
 
-    <#lt>int FATFS_printf (uintptr_t handle, const char* str, va_list argList);
+    <#lt>int FATFS_printf (uintptr_t handle, const char* fmt, va_list argList);
 
     <#lt>bool FATFS_error(uintptr_t handle);
 
     <#lt>int FATFS_mkfs (uint8_t vol, const MKFS_PARM* opt, void* work, uint32_t len);
 
-    <#lt>int FATFS_fdisk (uint8_t pdrv, const uint32_t szt[], void* work);
+    <#lt>int FATFS_fdisk (uint8_t pdrv, const uint32_t ptbl[], void* work);
 
     <#lt>int FATFS_getclusters (const char *path, uint32_t *tot_sec, uint32_t *free_sec);
 

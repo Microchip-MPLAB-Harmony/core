@@ -41,8 +41,8 @@
 *******************************************************************************/
 //DOM-IGNORE-END
 
-#ifndef _SYS_FS_PRIVATE_H
-#define _SYS_FS_PRIVATE_H
+#ifndef SYS_FS_PRIVATE_H
+#define SYS_FS_PRIVATE_H
 
 #include "configuration.h"
 #include "system/system.h"
@@ -51,7 +51,7 @@
 #include "osal/osal.h"
 #include <string.h>
 
-#define SYS_FS_PATH_LEN_WITH_DISK_NUM (SYS_FS_FILE_NAME_LEN + 3)
+#define SYS_FS_PATH_LEN_WITH_DISK_NUM (SYS_FS_FILE_NAME_LEN + 3U)
 #ifndef SYS_FS_CWD_STRING_LEN
 #define SYS_FS_CWD_STRING_LEN (1024)
 #endif
@@ -169,37 +169,6 @@ typedef struct
 SYS_FS_CURRENT_MOUNT_POINT;
 
 //******************************************************************************
-/*Function:
-    bool _SYS_FS_StringWildCardCompare(const char * ptr1, const char *ptr2)
 
-    Summary:
-    Compares the 2 file names with wild character.
-
-    Description:
-        Compares the 2 file names with wild character. This is required for
-        file search of a directory.
-
-    Precondition:
-        Atlesat, one disk has to be mounted before this funcion could be set.
-
-
-    Parameters:
-        ptr1            - First file name. This can have wild characters (*, ?).
-
-        ptr2     	- Second file name. This should be complete file name.
-                          No wild char should be passed here.
-
-
-    Returns:
-        If comparison is success	-	true
-
-        If comparison is failure	-	false
-
-  Remarks:
-	None
-***************************************************************************/
-bool _SYS_FS_StringWildCardCompare(const char * ptr1, const char *ptr2);
-
-
-#endif // _SYS_FS_PRIVATE_H
+#endif // SYS_FS_PRIVATE_H
 

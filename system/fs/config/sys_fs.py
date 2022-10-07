@@ -708,11 +708,12 @@ def instantiateComponent(sysFSComponent):
     sysFSLocalHeaderFile.setType("HEADER")
 
     sysFSMedManHeaderFile = sysFSComponent.createFileSymbol("SYS_FS_MEDIA_MANAGER_HEADER", None)
-    sysFSMedManHeaderFile.setSourcePath("/system/fs/sys_fs_media_manager.h")
+    sysFSMedManHeaderFile.setSourcePath("/system/fs/sys_fs_media_manager.h.ftl")
     sysFSMedManHeaderFile.setOutputName("sys_fs_media_manager.h")
     sysFSMedManHeaderFile.setDestPath("/system/fs/")
     sysFSMedManHeaderFile.setProjectPath("config/" + configName + "/system/fs/")
     sysFSMedManHeaderFile.setType("HEADER")
+    sysFSMedManHeaderFile.setMarkup(True)
 
     sysFSMedLocalHeaderFile = sysFSComponent.createFileSymbol("SYS_FS_MEDIA_MANAGER_LOCAL_HEADER", None)
     sysFSMedLocalHeaderFile.setSourcePath("/system/fs/src/sys_fs_media_manager_local.h")

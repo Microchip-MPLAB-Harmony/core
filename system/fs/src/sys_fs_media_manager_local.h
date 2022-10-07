@@ -23,8 +23,8 @@
  *******************************************************************************/
 //DOM-IGNORE-END
 
-#ifndef _SYS_FS_MEDIA_MANAGER_LOCAL_H_
-#define _SYS_FS_MEDIA_MANAGER_LOCAL_H_
+#ifndef SYS_FS_MEDIA_MANAGER_LOCAL_H_
+#define SYS_FS_MEDIA_MANAGER_LOCAL_H_
 
 #include "configuration.h"
 #include "system/int/sys_int.h"
@@ -43,10 +43,10 @@
 /* Shift Value for multiply or divide by a sector of size 512 bytes*/
 #define SYS_FS_MEDIA_SHIFT_SECTOR_VALUE     (9)
 
-#define _SYS_FS_MEDIA_MANAGER_UPDATE_MEDIA_INDEX(token) \
+#define SYS_FS_MEDIA_MANAGER_UPDATE_MEDIA_INDEX_T(token) \
 { \
     (token)++; \
-    (token) = ((token) == SYS_FS_MEDIA_NUMBER) ? 0: (token); \
+    (token) = ((token) == SYS_FS_MEDIA_NUMBER) ? 0U: (token); \
 }
 
 // *****************************************************************************
@@ -63,7 +63,7 @@
   Remarks:
     None.
 */
-typedef struct _SYS_FS_MEDIA
+typedef struct SYS_FS_MEDIA_T
 {
     /* Indicates if the media object is in use. */
     bool inUse;
@@ -133,7 +133,7 @@ typedef struct _SYS_FS_MEDIA
   Remarks:
     None.
 */
-typedef struct _SYS_FS_VOLUME
+typedef struct SYS_FS_VOLUME_T
 {
     /* Indicates if the volume object is being used. */
     bool inUse;
@@ -192,7 +192,7 @@ typedef struct SYS_FS_MEDIA_MANAGER_OBJ
     uint8_t mediaIndex;
 
     /* Flag to track the usage of the mediaBuffer */
-    uint8_t bufferInUse;
+    bool bufferInUse;
 
     /* Flag used to mute/unmute event notifications */
     bool muteEventNotification;

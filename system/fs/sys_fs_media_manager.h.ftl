@@ -40,8 +40,8 @@ File System Service Media Manager Interface Declarations and Types
 *******************************************************************************/
 //DOM-IGNORE-END
 
-#ifndef _SYS_FS_MEDIA_MANAGER_H_
-#define _SYS_FS_MEDIA_MANAGER_H_
+#ifndef SYS_FS_MEDIA_MANAGER_H_
+#define SYS_FS_MEDIA_MANAGER_H_
 
 #include "driver/driver_common.h"
 #include "system/fs/sys_fs.h"
@@ -76,6 +76,15 @@ File System Service Media Manager Interface Declarations and Types
   Remarks:
     Refer to sys_media.h for actual definition..
 */
+
+/* MISRA C-2012 Rule 5.5 deviated:3 Deviation record ID -  H3_MISRAC_2012_R_5_5_DR_1 */
+<#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
+<#if core.COMPILER_CHOICE == "XC32">
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wunknown-pragmas"
+</#if>
+#pragma coverity compliance block deviate:3 "MISRA C-2012 Rule 5.5" "H3_MISRAC_2012_R_5_5_DR_1"    
+</#if>
 
 typedef SYS_MEDIA_BLOCK_COMMAND_HANDLE  SYS_FS_MEDIA_BLOCK_COMMAND_HANDLE;
 
@@ -154,6 +163,11 @@ typedef enum
     SYS_FS_MEDIA_EVENT_BLOCK_COMMAND_ERROR    = SYS_MEDIA_EVENT_BLOCK_COMMAND_ERROR
 
 } SYS_FS_MEDIA_BLOCK_EVENT;
+
+<#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
+#pragma coverity compliance end_block "MISRA C-2012 Rule 5.5"
+</#if>
+/* MISRAC 2012 deviation block end */
 
 // *****************************************************************************
 /* SYS FS Media Property Structure
@@ -386,7 +400,7 @@ typedef struct
   Remarks:
     None.
 */
-typedef struct _SYS_FS_VOLUME_PROPERTY
+typedef struct SYS_FS_VOLUME_PROPERTY_T
 {
     /* Volume # */
     unsigned int volNumber;
@@ -500,7 +514,7 @@ typedef SYS_MEDIA_EVENT_HANDLER SYS_FS_MEDIA_EVENT_HANDLER;
 */
 SYS_FS_MEDIA_COMMAND_STATUS SYS_FS_MEDIA_MANAGER_CommandStatusGet
 (
-    uint16_t     diskNo,
+    uint16_t     diskNum,
     SYS_FS_MEDIA_BLOCK_COMMAND_HANDLE commandHandle
 );
 
@@ -691,7 +705,7 @@ SYS_FS_MEDIA_BLOCK_COMMAND_HANDLE SYS_FS_MEDIA_MANAGER_SectorWrite
 */
 bool SYS_FS_MEDIA_MANAGER_VolumePropertyGet
 (
-    const char *devName, SYS_FS_VOLUME_PROPERTY *str
+    const char *volumeName, SYS_FS_VOLUME_PROPERTY *property
 );
 
 //*****************************************************************************
@@ -721,7 +735,7 @@ bool SYS_FS_MEDIA_MANAGER_VolumePropertyGet
 
 bool SYS_FS_MEDIA_MANAGER_MediaStatusGet
 (
-    const char *devName
+    const char *deviceName
 );
 
 //*****************************************************************************
@@ -790,7 +804,7 @@ SYS_FS_MEDIA_BLOCK_COMMAND_HANDLE SYS_FS_MEDIA_MANAGER_Read
 */
 uintptr_t SYS_FS_MEDIA_MANAGER_AddressGet
 (
-    uint16_t diskNo
+    uint16_t diskNum
 );
 
 //*****************************************************************************
@@ -827,11 +841,27 @@ uintptr_t SYS_FS_MEDIA_MANAGER_AddressGet
 
     See sys_fs.h for usage information.
 */
+/* MISRA C-2012 Rule 5.1, 8.6 deviated below. Deviation record ID -  
+   H3_MISRAC_2012_R_5_1_DR_1 & H3_MISRAC_2012_R_8_6_DR_1*/
+<#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
+#pragma coverity compliance block \
+(deviate:1 "MISRA C-2012 Rule 5.1" "H3_MISRAC_2012_R_5_1_DR_1" )\
+(deviate:1 "MISRA C-2012 Rule 8.6" "H3_MISRAC_2012_R_8_6_DR_1" )   
+</#if>
+
 void SYS_FS_MEDIA_MANAGER_EventHandlerSet
 (
     const void * eventHandler,
     const uintptr_t context
 );
+<#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
+#pragma coverity compliance end_block "MISRA C-2012 Rule 5.1"
+#pragma coverity compliance end_block "MISRA C-2012 Rule 8.6"
+<#if core.COMPILER_CHOICE == "XC32">
+#pragma GCC diagnostic pop
+</#if>    
+</#if> 
+/* MISRAC 2012 deviation block end */
 
 //*****************************************************************************
 /* Function:

@@ -22,8 +22,8 @@
  *******************************************************************************/
 
 
-#ifndef _SYS_FS_LFS_INTERFACE_H
-#define _SYS_FS_LFS_INTERFACE_H
+#ifndef SYS_FS_LFS_INTERFACE_H
+#define SYS_FS_LFS_INTERFACE_H
 
 #include "system/fs/littlefs/lfs.h"
 
@@ -72,11 +72,11 @@ int LITTLEFS_close (uintptr_t handle);
 
 int LITTLEFS_lseek (uintptr_t handle, uint32_t ofs);
 
-int LITTLEFS_stat (const char* path, uintptr_t ptr);
+int LITTLEFS_stat (const char* path, uintptr_t fileInfo);
 
 int LITTLEFS_opendir (uintptr_t handle, const char* path);
 
-int LITTLEFS_readdir (uintptr_t handle, uintptr_t fno);
+int LITTLEFS_readdir (uintptr_t handle, uintptr_t fileInfo);
 
 int LITTLEFS_closedir (uintptr_t handle);
 
