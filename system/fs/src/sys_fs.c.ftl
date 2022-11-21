@@ -166,7 +166,11 @@ static bool SYS_FS_GetDisk
         for (index = 0; index != SYS_FS_VOLUME_NUMBER; index++)
         {
             volume = &gSYSFSMountPoint[index];
+<#if SYS_FS_FILEX == true>
+            if ((volume->inUse == true) || ((volume->mountName != NULL) && (volume->fsType == FILEX)))
+<#else>
             if (volume->inUse == true)
+</#if>
             {
                 /* Find the volume with the matching "mountName". Ignore the
                  * first 5 chars --> "/mnt/". */
@@ -466,7 +470,7 @@ void SYS_FS_Tasks ( void )
     Once the mount is successful the application needs to use SYS_FS_Error()
     API to know if the mount was successful with valid filesystem on media
     or not. If SYS_FS_ERROR_NO_FILESYSTEM is returned application needs to
-    Format the media using the SYS_FS_DriveFormat() API before performing 
+    Format the media using the SYS_FS_DriveFormat() API before performing
     any operations.
 
     The standard names for volumes (devName) used in the MPLAB Harmony file
@@ -525,7 +529,7 @@ SYS_FS_RESULT SYS_FS_Mount
     (void)data;
 
     /* Validate the parameters. */
-    if ((devName == NULL) || (mountName == NULL) || ((filesystemtype != FAT) && (filesystemtype != MPFS2) && (filesystemtype != LITTLEFS)))
+    if ((devName == NULL) || (mountName == NULL) || ((filesystemtype != FAT) && (filesystemtype != MPFS2) && (filesystemtype != LITTLEFS) && (filesystemtype != FILEX)))
     {
         errorValue = SYS_FS_ERROR_INVALID_PARAMETER;
         return SYS_FS_RES_FAILURE;
@@ -557,6 +561,10 @@ SYS_FS_RESULT SYS_FS_Mount
         return SYS_FS_RES_FAILURE;
     }
 
+<#if SYS_FS_FILEX == true>
+    volumeProperty.fsType = filesystemtype;
+
+</#if>
     /* Fetch the properties of the volume from the media manager. */
     status = SYS_FS_MEDIA_MANAGER_VolumePropertyGet(devName, &volumeProperty);
     if (status == false)
@@ -1921,11 +1929,11 @@ SYS_FS_RESULT SYS_FS_DirSearch
     char *fileName = NULL;
     OSAL_RESULT osalResult = OSAL_RESULT_FALSE;
 <#if SYS_FS_LFS == true >
-	uint8_t pathWithDiskNo[SYS_FS_PATH_LEN_WITH_DISK_NUM] = { 0 };
-    
-	SYS_FS_MOUNT_POINT *disk = (SYS_FS_MOUNT_POINT *) NULL;
-	
-	if (SYS_FS_GetDisk(name, &disk, pathWithDiskNo) == false)
+    uint8_t pathWithDiskNo[SYS_FS_PATH_LEN_WITH_DISK_NUM] = { 0 };
+
+    SYS_FS_MOUNT_POINT *disk = (SYS_FS_MOUNT_POINT *) NULL;
+
+    if (SYS_FS_GetDisk(name, &disk, pathWithDiskNo) == false)
     {
         /* "errorValue" contains the reason for failure. */
         return SYS_FS_RES_FAILURE;
@@ -1992,10 +2000,10 @@ SYS_FS_RESULT SYS_FS_DirSearch
 
         /* Firstly, match the file attribute with the requested attribute */
 <#if SYS_FS_LFS == true >
-		if ((disk->fsType == LITTLEFS) || (stat->fattrib & attr) ||
+        if ((disk->fsType == LITTLEFS) || (stat->fattrib & attr) ||
 <#else>
-		if ((stat->fattrib & attr) ||
-</#if>		
+        if ((stat->fattrib & attr) ||
+</#if>
             (attr == SYS_FS_ATTR_FILE))
         {
 <#if SYS_FS_LFN_ENABLE == true>
@@ -2023,7 +2031,7 @@ SYS_FS_RESULT SYS_FS_DirSearch
 }
 
 <#-- /* This block is Generated when only FAT-FS is Enabled OR FAT-FS and MPFS both are Enabled */ -->
-<#if SYS_FS_FAT == true >
+<#if SYS_FS_FAT == true || SYS_FS_FILEX == true>
 //******************************************************************************
 /*Function:
     SYS_FS_RESULT SYS_FS_FileStringGet
@@ -2401,10 +2409,10 @@ SYS_FS_RESULT SYS_FS_DriveLabelGet
 
     return (fileStatus == 0) ? SYS_FS_RES_SUCCESS : SYS_FS_RES_FAILURE;
 }
-</#if> <#-- /* SYS_FS_FAT == true */ -->
+</#if> <#-- /* SYS_FS_FAT == true || SYS_FS_FILEX == true */ -->
 
-<#-- /* This block is Generated when only FAT-FS is Enabled in Write Mode OR LFS-FS is Enabled in Write Mode */ -->
-<#if ((SYS_FS_FAT == true)  && (SYS_FS_FAT_READONLY == false)) || ((SYS_FS_LFS == true) && (SYS_FS_LFS_READONLY == false))>
+<#-- /* This block is Generated when only FAT-FS is Enabled in Write Mode OR LFS-FS is Enabled in Write Mode OR FILEX is Enabled in Write Mode */ -->
+<#if ((SYS_FS_FAT == true)  && (SYS_FS_FAT_READONLY == false)) || ((SYS_FS_LFS == true) && (SYS_FS_LFS_READONLY == false)) || ((SYS_FS_FILEX == true) && (SYS_FS_FILEX_READONLY == false))>
 //******************************************************************************
 /* Function:
     size_t SYS_FS_FileWrite
@@ -3491,15 +3499,15 @@ SYS_FS_RESULT SYS_FS_DriveFormat
 <#if SYS_FS_LFS == true >
 
         fileStatus = disk->fsFunctions->unmount(disk->diskNumber);
-        
+
         fileStatus = disk->fsFunctions->formatDisk((uint8_t)disk->diskNumber, opt, work, len);
         if (fileStatus == 0)
             fileStatus = disk->fsFunctions->mount(disk->diskNumber);
 <#else>
-	fileStatus = disk->fsFunctions->formatDisk((uint8_t)disk->diskNumber, opt, work, len);
+    fileStatus = disk->fsFunctions->formatDisk((uint8_t)disk->diskNumber, opt, work, len);
 </#if>
 
-        
+
 
         OSAL_MUTEX_Unlock(&(disk->mutexDiskVolume));
 
@@ -3654,7 +3662,7 @@ SYS_FS_RESULT SYS_FS_DriveSectorGet
 
     return (fileStatus == 0) ? SYS_FS_RES_SUCCESS : SYS_FS_RES_FAILURE;
 }
-</#if> <#-- /* (SYS_FS_FAT == true)  && (SYS_FS_FAT_READONLY == false) */ -->
+</#if> <#-- /* ((SYS_FS_FAT == true)  && (SYS_FS_FAT_READONLY == false)) || ((SYS_FS_LFS == true) && (SYS_FS_LFS_READONLY == false)) || ((SYS_FS_FILEX == true) && (SYS_FS_FILEX_READONLY == false)) */ -->
 
 <#-- /* This block is Generated when FAT-FS is Readonly OR Only MPFS is Enabled */ -->
 <#if ((SYS_FS_FAT == true)  && (SYS_FS_FAT_READONLY == true)) ||

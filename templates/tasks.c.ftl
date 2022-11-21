@@ -96,6 +96,11 @@
         <#lt>    /* Maintain the application's state machine. */
         <#lt>    ${core.LIST_SYSTEM_RTOS_TASKS_C_GEN_APP}
     </#if>
+    <#if sys_fs.SYS_FS_FILEX && sys_fs.SYS_FS_FILEX_FX_STANDALONE_ENABLE == false>
+
+    <#lt>    /* Initialize the FileX File System. */
+    <#lt>    fx_system_initialize();
+    </#if>
     <#lt>}
 <#elseif SELECT_RTOS == "MbedOS">
     <#lt>void mbed_start(void)

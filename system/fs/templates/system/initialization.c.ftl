@@ -24,6 +24,11 @@
  -->
     /*** File System Service Initialization Code ***/
     SYS_FS_Initialize( (const void *) sysFSInit );
+<#if SYS_FS_FILEX && SYS_FS_FILEX_FX_STANDALONE_ENABLE>
+
+    /* Initialize the FileX File System. */
+    fx_system_initialize();
+</#if>
 <#--
 /*******************************************************************************
  End of File

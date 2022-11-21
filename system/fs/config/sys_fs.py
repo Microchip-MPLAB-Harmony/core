@@ -22,10 +22,40 @@
 * THAT YOU HAVE PAID DIRECTLY TO MICROCHIP FOR THIS SOFTWARE.
 *****************************************************************************"""
 
+import os
+
 sys_fs_mcc_helpkeyword = "mcc_h3_sys_fs_configurations"
 
+exclusionList = ["fx_user_sample.h"]
+def AddFileXFiles(component, dirPath, destPath):
+    dirPath = str(Module.getPath() + dirPath)
+    fileNames = os.listdir(dirPath)
+    for fileName in fileNames:
+        # Find FileX source/header/assembler files
+        if fileName.lower().startswith("fx") and fileName.lower().endswith(('.c', '.h')):
+            # Dont process files in the exclusion list
+            if fileName in exclusionList:
+                continue
+            # Get the relative path of the file w.r.t to the module path
+            sourcePath = os.path.relpath(os.path.join(dirPath, fileName), Module.getPath())
+            #create a file symbol
+            fileSymbolName =  "FILEX_" + fileName.replace(".", "_").upper()
+            fxFile = component.createFileSymbol(fileSymbolName, None)
+            fxFile.setSourcePath(sourcePath)
+            fxFile.setDestPath(destPath)
+            fxFile.setProjectPath(destPath.split("../../third_party/azure_rtos/")[1])
+            fxFile.setMarkup(False)
+            fxFile.setOutputName(fileName)
+            # if it is a source
+            if fileName.lower().endswith(('.c')):
+                fxFile.setType("SOURCE")
+            else:
+                fxFile.setType("HEADER")
+            fxFile.setDependencies(lambda symbol, event: symbol.setEnabled(Database.getSymbolValue(component.getID().lower(), "SYS_FS_FILEX")), ["SYS_FS_FILEX"])
+            fxFile.setEnabled(Database.getSymbolValue(component.getID().lower(), "SYS_FS_FILEX"))
+
 def instantiateComponent(sysFSComponent):
-    fsTypes = ["FAT","MPFS2"]
+    fsTypes = ["FAT","MPFS2","FILEX"]
     mediaTypes =  ["SYS_FS_MEDIA_TYPE_NVM",
                     "SYS_FS_MEDIA_TYPE_MSD",
                     "SYS_FS_MEDIA_TYPE_SD_CARD",
@@ -286,7 +316,7 @@ def instantiateComponent(sysFSComponent):
     sysFSFileType.setLabel("File System Types")
     sysFSFileType.setHelp(sys_fs_mcc_helpkeyword)
     sysFSFileType.setDefaultValue(1)
-    sysFSFileType.setMax(3)
+    sysFSFileType.setMax(4)
 
     sysFSFat = sysFSComponent.createBooleanSymbol("SYS_FS_FAT", sysFSMenu)
     sysFSFat.setLabel("FAT File System")
@@ -299,14 +329,14 @@ def instantiateComponent(sysFSComponent):
     sysFSFatVersion.setDefaultValue("v0.14b")
     sysFSFatVersion.setVisible(sysFSFat.getValue())
     sysFSFatVersion.setReadOnly(True)
-    sysFSFatVersion.setDependencies(sysFsFatSymbolShow, ["SYS_FS_FAT"])
+    sysFSFatVersion.setDependencies(sysFsSymbolShow, ["SYS_FS_FAT"])
 
     sysFSFatReadonly = sysFSComponent.createBooleanSymbol("SYS_FS_FAT_READONLY", sysFSFat)
     sysFSFatReadonly.setLabel("Make FAT File System Read-only")
     sysFSFatReadonly.setHelp(sys_fs_mcc_helpkeyword)
     sysFSFatReadonly.setDefaultValue(False)
     sysFSFatReadonly.setVisible(sysFSFat.getValue())
-    sysFSFatReadonly.setDependencies(sysFsFatSymbolShow, ["SYS_FS_FAT"])
+    sysFSFatReadonly.setDependencies(sysFsSymbolShow, ["SYS_FS_FAT"])
 
     sysFSFatCodePage = sysFSComponent.createKeyValueSetSymbol("SYS_FS_FAT_CODE_PAGE", sysFSFat)
     sysFSFatCodePage.setLabel("OEM code page to be used")
@@ -337,14 +367,14 @@ def instantiateComponent(sysFSComponent):
     sysFSFatCodePage.setDisplayMode("Description")
     sysFSFatCodePage.setDefaultValue(1)
     sysFSFatCodePage.setVisible(sysFSFat.getValue())
-    sysFSFatCodePage.setDependencies(sysFsFatSymbolShow, ["SYS_FS_FAT"])
+    sysFSFatCodePage.setDependencies(sysFsSymbolShow, ["SYS_FS_FAT"])
 
     sysFSFatExFAT = sysFSComponent.createBooleanSymbol("SYS_FS_FAT_EXFAT_ENABLE", sysFSFat)
     sysFSFatExFAT.setLabel("Enable exFAT File System Support")
     sysFSFatExFAT.setHelp(sys_fs_mcc_helpkeyword)
     sysFSFatExFAT.setDefaultValue(False)
     sysFSFatExFAT.setVisible(sysFSFat.getValue())
-    sysFSFatExFAT.setDependencies(sysFsFatSymbolShow, ["SYS_FS_FAT"])
+    sysFSFatExFAT.setDependencies(sysFsSymbolShow, ["SYS_FS_FAT"])
 
     sysFSMpfs = sysFSComponent.createBooleanSymbol("SYS_FS_MPFS", sysFSMenu)
     sysFSMpfs.setLabel("Microchip File System")
@@ -362,14 +392,14 @@ def instantiateComponent(sysFSComponent):
     sysFSLFSReadonly.setHelp(sys_fs_mcc_helpkeyword)
     sysFSLFSReadonly.setDefaultValue(False)
     sysFSLFSReadonly.setVisible(sysFSLFS.getValue())
-    sysFSLFSReadonly.setDependencies(sysFsLFSSymbolShow, ["SYS_FS_LFS"])
+    sysFSLFSReadonly.setDependencies(sysFsSymbolShow, ["SYS_FS_LFS"])
 
     sysFSLFSSize = sysFSComponent.createIntegerSymbol("SYS_FS_LFS_SIZE", sysFSLFS)
     sysFSLFSSize.setLabel("Size Of LFS image (in KB)")
     sysFSLFSSize.setHelp(sys_fs_mcc_helpkeyword)
     sysFSLFSSize.setDefaultValue(64)
     sysFSLFSSize.setVisible(sysFSLFS.getValue())
-    sysFSLFSSize.setDependencies(sysFsLFSSymbolShow, ["SYS_FS_LFS"])
+    sysFSLFSSize.setDependencies(sysFsSymbolShow, ["SYS_FS_LFS"])
 
     symOptionsLFS = sysFSComponent.createSettingSymbol("SYM_OPTIONS_LFS", None)
     symOptionsLFS.setCategory("C32")
@@ -386,6 +416,226 @@ def instantiateComponent(sysFSComponent):
     preProcMacrosLFS.setAppend(True, ";")
     preProcMacrosLFS.setEnabled(sysFSLFSReadonly.getValue())
     preProcMacrosLFS.setDependencies(sysFsFileGen, ["SYS_FS_LFS_READONLY"])
+
+    sysFSFILEX = sysFSComponent.createBooleanSymbol("SYS_FS_FILEX", sysFSMenu)
+    sysFSFILEX.setHelp(sys_fs_mcc_helpkeyword)
+    sysFSFILEX.setLabel("FileX File System")
+    sysFSFILEX.setDefaultValue(False)
+
+    sysFSFILEXReadonly = sysFSComponent.createBooleanSymbol("SYS_FS_FILEX_READONLY", sysFSFILEX)
+    sysFSFILEXReadonly.setHelp(sys_fs_mcc_helpkeyword)
+    sysFSFILEXReadonly.setLabel("Make FileX File System Read-only")
+    sysFSFILEXReadonly.setDefaultValue(False)
+    sysFSFILEXReadonly.setVisible(sysFSFILEX.getValue())
+    sysFSFILEXReadonly.setDependencies(sysFsSymbolShow, ["SYS_FS_FILEX"])
+
+    sysFSFILEXNameLen = sysFSComponent.createIntegerSymbol("SYS_FS_FILEX_FX_MAX_LONG_NAME_LEN", sysFSFILEX)
+    sysFSFILEXNameLen.setLabel("Maximum size of long file name")
+    sysFSFILEXNameLen.setHelp(sys_fs_mcc_helpkeyword)
+    sysFSFILEXNameLen.setDefaultValue(256)
+    sysFSFILEXNameLen.setMin(13)
+    sysFSFILEXNameLen.setMax(256)
+    sysFSFILEXNameLen.setVisible(sysFSFILEX.getValue())
+    sysFSFILEXNameLen.setDependencies(sysFsSymbolShow, ["SYS_FS_FILEX"])
+
+    sysFSFILEXMxSecCache = sysFSComponent.createIntegerSymbol("SYS_FS_FILEX_FX_MAX_SECTOR_CACHE", sysFSFILEX)
+    sysFSFILEXMxSecCache.setLabel("Maximum logical sector cache")
+    sysFSFILEXMxSecCache.setHelp(sys_fs_mcc_helpkeyword)
+    sysFSFILEXMxSecCache.setDefaultValue(256)
+    sysFSFILEXMxSecCache.setMin(2)
+    sysFSFILEXMxSecCache.setVisible(sysFSFILEX.getValue())
+    sysFSFILEXMxSecCache.setDependencies(sysFsSymbolShow, ["SYS_FS_FILEX"])
+
+    sysFSFILEXFatMapSize = sysFSComponent.createIntegerSymbol("SYS_FS_FILEX_FX_FAT_MAP_SIZE", sysFSFILEX)
+    sysFSFILEXFatMapSize.setLabel("FAT sector bit map size")
+    sysFSFILEXFatMapSize.setHelp(sys_fs_mcc_helpkeyword)
+    sysFSFILEXFatMapSize.setDefaultValue(128)
+    sysFSFILEXFatMapSize.setMin(1)
+    sysFSFILEXFatMapSize.setVisible(sysFSFILEX.getValue())
+    sysFSFILEXFatMapSize.setDependencies(sysFsSymbolShow, ["SYS_FS_FILEX"])
+
+    sysFSFILEXMaxFatCache = sysFSComponent.createIntegerSymbol("SYS_FS_FILEX_FX_MAX_FAT_CACHE", sysFSFILEX)
+    sysFSFILEXMaxFatCache.setLabel("Number of entries in the FAT cache")
+    sysFSFILEXMaxFatCache.setHelp(sys_fs_mcc_helpkeyword)
+    sysFSFILEXMaxFatCache.setDefaultValue(16)
+    sysFSFILEXMaxFatCache.setMin(8)
+    sysFSFILEXMaxFatCache.setVisible(sysFSFILEX.getValue())
+    sysFSFILEXMaxFatCache.setDependencies(sysFsSymbolShow, ["SYS_FS_FILEX"])
+
+    sysFSFILEXUpdateRateSec = sysFSComponent.createIntegerSymbol("SYS_FS_FILEX_FX_UPDATE_RATE_IN_SECONDS", sysFSFILEX)
+    sysFSFILEXUpdateRateSec.setLabel("FileX update rate in seconds")
+    sysFSFILEXUpdateRateSec.setHelp(sys_fs_mcc_helpkeyword)
+    sysFSFILEXUpdateRateSec.setDefaultValue(10)
+    sysFSFILEXUpdateRateSec.setVisible(sysFSFILEX.getValue())
+    sysFSFILEXUpdateRateSec.setDependencies(sysFsSymbolShow, ["SYS_FS_FILEX"])
+
+    sysFSFILEXUpdateRateTick = sysFSComponent.createIntegerSymbol("SYS_FS_FILEX_FX_UPDATE_RATE_IN_TICKS", sysFSFILEX)
+    sysFSFILEXUpdateRateTick.setLabel("FileX update rate in ticks")
+    sysFSFILEXUpdateRateTick.setHelp(sys_fs_mcc_helpkeyword)
+    sysFSFILEXUpdateRateTick.setDefaultValue(1000)
+    sysFSFILEXUpdateRateTick.setVisible(sysFSFILEX.getValue())
+    sysFSFILEXUpdateRateTick.setDependencies(sysFsSymbolShow, ["SYS_FS_FILEX"])
+
+    sysFSFILEXNoTimer = sysFSComponent.createBooleanSymbol("SYS_FS_FILEX_FX_NO_TIMER", sysFSFILEX)
+    sysFSFILEXNoTimer.setLabel("FileX without timer")
+    sysFSFILEXNoTimer.setHelp(sys_fs_mcc_helpkeyword)
+    sysFSFILEXNoTimer.setVisible(sysFSFILEX.getValue())
+    sysFSFILEXNoTimer.setDependencies(sysFsSymbolShow, ["SYS_FS_FILEX"])
+
+    sysFSFILEXNoUpdateOpenFile = sysFSComponent.createBooleanSymbol("SYS_FS_FILEX_FX_DONT_UPDATE_OPEN_FILES", sysFSFILEX)
+    sysFSFILEXNoUpdateOpenFile.setLabel("FileX don't update open files")
+    sysFSFILEXNoUpdateOpenFile.setHelp(sys_fs_mcc_helpkeyword)
+    sysFSFILEXNoUpdateOpenFile.setVisible(sysFSFILEX.getValue())
+    sysFSFILEXNoUpdateOpenFile.setDependencies(sysFsSymbolShow, ["SYS_FS_FILEX"])
+
+    sysFSFILEXDisableSearchCache = sysFSComponent.createBooleanSymbol("SYS_FS_FILEX_FX_MEDIA_DISABLE_SEARCH_CACHE", sysFSFILEX)
+    sysFSFILEXDisableSearchCache.setLabel("Disable file search cache optimization")
+    sysFSFILEXDisableSearchCache.setHelp(sys_fs_mcc_helpkeyword)
+    sysFSFILEXDisableSearchCache.setVisible(sysFSFILEX.getValue())
+    sysFSFILEXDisableSearchCache.setDependencies(sysFsSymbolShow, ["SYS_FS_FILEX"])
+
+    sysFSFILEXDisableReadCache = sysFSComponent.createBooleanSymbol("SYS_FS_FILEX_DISABLE_DIRECT_DATA_READ_CACHE", sysFSFILEX)
+    sysFSFILEXDisableReadCache.setLabel("Disable direct read sector update of cache")
+    sysFSFILEXDisableReadCache.setHelp(sys_fs_mcc_helpkeyword)
+    sysFSFILEXDisableReadCache.setVisible(sysFSFILEX.getValue())
+    sysFSFILEXDisableReadCache.setDependencies(sysFsSymbolShow, ["SYS_FS_FILEX"])
+
+    sysFSFILEXDisableMediaStat = sysFSComponent.createBooleanSymbol("SYS_FS_FILEX_FX_MEDIA_STATISTICS_DISABLE", sysFSFILEX)
+    sysFSFILEXDisableMediaStat.setLabel("Disable media statistics")
+    sysFSFILEXDisableMediaStat.setHelp(sys_fs_mcc_helpkeyword)
+    sysFSFILEXDisableMediaStat.setVisible(sysFSFILEX.getValue())
+    sysFSFILEXDisableMediaStat.setDependencies(sysFsSymbolShow, ["SYS_FS_FILEX"])
+
+    sysFSFILEXEnableSingleFile = sysFSComponent.createBooleanSymbol("SYS_FS_FILEX_FX_SINGLE_OPEN_LEGACY", sysFSFILEX)
+    sysFSFILEXEnableSingleFile.setLabel("Enable single open file legacy logic")
+    sysFSFILEXEnableSingleFile.setHelp(sys_fs_mcc_helpkeyword)
+    sysFSFILEXEnableSingleFile.setVisible(sysFSFILEX.getValue())
+    sysFSFILEXEnableSingleFile.setDependencies(sysFsSymbolShow, ["SYS_FS_FILEX"])
+
+    sysFSFILEXRenamePath = sysFSComponent.createBooleanSymbol("SYS_FS_FILEX_FX_RENAME_PATH_INHERIT", sysFSFILEX)
+    sysFSFILEXRenamePath.setLabel("Renaming inherits path information")
+    sysFSFILEXRenamePath.setHelp(sys_fs_mcc_helpkeyword)
+    sysFSFILEXRenamePath.setVisible(sysFSFILEX.getValue())
+    sysFSFILEXRenamePath.setDependencies(sysFsSymbolShow, ["SYS_FS_FILEX"])
+
+    sysFSFILEXNoLocalPath = sysFSComponent.createBooleanSymbol("SYS_FS_FILEX_FX_NO_LOCAL_PATH", sysFSFILEX)
+    sysFSFILEXNoLocalPath.setLabel("Disable local path logic")
+    sysFSFILEXNoLocalPath.setHelp(sys_fs_mcc_helpkeyword)
+    sysFSFILEXNoLocalPath.setVisible(sysFSFILEX.getValue())
+    sysFSFILEXNoLocalPath.setDependencies(sysFsSymbolShow, ["SYS_FS_FILEX"])
+
+    sysFSFILEXEnableExFAT = sysFSComponent.createBooleanSymbol("SYS_FS_FILEX_FX_ENABLE_EXFAT", sysFSFILEX)
+    sysFSFILEXEnableExFAT.setLabel("Enable exFAT file system")
+    sysFSFILEXEnableExFAT.setHelp(sys_fs_mcc_helpkeyword)
+    sysFSFILEXEnableExFAT.setVisible(sysFSFILEX.getValue())
+    sysFSFILEXEnableExFAT.setDependencies(sysFsSymbolShow, ["SYS_FS_FILEX"])
+
+    sysFSFILEXExFatMaxCacheSize = sysFSComponent.createIntegerSymbol("SYS_FS_FILEX_FX_EXFAT_MAX_CACHE_SIZE", sysFSFILEX)
+    sysFSFILEXExFatMaxCacheSize.setLabel("ExFAT bitmap cache size")
+    sysFSFILEXExFatMaxCacheSize.setHelp(sys_fs_mcc_helpkeyword)
+    sysFSFILEXExFatMaxCacheSize.setDefaultValue(512)
+    sysFSFILEXExFatMaxCacheSize.setMin(512)
+    sysFSFILEXExFatMaxCacheSize.setMax(4096)
+    sysFSFILEXExFatMaxCacheSize.setVisible(sysFSFILEX.getValue())
+    sysFSFILEXExFatMaxCacheSize.setDependencies(sysFsSymbolShow, ["SYS_FS_FILEX"])
+
+    sysFSFILEXSingleThread = sysFSComponent.createBooleanSymbol("SYS_FS_FILEX_FX_SINGLE_THREAD", sysFSFILEX)
+    sysFSFILEXSingleThread.setLabel("Enable filex single Thread")
+    sysFSFILEXSingleThread.setHelp(sys_fs_mcc_helpkeyword)
+    sysFSFILEXSingleThread.setVisible(sysFSFILEX.getValue())
+    sysFSFILEXSingleThread.setDependencies(sysFsSymbolShow, ["SYS_FS_FILEX"])
+
+    sysFSFILEXStandaloneEnable = sysFSComponent.createBooleanSymbol("SYS_FS_FILEX_FX_STANDALONE_ENABLE", sysFSFILEX)
+    sysFSFILEXStandaloneEnable.setLabel("Enable filex standalone mode")
+    sysFSFILEXStandaloneEnable.setDefaultValue(True)
+    sysFSFILEXStandaloneEnable.setHelp(sys_fs_mcc_helpkeyword)
+    sysFSFILEXStandaloneEnable.setVisible(sysFSFILEX.getValue())
+    sysFSFILEXStandaloneEnable.setDependencies(updateFileXmode, ["SYS_FS_FILEX", "HarmonyCore.SELECT_RTOS"])
+
+    sysFSFILEXFaultToleData = sysFSComponent.createBooleanSymbol("SYS_FS_FILEX_FX_FAULT_TOLERANT_DATA", sysFSFILEX)
+    sysFSFILEXFaultToleData.setLabel("Data sector write requests flushed immediately")
+    sysFSFILEXFaultToleData.setHelp(sys_fs_mcc_helpkeyword)
+    sysFSFILEXFaultToleData.setVisible(sysFSFILEX.getValue())
+    sysFSFILEXFaultToleData.setDependencies(sysFsSymbolShow, ["SYS_FS_FILEX"])
+
+    sysFSFILEXFaultTolerant = sysFSComponent.createBooleanSymbol("SYS_FS_FILEX_FX_FAULT_TOLERANT", sysFSFILEX)
+    sysFSFILEXFaultTolerant.setLabel("System sector write requests flushed immediately")
+    sysFSFILEXFaultTolerant.setHelp(sys_fs_mcc_helpkeyword)
+    sysFSFILEXFaultTolerant.setVisible(sysFSFILEX.getValue())
+    sysFSFILEXFaultTolerant.setDependencies(sysFsSymbolShow, ["SYS_FS_FILEX"])
+
+    sysFSFILEXDriverUse64bitLBA = sysFSComponent.createBooleanSymbol("SYS_FS_FILEX_FX_DRIVER_USE_64BIT_LBA", sysFSFILEX)
+    sysFSFILEXDriverUse64bitLBA.setLabel("Enable 64-bits sector address")
+    sysFSFILEXDriverUse64bitLBA.setHelp(sys_fs_mcc_helpkeyword)
+    sysFSFILEXDriverUse64bitLBA.setVisible(sysFSFILEX.getValue())
+    sysFSFILEXDriverUse64bitLBA.setDependencies(sysFsSymbolShow, ["SYS_FS_FILEX"])
+
+    sysFSFILEXEnableFaultTolerant = sysFSComponent.createBooleanSymbol("SYS_FS_FILEX_FX_ENABLE_FAULT_TOLERANT", sysFSFILEX)
+    sysFSFILEXEnableFaultTolerant.setLabel("Enable filex fault tolerant")
+    sysFSFILEXEnableFaultTolerant.setHelp(sys_fs_mcc_helpkeyword)
+    sysFSFILEXEnableFaultTolerant.setVisible(sysFSFILEX.getValue())
+    sysFSFILEXEnableFaultTolerant.setDependencies(sysFsSymbolShow, ["SYS_FS_FILEX"])
+
+    sysFSFILEXFaultToleBootIndex = sysFSComponent.createIntegerSymbol("SYS_FS_FILEX_FAULT_TOLERANT_BOOT_INDEX", sysFSFILEX)
+    sysFSFILEXFaultToleBootIndex.setLabel("FileX fault tolerant boot index")
+    sysFSFILEXFaultToleBootIndex.setHelp(sys_fs_mcc_helpkeyword)
+    sysFSFILEXFaultToleBootIndex.setDefaultValue(116)
+    sysFSFILEXFaultToleBootIndex.setVisible(sysFSFILEX.getValue())
+    sysFSFILEXFaultToleBootIndex.setDependencies(sysFsSymbolShow, ["SYS_FS_FILEX"])
+
+    sysFSFILEXDisableErrCheck = sysFSComponent.createBooleanSymbol("SYS_FS_FILEX_FX_DISABLE_ERROR_CHECKING", sysFSFILEX)
+    sysFSFILEXDisableErrCheck.setLabel("Disable filex error checking")
+    sysFSFILEXDisableErrCheck.setHelp(sys_fs_mcc_helpkeyword)
+    sysFSFILEXDisableErrCheck.setVisible(sysFSFILEX.getValue())
+    sysFSFILEXDisableErrCheck.setDependencies(sysFsSymbolShow, ["SYS_FS_FILEX"])
+
+    sysFSFILEXDisableCache = sysFSComponent.createBooleanSymbol("SYS_FS_FILEX_FX_DISABLE_CACHE", sysFSFILEX)
+    sysFSFILEXDisableCache.setLabel("Disable filex cache")
+    sysFSFILEXDisableCache.setHelp(sys_fs_mcc_helpkeyword)
+    sysFSFILEXDisableCache.setVisible(sysFSFILEX.getValue())
+    sysFSFILEXDisableCache.setDependencies(sysFsSymbolShow, ["SYS_FS_FILEX"])
+
+    sysFSFILEXDisableFileClose = sysFSComponent.createBooleanSymbol("SYS_FS_FILEX_FX_DISABLE_FILE_CLOSE", sysFSFILEX)
+    sysFSFILEXDisableFileClose.setLabel("Disable filex file close")
+    sysFSFILEXDisableFileClose.setHelp(sys_fs_mcc_helpkeyword)
+    sysFSFILEXDisableFileClose.setVisible(sysFSFILEX.getValue())
+    sysFSFILEXDisableFileClose.setDependencies(sysFsSymbolShow, ["SYS_FS_FILEX"])
+
+    sysFSFILEXDisableFastOpen = sysFSComponent.createBooleanSymbol("SYS_FS_FILEX_FX_DISABLE_FAST_OPEN", sysFSFILEX)
+    sysFSFILEXDisableFastOpen.setLabel("Disable filex fast open")
+    sysFSFILEXDisableFastOpen.setHelp(sys_fs_mcc_helpkeyword)
+    sysFSFILEXDisableFastOpen.setVisible(sysFSFILEX.getValue())
+    sysFSFILEXDisableFastOpen.setDependencies(sysFsSymbolShow, ["SYS_FS_FILEX"])
+
+    sysFSFILEXDisablememPro = sysFSComponent.createBooleanSymbol("SYS_FS_FILEX_FX_DISABLE_FORCE_MEMORY_OPERATION", sysFSFILEX)
+    sysFSFILEXDisablememPro.setLabel("Disable force memory operations")
+    sysFSFILEXDisablememPro.setHelp(sys_fs_mcc_helpkeyword)
+    sysFSFILEXDisablememPro.setVisible(sysFSFILEX.getValue())
+    sysFSFILEXDisablememPro.setDependencies(sysFsSymbolShow, ["SYS_FS_FILEX"])
+
+    sysFSFILEXDisableBuildOpt = sysFSComponent.createBooleanSymbol("SYS_FS_FILEX_FX_DISABLE_BUILD_OPTIONS", sysFSFILEX)
+    sysFSFILEXDisableBuildOpt.setLabel("Disable build options")
+    sysFSFILEXDisableBuildOpt.setHelp(sys_fs_mcc_helpkeyword)
+    sysFSFILEXDisableBuildOpt.setVisible(sysFSFILEX.getValue())
+    sysFSFILEXDisableBuildOpt.setDependencies(sysFsSymbolShow, ["SYS_FS_FILEX"])
+
+    sysFSFILEXDisableOneLineFunc = sysFSComponent.createBooleanSymbol("SYS_FS_FILEX_FX_DISABLE_ONE_LINE_FUNCTION", sysFSFILEX)
+    sysFSFILEXDisableOneLineFunc.setLabel("Disable one line function")
+    sysFSFILEXDisableOneLineFunc.setHelp(sys_fs_mcc_helpkeyword)
+    sysFSFILEXDisableOneLineFunc.setVisible(sysFSFILEX.getValue())
+    sysFSFILEXDisableOneLineFunc.setDependencies(sysFsSymbolShow, ["SYS_FS_FILEX"])
+
+    sysFSFILEXDisableFatEntryRef = sysFSComponent.createBooleanSymbol("SYS_FS_FILEX_FX_DIABLE_FAT_ENTRY_REFRESH", sysFSFILEX)
+    sysFSFILEXDisableFatEntryRef.setLabel("Disable FAT entry refresh")
+    sysFSFILEXDisableFatEntryRef.setHelp(sys_fs_mcc_helpkeyword)
+    sysFSFILEXDisableFatEntryRef.setVisible(sysFSFILEX.getValue())
+    sysFSFILEXDisableFatEntryRef.setDependencies(sysFsSymbolShow, ["SYS_FS_FILEX"])
+
+    sysFSFILEXDisableConsecutiveDetect = sysFSComponent.createBooleanSymbol("SYS_FS_FILEX_FX_DISABLE_CONSECUTIVE_DETECT", sysFSFILEX)
+    sysFSFILEXDisableConsecutiveDetect.setLabel("Disable consecutive detect")
+    sysFSFILEXDisableConsecutiveDetect.setHelp(sys_fs_mcc_helpkeyword)
+    sysFSFILEXDisableConsecutiveDetect.setVisible(sysFSFILEX.getValue())
+    sysFSFILEXDisableConsecutiveDetect.setDependencies(sysFsSymbolShow, ["SYS_FS_FILEX"])
 
     sysFSLFNEnable = sysFSComponent.createBooleanSymbol("SYS_FS_LFN_ENABLE", sysFSMenu)
     sysFSLFNEnable.setLabel("Enable Long File Name Support")
@@ -578,6 +828,35 @@ def instantiateComponent(sysFSComponent):
     sysFSLFSLicenseFile.setType("SOURCE")
     sysFSLFSLicenseFile.setDependencies(sysFsFileGen, ["SYS_FS_LFS"])
 
+    sysFSFILEXIntHeaderFile = sysFSComponent.createFileSymbol("SYS_FS_FILEX_INTERFACE_HEADER", None)
+    sysFSFILEXIntHeaderFile.setSourcePath("/system/fs/templates/sys_fs_filex_interface.h.ftl")
+    sysFSFILEXIntHeaderFile.setOutputName("sys_fs_filex_interface.h")
+    sysFSFILEXIntHeaderFile.setDestPath("/system/fs/")
+    sysFSFILEXIntHeaderFile.setProjectPath("config/" + configName + "/system/fs/")
+    sysFSFILEXIntHeaderFile.setType("HEADER")
+    sysFSFILEXIntHeaderFile.setMarkup(True)
+    sysFSFILEXIntHeaderFile.setOverwrite(True)
+    sysFSFILEXIntHeaderFile.setEnabled(sysFSFILEX.getValue())
+    sysFSFILEXIntHeaderFile.setDependencies(sysFsFileGen, ["SYS_FS_FILEX"])
+
+    sysFSFILEXIODRVHeaderFile = sysFSComponent.createFileSymbol("SYS_FS_FILEX_IO_DRV_HEADER", None)
+    sysFSFILEXIODRVHeaderFile.setSourcePath("/system/fs/filex/hardware_access/filex_io_drv.h")
+    sysFSFILEXIODRVHeaderFile.setOutputName("filex_io_drv.h")
+    sysFSFILEXIODRVHeaderFile.setDestPath("/system/fs/filex/")
+    sysFSFILEXIODRVHeaderFile.setProjectPath("config/" + configName + "/system/fs/filex/")
+    sysFSFILEXIODRVHeaderFile.setEnabled(sysFSFILEX.getValue())
+    sysFSFILEXIODRVHeaderFile.setType("HEADER")
+    sysFSFILEXIODRVHeaderFile.setDependencies(sysFsFileGen, ["SYS_FS_FILEX"])
+
+    sysFSFILEXLicenseFile = sysFSComponent.createFileSymbol("SYS_FS_FILEX_LICENSE", None)
+    sysFSFILEXLicenseFile.setSourcePath("../filex/LICENSE.txt")
+    sysFSFILEXLicenseFile.setOutputName("LICENSE.txt")
+    sysFSFILEXLicenseFile.setDestPath("/system/fs/filex/")
+    sysFSFILEXLicenseFile.setProjectPath("config/" + configName + "/system/fs/filex/")
+    sysFSFILEXLicenseFile.setEnabled(sysFSFILEX.getValue())
+    sysFSFILEXLicenseFile.setType("SOURCE")
+    sysFSFILEXLicenseFile.setDependencies(sysFsFileGen, ["SYS_FS_FILEX"])
+
     sysFSSourceFile = sysFSComponent.createFileSymbol("SYS_FS_SOURCE", None)
     sysFSSourceFile.setSourcePath("/system/fs/src/sys_fs.c.ftl")
     sysFSSourceFile.setOutputName("sys_fs.c")
@@ -687,6 +966,28 @@ def instantiateComponent(sysFSComponent):
     sysFSLFSUTILSourceFile.setEnabled(sysFSLFS.getValue())
     sysFSLFSUTILSourceFile.setDependencies(sysFsFileGen, ["SYS_FS_LFS"])
 
+    sysFSFILEXIntSourceFile = sysFSComponent.createFileSymbol("SYS_FS_FILEX_INTERFACE_SOURCE", None)
+    sysFSFILEXIntSourceFile.setSourcePath("/system/fs/src/sys_fs_filex_interface.c.ftl")
+    sysFSFILEXIntSourceFile.setOutputName("sys_fs_filex_interface.c")
+    sysFSFILEXIntSourceFile.setDestPath("/system/fs/src/")
+    sysFSFILEXIntSourceFile.setProjectPath("config/" + configName + "/system/fs/")
+    sysFSFILEXIntSourceFile.setType("SOURCE")
+    sysFSFILEXIntSourceFile.setMarkup(True)
+    sysFSFILEXIntSourceFile.setOverwrite(True)
+    sysFSFILEXIntSourceFile.setEnabled(sysFSFILEX.getValue())
+    sysFSFILEXIntSourceFile.setDependencies(sysFsFileGen, ["SYS_FS_FILEX"])
+
+    sysFSFILEXIODRVSourceFile = sysFSComponent.createFileSymbol("SYS_FS_FILEX_IO_DRV_SOURCE", None)
+    sysFSFILEXIODRVSourceFile.setSourcePath("/system/fs/filex/hardware_access/filex_io_drv.c.ftl")
+    sysFSFILEXIODRVSourceFile.setOutputName("filex_io_drv.c")
+    sysFSFILEXIODRVSourceFile.setDestPath("/system/fs/filex/")
+    sysFSFILEXIODRVSourceFile.setProjectPath("config/" + configName + "/system/fs/filex/")
+    sysFSFILEXIODRVSourceFile.setType("SOURCE")
+    sysFSFILEXIODRVSourceFile.setMarkup(True)
+    sysFSFILEXIODRVSourceFile.setOverwrite(True)
+    sysFSFILEXIODRVSourceFile.setEnabled(sysFSFILEX.getValue())
+    sysFSFILEXIODRVSourceFile.setDependencies(sysFsFileGen, ["SYS_FS_FILEX"])
+
     sysFSSystemInitdataFile = sysFSComponent.createFileSymbol("sysFSInitDataFile", None)
     sysFSSystemInitdataFile.setType("STRING")
     sysFSSystemInitdataFile.setOutputName("core.LIST_SYSTEM_INIT_C_LIBRARY_INITIALIZATION_DATA")
@@ -755,6 +1056,39 @@ def instantiateComponent(sysFSComponent):
     sysFSLFSIncludePath.setEnabled(sysFSLFS.getValue())
     sysFSLFSIncludePath.setDependencies(sysFsFileGen, ["SYS_FS_LFS"])
 
+    filexSourcePath = "../filex"
+    filexDestPath = "../../third_party/azure_rtos/filex"
+    AddFileXFiles(sysFSComponent, filexSourcePath + "/common/src/", filexDestPath + "/common/src/")
+    AddFileXFiles(sysFSComponent, filexSourcePath + "/common/inc/", filexDestPath + "/common/inc/")
+    AddFileXFiles(sysFSComponent, filexSourcePath + "/ports/generic/inc/", filexDestPath + "/ports/generic/inc/")
+
+    filexUserHeaderFile = sysFSComponent.createFileSymbol("FILEX_FX_USER_H", None)
+    filexUserHeaderFile.setSourcePath("/system/fs/filex/fx_user.h.ftl")
+    filexUserHeaderFile.setOutputName("fx_user.h")
+    filexUserHeaderFile.setMarkup(True)
+    filexUserHeaderFile.setOverwrite(True)
+    filexUserHeaderFile.setDestPath("/system/fs/filex/")
+    filexUserHeaderFile.setProjectPath("config/" + configName + "/system/fs/filex/")
+    filexUserHeaderFile.setType("HEADER")
+    filexUserHeaderFile.setEnabled(sysFSFILEX.getValue())
+    filexUserHeaderFile.setDependencies(sysFsFileGen, ["SYS_FS_FILEX"])
+
+    filexPreProcMacros = sysFSComponent.createSettingSymbol("FILEX_PRE_PROC_MACROS", None)
+    filexPreProcMacros.setCategory("C32")
+    filexPreProcMacros.setKey("preprocessor-macros")
+    filexPreProcMacros.setValue("FX_INCLUDE_USER_DEFINE_FILE")
+    filexPreProcMacros.setAppend(True, ";")
+    filexPreProcMacros.setEnabled(sysFSFILEX.getValue())
+    filexPreProcMacros.setDependencies(sysFsFileGen, ["SYS_FS_FILEX"])
+
+    sysFSFILEXIncludePath = sysFSComponent.createSettingSymbol("SYS_FS_FILEX_XC32_INCLUDE_PATH", None)
+    sysFSFILEXIncludePath.setCategory("C32")
+    sysFSFILEXIncludePath.setKey("extra-include-directories")
+    sysFSFILEXIncludePath.setValue(";../src/config/" + configName + "/system/fs/filex;../src/third_party/azure_rtos/filex/common/inc;../src/third_party/azure_rtos/filex/ports/generic/inc")
+    sysFSFILEXIncludePath.setAppend(True, ";")
+    sysFSFILEXIncludePath.setEnabled(sysFSFILEX.getValue())
+    sysFSFILEXIncludePath.setDependencies(sysFsFileGen, ["SYS_FS_FILEX"])
+
 ###########################################################################################################
 deviceNames = { 'SYS_FS_MEDIA_TYPE_NVM' : '/dev/nvma',
     'SYS_FS_MEDIA_TYPE_MSD' : '/dev/sda',
@@ -766,11 +1100,13 @@ deviceNames = { 'SYS_FS_MEDIA_TYPE_NVM' : '/dev/nvma',
 def sysFsFileGen(symbol, event):
     symbol.setEnabled(event["value"])
 
-def sysFsFatSymbolShow(symbol, event):
+def sysFsSymbolShow(symbol, event):
     symbol.setVisible(event["value"])
 
-def sysFsLFSSymbolShow(symbol, event):
-    symbol.setVisible(event["value"])
+def updateFileXmode(symbol, event):
+    component = symbol.getComponent()
+    symbol.setVisible(component.getSymbolValue("SYS_FS_FILEX"))
+    symbol.setValue((Database.getSymbolValue("HarmonyCore", "SELECT_RTOS") != "ThreadX"))
 
 def sysFsAlignedBufferLenSymbolShow(symbol, event):
     component = symbol.getComponent()

@@ -12,3 +12,6 @@
 <#if SYS_FS_LFS == true>
     <#lt>#include "system/fs/sys_fs_littlefs_interface.h"
 </#if>
+<#if SYS_FS_FILEX == true>
+    <#lt>#include "system/fs/sys_fs_filex_interface.h"
+</#if>

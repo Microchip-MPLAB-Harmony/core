@@ -19,3 +19,6 @@ package:
     - name: "littlefs"
       type: "package"
       version: "2.5.0"
+    - name: "filex"
+      type: "package"
+      version: "6.2.0_rel"

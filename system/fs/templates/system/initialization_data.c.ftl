@@ -199,7 +199,7 @@
     </#if>
     <#lt>    .setlabel          = NULL,
     <#lt>    .chmode            = NULL,
-    <#lt>    .chtime            = NULL, 
+    <#lt>    .chtime            = NULL,
     <#lt>    .putchr            = NULL,
     <#lt>    .putstrn           = NULL,
     <#lt>    .formattedprint    = NULL,
@@ -209,7 +209,89 @@
     <#lt>};
 </#if>
 
-<#if SYS_FS_FAT == true && SYS_FS_MPFS == true && SYS_FS_LFS == true>
+<#if SYS_FS_FILEX == true>
+    <#lt>const SYS_FS_FUNCTIONS FileXFunctions =
+    <#lt>{
+    <#lt>    .mount             = FILEX_mount,
+    <#lt>    .unmount           = FILEX_unmount,
+    <#lt>    .open              = FILEX_open,
+    <#lt>    .read              = FILEX_read,
+    <#lt>    .close             = FILEX_close,
+    <#lt>    .seek              = FILEX_lseek,
+    <#lt>    .fstat             = FILEX_stat,
+    <#lt>    .getlabel          = FILEX_getlabel,
+    <#lt>    .currWD            = FILEX_getcwd,
+    <#lt>    .getstrn           = NULL,
+    <#lt>    .openDir           = FILEX_opendir,
+    <#lt>    .readDir           = FILEX_readdir,
+    <#lt>    .closeDir          = FILEX_closedir,
+    <#lt>    .chdir             = FILEX_chdir,
+    <#lt>    .chdrive           = FILEX_chdrive,
+    <#if SYS_FS_FILEX_READONLY == false>
+        <#lt>    .write             = FILEX_write,
+        <#lt>    .tell              = FILEX_tell,
+        <#lt>    .eof               = FILEX_eof,
+        <#lt>    .size              = FILEX_size,
+        <#lt>    .mkdir             = FILEX_mkdir,
+        <#lt>    .remove            = FILEX_unlink,
+        <#lt>    .setlabel          = FILEX_setlabel,
+        <#lt>    .truncate          = FILEX_truncate,
+        <#lt>    .chmode            = FILEX_chmod,
+        <#lt>    .chtime            = FILEX_utime,
+        <#lt>    .rename            = FILEX_rename,
+        <#lt>    .sync              = FILEX_sync,
+        <#lt>    .putchr            = NULL,
+        <#lt>    .putstrn           = NULL,
+        <#lt>    .formattedprint    = NULL,
+        <#lt>    .testerror         = NULL,
+        <#lt>    .formatDisk        = (FORMAT_DISK)FILEX_mkfs,
+        <#lt>    .partitionDisk     = NULL,
+        <#lt>    .getCluster        = FILEX_getclusters
+    <#else>
+        <#lt>    .write             = NULL,
+        <#lt>    .tell              = NULL,
+        <#lt>    .eof               = NULL,
+        <#lt>    .size              = NULL,
+        <#lt>    .mkdir             = NULL,
+        <#lt>    .remove            = NULL,
+        <#lt>    .setlabel          = NULL,
+        <#lt>    .truncate          = NULL,
+        <#lt>    .chmode            = NULL,
+        <#lt>    .chtime            = NULL,
+        <#lt>    .rename            = NULL,
+        <#lt>    .sync              = NULL,
+        <#lt>    .putchr            = NULL,
+        <#lt>    .putstrn           = NULL,
+        <#lt>    .formattedprint    = NULL,
+        <#lt>    .testerror         = NULL,
+        <#lt>    .formatDisk        = NULL,
+        <#lt>    .partitionDisk     = NULL,
+        <#lt>    .getCluster        = NULL
+    </#if>
+    <#lt>};
+</#if>
+
+<#if SYS_FS_FAT == true && SYS_FS_MPFS == true && SYS_FS_LFS == true && SYS_FS_FILEX == true>
+    <#lt>const SYS_FS_REGISTRATION_TABLE sysFSInit [ SYS_FS_MAX_FILE_SYSTEM_TYPE ] =
+    <#lt>{
+    <#lt>    {
+    <#lt>        .nativeFileSystemType = FAT,
+    <#lt>        .nativeFileSystemFunctions = &FatFsFunctions
+    <#lt>    },
+    <#lt>    {
+    <#lt>        .nativeFileSystemType = MPFS2,
+    <#lt>        .nativeFileSystemFunctions = &MPFSFunctions
+    <#lt>    },
+    <#lt>    {
+    <#lt>        .nativeFileSystemType = LITTLEFS,
+    <#lt>        .nativeFileSystemFunctions = &LittleFSFunctions
+    <#lt>    },
+    <#lt>    {
+    <#lt>        .nativeFileSystemType = FILEX,
+    <#lt>        .nativeFileSystemFunctions = &FileXFunctions
+    <#lt>    }
+    <#lt>};
+<#elseif SYS_FS_FAT == true && SYS_FS_MPFS == true && SYS_FS_LFS == true && SYS_FS_FILEX == false>
     <#lt>const SYS_FS_REGISTRATION_TABLE sysFSInit [ SYS_FS_MAX_FILE_SYSTEM_TYPE ] =
     <#lt>{
     <#lt>    {
@@ -225,7 +307,23 @@
     <#lt>        .nativeFileSystemFunctions = &LittleFSFunctions
     <#lt>    }
     <#lt>};
-<#elseif SYS_FS_FAT == true && SYS_FS_MPFS == true && SYS_FS_LFS == false>
+<#elseif SYS_FS_FAT == true && SYS_FS_MPFS == true && SYS_FS_LFS == false && SYS_FS_FILEX == true>
+    <#lt>const SYS_FS_REGISTRATION_TABLE sysFSInit [ SYS_FS_MAX_FILE_SYSTEM_TYPE ] =
+    <#lt>{
+    <#lt>    {
+    <#lt>        .nativeFileSystemType = FAT,
+    <#lt>        .nativeFileSystemFunctions = &FatFsFunctions
+    <#lt>    },
+    <#lt>    {
+    <#lt>        .nativeFileSystemType = MPFS2,
+    <#lt>        .nativeFileSystemFunctions = &MPFSFunctions
+    <#lt>    },
+    <#lt>    {
+    <#lt>        .nativeFileSystemType = FILEX,
+    <#lt>        .nativeFileSystemFunctions = &FileXFunctions
+    <#lt>    }
+    <#lt>};
+<#elseif SYS_FS_FAT == true && SYS_FS_MPFS == true && SYS_FS_LFS == false && SYS_FS_FILEX == false>
     <#lt>const SYS_FS_REGISTRATION_TABLE sysFSInit [ SYS_FS_MAX_FILE_SYSTEM_TYPE ] =
     <#lt>{
     <#lt>    {
@@ -237,7 +335,23 @@
     <#lt>        .nativeFileSystemFunctions = &MPFSFunctions
     <#lt>    }
     <#lt>};
-<#elseif SYS_FS_FAT == true && SYS_FS_MPFS == false && SYS_FS_LFS == true>
+<#elseif SYS_FS_FAT == true && SYS_FS_MPFS == false && SYS_FS_LFS == true && SYS_FS_FILEX == true>
+    <#lt>const SYS_FS_REGISTRATION_TABLE sysFSInit [ SYS_FS_MAX_FILE_SYSTEM_TYPE ] =
+    <#lt>{
+    <#lt>    {
+    <#lt>        .nativeFileSystemType = FAT,
+    <#lt>        .nativeFileSystemFunctions = &FatFsFunctions
+    <#lt>    },
+    <#lt>    {
+    <#lt>        .nativeFileSystemType = LITTLEFS,
+    <#lt>        .nativeFileSystemFunctions = &LittleFSFunctions
+    <#lt>    },
+    <#lt>    {
+    <#lt>        .nativeFileSystemType = FILEX,
+    <#lt>        .nativeFileSystemFunctions = &FileXFunctions
+    <#lt>    }
+    <#lt>};
+<#elseif SYS_FS_FAT == true && SYS_FS_MPFS == false && SYS_FS_LFS == true && SYS_FS_FILEX == false>
     <#lt>const SYS_FS_REGISTRATION_TABLE sysFSInit [ SYS_FS_MAX_FILE_SYSTEM_TYPE ] =
     <#lt>{
     <#lt>    {
@@ -249,7 +363,43 @@
     <#lt>        .nativeFileSystemFunctions = &LittleFSFunctions
     <#lt>    }
     <#lt>};
-<#elseif SYS_FS_FAT == false && SYS_FS_MPFS == true && SYS_FS_LFS == true>
+<#elseif SYS_FS_FAT == true && SYS_FS_MPFS == false && SYS_FS_LFS == false && SYS_FS_FILEX == true>
+    <#lt>const SYS_FS_REGISTRATION_TABLE sysFSInit [ SYS_FS_MAX_FILE_SYSTEM_TYPE ] =
+    <#lt>{
+    <#lt>    {
+    <#lt>        .nativeFileSystemType = FAT,
+    <#lt>        .nativeFileSystemFunctions = &FatFsFunctions
+    <#lt>    },
+    <#lt>    {
+    <#lt>        .nativeFileSystemType = FILEX,
+    <#lt>        .nativeFileSystemFunctions = &FileXFunctions
+    <#lt>    }
+    <#lt>};
+<#elseif SYS_FS_FAT == true && SYS_FS_MPFS == false && SYS_FS_LFS == false && SYS_FS_FILEX == false>
+    <#lt>const SYS_FS_REGISTRATION_TABLE sysFSInit [ SYS_FS_MAX_FILE_SYSTEM_TYPE ] =
+    <#lt>{
+    <#lt>    {
+    <#lt>        .nativeFileSystemType = FAT,
+    <#lt>        .nativeFileSystemFunctions = &FatFsFunctions
+    <#lt>    }
+    <#lt>};
+<#elseif SYS_FS_FAT == false && SYS_FS_MPFS == true && SYS_FS_LFS == true && SYS_FS_FILEX == true>
+    <#lt>const SYS_FS_REGISTRATION_TABLE sysFSInit [ SYS_FS_MAX_FILE_SYSTEM_TYPE ] =
+    <#lt>{
+    <#lt>    {
+    <#lt>        .nativeFileSystemType = MPFS2,
+    <#lt>        .nativeFileSystemFunctions = &MPFSFunctions
+    <#lt>    },
+    <#lt>    {
+    <#lt>        .nativeFileSystemType = LITTLEFS,
+    <#lt>        .nativeFileSystemFunctions = &LittleFSFunctions
+    <#lt>    },
+    <#lt>    {
+    <#lt>        .nativeFileSystemType = FILEX,
+    <#lt>        .nativeFileSystemFunctions = &FileXFunctions
+    <#lt>    }
+    <#lt>};
+<#elseif SYS_FS_FAT == false && SYS_FS_MPFS == true && SYS_FS_LFS == true && SYS_FS_FILEX == false>
     <#lt>const SYS_FS_REGISTRATION_TABLE sysFSInit [ SYS_FS_MAX_FILE_SYSTEM_TYPE ] =
     <#lt>{
     <#lt>    {
@@ -261,29 +411,53 @@
     <#lt>        .nativeFileSystemFunctions = &LittleFSFunctions
     <#lt>    }
     <#lt>};
-<#elseif SYS_FS_FAT == true && SYS_FS_MPFS == false && SYS_FS_LFS == false>
-    <#lt>const SYS_FS_REGISTRATION_TABLE sysFSInit [ SYS_FS_MAX_FILE_SYSTEM_TYPE ] =
-    <#lt>{
-    <#lt>    {
-    <#lt>        .nativeFileSystemType = FAT,
-    <#lt>        .nativeFileSystemFunctions = &FatFsFunctions
-    <#lt>    },
-    <#lt>};
-<#elseif SYS_FS_FAT == false && SYS_FS_MPFS == true && SYS_FS_LFS == false>
+<#elseif SYS_FS_FAT == false && SYS_FS_MPFS == true && SYS_FS_LFS == false && SYS_FS_FILEX == true>
     <#lt>const SYS_FS_REGISTRATION_TABLE sysFSInit [ SYS_FS_MAX_FILE_SYSTEM_TYPE ] =
     <#lt>{
     <#lt>    {
     <#lt>        .nativeFileSystemType = MPFS2,
     <#lt>        .nativeFileSystemFunctions = &MPFSFunctions
     <#lt>    },
+    <#lt>    {
+    <#lt>        .nativeFileSystemType = FILEX,
+    <#lt>        .nativeFileSystemFunctions = &FileXFunctions
+    <#lt>    }
     <#lt>};
-<#elseif SYS_FS_FAT == false && SYS_FS_MPFS == false && SYS_FS_LFS == true>
+<#elseif SYS_FS_FAT == false && SYS_FS_MPFS == true && SYS_FS_LFS == false && SYS_FS_FILEX == false>
+    <#lt>const SYS_FS_REGISTRATION_TABLE sysFSInit [ SYS_FS_MAX_FILE_SYSTEM_TYPE ] =
+    <#lt>{
+    <#lt>    {
+    <#lt>        .nativeFileSystemType = MPFS2,
+    <#lt>        .nativeFileSystemFunctions = &MPFSFunctions
+    <#lt>    }
+    <#lt>};
+<#elseif SYS_FS_FAT == false && SYS_FS_MPFS == false && SYS_FS_LFS == true && SYS_FS_FILEX == true>
     <#lt>const SYS_FS_REGISTRATION_TABLE sysFSInit [ SYS_FS_MAX_FILE_SYSTEM_TYPE ] =
     <#lt>{
     <#lt>    {
     <#lt>        .nativeFileSystemType = LITTLEFS,
     <#lt>        .nativeFileSystemFunctions = &LittleFSFunctions
     <#lt>    },
+    <#lt>    {
+    <#lt>        .nativeFileSystemType = FILEX,
+    <#lt>        .nativeFileSystemFunctions = &FileXFunctions
+    <#lt>    }
+    <#lt>};
+<#elseif SYS_FS_FAT == false && SYS_FS_MPFS == false && SYS_FS_LFS == true && SYS_FS_FILEX == false>
+    <#lt>const SYS_FS_REGISTRATION_TABLE sysFSInit [ SYS_FS_MAX_FILE_SYSTEM_TYPE ] =
+    <#lt>{
+    <#lt>    {
+    <#lt>        .nativeFileSystemType = LITTLEFS,
+    <#lt>        .nativeFileSystemFunctions = &LittleFSFunctions
+    <#lt>    }
+    <#lt>};
+<#elseif SYS_FS_FAT == false && SYS_FS_MPFS == false && SYS_FS_LFS == false && SYS_FS_FILEX == true>
+    <#lt>const SYS_FS_REGISTRATION_TABLE sysFSInit [ SYS_FS_MAX_FILE_SYSTEM_TYPE ] =
+    <#lt>{
+    <#lt>    {
+    <#lt>        .nativeFileSystemType = FILEX,
+    <#lt>        .nativeFileSystemFunctions = &FileXFunctions
+    <#lt>    }
     <#lt>};
 </#if>
 

@@ -47,6 +47,9 @@
 <#if SYS_FS_MPFS == true>
     <#lt>#include "system/fs/mpfs/mpfs.h"
 </#if>
+<#if SYS_FS_FILEX == true>
+    <#lt>#include "system/fs/filex/filex_io_drv.h"
+</#if>
 <#if core.PRODUCT_FAMILY?matches("PIC32MZ.*") == true>
     <#lt>#include "system/cache/sys_cache.h"
     <#lt>#include "sys/kmem.h"
@@ -167,7 +170,7 @@ SYS_FS_MEDIA_MANAGER_OBJ gSYSFSMediaManagerObj =
     <#lt>MPFS_PARTITION MPFS_VolToPart[SYS_FS_VOLUME_NUMBER];
 </#if>
 
-<#if SYS_FS_FAT == true>
+<#if SYS_FS_FAT == true || SYS_FS_FILEX == true>
     <#lt>// *****************************************************************************
     <#lt>/* Volume to Partition translation
 
@@ -414,7 +417,7 @@ static void _SYS_FS_MEDIA_MANAGER_PopulateVolume
     uint8_t volumeNameLen = 0;
     SYS_FS_VOLUME *volumeObj = &gSYSFSMediaManagerObj.volumeObj[0];
 
-<#if SYS_FS_FAT == true>
+<#if SYS_FS_FAT == true || SYS_FS_FILEX == true>
     uint8_t  partitionNum = 0;
     uint16_t offset = 0;
     uint8_t  *readBuffer = gSYSFSMediaManagerObj.mediaBuffer;
@@ -453,10 +456,10 @@ static void _SYS_FS_MEDIA_MANAGER_PopulateVolume
             MPFS_VolToPart[volumeIndex].pt = 0;
         }
 </#if>
-<#if SYS_FS_MPFS == true && SYS_FS_FAT == true>
+<#if (SYS_FS_MPFS == true && SYS_FS_FAT == true) || (SYS_FS_MPFS == true && SYS_FS_FILEX == true)>
         else
 </#if>
-<#if SYS_FS_FAT == true>
+<#if SYS_FS_FAT == true || SYS_FS_FILEX == true>
         {
             /* Register Media and Volume mapping with FAT File System */
             /* Register the volumes to partition table only if this device has
@@ -594,7 +597,7 @@ static uint8_t _SYS_FS_MEDIA_MANAGER_FindNextMedia
     return 0xFF;
 }
 
-<#if SYS_FS_FAT == true>
+<#if SYS_FS_FAT == true || SYS_FS_FILEX == true>
     <#lt>// *****************************************************************************
     <#lt>/* Function:
     <#lt>    static bool SYS_FS_MEDIA_MANAGER_IsFSFat
@@ -673,7 +676,7 @@ static uint8_t _SYS_FS_MEDIA_MANAGER_AnalyzeFileSystem
     *numPartition = 0;
 
     /* Check for the Boot Signature */
-<#if SYS_FS_FAT == true>
+<#if SYS_FS_FAT == true || SYS_FS_FILEX == true>
     if((firstSector[510] == 0x55) && (firstSector[511] == 0xAA))
     {
         /* Check if the first sector of the media is Volume Boot Record or the
@@ -739,10 +742,10 @@ static uint8_t _SYS_FS_MEDIA_MANAGER_AnalyzeFileSystem
         }
     }
 </#if>
-<#if SYS_FS_FAT == true && SYS_FS_MPFS == true>
+<#if (SYS_FS_FAT == true || SYS_FS_FILEX == true) && SYS_FS_MPFS == true>
     else if (0 == memcmp(firstSector, "MPFS", 4))
 </#if>
-<#if SYS_FS_FAT == false && SYS_FS_MPFS == true>
+<#if SYS_FS_FAT == false && SYS_FS_FILEX == false && SYS_FS_MPFS == true>
     if (0 == memcmp(firstSector, "MPFS", 4))
 </#if>
 <#if SYS_FS_MPFS == true>
@@ -755,9 +758,7 @@ static uint8_t _SYS_FS_MEDIA_MANAGER_AnalyzeFileSystem
         fsType = 'M';
     }
 </#if>
-<#if SYS_FS_FAT == true && SYS_FS_LFS == true>
-    else if (0 == memcmp(&firstSector[8], "littlefs", 8))
-<#elseif SYS_FS_MPFS == true && SYS_FS_LFS == true>
+<#if (SYS_FS_FAT == true || SYS_FS_MPFS == true || SYS_FS_FILEX == true) && SYS_FS_LFS == true>
     else if (0 == memcmp(&firstSector[8], "littlefs", 8))
 <#elseif SYS_FS_LFS == true>
     if (0 == memcmp(&firstSector[8], "littlefs", 8))
@@ -1388,17 +1389,21 @@ bool SYS_FS_MEDIA_MANAGER_VolumePropertyGet
         {
             if (strcmp((const char*)(volumeName + 5), (const char *)volumeObj->volumeName) == 0)
             {
-<#if SYS_FS_FAT == true>
+<#if SYS_FS_FAT == true || SYS_FS_FILEX == true>
                 if (SYS_FS_MEDIA_MANAGER_IsFSFat (volumeObj->fsType))
                 {
+<#if SYS_FS_FILEX == true>
+                    /* FS type is already set */
+<#else>
                     /* FAT File System */
                     property->fsType = FAT;
+</#if>
                 }
 </#if>
-<#if SYS_FS_FAT == true && SYS_FS_MPFS == true>
+<#if (SYS_FS_FAT == true || SYS_FS_FILEX == true) && SYS_FS_MPFS == true>
                 else if (volumeObj->fsType == 'M')
 </#if>
-<#if SYS_FS_FAT == false && SYS_FS_MPFS == true>
+<#if SYS_FS_FAT == false && SYS_FS_FILEX == false && SYS_FS_MPFS == true>
                 if (volumeObj->fsType == 'M')
 </#if>
 <#if SYS_FS_MPFS == true>
@@ -1407,10 +1412,10 @@ bool SYS_FS_MEDIA_MANAGER_VolumePropertyGet
                     property->fsType = MPFS2;
                 }
 </#if>
-<#if (SYS_FS_FAT == true || SYS_FS_MPFS == true) && SYS_FS_LFS == true>
+<#if (SYS_FS_FAT == true || SYS_FS_MPFS == true || SYS_FS_FILEX == true) && SYS_FS_LFS == true>
                 else if (volumeObj->fsType == 'L')
 <#elseif SYS_FS_LFS == true>
-                if (volumeObj->fsType == 'L')				
+                if (volumeObj->fsType == 'L')
 </#if>
 <#if SYS_FS_LFS == true>
                 {

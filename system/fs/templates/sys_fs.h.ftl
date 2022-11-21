@@ -124,7 +124,10 @@ typedef enum
     MPFS2,
 
     /*  LittleFS native File system */
-    LITTLEFS
+    LITTLEFS,
+
+    /*  FILEX native File system */
+    FILEX
 
 } SYS_FS_FILE_SYSTEM_TYPE;
 
@@ -688,7 +691,7 @@ typedef void (* SYS_FS_EVENT_HANDLER)
   Remarks:
     None.
 */
-<#if SYS_FS_FAT == true>
+<#if SYS_FS_FAT == true || SYS_FS_FILEX == true>
     <#lt>typedef struct
     <#lt>{
     <#lt>    /* File size */
