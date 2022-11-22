@@ -1,0 +1,1 @@
+    sysObj.drvSST38 = DRV_SST38_Initialize((SYS_MODULE_INDEX)DRV_SST38_INDEX, (SYS_MODULE_INIT *)&drvSST38InitData);

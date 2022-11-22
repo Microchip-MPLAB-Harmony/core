@@ -93,6 +93,8 @@ def loadModule():
 
         {"name":"sst39", "label": "SST39", "type":"driver", "display_path":"Parallel PROM", "actual_path":"parallel_prom", "instance":"single", "capability":["MEMORY"], "dependency":["HEMC_CS"], "condition":"True"},
 
+        {"name":"sst38", "label": "SST38", "type":"driver", "display_path":"Parallel PROM", "actual_path":"parallel_prom", "instance":"single", "capability":["MEMORY"], "dependency":["HEMC_CS"], "condition":"True"},
+
         ]
 
     #load drivers and system services defined above
