@@ -76,7 +76,7 @@
 #define configUSE_TASK_FPU_SUPPORT              <#if FREERTOS_USE_TASK_FPU_SUPPORT == true>1<#else>0</#if>
 </#if>
 
-<#if core.CoreArchitecture == "CORTEX-M23">
+<#if core.CoreArchitecture == "CORTEX-M23" || core.CoreArchitecture == "CORTEX-M33">
 #define configENABLE_FPU                        <#if FREERTOS_ENABLE_FPU == true>1<#else>0</#if>
 #define configENABLE_TRUSTZONE                  <#if FREERTOS_ENABLE_TRUSTZONE == true>1<#else>0</#if>
 #define configENABLE_MPU                        <#if FREERTOS_ENABLE_MPU == true>1<#else>0</#if>

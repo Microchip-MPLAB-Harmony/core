@@ -32,7 +32,7 @@ selectedCompiler = compilerList[Database.getSymbolValue("core", "COMPILER_CHOICE
 ###############################################################################
 ########################## FreeRTOS Configurations ############################
 ###############################################################################
-if (coreArch == "CORTEX-M0PLUS" or coreArch == "CORTEX-M23"):
+if (coreArch == "CORTEX-M0PLUS" or coreArch == "CORTEX-M23" or coreArch == "CORTEX-M33"):
     ComboVal_Task_Selection = ["Generic"]
 else:
     ComboVal_Task_Selection = ["Port_Optimized", "Generic"]
@@ -287,7 +287,7 @@ def instantiateComponent(thirdPartyFreeRTOS):
     freeRtosSym_TaskSelection = thirdPartyFreeRTOS.createComboSymbol("FREERTOS_TASK_SELECTION", freeRtosSymMenu, ComboVal_Task_Selection)
     freeRtosSym_TaskSelection.setLabel("Task Selection")
     freeRtosSym_TaskSelection.setDescription("Select either the Port specific or the Generic method of selecting the next task to execute.")
-    if (coreArch == "CORTEX-M0PLUS" or coreArch == "CORTEX-M23"):
+    if (coreArch == "CORTEX-M0PLUS" or coreArch == "CORTEX-M23" or coreArch == "CORTEX-M33"):
         freeRtosSym_TaskSelection.setDefaultValue("Generic_Task_Selection")
     else:
         freeRtosSym_TaskSelection.setDefaultValue("Port_Optimized")
