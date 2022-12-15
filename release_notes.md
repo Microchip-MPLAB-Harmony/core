@@ -3,6 +3,20 @@
 
 # Microchip MPLAB® Harmony 3 Release Notes
 
+## Core Release v3.12.0-E1
+
+### New Features
+- This engineering release adds support for the PIC32CK-GC/SG family of devices
+
+### Bug fixes
+- None
+
+### Known Issues
+- Same as v3.11.0
+
+### Development Tools
+- Same as v3.11.0
+
 ## Core Release v3.11.1
 
 ### New Features
