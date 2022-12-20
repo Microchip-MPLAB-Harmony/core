@@ -125,11 +125,12 @@ def instantiateComponent(mx25lComponent):
     mx25lHeaderDefFile.setMarkup(True)
 
     mx25lSourceFile = mx25lComponent.createFileSymbol("DRV_MX25L_SOURCE", None)
-    mx25lSourceFile.setSourcePath("driver/sqi_flash/mx25l/src/drv_mx25l.c")
+    mx25lSourceFile.setSourcePath("driver/sqi_flash/mx25l/src/drv_mx25l.c.ftl")
     mx25lSourceFile.setOutputName("drv_mx25l.c")
     mx25lSourceFile.setDestPath("driver/mx25l/src/")
     mx25lSourceFile.setProjectPath("config/" + configName + "/driver/mx25l/")
     mx25lSourceFile.setType("SOURCE")
+    mx25lSourceFile.setMarkup(True)
     mx25lSourceFile.setOverwrite(True)
 
     # System Template Files
