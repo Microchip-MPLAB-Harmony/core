@@ -153,6 +153,14 @@ static DRV_SDMMC_BUFFER_OBJ* lDRV_SDMMC_FreeBufferObjectGet(DRV_SDMMC_CLIENT_OBJ
     }
     return NULL;
 }
+/* MISRA C-2012 Rule 11.3 deviated:12 Deviation record ID -  H3_MISRAC_2012_R_11_3_DR_1 */
+<#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
+<#if core.COMPILER_CHOICE == "XC32">
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wunknown-pragmas"
+</#if>
+#pragma coverity compliance block deviate:12 "MISRA C-2012 Rule 11.3" "H3_MISRAC_2012_R_11_3_DR_1"    
+</#if>
 
 static bool lDRV_SDMMC_BufferObjectAddToList(
     DRV_SDMMC_OBJ* dObj,
@@ -525,7 +533,14 @@ static void lDRV_SDMMC_ParseCSD (
         cardCtxt->discCapacity = ((cSizeVal + 1U) * (1UL << (cSizeMult + 2U)) * (1UL << readBlockLength)) / 512U;
     }
 }
-
+/* MISRA C-2012 Rule 16.1, 16.3 and 16.5 deviated below. 
+  Deviation record ID -  H3_MISRAC_2012_R_16_1_DR_1, H3_MISRAC_2012_R_16_3_DR_1 & H3_MISRAC_2012_R_16_5_DR_1 */
+<#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
+#pragma coverity compliance block \
+(deviate:3 "MISRA C-2012 Rule 16.1" "H3_MISRAC_2012_R_16_1_DR_1" )\
+(deviate:4 "MISRA C-2012 Rule 16.3" "H3_MISRAC_2012_R_16_3_DR_1" )\
+(deviate:1 "MISRA C-2012 Rule 16.5" "H3_MISRAC_2012_R_16_1_DR_5" )   
+</#if>
 
 
 static void lDRV_SDMMC_CommandSend (
@@ -1117,7 +1132,7 @@ static void lDRV_SDMMC_MediaInitialize (
             <#if core.DATA_CACHE_ENABLE?? && core.DATA_CACHE_ENABLE == true>
             /* Invalidate the cache to force the CPU to read the latest data
              * from the main memory. */
-            SYS_CACHE_InvalidateDCache_by_Addr((uint32_t *)dObj->cardCtxt.scrBuffer, DRV_SDMMC_SCR_BUFFER_LEN);
+            SYS_CACHE_InvalidateDCache_by_Addr((uint32_t *)dObj->cardCtxt.scrBuffer, (int32_t)DRV_SDMMC_SCR_BUFFER_LEN);
             </#if>
 
             /* Set up the DMA for the data transfer. */
@@ -1466,6 +1481,7 @@ static void lDRV_SDMMC_MediaInitialize (
 // Section: Driver Interface Function Definitions
 // *****************************************************************************
 // *****************************************************************************
+void DRV_SDMMC_RegisterWithSysFs( const SYS_MODULE_INDEX drvIndex );
 
 __WEAK void DRV_SDMMC_RegisterWithSysFs(
     const SYS_MODULE_INDEX drvIndex
@@ -1473,6 +1489,15 @@ __WEAK void DRV_SDMMC_RegisterWithSysFs(
 {
 
 }
+<#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
+#pragma coverity compliance block fp:8 "MISRA C-2012 Rule 10.4" "H3_MISRAC_2012_R_10_4_DR_1"    
+</#if>
+/* MISRA C-2012 Rule 10.4 deviated:8 Deviation record ID -  H3_MISRAC_2012_R_10_4_DR_1 */
+
+<#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
+#pragma coverity compliance block deviate:2 "MISRA C-2012 Rule 11.8" "H3_MISRAC_2012_R_11_8_DR_1"    
+</#if>
+/* MISRA C-2012 Rule 11.8 deviated:2 Deviation record ID -  H3_MISRAC_2012_R_11_8_DR_1 */
 
 SYS_MODULE_OBJ DRV_SDMMC_Initialize (
     const SYS_MODULE_INDEX drvIndex,
@@ -1683,7 +1708,7 @@ void DRV_SDMMC_Close (
 
 }
 
-void DRV_SDMMC_SetupXfer(
+static void DRV_SDMMC_SetupXfer(
     const DRV_HANDLE handle,
     DRV_SDMMC_COMMAND_HANDLE* commandHandle,
     void* buffer,
@@ -1865,6 +1890,10 @@ SYS_MEDIA_GEOMETRY* DRV_SDMMC_GeometryGet (
 
     return mediaGeometryObj;
 }
+<#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
+#pragma coverity compliance block deviate:1 "MISRA C-2012 Rule 11.1" "H3_MISRAC_2012_R_11_1_DR_1"    
+</#if>
+/* MISRA C-2012 Rule 11.1 deviated:1 Deviation record ID -  H3_MISRAC_2012_R_11_1_DR_1 */
 
 void DRV_SDMMC_EventHandlerSet (
     const DRV_HANDLE handle,
@@ -1890,6 +1919,15 @@ void DRV_SDMMC_EventHandlerSet (
         }
     }
 }
+<#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
+#pragma coverity compliance end_block "MISRA C-2012 Rule 11.1"   
+</#if>
+/* MISRAC 2012 deviation block end */
+
+<#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
+#pragma coverity compliance end_block "MISRA C-2012 Rule 11.8"   
+</#if>
+/* MISRAC 2012 deviation block end */
 
 bool DRV_SDMMC_IsAttached (
     const DRV_HANDLE handle
@@ -2369,13 +2407,13 @@ void DRV_SDMMC_Tasks( SYS_MODULE_OBJ object )
             {
                 /* Clean the cache to push the data to be written, from the cache
                  * memory to the main memory for the DMA */
-                SYS_CACHE_CleanDCache_by_Addr((uint32_t *)currentBufObj->buffer, (currentBufObj->nBlocks << 9));
+                SYS_CACHE_CleanDCache_by_Addr((uint32_t *)currentBufObj->buffer, (int32_t)(currentBufObj->nBlocks << 9));
             }
             else if (currentBufObj->opType == DRV_SDMMC_OPERATION_TYPE_READ)
             {
                 /* Invalidate the cache to force the CPU to read the latest data
                  * from the main memory. */
-                SYS_CACHE_InvalidateDCache_by_Addr((uint32_t *)currentBufObj->buffer, (currentBufObj->nBlocks << 9));
+                SYS_CACHE_InvalidateDCache_by_Addr((uint32_t *)currentBufObj->buffer, (int32_t)(currentBufObj->nBlocks << 9));
             }
             else
             {
@@ -2576,3 +2614,22 @@ void DRV_SDMMC_Tasks( SYS_MODULE_OBJ object )
         SYS_ASSERT(false, "SDMMC Driver: OSAL_MUTEX_Unlock failed");
     }
 }
+<#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
+#pragma coverity compliance end_block "MISRA C-2012 Rule 10.4"    
+</#if>
+/* MISRAC 2012 deviation block end */
+
+<#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
+#pragma coverity compliance end_block "MISRA C-2012 Rule 11.3"   
+</#if>
+/* MISRAC 2012 deviation block end */
+
+<#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
+#pragma coverity compliance end_block "MISRA C-2012 Rule 16.1"
+#pragma coverity compliance end_block "MISRA C-2012 Rule 16.3"
+#pragma coverity compliance end_block "MISRA C-2012 Rule 16.5"
+<#if core.COMPILER_CHOICE == "XC32">
+#pragma GCC diagnostic pop
+</#if>   
+</#if> 
+/* MISRAC 2012 deviation block end */
