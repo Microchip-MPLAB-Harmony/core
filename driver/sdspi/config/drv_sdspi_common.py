@@ -174,11 +174,12 @@ def instantiateComponent(sdspiComponentCommon):
 
     # Global Header Files
     sdspiSymHeaderFile = sdspiComponentCommon.createFileSymbol("DRV_SDSPI_HEADER", None)
-    sdspiSymHeaderFile.setSourcePath("driver/sdspi/drv_sdspi.h")
+    sdspiSymHeaderFile.setSourcePath("driver/sdspi/drv_sdspi.h.ftl")
     sdspiSymHeaderFile.setOutputName("drv_sdspi.h")
     sdspiSymHeaderFile.setDestPath("driver/sdspi/")
     sdspiSymHeaderFile.setProjectPath("config/" + configName + "/driver/sdspi/")
     sdspiSymHeaderFile.setType("HEADER")
+    sdspiSymHeaderFile.setMarkup(True)
     sdspiSymHeaderFile.setOverwrite(True)
 
     # Common System Files
