@@ -265,6 +265,14 @@ static DRV_SDSPI_BUFFER_OBJ* lDRV_SDSPI_FreeBufferObjectGet(DRV_SDSPI_CLIENT_OBJ
     }
     return NULL;
 }
+/* MISRA C-2012 Rule 11.3 deviated:5 Deviation record ID -  H3_MISRAC_2012_R_11_3_DR_1 */
+<#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
+<#if core.COMPILER_CHOICE == "XC32">
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wunknown-pragmas"
+</#if>
+#pragma coverity compliance block deviate:5 "MISRA C-2012 Rule 11.3" "H3_MISRAC_2012_R_11_3_DR_1"    
+</#if>
 
 static bool lDRV_SDSPI_BufferObjectAddToList(
     DRV_SDSPI_OBJ* dObj,
@@ -1000,7 +1008,7 @@ static DRV_SDSPI_ATTACH lDRV_SDSPI_MediaCommandDetect
             }
             break;
 
-        case DRV_SDSPI_CMD_DETECT_CHECK_FOR_DETACH:
+        case DRV_SDSPI_CMD_DETECT_CHK_FOR_DETCH:
 
             if (dObj->sdState == TASK_STATE_CARD_COMMAND)
             {
@@ -1036,7 +1044,7 @@ static DRV_SDSPI_ATTACH lDRV_SDSPI_MediaCommandDetect
             {
                 if (dObj->cmdResponse.response1.byte == 0x00U)
                 {
-                    dObj->cmdDetectState = DRV_SDSPI_CMD_DETECT_CHECK_FOR_DETACH_READ_CID_DATA;
+                    dObj->cmdDetectState = DRV_SDSPI_CMD_DETECT_CHK_FOR_DETACH_RD_CID_DAT;
                 }
                 else
                 {
@@ -1057,7 +1065,7 @@ static DRV_SDSPI_ATTACH lDRV_SDSPI_MediaCommandDetect
             }
             break;
 
-        case DRV_SDSPI_CMD_DETECT_CHECK_FOR_DETACH_READ_CID_DATA:
+        case DRV_SDSPI_CMD_DETECT_CHK_FOR_DETACH_RD_CID_DAT:
 
             /* Here the default state of the card is attached */
             cardStatus = DRV_SDSPI_IS_ATTACHED;
@@ -1068,7 +1076,7 @@ static DRV_SDSPI_ATTACH lDRV_SDSPI_MediaCommandDetect
              */
             if (DRV_SDSPI_SPIRead(dObj, &gDrvSDSPITempCidData[object], DRV_SDSPI_CID_READ_SIZE) == true)
             {
-                dObj->cmdDetectState = DRV_SDSPI_CMD_DETECT_CHECK_FOR_DETACH_PROCESS_CID_DATA;
+                dObj->cmdDetectState = DRV_SDSPI_CMD_DETECT_CHK_FOR_DETACH_PRCS_CID_DAT;
             }
             else
             {
@@ -1078,7 +1086,7 @@ static DRV_SDSPI_ATTACH lDRV_SDSPI_MediaCommandDetect
             }
             break;
 
-        case DRV_SDSPI_CMD_DETECT_CHECK_FOR_DETACH_PROCESS_CID_DATA:
+        case DRV_SDSPI_CMD_DETECT_CHK_FOR_DETACH_PRCS_CID_DAT:
 
             /* Here the default state of the card is attached */
             cardStatus = DRV_SDSPI_IS_ATTACHED;
@@ -1088,7 +1096,7 @@ static DRV_SDSPI_ATTACH lDRV_SDSPI_MediaCommandDetect
                 dObj->sdState = TASK_STATE_IDLE;
                 if (memcmp(dObj->pCidData, &gDrvSDSPITempCidData[object], DRV_SDSPI_CID_READ_SIZE - 1) == 0)
                 {
-                    dObj->cmdDetectState = DRV_SDSPI_CMD_DETECT_CHECK_FOR_DETACH;
+                    dObj->cmdDetectState = DRV_SDSPI_CMD_DETECT_CHK_FOR_DETCH;
                 }
                 else
                 {
@@ -1393,7 +1401,7 @@ static void lDRV_SDSPI_MediaInitialize ( SYS_MODULE_OBJ object )
                 }
 
                 /* Card initialization is complete, switch to normal operation */
-                dObj->mediaInitState = DRV_SDSPI_INIT_INCR_CLOCK_SPEED;
+                dObj->mediaInitState = DRV_SDSPI_INIT_INCR_CLK_SPD;
             }
             else if (dObj->cmdState == DRV_SDSPI_CMD_EXEC_ERROR)
             {
@@ -1406,7 +1414,7 @@ static void lDRV_SDSPI_MediaInitialize ( SYS_MODULE_OBJ object )
 
             break;
 
-        case DRV_SDSPI_INIT_INCR_CLOCK_SPEED:
+        case DRV_SDSPI_INIT_INCR_CLK_SPD:
 
             /* Basic initialization of media is now complete.  The card will now
                use push/pull outputs with fast drivers.  Therefore, we can now increase
@@ -1424,11 +1432,11 @@ static void lDRV_SDSPI_MediaInitialize ( SYS_MODULE_OBJ object )
             /* Do a dummy read to ensure that the receiver buffer is cleared */
             (void) DRV_SDSPI_SPIRead(dObj, dObj->pCmdResp, 10);
 
-            dObj->mediaInitState = DRV_SDSPI_INIT_INCR_CLOCK_SPEED_STATUS;
+            dObj->mediaInitState = DRV_SDSPI_INIT_INCR_CLK_SPD_STAT;
 
             break;
 
-        case DRV_SDSPI_INIT_INCR_CLOCK_SPEED_STATUS:
+        case DRV_SDSPI_INIT_INCR_CLK_SPD_STAT:
 
             if (dObj->spiTransferStatus == DRV_SDSPI_SPI_TRANSFER_STATUS_COMPLETE)
             {
@@ -1642,6 +1650,10 @@ static void lDRV_SDSPI_MediaInitialize ( SYS_MODULE_OBJ object )
             break;
     }
 }
+/* MISRA C-2012 Rule 10.4 False positive:8 Deviation record ID -  H3_MISRAC_2012_R_10_4_DR_1 */
+<#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
+#pragma coverity compliance block fp:8 "MISRA C-2012 Rule 10.4" "H3_MISRAC_2012_R_10_4_DR_1"    
+</#if>
 
 static void lDRV_SDSPI_AttachDetachTasks
 (
@@ -1742,7 +1754,7 @@ static void lDRV_SDSPI_AttachDetachTasks
 
                 /* State that the device is attached. */
                 dObj->mediaState = SYS_MEDIA_ATTACHED;
-                dObj->cmdDetectState = DRV_SDSPI_CMD_DETECT_CHECK_FOR_DETACH;
+                dObj->cmdDetectState = DRV_SDSPI_CMD_DETECT_CHK_FOR_DETCH;
                 dObj->taskState = DRV_SDSPI_TASK_START_POLLING_TIMER;
             }
             else if (dObj->mediaInitState == DRV_SDSPI_INIT_ERROR)
@@ -1768,7 +1780,13 @@ static void lDRV_SDSPI_AttachDetachTasks
     /* Release the Mutex to allow other clients/threads to access the SD Card */
      (void) OSAL_MUTEX_Unlock(&dObj->transferMutex);
 }
-
+/* MISRA C-2012 Rule 16.1, 16.3 deviated below. Deviation record ID -  
+   H3_MISRAC_2012_R_16_1_DR_1 & H3_MISRAC_2012_R_16_3_DR_1*/
+<#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
+#pragma coverity compliance block \
+(deviate:1 "MISRA C-2012 Rule 16.1" "H3_MISRAC_2012_R_16_1_DR_1" )\
+(deviate:1 "MISRA C-2012 Rule 16.3" "H3_MISRAC_2012_R_16_3_DR_1" )   
+</#if>
 static void lDRV_SDSPI_BufferIOTasks
 (
     SYS_MODULE_OBJ object
@@ -1875,7 +1893,7 @@ static void lDRV_SDSPI_BufferIOTasks
                 if (dObj->cmdResponse.response1.byte == 0x00U)
                 {
                     dObj->timerFlag = false;
-                    dObj->taskBufferIOState = DRV_SDSPI_TASK_READ_START_TOKEN;
+                    dObj->taskBufferIOState = DRV_SDSPI_TASK_RD_SRT_TKN;
                 }
                 else
                 {
@@ -1909,11 +1927,11 @@ static void lDRV_SDSPI_BufferIOTasks
             }
             break;
 
-        case DRV_SDSPI_TASK_READ_START_TOKEN:
+        case DRV_SDSPI_TASK_RD_SRT_TKN:
 
             if (DRV_SDSPI_SPIRead(dObj, dObj->pCmdResp, 1) == true)
             {
-                dObj->nextTaskState = DRV_SDSPI_TASK_READ_START_TOKEN_STATUS;
+                dObj->nextTaskState = DRV_SDSPI_TASK_RD_SRT_TKN_STATUS;
                 dObj->taskBufferIOState = DRV_SDSPI_TASK_SPI_STATUS;
             }
             else
@@ -1923,7 +1941,7 @@ static void lDRV_SDSPI_BufferIOTasks
             }
             break;
 
-        case DRV_SDSPI_TASK_READ_START_TOKEN_STATUS:
+        case DRV_SDSPI_TASK_RD_SRT_TKN_STATUS:
 
             /* In this case, we have already issued the READ_MULTI_BLOCK command
                to the media, and we need to keep polling the media until it sends
@@ -1960,7 +1978,7 @@ static void lDRV_SDSPI_BufferIOTasks
                 }
                 else
                 {
-                    dObj->taskBufferIOState = DRV_SDSPI_TASK_READ_START_TOKEN;
+                    dObj->taskBufferIOState = DRV_SDSPI_TASK_RD_SRT_TKN;
                 }
             }
             break;
@@ -2005,7 +2023,7 @@ static void lDRV_SDSPI_BufferIOTasks
                 else
                 {
                     currentBufObj->buffer += DRV_SDSPI_MEDIA_BLOCK_SIZE;
-                    dObj->taskBufferIOState = DRV_SDSPI_TASK_READ_START_TOKEN;
+                    dObj->taskBufferIOState = DRV_SDSPI_TASK_RD_SRT_TKN;
                 }
             }
             else
@@ -2147,19 +2165,19 @@ static void lDRV_SDSPI_BufferIOTasks
             }
             else
             {
-                dObj->taskBufferIOState = DRV_SDSPI_TASK_WRITE_CHECK_BUSY;
+                dObj->taskBufferIOState = DRV_SDSPI_TASK_WR_CHK_BSY;
                 dObj->timerFlag = false;
             }
             break;
 
-        case DRV_SDSPI_TASK_WRITE_CHECK_BUSY:
+        case DRV_SDSPI_TASK_WR_CHK_BSY:
 
             /* The media will now send busy token (0x00) bytes until it is
              * internally ready again (after the block is successfully
              * written and the card is ready to accept a new block). */
             if (DRV_SDSPI_SPIRead(dObj, dObj->pCmdResp, 1) == true)
             {
-                dObj->nextTaskState = DRV_SDSPI_TASK_WRITE_CHECK_BUSY_STATUS;
+                dObj->nextTaskState = DRV_SDSPI_TASK_WR_CHK_BSY_STAT;
                 dObj->taskBufferIOState = DRV_SDSPI_TASK_SPI_STATUS;
             }
             else
@@ -2168,7 +2186,7 @@ static void lDRV_SDSPI_BufferIOTasks
             }
             break;
 
-        case DRV_SDSPI_TASK_WRITE_CHECK_BUSY_STATUS:
+        case DRV_SDSPI_TASK_WR_CHK_BSY_STAT:
 
             if (dObj->pCmdResp[0] == 0x00U)
             {
@@ -2195,7 +2213,7 @@ static void lDRV_SDSPI_BufferIOTasks
                 }
                 else
                 {
-                    dObj->taskBufferIOState = DRV_SDSPI_TASK_WRITE_CHECK_BUSY;
+                    dObj->taskBufferIOState = DRV_SDSPI_TASK_WR_CHK_BSY;
                 }
             }
             else
@@ -2238,7 +2256,7 @@ static void lDRV_SDSPI_BufferIOTasks
             dObj->pCmdResp[0] = DRV_SDSPI_DATA_STOP_TRAN_TOKEN;
             if (DRV_SDSPI_SPIWrite(dObj, dObj->pCmdResp, 1) == true)
             {
-                dObj->nextTaskState = DRV_SDSPI_TASK_WRITE_STOP_TRAN_DUMMY_PULSES;
+                dObj->nextTaskState = DRV_SDSPI_TASK_WR_STP_TRN_DUMMY_PLS;
                 dObj->taskBufferIOState = DRV_SDSPI_TASK_SPI_STATUS;
                 dObj->timerFlag = false;
             }
@@ -2248,11 +2266,11 @@ static void lDRV_SDSPI_BufferIOTasks
             }
             break;
 
-        case DRV_SDSPI_TASK_WRITE_STOP_TRAN_DUMMY_PULSES:
+        case DRV_SDSPI_TASK_WR_STP_TRN_DUMMY_PLS:
 
             if (DRV_SDSPI_SPIRead(dObj, dObj->pCmdResp, 1) == true)
             {
-                dObj->nextTaskState = DRV_SDSPI_TASK_WRITE_STOP_TRAN_CHECK_BUSY;
+                dObj->nextTaskState = DRV_SDSPI_TASK_WR_STP_TRAN_CHK_BSY;
                 dObj->taskBufferIOState = DRV_SDSPI_TASK_SPI_STATUS;
             }
             else
@@ -2261,14 +2279,14 @@ static void lDRV_SDSPI_BufferIOTasks
             }
             break;
 
-        case DRV_SDSPI_TASK_WRITE_STOP_TRAN_CHECK_BUSY:
+        case DRV_SDSPI_TASK_WR_STP_TRAN_CHK_BSY:
 
             /* The media will now send busy token (0x00) bytes until it is
              * internally ready again (after the block is successfully
              * written and the card is ready to accept a new block). */
             if (DRV_SDSPI_SPIRead(dObj, dObj->pCmdResp, 1) == true)
             {
-                dObj->nextTaskState = DRV_SDSPI_TASK_WRITE_STOP_TRAN_BUSY_STATUS;
+                dObj->nextTaskState = DRV_SDSPI_TASK_WR_STP_TRAN_BSY_STAT;
                 dObj->taskBufferIOState = DRV_SDSPI_TASK_SPI_STATUS;
             }
             else
@@ -2277,7 +2295,7 @@ static void lDRV_SDSPI_BufferIOTasks
             }
             break;
 
-        case DRV_SDSPI_TASK_WRITE_STOP_TRAN_BUSY_STATUS:
+        case DRV_SDSPI_TASK_WR_STP_TRAN_BSY_STAT:
 
             if (dObj->pCmdResp[0] == 0x00U)
             {
@@ -2303,7 +2321,7 @@ static void lDRV_SDSPI_BufferIOTasks
                 }
                 else
                 {
-                    dObj->taskBufferIOState = DRV_SDSPI_TASK_WRITE_STOP_TRAN_CHECK_BUSY;
+                    dObj->taskBufferIOState = DRV_SDSPI_TASK_WR_STP_TRAN_CHK_BSY;
                 }
             }
             else
@@ -2360,12 +2378,19 @@ static void lDRV_SDSPI_BufferIOTasks
         SYS_ASSERT(false, "SDCard Driver: OSAL_MUTEX_Unlock failed");
     }
 }
+<#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
+#pragma coverity compliance end_block "MISRA C-2012 Rule 16.1"
+#pragma coverity compliance end_block "MISRA C-2012 Rule 16.3"    
+</#if> 
+/* MISRAC 2012 deviation block end */
 
 // *****************************************************************************
 // *****************************************************************************
 // Section: Driver Interface Function Definitions
 // *****************************************************************************
 // *****************************************************************************
+
+void DRV_SDSPI_RegisterWithSysFs ( const SYS_MODULE_INDEX drvIndex );
 
 __WEAK void DRV_SDSPI_RegisterWithSysFs
 (
@@ -2557,6 +2582,10 @@ SYS_MODULE_OBJ DRV_SDSPI_Initialize
     /* Return the object structure */
     return ( (SYS_MODULE_OBJ)drvIndex );
 }
+<#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
+#pragma coverity compliance end_block "MISRA C-2012 Rule 11.3"    
+</#if>
+/* MISRAC 2012 deviation block end */
 
 SYS_STATUS DRV_SDSPI_Status (
     SYS_MODULE_OBJ object
@@ -2698,7 +2727,7 @@ void DRV_SDSPI_Close (
     (void) OSAL_MUTEX_Unlock(&dObj->clientMutex);
 }
 
-void DRV_SDSPI_SetupXfer(
+static void DRV_SDSPI_SetupXfer(
     const DRV_HANDLE handle,
     DRV_SDSPI_COMMAND_HANDLE* commandHandle,
     void* buffer,
@@ -2788,6 +2817,10 @@ void DRV_SDSPI_SetupXfer(
 
     (void) OSAL_MUTEX_Unlock(&dObj->transferMutex);
 }
+<#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
+#pragma coverity compliance end_block "MISRA C-2012 Rule 10.4"   
+</#if>
+/* MISRAC 2012 deviation block end */
 
 void DRV_SDSPI_AsyncRead
 (
@@ -2886,7 +2919,13 @@ SYS_MEDIA_GEOMETRY* DRV_SDSPI_GeometryGet (
 
     return mediaGeometryObj;
 }
-
+/* MISRA C-2012 Rule 11.1, 11.8 deviated below. Deviation record ID -  
+   H3_MISRAC_2012_R_11_1_DR_1 & H3_MISRAC_2012_R_11_8_DR_1*/
+<#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
+#pragma coverity compliance block \
+(deviate:1 "MISRA C-2012 Rule 11.1" "H3_MISRAC_2012_R_11_1_DR_1" )\
+(deviate:1 "MISRA C-2012 Rule 11.8" "H3_MISRAC_2012_R_11_8_DR_1" )   
+</#if>
 void DRV_SDSPI_EventHandlerSet (
     const DRV_HANDLE handle,
     const void* eventHandler,
@@ -2904,6 +2943,14 @@ void DRV_SDSPI_EventHandlerSet (
         clientObj->context = context;
     }
 }
+<#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
+#pragma coverity compliance end_block "MISRA C-2012 Rule 11.1"
+#pragma coverity compliance end_block "MISRA C-2012 Rule 11.8"
+<#if core.COMPILER_CHOICE == "XC32">
+#pragma GCC diagnostic pop
+</#if>    
+</#if>
+/* MISRAC 2012 deviation block end */ 
 
 bool DRV_SDSPI_IsAttached (
     const DRV_HANDLE handle

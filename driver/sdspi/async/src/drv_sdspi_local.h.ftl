@@ -495,10 +495,10 @@ typedef enum
     DRV_SDSPI_TASK_SPI_STATUS,
 
     /* Read the start token from the SD card. */
-    DRV_SDSPI_TASK_READ_START_TOKEN,
+    DRV_SDSPI_TASK_RD_SRT_TKN,
 
     /* Check if the token received is correct */
-    DRV_SDSPI_TASK_READ_START_TOKEN_STATUS,
+    DRV_SDSPI_TASK_RD_SRT_TKN_STATUS,
 
     /* Read 512 bytes of data from the SD card. */
     DRV_SDSPI_TASK_READ_DATA,
@@ -531,10 +531,10 @@ typedef enum
     DRV_SDSPI_TASK_WRITE_RESP_TOKEN_STATUS,
 
     /* Read the busy status from the card. */
-    DRV_SDSPI_TASK_WRITE_CHECK_BUSY,
+    DRV_SDSPI_TASK_WR_CHK_BSY,
 
     /* Check if the card is still busy with programming of the data. */
-    DRV_SDSPI_TASK_WRITE_CHECK_BUSY_STATUS,
+    DRV_SDSPI_TASK_WR_CHK_BSY_STAT,
 
     /* Check if the write is complete. */
     DRV_SDSPI_TASK_WRITE_COMPLETE_CHECK,
@@ -543,13 +543,13 @@ typedef enum
     DRV_SDSPI_TASK_WRITE_STOP_TRAN_TOKEN,
 
     /* Send 8 clock pulses post stop tran token. */
-    DRV_SDSPI_TASK_WRITE_STOP_TRAN_DUMMY_PULSES,
+    DRV_SDSPI_TASK_WR_STP_TRN_DUMMY_PLS,
 
     /* Read the card busy status. */
-    DRV_SDSPI_TASK_WRITE_STOP_TRAN_CHECK_BUSY,
+    DRV_SDSPI_TASK_WR_STP_TRAN_CHK_BSY,
 
     /* Check if the card has come out of the busy status. */
-    DRV_SDSPI_TASK_WRITE_STOP_TRAN_BUSY_STATUS,
+    DRV_SDSPI_TASK_WR_STP_TRAN_BSY_STAT,
 
     /* SD card write is complete */
     DRV_SDSPI_TASK_PROCESS_NEXT,
@@ -747,13 +747,13 @@ typedef enum
     DRV_SDSPI_CMD_DETECT_WAIT_TRANSFER_COMPLETE,
 
     /* Check whether the card has been detached. */
-    DRV_SDSPI_CMD_DETECT_CHECK_FOR_DETACH,
+    DRV_SDSPI_CMD_DETECT_CHK_FOR_DETCH,
 
     DRV_SDSPI_CMD_DETECT_CHECK_FOR_CMD_SEND,
 
-    DRV_SDSPI_CMD_DETECT_CHECK_FOR_DETACH_READ_CID_DATA,
+    DRV_SDSPI_CMD_DETECT_CHK_FOR_DETACH_RD_CID_DAT,
 
-    DRV_SDSPI_CMD_DETECT_CHECK_FOR_DETACH_PROCESS_CID_DATA,
+    DRV_SDSPI_CMD_DETECT_CHECK_FOR_DETACH_PRCS_CID_DAT,
 
     DRV_SDSPI_CMD_DETECT_IDLE_STATE,
 
@@ -834,10 +834,10 @@ typedef enum
     DRV_SDSPI_INIT_READ_OCR,
 
     /* Card's internal init is complete. Increase the SPI frequency. */
-    DRV_SDSPI_INIT_INCR_CLOCK_SPEED,
+    DRV_SDSPI_INIT_INCR_CLK_SPD,
 
     /* Wait for the dummy read done in the INCR_CLOCK_SPEED state to complete. */
-    DRV_SDSPI_INIT_INCR_CLOCK_SPEED_STATUS,
+    DRV_SDSPI_INIT_INCR_CLK_SPD_STAT,
 
     /* Issue command to read the card's Card Specific Data register */
     DRV_SDSPI_INIT_READ_CSD,
@@ -846,10 +846,10 @@ typedef enum
     DRV_SDSPI_INIT_READ_CSD_DATA,
 
     /* Read the CSD data token */
-    DRV_SDSPI_INIT_READ_CSD_DATA_TOKEN,
+    DRV_SDSPI_INIT_RD_CSD_DAT_TKN,
 
     /* Read the CSD data token */
-    DRV_SDSPI_INIT_READ_CSD_DATA_TOKEN_STATUS,
+    DRV_SDSPI_INIT_RD_CSD_DAT_TKN_STAT,
 
     /* Process the CSD register data */
     DRV_SDSPI_INIT_PROCESS_CSD,
@@ -892,6 +892,15 @@ typedef struct
     uint32_t                    responseLength;
 
 } DRV_SDSPI_CMD_OBJ;
+
+/* MISRA C-2012 Rule 6.1 deviated:5 Deviation record ID -  H3_MISRAC_2012_R_6_1_DR_1 */
+<#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
+<#if core.COMPILER_CHOICE == "XC32">
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wunknown-pragmas"
+</#if>
+#pragma coverity compliance block deviate:5 "MISRA C-2012 Rule 6.1" "H3_MISRAC_2012_R_6_1_DR_1"    
+</#if>
 
 typedef union
 {
@@ -949,6 +958,14 @@ typedef union
         uint8_t  startBit:1;
     };
 } DRV_SDSPI_CMD_PACKET;
+
+<#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
+#pragma coverity compliance end_block "MISRA C-2012 Rule 6.1"
+<#if core.COMPILER_CHOICE == "XC32">
+#pragma GCC diagnostic pop
+</#if>    
+</#if>
+/* MISRAC 2012 deviation block end */
 
 typedef union
 {
