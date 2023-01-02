@@ -314,11 +314,12 @@ def instantiateComponent(sysTimeComponent):
     sysTimeTickbasedSourceFile.setDependencies(tickbasedFileGen, ["SYS_TIME_OPERATING_MODE"])
 
     sysTimeTicklessSourceFile = sysTimeComponent.createFileSymbol("SYS_TIME_TICKLESS_SOURCE", None)
-    sysTimeTicklessSourceFile.setSourcePath("system/time/src/tickless/sys_time.c")
+    sysTimeTicklessSourceFile.setSourcePath("system/time/src/tickless/sys_time.c.ftl")
     sysTimeTicklessSourceFile.setOutputName("sys_time.c")
     sysTimeTicklessSourceFile.setDestPath("system/time/src")
     sysTimeTicklessSourceFile.setProjectPath("config/" + configName + "/system/time/")
     sysTimeTicklessSourceFile.setType("SOURCE")
+    sysTimeTicklessSourceFile.setMarkup(True)
     sysTimeTicklessSourceFile.setOverwrite(True)
     sysTimeTicklessSourceFile.setEnabled((sysTimeOperatingMode.getValue() == "TICKLESS"))
     sysTimeTicklessSourceFile.setDependencies(ticklessFileGen, ["SYS_TIME_OPERATING_MODE"])
