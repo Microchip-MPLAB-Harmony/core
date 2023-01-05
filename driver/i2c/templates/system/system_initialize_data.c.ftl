@@ -94,7 +94,9 @@ const DRV_I2C_INTERRUPT_SOURCES drvI2C${INDEX?string}InterruptSources =
         <#lt>    .isSingleIntSrc                        = true,
 
         <#lt>    /* Peripheral interrupt line */
-        <#if I2C_PLIB_SINGLE_IRQn?eval??>
+        <#if .vars["${DRV_I2C_PLIB?lower_case}"].SINGLE_IRQn?has_content>
+            <#lt>    .intSources.i2cInterrupt             = ${.vars["${DRV_I2C_PLIB?lower_case}"].SINGLE_IRQn},
+        <#elseif I2C_PLIB_SINGLE_IRQn?eval??>
             <#lt>    .intSources.i2cInterrupt             = ${I2C_PLIB_SINGLE_IRQn?eval},
         <#else>
             <#lt>    .intSources.i2cInterrupt             = ${DRV_I2C_PLIB}_IRQn,
