@@ -75,8 +75,8 @@ typedef void (*SYS_TIME_PLIB_START)(void);
 typedef void (*SYS_TIME_PLIB_STOP)(void);
 
 <#if SYS_TIME_USE_SYSTICK == true>
-typedef void (*SYS_TIME_PLIB_INTERRUPT_ENABLE)(void);
-typedef void (*SYS_TIME_PLIB_INTERRUPT_DISABLE)(void);
+typedef void (*SYS_TIME_PLIB_INTERRUPT_RESTORE)(bool status);
+typedef bool (*SYS_TIME_PLIB_INTERRUPT_DISABLE)(void);
 </#if>
 
 <#if .vars["${SYS_TIME_PLIB?lower_case}"].TIMER_WIDTH == 8>
@@ -101,7 +101,7 @@ typedef struct
     SYS_TIME_PLIB_FREQUENCY_GET         timerFrequencyGet;
     SYS_TIME_PLIB_PERIOD_SET            timerPeriodSet;
 <#if SYS_TIME_USE_SYSTICK == true>
-    SYS_TIME_PLIB_INTERRUPT_ENABLE      timerInterruptEnable;
+    SYS_TIME_PLIB_INTERRUPT_RESTORE     timerInterruptRestore;
     SYS_TIME_PLIB_INTERRUPT_DISABLE     timerInterruptDisable;
 </#if>
 <#if SYS_TIME_OPERATING_MODE == "TICKLESS">

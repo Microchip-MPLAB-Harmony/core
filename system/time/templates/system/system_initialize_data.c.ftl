@@ -6,7 +6,7 @@ const SYS_TIME_PLIB_INTERFACE sysTimePlibAPI = {
     .timerStop = (SYS_TIME_PLIB_STOP)${.vars["${SYS_TIME_PLIB?lower_case}"].TIMER_STOP_API_NAME},
     .timerFrequencyGet = (SYS_TIME_PLIB_FREQUENCY_GET)${.vars["${SYS_TIME_PLIB?lower_case}"].FREQUENCY_GET_API_NAME},
     <#if SYS_TIME_USE_SYSTICK == true>
-    .timerInterruptEnable = (SYS_TIME_PLIB_INTERRUPT_ENABLE)${.vars["${SYS_TIME_PLIB?lower_case}"].INTERRUPT_ENABLE_API_NAME},
+    .timerInterruptRestore = (SYS_TIME_PLIB_INTERRUPT_RESTORE)${.vars["${SYS_TIME_PLIB?lower_case}"].INTERRUPT_RESTORE_API_NAME},
     .timerInterruptDisable = (SYS_TIME_PLIB_INTERRUPT_DISABLE)${.vars["${SYS_TIME_PLIB?lower_case}"].INTERRUPT_DISABLE_API_NAME},
     </#if>
     <#if .vars["${SYS_TIME_PLIB?lower_case}"].PERIOD_SET_API_NAME?has_content>
