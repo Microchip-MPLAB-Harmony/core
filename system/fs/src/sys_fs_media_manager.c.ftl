@@ -1072,6 +1072,7 @@ SYS_FS_MEDIA_BLOCK_COMMAND_HANDLE SYS_FS_MEDIA_MANAGER_SectorWrite
     uint32_t numSectorsToWrite = 0;
     uint32_t mediaWriteBlockSize = 0;
     uint32_t blocksPerSector = 0;
+    uint32_t readSize = SYS_FS_MEDIA_MANAGER_BUFFER_SIZE;
 
     if(diskNum >= SYS_FS_MEDIA_NUMBER)
     {
@@ -1141,7 +1142,12 @@ SYS_FS_MEDIA_BLOCK_COMMAND_HANDLE SYS_FS_MEDIA_MANAGER_SectorWrite
                 /* Read the memory block from the media. Update the media data. */
                 mediaObj->commandStatus = SYS_FS_MEDIA_COMMAND_IN_PROGRESS;
 
-                mediaObj->driverFunctions->sectorRead(mediaObj->driverHandle, &(mediaObj->commandHandle), gSYSFSMediaBlockBuffer, memoryBlock * mediaWriteBlockSize, SYS_FS_MEDIA_MANAGER_BUFFER_SIZE);
+                if (mediaWriteBlockSize < SYS_FS_MEDIA_MANAGER_BUFFER_SIZE)
+                {
+                    readSize = mediaWriteBlockSize;
+                }
+
+                mediaObj->driverFunctions->sectorRead(mediaObj->driverHandle, &(mediaObj->commandHandle), gSYSFSMediaBlockBuffer, memoryBlock * mediaWriteBlockSize, readSize);
 
                 while (mediaObj->commandStatus == SYS_FS_MEDIA_COMMAND_IN_PROGRESS)
                 {
