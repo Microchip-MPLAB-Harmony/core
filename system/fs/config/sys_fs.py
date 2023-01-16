@@ -326,7 +326,7 @@ def instantiateComponent(sysFSComponent):
     sysFSFatVersion = sysFSComponent.createStringSymbol("SYS_FS_FAT_VERSION", sysFSFat)
     sysFSFatVersion.setLabel("FAT File System Version")
     sysFSFatVersion.setHelp(sys_fs_mcc_helpkeyword)
-    sysFSFatVersion.setDefaultValue("v0.14b")
+    sysFSFatVersion.setDefaultValue("v0.15")
     sysFSFatVersion.setVisible(sysFSFat.getValue())
     sysFSFatVersion.setReadOnly(True)
     sysFSFatVersion.setDependencies(sysFsSymbolShow, ["SYS_FS_FAT"])
