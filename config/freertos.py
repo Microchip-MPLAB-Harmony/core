@@ -450,6 +450,12 @@ def instantiateComponent(thirdPartyFreeRTOS):
     freeRtosSym_EnableMpu.setDefaultValue(False)
     freeRtosSym_EnableMpu.setVisible(False)
 
+    freeRtosSym_EnableMVE = thirdPartyFreeRTOS.createBooleanSymbol("FREERTOS_ENABLE_MVE", freeRtosSymMenu)
+    freeRtosSym_EnableMVE.setLabel("Enable MVE")
+    freeRtosSym_EnableMVE.setDescription("FreeRTOS - Enable Cortex-M Vector Extensions")
+    freeRtosSym_EnableMVE.setDefaultValue(False)
+    freeRtosSym_EnableMVE.setVisible(False)
+
     freeRtosSym_RunFreeRtosSecure = thirdPartyFreeRTOS.createBooleanSymbol("FREERTOS_RUN_FREERTOS_SECURE_ONLY", freeRtosSymMenu)
     freeRtosSym_RunFreeRtosSecure.setLabel("Run FreeRTOS on the Secure Side")
     freeRtosSym_RunFreeRtosSecure.setDescription("FreeRTOS - Run FreeRTOS on the Secure Side")
@@ -647,7 +653,7 @@ def instantiateComponent(thirdPartyFreeRTOS):
     freeRtosSym_xTaskGetCurrentTaskHandle = thirdPartyFreeRTOS.createBooleanSymbol("FREERTOS_INCLUDE_XTASKGETCURRENTTASKHANDLE", freeRtosSymMenu_IncludeComponents)
     freeRtosSym_xTaskGetCurrentTaskHandle.setLabel("Include xTaskGetCurrentTaskHandle")
     freeRtosSym_xTaskGetCurrentTaskHandle.setDescription("FreeRTOS - Include xTaskGetCurrentTaskHandle")
-    freeRtosSym_xTaskGetCurrentTaskHandle.setDefaultValue(False)
+    freeRtosSym_xTaskGetCurrentTaskHandle.setDefaultValue(True)
 
     freeRtosSym_xTaskGetIdleTaskHandle = thirdPartyFreeRTOS.createBooleanSymbol("FREERTOS_INCLUDE_XTASKGETIDLETASKHANDLE", freeRtosSymMenu_IncludeComponents)
     freeRtosSym_xTaskGetIdleTaskHandle.setLabel("Include xTaskGetIdleTaskHandle")

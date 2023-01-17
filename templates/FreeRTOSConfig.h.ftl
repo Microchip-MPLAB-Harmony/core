@@ -1,5 +1,5 @@
 /*
- * FreeRTOS Kernel V10.3.0
+ * FreeRTOS Kernel V10.4.0
  * Copyright (C) 2019 Amazon.com, Inc. or its affiliates.  All Rights Reserved.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy of
@@ -80,6 +80,7 @@
 #define configENABLE_FPU                        <#if FREERTOS_ENABLE_FPU == true>1<#else>0</#if>
 #define configENABLE_TRUSTZONE                  <#if FREERTOS_ENABLE_TRUSTZONE == true>1<#else>0</#if>
 #define configENABLE_MPU                        <#if FREERTOS_ENABLE_MPU == true>1<#else>0</#if>
+#define configENABLE_MVE                        <#if FREERTOS_ENABLE_MVE == true>1<#else>0</#if>
 #define configRUN_FREERTOS_SECURE_ONLY          <#if FREERTOS_RUN_FREERTOS_SECURE_ONLY == true>1<#else>0</#if>
 <#if __TRUSTZONE_ENABLED?? && __TRUSTZONE_ENABLED == "true">
 #define configMINIMAL_SECURE_STACK_SIZE         ( (uint32_t) ${FREERTOS_MINIMAL_SECURE_STACK_SIZE} )

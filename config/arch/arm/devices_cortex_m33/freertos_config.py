@@ -146,6 +146,14 @@ freeRtosPortHeader.setProjectPath("FreeRTOS/Source/portable/GCC/" + freeRtosDir 
 freeRtosPortHeader.setType("HEADER")
 freeRtosPortHeader.setMarkup(False)
 
+freeRtosPortCommonHeader = thirdPartyFreeRTOS.createFileSymbol("FREERTOS_SAM_PORTMACRO_COMMON_H", None)
+freeRtosPortCommonHeader.setSourcePath("../CMSIS-FreeRTOS/Source/portable/GCC/" + freeRtosDir + "/non_secure/portmacrocommon.h")
+freeRtosPortCommonHeader.setOutputName("portmacrocommon.h")
+freeRtosPortCommonHeader.setDestPath("../../third_party/rtos/FreeRTOS/Source/portable/GCC/" + freeRtosDir + "/non_secure")
+freeRtosPortCommonHeader.setProjectPath("FreeRTOS/Source/portable/GCC/" + freeRtosDir + "/non_secure")
+freeRtosPortCommonHeader.setType("HEADER")
+freeRtosPortCommonHeader.setMarkup(False)
+
 #If TrustZone Enable
 if Variables.get("__TRUSTZONE_ENABLED") != None and Variables.get("__TRUSTZONE_ENABLED") == "true":
     freeRtosSecureIncludeDirSym = thirdPartyFreeRTOS.createSettingSymbol("FREERTOS_XC32_SECURE_INCLUDE_DIRS", None)
