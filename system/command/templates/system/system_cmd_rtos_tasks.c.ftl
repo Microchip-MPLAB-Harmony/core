@@ -23,6 +23,7 @@
  *******************************************************************************/
 -->
 <#if (HarmonyCore.SELECT_RTOS)?? && HarmonyCore.SELECT_RTOS == "FreeRTOS">
+    <#lt>TaskHandle_t xSYS_CMD_Tasks;
     <#lt>void _SYS_CMD_Tasks(  void *pvParameters  )
     <#lt>{
     <#lt>    while(1)

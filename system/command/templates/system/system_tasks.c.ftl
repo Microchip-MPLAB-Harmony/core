@@ -31,7 +31,7 @@
     <#lt>        SYS_CMD_RTOS_STACK_SIZE,
     <#lt>        (void*)NULL,
     <#lt>        SYS_CMD_RTOS_TASK_PRIORITY,
-    <#lt>        (TaskHandle_t*)NULL
+    <#lt>        &xSYS_CMD_Tasks
     <#lt>    );
 <#elseif (HarmonyCore.SELECT_RTOS)?? && HarmonyCore.SELECT_RTOS == "ThreadX">
     <#lt>    tx_byte_allocate(&byte_pool_0,
