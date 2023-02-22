@@ -179,7 +179,9 @@ const DRV_USART_INTERRUPT_SOURCES drvUSART${INDEX?string}InterruptSources =
         <#lt>    .isSingleIntSrc                        = true,
 
         <#lt>    /* Peripheral interrupt line */
-        <#if USART_PLIB_SINGLE_IRQn?eval??>
+        <#if .vars["${DRV_USART_PLIB?lower_case}"].SINGLE_IRQn?has_content>
+            <#lt>    .intSources.usartInterrupt             = ${.vars["${DRV_USART_PLIB?lower_case}"].SINGLE_IRQn},
+        <#elseif USART_PLIB_SINGLE_IRQn?eval??>
             <#lt>    .intSources.usartInterrupt             = ${USART_PLIB_SINGLE_IRQn?eval},
         <#else>
             <#lt>    .intSources.usartInterrupt             = ${DRV_USART_PLIB}_IRQn,
