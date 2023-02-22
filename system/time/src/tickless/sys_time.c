@@ -598,13 +598,12 @@ static void SYS_TIME_CounterInit(SYS_MODULE_INIT* init)
 {
     SYS_TIME_COUNTER_OBJ* counterObj = (SYS_TIME_COUNTER_OBJ *)&gSystemCounterObj;
     SYS_TIME_INIT* initData = (SYS_TIME_INIT *)init;
-    int32_t cpuCyclesPerTimerClock;
 
     counterObj->timePlib = initData->timePlib;
     counterObj->hwTimerFrequency = counterObj->timePlib->timerFrequencyGet();
 
-    cpuCyclesPerTimerClock=(SYS_TIME_CPU_CLOCK_FREQUENCY/counterObj->hwTimerFrequency);
-    counterObj->hwTimerCompareMargin=(SYS_TIME_COMPARE_UPDATE_EXECUTION_CYCLES/cpuCyclesPerTimerClock) +2;
+    /*num_timer_cnts = (execution_cycles * timer_freq)/cpu_freq*/
+    counterObj->hwTimerCompareMargin = (((uint64_t)SYS_TIME_COMPARE_UPDATE_EXECUTION_CYCLES * counterObj->hwTimerFrequency)/(uint32_t)SYS_TIME_CPU_CLOCK_FREQUENCY) + 2U;
 
     counterObj->hwTimerIntNum = initData->hwTimerIntNum;
     counterObj->hwTimerPreviousValue = 0;

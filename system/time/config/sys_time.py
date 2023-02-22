@@ -53,7 +53,7 @@ def handleMessage(messageID, args):
 
     if sysTimeUseSystick.getValue() == True:
         sysTimeRemoteComponentId.setValue("core")
-
+        
     if messageID == "SYS_TIME_PLIB_CAPABILITY":
         if args["plib_mode"] == "PERIOD_MODE":
             sysTimeOperatingMode.setValue("TICK BASED")
