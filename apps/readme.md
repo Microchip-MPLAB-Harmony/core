@@ -2,6 +2,7 @@ Microchip MPLAB Harmony provides several application examples for most supported
 
 | Repository | Product family |
 | ---------- | -------------- |
+| [core_apps_cec173x](https://github.com/Microchip-MPLAB-Harmony/core_apps_cec173x) | Application examples for CEC173x family |
 | [core_apps_pic32ck_sg_gc](https://github.com/Microchip-MPLAB-Harmony/core_apps_pic32ck_sg_gc) | Application examples for PIC32CK-SG/GC family |
 | [core_apps_pic32cm_jh00_jh01](https://github.com/Microchip-MPLAB-Harmony/core_apps_pic32cm_jh00_jh01) | Application examples for PIC32CM JH01 family |
 | [core_apps_pic32cm_le_ls](https://github.com/Microchip-MPLAB-Harmony/core_apps_pic32cm_le_ls) | Application examples for PIC32CM LE/LS family |

@@ -3,6 +3,32 @@
 
 # Microchip MPLAB® Harmony 3 Release Notes
 
+## Core Release v3.12.0
+
+### New Features
+
+- **New Features and Enhancements**
+  - Added UART, I2C, I2C EEPROM, SYS Console and SYS Time driver support for CEC173x family of devices
+  - Added support for W25 SPI flash device for CEC173x family of devices
+
+- **Applications**
+  - MPLAB Harmony provides large number of application examples to accelerate learning and reduce the development cycles for your embedded systems with reusable software components. The application examples are available in the respective [product family specific repository](apps/readme.md).
+
+### Known Issues
+
+Same as v3.12.0-E1
+
+### Development Tools
+
+- [MPLAB® X IDE v6.05](https://www.microchip.com/mplab/mplab-x-ide)
+- [MPLAB® XC32 C/C++ Compiler v4.21](https://www.microchip.com/mplab/compilers)
+- MPLAB® X IDE plug-ins:
+  - MPLAB® Code Configurator 5.2.2 or higher
+
+### Notes
+
+-  None
+
 ## Core Release v3.12.0-E1
 
 ### New Features
