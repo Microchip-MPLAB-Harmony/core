@@ -1,237 +1,302 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE html
-  PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
-<head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-
-<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE11" /><meta name="copyright" content="(C) Copyright 2022" />
-<meta name="DC.rights.owner" content="(C) Copyright 2022" />
-<meta name="DC.type" content="topic" />
-<meta name="DC.title" content="EMU_EEPROM_ParametersGet Function" />
-<meta name="DC.relation" scheme="URI" content="GUID-000B6F77-4664-4A72-9723-F697040A7436.html" />
-<meta name="DC.format" content="XHTML" />
-<meta name="DC.identifier" content="emu-eeprom-parametersget-function" />
-<link rel="stylesheet" type="text/css" href="stylesheets/commonltr.css" />
-<link rel="stylesheet" type="text/css" href="stylesheets/atmel.css" />
-<link rel="stylesheet" type="text/css" href="./stylesheets/common-extended.css" /><title>EMU_EEPROM_ParametersGet Function</title>
-<meta name="Microsoft.Help.Id" content="GUID-EDFB1AB8-CD6B-446F-8E25-F2167287A1AF-emu-eeprom-parametersget-function" />
-<meta name="Microsoft.Help.TocParent" content="GUID-EDFB1AB8-CD6B-446F-8E25-F2167287A1AF" />
-<meta name="Microsoft.Help.TocOrder" content="0" />
-<meta name="Microsoft.Help.Locale" content="en-US" />
-<meta name="Microsoft.Help.TopicLocale" content="en-US" />
-<meta name="Microsoft.Help.DisplayVersion" content="MPLAB® Harmony Core Library Reference A 11/2021" />
-<script language="javascript">
-       
-       if (window.parent.location.protocol != 'file:') {
-				document.addEventListener('click', function(e) {
-				    if (e.target) {
-               if (e.target.nodeName == "A" ) {
-                    if (!e.target.target) {
-                      e.preventDefault();
-                      e.stopPropagation();
-                              
-                      var origUrl = window.parent.location.href.substr(0, window.parent.location.href.indexOf("?"));
-                      if (origUrl.length === 0) {
-                          origUrl = window.parent.location.href;
-                      }
-                      var href= e.target.getAttribute("href");
-                      var parts = href.split("#");
-          
-                      var url = "";
-                      if (parts.length == 2 ) {
-                        if (!parts[0].length) {
-                            url = window.parent.location.search.replace('?','')
-                        } else {
-                            url = parts[0].replace('.html','');
-                        }
-                      } else {
-                        url = parts[0].replace('.html','');
-                      }
-
-                      if (parts.length == 2) {
-                          url += "#" + parts[1];
-                      }
+<!DOCTYPE html><html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-us" lang="en-us" data-whc_version="24.1">
+    <head><link rel="shortcut icon" href="oxygen-webhelp\template\resources/images/favicon.ico"/><link rel="icon" href="oxygen-webhelp\template\resources/images/favicon.ico"/><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/><meta name="viewport" content="width=device-width, initial-scale=1.0"/><meta http-equiv="X-UA-Compatible" content="IE=edge"/><meta name="description" content="EMU_EEPROM_STATUS EMU_EEPROM_ParametersGet ( EMU_EEPROM_PARAMETERS * const parameters) Returns EEPROM Emulation configuration parameters Retrieves the configuration parameters of the EEPROM Emulator ..."/><meta name="copyright" content="(C) Copyright 2023"/><meta name="DC.rights.owner" content="(C) Copyright 2023"/><meta name="DC.type" content="topic"/><meta name="DC.relation" content="GUID-000B6F77-4664-4A72-9723-F697040A7436.md"/><meta name="DC.format" content="HTML5"/><meta name="DC.identifier" content="emu-eeprom-parametersget-function"/><title>1.3.1.4.4 EMU_EEPROM_ParametersGet Function</title><!--  Generated with Oxygen version 24.1, build number 2022062014.  --><meta name="wh-path2root" content=""/><meta name="wh-toc-id" content="&lt;?xml version=&#34;1.0&#34; encoding=&#34;UTF-8&#34;?&gt;&lt;?workdir /D:\InfoShare\Data\Publish\Data\qzvtb5xcvan\work\temp?&gt;&lt;?workdir-uri file:/D:/InfoShare/Data/Publish/Data/qzvtb5xcvan/work/temp/?&gt;&lt;?path2project?&gt;&lt;?path2project-uri ./?&gt;&lt;?path2rootmap-uri ./?&gt;&lt;topic xmlns:ditaarch=&#34;http://dita.oasis-open.org/architecture/2005/&#34; xmlns:dita-ot=&#34;http://dita-ot.sourceforge.net/ns/201007/dita-ot&#34; class=&#34;- topic/topic &#34; ditaarch:DITAArchVersion=&#34;1.2&#34; domains=&#34;(topic hi-d) (topic ut-d) (topic indexing-d) (topic hazard-d) (topic abbrev-d) (topic pr-d) (topic sw-d) (topic ui-d)&#34; id=&#34;emu-eeprom-parametersget-function&#34; xtrf=&#34;file:/D:/InfoShare/Data/Publish/Data/qzvtb5xcvan/work/1/en-US/GUID-3893EFC2-A6FE-4963-9744-99AF06FA28E9.md&#34; xtrc=&#34;topic:1;182:3&#34; specializations=&#34;&#34;&gt;&lt;title class=&#34;- topic/title &#34; xtrf=&#34;file:/D:/InfoShare/Data/Publish/Data/qzvtb5xcvan/work/1/en-US/GUID-3893EFC2-A6FE-4963-9744-99AF06FA28E9.md&#34; xtrc=&#34;title:1;182:3&#34;&gt;EMU_EEPROM_ParametersGet Function&lt;/title&gt;&lt;body class=&#34;- topic/body &#34; xtrf=&#34;file:/D:/InfoShare/Data/Publish/Data/qzvtb5xcvan/work/1/en-US/GUID-3893EFC2-A6FE-4963-9744-99AF06FA28E9.md&#34; xtrc=&#34;body:1;182:3&#34;/&gt;&lt;related-links class=&#34;- topic/related-links &#34;&gt;&lt;linkpool class=&#34;- topic/linkpool &#34; mapkeyref=&#34;GUID-4BA21645-85F2-46DA-ADDC-4292784EE8A4&#34; xtrc=&#34;topicref:9;3:2519&#34; xtrf=&#34;file:/D:/InfoShare/Data/Publish/Data/qzvtb5xcvan/work/1/en-US/GUID-4789C820-B661-425A-8E90-60ED79990241.ditamap&#34;&gt;&lt;link class=&#34;- topic/link &#34; format=&#34;dita&#34; href=&#34;GUID-000B6F77-4664-4A72-9723-F697040A7436.md&#34; mapclass=&#34;- map/topicref &#34; role=&#34;parent&#34; scope=&#34;local&#34; type=&#34;topic&#34; xtrc=&#34;topicref:5;3:1946&#34; xtrf=&#34;file:/D:/InfoShare/Data/Publish/Data/qzvtb5xcvan/work/1/en-US/GUID-4789C820-B661-425A-8E90-60ED79990241.ditamap&#34;&gt;&lt;?ditaot usertext?&gt;&lt;linktext class=&#34;- topic/linktext &#34;&gt;&lt;?ditaot gentext?&gt;Library Interface&lt;/linktext&gt;&lt;/link&gt;&lt;/linkpool&gt;&lt;/related-links&gt;&lt;topic class=&#34;- topic/topic &#34; ditaarch:DITAArchVersion=&#34;1.2&#34; domains=&#34;(topic hi-d) (topic ut-d) (topic indexing-d) (topic hazard-d) (topic abbrev-d) (topic pr-d) (topic sw-d) (topic ui-d)&#34; id=&#34;c&#34; xtrf=&#34;file:/D:/InfoShare/Data/Publish/Data/qzvtb5xcvan/work/1/en-US/GUID-3893EFC2-A6FE-4963-9744-99AF06FA28E9.md&#34; xtrc=&#34;topic:2;182:3&#34; specializations=&#34;&#34;&gt;&lt;title class=&#34;- topic/title &#34; xtrf=&#34;file:/D:/InfoShare/Data/Publish/Data/qzvtb5xcvan/work/1/en-US/GUID-3893EFC2-A6FE-4963-9744-99AF06FA28E9.md&#34; xtrc=&#34;title:2;182:3&#34;&gt;C&lt;/title&gt;&lt;body class=&#34;- topic/body &#34; xtrf=&#34;file:/D:/InfoShare/Data/Publish/Data/qzvtb5xcvan/work/1/en-US/GUID-3893EFC2-A6FE-4963-9744-99AF06FA28E9.md&#34; xtrc=&#34;body:2;182:3&#34;&gt;&lt;codeblock class=&#34;+ topic/pre pr-d/codeblock &#34; xml:space=&#34;preserve&#34; outputclass=&#34;c&#34; xtrf=&#34;file:/D:/InfoShare/Data/Publish/Data/qzvtb5xcvan/work/1/en-US/GUID-3893EFC2-A6FE-4963-9744-99AF06FA28E9.md&#34; xtrc=&#34;codeblock:1;182:3&#34;&gt;EMU_EEPROM_STATUS EMU_EEPROM_ParametersGet( EMU_EEPROM_PARAMETERS *const parameters)&lt;/codeblock&gt;&lt;/body&gt;&lt;/topic&gt;&lt;topic class=&#34;- topic/topic &#34; ditaarch:DITAArchVersion=&#34;1.2&#34; domains=&#34;(topic hi-d) (topic ut-d) (topic indexing-d) (topic hazard-d) (topic abbrev-d) (topic pr-d) (topic sw-d) (topic ui-d)&#34; id=&#34;summary&#34; xtrf=&#34;file:/D:/InfoShare/Data/Publish/Data/qzvtb5xcvan/work/1/en-US/GUID-3893EFC2-A6FE-4963-9744-99AF06FA28E9.md&#34; xtrc=&#34;topic:3;182:3&#34; specializations=&#34;&#34;&gt;&lt;title class=&#34;- topic/title &#34; xtrf=&#34;file:/D:/InfoShare/Data/Publish/Data/qzvtb5xcvan/work/1/en-US/GUID-3893EFC2-A6FE-4963-9744-99AF06FA28E9.md&#34; xtrc=&#34;title:3;182:3&#34;&gt;Summary&lt;/title&gt;&lt;body class=&#34;- topic/body &#34; xtrf=&#34;file:/D:/InfoShare/Data/Publish/Data/qzvtb5xcvan/work/1/en-US/GUID-3893EFC2-A6FE-4963-9744-99AF06FA28E9.md&#34; xtrc=&#34;body:3;182:3&#34;&gt;&lt;p class=&#34;- topic/p &#34; xtrf=&#34;file:/D:/InfoShare/Data/Publish/Data/qzvtb5xcvan/work/1/en-US/GUID-3893EFC2-A6FE-4963-9744-99AF06FA28E9.md&#34; xtrc=&#34;p:1;182:3&#34;&gt;Returns EEPROM Emulation configuration parameters&lt;/p&gt;&lt;/body&gt;&lt;/topic&gt;&lt;topic class=&#34;- topic/topic &#34; ditaarch:DITAArchVersion=&#34;1.2&#34; domains=&#34;(topic hi-d) (topic ut-d) (topic indexing-d) (topic hazard-d) (topic abbrev-d) (topic pr-d) (topic sw-d) (topic ui-d)&#34; id=&#34;description&#34; xtrf=&#34;file:/D:/InfoShare/Data/Publish/Data/qzvtb5xcvan/work/1/en-US/GUID-3893EFC2-A6FE-4963-9744-99AF06FA28E9.md&#34; xtrc=&#34;topic:4;182:3&#34; specializations=&#34;&#34;&gt;&lt;title class=&#34;- topic/title &#34; xtrf=&#34;file:/D:/InfoShare/Data/Publish/Data/qzvtb5xcvan/work/1/en-US/GUID-3893EFC2-A6FE-4963-9744-99AF06FA28E9.md&#34; xtrc=&#34;title:4;182:3&#34;&gt;Description&lt;/title&gt;&lt;body class=&#34;- topic/body &#34; xtrf=&#34;file:/D:/InfoShare/Data/Publish/Data/qzvtb5xcvan/work/1/en-US/GUID-3893EFC2-A6FE-4963-9744-99AF06FA28E9.md&#34; xtrc=&#34;body:4;182:3&#34;&gt;&lt;p class=&#34;- topic/p &#34; xtrf=&#34;file:/D:/InfoShare/Data/Publish/Data/qzvtb5xcvan/work/1/en-US/GUID-3893EFC2-A6FE-4963-9744-99AF06FA28E9.md&#34; xtrc=&#34;p:2;182:3&#34;&gt;Retrieves the configuration parameters of the EEPROM Emulator&lt;/p&gt;&lt;/body&gt;&lt;/topic&gt;&lt;topic class=&#34;- topic/topic &#34; ditaarch:DITAArchVersion=&#34;1.2&#34; domains=&#34;(topic hi-d) (topic ut-d) (topic indexing-d) (topic hazard-d) (topic abbrev-d) (topic pr-d) (topic sw-d) (topic ui-d)&#34; id=&#34;precondition&#34; xtrf=&#34;file:/D:/InfoShare/Data/Publish/Data/qzvtb5xcvan/work/1/en-US/GUID-3893EFC2-A6FE-4963-9744-99AF06FA28E9.md&#34; xtrc=&#34;topic:5;182:3&#34; specializations=&#34;&#34;&gt;&lt;title class=&#34;- topic/title &#34; xtrf=&#34;file:/D:/InfoShare/Data/Publish/Data/qzvtb5xcvan/work/1/en-US/GUID-3893EFC2-A6FE-4963-9744-99AF06FA28E9.md&#34; xtrc=&#34;title:5;182:3&#34;&gt;Precondition&lt;/title&gt;&lt;body class=&#34;- topic/body &#34; xtrf=&#34;file:/D:/InfoShare/Data/Publish/Data/qzvtb5xcvan/work/1/en-US/GUID-3893EFC2-A6FE-4963-9744-99AF06FA28E9.md&#34; xtrc=&#34;body:5;182:3&#34;&gt;&lt;p class=&#34;- topic/p &#34; xtrf=&#34;file:/D:/InfoShare/Data/Publish/Data/qzvtb5xcvan/work/1/en-US/GUID-3893EFC2-A6FE-4963-9744-99AF06FA28E9.md&#34; xtrc=&#34;p:3;182:3&#34;&gt;Function EMU_EEPROM_Initialize should have been called before calling this function.&lt;/p&gt;&lt;/body&gt;&lt;/topic&gt;&lt;topic class=&#34;- topic/topic &#34; ditaarch:DITAArchVersion=&#34;1.2&#34; domains=&#34;(topic hi-d) (topic ut-d) (topic indexing-d) (topic hazard-d) (topic abbrev-d) (topic pr-d) (topic sw-d) (topic ui-d)&#34; id=&#34;parameters&#34; xtrf=&#34;file:/D:/InfoShare/Data/Publish/Data/qzvtb5xcvan/work/1/en-US/GUID-3893EFC2-A6FE-4963-9744-99AF06FA28E9.md&#34; xtrc=&#34;topic:6;182:3&#34; specializations=&#34;&#34;&gt;&lt;title class=&#34;- topic/title &#34; xtrf=&#34;file:/D:/InfoShare/Data/Publish/Data/qzvtb5xcvan/work/1/en-US/GUID-3893EFC2-A6FE-4963-9744-99AF06FA28E9.md&#34; xtrc=&#34;title:6;182:3&#34;&gt;Parameters&lt;/title&gt;&lt;body class=&#34;- topic/body &#34; xtrf=&#34;file:/D:/InfoShare/Data/Publish/Data/qzvtb5xcvan/work/1/en-US/GUID-3893EFC2-A6FE-4963-9744-99AF06FA28E9.md&#34; xtrc=&#34;body:6;182:3&#34;&gt;&lt;table class=&#34;- topic/table &#34; xtrf=&#34;file:/D:/InfoShare/Data/Publish/Data/qzvtb5xcvan/work/1/en-US/GUID-3893EFC2-A6FE-4963-9744-99AF06FA28E9.md&#34; xtrc=&#34;table:1;182:3&#34;&gt;&lt;tgroup class=&#34;- topic/tgroup &#34; cols=&#34;2&#34; xtrf=&#34;file:/D:/InfoShare/Data/Publish/Data/qzvtb5xcvan/work/1/en-US/GUID-3893EFC2-A6FE-4963-9744-99AF06FA28E9.md&#34; xtrc=&#34;tgroup:1;182:3&#34;&gt;&lt;colspec class=&#34;- topic/colspec &#34; colname=&#34;col1&#34; xtrf=&#34;file:/D:/InfoShare/Data/Publish/Data/qzvtb5xcvan/work/1/en-US/GUID-3893EFC2-A6FE-4963-9744-99AF06FA28E9.md&#34; xtrc=&#34;colspec:1;182:3&#34; colnum=&#34;1&#34;/&gt;&lt;colspec class=&#34;- topic/colspec &#34; colname=&#34;col2&#34; xtrf=&#34;file:/D:/InfoShare/Data/Publish/Data/qzvtb5xcvan/work/1/en-US/GUID-3893EFC2-A6FE-4963-9744-99AF06FA28E9.md&#34; xtrc=&#34;colspec:2;182:3&#34; colnum=&#34;2&#34;/&gt;&lt;thead class=&#34;- topic/thead &#34; xtrf=&#34;file:/D:/InfoShare/Data/Publish/Data/qzvtb5xcvan/work/1/en-US/GUID-3893EFC2-A6FE-4963-9744-99AF06FA28E9.md&#34; xtrc=&#34;thead:1;182:3&#34;&gt;&lt;row class=&#34;- topic/row &#34; xtrf=&#34;file:/D:/InfoShare/Data/Publish/Data/qzvtb5xcvan/work/1/en-US/GUID-3893EFC2-A6FE-4963-9744-99AF06FA28E9.md&#34; xtrc=&#34;row:1;182:3&#34;&gt;&lt;entry class=&#34;- topic/entry &#34; align=&#34;left&#34; xtrf=&#34;file:/D:/InfoShare/Data/Publish/Data/qzvtb5xcvan/work/1/en-US/GUID-3893EFC2-A6FE-4963-9744-99AF06FA28E9.md&#34; xtrc=&#34;entry:1;182:3&#34; colname=&#34;col1&#34; dita-ot:x=&#34;1&#34; dita-ot:y=&#34;1&#34;&gt;Param&lt;/entry&gt;&lt;entry class=&#34;- topic/entry &#34; align=&#34;left&#34; xtrf=&#34;file:/D:/InfoShare/Data/Publish/Data/qzvtb5xcvan/work/1/en-US/GUID-3893EFC2-A6FE-4963-9744-99AF06FA28E9.md&#34; xtrc=&#34;entry:2;182:3&#34; colname=&#34;col2&#34; dita-ot:x=&#34;2&#34; dita-ot:y=&#34;1&#34;&gt;Description&lt;/entry&gt;&lt;/row&gt;&lt;/thead&gt;&lt;tbody class=&#34;- topic/tbody &#34; xtrf=&#34;file:/D:/InfoShare/Data/Publish/Data/qzvtb5xcvan/work/1/en-US/GUID-3893EFC2-A6FE-4963-9744-99AF06FA28E9.md&#34; xtrc=&#34;tbody:1;182:3&#34;&gt;&lt;row class=&#34;- topic/row &#34; xtrf=&#34;file:/D:/InfoShare/Data/Publish/Data/qzvtb5xcvan/work/1/en-US/GUID-3893EFC2-A6FE-4963-9744-99AF06FA28E9.md&#34; xtrc=&#34;row:2;182:3&#34;&gt;&lt;entry class=&#34;- topic/entry &#34; align=&#34;left&#34; xtrf=&#34;file:/D:/InfoShare/Data/Publish/Data/qzvtb5xcvan/work/1/en-US/GUID-3893EFC2-A6FE-4963-9744-99AF06FA28E9.md&#34; xtrc=&#34;entry:3;182:3&#34; colname=&#34;col1&#34; dita-ot:x=&#34;1&#34; dita-ot:y=&#34;2&#34;&gt;parameters&lt;/entry&gt;&lt;entry class=&#34;- topic/entry &#34; align=&#34;left&#34; xtrf=&#34;file:/D:/InfoShare/Data/Publish/Data/qzvtb5xcvan/work/1/en-US/GUID-3893EFC2-A6FE-4963-9744-99AF06FA28E9.md&#34; xtrc=&#34;entry:4;182:3&#34; colname=&#34;col2&#34; dita-ot:x=&#34;2&#34; dita-ot:y=&#34;2&#34;&gt;pointer to variable of type EMU_EEPROM_PARAMETERS&lt;/entry&gt;&lt;/row&gt;&lt;/tbody&gt;&lt;/tgroup&gt;&lt;/table&gt;&lt;/body&gt;&lt;/topic&gt;&lt;topic class=&#34;- topic/topic &#34; ditaarch:DITAArchVersion=&#34;1.2&#34; domains=&#34;(topic hi-d) (topic ut-d) (topic indexing-d) (topic hazard-d) (topic abbrev-d) (topic pr-d) (topic sw-d) (topic ui-d)&#34; id=&#34;returns&#34; xtrf=&#34;file:/D:/InfoShare/Data/Publish/Data/qzvtb5xcvan/work/1/en-US/GUID-3893EFC2-A6FE-4963-9744-99AF06FA28E9.md&#34; xtrc=&#34;topic:7;182:3&#34; specializations=&#34;&#34;&gt;&lt;title class=&#34;- topic/title &#34; xtrf=&#34;file:/D:/InfoShare/Data/Publish/Data/qzvtb5xcvan/work/1/en-US/GUID-3893EFC2-A6FE-4963-9744-99AF06FA28E9.md&#34; xtrc=&#34;title:7;182:3&#34;&gt;Returns&lt;/title&gt;&lt;body class=&#34;- topic/body &#34; xtrf=&#34;file:/D:/InfoShare/Data/Publish/Data/qzvtb5xcvan/work/1/en-US/GUID-3893EFC2-A6FE-4963-9744-99AF06FA28E9.md&#34; xtrc=&#34;body:7;182:3&#34;&gt;&lt;p class=&#34;- topic/p &#34; xtrf=&#34;file:/D:/InfoShare/Data/Publish/Data/qzvtb5xcvan/work/1/en-US/GUID-3893EFC2-A6FE-4963-9744-99AF06FA28E9.md&#34; xtrc=&#34;p:4;182:3&#34;&gt;&lt;i class=&#34;+ topic/ph hi-d/i &#34; xtrf=&#34;file:/D:/InfoShare/Data/Publish/Data/qzvtb5xcvan/work/1/en-US/GUID-3893EFC2-A6FE-4963-9744-99AF06FA28E9.md&#34; xtrc=&#34;i:1;182:3&#34;&gt;EMU_EEPROM_STATUS&lt;/i&gt; - Enum of type EMU_EEPROM_STATUS&lt;/p&gt;&lt;/body&gt;&lt;/topic&gt;&lt;topic class=&#34;- topic/topic &#34; ditaarch:DITAArchVersion=&#34;1.2&#34; domains=&#34;(topic hi-d) (topic ut-d) (topic indexing-d) (topic hazard-d) (topic abbrev-d) (topic pr-d) (topic sw-d) (topic ui-d)&#34; id=&#34;example&#34; xtrf=&#34;file:/D:/InfoShare/Data/Publish/Data/qzvtb5xcvan/work/1/en-US/GUID-3893EFC2-A6FE-4963-9744-99AF06FA28E9.md&#34; xtrc=&#34;topic:8;182:3&#34; specializations=&#34;&#34;&gt;&lt;title class=&#34;- topic/title &#34; xtrf=&#34;file:/D:/InfoShare/Data/Publish/Data/qzvtb5xcvan/work/1/en-US/GUID-3893EFC2-A6FE-4963-9744-99AF06FA28E9.md&#34; xtrc=&#34;title:8;182:3&#34;&gt;Example&lt;/title&gt;&lt;body class=&#34;- topic/body &#34; xtrf=&#34;file:/D:/InfoShare/Data/Publish/Data/qzvtb5xcvan/work/1/en-US/GUID-3893EFC2-A6FE-4963-9744-99AF06FA28E9.md&#34; xtrc=&#34;body:8;182:3&#34;&gt;&lt;codeblock class=&#34;+ topic/pre pr-d/codeblock &#34; xml:space=&#34;preserve&#34; outputclass=&#34;c&#34; xtrf=&#34;file:/D:/InfoShare/Data/Publish/Data/qzvtb5xcvan/work/1/en-US/GUID-3893EFC2-A6FE-4963-9744-99AF06FA28E9.md&#34; xtrc=&#34;codeblock:2;182:3&#34;&gt;EMU_EEPROM_PARAMETERS param; EMU_EEPROM_ParametersGet(&amp;amp;param);&lt;/codeblock&gt;&lt;/body&gt;&lt;/topic&gt;&lt;topic class=&#34;- topic/topic &#34; ditaarch:DITAArchVersion=&#34;1.2&#34; domains=&#34;(topic hi-d) (topic ut-d) (topic indexing-d) (topic hazard-d) (topic abbrev-d) (topic pr-d) (topic sw-d) (topic ui-d)&#34; id=&#34;remarks&#34; xtrf=&#34;file:/D:/InfoShare/Data/Publish/Data/qzvtb5xcvan/work/1/en-US/GUID-3893EFC2-A6FE-4963-9744-99AF06FA28E9.md&#34; xtrc=&#34;topic:9;182:3&#34; specializations=&#34;&#34;&gt;&lt;title class=&#34;- topic/title &#34; xtrf=&#34;file:/D:/InfoShare/Data/Publish/Data/qzvtb5xcvan/work/1/en-US/GUID-3893EFC2-A6FE-4963-9744-99AF06FA28E9.md&#34; xtrc=&#34;title:9;182:3&#34;&gt;Remarks&lt;/title&gt;&lt;body class=&#34;- topic/body &#34; xtrf=&#34;file:/D:/InfoShare/Data/Publish/Data/qzvtb5xcvan/work/1/en-US/GUID-3893EFC2-A6FE-4963-9744-99AF06FA28E9.md&#34; xtrc=&#34;body:9;182:3&#34;&gt;&lt;p class=&#34;- topic/p &#34; xtrf=&#34;file:/D:/InfoShare/Data/Publish/Data/qzvtb5xcvan/work/1/en-US/GUID-3893EFC2-A6FE-4963-9744-99AF06FA28E9.md&#34; xtrc=&#34;p:5;182:3&#34;&gt;None&lt;/p&gt;&lt;/body&gt;&lt;/topic&gt;&lt;/topic&gt;"/><meta name="wh-source-relpath" content="GUID-3893EFC2-A6FE-4963-9744-99AF06FA28E9.md"/><meta name="wh-out-relpath" content="GUID-3893EFC2-A6FE-4963-9744-99AF06FA28E9.html"/>
+    <!-- Latest compiled and minified Bootstrap CSS -->
+    <link rel="stylesheet" type="text/css" href="./oxygen-webhelp/lib/bootstrap/css/bootstrap.min.css"/>
     
-                      window.parent.location.href = origUrl + "?" + url;
+    <link rel="stylesheet" href="./oxygen-webhelp/lib/jquery-ui/jquery-ui.min.css"/>
+    
+    <!-- Template default styles  -->
+    <link rel="stylesheet" type="text/css" href="./oxygen-webhelp/app/topic-page.css?buildId=2022062014"/>
+    
+    
+    <script src="./oxygen-webhelp/lib/jquery/jquery-3.5.1.min.js"></script>
+    
+    <script data-main="./oxygen-webhelp/app/topic-page.js" src="./oxygen-webhelp/lib/requirejs/require.js"></script>
+<link rel="stylesheet" type="text/css" href="oxygen-webhelp/template/microchip.css?buildId=2022062014"/><link rel="stylesheet" type="text/css" href="oxygen-webhelp/template/notes.css?buildId=2022062014"/>
+<script src="mchp-context-help.js"></script>
+<link href="https://fonts.googleapis.com/css?family=Open+Sans:400,600,300" rel="stylesheet" type="text/css"/>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML" async="" type="text/javascript"></script>
+</head>
 
-                      return false;
-                    }
-               }
-            }
-				});
-			}
+    <body id="emu-eeprom-parametersget-function" class="wh_topic_page frmBody">
+        <a href="#wh_topic_body" class="sr-only sr-only-focusable">
+            Jump to main content
+        </a>
+        
+        
+        
+        
+        <header class="navbar navbar-default wh_header">
+    <div class="container-fluid">
+        <div class="wh_header_flex_container navbar-nav navbar-expand-md navbar-dark">
+            <div class="wh_logo_and_publication_title_container">
+                <div class="wh_logo_and_publication_title">
+                    
+                    <a href="index.html" class=" wh_logo d-none d-sm-block "><img src="oxygen-webhelp\template\resources/images/microchip.png" alt="MPLAB® Harmony Core Library "/></a>
+                    <div class=" wh_publication_title "><a href="index.html">MPLAB® Harmony Core Library </a></div>
+                    
+                </div>
+                
+                
+            </div>
 
-		</script><script language="javascript">
-        function cpy(id, button) {
-        
-            var element = document.getElementById(id);
-            var content = element.getAttribute("content");
-            var textArea = document.createElement("textarea");
-            
-            // Place in the top-left corner of screen regardless of scroll position.
-            textArea.style.position = 'fixed';
-            textArea.style.top = 0;
-            textArea.style.left = 0;
-            
-            // Ensure it has a small width and height. Setting to 1px / 1em
-            // doesn't work as this gives a negative w/h on some browsers.
-            textArea.style.width = '2em';
-            textArea.style.height = '2em';
-            
-            // We don't need padding, reducing the size if it does flash render.
-            textArea.style.padding = 0;
-            
-            // Clean up any borders.
-            textArea.style.border = 'none';
-            textArea.style.outline = 'none';
-            textArea.style.boxShadow = 'none';
-            
-            // Avoid flash of the white box if rendered for any reason.
-            textArea.style.background = 'transparent';
-            
-            
-            textArea.value = content;
-            
-            document.body.appendChild(textArea);
-            textArea.focus();
-            textArea.select();
-            
-            try {
-               var successful = document.execCommand('copy');
-               var msg = successful ? 'successful' : 'unsuccessful';
-               if (!button.classList.contains("copied")){
-                  button.textContent = "Copied";
-                  button.classList.add("copied");
-                  setTimeout(function(){
-                    button.textContent = "Copy";
-                    button.classList.remove("copied");
-                  },1000);
-               }
-            } catch (err) {
-              console.log('Oops, unable to copy');
-            }
-            
-            document.body.removeChild(textArea);
-        }
-      </script><script language="javascript">
-          
-          // Add the MathML namespace to html
-          var html = document.getElementsByTagName("html")[0],
-          head = document.getElementsByTagName("head")[0];
-          
-          var mathJax = document.createElement("script");
-          mathJax.src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-MML-AM_CHTML";
-          head.appendChild(mathJax);
-          
-          html.setAttribute("xmlns:m","http://www.w3.org/1998/Math/MathML");
-          
-          function inIframe() { try { return window.self !== window.top; } catch (e) { return true; } }
-          
-          if (!inIframe()) { 
-          
-          var Default = "index.html?GUID-3893EFC2-A6FE-4963-9744-99AF06FA28E9"; 
-          
-          var displaylocation = "value" + window.location.href;
-          
-          var GUIDS = displaylocation.split('GUID');          
-          
-          if (displaylocation.indexOf('#GUID') != -1) {            
-          var First = GUIDS[1].split('.html');  
-          if (GUIDS[3]){First = GUIDS[2].split('.html');}
-          if (GUIDS[4]){First = GUIDS[3].split('.html');}
-          if (GUIDS[5]){First = GUIDS[4].split('.html');}
-          
-          var Second = GUIDS[2].split('#');   
-          if (GUIDS[3]){Second = GUIDS[3].split('#');}
-          if (GUIDS[4]){Second = GUIDS[4].split('#');}
-          if (GUIDS[5]){Second = GUIDS[5].split('#');}
-          
-          Default = "index.html?" + "GUID" + First[0] + "GUID" + Second[0];     
-          }                    
-          window.top.location = Default;
-          }       
-          
-        </script><style xml:space="">
-        
-          button.copy-code{
-            display:none;
-            padding:0.7em 1.4em;
-            margin:0 0.3em 0.3em 0;
-            border-radius:0.15em;
-            box-sizing: border-box;
-            text-decoration:none;
-            font-family:'Roboto',sans-serif;
-            text-transform:uppercase;
-            font-weight:400;
-            color:#FFFFFF;
-            background-color:#9c9c9c;
-            box-shadow:inset 0 -0.6em 0 -0.35em rgba(0,0,0,0.17);
-            text-align:center;
-            position:relative;
-            border: 0;
-            float: right;
-            border-radius: .5em;
-            cursor: pointer;
-          }
-          button.copy-code:active{
-            top:0.1em;
-          }
-          
-          pre:hover button.copy-code{
-            display: inline-block !important;
-          }
-          button.copy-code.copied {
-            cursor: default !important;
-          }
-          
-          
-          @media all and (max-width:30em){
-            button.copy-code{
-              display:block;
-              margin:0.4em auto;
-            }
-          }
+            <div class="wh_top_menu_and_indexterms_link collapse navbar-collapse" id="wh_top_menu_and_indexterms_link">
+                
+                
+                
+                
+            </div>
+        </div>
+    </div>
+</header>
         
         
-      </style></head>
-<body id="emu-eeprom-parametersget-function">
-<h1 class="title topictitle1" id="ariaid-title1">EMU_EEPROM_ParametersGet Function</h1><div class="body"></div>
-<div class="related-links">
-<div class="familylinks">
-<div class="parentlink"><strong>Parent topic:</strong> <a class="link" href="GUID-000B6F77-4664-4A72-9723-F697040A7436.html">Library Interface</a></div>
+         
+        
+        <div class=" wh_search_input navbar-form wh_topic_page_search search " role="form">
+            
+            
+            
+            <form id="searchForm" method="get" role="search" action="search.html"><div><input type="search" placeholder="Search " class="wh_search_textfield" id="textToSearch" name="searchQuery" aria-label="Search query" required="required"/><button type="submit" class="wh_search_button" aria-label="Search"><span class="search_input_text">Search</span></button></div></form>
+            
+            <div class="mchp-color-stripe-grid-container">
+  <div class="mchp-main-bar mchp-orange-bar"></div>
+  <div class="mchp-main-bar mchp-blue-bar"></div>
+  <div class="mchp-main-bar mchp-green-bar"></div>
 </div>
-</div><div class="topic nested1" aria-labelledby="ariaid-title2" id="c"><h2 class="title topictitle2" id="ariaid-title2">C</h2><div class="body"><pre class="pre codeblock language-c"><button title="Copy Code" class="copy-code" onclick="cpy('d80939e21', this);">Copy</button><code id="d80939e21" content="EMU_EEPROM_STATUS EMU_EEPROM_ParametersGet( EMU_EEPROM_PARAMETERS *const parameters)">EMU_EEPROM_STATUS <span class="ph token function">EMU_EEPROM_ParametersGet</span><span class="ph token punctuation">(</span> EMU_EEPROM_PARAMETERS <span class="ph token operator">*</span><span class="ph token keyword">const</span> parameters<span class="ph token punctuation">)</span></code></pre></div>
+            
+        </div>
+        
+        <div class="container-fluid" id="wh_topic_container">
+            <div class="row">
+
+                <nav class="wh_tools d-print-none navbar-expand-md" aria-label="Tools">
+                    
+                    <div data-tooltip-position="bottom" class=" wh_breadcrumb "><ol class="d-print-none"><li><span class="home"><a href="index.html"><span>Home</span></a></span></li><li><div class="topicref" data-id="mplab-harmony-core-library"><div class="title"><a href="GUID-C04D97AB-D6E0-4CF5-9A80-CA64E36B6199.html"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">1</ph>
+MPLAB® Harmony Core Library</a></div></div></li><li><div class="topicref" data-id="software-libraries"><div class="title"><a href="GUID-7249D18B-E049-45D9-96DD-B6329375E344.html"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">1.3</ph>
+Software Libraries</a></div></div></li><li><div class="topicref" data-id="emulated-eeprom"><div class="title"><a href="GUID-7D1381D7-9A05-495B-B0A8-D195FA444618.html"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">1.3.1</ph>
+Emulated EEPROM</a></div></div></li><li><div class="topicref" data-id="library-interface"><div class="title"><a href="GUID-000B6F77-4664-4A72-9723-F697040A7436.html"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">1.3.1.4</ph>
+Library Interface</a></div></div></li><li class="active"><div class="topicref" data-id="emu-eeprom-parametersget-function"><div class="title"><a href="GUID-3893EFC2-A6FE-4963-9744-99AF06FA28E9.html"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">1.3.1.4.4</ph>
+EMU_EEPROM_ParametersGet Function</a></div></div></li></ol></div>
+                    
+                    
+                    
+                    <div class="wh_right_tools">
+                        <button class="wh_hide_highlight" aria-label="Toggle search highlights" title="Toggle search highlights"></button>
+                        <button class="webhelp_expand_collapse_sections" data-next-state="collapsed" aria-label="Collapse sections" title="Collapse sections"></button>
+                        
+                        
+                        
+                        
+                        <div class=" wh_print_link print d-none d-md-inline-block "><button onClick="window.print()" title="Print this page" aria-label="Print this page"></button></div>
+                        
+                        <button type="button" id="wh_toc_button" class="custom-toggler navbar-toggler collapsed wh_toggle_button navbar-light" aria-expanded="false" aria-label="Toggle publishing table of content" aria-controls="wh_publication_toc">
+                            <span class="navbar-toggler-icon"></span>
+                        </button>
+                    </div>
+                    
+                </nav>
+            </div>
+            
+            
+            
+            
+            <div class="wh_content_area">
+                <div class="row">
+                    
+                        <nav id="wh_publication_toc" class="col-lg-3 col-md-3 col-sm-12 d-md-block d-none d-print-none" aria-label="Table of Contents Container">
+                            <div id="wh_publication_toc_content">
+		                        
+                            	<div class=" wh_publication_toc " data-tooltip-position="right"><span class="expand-button-action-labels"><span id="button-expand-action" role="button" aria-label="Expand"></span><span id="button-collapse-action" role="button" aria-label="Collapse"></span><span id="button-pending-action" role="button" aria-label="Pending"></span></span><ul role="tree" aria-label="Table of Contents"><li role="treeitem" aria-expanded="true"><div data-tocid="mplab-harmony-core-library-d6800e9" class="topicref" data-id="mplab-harmony-core-library" data-state="expanded"><span role="button" tabindex="0" aria-labelledby="button-collapse-action mplab-harmony-core-library-d6800e9-link" class="wh-expand-btn"></span><div class="title"><a href="GUID-C04D97AB-D6E0-4CF5-9A80-CA64E36B6199.html" id="mplab-harmony-core-library-d6800e9-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">1</ph>
+MPLAB® Harmony Core Library</a></div></div><ul role="group" class="navbar-nav nav-list"><li role="treeitem" aria-expanded="false"><div data-tocid="driver-libraries-d6800e17" class="topicref" data-id="driver-libraries" data-state="not-ready"><span role="button" tabindex="0" aria-labelledby="button-expand-action driver-libraries-d6800e17-link" class="wh-expand-btn"></span><div class="title"><a href="GUID-4FA4B38A-8C7F-46A3-9D08-4B8C5CE26712.html" id="driver-libraries-d6800e17-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">1.1</ph>
+Driver Libraries</a></div></div></li><li role="treeitem" aria-expanded="false"><div data-tocid="system-service-libraries-d6800e2771" class="topicref" data-id="system-service-libraries" data-state="not-ready"><span role="button" tabindex="0" aria-labelledby="button-expand-action system-service-libraries-d6800e2771-link" class="wh-expand-btn"></span><div class="title"><a href="GUID-EA5ADDDE-73D5-43CB-B474-0752CA9A1A50.html" id="system-service-libraries-d6800e2771-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">1.2</ph>
+System Service Libraries</a></div></div></li><li role="treeitem" aria-expanded="true"><div data-tocid="software-libraries-d6800e5031" class="topicref" data-id="software-libraries" data-state="expanded"><span role="button" tabindex="0" aria-labelledby="button-collapse-action software-libraries-d6800e5031-link" class="wh-expand-btn"></span><div class="title"><a href="GUID-7249D18B-E049-45D9-96DD-B6329375E344.html" id="software-libraries-d6800e5031-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">1.3</ph>
+Software Libraries</a></div></div><ul role="group" class="navbar-nav nav-list"><li role="treeitem" aria-expanded="true"><div data-tocid="emulated-eeprom-d6800e5039" class="topicref" data-id="emulated-eeprom" data-state="expanded"><span role="button" tabindex="0" aria-labelledby="button-collapse-action emulated-eeprom-d6800e5039-link" class="wh-expand-btn"></span><div class="title"><a href="GUID-7D1381D7-9A05-495B-B0A8-D195FA444618.html" id="emulated-eeprom-d6800e5039-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">1.3.1</ph>
+Emulated EEPROM</a></div></div><ul role="group" class="navbar-nav nav-list"><li role="treeitem"><div data-tocid="how-the-library-works-d6800e5047" class="topicref" data-id="how-the-library-works" data-state="leaf"><span role="button" class="wh-expand-btn"></span><div class="title"><a href="GUID-F2389E2B-C0EA-4408-B910-EBC4B92C005F.html" id="how-the-library-works-d6800e5047-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">1.3.1.1</ph>
+How the Library Works</a></div></div></li><li role="treeitem"><div data-tocid="using-the-library-d6800e5055" class="topicref" data-id="using-the-library" data-state="leaf"><span role="button" class="wh-expand-btn"></span><div class="title"><a href="GUID-CA73D5E6-E69E-4ED9-8BAE-47DF7EBB82AB.html" id="using-the-library-d6800e5055-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">1.3.1.2</ph>
+Using The Library</a></div></div></li><li role="treeitem"><div data-tocid="configuring-the-library-d6800e5063" class="topicref" data-id="configuring-the-library" data-state="leaf"><span role="button" class="wh-expand-btn"></span><div class="title"><a href="GUID-E082A9CA-FC12-4A79-8A83-E0902DF83721.html" id="configuring-the-library-d6800e5063-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">1.3.1.3</ph>
+Configuring The Library</a></div></div></li><li role="treeitem" aria-expanded="true"><div data-tocid="library-interface-d6800e5071" class="topicref" data-id="library-interface" data-state="expanded"><span role="button" tabindex="0" aria-labelledby="button-collapse-action library-interface-d6800e5071-link" class="wh-expand-btn"></span><div class="title"><a href="GUID-000B6F77-4664-4A72-9723-F697040A7436.html" id="library-interface-d6800e5071-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">1.3.1.4</ph>
+Library Interface</a></div></div><ul role="group" class="navbar-nav nav-list"><li role="treeitem"><div data-tocid="emu-eeprom-initialize-function-d6800e5079" class="topicref" data-id="emu-eeprom-initialize-function" data-state="leaf"><span role="button" class="wh-expand-btn"></span><div class="title"><a href="GUID-1522E7A9-D0DA-48E9-A893-7AFF88739328.html" id="emu-eeprom-initialize-function-d6800e5079-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">1.3.1.4.1</ph>
+EMU_EEPROM_Initialize Function</a></div></div></li><li role="treeitem"><div data-tocid="emu-eeprom-statusget-function-d6800e5087" class="topicref" data-id="emu-eeprom-statusget-function" data-state="leaf"><span role="button" class="wh-expand-btn"></span><div class="title"><a href="GUID-D90F34DE-49C2-4D1F-9762-5555B6F2F06C.html" id="emu-eeprom-statusget-function-d6800e5087-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">1.3.1.4.2</ph>
+EMU_EEPROM_StatusGet Function</a></div></div></li><li role="treeitem"><div data-tocid="emu-eeprom-formatmemory-function-d6800e5095" class="topicref" data-id="emu-eeprom-formatmemory-function" data-state="leaf"><span role="button" class="wh-expand-btn"></span><div class="title"><a href="GUID-2D66D8A2-D985-4A4B-903C-D713C835DDC3.html" id="emu-eeprom-formatmemory-function-d6800e5095-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">1.3.1.4.3</ph>
+EMU_EEPROM_FormatMemory Function</a></div></div></li><li role="treeitem" class="active"><div data-tocid="emu-eeprom-parametersget-function-d6800e5103" class="topicref" data-id="emu-eeprom-parametersget-function" data-state="leaf"><span role="button" class="wh-expand-btn"></span><div class="title"><a href="GUID-3893EFC2-A6FE-4963-9744-99AF06FA28E9.html" id="emu-eeprom-parametersget-function-d6800e5103-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">1.3.1.4.4</ph>
+EMU_EEPROM_ParametersGet Function</a></div></div></li><li role="treeitem"><div data-tocid="emu-eeprom-pagebuffercommit-function-d6800e5111" class="topicref" data-id="emu-eeprom-pagebuffercommit-function" data-state="leaf"><span role="button" class="wh-expand-btn"></span><div class="title"><a href="GUID-4EBEC168-246F-401E-8D76-A04EACD7EFB9.html" id="emu-eeprom-pagebuffercommit-function-d6800e5111-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">1.3.1.4.5</ph>
+EMU_EEPROM_PageBufferCommit Function</a></div></div></li><li role="treeitem"><div data-tocid="emu-eeprom-pagewrite-function-d6800e5119" class="topicref" data-id="emu-eeprom-pagewrite-function" data-state="leaf"><span role="button" class="wh-expand-btn"></span><div class="title"><a href="GUID-C5D32B8C-8006-47DC-82E4-380055D681F3.html" id="emu-eeprom-pagewrite-function-d6800e5119-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">1.3.1.4.6</ph>
+EMU_EEPROM_PageWrite Function</a></div></div></li><li role="treeitem"><div data-tocid="emu-eeprom-pageread-function-d6800e5127" class="topicref" data-id="emu-eeprom-pageread-function" data-state="leaf"><span role="button" class="wh-expand-btn"></span><div class="title"><a href="GUID-4307AF8B-71ED-471F-B1D1-804772B8F545.html" id="emu-eeprom-pageread-function-d6800e5127-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">1.3.1.4.7</ph>
+EMU_EEPROM_PageRead Function</a></div></div></li><li role="treeitem"><div data-tocid="emu-eeprom-bufferwrite-function-d6800e5135" class="topicref" data-id="emu-eeprom-bufferwrite-function" data-state="leaf"><span role="button" class="wh-expand-btn"></span><div class="title"><a href="GUID-5B30F7C8-8E1C-47DD-834E-5DCEB9726A84.html" id="emu-eeprom-bufferwrite-function-d6800e5135-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">1.3.1.4.8</ph>
+EMU_EEPROM_BufferWrite Function</a></div></div></li><li role="treeitem"><div data-tocid="emu-eeprom-bufferread-function-d6800e5143" class="topicref" data-id="emu-eeprom-bufferread-function" data-state="leaf"><span role="button" class="wh-expand-btn"></span><div class="title"><a href="GUID-AD2A8D50-5953-4F48-AA6E-2C472D92EEB3.html" id="emu-eeprom-bufferread-function-d6800e5143-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">1.3.1.4.9</ph>
+EMU_EEPROM_BufferRead Function</a></div></div></li><li role="treeitem"><div data-tocid="emu-eeprom-status-enum-d6800e5151" class="topicref" data-id="emu-eeprom-status-enum" data-state="leaf"><span role="button" class="wh-expand-btn"></span><div class="title"><a href="GUID-CF0C439F-1F3C-4557-A0D6-08E15536CDAD.html" id="emu-eeprom-status-enum-d6800e5151-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">1.3.1.4.10</ph>
+EMU_EEPROM_STATUS Enum</a></div></div></li><li role="treeitem"><div data-tocid="emu-eeprom-parameters-struct-d6800e5160" class="topicref" data-id="emu-eeprom-parameters-struct" data-state="leaf"><span role="button" class="wh-expand-btn"></span><div class="title"><a href="GUID-9728BCD2-2DB9-456F-8B5F-E88D61261ABC.html" id="emu-eeprom-parameters-struct-d6800e5160-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">1.3.1.4.11</ph>
+EMU_EEPROM_PARAMETERS Struct</a></div></div></li></ul></li></ul></li><li role="treeitem" aria-expanded="false"><div data-tocid="i2c-bit-bang-d6800e5168" class="topicref" data-id="i2c-bit-bang" data-state="not-ready"><span role="button" tabindex="0" aria-labelledby="button-expand-action i2c-bit-bang-d6800e5168-link" class="wh-expand-btn"></span><div class="title"><a href="GUID-64D5F998-D72C-42CD-902F-D3FED8339A94.html" id="i2c-bit-bang-d6800e5168-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">1.3.2</ph>
+I2C Bit Bang</a></div></div></li></ul></li><li role="treeitem" aria-expanded="false"><div data-tocid="osal-library-d6800e5305" class="topicref" data-id="osal-library" data-state="not-ready"><span role="button" tabindex="0" aria-labelledby="button-expand-action osal-library-d6800e5305-link" class="wh-expand-btn"></span><div class="title"><a href="GUID-8AEFE0B0-CE35-4F99-ACF4-7C8E10D3BBB6.html" id="osal-library-d6800e5305-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">1.4</ph>
+OSAL Library</a></div></div></li><li role="treeitem" aria-expanded="false"><div data-tocid="third-party-products-d6800e5546" class="topicref" data-id="third-party-products" data-state="not-ready"><span role="button" tabindex="0" aria-labelledby="button-expand-action third-party-products-d6800e5546-link" class="wh-expand-btn"></span><div class="title"><a href="GUID-2FB7347D-8FBD-411F-88D8-58A813EA9498.html" id="third-party-products-d6800e5546-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">1.5</ph>
+Third party Products</a></div></div></li><li role="treeitem"><div data-tocid="configuring-the-harmony-core-library-d6800e5586" class="topicref" data-id="configuring-the-harmony-core-library" data-state="leaf"><span role="button" class="wh-expand-btn"></span><div class="title"><a href="GUID-F1244C57-71EF-492B-8104-473C8CECC20F.html" id="configuring-the-harmony-core-library-d6800e5586-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">1.6</ph>
+Configuring The Harmony Core Library</a></div></div></li></ul></li></ul></div>
+		                        
+                            </div>
+                        </nav>
+                    
+                    
+                    <div class="col-lg-7 col-md-9 col-sm-12" id="wh_topic_body">
+                        <button id="wh_close_publication_toc_button" class="close-toc-button d-none" aria-label="Toggle publishing table of content" aria-controls="wh_publication_toc" aria-expanded="true">
+                            <span class="close-toc-icon-container">
+                                <span class="close-toc-icon"></span>     
+                            </span>
+                        </button>
+                        <button id="wh_close_topic_toc_button" class="close-toc-button d-none" aria-label="Toggle topic table of content" aria-controls="wh_topic_toc" aria-expanded="true">
+                            <span class="close-toc-icon-container">
+                                <span class="close-toc-icon"></span>     
+                            </span>
+                        </button>
+                        
+                        <div class=" wh_topic_content body "><main role="main"><article role="article" aria-labelledby="ariaid-title1"><h1 class="- topic/title title topictitle1" id="ariaid-title1" style="">1.3.1.4.4 EMU_EEPROM_ParametersGet Function</h1><div class="- topic/body body"></div><article class="- topic/topic topic nested1" aria-labelledby="ariaid-title2" id="c"><h2 class="- topic/title title topictitle2" id="ariaid-title2" style=""> C</h2><div class="- topic/body body"><pre class="+ topic/pre pr-d/codeblock pre codeblock c">EMU_EEPROM_STATUS <span class="hl-functions">EMU_EEPROM_ParametersGet</span>( EMU_EEPROM_PARAMETERS *<strong class="hl-keyword">const</strong> parameters)</pre></div></article><article class="- topic/topic topic nested1" aria-labelledby="ariaid-title3" id="summary"><h2 class="- topic/title title topictitle2" id="ariaid-title3" style=""> Summary</h2><div class="- topic/body body"><p class="- topic/p p">Returns EEPROM Emulation configuration parameters</p></div></article><article class="- topic/topic topic nested1" aria-labelledby="ariaid-title4" id="description"><h2 class="- topic/title title topictitle2" id="ariaid-title4" style=""> Description</h2><div class="- topic/body body"><p class="- topic/p p">Retrieves the configuration parameters of the EEPROM Emulator</p></div></article><article class="- topic/topic topic nested1" aria-labelledby="ariaid-title5" id="precondition"><h2 class="- topic/title title topictitle2" id="ariaid-title5" style=""> Precondition</h2><div class="- topic/body body"><p class="- topic/p p">Function EMU_EEPROM_Initialize should have been called before calling this function.</p></div></article><article class="- topic/topic topic nested1" aria-labelledby="ariaid-title6" id="parameters"><h2 class="- topic/title title topictitle2" id="ariaid-title6" style=""> Parameters</h2><div class="- topic/body body"><div class="table-container"><table class="- topic/table table" data-cols="2"><caption></caption><colgroup><col/><col/></colgroup><thead class="- topic/thead thead"><tr class="- topic/row"><th class="- topic/entry entry align-left colsep-0 rowsep-0" id="parameters__entry__1">Param</th><th class="- topic/entry entry align-left colsep-0 rowsep-0" id="parameters__entry__2">Description</th></tr></thead><tbody class="- topic/tbody tbody"><tr class="- topic/row"><td class="- topic/entry entry align-left colsep-0 rowsep-0" headers="parameters__entry__1">parameters</td><td class="- topic/entry entry align-left colsep-0 rowsep-0" headers="parameters__entry__2">pointer to variable of type EMU_EEPROM_PARAMETERS</td></tr></tbody></table></div></div></article><article class="- topic/topic topic nested1" aria-labelledby="ariaid-title7" id="returns"><h2 class="- topic/title title topictitle2" id="ariaid-title7" style=""> Returns</h2><div class="- topic/body body"><p class="- topic/p p"><em class="+ topic/ph hi-d/i ph i">EMU_EEPROM_STATUS</em> - Enum of type EMU_EEPROM_STATUS</p></div></article><article class="- topic/topic topic nested1" aria-labelledby="ariaid-title8" id="example"><h2 class="- topic/title title topictitle2" id="ariaid-title8" style=""> Example</h2><div class="- topic/body body"><pre class="+ topic/pre pr-d/codeblock pre codeblock c">EMU_EEPROM_PARAMETERS param;
+EMU_EEPROM_ParametersGet(&amp;param);</pre></div></article><article class="- topic/topic topic nested1" aria-labelledby="ariaid-title9" id="remarks"><h2 class="- topic/title title topictitle2" id="ariaid-title9" style=""> Remarks</h2><div class="- topic/body body"><p class="- topic/p p">None</p></div></article></article></main></div>
+                        
+                        
+                        
+                        
+                        
+                        
+                    </div>
+                    
+                        <nav role="navigation" id="wh_topic_toc" aria-label="On this page" class="col-lg-2 d-none d-lg-block navbar d-print-none"> 
+                            <div id="wh_topic_toc_content">
+		                        
+	                            <div class=" wh_topic_toc "><div class="wh_topic_label">On this page</div><ul><li class="topic-item"><a href="#c" data-tocid="c"> C</a></li><li class="topic-item"><a href="#summary" data-tocid="summary"> Summary</a></li><li class="topic-item"><a href="#description" data-tocid="description"> Description</a></li><li class="topic-item"><a href="#precondition" data-tocid="precondition"> Precondition</a></li><li class="topic-item"><a href="#parameters" data-tocid="parameters"> Parameters</a></li><li class="topic-item"><a href="#returns" data-tocid="returns"> Returns</a></li><li class="topic-item"><a href="#example" data-tocid="example"> Example</a></li><li class="topic-item"><a href="#remarks" data-tocid="remarks"> Remarks</a></li></ul></div>
+	                        	
+                        	</div>
+                        </nav>
+                    
+                </div>
+            </div>
+            
+            
+            
+        </div> 
+        <footer class="navbar navbar-default wh_footer">
+  <div class=" footer-container mx-auto ">
+    <div class="footer">
+  <div class="mchp-wh-footer">
+    <div class="mchp-footer">
+      <div class="mchp-footer-tier1">
+        <div class="spacer"></div>
+        <div class="mchp-footer-container">
+          <div class="mchp-footer-links mchp-social-media-links">
+            <div class="mchp-component-items">
+              <div class="mchp-component-item">
+                <a class="cmp-image__link" href="https://www.facebook.com/pages/Microchip-Technology-Inc/20320981741" target="_blank">
+                  <img class="cmp-image__image" alt="Microchip Facebook" src="oxygen-webhelp/template/resources/images/201016-corp-facebook.png"/>
+                </a>
+              </div>
+              <div class="mchp-component-item">
+                <a class="cmp-image__link" href="https://www.linkedin.com/company/microchip-technology" target="_blank">
+                  <img class="cmp-image__image" alt="Microchip LinkedIn" src="oxygen-webhelp/template/resources/images/201016-corp-linkedin.png"/>
+                </a>
+              </div>
+              <div class="mchp-component-item">
+                <a class="cmp-image__link" href="https://twitter.com/MicrochipTech" target="_blank">
+                  <img class="cmp-image__image" alt="Microchip Twitter" src="oxygen-webhelp/template/resources/images/201016-corp-twitter.png"/>
+                </a>
+              </div>
+              <div class="mchp-component-item">
+                <a class="cmp-image__link" href="https://www.youtube.com/user/MicrochipTechnology" target="_blank">
+                  <img class="cmp-image__image" alt="Microchip YouTube" src="oxygen-webhelp/template/resources/images/201016-corp-youtube.png"/>
+                </a>
+              </div>
+              <div class="mchp-component-item">
+                <a class="cmp-image__link" href="https://www.instagram.com/microchiptechnologyinc/" target="_blank">
+                  <img class="cmp-image__image" alt="Microchip Instagram" src="oxygen-webhelp/template/resources/images/201016-corp-instagram.png"/>
+                </a>
+              </div>
+              <div class="mchp-component-item">
+                <a class="cmp-image__link" href="https://www.weibo.com/microchiptech" target="_blank">
+                  <img class="cmp-image__image" alt="Microchip Weibo" src="oxygen-webhelp/template/resources/images/201016-corp-weibo.png"/>
+                </a>
+              </div>
+              <div class="mchp-component-item">
+                <a class="cmp-image__link" href="https://www.microchip.com/en-us/about/blog" target="_blank">
+                  <img class="cmp-image__image" alt="Microchip Blog" src="oxygen-webhelp/template/resources/images/201016-corp-blog.png"/>
+                </a>
+              </div>
+            </div>
+          </div>
+          <div class="mchp-footer-links">
+            <div class="mchp-component-items">
+              <div class="mchp-component-item">
+                <div class="link">
+                  <a href="https://www.microchip.com/about-us/contact-us" class="mchp-link__link">Contact</a>
+                  <span class="mchp-link__separator">|</span>
+                </div>
+              </div>
+              <div class="mchp-component-item ">
+                <div class="link">
+                  <a href="https://www.microchip.com/en-us/about/legal-information" class="mchp-link__link">Legal</a>
+                  <span class="mchp-link__separator">|</span>
+                </div>
+              </div>
+              <div class="mchp-component-item ">
+                <div class="link">
+                  <a href="https://www.microchip.com/en-us/about/legal-information/privacy-policy" class="mchp-link__link">Privacy Policy</a>
+                  <span class="mchp-link__separator">|</span>
+                </div>
+              </div>
+              <div class="mchp-component-item ">
+                <div class="link">
+                  <a href="https://www.microchip.com/en-us/about/legal-information/microchip-cookie-statement" class="mchp-link__link">Cookies</a>
+                  <span class="mchp-link__separator">|</span>
+                </div>
+              </div>
+              <div class="mchp-component-item">
+                <div class="link">
+                  <a href="https://careers.microchip.com/" class="mchp-link__link">Careers</a>
+                  <span class="mchp-link__separator"></span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="mchp-footer-newsletter">
+            <div class="cmp-text">
+              <p>Stay on the leading edge with our blog</p>
+            </div>
+            <div class="mchp-button-wrapper">
+              <a role="button" href="https://www.microchip.com/en-us/about/blog" class="mchp-button mchp-button-regular solid">
+                <span class="mchp-button__span">MicroSolutions</span>
+              </a>
+            </div>
+          </div>
+        </div>
+        <div class="graphic">
+          <img src="oxygen-webhelp/template/resources/images/footer-graphic.png"/>
+        </div>
+      </div>
+      <div class="mchp-footer-tier2">
+        <p class="mchp-copyright">© Copyright 1998-2022 Microchip Technology Inc. All rights reserved.</p>
+      </div>
+    </div>
+  </div>
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+  <script async="true" src="https://www.googletagmanager.com/gtag/js?id=UA-2724382-19"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];  
+    function gtag(){dataLayer.push(arguments);}  
+    gtag('js', new Date());   
+    gtag('config', 'UA-2724382-19');
+  </script>
 </div>
-<div class="topic nested1" aria-labelledby="ariaid-title3" id="summary"><h2 class="title topictitle2" id="ariaid-title3">Summary</h2><div class="body"><p class="p">Returns EEPROM Emulation configuration parameters</p>
-</div>
-</div>
-<div class="topic nested1" aria-labelledby="ariaid-title4" id="description"><h2 class="title topictitle2" id="ariaid-title4">Description</h2><div class="body"><p class="p">Retrieves the configuration parameters of the EEPROM Emulator</p>
-</div>
-</div>
-<div class="topic nested1" aria-labelledby="ariaid-title5" id="precondition"><h2 class="title topictitle2" id="ariaid-title5">Precondition</h2><div class="body"><p class="p">Function EMU_EEPROM_Initialize should have been called before calling this function.</p>
-</div>
-</div>
-<div class="topic nested1" aria-labelledby="ariaid-title6" id="parameters"><h2 class="title topictitle2" id="ariaid-title6">Parameters</h2><div class="body">
-<div class="tablenoborder"><table cellpadding="4" cellspacing="0" summary="" class="table" frame="border" border="1" rules="all"><col style="width:" /><col style="width:" /><thead class="thead" style="text-align:left;"><tr class="row"><th class="entry cellrowborder" style="text-align:left;vertical-align:middle;" id="d80939e63"><span>Param</span></th>
-<th class="entry cellrowborder" style="text-align:left;vertical-align:middle;" id="d80939e65"><span>Description</span></th>
-</tr>
-</thead>
-<tbody class="tbody"><tr class="row"><td class="entry cellrowborder" style="text-align:left;vertical-align:middle;" headers="d80939e63 "><span>parameters</span></td>
-<td class="entry cellrowborder" style="text-align:left;vertical-align:middle;" headers="d80939e65 "><span>pointer to variable of type EMU_EEPROM_PARAMETERS</span></td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
-</div>
-<div class="topic nested1" aria-labelledby="ariaid-title7" id="returns"><h2 class="title topictitle2" id="ariaid-title7">Returns</h2><div class="body"><p class="p"><em class="ph i">EMU_EEPROM_STATUS</em> - Enum of type EMU_EEPROM_STATUS</p>
-</div>
-</div>
-<div class="topic nested1" aria-labelledby="ariaid-title8" id="example"><h2 class="title topictitle2" id="ariaid-title8">Example</h2><div class="body"><pre class="pre codeblock language-c"><button title="Copy Code" class="copy-code" onclick="cpy('d80939e85', this);">Copy</button><code id="d80939e85" content="EMU_EEPROM_PARAMETERS param;&#xA;EMU_EEPROM_ParametersGet(&amp;param);">EMU_EEPROM_PARAMETERS param<span class="ph token punctuation">;</span>
-<span class="ph token function">EMU_EEPROM_ParametersGet</span><span class="ph token punctuation">(</span><span class="ph token operator">&amp;</span>param<span class="ph token punctuation">)</span><span class="ph token punctuation">;</span></code></pre></div>
-</div>
-<div class="topic nested1" aria-labelledby="ariaid-title9" id="remarks"><h2 class="title topictitle2" id="ariaid-title9">Remarks</h2><div class="body"><p class="p">None</p>
-</div>
-</div>
-</body>
+  </div>
+</footer>
+        
+        <div id="go2top" class="d-print-none">
+            <span class="oxy-icon oxy-icon-up"></span>
+        </div>
+        
+        <div id="modal_img_large" class="modal">
+            <span class="close oxy-icon oxy-icon-remove"></span>
+            <div id="modal_img_container"></div>
+            <div id="caption"></div>
+        </div>
+        
+        
+        
+    </body>
 </html>

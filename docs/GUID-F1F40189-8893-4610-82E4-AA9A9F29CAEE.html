@@ -1,243 +1,333 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE html
-  PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
-<head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-
-<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE11" /><meta name="copyright" content="(C) Copyright 2022" />
-<meta name="DC.rights.owner" content="(C) Copyright 2022" />
-<meta name="DC.type" content="topic" />
-<meta name="DC.title" content="SYS_TIME_DelayIsComplete Function" />
-<meta name="DC.relation" scheme="URI" content="GUID-3D84F884-122D-4A4A-95DA-DFD8C2E84650.html" />
-<meta name="DC.format" content="XHTML" />
-<meta name="DC.identifier" content="sys-time-delayiscomplete-function" />
-<link rel="stylesheet" type="text/css" href="stylesheets/commonltr.css" />
-<link rel="stylesheet" type="text/css" href="stylesheets/atmel.css" />
-<link rel="stylesheet" type="text/css" href="./stylesheets/common-extended.css" /><title>SYS_TIME_DelayIsComplete Function</title>
-<meta name="Microsoft.Help.Id" content="GUID-EDFB1AB8-CD6B-446F-8E25-F2167287A1AF-sys-time-delayiscomplete-function" />
-<meta name="Microsoft.Help.TocParent" content="GUID-EDFB1AB8-CD6B-446F-8E25-F2167287A1AF" />
-<meta name="Microsoft.Help.TocOrder" content="0" />
-<meta name="Microsoft.Help.Locale" content="en-US" />
-<meta name="Microsoft.Help.TopicLocale" content="en-US" />
-<meta name="Microsoft.Help.DisplayVersion" content="MPLAB® Harmony Core Library Reference A 11/2021" />
-<script language="javascript">
-       
-       if (window.parent.location.protocol != 'file:') {
-				document.addEventListener('click', function(e) {
-				    if (e.target) {
-               if (e.target.nodeName == "A" ) {
-                    if (!e.target.target) {
-                      e.preventDefault();
-                      e.stopPropagation();
-                              
-                      var origUrl = window.parent.location.href.substr(0, window.parent.location.href.indexOf("?"));
-                      if (origUrl.length === 0) {
-                          origUrl = window.parent.location.href;
-                      }
-                      var href= e.target.getAttribute("href");
-                      var parts = href.split("#");
-          
-                      var url = "";
-                      if (parts.length == 2 ) {
-                        if (!parts[0].length) {
-                            url = window.parent.location.search.replace('?','')
-                        } else {
-                            url = parts[0].replace('.html','');
-                        }
-                      } else {
-                        url = parts[0].replace('.html','');
-                      }
-
-                      if (parts.length == 2) {
-                          url += "#" + parts[1];
-                      }
+<!DOCTYPE html><html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-us" lang="en-us" data-whc_version="24.1">
+    <head><link rel="shortcut icon" href="oxygen-webhelp\template\resources/images/favicon.ico"/><link rel="icon" href="oxygen-webhelp\template\resources/images/favicon.ico"/><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/><meta name="viewport" content="width=device-width, initial-scale=1.0"/><meta http-equiv="X-UA-Compatible" content="IE=edge"/><meta name="description" content="bool SYS_TIME_DelayIsComplete ( SYS_TIME_HANDLE handle ) Determines if the given delay timer has completed. This function determines if the requested delay is completed or is still in progress. A ..."/><meta name="copyright" content="(C) Copyright 2023"/><meta name="DC.rights.owner" content="(C) Copyright 2023"/><meta name="DC.type" content="topic"/><meta name="DC.relation" content="GUID-3D84F884-122D-4A4A-95DA-DFD8C2E84650.md"/><meta name="DC.format" content="HTML5"/><meta name="DC.identifier" content="sys-time-delayiscomplete-function"/><title>1.2.11.4.8 SYS_TIME_DelayIsComplete Function</title><!--  Generated with Oxygen version 24.1, build number 2022062014.  --><meta name="wh-path2root" content=""/><meta name="wh-toc-id" content="&lt;?xml version=&#34;1.0&#34; encoding=&#34;UTF-8&#34;?&gt;&lt;?workdir /D:\InfoShare\Data\Publish\Data\qzvtb5xcvan\work\temp?&gt;&lt;?workdir-uri file:/D:/InfoShare/Data/Publish/Data/qzvtb5xcvan/work/temp/?&gt;&lt;?path2project?&gt;&lt;?path2project-uri ./?&gt;&lt;?path2rootmap-uri ./?&gt;&lt;topic xmlns:ditaarch=&#34;http://dita.oasis-open.org/architecture/2005/&#34; xmlns:dita-ot=&#34;http://dita-ot.sourceforge.net/ns/201007/dita-ot&#34; class=&#34;- topic/topic &#34; ditaarch:DITAArchVersion=&#34;1.2&#34; domains=&#34;(topic hi-d) (topic ut-d) (topic indexing-d) (topic hazard-d) (topic abbrev-d) (topic pr-d) (topic sw-d) (topic ui-d)&#34; id=&#34;sys-time-delayiscomplete-function&#34; xtrf=&#34;file:/D:/InfoShare/Data/Publish/Data/qzvtb5xcvan/work/1/en-US/GUID-F1F40189-8893-4610-82E4-AA9A9F29CAEE.md&#34; xtrc=&#34;topic:1;182:3&#34; specializations=&#34;&#34;&gt;&lt;title class=&#34;- topic/title &#34; xtrf=&#34;file:/D:/InfoShare/Data/Publish/Data/qzvtb5xcvan/work/1/en-US/GUID-F1F40189-8893-4610-82E4-AA9A9F29CAEE.md&#34; xtrc=&#34;title:1;182:3&#34;&gt;SYS_TIME_DelayIsComplete Function&lt;/title&gt;&lt;body class=&#34;- topic/body &#34; xtrf=&#34;file:/D:/InfoShare/Data/Publish/Data/qzvtb5xcvan/work/1/en-US/GUID-F1F40189-8893-4610-82E4-AA9A9F29CAEE.md&#34; xtrc=&#34;body:1;182:3&#34;/&gt;&lt;related-links class=&#34;- topic/related-links &#34;&gt;&lt;linkpool class=&#34;- topic/linkpool &#34; mapkeyref=&#34;GUID-4BA21645-85F2-46DA-ADDC-4292784EE8A4&#34; xtrc=&#34;topicref:13;3:3096&#34; xtrf=&#34;file:/D:/InfoShare/Data/Publish/Data/qzvtb5xcvan/work/1/en-US/GUID-5C260567-9DCB-4B61-8EF7-60364A641851.ditamap&#34;&gt;&lt;link class=&#34;- topic/link &#34; format=&#34;dita&#34; href=&#34;GUID-3D84F884-122D-4A4A-95DA-DFD8C2E84650.md&#34; mapclass=&#34;- map/topicref &#34; role=&#34;parent&#34; scope=&#34;local&#34; type=&#34;topic&#34; xtrc=&#34;topicref:5;3:1939&#34; xtrf=&#34;file:/D:/InfoShare/Data/Publish/Data/qzvtb5xcvan/work/1/en-US/GUID-5C260567-9DCB-4B61-8EF7-60364A641851.ditamap&#34;&gt;&lt;?ditaot usertext?&gt;&lt;linktext class=&#34;- topic/linktext &#34;&gt;&lt;?ditaot gentext?&gt;Library Interface&lt;/linktext&gt;&lt;/link&gt;&lt;/linkpool&gt;&lt;/related-links&gt;&lt;topic class=&#34;- topic/topic &#34; ditaarch:DITAArchVersion=&#34;1.2&#34; domains=&#34;(topic hi-d) (topic ut-d) (topic indexing-d) (topic hazard-d) (topic abbrev-d) (topic pr-d) (topic sw-d) (topic ui-d)&#34; id=&#34;c&#34; xtrf=&#34;file:/D:/InfoShare/Data/Publish/Data/qzvtb5xcvan/work/1/en-US/GUID-F1F40189-8893-4610-82E4-AA9A9F29CAEE.md&#34; xtrc=&#34;topic:2;182:3&#34; specializations=&#34;&#34;&gt;&lt;title class=&#34;- topic/title &#34; xtrf=&#34;file:/D:/InfoShare/Data/Publish/Data/qzvtb5xcvan/work/1/en-US/GUID-F1F40189-8893-4610-82E4-AA9A9F29CAEE.md&#34; xtrc=&#34;title:2;182:3&#34;&gt;C&lt;/title&gt;&lt;body class=&#34;- topic/body &#34; xtrf=&#34;file:/D:/InfoShare/Data/Publish/Data/qzvtb5xcvan/work/1/en-US/GUID-F1F40189-8893-4610-82E4-AA9A9F29CAEE.md&#34; xtrc=&#34;body:2;182:3&#34;&gt;&lt;codeblock class=&#34;+ topic/pre pr-d/codeblock &#34; xml:space=&#34;preserve&#34; outputclass=&#34;c&#34; xtrf=&#34;file:/D:/InfoShare/Data/Publish/Data/qzvtb5xcvan/work/1/en-US/GUID-F1F40189-8893-4610-82E4-AA9A9F29CAEE.md&#34; xtrc=&#34;codeblock:1;182:3&#34;&gt;bool SYS_TIME_DelayIsComplete ( SYS_TIME_HANDLE handle )&lt;/codeblock&gt;&lt;/body&gt;&lt;/topic&gt;&lt;topic class=&#34;- topic/topic &#34; ditaarch:DITAArchVersion=&#34;1.2&#34; domains=&#34;(topic hi-d) (topic ut-d) (topic indexing-d) (topic hazard-d) (topic abbrev-d) (topic pr-d) (topic sw-d) (topic ui-d)&#34; id=&#34;summary&#34; xtrf=&#34;file:/D:/InfoShare/Data/Publish/Data/qzvtb5xcvan/work/1/en-US/GUID-F1F40189-8893-4610-82E4-AA9A9F29CAEE.md&#34; xtrc=&#34;topic:3;182:3&#34; specializations=&#34;&#34;&gt;&lt;title class=&#34;- topic/title &#34; xtrf=&#34;file:/D:/InfoShare/Data/Publish/Data/qzvtb5xcvan/work/1/en-US/GUID-F1F40189-8893-4610-82E4-AA9A9F29CAEE.md&#34; xtrc=&#34;title:3;182:3&#34;&gt;Summary&lt;/title&gt;&lt;body class=&#34;- topic/body &#34; xtrf=&#34;file:/D:/InfoShare/Data/Publish/Data/qzvtb5xcvan/work/1/en-US/GUID-F1F40189-8893-4610-82E4-AA9A9F29CAEE.md&#34; xtrc=&#34;body:3;182:3&#34;&gt;&lt;p class=&#34;- topic/p &#34; xtrf=&#34;file:/D:/InfoShare/Data/Publish/Data/qzvtb5xcvan/work/1/en-US/GUID-F1F40189-8893-4610-82E4-AA9A9F29CAEE.md&#34; xtrc=&#34;p:1;182:3&#34;&gt;Determines if the given delay timer has completed.&lt;/p&gt;&lt;/body&gt;&lt;/topic&gt;&lt;topic class=&#34;- topic/topic &#34; ditaarch:DITAArchVersion=&#34;1.2&#34; domains=&#34;(topic hi-d) (topic ut-d) (topic indexing-d) (topic hazard-d) (topic abbrev-d) (topic pr-d) (topic sw-d) (topic ui-d)&#34; id=&#34;description&#34; xtrf=&#34;file:/D:/InfoShare/Data/Publish/Data/qzvtb5xcvan/work/1/en-US/GUID-F1F40189-8893-4610-82E4-AA9A9F29CAEE.md&#34; xtrc=&#34;topic:4;182:3&#34; specializations=&#34;&#34;&gt;&lt;title class=&#34;- topic/title &#34; xtrf=&#34;file:/D:/InfoShare/Data/Publish/Data/qzvtb5xcvan/work/1/en-US/GUID-F1F40189-8893-4610-82E4-AA9A9F29CAEE.md&#34; xtrc=&#34;title:4;182:3&#34;&gt;Description&lt;/title&gt;&lt;body class=&#34;- topic/body &#34; xtrf=&#34;file:/D:/InfoShare/Data/Publish/Data/qzvtb5xcvan/work/1/en-US/GUID-F1F40189-8893-4610-82E4-AA9A9F29CAEE.md&#34; xtrc=&#34;body:4;182:3&#34;&gt;&lt;p class=&#34;- topic/p &#34; xtrf=&#34;file:/D:/InfoShare/Data/Publish/Data/qzvtb5xcvan/work/1/en-US/GUID-F1F40189-8893-4610-82E4-AA9A9F29CAEE.md&#34; xtrc=&#34;p:2;182:3&#34;&gt;This function determines if the requested delay is completed or is still in progress.&lt;/p&gt;&lt;/body&gt;&lt;/topic&gt;&lt;topic class=&#34;- topic/topic &#34; ditaarch:DITAArchVersion=&#34;1.2&#34; domains=&#34;(topic hi-d) (topic ut-d) (topic indexing-d) (topic hazard-d) (topic abbrev-d) (topic pr-d) (topic sw-d) (topic ui-d)&#34; id=&#34;precondition&#34; xtrf=&#34;file:/D:/InfoShare/Data/Publish/Data/qzvtb5xcvan/work/1/en-US/GUID-F1F40189-8893-4610-82E4-AA9A9F29CAEE.md&#34; xtrc=&#34;topic:5;182:3&#34; specializations=&#34;&#34;&gt;&lt;title class=&#34;- topic/title &#34; xtrf=&#34;file:/D:/InfoShare/Data/Publish/Data/qzvtb5xcvan/work/1/en-US/GUID-F1F40189-8893-4610-82E4-AA9A9F29CAEE.md&#34; xtrc=&#34;title:5;182:3&#34;&gt;Precondition&lt;/title&gt;&lt;body class=&#34;- topic/body &#34; xtrf=&#34;file:/D:/InfoShare/Data/Publish/Data/qzvtb5xcvan/work/1/en-US/GUID-F1F40189-8893-4610-82E4-AA9A9F29CAEE.md&#34; xtrc=&#34;body:5;182:3&#34;&gt;&lt;p class=&#34;- topic/p &#34; xtrf=&#34;file:/D:/InfoShare/Data/Publish/Data/qzvtb5xcvan/work/1/en-US/GUID-F1F40189-8893-4610-82E4-AA9A9F29CAEE.md&#34; xtrc=&#34;p:3;182:3&#34;&gt;A delay request must have been created using either the SYS_TIME_DelayMS or SYS_TIME_DelayUS functions.&lt;/p&gt;&lt;/body&gt;&lt;/topic&gt;&lt;topic class=&#34;- topic/topic &#34; ditaarch:DITAArchVersion=&#34;1.2&#34; domains=&#34;(topic hi-d) (topic ut-d) (topic indexing-d) (topic hazard-d) (topic abbrev-d) (topic pr-d) (topic sw-d) (topic ui-d)&#34; id=&#34;parameters&#34; xtrf=&#34;file:/D:/InfoShare/Data/Publish/Data/qzvtb5xcvan/work/1/en-US/GUID-F1F40189-8893-4610-82E4-AA9A9F29CAEE.md&#34; xtrc=&#34;topic:6;182:3&#34; specializations=&#34;&#34;&gt;&lt;title class=&#34;- topic/title &#34; xtrf=&#34;file:/D:/InfoShare/Data/Publish/Data/qzvtb5xcvan/work/1/en-US/GUID-F1F40189-8893-4610-82E4-AA9A9F29CAEE.md&#34; xtrc=&#34;title:6;182:3&#34;&gt;Parameters&lt;/title&gt;&lt;body class=&#34;- topic/body &#34; xtrf=&#34;file:/D:/InfoShare/Data/Publish/Data/qzvtb5xcvan/work/1/en-US/GUID-F1F40189-8893-4610-82E4-AA9A9F29CAEE.md&#34; xtrc=&#34;body:6;182:3&#34;&gt;&lt;table class=&#34;- topic/table &#34; xtrf=&#34;file:/D:/InfoShare/Data/Publish/Data/qzvtb5xcvan/work/1/en-US/GUID-F1F40189-8893-4610-82E4-AA9A9F29CAEE.md&#34; xtrc=&#34;table:1;182:3&#34;&gt;&lt;tgroup class=&#34;- topic/tgroup &#34; cols=&#34;2&#34; xtrf=&#34;file:/D:/InfoShare/Data/Publish/Data/qzvtb5xcvan/work/1/en-US/GUID-F1F40189-8893-4610-82E4-AA9A9F29CAEE.md&#34; xtrc=&#34;tgroup:1;182:3&#34;&gt;&lt;colspec class=&#34;- topic/colspec &#34; colname=&#34;col1&#34; xtrf=&#34;file:/D:/InfoShare/Data/Publish/Data/qzvtb5xcvan/work/1/en-US/GUID-F1F40189-8893-4610-82E4-AA9A9F29CAEE.md&#34; xtrc=&#34;colspec:1;182:3&#34; colnum=&#34;1&#34;/&gt;&lt;colspec class=&#34;- topic/colspec &#34; colname=&#34;col2&#34; xtrf=&#34;file:/D:/InfoShare/Data/Publish/Data/qzvtb5xcvan/work/1/en-US/GUID-F1F40189-8893-4610-82E4-AA9A9F29CAEE.md&#34; xtrc=&#34;colspec:2;182:3&#34; colnum=&#34;2&#34;/&gt;&lt;thead class=&#34;- topic/thead &#34; xtrf=&#34;file:/D:/InfoShare/Data/Publish/Data/qzvtb5xcvan/work/1/en-US/GUID-F1F40189-8893-4610-82E4-AA9A9F29CAEE.md&#34; xtrc=&#34;thead:1;182:3&#34;&gt;&lt;row class=&#34;- topic/row &#34; xtrf=&#34;file:/D:/InfoShare/Data/Publish/Data/qzvtb5xcvan/work/1/en-US/GUID-F1F40189-8893-4610-82E4-AA9A9F29CAEE.md&#34; xtrc=&#34;row:1;182:3&#34;&gt;&lt;entry class=&#34;- topic/entry &#34; align=&#34;left&#34; xtrf=&#34;file:/D:/InfoShare/Data/Publish/Data/qzvtb5xcvan/work/1/en-US/GUID-F1F40189-8893-4610-82E4-AA9A9F29CAEE.md&#34; xtrc=&#34;entry:1;182:3&#34; colname=&#34;col1&#34; dita-ot:x=&#34;1&#34; dita-ot:y=&#34;1&#34;&gt;Param&lt;/entry&gt;&lt;entry class=&#34;- topic/entry &#34; align=&#34;left&#34; xtrf=&#34;file:/D:/InfoShare/Data/Publish/Data/qzvtb5xcvan/work/1/en-US/GUID-F1F40189-8893-4610-82E4-AA9A9F29CAEE.md&#34; xtrc=&#34;entry:2;182:3&#34; colname=&#34;col2&#34; dita-ot:x=&#34;2&#34; dita-ot:y=&#34;1&#34;&gt;Description&lt;/entry&gt;&lt;/row&gt;&lt;/thead&gt;&lt;tbody class=&#34;- topic/tbody &#34; xtrf=&#34;file:/D:/InfoShare/Data/Publish/Data/qzvtb5xcvan/work/1/en-US/GUID-F1F40189-8893-4610-82E4-AA9A9F29CAEE.md&#34; xtrc=&#34;tbody:1;182:3&#34;&gt;&lt;row class=&#34;- topic/row &#34; xtrf=&#34;file:/D:/InfoShare/Data/Publish/Data/qzvtb5xcvan/work/1/en-US/GUID-F1F40189-8893-4610-82E4-AA9A9F29CAEE.md&#34; xtrc=&#34;row:2;182:3&#34;&gt;&lt;entry class=&#34;- topic/entry &#34; align=&#34;left&#34; xtrf=&#34;file:/D:/InfoShare/Data/Publish/Data/qzvtb5xcvan/work/1/en-US/GUID-F1F40189-8893-4610-82E4-AA9A9F29CAEE.md&#34; xtrc=&#34;entry:3;182:3&#34; colname=&#34;col1&#34; dita-ot:x=&#34;1&#34; dita-ot:y=&#34;2&#34;&gt;handle&lt;/entry&gt;&lt;entry class=&#34;- topic/entry &#34; align=&#34;left&#34; xtrf=&#34;file:/D:/InfoShare/Data/Publish/Data/qzvtb5xcvan/work/1/en-US/GUID-F1F40189-8893-4610-82E4-AA9A9F29CAEE.md&#34; xtrc=&#34;entry:4;182:3&#34; colname=&#34;col2&#34; dita-ot:x=&#34;2&#34; dita-ot:y=&#34;2&#34;&gt;A SYS_TIME_HANDLE value provided by either SYS_TIME_DelayMS or SYS_TIME_DelayUS functions.&lt;/entry&gt;&lt;/row&gt;&lt;/tbody&gt;&lt;/tgroup&gt;&lt;/table&gt;&lt;/body&gt;&lt;/topic&gt;&lt;topic class=&#34;- topic/topic &#34; ditaarch:DITAArchVersion=&#34;1.2&#34; domains=&#34;(topic hi-d) (topic ut-d) (topic indexing-d) (topic hazard-d) (topic abbrev-d) (topic pr-d) (topic sw-d) (topic ui-d)&#34; id=&#34;returns&#34; xtrf=&#34;file:/D:/InfoShare/Data/Publish/Data/qzvtb5xcvan/work/1/en-US/GUID-F1F40189-8893-4610-82E4-AA9A9F29CAEE.md&#34; xtrc=&#34;topic:7;182:3&#34; specializations=&#34;&#34;&gt;&lt;title class=&#34;- topic/title &#34; xtrf=&#34;file:/D:/InfoShare/Data/Publish/Data/qzvtb5xcvan/work/1/en-US/GUID-F1F40189-8893-4610-82E4-AA9A9F29CAEE.md&#34; xtrc=&#34;title:7;182:3&#34;&gt;Returns&lt;/title&gt;&lt;body class=&#34;- topic/body &#34; xtrf=&#34;file:/D:/InfoShare/Data/Publish/Data/qzvtb5xcvan/work/1/en-US/GUID-F1F40189-8893-4610-82E4-AA9A9F29CAEE.md&#34; xtrc=&#34;body:7;182:3&#34;&gt;&lt;p class=&#34;- topic/p &#34; xtrf=&#34;file:/D:/InfoShare/Data/Publish/Data/qzvtb5xcvan/work/1/en-US/GUID-F1F40189-8893-4610-82E4-AA9A9F29CAEE.md&#34; xtrc=&#34;p:4;182:3&#34;&gt;&lt;i class=&#34;+ topic/ph hi-d/i &#34; xtrf=&#34;file:/D:/InfoShare/Data/Publish/Data/qzvtb5xcvan/work/1/en-US/GUID-F1F40189-8893-4610-82E4-AA9A9F29CAEE.md&#34; xtrc=&#34;i:1;182:3&#34;&gt;true&lt;/i&gt; - If the delay has completed.&lt;/p&gt;&lt;p class=&#34;- topic/p &#34; xtrf=&#34;file:/D:/InfoShare/Data/Publish/Data/qzvtb5xcvan/work/1/en-US/GUID-F1F40189-8893-4610-82E4-AA9A9F29CAEE.md&#34; xtrc=&#34;p:5;182:3&#34;&gt;&lt;i class=&#34;+ topic/ph hi-d/i &#34; xtrf=&#34;file:/D:/InfoShare/Data/Publish/Data/qzvtb5xcvan/work/1/en-US/GUID-F1F40189-8893-4610-82E4-AA9A9F29CAEE.md&#34; xtrc=&#34;i:2;182:3&#34;&gt;false&lt;/i&gt; - If the delay has not completed.&lt;/p&gt;&lt;/body&gt;&lt;/topic&gt;&lt;topic class=&#34;- topic/topic &#34; ditaarch:DITAArchVersion=&#34;1.2&#34; domains=&#34;(topic hi-d) (topic ut-d) (topic indexing-d) (topic hazard-d) (topic abbrev-d) (topic pr-d) (topic sw-d) (topic ui-d)&#34; id=&#34;example&#34; xtrf=&#34;file:/D:/InfoShare/Data/Publish/Data/qzvtb5xcvan/work/1/en-US/GUID-F1F40189-8893-4610-82E4-AA9A9F29CAEE.md&#34; xtrc=&#34;topic:8;182:3&#34; specializations=&#34;&#34;&gt;&lt;title class=&#34;- topic/title &#34; xtrf=&#34;file:/D:/InfoShare/Data/Publish/Data/qzvtb5xcvan/work/1/en-US/GUID-F1F40189-8893-4610-82E4-AA9A9F29CAEE.md&#34; xtrc=&#34;title:8;182:3&#34;&gt;Example&lt;/title&gt;&lt;body class=&#34;- topic/body &#34; xtrf=&#34;file:/D:/InfoShare/Data/Publish/Data/qzvtb5xcvan/work/1/en-US/GUID-F1F40189-8893-4610-82E4-AA9A9F29CAEE.md&#34; xtrc=&#34;body:8;182:3&#34;&gt;&lt;codeblock class=&#34;+ topic/pre pr-d/codeblock &#34; xml:space=&#34;preserve&#34; outputclass=&#34;c&#34; xtrf=&#34;file:/D:/InfoShare/Data/Publish/Data/qzvtb5xcvan/work/1/en-US/GUID-F1F40189-8893-4610-82E4-AA9A9F29CAEE.md&#34; xtrc=&#34;codeblock:2;182:3&#34;&gt;// Check if the delay has expired. if (SYS_TIME_DelayIsComplete(timer) != true) { // Delay has not expired }&lt;/codeblock&gt;&lt;/body&gt;&lt;/topic&gt;&lt;topic class=&#34;- topic/topic &#34; ditaarch:DITAArchVersion=&#34;1.2&#34; domains=&#34;(topic hi-d) (topic ut-d) (topic indexing-d) (topic hazard-d) (topic abbrev-d) (topic pr-d) (topic sw-d) (topic ui-d)&#34; id=&#34;remarks&#34; xtrf=&#34;file:/D:/InfoShare/Data/Publish/Data/qzvtb5xcvan/work/1/en-US/GUID-F1F40189-8893-4610-82E4-AA9A9F29CAEE.md&#34; xtrc=&#34;topic:9;182:3&#34; specializations=&#34;&#34;&gt;&lt;title class=&#34;- topic/title &#34; xtrf=&#34;file:/D:/InfoShare/Data/Publish/Data/qzvtb5xcvan/work/1/en-US/GUID-F1F40189-8893-4610-82E4-AA9A9F29CAEE.md&#34; xtrc=&#34;title:9;182:3&#34;&gt;Remarks&lt;/title&gt;&lt;body class=&#34;- topic/body &#34; xtrf=&#34;file:/D:/InfoShare/Data/Publish/Data/qzvtb5xcvan/work/1/en-US/GUID-F1F40189-8893-4610-82E4-AA9A9F29CAEE.md&#34; xtrc=&#34;body:9;182:3&#34;&gt;&lt;p class=&#34;- topic/p &#34; xtrf=&#34;file:/D:/InfoShare/Data/Publish/Data/qzvtb5xcvan/work/1/en-US/GUID-F1F40189-8893-4610-82E4-AA9A9F29CAEE.md&#34; xtrc=&#34;p:6;182:3&#34;&gt;SYS_TIME_DelayIsComplete must be called to poll the status of the delay requested through SYS_TIME_DelayMS or SYS_TIME_DelayUS.&lt;/p&gt;&lt;p class=&#34;- topic/p &#34; xtrf=&#34;file:/D:/InfoShare/Data/Publish/Data/qzvtb5xcvan/work/1/en-US/GUID-F1F40189-8893-4610-82E4-AA9A9F29CAEE.md&#34; xtrc=&#34;p:7;182:3&#34;&gt;SYS_TIME_DelayIsComplete must not be used to poll the status of a periodic timer. Status of a periodic timer may be polled using the SYS_TIME_TimerPeriodHasExpired routine.&lt;/p&gt;&lt;/body&gt;&lt;/topic&gt;&lt;/topic&gt;"/><meta name="wh-source-relpath" content="GUID-F1F40189-8893-4610-82E4-AA9A9F29CAEE.md"/><meta name="wh-out-relpath" content="GUID-F1F40189-8893-4610-82E4-AA9A9F29CAEE.html"/>
+    <!-- Latest compiled and minified Bootstrap CSS -->
+    <link rel="stylesheet" type="text/css" href="./oxygen-webhelp/lib/bootstrap/css/bootstrap.min.css"/>
     
-                      window.parent.location.href = origUrl + "?" + url;
+    <link rel="stylesheet" href="./oxygen-webhelp/lib/jquery-ui/jquery-ui.min.css"/>
+    
+    <!-- Template default styles  -->
+    <link rel="stylesheet" type="text/css" href="./oxygen-webhelp/app/topic-page.css?buildId=2022062014"/>
+    
+    
+    <script src="./oxygen-webhelp/lib/jquery/jquery-3.5.1.min.js"></script>
+    
+    <script data-main="./oxygen-webhelp/app/topic-page.js" src="./oxygen-webhelp/lib/requirejs/require.js"></script>
+<link rel="stylesheet" type="text/css" href="oxygen-webhelp/template/microchip.css?buildId=2022062014"/><link rel="stylesheet" type="text/css" href="oxygen-webhelp/template/notes.css?buildId=2022062014"/>
+<script src="mchp-context-help.js"></script>
+<link href="https://fonts.googleapis.com/css?family=Open+Sans:400,600,300" rel="stylesheet" type="text/css"/>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML" async="" type="text/javascript"></script>
+</head>
 
-                      return false;
-                    }
-               }
-            }
-				});
-			}
+    <body id="sys-time-delayiscomplete-function" class="wh_topic_page frmBody">
+        <a href="#wh_topic_body" class="sr-only sr-only-focusable">
+            Jump to main content
+        </a>
+        
+        
+        
+        
+        <header class="navbar navbar-default wh_header">
+    <div class="container-fluid">
+        <div class="wh_header_flex_container navbar-nav navbar-expand-md navbar-dark">
+            <div class="wh_logo_and_publication_title_container">
+                <div class="wh_logo_and_publication_title">
+                    
+                    <a href="index.html" class=" wh_logo d-none d-sm-block "><img src="oxygen-webhelp\template\resources/images/microchip.png" alt="MPLAB® Harmony Core Library "/></a>
+                    <div class=" wh_publication_title "><a href="index.html">MPLAB® Harmony Core Library </a></div>
+                    
+                </div>
+                
+                
+            </div>
 
-		</script><script language="javascript">
-        function cpy(id, button) {
-        
-            var element = document.getElementById(id);
-            var content = element.getAttribute("content");
-            var textArea = document.createElement("textarea");
-            
-            // Place in the top-left corner of screen regardless of scroll position.
-            textArea.style.position = 'fixed';
-            textArea.style.top = 0;
-            textArea.style.left = 0;
-            
-            // Ensure it has a small width and height. Setting to 1px / 1em
-            // doesn't work as this gives a negative w/h on some browsers.
-            textArea.style.width = '2em';
-            textArea.style.height = '2em';
-            
-            // We don't need padding, reducing the size if it does flash render.
-            textArea.style.padding = 0;
-            
-            // Clean up any borders.
-            textArea.style.border = 'none';
-            textArea.style.outline = 'none';
-            textArea.style.boxShadow = 'none';
-            
-            // Avoid flash of the white box if rendered for any reason.
-            textArea.style.background = 'transparent';
-            
-            
-            textArea.value = content;
-            
-            document.body.appendChild(textArea);
-            textArea.focus();
-            textArea.select();
-            
-            try {
-               var successful = document.execCommand('copy');
-               var msg = successful ? 'successful' : 'unsuccessful';
-               if (!button.classList.contains("copied")){
-                  button.textContent = "Copied";
-                  button.classList.add("copied");
-                  setTimeout(function(){
-                    button.textContent = "Copy";
-                    button.classList.remove("copied");
-                  },1000);
-               }
-            } catch (err) {
-              console.log('Oops, unable to copy');
-            }
-            
-            document.body.removeChild(textArea);
-        }
-      </script><script language="javascript">
-          
-          // Add the MathML namespace to html
-          var html = document.getElementsByTagName("html")[0],
-          head = document.getElementsByTagName("head")[0];
-          
-          var mathJax = document.createElement("script");
-          mathJax.src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-MML-AM_CHTML";
-          head.appendChild(mathJax);
-          
-          html.setAttribute("xmlns:m","http://www.w3.org/1998/Math/MathML");
-          
-          function inIframe() { try { return window.self !== window.top; } catch (e) { return true; } }
-          
-          if (!inIframe()) { 
-          
-          var Default = "index.html?GUID-F1F40189-8893-4610-82E4-AA9A9F29CAEE"; 
-          
-          var displaylocation = "value" + window.location.href;
-          
-          var GUIDS = displaylocation.split('GUID');          
-          
-          if (displaylocation.indexOf('#GUID') != -1) {            
-          var First = GUIDS[1].split('.html');  
-          if (GUIDS[3]){First = GUIDS[2].split('.html');}
-          if (GUIDS[4]){First = GUIDS[3].split('.html');}
-          if (GUIDS[5]){First = GUIDS[4].split('.html');}
-          
-          var Second = GUIDS[2].split('#');   
-          if (GUIDS[3]){Second = GUIDS[3].split('#');}
-          if (GUIDS[4]){Second = GUIDS[4].split('#');}
-          if (GUIDS[5]){Second = GUIDS[5].split('#');}
-          
-          Default = "index.html?" + "GUID" + First[0] + "GUID" + Second[0];     
-          }                    
-          window.top.location = Default;
-          }       
-          
-        </script><style xml:space="">
-        
-          button.copy-code{
-            display:none;
-            padding:0.7em 1.4em;
-            margin:0 0.3em 0.3em 0;
-            border-radius:0.15em;
-            box-sizing: border-box;
-            text-decoration:none;
-            font-family:'Roboto',sans-serif;
-            text-transform:uppercase;
-            font-weight:400;
-            color:#FFFFFF;
-            background-color:#9c9c9c;
-            box-shadow:inset 0 -0.6em 0 -0.35em rgba(0,0,0,0.17);
-            text-align:center;
-            position:relative;
-            border: 0;
-            float: right;
-            border-radius: .5em;
-            cursor: pointer;
-          }
-          button.copy-code:active{
-            top:0.1em;
-          }
-          
-          pre:hover button.copy-code{
-            display: inline-block !important;
-          }
-          button.copy-code.copied {
-            cursor: default !important;
-          }
-          
-          
-          @media all and (max-width:30em){
-            button.copy-code{
-              display:block;
-              margin:0.4em auto;
-            }
-          }
+            <div class="wh_top_menu_and_indexterms_link collapse navbar-collapse" id="wh_top_menu_and_indexterms_link">
+                
+                
+                
+                
+            </div>
+        </div>
+    </div>
+</header>
         
         
-      </style></head>
-<body id="sys-time-delayiscomplete-function">
-<h1 class="title topictitle1" id="ariaid-title1">SYS_TIME_DelayIsComplete Function</h1><div class="body"></div>
-<div class="related-links">
-<div class="familylinks">
-<div class="parentlink"><strong>Parent topic:</strong> <a class="link" href="GUID-3D84F884-122D-4A4A-95DA-DFD8C2E84650.html">Library Interface</a></div>
+         
+        
+        <div class=" wh_search_input navbar-form wh_topic_page_search search " role="form">
+            
+            
+            
+            <form id="searchForm" method="get" role="search" action="search.html"><div><input type="search" placeholder="Search " class="wh_search_textfield" id="textToSearch" name="searchQuery" aria-label="Search query" required="required"/><button type="submit" class="wh_search_button" aria-label="Search"><span class="search_input_text">Search</span></button></div></form>
+            
+            <div class="mchp-color-stripe-grid-container">
+  <div class="mchp-main-bar mchp-orange-bar"></div>
+  <div class="mchp-main-bar mchp-blue-bar"></div>
+  <div class="mchp-main-bar mchp-green-bar"></div>
 </div>
-</div><div class="topic nested1" aria-labelledby="ariaid-title2" id="c"><h2 class="title topictitle2" id="ariaid-title2">C</h2><div class="body"><pre class="pre codeblock language-c"><button title="Copy Code" class="copy-code" onclick="cpy('d78660e21', this);">Copy</button><code id="d78660e21" content="bool SYS_TIME_DelayIsComplete ( SYS_TIME_HANDLE handle )">bool SYS_TIME_DelayIsComplete <span class="ph token punctuation">(</span> SYS_TIME_HANDLE handle <span class="ph token punctuation">)</span></code></pre></div>
+            
+        </div>
+        
+        <div class="container-fluid" id="wh_topic_container">
+            <div class="row">
+
+                <nav class="wh_tools d-print-none navbar-expand-md" aria-label="Tools">
+                    
+                    <div data-tooltip-position="bottom" class=" wh_breadcrumb "><ol class="d-print-none"><li><span class="home"><a href="index.html"><span>Home</span></a></span></li><li><div class="topicref" data-id="mplab-harmony-core-library"><div class="title"><a href="GUID-C04D97AB-D6E0-4CF5-9A80-CA64E36B6199.html"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">1</ph>
+MPLAB® Harmony Core Library</a></div></div></li><li><div class="topicref" data-id="system-service-libraries"><div class="title"><a href="GUID-EA5ADDDE-73D5-43CB-B474-0752CA9A1A50.html"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">1.2</ph>
+System Service Libraries</a></div></div></li><li><div class="topicref" data-id="time-system-service"><div class="title"><a href="GUID-05D0B89A-EE4D-46D4-B58F-7402C56061AE.html"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">1.2.11</ph>
+Time System Service</a></div></div></li><li><div class="topicref" data-id="library-interface"><div class="title"><a href="GUID-3D84F884-122D-4A4A-95DA-DFD8C2E84650.html"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">1.2.11.4</ph>
+Library Interface</a></div></div></li><li class="active"><div class="topicref" data-id="sys-time-delayiscomplete-function"><div class="title"><a href="GUID-F1F40189-8893-4610-82E4-AA9A9F29CAEE.html"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">1.2.11.4.8</ph>
+SYS_TIME_DelayIsComplete Function</a></div></div></li></ol></div>
+                    
+                    
+                    
+                    <div class="wh_right_tools">
+                        <button class="wh_hide_highlight" aria-label="Toggle search highlights" title="Toggle search highlights"></button>
+                        <button class="webhelp_expand_collapse_sections" data-next-state="collapsed" aria-label="Collapse sections" title="Collapse sections"></button>
+                        
+                        
+                        
+                        
+                        <div class=" wh_print_link print d-none d-md-inline-block "><button onClick="window.print()" title="Print this page" aria-label="Print this page"></button></div>
+                        
+                        <button type="button" id="wh_toc_button" class="custom-toggler navbar-toggler collapsed wh_toggle_button navbar-light" aria-expanded="false" aria-label="Toggle publishing table of content" aria-controls="wh_publication_toc">
+                            <span class="navbar-toggler-icon"></span>
+                        </button>
+                    </div>
+                    
+                </nav>
+            </div>
+            
+            
+            
+            
+            <div class="wh_content_area">
+                <div class="row">
+                    
+                        <nav id="wh_publication_toc" class="col-lg-3 col-md-3 col-sm-12 d-md-block d-none d-print-none" aria-label="Table of Contents Container">
+                            <div id="wh_publication_toc_content">
+		                        
+                            	<div class=" wh_publication_toc " data-tooltip-position="right"><span class="expand-button-action-labels"><span id="button-expand-action" role="button" aria-label="Expand"></span><span id="button-collapse-action" role="button" aria-label="Collapse"></span><span id="button-pending-action" role="button" aria-label="Pending"></span></span><ul role="tree" aria-label="Table of Contents"><li role="treeitem" aria-expanded="true"><div data-tocid="mplab-harmony-core-library-d6800e9" class="topicref" data-id="mplab-harmony-core-library" data-state="expanded"><span role="button" tabindex="0" aria-labelledby="button-collapse-action mplab-harmony-core-library-d6800e9-link" class="wh-expand-btn"></span><div class="title"><a href="GUID-C04D97AB-D6E0-4CF5-9A80-CA64E36B6199.html" id="mplab-harmony-core-library-d6800e9-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">1</ph>
+MPLAB® Harmony Core Library</a></div></div><ul role="group" class="navbar-nav nav-list"><li role="treeitem" aria-expanded="false"><div data-tocid="driver-libraries-d6800e17" class="topicref" data-id="driver-libraries" data-state="not-ready"><span role="button" tabindex="0" aria-labelledby="button-expand-action driver-libraries-d6800e17-link" class="wh-expand-btn"></span><div class="title"><a href="GUID-4FA4B38A-8C7F-46A3-9D08-4B8C5CE26712.html" id="driver-libraries-d6800e17-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">1.1</ph>
+Driver Libraries</a></div></div></li><li role="treeitem" aria-expanded="true"><div data-tocid="system-service-libraries-d6800e2771" class="topicref" data-id="system-service-libraries" data-state="expanded"><span role="button" tabindex="0" aria-labelledby="button-collapse-action system-service-libraries-d6800e2771-link" class="wh-expand-btn"></span><div class="title"><a href="GUID-EA5ADDDE-73D5-43CB-B474-0752CA9A1A50.html" id="system-service-libraries-d6800e2771-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">1.2</ph>
+System Service Libraries</a></div></div><ul role="group" class="navbar-nav nav-list"><li role="treeitem" aria-expanded="false"><div data-tocid="common-system-services-library-d6800e2779" class="topicref" data-id="common-system-services-library" data-state="not-ready"><span role="button" tabindex="0" aria-labelledby="button-expand-action common-system-services-library-d6800e2779-link" class="wh-expand-btn"></span><div class="title"><a href="GUID-B6B51E48-2D3D-42F8-8493-3405F1639A9E.html" id="common-system-services-library-d6800e2779-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">1.2.1</ph>
+Common System Services Library</a></div></div></li><li role="treeitem" aria-expanded="false"><div data-tocid="cache-system-service-d6800e2956" class="topicref" data-id="cache-system-service" data-state="not-ready"><span role="button" tabindex="0" aria-labelledby="button-expand-action cache-system-service-d6800e2956-link" class="wh-expand-btn"></span><div class="title"><a href="GUID-4522BF0A-636F-448D-B87F-2342F8CBEB00.html" id="cache-system-service-d6800e2956-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">1.2.2</ph>
+Cache System Service</a></div></div></li><li role="treeitem" aria-expanded="false"><div data-tocid="command-processor-system-service-d6800e3069" class="topicref" data-id="command-processor-system-service" data-state="not-ready"><span role="button" tabindex="0" aria-labelledby="button-expand-action command-processor-system-service-d6800e3069-link" class="wh-expand-btn"></span><div class="title"><a href="GUID-09F65940-7D05-4F78-81C9-6356B65DEF21.html" id="command-processor-system-service-d6800e3069-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">1.2.3</ph>
+Command Processor System Service</a></div></div></li><li role="treeitem" aria-expanded="false"><div data-tocid="console-system-service-d6800e3335" class="topicref" data-id="console-system-service" data-state="not-ready"><span role="button" tabindex="0" aria-labelledby="button-expand-action console-system-service-d6800e3335-link" class="wh-expand-btn"></span><div class="title"><a href="GUID-C8EFF72A-1BBB-416E-BF89-EEA2B23EB27D.html" id="console-system-service-d6800e3335-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">1.2.4</ph>
+Console System Service</a></div></div></li><li role="treeitem" aria-expanded="false"><div data-tocid="debug-system-service-d6800e3553" class="topicref" data-id="debug-system-service" data-state="not-ready"><span role="button" tabindex="0" aria-labelledby="button-expand-action debug-system-service-d6800e3553-link" class="wh-expand-btn"></span><div class="title"><a href="GUID-4F625306-2206-49B1-8846-60C97E40A440.html" id="debug-system-service-d6800e3553-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">1.2.5</ph>
+Debug System Service</a></div></div></li><li role="treeitem" aria-expanded="false"><div data-tocid="direct-memory-access-dma-system-service-d6800e3682" class="topicref" data-id="direct-memory-access-dma-system-service" data-state="not-ready"><span role="button" tabindex="0" aria-labelledby="button-expand-action direct-memory-access-dma-system-service-d6800e3682-link" class="wh-expand-btn"></span><div class="title"><a href="GUID-DB773A68-76AC-4900-8C7C-3AC9C38BE0BD.html" id="direct-memory-access-dma-system-service-d6800e3682-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">1.2.6</ph>
+Direct Memory Access (DMA) System Service</a></div></div></li><li role="treeitem" aria-expanded="false"><div data-tocid="file-system-service-d6800e3787" class="topicref" data-id="file-system-service" data-state="not-ready"><span role="button" tabindex="0" aria-labelledby="button-expand-action file-system-service-d6800e3787-link" class="wh-expand-btn"></span><div class="title"><a href="GUID-066D09D2-5550-49D9-ADA2-60A702DB243E.html" id="file-system-service-d6800e3787-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">1.2.7</ph>
+File System Service</a></div></div></li><li role="treeitem" aria-expanded="false"><div data-tocid="interrupt-system-service-d6800e4547" class="topicref" data-id="interrupt-system-service" data-state="not-ready"><span role="button" tabindex="0" aria-labelledby="button-expand-action interrupt-system-service-d6800e4547-link" class="wh-expand-btn"></span><div class="title"><a href="GUID-AB36B81D-DB1C-43F0-950E-1E302FC77832.html" id="interrupt-system-service-d6800e4547-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">1.2.8</ph>
+Interrupt System Service</a></div></div></li><li role="treeitem" aria-expanded="false"><div data-tocid="ports-system-service-d6800e4652" class="topicref" data-id="ports-system-service" data-state="not-ready"><span role="button" tabindex="0" aria-labelledby="button-expand-action ports-system-service-d6800e4652-link" class="wh-expand-btn"></span><div class="title"><a href="GUID-89291D9B-92F4-4472-BAE0-9F007571CD35.html" id="ports-system-service-d6800e4652-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">1.2.9</ph>
+Ports System Service</a></div></div></li><li role="treeitem" aria-expanded="false"><div data-tocid="reset-system-service-d6800e4740" class="topicref" data-id="reset-system-service" data-state="not-ready"><span role="button" tabindex="0" aria-labelledby="button-expand-action reset-system-service-d6800e4740-link" class="wh-expand-btn"></span><div class="title"><a href="GUID-9B151BD6-CAB6-497E-867F-9D9543CB51A6.html" id="reset-system-service-d6800e4740-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">1.2.10</ph>
+Reset System Service</a></div></div></li><li role="treeitem" aria-expanded="true"><div data-tocid="time-system-service-d6800e4757" class="topicref" data-id="time-system-service" data-state="expanded"><span role="button" tabindex="0" aria-labelledby="button-collapse-action time-system-service-d6800e4757-link" class="wh-expand-btn"></span><div class="title"><a href="GUID-05D0B89A-EE4D-46D4-B58F-7402C56061AE.html" id="time-system-service-d6800e4757-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">1.2.11</ph>
+Time System Service</a></div></div><ul role="group" class="navbar-nav nav-list"><li role="treeitem"><div data-tocid="how-the-library-works-d6800e4765" class="topicref" data-id="how-the-library-works" data-state="leaf"><span role="button" class="wh-expand-btn"></span><div class="title"><a href="GUID-9D474B7C-D749-4DD6-A012-FE94C039324E.html" id="how-the-library-works-d6800e4765-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">1.2.11.1</ph>
+How the Library Works</a></div></div></li><li role="treeitem"><div data-tocid="using-the-library-d6800e4773" class="topicref" data-id="using-the-library" data-state="leaf"><span role="button" class="wh-expand-btn"></span><div class="title"><a href="GUID-EE734734-7914-41BF-8AF2-8275506BBED4.html" id="using-the-library-d6800e4773-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">1.2.11.2</ph>
+Using The Library</a></div></div></li><li role="treeitem"><div data-tocid="configuring-the-library-d6800e4781" class="topicref" data-id="configuring-the-library" data-state="leaf"><span role="button" class="wh-expand-btn"></span><div class="title"><a href="GUID-BA5815F6-F9D7-43BD-8F05-65CC6E199C25.html" id="configuring-the-library-d6800e4781-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">1.2.11.3</ph>
+Configuring The Library</a></div></div></li><li role="treeitem" aria-expanded="true"><div data-tocid="library-interface-d6800e4789" class="topicref" data-id="library-interface" data-state="expanded"><span role="button" tabindex="0" aria-labelledby="button-collapse-action library-interface-d6800e4789-link" class="wh-expand-btn"></span><div class="title"><a href="GUID-3D84F884-122D-4A4A-95DA-DFD8C2E84650.html" id="library-interface-d6800e4789-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">1.2.11.4</ph>
+Library Interface</a></div></div><ul role="group" class="navbar-nav nav-list"><li role="treeitem"><div data-tocid="sys-time-initialize-function-d6800e4797" class="topicref" data-id="sys-time-initialize-function" data-state="leaf"><span role="button" class="wh-expand-btn"></span><div class="title"><a href="GUID-4483443F-5DCE-47F2-A7A8-EEA1BA48B089.html" id="sys-time-initialize-function-d6800e4797-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">1.2.11.4.1</ph>
+SYS_TIME_Initialize Function</a></div></div></li><li role="treeitem"><div data-tocid="sys-time-deinitialize-function-d6800e4805" class="topicref" data-id="sys-time-deinitialize-function" data-state="leaf"><span role="button" class="wh-expand-btn"></span><div class="title"><a href="GUID-F27448AA-BF71-4DBC-ACDD-B2CAA20AB723.html" id="sys-time-deinitialize-function-d6800e4805-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">1.2.11.4.2</ph>
+SYS_TIME_Deinitialize Function</a></div></div></li><li role="treeitem"><div data-tocid="sys-time-status-function-d6800e4813" class="topicref" data-id="sys-time-status-function" data-state="leaf"><span role="button" class="wh-expand-btn"></span><div class="title"><a href="GUID-15105BA3-7A7E-45B3-B3ED-61370B648774.html" id="sys-time-status-function-d6800e4813-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">1.2.11.4.3</ph>
+SYS_TIME_Status Function</a></div></div></li><li role="treeitem"><div data-tocid="sys-time-callbackregisterus-function-d6800e4821" class="topicref" data-id="sys-time-callbackregisterus-function" data-state="leaf"><span role="button" class="wh-expand-btn"></span><div class="title"><a href="GUID-5AB08537-241F-4458-9E50-2B43C8B16BB9.html" id="sys-time-callbackregisterus-function-d6800e4821-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">1.2.11.4.4</ph>
+SYS_TIME_CallbackRegisterUS Function</a></div></div></li><li role="treeitem"><div data-tocid="sys-time-callbackregisterms-function-d6800e4829" class="topicref" data-id="sys-time-callbackregisterms-function" data-state="leaf"><span role="button" class="wh-expand-btn"></span><div class="title"><a href="GUID-854CFE11-D8CD-4630-ABB5-6EF7342AE6F0.html" id="sys-time-callbackregisterms-function-d6800e4829-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">1.2.11.4.5</ph>
+SYS_TIME_CallbackRegisterMS Function</a></div></div></li><li role="treeitem"><div data-tocid="sys-time-delayus-function-d6800e4837" class="topicref" data-id="sys-time-delayus-function" data-state="leaf"><span role="button" class="wh-expand-btn"></span><div class="title"><a href="GUID-ED13CFBE-FE20-4D83-8330-A69BE679FE4D.html" id="sys-time-delayus-function-d6800e4837-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">1.2.11.4.6</ph>
+SYS_TIME_DelayUS Function</a></div></div></li><li role="treeitem"><div data-tocid="sys-time-delayms-function-d6800e4845" class="topicref" data-id="sys-time-delayms-function" data-state="leaf"><span role="button" class="wh-expand-btn"></span><div class="title"><a href="GUID-1A398EB1-C3DC-4A9A-9112-8D4400166704.html" id="sys-time-delayms-function-d6800e4845-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">1.2.11.4.7</ph>
+SYS_TIME_DelayMS Function</a></div></div></li><li role="treeitem" class="active"><div data-tocid="sys-time-delayiscomplete-function-d6800e4853" class="topicref" data-id="sys-time-delayiscomplete-function" data-state="leaf"><span role="button" class="wh-expand-btn"></span><div class="title"><a href="GUID-F1F40189-8893-4610-82E4-AA9A9F29CAEE.html" id="sys-time-delayiscomplete-function-d6800e4853-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">1.2.11.4.8</ph>
+SYS_TIME_DelayIsComplete Function</a></div></div></li><li role="treeitem"><div data-tocid="sys-time-frequencyget-function-d6800e4861" class="topicref" data-id="sys-time-frequencyget-function" data-state="leaf"><span role="button" class="wh-expand-btn"></span><div class="title"><a href="GUID-0216C2E2-D32B-431B-8469-CEEE41248296.html" id="sys-time-frequencyget-function-d6800e4861-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">1.2.11.4.9</ph>
+SYS_TIME_FrequencyGet Function</a></div></div></li><li role="treeitem"><div data-tocid="sys-time-counterget-function-d6800e4869" class="topicref" data-id="sys-time-counterget-function" data-state="leaf"><span role="button" class="wh-expand-btn"></span><div class="title"><a href="GUID-5DC16D9D-8D76-476D-8F4E-D5C261E8CEE0.html" id="sys-time-counterget-function-d6800e4869-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">1.2.11.4.10</ph>
+SYS_TIME_CounterGet Function</a></div></div></li><li role="treeitem"><div data-tocid="sys-time-counter64get-function-d6800e4878" class="topicref" data-id="sys-time-counter64get-function" data-state="leaf"><span role="button" class="wh-expand-btn"></span><div class="title"><a href="GUID-55F16D8C-B670-4D4F-A2C3-41AEC77231E6.html" id="sys-time-counter64get-function-d6800e4878-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">1.2.11.4.11</ph>
+SYS_TIME_Counter64Get Function</a></div></div></li><li role="treeitem"><div data-tocid="sys-time-counterset-function-d6800e4886" class="topicref" data-id="sys-time-counterset-function" data-state="leaf"><span role="button" class="wh-expand-btn"></span><div class="title"><a href="GUID-EB747548-B871-407B-B244-0FF587C704C2.html" id="sys-time-counterset-function-d6800e4886-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">1.2.11.4.12</ph>
+SYS_TIME_CounterSet Function</a></div></div></li><li role="treeitem"><div data-tocid="sys-time-counttous-function-d6800e4894" class="topicref" data-id="sys-time-counttous-function" data-state="leaf"><span role="button" class="wh-expand-btn"></span><div class="title"><a href="GUID-728877D4-5B54-4990-9C94-A4A80BBBEBD6.html" id="sys-time-counttous-function-d6800e4894-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">1.2.11.4.13</ph>
+SYS_TIME_CountToUS Function</a></div></div></li><li role="treeitem"><div data-tocid="sys-time-counttoms-function-d6800e4902" class="topicref" data-id="sys-time-counttoms-function" data-state="leaf"><span role="button" class="wh-expand-btn"></span><div class="title"><a href="GUID-C1322D50-D28A-4AF1-82D7-15BA0ED96765.html" id="sys-time-counttoms-function-d6800e4902-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">1.2.11.4.14</ph>
+SYS_TIME_CountToMS Function</a></div></div></li><li role="treeitem"><div data-tocid="sys-time-ustocount-function-d6800e4910" class="topicref" data-id="sys-time-ustocount-function" data-state="leaf"><span role="button" class="wh-expand-btn"></span><div class="title"><a href="GUID-CE8A08B3-44E0-4442-8BC5-B78123047EB6.html" id="sys-time-ustocount-function-d6800e4910-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">1.2.11.4.15</ph>
+SYS_TIME_USToCount Function</a></div></div></li><li role="treeitem"><div data-tocid="sys-time-mstocount-function-d6800e4918" class="topicref" data-id="sys-time-mstocount-function" data-state="leaf"><span role="button" class="wh-expand-btn"></span><div class="title"><a href="GUID-51FAD95A-A178-457E-829A-4F5E0EF5B8D7.html" id="sys-time-mstocount-function-d6800e4918-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">1.2.11.4.16</ph>
+SYS_TIME_MSToCount Function</a></div></div></li><li role="treeitem"><div data-tocid="sys-time-timercreate-function-d6800e4926" class="topicref" data-id="sys-time-timercreate-function" data-state="leaf"><span role="button" class="wh-expand-btn"></span><div class="title"><a href="GUID-C620CB5A-6247-420E-A260-5350F62D70F7.html" id="sys-time-timercreate-function-d6800e4926-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">1.2.11.4.17</ph>
+SYS_TIME_TimerCreate Function</a></div></div></li><li role="treeitem"><div data-tocid="sys-time-timerreload-function-d6800e4934" class="topicref" data-id="sys-time-timerreload-function" data-state="leaf"><span role="button" class="wh-expand-btn"></span><div class="title"><a href="GUID-C5E394FE-B52D-4484-85BD-9C42D1CCB540.html" id="sys-time-timerreload-function-d6800e4934-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">1.2.11.4.18</ph>
+SYS_TIME_TimerReload Function</a></div></div></li><li role="treeitem"><div data-tocid="sys-time-timerdestroy-function-d6800e4942" class="topicref" data-id="sys-time-timerdestroy-function" data-state="leaf"><span role="button" class="wh-expand-btn"></span><div class="title"><a href="GUID-64C748F5-8A8A-4F85-ACA1-91BACBD20A53.html" id="sys-time-timerdestroy-function-d6800e4942-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">1.2.11.4.19</ph>
+SYS_TIME_TimerDestroy Function</a></div></div></li><li role="treeitem"><div data-tocid="sys-time-timercounterget-function-d6800e4950" class="topicref" data-id="sys-time-timercounterget-function" data-state="leaf"><span role="button" class="wh-expand-btn"></span><div class="title"><a href="GUID-3966A3D3-92CB-4B70-A673-51EA0BF318F1.html" id="sys-time-timercounterget-function-d6800e4950-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">1.2.11.4.20</ph>
+SYS_TIME_TimerCounterGet Function</a></div></div></li><li role="treeitem"><div data-tocid="sys-time-timerstart-function-d6800e4958" class="topicref" data-id="sys-time-timerstart-function" data-state="leaf"><span role="button" class="wh-expand-btn"></span><div class="title"><a href="GUID-BF7BCBE3-A362-4DD5-81B5-8A7037353CCC.html" id="sys-time-timerstart-function-d6800e4958-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">1.2.11.4.21</ph>
+SYS_TIME_TimerStart Function</a></div></div></li><li role="treeitem"><div data-tocid="sys-time-timerstop-function-d6800e4967" class="topicref" data-id="sys-time-timerstop-function" data-state="leaf"><span role="button" class="wh-expand-btn"></span><div class="title"><a href="GUID-1017B1C8-B505-4C3E-88C5-676BDB100A87.html" id="sys-time-timerstop-function-d6800e4967-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">1.2.11.4.22</ph>
+SYS_TIME_TimerStop Function</a></div></div></li><li role="treeitem"><div data-tocid="sys-time-timerperiodhasexpired-function-d6800e4975" class="topicref" data-id="sys-time-timerperiodhasexpired-function" data-state="leaf"><span role="button" class="wh-expand-btn"></span><div class="title"><a href="GUID-B7A6EC0C-5131-48B0-AA51-4F396DA97785.html" id="sys-time-timerperiodhasexpired-function-d6800e4975-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">1.2.11.4.23</ph>
+SYS_TIME_TimerPeriodHasExpired Function</a></div></div></li><li role="treeitem"><div data-tocid="sys-time-init-struct-d6800e4983" class="topicref" data-id="sys-time-init-struct" data-state="leaf"><span role="button" class="wh-expand-btn"></span><div class="title"><a href="GUID-A235E91D-B728-4F9C-9B77-54B79265196A.html" id="sys-time-init-struct-d6800e4983-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">1.2.11.4.24</ph>
+SYS_TIME_INIT Struct</a></div></div></li><li role="treeitem"><div data-tocid="sys-time-result-enum-d6800e4991" class="topicref" data-id="sys-time-result-enum" data-state="leaf"><span role="button" class="wh-expand-btn"></span><div class="title"><a href="GUID-0B4B2BDA-18B7-4F86-908E-5B087BBE6DB4.html" id="sys-time-result-enum-d6800e4991-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">1.2.11.4.25</ph>
+SYS_TIME_RESULT Enum</a></div></div></li><li role="treeitem"><div data-tocid="sys-time-handle-typedef-d6800e4999" class="topicref" data-id="sys-time-handle-typedef" data-state="leaf"><span role="button" class="wh-expand-btn"></span><div class="title"><a href="GUID-8ABDCCF3-A786-4FB6-A424-52803779706D.html" id="sys-time-handle-typedef-d6800e4999-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">1.2.11.4.26</ph>
+SYS_TIME_HANDLE Typedef</a></div></div></li><li role="treeitem"><div data-tocid="sys-time-handle-invalid-macro-d6800e5007" class="topicref" data-id="sys-time-handle-invalid-macro" data-state="leaf"><span role="button" class="wh-expand-btn"></span><div class="title"><a href="GUID-C7D1D845-C908-4F60-9BCF-56C32DBEB467.html" id="sys-time-handle-invalid-macro-d6800e5007-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">1.2.11.4.27</ph>
+SYS_TIME_HANDLE_INVALID Macro</a></div></div></li><li role="treeitem"><div data-tocid="sys-time-callback-type-enum-d6800e5015" class="topicref" data-id="sys-time-callback-type-enum" data-state="leaf"><span role="button" class="wh-expand-btn"></span><div class="title"><a href="GUID-C89A507B-B9DA-4537-971D-8A44FC2D028E.html" id="sys-time-callback-type-enum-d6800e5015-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">1.2.11.4.28</ph>
+SYS_TIME_CALLBACK_TYPE Enum</a></div></div></li><li role="treeitem"><div data-tocid="sys-time-callback-typedef-d6800e5023" class="topicref" data-id="sys-time-callback-typedef" data-state="leaf"><span role="button" class="wh-expand-btn"></span><div class="title"><a href="GUID-CB25A98A-1CED-45A3-B538-027D927C97E0.html" id="sys-time-callback-typedef-d6800e5023-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">1.2.11.4.29</ph>
+SYS_TIME_CALLBACK Typedef</a></div></div></li></ul></li></ul></li></ul></li><li role="treeitem" aria-expanded="false"><div data-tocid="software-libraries-d6800e5031" class="topicref" data-id="software-libraries" data-state="not-ready"><span role="button" tabindex="0" aria-labelledby="button-expand-action software-libraries-d6800e5031-link" class="wh-expand-btn"></span><div class="title"><a href="GUID-7249D18B-E049-45D9-96DD-B6329375E344.html" id="software-libraries-d6800e5031-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">1.3</ph>
+Software Libraries</a></div></div></li><li role="treeitem" aria-expanded="false"><div data-tocid="osal-library-d6800e5305" class="topicref" data-id="osal-library" data-state="not-ready"><span role="button" tabindex="0" aria-labelledby="button-expand-action osal-library-d6800e5305-link" class="wh-expand-btn"></span><div class="title"><a href="GUID-8AEFE0B0-CE35-4F99-ACF4-7C8E10D3BBB6.html" id="osal-library-d6800e5305-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">1.4</ph>
+OSAL Library</a></div></div></li><li role="treeitem" aria-expanded="false"><div data-tocid="third-party-products-d6800e5546" class="topicref" data-id="third-party-products" data-state="not-ready"><span role="button" tabindex="0" aria-labelledby="button-expand-action third-party-products-d6800e5546-link" class="wh-expand-btn"></span><div class="title"><a href="GUID-2FB7347D-8FBD-411F-88D8-58A813EA9498.html" id="third-party-products-d6800e5546-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">1.5</ph>
+Third party Products</a></div></div></li><li role="treeitem"><div data-tocid="configuring-the-harmony-core-library-d6800e5586" class="topicref" data-id="configuring-the-harmony-core-library" data-state="leaf"><span role="button" class="wh-expand-btn"></span><div class="title"><a href="GUID-F1244C57-71EF-492B-8104-473C8CECC20F.html" id="configuring-the-harmony-core-library-d6800e5586-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">1.6</ph>
+Configuring The Harmony Core Library</a></div></div></li></ul></li></ul></div>
+		                        
+                            </div>
+                        </nav>
+                    
+                    
+                    <div class="col-lg-7 col-md-9 col-sm-12" id="wh_topic_body">
+                        <button id="wh_close_publication_toc_button" class="close-toc-button d-none" aria-label="Toggle publishing table of content" aria-controls="wh_publication_toc" aria-expanded="true">
+                            <span class="close-toc-icon-container">
+                                <span class="close-toc-icon"></span>     
+                            </span>
+                        </button>
+                        <button id="wh_close_topic_toc_button" class="close-toc-button d-none" aria-label="Toggle topic table of content" aria-controls="wh_topic_toc" aria-expanded="true">
+                            <span class="close-toc-icon-container">
+                                <span class="close-toc-icon"></span>     
+                            </span>
+                        </button>
+                        
+                        <div class=" wh_topic_content body "><main role="main"><article role="article" aria-labelledby="ariaid-title1"><h1 class="- topic/title title topictitle1" id="ariaid-title1" style="">1.2.11.4.8 SYS_TIME_DelayIsComplete Function</h1><div class="- topic/body body"></div><article class="- topic/topic topic nested1" aria-labelledby="ariaid-title2" id="c"><h2 class="- topic/title title topictitle2" id="ariaid-title2" style=""> C</h2><div class="- topic/body body"><pre class="+ topic/pre pr-d/codeblock pre codeblock c">bool SYS_TIME_DelayIsComplete ( SYS_TIME_HANDLE handle )</pre></div></article><article class="- topic/topic topic nested1" aria-labelledby="ariaid-title3" id="summary"><h2 class="- topic/title title topictitle2" id="ariaid-title3" style=""> Summary</h2><div class="- topic/body body"><p class="- topic/p p">Determines if the given delay timer has completed.</p></div></article><article class="- topic/topic topic nested1" aria-labelledby="ariaid-title4" id="description"><h2 class="- topic/title title topictitle2" id="ariaid-title4" style=""> Description</h2><div class="- topic/body body"><p class="- topic/p p">This function determines if the requested delay is completed or is still
+in progress.</p></div></article><article class="- topic/topic topic nested1" aria-labelledby="ariaid-title5" id="precondition"><h2 class="- topic/title title topictitle2" id="ariaid-title5" style=""> Precondition</h2><div class="- topic/body body"><p class="- topic/p p">A delay request must have been created using either the SYS_TIME_DelayMS or SYS_TIME_DelayUS functions.</p></div></article><article class="- topic/topic topic nested1" aria-labelledby="ariaid-title6" id="parameters"><h2 class="- topic/title title topictitle2" id="ariaid-title6" style=""> Parameters</h2><div class="- topic/body body"><div class="table-container"><table class="- topic/table table" data-cols="2"><caption></caption><colgroup><col/><col/></colgroup><thead class="- topic/thead thead"><tr class="- topic/row"><th class="- topic/entry entry align-left colsep-0 rowsep-0" id="parameters__entry__1">Param</th><th class="- topic/entry entry align-left colsep-0 rowsep-0" id="parameters__entry__2">Description</th></tr></thead><tbody class="- topic/tbody tbody"><tr class="- topic/row"><td class="- topic/entry entry align-left colsep-0 rowsep-0" headers="parameters__entry__1">handle</td><td class="- topic/entry entry align-left colsep-0 rowsep-0" headers="parameters__entry__2">A SYS_TIME_HANDLE value provided by either SYS_TIME_DelayMS or SYS_TIME_DelayUS functions.</td></tr></tbody></table></div></div></article><article class="- topic/topic topic nested1" aria-labelledby="ariaid-title7" id="returns"><h2 class="- topic/title title topictitle2" id="ariaid-title7" style=""> Returns</h2><div class="- topic/body body"><p class="- topic/p p"><em class="+ topic/ph hi-d/i ph i">true</em> - If the delay has completed.</p><p class="- topic/p p"><em class="+ topic/ph hi-d/i ph i">false</em> - If the delay has not completed.</p></div></article><article class="- topic/topic topic nested1" aria-labelledby="ariaid-title8" id="example"><h2 class="- topic/title title topictitle2" id="ariaid-title8" style=""> Example</h2><div class="- topic/body body"><pre class="+ topic/pre pr-d/codeblock pre codeblock c"><em class="hl-comment">// Check if the delay has expired.</em>
+<strong class="hl-keyword">if</strong> (SYS_TIME_DelayIsComplete(timer) != true)
+{
+    <em class="hl-comment">// Delay has not expired</em>
+}</pre></div></article><article class="- topic/topic topic nested1" aria-labelledby="ariaid-title9" id="remarks"><h2 class="- topic/title title topictitle2" id="ariaid-title9" style=""> Remarks</h2><div class="- topic/body body"><p class="- topic/p p">SYS_TIME_DelayIsComplete must be called to poll the status of the delay requested through SYS_TIME_DelayMS or SYS_TIME_DelayUS.</p><p class="- topic/p p">SYS_TIME_DelayIsComplete must not be used to poll the status of a periodic timer. Status of a periodic timer may be polled using the SYS_TIME_TimerPeriodHasExpired routine.</p></div></article></article></main></div>
+                        
+                        
+                        
+                        
+                        
+                        
+                    </div>
+                    
+                        <nav role="navigation" id="wh_topic_toc" aria-label="On this page" class="col-lg-2 d-none d-lg-block navbar d-print-none"> 
+                            <div id="wh_topic_toc_content">
+		                        
+	                            <div class=" wh_topic_toc "><div class="wh_topic_label">On this page</div><ul><li class="topic-item"><a href="#c" data-tocid="c"> C</a></li><li class="topic-item"><a href="#summary" data-tocid="summary"> Summary</a></li><li class="topic-item"><a href="#description" data-tocid="description"> Description</a></li><li class="topic-item"><a href="#precondition" data-tocid="precondition"> Precondition</a></li><li class="topic-item"><a href="#parameters" data-tocid="parameters"> Parameters</a></li><li class="topic-item"><a href="#returns" data-tocid="returns"> Returns</a></li><li class="topic-item"><a href="#example" data-tocid="example"> Example</a></li><li class="topic-item"><a href="#remarks" data-tocid="remarks"> Remarks</a></li></ul></div>
+	                        	
+                        	</div>
+                        </nav>
+                    
+                </div>
+            </div>
+            
+            
+            
+        </div> 
+        <footer class="navbar navbar-default wh_footer">
+  <div class=" footer-container mx-auto ">
+    <div class="footer">
+  <div class="mchp-wh-footer">
+    <div class="mchp-footer">
+      <div class="mchp-footer-tier1">
+        <div class="spacer"></div>
+        <div class="mchp-footer-container">
+          <div class="mchp-footer-links mchp-social-media-links">
+            <div class="mchp-component-items">
+              <div class="mchp-component-item">
+                <a class="cmp-image__link" href="https://www.facebook.com/pages/Microchip-Technology-Inc/20320981741" target="_blank">
+                  <img class="cmp-image__image" alt="Microchip Facebook" src="oxygen-webhelp/template/resources/images/201016-corp-facebook.png"/>
+                </a>
+              </div>
+              <div class="mchp-component-item">
+                <a class="cmp-image__link" href="https://www.linkedin.com/company/microchip-technology" target="_blank">
+                  <img class="cmp-image__image" alt="Microchip LinkedIn" src="oxygen-webhelp/template/resources/images/201016-corp-linkedin.png"/>
+                </a>
+              </div>
+              <div class="mchp-component-item">
+                <a class="cmp-image__link" href="https://twitter.com/MicrochipTech" target="_blank">
+                  <img class="cmp-image__image" alt="Microchip Twitter" src="oxygen-webhelp/template/resources/images/201016-corp-twitter.png"/>
+                </a>
+              </div>
+              <div class="mchp-component-item">
+                <a class="cmp-image__link" href="https://www.youtube.com/user/MicrochipTechnology" target="_blank">
+                  <img class="cmp-image__image" alt="Microchip YouTube" src="oxygen-webhelp/template/resources/images/201016-corp-youtube.png"/>
+                </a>
+              </div>
+              <div class="mchp-component-item">
+                <a class="cmp-image__link" href="https://www.instagram.com/microchiptechnologyinc/" target="_blank">
+                  <img class="cmp-image__image" alt="Microchip Instagram" src="oxygen-webhelp/template/resources/images/201016-corp-instagram.png"/>
+                </a>
+              </div>
+              <div class="mchp-component-item">
+                <a class="cmp-image__link" href="https://www.weibo.com/microchiptech" target="_blank">
+                  <img class="cmp-image__image" alt="Microchip Weibo" src="oxygen-webhelp/template/resources/images/201016-corp-weibo.png"/>
+                </a>
+              </div>
+              <div class="mchp-component-item">
+                <a class="cmp-image__link" href="https://www.microchip.com/en-us/about/blog" target="_blank">
+                  <img class="cmp-image__image" alt="Microchip Blog" src="oxygen-webhelp/template/resources/images/201016-corp-blog.png"/>
+                </a>
+              </div>
+            </div>
+          </div>
+          <div class="mchp-footer-links">
+            <div class="mchp-component-items">
+              <div class="mchp-component-item">
+                <div class="link">
+                  <a href="https://www.microchip.com/about-us/contact-us" class="mchp-link__link">Contact</a>
+                  <span class="mchp-link__separator">|</span>
+                </div>
+              </div>
+              <div class="mchp-component-item ">
+                <div class="link">
+                  <a href="https://www.microchip.com/en-us/about/legal-information" class="mchp-link__link">Legal</a>
+                  <span class="mchp-link__separator">|</span>
+                </div>
+              </div>
+              <div class="mchp-component-item ">
+                <div class="link">
+                  <a href="https://www.microchip.com/en-us/about/legal-information/privacy-policy" class="mchp-link__link">Privacy Policy</a>
+                  <span class="mchp-link__separator">|</span>
+                </div>
+              </div>
+              <div class="mchp-component-item ">
+                <div class="link">
+                  <a href="https://www.microchip.com/en-us/about/legal-information/microchip-cookie-statement" class="mchp-link__link">Cookies</a>
+                  <span class="mchp-link__separator">|</span>
+                </div>
+              </div>
+              <div class="mchp-component-item">
+                <div class="link">
+                  <a href="https://careers.microchip.com/" class="mchp-link__link">Careers</a>
+                  <span class="mchp-link__separator"></span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="mchp-footer-newsletter">
+            <div class="cmp-text">
+              <p>Stay on the leading edge with our blog</p>
+            </div>
+            <div class="mchp-button-wrapper">
+              <a role="button" href="https://www.microchip.com/en-us/about/blog" class="mchp-button mchp-button-regular solid">
+                <span class="mchp-button__span">MicroSolutions</span>
+              </a>
+            </div>
+          </div>
+        </div>
+        <div class="graphic">
+          <img src="oxygen-webhelp/template/resources/images/footer-graphic.png"/>
+        </div>
+      </div>
+      <div class="mchp-footer-tier2">
+        <p class="mchp-copyright">© Copyright 1998-2022 Microchip Technology Inc. All rights reserved.</p>
+      </div>
+    </div>
+  </div>
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+  <script async="true" src="https://www.googletagmanager.com/gtag/js?id=UA-2724382-19"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];  
+    function gtag(){dataLayer.push(arguments);}  
+    gtag('js', new Date());   
+    gtag('config', 'UA-2724382-19');
+  </script>
 </div>
-<div class="topic nested1" aria-labelledby="ariaid-title3" id="summary"><h2 class="title topictitle2" id="ariaid-title3">Summary</h2><div class="body"><p class="p">Determines if the given delay timer has completed.</p>
-</div>
-</div>
-<div class="topic nested1" aria-labelledby="ariaid-title4" id="description"><h2 class="title topictitle2" id="ariaid-title4">Description</h2><div class="body"><p class="p">This function determines if the requested delay is completed or is still
-in progress.</p>
-</div>
-</div>
-<div class="topic nested1" aria-labelledby="ariaid-title5" id="precondition"><h2 class="title topictitle2" id="ariaid-title5">Precondition</h2><div class="body"><p class="p">A delay request must have been created using either the SYS_TIME_DelayMS or SYS_TIME_DelayUS functions.</p>
-</div>
-</div>
-<div class="topic nested1" aria-labelledby="ariaid-title6" id="parameters"><h2 class="title topictitle2" id="ariaid-title6">Parameters</h2><div class="body">
-<div class="tablenoborder"><table cellpadding="4" cellspacing="0" summary="" class="table" frame="border" border="1" rules="all"><col style="width:" /><col style="width:" /><thead class="thead" style="text-align:left;"><tr class="row"><th class="entry cellrowborder" style="text-align:left;vertical-align:middle;" id="d78660e56"><span>Param</span></th>
-<th class="entry cellrowborder" style="text-align:left;vertical-align:middle;" id="d78660e58"><span>Description</span></th>
-</tr>
-</thead>
-<tbody class="tbody"><tr class="row"><td class="entry cellrowborder" style="text-align:left;vertical-align:middle;" headers="d78660e56 "><span>handle</span></td>
-<td class="entry cellrowborder" style="text-align:left;vertical-align:middle;" headers="d78660e58 "><span>A SYS_TIME_HANDLE value provided by either SYS_TIME_DelayMS or SYS_TIME_DelayUS functions.</span></td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
-</div>
-<div class="topic nested1" aria-labelledby="ariaid-title7" id="returns"><h2 class="title topictitle2" id="ariaid-title7">Returns</h2><div class="body"><p class="p"><em class="ph i">true</em> - If the delay has completed.</p>
-<p class="p"><em class="ph i">false</em> - If the delay has not completed.</p>
-</div>
-</div>
-<div class="topic nested1" aria-labelledby="ariaid-title8" id="example"><h2 class="title topictitle2" id="ariaid-title8">Example</h2><div class="body"><pre class="pre codeblock language-c"><button title="Copy Code" class="copy-code" onclick="cpy('d78660e82', this);">Copy</button><code id="d78660e82" content="// Check if the delay has expired.&#xA;if (SYS_TIME_DelayIsComplete(timer) != true)&#xA;{&#xA;    // Delay has not expired&#xA;}"><span class="ph token comment">// Check if the delay has expired.</span>
-<span class="ph token keyword">if</span> <span class="ph token punctuation">(</span><span class="ph token function">SYS_TIME_DelayIsComplete</span><span class="ph token punctuation">(</span>timer<span class="ph token punctuation">)</span> <span class="ph token operator">!=</span> true<span class="ph token punctuation">)</span>
-<span class="ph token punctuation">{</span>
-    <span class="ph token comment">// Delay has not expired</span>
-<span class="ph token punctuation">}</span></code></pre></div>
-</div>
-<div class="topic nested1" aria-labelledby="ariaid-title9" id="remarks"><h2 class="title topictitle2" id="ariaid-title9">Remarks</h2><div class="body"><p class="p">SYS_TIME_DelayIsComplete must be called to poll the status of the delay requested through SYS_TIME_DelayMS or SYS_TIME_DelayUS.</p>
-<p class="p">SYS_TIME_DelayIsComplete must not be used to poll the status of a periodic timer. Status of a periodic timer may be polled using the SYS_TIME_TimerPeriodHasExpired routine.</p>
-</div>
-</div>
-</body>
+  </div>
+</footer>
+        
+        <div id="go2top" class="d-print-none">
+            <span class="oxy-icon oxy-icon-up"></span>
+        </div>
+        
+        <div id="modal_img_large" class="modal">
+            <span class="close oxy-icon oxy-icon-remove"></span>
+            <div id="modal_img_container"></div>
+            <div id="caption"></div>
+        </div>
+        
+        
+        
+    </body>
 </html>

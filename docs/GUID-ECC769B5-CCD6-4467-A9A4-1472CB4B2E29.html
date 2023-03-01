@@ -1,228 +1,400 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE html
-  PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
-<head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-
-<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE11" /><meta name="copyright" content="(C) Copyright 2022" />
-<meta name="DC.rights.owner" content="(C) Copyright 2022" />
-<meta name="DC.type" content="topic" />
-<meta name="DC.title" content="SYS_FS_MEDIA_BLOCK_EVENT Enum" />
-<meta name="DC.relation" scheme="URI" content="GUID-42556FDF-A632-49FE-8A5E-9303A926578C.html" />
-<meta name="DC.format" content="XHTML" />
-<meta name="DC.identifier" content="sys-fs-media-block-event-enum" />
-<link rel="stylesheet" type="text/css" href="stylesheets/commonltr.css" />
-<link rel="stylesheet" type="text/css" href="stylesheets/atmel.css" />
-<link rel="stylesheet" type="text/css" href="./stylesheets/common-extended.css" /><title>SYS_FS_MEDIA_BLOCK_EVENT Enum</title>
-<meta name="Microsoft.Help.Id" content="GUID-EDFB1AB8-CD6B-446F-8E25-F2167287A1AF-sys-fs-media-block-event-enum" />
-<meta name="Microsoft.Help.TocParent" content="GUID-EDFB1AB8-CD6B-446F-8E25-F2167287A1AF" />
-<meta name="Microsoft.Help.TocOrder" content="0" />
-<meta name="Microsoft.Help.Locale" content="en-US" />
-<meta name="Microsoft.Help.TopicLocale" content="en-US" />
-<meta name="Microsoft.Help.DisplayVersion" content="MPLAB® Harmony Core Library Reference A 11/2021" />
-<script language="javascript">
-       
-       if (window.parent.location.protocol != 'file:') {
-				document.addEventListener('click', function(e) {
-				    if (e.target) {
-               if (e.target.nodeName == "A" ) {
-                    if (!e.target.target) {
-                      e.preventDefault();
-                      e.stopPropagation();
-                              
-                      var origUrl = window.parent.location.href.substr(0, window.parent.location.href.indexOf("?"));
-                      if (origUrl.length === 0) {
-                          origUrl = window.parent.location.href;
-                      }
-                      var href= e.target.getAttribute("href");
-                      var parts = href.split("#");
-          
-                      var url = "";
-                      if (parts.length == 2 ) {
-                        if (!parts[0].length) {
-                            url = window.parent.location.search.replace('?','')
-                        } else {
-                            url = parts[0].replace('.html','');
-                        }
-                      } else {
-                        url = parts[0].replace('.html','');
-                      }
-
-                      if (parts.length == 2) {
-                          url += "#" + parts[1];
-                      }
+<!DOCTYPE html><html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-us" lang="en-us" data-whc_version="24.1">
+    <head><link rel="shortcut icon" href="oxygen-webhelp\template\resources/images/favicon.ico"/><link rel="icon" href="oxygen-webhelp\template\resources/images/favicon.ico"/><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/><meta name="viewport" content="width=device-width, initial-scale=1.0"/><meta http-equiv="X-UA-Compatible" content="IE=edge"/><meta name="description" content="typedef enum { /* Block operation has been completed successfully. */ SYS_FS_MEDIA_EVENT_BLOCK_COMMAND_COMPLETE = SYS_MEDIA_EVENT_BLOCK_COMMAND_COMPLETE, /* There was an error during the block ..."/><meta name="copyright" content="(C) Copyright 2023"/><meta name="DC.rights.owner" content="(C) Copyright 2023"/><meta name="DC.type" content="topic"/><meta name="DC.relation" content="GUID-42556FDF-A632-49FE-8A5E-9303A926578C.md"/><meta name="DC.format" content="HTML5"/><meta name="DC.identifier" content="sys-fs-media-block-event-enum"/><title>1.2.7.4.78 SYS_FS_MEDIA_BLOCK_EVENT Enum</title><!--  Generated with Oxygen version 24.1, build number 2022062014.  --><meta name="wh-path2root" content=""/><meta name="wh-toc-id" content="&lt;?xml version=&#34;1.0&#34; encoding=&#34;UTF-8&#34;?&gt;&lt;?workdir /D:\InfoShare\Data\Publish\Data\qzvtb5xcvan\work\temp?&gt;&lt;?workdir-uri file:/D:/InfoShare/Data/Publish/Data/qzvtb5xcvan/work/temp/?&gt;&lt;?path2project?&gt;&lt;?path2project-uri ./?&gt;&lt;?path2rootmap-uri ./?&gt;&lt;topic xmlns:ditaarch=&#34;http://dita.oasis-open.org/architecture/2005/&#34; xmlns:dita-ot=&#34;http://dita-ot.sourceforge.net/ns/201007/dita-ot&#34; class=&#34;- topic/topic &#34; ditaarch:DITAArchVersion=&#34;1.2&#34; domains=&#34;(topic hi-d) (topic ut-d) (topic indexing-d) (topic hazard-d) (topic abbrev-d) (topic pr-d) (topic sw-d) (topic ui-d)&#34; id=&#34;sys-fs-media-block-event-enum&#34; xtrf=&#34;file:/D:/InfoShare/Data/Publish/Data/qzvtb5xcvan/work/1/en-US/GUID-ECC769B5-CCD6-4467-A9A4-1472CB4B2E29.md&#34; xtrc=&#34;topic:1;182:3&#34; specializations=&#34;&#34;&gt;&lt;title class=&#34;- topic/title &#34; xtrf=&#34;file:/D:/InfoShare/Data/Publish/Data/qzvtb5xcvan/work/1/en-US/GUID-ECC769B5-CCD6-4467-A9A4-1472CB4B2E29.md&#34; xtrc=&#34;title:1;182:3&#34;&gt;SYS_FS_MEDIA_BLOCK_EVENT Enum&lt;/title&gt;&lt;body class=&#34;- topic/body &#34; xtrf=&#34;file:/D:/InfoShare/Data/Publish/Data/qzvtb5xcvan/work/1/en-US/GUID-ECC769B5-CCD6-4467-A9A4-1472CB4B2E29.md&#34; xtrc=&#34;body:1;182:3&#34;/&gt;&lt;related-links class=&#34;- topic/related-links &#34;&gt;&lt;linkpool class=&#34;- topic/linkpool &#34; mapkeyref=&#34;GUID-4BA21645-85F2-46DA-ADDC-4292784EE8A4&#34; xtrc=&#34;topicref:83;3:13314&#34; xtrf=&#34;file:/D:/InfoShare/Data/Publish/Data/qzvtb5xcvan/work/1/en-US/GUID-9AE69EC2-7290-4561-953A-1E9E1D1C1418.ditamap&#34;&gt;&lt;link class=&#34;- topic/link &#34; format=&#34;dita&#34; href=&#34;GUID-42556FDF-A632-49FE-8A5E-9303A926578C.md&#34; mapclass=&#34;- map/topicref &#34; role=&#34;parent&#34; scope=&#34;local&#34; type=&#34;topic&#34; xtrc=&#34;topicref:5;3:1937&#34; xtrf=&#34;file:/D:/InfoShare/Data/Publish/Data/qzvtb5xcvan/work/1/en-US/GUID-9AE69EC2-7290-4561-953A-1E9E1D1C1418.ditamap&#34;&gt;&lt;?ditaot usertext?&gt;&lt;linktext class=&#34;- topic/linktext &#34;&gt;&lt;?ditaot gentext?&gt;Library Interface&lt;/linktext&gt;&lt;/link&gt;&lt;/linkpool&gt;&lt;/related-links&gt;&lt;topic class=&#34;- topic/topic &#34; ditaarch:DITAArchVersion=&#34;1.2&#34; domains=&#34;(topic hi-d) (topic ut-d) (topic indexing-d) (topic hazard-d) (topic abbrev-d) (topic pr-d) (topic sw-d) (topic ui-d)&#34; id=&#34;c&#34; xtrf=&#34;file:/D:/InfoShare/Data/Publish/Data/qzvtb5xcvan/work/1/en-US/GUID-ECC769B5-CCD6-4467-A9A4-1472CB4B2E29.md&#34; xtrc=&#34;topic:2;182:3&#34; specializations=&#34;&#34;&gt;&lt;title class=&#34;- topic/title &#34; xtrf=&#34;file:/D:/InfoShare/Data/Publish/Data/qzvtb5xcvan/work/1/en-US/GUID-ECC769B5-CCD6-4467-A9A4-1472CB4B2E29.md&#34; xtrc=&#34;title:2;182:3&#34;&gt;C&lt;/title&gt;&lt;body class=&#34;- topic/body &#34; xtrf=&#34;file:/D:/InfoShare/Data/Publish/Data/qzvtb5xcvan/work/1/en-US/GUID-ECC769B5-CCD6-4467-A9A4-1472CB4B2E29.md&#34; xtrc=&#34;body:2;182:3&#34;&gt;&lt;codeblock class=&#34;+ topic/pre pr-d/codeblock &#34; xml:space=&#34;preserve&#34; outputclass=&#34;c&#34; xtrf=&#34;file:/D:/InfoShare/Data/Publish/Data/qzvtb5xcvan/work/1/en-US/GUID-ECC769B5-CCD6-4467-A9A4-1472CB4B2E29.md&#34; xtrc=&#34;codeblock:1;182:3&#34;&gt;typedef enum { /* Block operation has been completed successfully. */ SYS_FS_MEDIA_EVENT_BLOCK_COMMAND_COMPLETE = SYS_MEDIA_EVENT_BLOCK_COMMAND_COMPLETE, /* There was an error during the block operation */ SYS_FS_MEDIA_EVENT_BLOCK_COMMAND_ERROR = SYS_MEDIA_EVENT_BLOCK_COMMAND_ERROR } SYS_FS_MEDIA_BLOCK_EVENT; &lt;/codeblock&gt;&lt;/body&gt;&lt;/topic&gt;&lt;topic class=&#34;- topic/topic &#34; ditaarch:DITAArchVersion=&#34;1.2&#34; domains=&#34;(topic hi-d) (topic ut-d) (topic indexing-d) (topic hazard-d) (topic abbrev-d) (topic pr-d) (topic sw-d) (topic ui-d)&#34; id=&#34;summary&#34; xtrf=&#34;file:/D:/InfoShare/Data/Publish/Data/qzvtb5xcvan/work/1/en-US/GUID-ECC769B5-CCD6-4467-A9A4-1472CB4B2E29.md&#34; xtrc=&#34;topic:3;182:3&#34; specializations=&#34;&#34;&gt;&lt;title class=&#34;- topic/title &#34; xtrf=&#34;file:/D:/InfoShare/Data/Publish/Data/qzvtb5xcvan/work/1/en-US/GUID-ECC769B5-CCD6-4467-A9A4-1472CB4B2E29.md&#34; xtrc=&#34;title:3;182:3&#34;&gt;Summary&lt;/title&gt;&lt;body class=&#34;- topic/body &#34; xtrf=&#34;file:/D:/InfoShare/Data/Publish/Data/qzvtb5xcvan/work/1/en-US/GUID-ECC769B5-CCD6-4467-A9A4-1472CB4B2E29.md&#34; xtrc=&#34;body:3;182:3&#34;&gt;&lt;p class=&#34;- topic/p &#34; xtrf=&#34;file:/D:/InfoShare/Data/Publish/Data/qzvtb5xcvan/work/1/en-US/GUID-ECC769B5-CCD6-4467-A9A4-1472CB4B2E29.md&#34; xtrc=&#34;p:1;182:3&#34;&gt;Identifies the possible events that can result from a request.&lt;/p&gt;&lt;/body&gt;&lt;/topic&gt;&lt;topic class=&#34;- topic/topic &#34; ditaarch:DITAArchVersion=&#34;1.2&#34; domains=&#34;(topic hi-d) (topic ut-d) (topic indexing-d) (topic hazard-d) (topic abbrev-d) (topic pr-d) (topic sw-d) (topic ui-d)&#34; id=&#34;description&#34; xtrf=&#34;file:/D:/InfoShare/Data/Publish/Data/qzvtb5xcvan/work/1/en-US/GUID-ECC769B5-CCD6-4467-A9A4-1472CB4B2E29.md&#34; xtrc=&#34;topic:4;182:3&#34; specializations=&#34;&#34;&gt;&lt;title class=&#34;- topic/title &#34; xtrf=&#34;file:/D:/InfoShare/Data/Publish/Data/qzvtb5xcvan/work/1/en-US/GUID-ECC769B5-CCD6-4467-A9A4-1472CB4B2E29.md&#34; xtrc=&#34;title:4;182:3&#34;&gt;Description&lt;/title&gt;&lt;body class=&#34;- topic/body &#34; xtrf=&#34;file:/D:/InfoShare/Data/Publish/Data/qzvtb5xcvan/work/1/en-US/GUID-ECC769B5-CCD6-4467-A9A4-1472CB4B2E29.md&#34; xtrc=&#34;body:4;182:3&#34;&gt;&lt;p class=&#34;- topic/p &#34; xtrf=&#34;file:/D:/InfoShare/Data/Publish/Data/qzvtb5xcvan/work/1/en-US/GUID-ECC769B5-CCD6-4467-A9A4-1472CB4B2E29.md&#34; xtrc=&#34;p:2;182:3&#34;&gt;This enumeration identifies the possible events that can result from a media.&lt;/p&gt;&lt;p class=&#34;- topic/p &#34; xtrf=&#34;file:/D:/InfoShare/Data/Publish/Data/qzvtb5xcvan/work/1/en-US/GUID-ECC769B5-CCD6-4467-A9A4-1472CB4B2E29.md&#34; xtrc=&#34;p:3;182:3&#34;&gt;One of these values is passed in the &#34;event&#34; parameter of the event handling callback function that client registered with the driver by setting the event handler when a block request is completed.&lt;/p&gt;&lt;/body&gt;&lt;/topic&gt;&lt;topic class=&#34;- topic/topic &#34; ditaarch:DITAArchVersion=&#34;1.2&#34; domains=&#34;(topic hi-d) (topic ut-d) (topic indexing-d) (topic hazard-d) (topic abbrev-d) (topic pr-d) (topic sw-d) (topic ui-d)&#34; id=&#34;remarks&#34; xtrf=&#34;file:/D:/InfoShare/Data/Publish/Data/qzvtb5xcvan/work/1/en-US/GUID-ECC769B5-CCD6-4467-A9A4-1472CB4B2E29.md&#34; xtrc=&#34;topic:5;182:3&#34; specializations=&#34;&#34;&gt;&lt;title class=&#34;- topic/title &#34; xtrf=&#34;file:/D:/InfoShare/Data/Publish/Data/qzvtb5xcvan/work/1/en-US/GUID-ECC769B5-CCD6-4467-A9A4-1472CB4B2E29.md&#34; xtrc=&#34;title:5;182:3&#34;&gt;Remarks&lt;/title&gt;&lt;body class=&#34;- topic/body &#34; xtrf=&#34;file:/D:/InfoShare/Data/Publish/Data/qzvtb5xcvan/work/1/en-US/GUID-ECC769B5-CCD6-4467-A9A4-1472CB4B2E29.md&#34; xtrc=&#34;body:5;182:3&#34;&gt;&lt;p class=&#34;- topic/p &#34; xtrf=&#34;file:/D:/InfoShare/Data/Publish/Data/qzvtb5xcvan/work/1/en-US/GUID-ECC769B5-CCD6-4467-A9A4-1472CB4B2E29.md&#34; xtrc=&#34;p:4;182:3&#34;&gt;Refer to sys_media.h for actual enumerations.&lt;/p&gt;&lt;/body&gt;&lt;/topic&gt;&lt;/topic&gt;"/><meta name="wh-source-relpath" content="GUID-ECC769B5-CCD6-4467-A9A4-1472CB4B2E29.md"/><meta name="wh-out-relpath" content="GUID-ECC769B5-CCD6-4467-A9A4-1472CB4B2E29.html"/>
+    <!-- Latest compiled and minified Bootstrap CSS -->
+    <link rel="stylesheet" type="text/css" href="./oxygen-webhelp/lib/bootstrap/css/bootstrap.min.css"/>
     
-                      window.parent.location.href = origUrl + "?" + url;
-
-                      return false;
-                    }
-               }
-            }
-				});
-			}
-
-		</script><script language="javascript">
-        function cpy(id, button) {
-        
-            var element = document.getElementById(id);
-            var content = element.getAttribute("content");
-            var textArea = document.createElement("textarea");
-            
-            // Place in the top-left corner of screen regardless of scroll position.
-            textArea.style.position = 'fixed';
-            textArea.style.top = 0;
-            textArea.style.left = 0;
-            
-            // Ensure it has a small width and height. Setting to 1px / 1em
-            // doesn't work as this gives a negative w/h on some browsers.
-            textArea.style.width = '2em';
-            textArea.style.height = '2em';
-            
-            // We don't need padding, reducing the size if it does flash render.
-            textArea.style.padding = 0;
-            
-            // Clean up any borders.
-            textArea.style.border = 'none';
-            textArea.style.outline = 'none';
-            textArea.style.boxShadow = 'none';
-            
-            // Avoid flash of the white box if rendered for any reason.
-            textArea.style.background = 'transparent';
-            
-            
-            textArea.value = content;
-            
-            document.body.appendChild(textArea);
-            textArea.focus();
-            textArea.select();
-            
-            try {
-               var successful = document.execCommand('copy');
-               var msg = successful ? 'successful' : 'unsuccessful';
-               if (!button.classList.contains("copied")){
-                  button.textContent = "Copied";
-                  button.classList.add("copied");
-                  setTimeout(function(){
-                    button.textContent = "Copy";
-                    button.classList.remove("copied");
-                  },1000);
-               }
-            } catch (err) {
-              console.log('Oops, unable to copy');
-            }
-            
-            document.body.removeChild(textArea);
-        }
-      </script><script language="javascript">
-          
-          // Add the MathML namespace to html
-          var html = document.getElementsByTagName("html")[0],
-          head = document.getElementsByTagName("head")[0];
-          
-          var mathJax = document.createElement("script");
-          mathJax.src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-MML-AM_CHTML";
-          head.appendChild(mathJax);
-          
-          html.setAttribute("xmlns:m","http://www.w3.org/1998/Math/MathML");
-          
-          function inIframe() { try { return window.self !== window.top; } catch (e) { return true; } }
-          
-          if (!inIframe()) { 
-          
-          var Default = "index.html?GUID-ECC769B5-CCD6-4467-A9A4-1472CB4B2E29"; 
-          
-          var displaylocation = "value" + window.location.href;
-          
-          var GUIDS = displaylocation.split('GUID');          
-          
-          if (displaylocation.indexOf('#GUID') != -1) {            
-          var First = GUIDS[1].split('.html');  
-          if (GUIDS[3]){First = GUIDS[2].split('.html');}
-          if (GUIDS[4]){First = GUIDS[3].split('.html');}
-          if (GUIDS[5]){First = GUIDS[4].split('.html');}
-          
-          var Second = GUIDS[2].split('#');   
-          if (GUIDS[3]){Second = GUIDS[3].split('#');}
-          if (GUIDS[4]){Second = GUIDS[4].split('#');}
-          if (GUIDS[5]){Second = GUIDS[5].split('#');}
-          
-          Default = "index.html?" + "GUID" + First[0] + "GUID" + Second[0];     
-          }                    
-          window.top.location = Default;
-          }       
-          
-        </script><style xml:space="">
-        
-          button.copy-code{
-            display:none;
-            padding:0.7em 1.4em;
-            margin:0 0.3em 0.3em 0;
-            border-radius:0.15em;
-            box-sizing: border-box;
-            text-decoration:none;
-            font-family:'Roboto',sans-serif;
-            text-transform:uppercase;
-            font-weight:400;
-            color:#FFFFFF;
-            background-color:#9c9c9c;
-            box-shadow:inset 0 -0.6em 0 -0.35em rgba(0,0,0,0.17);
-            text-align:center;
-            position:relative;
-            border: 0;
-            float: right;
-            border-radius: .5em;
-            cursor: pointer;
-          }
-          button.copy-code:active{
-            top:0.1em;
-          }
-          
-          pre:hover button.copy-code{
-            display: inline-block !important;
-          }
-          button.copy-code.copied {
-            cursor: default !important;
-          }
-          
-          
-          @media all and (max-width:30em){
-            button.copy-code{
-              display:block;
-              margin:0.4em auto;
-            }
-          }
-        
-        
-      </style></head>
-<body id="sys-fs-media-block-event-enum">
-<h1 class="title topictitle1" id="ariaid-title1">SYS_FS_MEDIA_BLOCK_EVENT Enum</h1><div class="body"></div>
-<div class="related-links">
-<div class="familylinks">
-<div class="parentlink"><strong>Parent topic:</strong> <a class="link" href="GUID-42556FDF-A632-49FE-8A5E-9303A926578C.html">Library Interface</a></div>
-</div>
-</div><div class="topic nested1" aria-labelledby="ariaid-title2" id="c"><h2 class="title topictitle2" id="ariaid-title2">C</h2><div class="body"><pre class="pre codeblock language-c"><button title="Copy Code" class="copy-code" onclick="cpy('d161793e21', this);">Copy</button><code id="d161793e21" content="typedef enum&#xA;{&#xA;    /* Block operation has been completed successfully. */&#xA;    SYS_FS_MEDIA_EVENT_BLOCK_COMMAND_COMPLETE = SYS_MEDIA_EVENT_BLOCK_COMMAND_COMPLETE,&#xA;    &#xA;    /* There was an error during the block operation */&#xA;    SYS_FS_MEDIA_EVENT_BLOCK_COMMAND_ERROR = SYS_MEDIA_EVENT_BLOCK_COMMAND_ERROR&#xA;    &#xA;} SYS_FS_MEDIA_BLOCK_EVENT;&#xA;"><span class="ph token keyword">typedef</span> <span class="ph token keyword">enum</span>
-<span class="ph token punctuation">{</span>
-    <span class="ph token comment">/* Block operation has been completed successfully. */</span>
-    SYS_FS_MEDIA_EVENT_BLOCK_COMMAND_COMPLETE <span class="ph token operator">=</span> SYS_MEDIA_EVENT_BLOCK_COMMAND_COMPLETE<span class="ph token punctuation">,</span>
+    <link rel="stylesheet" href="./oxygen-webhelp/lib/jquery-ui/jquery-ui.min.css"/>
     
-    <span class="ph token comment">/* There was an error during the block operation */</span>
-    SYS_FS_MEDIA_EVENT_BLOCK_COMMAND_ERROR <span class="ph token operator">=</span> SYS_MEDIA_EVENT_BLOCK_COMMAND_ERROR
+    <!-- Template default styles  -->
+    <link rel="stylesheet" type="text/css" href="./oxygen-webhelp/app/topic-page.css?buildId=2022062014"/>
     
-<span class="ph token punctuation">}</span> SYS_FS_MEDIA_BLOCK_EVENT<span class="ph token punctuation">;</span>
-</code></pre></div>
+    
+    <script src="./oxygen-webhelp/lib/jquery/jquery-3.5.1.min.js"></script>
+    
+    <script data-main="./oxygen-webhelp/app/topic-page.js" src="./oxygen-webhelp/lib/requirejs/require.js"></script>
+<link rel="stylesheet" type="text/css" href="oxygen-webhelp/template/microchip.css?buildId=2022062014"/><link rel="stylesheet" type="text/css" href="oxygen-webhelp/template/notes.css?buildId=2022062014"/>
+<script src="mchp-context-help.js"></script>
+<link href="https://fonts.googleapis.com/css?family=Open+Sans:400,600,300" rel="stylesheet" type="text/css"/>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML" async="" type="text/javascript"></script>
+</head>
+
+    <body id="sys-fs-media-block-event-enum" class="wh_topic_page frmBody">
+        <a href="#wh_topic_body" class="sr-only sr-only-focusable">
+            Jump to main content
+        </a>
+        
+        
+        
+        
+        <header class="navbar navbar-default wh_header">
+    <div class="container-fluid">
+        <div class="wh_header_flex_container navbar-nav navbar-expand-md navbar-dark">
+            <div class="wh_logo_and_publication_title_container">
+                <div class="wh_logo_and_publication_title">
+                    
+                    <a href="index.html" class=" wh_logo d-none d-sm-block "><img src="oxygen-webhelp\template\resources/images/microchip.png" alt="MPLAB® Harmony Core Library "/></a>
+                    <div class=" wh_publication_title "><a href="index.html">MPLAB® Harmony Core Library </a></div>
+                    
+                </div>
+                
+                
+            </div>
+
+            <div class="wh_top_menu_and_indexterms_link collapse navbar-collapse" id="wh_top_menu_and_indexterms_link">
+                
+                
+                
+                
+            </div>
+        </div>
+    </div>
+</header>
+        
+        
+         
+        
+        <div class=" wh_search_input navbar-form wh_topic_page_search search " role="form">
+            
+            
+            
+            <form id="searchForm" method="get" role="search" action="search.html"><div><input type="search" placeholder="Search " class="wh_search_textfield" id="textToSearch" name="searchQuery" aria-label="Search query" required="required"/><button type="submit" class="wh_search_button" aria-label="Search"><span class="search_input_text">Search</span></button></div></form>
+            
+            <div class="mchp-color-stripe-grid-container">
+  <div class="mchp-main-bar mchp-orange-bar"></div>
+  <div class="mchp-main-bar mchp-blue-bar"></div>
+  <div class="mchp-main-bar mchp-green-bar"></div>
 </div>
-<div class="topic nested1" aria-labelledby="ariaid-title3" id="summary"><h2 class="title topictitle2" id="ariaid-title3">Summary</h2><div class="body"><p class="p">Identifies the possible events that can result from a request.</p>
-</div>
-</div>
-<div class="topic nested1" aria-labelledby="ariaid-title4" id="description"><h2 class="title topictitle2" id="ariaid-title4">Description</h2><div class="body"><p class="p">This enumeration identifies the possible events that can result from a
-media.</p>
-<p class="p">One of these values is passed in the "event" parameter of the event handling
+            
+        </div>
+        
+        <div class="container-fluid" id="wh_topic_container">
+            <div class="row">
+
+                <nav class="wh_tools d-print-none navbar-expand-md" aria-label="Tools">
+                    
+                    <div data-tooltip-position="bottom" class=" wh_breadcrumb "><ol class="d-print-none"><li><span class="home"><a href="index.html"><span>Home</span></a></span></li><li><div class="topicref" data-id="mplab-harmony-core-library"><div class="title"><a href="GUID-C04D97AB-D6E0-4CF5-9A80-CA64E36B6199.html"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">1</ph>
+MPLAB® Harmony Core Library</a></div></div></li><li><div class="topicref" data-id="system-service-libraries"><div class="title"><a href="GUID-EA5ADDDE-73D5-43CB-B474-0752CA9A1A50.html"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">1.2</ph>
+System Service Libraries</a></div></div></li><li><div class="topicref" data-id="file-system-service"><div class="title"><a href="GUID-066D09D2-5550-49D9-ADA2-60A702DB243E.html"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">1.2.7</ph>
+File System Service</a></div></div></li><li><div class="topicref" data-id="library-interface"><div class="title"><a href="GUID-42556FDF-A632-49FE-8A5E-9303A926578C.html"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">1.2.7.4</ph>
+Library Interface</a></div></div></li><li class="active"><div class="topicref" data-id="sys-fs-media-block-event-enum"><div class="title"><a href="GUID-ECC769B5-CCD6-4467-A9A4-1472CB4B2E29.html"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">1.2.7.4.78</ph>
+SYS_FS_MEDIA_BLOCK_EVENT Enum</a></div></div></li></ol></div>
+                    
+                    
+                    
+                    <div class="wh_right_tools">
+                        <button class="wh_hide_highlight" aria-label="Toggle search highlights" title="Toggle search highlights"></button>
+                        <button class="webhelp_expand_collapse_sections" data-next-state="collapsed" aria-label="Collapse sections" title="Collapse sections"></button>
+                        
+                        
+                        
+                        
+                        <div class=" wh_print_link print d-none d-md-inline-block "><button onClick="window.print()" title="Print this page" aria-label="Print this page"></button></div>
+                        
+                        <button type="button" id="wh_toc_button" class="custom-toggler navbar-toggler collapsed wh_toggle_button navbar-light" aria-expanded="false" aria-label="Toggle publishing table of content" aria-controls="wh_publication_toc">
+                            <span class="navbar-toggler-icon"></span>
+                        </button>
+                    </div>
+                    
+                </nav>
+            </div>
+            
+            
+            
+            
+            <div class="wh_content_area">
+                <div class="row">
+                    
+                        <nav id="wh_publication_toc" class="col-lg-3 col-md-3 col-sm-12 d-md-block d-none d-print-none" aria-label="Table of Contents Container">
+                            <div id="wh_publication_toc_content">
+		                        
+                            	<div class=" wh_publication_toc " data-tooltip-position="right"><span class="expand-button-action-labels"><span id="button-expand-action" role="button" aria-label="Expand"></span><span id="button-collapse-action" role="button" aria-label="Collapse"></span><span id="button-pending-action" role="button" aria-label="Pending"></span></span><ul role="tree" aria-label="Table of Contents"><li role="treeitem" aria-expanded="true"><div data-tocid="mplab-harmony-core-library-d6800e9" class="topicref" data-id="mplab-harmony-core-library" data-state="expanded"><span role="button" tabindex="0" aria-labelledby="button-collapse-action mplab-harmony-core-library-d6800e9-link" class="wh-expand-btn"></span><div class="title"><a href="GUID-C04D97AB-D6E0-4CF5-9A80-CA64E36B6199.html" id="mplab-harmony-core-library-d6800e9-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">1</ph>
+MPLAB® Harmony Core Library</a></div></div><ul role="group" class="navbar-nav nav-list"><li role="treeitem" aria-expanded="false"><div data-tocid="driver-libraries-d6800e17" class="topicref" data-id="driver-libraries" data-state="not-ready"><span role="button" tabindex="0" aria-labelledby="button-expand-action driver-libraries-d6800e17-link" class="wh-expand-btn"></span><div class="title"><a href="GUID-4FA4B38A-8C7F-46A3-9D08-4B8C5CE26712.html" id="driver-libraries-d6800e17-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">1.1</ph>
+Driver Libraries</a></div></div></li><li role="treeitem" aria-expanded="true"><div data-tocid="system-service-libraries-d6800e2771" class="topicref" data-id="system-service-libraries" data-state="expanded"><span role="button" tabindex="0" aria-labelledby="button-collapse-action system-service-libraries-d6800e2771-link" class="wh-expand-btn"></span><div class="title"><a href="GUID-EA5ADDDE-73D5-43CB-B474-0752CA9A1A50.html" id="system-service-libraries-d6800e2771-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">1.2</ph>
+System Service Libraries</a></div></div><ul role="group" class="navbar-nav nav-list"><li role="treeitem" aria-expanded="false"><div data-tocid="common-system-services-library-d6800e2779" class="topicref" data-id="common-system-services-library" data-state="not-ready"><span role="button" tabindex="0" aria-labelledby="button-expand-action common-system-services-library-d6800e2779-link" class="wh-expand-btn"></span><div class="title"><a href="GUID-B6B51E48-2D3D-42F8-8493-3405F1639A9E.html" id="common-system-services-library-d6800e2779-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">1.2.1</ph>
+Common System Services Library</a></div></div></li><li role="treeitem" aria-expanded="false"><div data-tocid="cache-system-service-d6800e2956" class="topicref" data-id="cache-system-service" data-state="not-ready"><span role="button" tabindex="0" aria-labelledby="button-expand-action cache-system-service-d6800e2956-link" class="wh-expand-btn"></span><div class="title"><a href="GUID-4522BF0A-636F-448D-B87F-2342F8CBEB00.html" id="cache-system-service-d6800e2956-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">1.2.2</ph>
+Cache System Service</a></div></div></li><li role="treeitem" aria-expanded="false"><div data-tocid="command-processor-system-service-d6800e3069" class="topicref" data-id="command-processor-system-service" data-state="not-ready"><span role="button" tabindex="0" aria-labelledby="button-expand-action command-processor-system-service-d6800e3069-link" class="wh-expand-btn"></span><div class="title"><a href="GUID-09F65940-7D05-4F78-81C9-6356B65DEF21.html" id="command-processor-system-service-d6800e3069-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">1.2.3</ph>
+Command Processor System Service</a></div></div></li><li role="treeitem" aria-expanded="false"><div data-tocid="console-system-service-d6800e3335" class="topicref" data-id="console-system-service" data-state="not-ready"><span role="button" tabindex="0" aria-labelledby="button-expand-action console-system-service-d6800e3335-link" class="wh-expand-btn"></span><div class="title"><a href="GUID-C8EFF72A-1BBB-416E-BF89-EEA2B23EB27D.html" id="console-system-service-d6800e3335-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">1.2.4</ph>
+Console System Service</a></div></div></li><li role="treeitem" aria-expanded="false"><div data-tocid="debug-system-service-d6800e3553" class="topicref" data-id="debug-system-service" data-state="not-ready"><span role="button" tabindex="0" aria-labelledby="button-expand-action debug-system-service-d6800e3553-link" class="wh-expand-btn"></span><div class="title"><a href="GUID-4F625306-2206-49B1-8846-60C97E40A440.html" id="debug-system-service-d6800e3553-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">1.2.5</ph>
+Debug System Service</a></div></div></li><li role="treeitem" aria-expanded="false"><div data-tocid="direct-memory-access-dma-system-service-d6800e3682" class="topicref" data-id="direct-memory-access-dma-system-service" data-state="not-ready"><span role="button" tabindex="0" aria-labelledby="button-expand-action direct-memory-access-dma-system-service-d6800e3682-link" class="wh-expand-btn"></span><div class="title"><a href="GUID-DB773A68-76AC-4900-8C7C-3AC9C38BE0BD.html" id="direct-memory-access-dma-system-service-d6800e3682-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">1.2.6</ph>
+Direct Memory Access (DMA) System Service</a></div></div></li><li role="treeitem" aria-expanded="true"><div data-tocid="file-system-service-d6800e3787" class="topicref" data-id="file-system-service" data-state="expanded"><span role="button" tabindex="0" aria-labelledby="button-collapse-action file-system-service-d6800e3787-link" class="wh-expand-btn"></span><div class="title"><a href="GUID-066D09D2-5550-49D9-ADA2-60A702DB243E.html" id="file-system-service-d6800e3787-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">1.2.7</ph>
+File System Service</a></div></div><ul role="group" class="navbar-nav nav-list"><li role="treeitem"><div data-tocid="how-the-library-works-d6800e3795" class="topicref" data-id="how-the-library-works" data-state="leaf"><span role="button" class="wh-expand-btn"></span><div class="title"><a href="GUID-DA048541-5D9C-4523-AAA7-A4BCF54C0B2D.html" id="how-the-library-works-d6800e3795-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">1.2.7.1</ph>
+How the Library Works</a></div></div></li><li role="treeitem"><div data-tocid="using-the-library-d6800e3803" class="topicref" data-id="using-the-library" data-state="leaf"><span role="button" class="wh-expand-btn"></span><div class="title"><a href="GUID-51740620-007C-449D-A985-84207C03F2DF.html" id="using-the-library-d6800e3803-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">1.2.7.2</ph>
+Using The Library</a></div></div></li><li role="treeitem"><div data-tocid="configuring-the-library-d6800e3811" class="topicref" data-id="configuring-the-library" data-state="leaf"><span role="button" class="wh-expand-btn"></span><div class="title"><a href="GUID-FEDD8FB6-058D-48C6-AD72-85A1DFE7DB31.html" id="configuring-the-library-d6800e3811-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">1.2.7.3</ph>
+Configuring The Library</a></div></div></li><li role="treeitem" aria-expanded="true"><div data-tocid="library-interface-d6800e3819" class="topicref" data-id="library-interface" data-state="expanded"><span role="button" tabindex="0" aria-labelledby="button-collapse-action library-interface-d6800e3819-link" class="wh-expand-btn"></span><div class="title"><a href="GUID-42556FDF-A632-49FE-8A5E-9303A926578C.html" id="library-interface-d6800e3819-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">1.2.7.4</ph>
+Library Interface</a></div></div><ul role="group" class="navbar-nav nav-list"><li role="treeitem"><div data-tocid="sys-fs-initialize-function-d6800e3827" class="topicref" data-id="sys-fs-initialize-function" data-state="leaf"><span role="button" class="wh-expand-btn"></span><div class="title"><a href="GUID-EBC86D7E-991E-4F99-B615-1764B5687E0F.html" id="sys-fs-initialize-function-d6800e3827-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">1.2.7.4.1</ph>
+SYS_FS_Initialize Function</a></div></div></li><li role="treeitem"><div data-tocid="sys-fs-tasks-function-d6800e3835" class="topicref" data-id="sys-fs-tasks-function" data-state="leaf"><span role="button" class="wh-expand-btn"></span><div class="title"><a href="GUID-3365F9D0-51D1-4CD6-8ABE-36B90E11752E.html" id="sys-fs-tasks-function-d6800e3835-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">1.2.7.4.2</ph>
+SYS_FS_Tasks Function</a></div></div></li><li role="treeitem"><div data-tocid="sys-fs-mount-function-d6800e3843" class="topicref" data-id="sys-fs-mount-function" data-state="leaf"><span role="button" class="wh-expand-btn"></span><div class="title"><a href="GUID-C3E440D0-2F73-4BA9-874A-A08D52EA87E3.html" id="sys-fs-mount-function-d6800e3843-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">1.2.7.4.3</ph>
+SYS_FS_Mount Function</a></div></div></li><li role="treeitem"><div data-tocid="sys-fs-unmount-function-d6800e3851" class="topicref" data-id="sys-fs-unmount-function" data-state="leaf"><span role="button" class="wh-expand-btn"></span><div class="title"><a href="GUID-4CD57E60-CFCA-4413-A344-0BB9E1A05660.html" id="sys-fs-unmount-function-d6800e3851-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">1.2.7.4.4</ph>
+SYS_FS_Unmount Function</a></div></div></li><li role="treeitem"><div data-tocid="sys-fs-eventhandlerset-function-d6800e3859" class="topicref" data-id="sys-fs-eventhandlerset-function" data-state="leaf"><span role="button" class="wh-expand-btn"></span><div class="title"><a href="GUID-760611CB-BB7F-4083-A98D-102D8A28E346.html" id="sys-fs-eventhandlerset-function-d6800e3859-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">1.2.7.4.5</ph>
+SYS_FS_EventHandlerSet Function</a></div></div></li><li role="treeitem"><div data-tocid="sys-fs-fileopen-function-d6800e3867" class="topicref" data-id="sys-fs-fileopen-function" data-state="leaf"><span role="button" class="wh-expand-btn"></span><div class="title"><a href="GUID-B11944D6-E746-4D44-B1D6-9C1E12944351.html" id="sys-fs-fileopen-function-d6800e3867-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">1.2.7.4.6</ph>
+SYS_FS_FileOpen Function</a></div></div></li><li role="treeitem"><div data-tocid="sys-fs-fileclose-function-d6800e3875" class="topicref" data-id="sys-fs-fileclose-function" data-state="leaf"><span role="button" class="wh-expand-btn"></span><div class="title"><a href="GUID-E8F31262-EEB7-495E-8292-1CE7D6BED8F6.html" id="sys-fs-fileclose-function-d6800e3875-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">1.2.7.4.7</ph>
+SYS_FS_FileClose Function</a></div></div></li><li role="treeitem"><div data-tocid="sys-fs-fileread-function-d6800e3883" class="topicref" data-id="sys-fs-fileread-function" data-state="leaf"><span role="button" class="wh-expand-btn"></span><div class="title"><a href="GUID-BEEC6E4A-AB22-424B-81C4-161E06B286B3.html" id="sys-fs-fileread-function-d6800e3883-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">1.2.7.4.8</ph>
+SYS_FS_FileRead Function</a></div></div></li><li role="treeitem"><div data-tocid="sys-fs-filestat-function-d6800e3891" class="topicref" data-id="sys-fs-filestat-function" data-state="leaf"><span role="button" class="wh-expand-btn"></span><div class="title"><a href="GUID-8A597E0D-6D93-4722-84B7-6DBC83406F78.html" id="sys-fs-filestat-function-d6800e3891-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">1.2.7.4.9</ph>
+SYS_FS_FileStat Function</a></div></div></li><li role="treeitem"><div data-tocid="sys-fs-fileseek-function-d6800e3899" class="topicref" data-id="sys-fs-fileseek-function" data-state="leaf"><span role="button" class="wh-expand-btn"></span><div class="title"><a href="GUID-B6E0D5A9-0560-44D9-A979-BA1CECDD2885.html" id="sys-fs-fileseek-function-d6800e3899-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">1.2.7.4.10</ph>
+SYS_FS_FileSeek Function</a></div></div></li><li role="treeitem"><div data-tocid="sys-fs-filetell-function-d6800e3908" class="topicref" data-id="sys-fs-filetell-function" data-state="leaf"><span role="button" class="wh-expand-btn"></span><div class="title"><a href="GUID-92EA2E5D-4704-4D93-96DB-29FA4359A2AB.html" id="sys-fs-filetell-function-d6800e3908-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">1.2.7.4.11</ph>
+SYS_FS_FileTell Function</a></div></div></li><li role="treeitem"><div data-tocid="sys-fs-filesize-function-d6800e3916" class="topicref" data-id="sys-fs-filesize-function" data-state="leaf"><span role="button" class="wh-expand-btn"></span><div class="title"><a href="GUID-C5423212-D6E4-4C4A-A935-BAE0D8E971D9.html" id="sys-fs-filesize-function-d6800e3916-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">1.2.7.4.12</ph>
+SYS_FS_FileSize Function</a></div></div></li><li role="treeitem"><div data-tocid="sys-fs-fileeof-function-d6800e3924" class="topicref" data-id="sys-fs-fileeof-function" data-state="leaf"><span role="button" class="wh-expand-btn"></span><div class="title"><a href="GUID-79C0F4A4-9F81-4865-B6A6-2642F39E919F.html" id="sys-fs-fileeof-function-d6800e3924-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">1.2.7.4.13</ph>
+SYS_FS_FileEOF Function</a></div></div></li><li role="treeitem"><div data-tocid="sys-fs-filenameget-function-d6800e3932" class="topicref" data-id="sys-fs-filenameget-function" data-state="leaf"><span role="button" class="wh-expand-btn"></span><div class="title"><a href="GUID-D7E32A8F-DC21-4E8D-ABE6-6AEE3FA0C89C.html" id="sys-fs-filenameget-function-d6800e3932-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">1.2.7.4.14</ph>
+SYS_FS_FileNameGet Function</a></div></div></li><li role="treeitem"><div data-tocid="sys-fs-error-function-d6800e3940" class="topicref" data-id="sys-fs-error-function" data-state="leaf"><span role="button" class="wh-expand-btn"></span><div class="title"><a href="GUID-9556A393-F301-40C0-8CCB-B49E9A0FC031.html" id="sys-fs-error-function-d6800e3940-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">1.2.7.4.15</ph>
+SYS_FS_Error Function</a></div></div></li><li role="treeitem"><div data-tocid="sys-fs-fileerror-function-d6800e3948" class="topicref" data-id="sys-fs-fileerror-function" data-state="leaf"><span role="button" class="wh-expand-btn"></span><div class="title"><a href="GUID-F6E3750F-7E4C-4A6C-9993-3028AF3D5457.html" id="sys-fs-fileerror-function-d6800e3948-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">1.2.7.4.16</ph>
+SYS_FS_FileError Function</a></div></div></li><li role="treeitem"><div data-tocid="sys-fs-filestringget-function-d6800e3956" class="topicref" data-id="sys-fs-filestringget-function" data-state="leaf"><span role="button" class="wh-expand-btn"></span><div class="title"><a href="GUID-E19AB663-B620-431F-988F-64E339B3010C.html" id="sys-fs-filestringget-function-d6800e3956-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">1.2.7.4.17</ph>
+SYS_FS_FileStringGet Function</a></div></div></li><li role="treeitem"><div data-tocid="sys-fs-filestringput-function-d6800e3964" class="topicref" data-id="sys-fs-filestringput-function" data-state="leaf"><span role="button" class="wh-expand-btn"></span><div class="title"><a href="GUID-68AF6796-DF3C-4742-81B5-555C359975D1.html" id="sys-fs-filestringput-function-d6800e3964-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">1.2.7.4.18</ph>
+SYS_FS_FileStringPut Function</a></div></div></li><li role="treeitem"><div data-tocid="sys-fs-filewrite-function-d6800e3972" class="topicref" data-id="sys-fs-filewrite-function" data-state="leaf"><span role="button" class="wh-expand-btn"></span><div class="title"><a href="GUID-40903D55-759F-49AF-BDF7-CD4E0693C394.html" id="sys-fs-filewrite-function-d6800e3972-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">1.2.7.4.19</ph>
+SYS_FS_FileWrite Function</a></div></div></li><li role="treeitem"><div data-tocid="sys-fs-filesync-function-d6800e3980" class="topicref" data-id="sys-fs-filesync-function" data-state="leaf"><span role="button" class="wh-expand-btn"></span><div class="title"><a href="GUID-17500CE8-820C-482D-B721-87577B1FA289.html" id="sys-fs-filesync-function-d6800e3980-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">1.2.7.4.20</ph>
+SYS_FS_FileSync Function</a></div></div></li><li role="treeitem"><div data-tocid="sys-fs-filetruncate-function-d6800e3988" class="topicref" data-id="sys-fs-filetruncate-function" data-state="leaf"><span role="button" class="wh-expand-btn"></span><div class="title"><a href="GUID-D34C151E-F128-4431-B0B3-6992EDD44D8F.html" id="sys-fs-filetruncate-function-d6800e3988-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">1.2.7.4.21</ph>
+SYS_FS_FileTruncate Function</a></div></div></li><li role="treeitem"><div data-tocid="sys-fs-filecharacterput-function-d6800e3997" class="topicref" data-id="sys-fs-filecharacterput-function" data-state="leaf"><span role="button" class="wh-expand-btn"></span><div class="title"><a href="GUID-B84F5FC9-27E9-43D0-BF80-DDF4F8EBA4F1.html" id="sys-fs-filecharacterput-function-d6800e3997-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">1.2.7.4.22</ph>
+SYS_FS_FileCharacterPut Function</a></div></div></li><li role="treeitem"><div data-tocid="sys-fs-fileprintf-function-d6800e4005" class="topicref" data-id="sys-fs-fileprintf-function" data-state="leaf"><span role="button" class="wh-expand-btn"></span><div class="title"><a href="GUID-42C01AE8-60C8-4A86-91A7-56D9222CBFC7.html" id="sys-fs-fileprintf-function-d6800e4005-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">1.2.7.4.23</ph>
+SYS_FS_FilePrintf Function</a></div></div></li><li role="treeitem"><div data-tocid="sys-fs-filetesterror-function-d6800e4013" class="topicref" data-id="sys-fs-filetesterror-function" data-state="leaf"><span role="button" class="wh-expand-btn"></span><div class="title"><a href="GUID-DE7E790A-ADA1-45B1-83C7-C072A270C6B1.html" id="sys-fs-filetesterror-function-d6800e4013-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">1.2.7.4.24</ph>
+SYS_FS_FileTestError Function</a></div></div></li><li role="treeitem"><div data-tocid="sys-fs-diropen-function-d6800e4021" class="topicref" data-id="sys-fs-diropen-function" data-state="leaf"><span role="button" class="wh-expand-btn"></span><div class="title"><a href="GUID-C0A3888C-CE30-403B-9AE7-042022369538.html" id="sys-fs-diropen-function-d6800e4021-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">1.2.7.4.25</ph>
+SYS_FS_DirOpen Function</a></div></div></li><li role="treeitem"><div data-tocid="sys-fs-dirclose-function-d6800e4029" class="topicref" data-id="sys-fs-dirclose-function" data-state="leaf"><span role="button" class="wh-expand-btn"></span><div class="title"><a href="GUID-09414A23-7390-4DBF-950D-F0BB8575A7B6.html" id="sys-fs-dirclose-function-d6800e4029-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">1.2.7.4.26</ph>
+SYS_FS_DirClose Function</a></div></div></li><li role="treeitem"><div data-tocid="sys-fs-dirread-function-d6800e4037" class="topicref" data-id="sys-fs-dirread-function" data-state="leaf"><span role="button" class="wh-expand-btn"></span><div class="title"><a href="GUID-C43ABFE3-58B7-4A30-840E-B2BBCCCDF33D.html" id="sys-fs-dirread-function-d6800e4037-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">1.2.7.4.27</ph>
+SYS_FS_DirRead Function</a></div></div></li><li role="treeitem"><div data-tocid="sys-fs-dirrewind-function-d6800e4045" class="topicref" data-id="sys-fs-dirrewind-function" data-state="leaf"><span role="button" class="wh-expand-btn"></span><div class="title"><a href="GUID-85FC64CE-DADA-4F11-BBAC-9EF299544C00.html" id="sys-fs-dirrewind-function-d6800e4045-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">1.2.7.4.28</ph>
+SYS_FS_DirRewind Function</a></div></div></li><li role="treeitem"><div data-tocid="sys-fs-dirsearch-function-d6800e4053" class="topicref" data-id="sys-fs-dirsearch-function" data-state="leaf"><span role="button" class="wh-expand-btn"></span><div class="title"><a href="GUID-BB75D339-99C6-4EFA-8443-51B883E071F5.html" id="sys-fs-dirsearch-function-d6800e4053-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">1.2.7.4.29</ph>
+SYS_FS_DirSearch Function</a></div></div></li><li role="treeitem"><div data-tocid="sys-fs-directorymake-function-d6800e4061" class="topicref" data-id="sys-fs-directorymake-function" data-state="leaf"><span role="button" class="wh-expand-btn"></span><div class="title"><a href="GUID-D91142BC-8060-4E5E-A75A-F92BD776160A.html" id="sys-fs-directorymake-function-d6800e4061-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">1.2.7.4.30</ph>
+SYS_FS_DirectoryMake Function</a></div></div></li><li role="treeitem"><div data-tocid="sys-fs-directorychange-function-d6800e4069" class="topicref" data-id="sys-fs-directorychange-function" data-state="leaf"><span role="button" class="wh-expand-btn"></span><div class="title"><a href="GUID-63D12AA9-FCFA-4183-9E63-F01D58DDF1B9.html" id="sys-fs-directorychange-function-d6800e4069-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">1.2.7.4.31</ph>
+SYS_FS_DirectoryChange Function</a></div></div></li><li role="treeitem"><div data-tocid="sys-fs-currentworkingdirectoryget-function-d6800e4077" class="topicref" data-id="sys-fs-currentworkingdirectoryget-function" data-state="leaf"><span role="button" class="wh-expand-btn"></span><div class="title"><a href="GUID-8D636C6F-ECAD-4501-9CD1-E145B18D7256.html" id="sys-fs-currentworkingdirectoryget-function-d6800e4077-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">1.2.7.4.32</ph>
+SYS_FS_CurrentWorkingDirectoryGet Function</a></div></div></li><li role="treeitem"><div data-tocid="sys-fs-filedirectoryremove-function-d6800e4086" class="topicref" data-id="sys-fs-filedirectoryremove-function" data-state="leaf"><span role="button" class="wh-expand-btn"></span><div class="title"><a href="GUID-27A799DA-3CEE-457F-AFEE-819817CA5978.html" id="sys-fs-filedirectoryremove-function-d6800e4086-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">1.2.7.4.33</ph>
+SYS_FS_FileDirectoryRemove Function</a></div></div></li><li role="treeitem"><div data-tocid="sys-fs-filedirectoryrenamemove-function-d6800e4094" class="topicref" data-id="sys-fs-filedirectoryrenamemove-function" data-state="leaf"><span role="button" class="wh-expand-btn"></span><div class="title"><a href="GUID-0DECF377-6DF4-46B4-A309-5C08078198F0.html" id="sys-fs-filedirectoryrenamemove-function-d6800e4094-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">1.2.7.4.34</ph>
+SYS_FS_FileDirectoryRenameMove Function</a></div></div></li><li role="treeitem"><div data-tocid="sys-fs-filedirectorymodeset-function-d6800e4102" class="topicref" data-id="sys-fs-filedirectorymodeset-function" data-state="leaf"><span role="button" class="wh-expand-btn"></span><div class="title"><a href="GUID-9001DC8C-6506-490D-B889-B8925C1192C3.html" id="sys-fs-filedirectorymodeset-function-d6800e4102-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">1.2.7.4.35</ph>
+SYS_FS_FileDirectoryModeSet Function</a></div></div></li><li role="treeitem"><div data-tocid="sys-fs-filedirectorytimeset-function-d6800e4110" class="topicref" data-id="sys-fs-filedirectorytimeset-function" data-state="leaf"><span role="button" class="wh-expand-btn"></span><div class="title"><a href="GUID-EE2B1E74-FD6E-4E67-B829-146AA4C02001.html" id="sys-fs-filedirectorytimeset-function-d6800e4110-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">1.2.7.4.36</ph>
+SYS_FS_FileDirectoryTimeSet Function</a></div></div></li><li role="treeitem"><div data-tocid="sys-fs-currentdriveget-function-d6800e4118" class="topicref" data-id="sys-fs-currentdriveget-function" data-state="leaf"><span role="button" class="wh-expand-btn"></span><div class="title"><a href="GUID-49A215E2-6C03-4638-8DDF-D5E08D353B8C.html" id="sys-fs-currentdriveget-function-d6800e4118-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">1.2.7.4.37</ph>
+SYS_FS_CurrentDriveGet Function</a></div></div></li><li role="treeitem"><div data-tocid="sys-fs-currentdriveset-function-d6800e4126" class="topicref" data-id="sys-fs-currentdriveset-function" data-state="leaf"><span role="button" class="wh-expand-btn"></span><div class="title"><a href="GUID-9A395A5B-24E8-474F-9FD0-FDA0DD7DF22A.html" id="sys-fs-currentdriveset-function-d6800e4126-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">1.2.7.4.38</ph>
+SYS_FS_CurrentDriveSet Function</a></div></div></li><li role="treeitem"><div data-tocid="sys-fs-drivelabelget-function-d6800e4134" class="topicref" data-id="sys-fs-drivelabelget-function" data-state="leaf"><span role="button" class="wh-expand-btn"></span><div class="title"><a href="GUID-783A145F-F4AF-4AA7-B066-80BD9E439E00.html" id="sys-fs-drivelabelget-function-d6800e4134-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">1.2.7.4.39</ph>
+SYS_FS_DriveLabelGet Function</a></div></div></li><li role="treeitem"><div data-tocid="sys-fs-drivelabelset-function-d6800e4142" class="topicref" data-id="sys-fs-drivelabelset-function" data-state="leaf"><span role="button" class="wh-expand-btn"></span><div class="title"><a href="GUID-6D392610-20DC-4F38-9798-E5FF2BAA3E0A.html" id="sys-fs-drivelabelset-function-d6800e4142-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">1.2.7.4.40</ph>
+SYS_FS_DriveLabelSet Function</a></div></div></li><li role="treeitem"><div data-tocid="sys-fs-driveformat-function-d6800e4150" class="topicref" data-id="sys-fs-driveformat-function" data-state="leaf"><span role="button" class="wh-expand-btn"></span><div class="title"><a href="GUID-F724EC87-6DF5-4689-821F-2757C4994DA9.html" id="sys-fs-driveformat-function-d6800e4150-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">1.2.7.4.41</ph>
+SYS_FS_DriveFormat Function</a></div></div></li><li role="treeitem"><div data-tocid="sys-fs-drivepartition-function-d6800e4158" class="topicref" data-id="sys-fs-drivepartition-function" data-state="leaf"><span role="button" class="wh-expand-btn"></span><div class="title"><a href="GUID-95A8C5DF-C0ED-42F7-9C69-062984DBBEAB.html" id="sys-fs-drivepartition-function-d6800e4158-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">1.2.7.4.42</ph>
+SYS_FS_DrivePartition Function</a></div></div></li><li role="treeitem"><div data-tocid="sys-fs-drivesectorget-function-d6800e4166" class="topicref" data-id="sys-fs-drivesectorget-function" data-state="leaf"><span role="button" class="wh-expand-btn"></span><div class="title"><a href="GUID-CC9DEE82-C59D-409F-81BD-347420DBAB94.html" id="sys-fs-drivesectorget-function-d6800e4166-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">1.2.7.4.43</ph>
+SYS_FS_DriveSectorGet Function</a></div></div></li><li role="treeitem"><div data-tocid="sys-fs-handle-typedef-d6800e4175" class="topicref" data-id="sys-fs-handle-typedef" data-state="leaf"><span role="button" class="wh-expand-btn"></span><div class="title"><a href="GUID-29718976-3953-4ACB-80D9-E4F98D7267EB.html" id="sys-fs-handle-typedef-d6800e4175-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">1.2.7.4.44</ph>
+SYS_FS_HANDLE Typedef</a></div></div></li><li role="treeitem"><div data-tocid="sys-fs-handle-invalid-macro-d6800e4183" class="topicref" data-id="sys-fs-handle-invalid-macro" data-state="leaf"><span role="button" class="wh-expand-btn"></span><div class="title"><a href="GUID-788A2F8C-2432-42F2-9E49-35E431487E63.html" id="sys-fs-handle-invalid-macro-d6800e4183-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">1.2.7.4.45</ph>
+SYS_FS_HANDLE_INVALID Macro</a></div></div></li><li role="treeitem"><div data-tocid="sys-fs-file-system-type-enum-d6800e4191" class="topicref" data-id="sys-fs-file-system-type-enum" data-state="leaf"><span role="button" class="wh-expand-btn"></span><div class="title"><a href="GUID-6942E929-C41E-47A6-BDC6-72B98D966379.html" id="sys-fs-file-system-type-enum-d6800e4191-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">1.2.7.4.46</ph>
+SYS_FS_FILE_SYSTEM_TYPE Enum</a></div></div></li><li role="treeitem"><div data-tocid="sys-fs-file-dir-attr-enum-d6800e4199" class="topicref" data-id="sys-fs-file-dir-attr-enum" data-state="leaf"><span role="button" class="wh-expand-btn"></span><div class="title"><a href="GUID-8179778A-592C-4660-87E7-4AFDC27FA7B7.html" id="sys-fs-file-dir-attr-enum-d6800e4199-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">1.2.7.4.47</ph>
+SYS_FS_FILE_DIR_ATTR Enum</a></div></div></li><li role="treeitem"><div data-tocid="sys-fs-file-seek-control-enum-d6800e4207" class="topicref" data-id="sys-fs-file-seek-control-enum" data-state="leaf"><span role="button" class="wh-expand-btn"></span><div class="title"><a href="GUID-053B53A0-6358-4572-87A9-D344535EECF0.html" id="sys-fs-file-seek-control-enum-d6800e4207-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">1.2.7.4.48</ph>
+SYS_FS_FILE_SEEK_CONTROL Enum</a></div></div></li><li role="treeitem"><div data-tocid="sys-fs-result-enum-d6800e4215" class="topicref" data-id="sys-fs-result-enum" data-state="leaf"><span role="button" class="wh-expand-btn"></span><div class="title"><a href="GUID-B19AE59E-6323-4584-8369-DF3831E9F1F4.html" id="sys-fs-result-enum-d6800e4215-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">1.2.7.4.49</ph>
+SYS_FS_RESULT Enum</a></div></div></li><li role="treeitem"><div data-tocid="sys-fs-format-macros-d6800e4223" class="topicref" data-id="sys-fs-format-macros" data-state="leaf"><span role="button" class="wh-expand-btn"></span><div class="title"><a href="GUID-A7294804-5A6B-42F0-A7EC-9B78EEBC0C19.html" id="sys-fs-format-macros-d6800e4223-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">1.2.7.4.50</ph>
+SYS_FS_FORMAT Macros</a></div></div></li><li role="treeitem"><div data-tocid="sys-fs-format-param-struct-d6800e4231" class="topicref" data-id="sys-fs-format-param-struct" data-state="leaf"><span role="button" class="wh-expand-btn"></span><div class="title"><a href="GUID-E971A136-E792-4F48-9664-C4B0612DD46D.html" id="sys-fs-format-param-struct-d6800e4231-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">1.2.7.4.51</ph>
+SYS_FS_FORMAT_PARAM Struct</a></div></div></li><li role="treeitem"><div data-tocid="sys-fs-file-open-attributes-enum-d6800e4239" class="topicref" data-id="sys-fs-file-open-attributes-enum" data-state="leaf"><span role="button" class="wh-expand-btn"></span><div class="title"><a href="GUID-A5F00E8D-8192-4978-8E5D-D7843B7046C0.html" id="sys-fs-file-open-attributes-enum-d6800e4239-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">1.2.7.4.52</ph>
+SYS_FS_FILE_OPEN_ATTRIBUTES Enum</a></div></div></li><li role="treeitem"><div data-tocid="sys-fs-error-enum-d6800e4247" class="topicref" data-id="sys-fs-error-enum" data-state="leaf"><span role="button" class="wh-expand-btn"></span><div class="title"><a href="GUID-D84144C8-6208-429C-99C3-0F280E644638.html" id="sys-fs-error-enum-d6800e4247-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">1.2.7.4.53</ph>
+SYS_FS_ERROR Enum</a></div></div></li><li role="treeitem"><div data-tocid="sys-fs-event-enum-d6800e4255" class="topicref" data-id="sys-fs-event-enum" data-state="leaf"><span role="button" class="wh-expand-btn"></span><div class="title"><a href="GUID-0F9DEE27-DE19-477C-9AD4-3F4E5C84CF8B.html" id="sys-fs-event-enum-d6800e4255-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">1.2.7.4.54</ph>
+SYS_FS_EVENT Enum</a></div></div></li><li role="treeitem"><div data-tocid="sys-fs-functions-struct-d6800e4264" class="topicref" data-id="sys-fs-functions-struct" data-state="leaf"><span role="button" class="wh-expand-btn"></span><div class="title"><a href="GUID-BF3D7806-7DBE-4A2A-BA54-72EAF3659DBD.html" id="sys-fs-functions-struct-d6800e4264-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">1.2.7.4.55</ph>
+SYS_FS_FUNCTIONS Struct</a></div></div></li><li role="treeitem"><div data-tocid="sys-fs-registration-table-struct-d6800e4272" class="topicref" data-id="sys-fs-registration-table-struct" data-state="leaf"><span role="button" class="wh-expand-btn"></span><div class="title"><a href="GUID-7E8361E8-8372-4766-89EA-12D19F9DE0CD.html" id="sys-fs-registration-table-struct-d6800e4272-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">1.2.7.4.56</ph>
+SYS_FS_REGISTRATION_TABLE Struct</a></div></div></li><li role="treeitem"><div data-tocid="sys-fs-fstat-struct-d6800e4280" class="topicref" data-id="sys-fs-fstat-struct" data-state="leaf"><span role="button" class="wh-expand-btn"></span><div class="title"><a href="GUID-E77EF3AE-382C-4616-B57C-D573748C63A2.html" id="sys-fs-fstat-struct-d6800e4280-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">1.2.7.4.57</ph>
+SYS_FS_FSTAT Struct</a></div></div></li><li role="treeitem"><div data-tocid="sys-fs-time-union-d6800e4288" class="topicref" data-id="sys-fs-time-union" data-state="leaf"><span role="button" class="wh-expand-btn"></span><div class="title"><a href="GUID-CFDB12EA-C18C-4C53-A42B-5E0419E69632.html" id="sys-fs-time-union-d6800e4288-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">1.2.7.4.58</ph>
+SYS_FS_TIME Union</a></div></div></li><li role="treeitem"><div data-tocid="sys-fs-event-handler-typedef-d6800e4296" class="topicref" data-id="sys-fs-event-handler-typedef" data-state="leaf"><span role="button" class="wh-expand-btn"></span><div class="title"><a href="GUID-52A7B0F6-92F2-44FB-B4CF-363FB76CFCA7.html" id="sys-fs-event-handler-typedef-d6800e4296-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">1.2.7.4.59</ph>
+SYS_FS_EVENT_HANDLER Typedef</a></div></div></li><li role="treeitem"><div data-tocid="sys-fs-media-manager-addressget-function-d6800e4304" class="topicref" data-id="sys-fs-media-manager-addressget-function" data-state="leaf"><span role="button" class="wh-expand-btn"></span><div class="title"><a href="GUID-A6505482-D078-4796-9E2E-A224BB412F0A.html" id="sys-fs-media-manager-addressget-function-d6800e4304-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">1.2.7.4.60</ph>
+SYS_FS_MEDIA_MANAGER_AddressGet Function</a></div></div></li><li role="treeitem"><div data-tocid="sys-fs-media-manager-commandstatusget-function-d6800e4312" class="topicref" data-id="sys-fs-media-manager-commandstatusget-function" data-state="leaf"><span role="button" class="wh-expand-btn"></span><div class="title"><a href="GUID-13815F0C-6C56-4478-979F-D2D1623BDF20.html" id="sys-fs-media-manager-commandstatusget-function-d6800e4312-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">1.2.7.4.61</ph>
+SYS_FS_MEDIA_MANAGER_CommandStatusGet Function</a></div></div></li><li role="treeitem"><div data-tocid="sys-fs-media-manager-register-function-d6800e4320" class="topicref" data-id="sys-fs-media-manager-register-function" data-state="leaf"><span role="button" class="wh-expand-btn"></span><div class="title"><a href="GUID-FC8C727E-1368-48E2-88E3-C84B369ABE41.html" id="sys-fs-media-manager-register-function-d6800e4320-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">1.2.7.4.62</ph>
+SYS_FS_MEDIA_MANAGER_Register Function</a></div></div></li><li role="treeitem"><div data-tocid="sys-fs-media-manager-deregister-function-d6800e4328" class="topicref" data-id="sys-fs-media-manager-deregister-function" data-state="leaf"><span role="button" class="wh-expand-btn"></span><div class="title"><a href="GUID-BD3DA087-FB55-44E5-B3D7-47966581E0E5.html" id="sys-fs-media-manager-deregister-function-d6800e4328-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">1.2.7.4.63</ph>
+SYS_FS_MEDIA_MANAGER_DeRegister Function</a></div></div></li><li role="treeitem"><div data-tocid="sys-fs-media-manager-read-function-d6800e4336" class="topicref" data-id="sys-fs-media-manager-read-function" data-state="leaf"><span role="button" class="wh-expand-btn"></span><div class="title"><a href="GUID-509CACEA-CB11-45C5-89F1-A1744632EECA.html" id="sys-fs-media-manager-read-function-d6800e4336-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">1.2.7.4.64</ph>
+SYS_FS_MEDIA_MANAGER_Read Function</a></div></div></li><li role="treeitem"><div data-tocid="sys-fs-media-manager-sectorread-function-d6800e4344" class="topicref" data-id="sys-fs-media-manager-sectorread-function" data-state="leaf"><span role="button" class="wh-expand-btn"></span><div class="title"><a href="GUID-2057DC7F-AF3F-4DA1-BBA9-E086A5B949E1.html" id="sys-fs-media-manager-sectorread-function-d6800e4344-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">1.2.7.4.65</ph>
+SYS_FS_MEDIA_MANAGER_SectorRead Function</a></div></div></li><li role="treeitem"><div data-tocid="sys-fs-media-manager-sectorwrite-function-d6800e4353" class="topicref" data-id="sys-fs-media-manager-sectorwrite-function" data-state="leaf"><span role="button" class="wh-expand-btn"></span><div class="title"><a href="GUID-8F64B44C-AAE7-48E6-A1DF-EA5D649F655D.html" id="sys-fs-media-manager-sectorwrite-function-d6800e4353-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">1.2.7.4.66</ph>
+SYS_FS_MEDIA_MANAGER_SectorWrite Function</a></div></div></li><li role="treeitem"><div data-tocid="sys-fs-media-manager-volumepropertyget-function-d6800e4361" class="topicref" data-id="sys-fs-media-manager-volumepropertyget-function" data-state="leaf"><span role="button" class="wh-expand-btn"></span><div class="title"><a href="GUID-DAC3E906-7325-456B-A67A-B5F9FD901AC3.html" id="sys-fs-media-manager-volumepropertyget-function-d6800e4361-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">1.2.7.4.67</ph>
+SYS_FS_MEDIA_MANAGER_VolumePropertyGet Function</a></div></div></li><li role="treeitem"><div data-tocid="sys-fs-media-manager-mediastatusget-function-d6800e4369" class="topicref" data-id="sys-fs-media-manager-mediastatusget-function" data-state="leaf"><span role="button" class="wh-expand-btn"></span><div class="title"><a href="GUID-6D8C930C-02AE-4657-B161-09CD0578C2E5.html" id="sys-fs-media-manager-mediastatusget-function-d6800e4369-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">1.2.7.4.68</ph>
+SYS_FS_MEDIA_MANAGER_MediaStatusGet Function</a></div></div></li><li role="treeitem"><div data-tocid="sys-fs-media-manager-eventhandlerset-function-d6800e4377" class="topicref" data-id="sys-fs-media-manager-eventhandlerset-function" data-state="leaf"><span role="button" class="wh-expand-btn"></span><div class="title"><a href="GUID-1A26E4B2-B446-450A-BADF-0B0C5549FBA2.html" id="sys-fs-media-manager-eventhandlerset-function-d6800e4377-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">1.2.7.4.69</ph>
+SYS_FS_MEDIA_MANAGER_EventHandlerSet Function</a></div></div></li><li role="treeitem"><div data-tocid="sys-fs-media-manager-registertransferhandler-function-d6800e4385" class="topicref" data-id="sys-fs-media-manager-registertransferhandler-function" data-state="leaf"><span role="button" class="wh-expand-btn"></span><div class="title"><a href="GUID-BE94C6F4-3546-4F08-ACFC-B47A03E1E8E0.html" id="sys-fs-media-manager-registertransferhandler-function-d6800e4385-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">1.2.7.4.70</ph>
+SYS_FS_MEDIA_MANAGER_RegisterTransferHandler Function</a></div></div></li><li role="treeitem"><div data-tocid="sys-fs-media-manager-getmediageometry-function-d6800e4393" class="topicref" data-id="sys-fs-media-manager-getmediageometry-function" data-state="leaf"><span role="button" class="wh-expand-btn"></span><div class="title"><a href="GUID-7E038757-E53C-4A63-82DC-DF79418D9FDB.html" id="sys-fs-media-manager-getmediageometry-function-d6800e4393-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">1.2.7.4.71</ph>
+SYS_FS_MEDIA_MANAGER_GetMediaGeometry Function</a></div></div></li><li role="treeitem"><div data-tocid="sys-fs-media-manager-transfertask-function-d6800e4401" class="topicref" data-id="sys-fs-media-manager-transfertask-function" data-state="leaf"><span role="button" class="wh-expand-btn"></span><div class="title"><a href="GUID-A670ED1C-14B6-4AC7-9C14-8A16D69DF1A3.html" id="sys-fs-media-manager-transfertask-function-d6800e4401-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">1.2.7.4.72</ph>
+SYS_FS_MEDIA_MANAGER_TransferTask Function</a></div></div></li><li role="treeitem"><div data-tocid="sys-fs-media-manager-tasks-function-d6800e4409" class="topicref" data-id="sys-fs-media-manager-tasks-function" data-state="leaf"><span role="button" class="wh-expand-btn"></span><div class="title"><a href="GUID-3355F72A-0C28-43AD-877C-3B76EA782BCE.html" id="sys-fs-media-manager-tasks-function-d6800e4409-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">1.2.7.4.73</ph>
+SYS_FS_MEDIA_MANAGER_Tasks Function</a></div></div></li><li role="treeitem"><div data-tocid="sys-fs-media-block-command-handle-typedef-d6800e4417" class="topicref" data-id="sys-fs-media-block-command-handle-typedef" data-state="leaf"><span role="button" class="wh-expand-btn"></span><div class="title"><a href="GUID-BAC812A4-D8EE-4075-9E96-7B08D530A892.html" id="sys-fs-media-block-command-handle-typedef-d6800e4417-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">1.2.7.4.74</ph>
+SYS_FS_MEDIA_BLOCK_COMMAND_HANDLE Typedef</a></div></div></li><li role="treeitem"><div data-tocid="sys-fs-media-block-command-handle-invalid-macro-d6800e4425" class="topicref" data-id="sys-fs-media-block-command-handle-invalid-macro" data-state="leaf"><span role="button" class="wh-expand-btn"></span><div class="title"><a href="GUID-9A7A8F80-564A-4CEC-AAB4-460526A7CBDC.html" id="sys-fs-media-block-command-handle-invalid-macro-d6800e4425-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">1.2.7.4.75</ph>
+SYS_FS_MEDIA_BLOCK_COMMAND_HANDLE_INVALID Macro</a></div></div></li><li role="treeitem"><div data-tocid="sys-fs-media-handle-typedef-d6800e4433" class="topicref" data-id="sys-fs-media-handle-typedef" data-state="leaf"><span role="button" class="wh-expand-btn"></span><div class="title"><a href="GUID-D904086C-E292-4B0F-ADB3-0633EAD4AB9B.html" id="sys-fs-media-handle-typedef-d6800e4433-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">1.2.7.4.76</ph>
+SYS_FS_MEDIA_HANDLE Typedef</a></div></div></li><li role="treeitem"><div data-tocid="sys-fs-media-handle-invalid-macro-d6800e4442" class="topicref" data-id="sys-fs-media-handle-invalid-macro" data-state="leaf"><span role="button" class="wh-expand-btn"></span><div class="title"><a href="GUID-DE47A3D3-C32A-4ED6-A2B7-A5D16DBAEAD0.html" id="sys-fs-media-handle-invalid-macro-d6800e4442-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">1.2.7.4.77</ph>
+SYS_FS_MEDIA_HANDLE_INVALID Macro</a></div></div></li><li role="treeitem" class="active"><div data-tocid="sys-fs-media-block-event-enum-d6800e4450" class="topicref" data-id="sys-fs-media-block-event-enum" data-state="leaf"><span role="button" class="wh-expand-btn"></span><div class="title"><a href="GUID-ECC769B5-CCD6-4467-A9A4-1472CB4B2E29.html" id="sys-fs-media-block-event-enum-d6800e4450-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">1.2.7.4.78</ph>
+SYS_FS_MEDIA_BLOCK_EVENT Enum</a></div></div></li><li role="treeitem"><div data-tocid="sys-fs-media-property-enum-d6800e4458" class="topicref" data-id="sys-fs-media-property-enum" data-state="leaf"><span role="button" class="wh-expand-btn"></span><div class="title"><a href="GUID-49B9B4AE-75C1-466E-A2AA-592725DCA8A8.html" id="sys-fs-media-property-enum-d6800e4458-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">1.2.7.4.79</ph>
+SYS_FS_MEDIA_PROPERTY Enum</a></div></div></li><li role="treeitem"><div data-tocid="sys-fs-media-status-enum-d6800e4466" class="topicref" data-id="sys-fs-media-status-enum" data-state="leaf"><span role="button" class="wh-expand-btn"></span><div class="title"><a href="GUID-72155962-6FFE-4598-AE78-3C138ECA6E6C.html" id="sys-fs-media-status-enum-d6800e4466-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">1.2.7.4.80</ph>
+SYS_FS_MEDIA_STATUS Enum</a></div></div></li><li role="treeitem"><div data-tocid="sys-fs-media-state-enum-d6800e4474" class="topicref" data-id="sys-fs-media-state-enum" data-state="leaf"><span role="button" class="wh-expand-btn"></span><div class="title"><a href="GUID-BA2537D5-FF83-42EA-AD5B-2D427CC91976.html" id="sys-fs-media-state-enum-d6800e4474-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">1.2.7.4.81</ph>
+SYS_FS_MEDIA_STATE Enum</a></div></div></li><li role="treeitem"><div data-tocid="sys-fs-media-type-enum-d6800e4482" class="topicref" data-id="sys-fs-media-type-enum" data-state="leaf"><span role="button" class="wh-expand-btn"></span><div class="title"><a href="GUID-1D9C329D-7D74-4D33-A711-A6F33A9714C5.html" id="sys-fs-media-type-enum-d6800e4482-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">1.2.7.4.82</ph>
+SYS_FS_MEDIA_TYPE Enum</a></div></div></li><li role="treeitem"><div data-tocid="sys-fs-media-command-status-enum-d6800e4490" class="topicref" data-id="sys-fs-media-command-status-enum" data-state="leaf"><span role="button" class="wh-expand-btn"></span><div class="title"><a href="GUID-E830242B-F60A-4E37-99CA-BB6261C77502.html" id="sys-fs-media-command-status-enum-d6800e4490-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">1.2.7.4.83</ph>
+SYS_FS_MEDIA_COMMAND_STATUS Enum</a></div></div></li><li role="treeitem"><div data-tocid="sys-fs-media-region-geometry-typedef-d6800e4498" class="topicref" data-id="sys-fs-media-region-geometry-typedef" data-state="leaf"><span role="button" class="wh-expand-btn"></span><div class="title"><a href="GUID-70F2B75F-672C-4723-84A5-9C5065059760.html" id="sys-fs-media-region-geometry-typedef-d6800e4498-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">1.2.7.4.84</ph>
+SYS_FS_MEDIA_REGION_GEOMETRY Typedef</a></div></div></li><li role="treeitem"><div data-tocid="sys-fs-media-geometry-typedef-d6800e4506" class="topicref" data-id="sys-fs-media-geometry-typedef" data-state="leaf"><span role="button" class="wh-expand-btn"></span><div class="title"><a href="GUID-560E0AF3-D3EA-43B8-92D8-A7E3CBB2FDDA.html" id="sys-fs-media-geometry-typedef-d6800e4506-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">1.2.7.4.85</ph>
+SYS_FS_MEDIA_GEOMETRY Typedef</a></div></div></li><li role="treeitem"><div data-tocid="sys-fs-media-mount-data-struct-d6800e4514" class="topicref" data-id="sys-fs-media-mount-data-struct" data-state="leaf"><span role="button" class="wh-expand-btn"></span><div class="title"><a href="GUID-ECF2920E-DC50-497B-8D2F-318D08D4C97F.html" id="sys-fs-media-mount-data-struct-d6800e4514-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">1.2.7.4.86</ph>
+SYS_FS_MEDIA_MOUNT_DATA Struct</a></div></div></li><li role="treeitem"><div data-tocid="sys-fs-volume-property-struct-d6800e4522" class="topicref" data-id="sys-fs-volume-property-struct" data-state="leaf"><span role="button" class="wh-expand-btn"></span><div class="title"><a href="GUID-8AC15DAA-ECDD-4386-9F24-C84E3D544C53.html" id="sys-fs-volume-property-struct-d6800e4522-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">1.2.7.4.87</ph>
+SYS_FS_VOLUME_PROPERTY Struct</a></div></div></li><li role="treeitem"><div data-tocid="sys-fs-media-functions-struct-d6800e4531" class="topicref" data-id="sys-fs-media-functions-struct" data-state="leaf"><span role="button" class="wh-expand-btn"></span><div class="title"><a href="GUID-880E2678-2F2C-49D7-A20E-9D0F43DA8F94.html" id="sys-fs-media-functions-struct-d6800e4531-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">1.2.7.4.88</ph>
+SYS_FS_MEDIA_FUNCTIONS Struct</a></div></div></li><li role="treeitem"><div data-tocid="sys-fs-media-event-handler-typedef-d6800e4539" class="topicref" data-id="sys-fs-media-event-handler-typedef" data-state="leaf"><span role="button" class="wh-expand-btn"></span><div class="title"><a href="GUID-D5DA8FED-9161-4241-AC90-02C7928C8DEB.html" id="sys-fs-media-event-handler-typedef-d6800e4539-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">1.2.7.4.89</ph>
+SYS_FS_MEDIA_EVENT_HANDLER Typedef</a></div></div></li></ul></li></ul></li><li role="treeitem" aria-expanded="false"><div data-tocid="interrupt-system-service-d6800e4547" class="topicref" data-id="interrupt-system-service" data-state="not-ready"><span role="button" tabindex="0" aria-labelledby="button-expand-action interrupt-system-service-d6800e4547-link" class="wh-expand-btn"></span><div class="title"><a href="GUID-AB36B81D-DB1C-43F0-950E-1E302FC77832.html" id="interrupt-system-service-d6800e4547-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">1.2.8</ph>
+Interrupt System Service</a></div></div></li><li role="treeitem" aria-expanded="false"><div data-tocid="ports-system-service-d6800e4652" class="topicref" data-id="ports-system-service" data-state="not-ready"><span role="button" tabindex="0" aria-labelledby="button-expand-action ports-system-service-d6800e4652-link" class="wh-expand-btn"></span><div class="title"><a href="GUID-89291D9B-92F4-4472-BAE0-9F007571CD35.html" id="ports-system-service-d6800e4652-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">1.2.9</ph>
+Ports System Service</a></div></div></li><li role="treeitem" aria-expanded="false"><div data-tocid="reset-system-service-d6800e4740" class="topicref" data-id="reset-system-service" data-state="not-ready"><span role="button" tabindex="0" aria-labelledby="button-expand-action reset-system-service-d6800e4740-link" class="wh-expand-btn"></span><div class="title"><a href="GUID-9B151BD6-CAB6-497E-867F-9D9543CB51A6.html" id="reset-system-service-d6800e4740-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">1.2.10</ph>
+Reset System Service</a></div></div></li><li role="treeitem" aria-expanded="false"><div data-tocid="time-system-service-d6800e4757" class="topicref" data-id="time-system-service" data-state="not-ready"><span role="button" tabindex="0" aria-labelledby="button-expand-action time-system-service-d6800e4757-link" class="wh-expand-btn"></span><div class="title"><a href="GUID-05D0B89A-EE4D-46D4-B58F-7402C56061AE.html" id="time-system-service-d6800e4757-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">1.2.11</ph>
+Time System Service</a></div></div></li></ul></li><li role="treeitem" aria-expanded="false"><div data-tocid="software-libraries-d6800e5031" class="topicref" data-id="software-libraries" data-state="not-ready"><span role="button" tabindex="0" aria-labelledby="button-expand-action software-libraries-d6800e5031-link" class="wh-expand-btn"></span><div class="title"><a href="GUID-7249D18B-E049-45D9-96DD-B6329375E344.html" id="software-libraries-d6800e5031-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">1.3</ph>
+Software Libraries</a></div></div></li><li role="treeitem" aria-expanded="false"><div data-tocid="osal-library-d6800e5305" class="topicref" data-id="osal-library" data-state="not-ready"><span role="button" tabindex="0" aria-labelledby="button-expand-action osal-library-d6800e5305-link" class="wh-expand-btn"></span><div class="title"><a href="GUID-8AEFE0B0-CE35-4F99-ACF4-7C8E10D3BBB6.html" id="osal-library-d6800e5305-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">1.4</ph>
+OSAL Library</a></div></div></li><li role="treeitem" aria-expanded="false"><div data-tocid="third-party-products-d6800e5546" class="topicref" data-id="third-party-products" data-state="not-ready"><span role="button" tabindex="0" aria-labelledby="button-expand-action third-party-products-d6800e5546-link" class="wh-expand-btn"></span><div class="title"><a href="GUID-2FB7347D-8FBD-411F-88D8-58A813EA9498.html" id="third-party-products-d6800e5546-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">1.5</ph>
+Third party Products</a></div></div></li><li role="treeitem"><div data-tocid="configuring-the-harmony-core-library-d6800e5586" class="topicref" data-id="configuring-the-harmony-core-library" data-state="leaf"><span role="button" class="wh-expand-btn"></span><div class="title"><a href="GUID-F1244C57-71EF-492B-8104-473C8CECC20F.html" id="configuring-the-harmony-core-library-d6800e5586-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">1.6</ph>
+Configuring The Harmony Core Library</a></div></div></li></ul></li></ul></div>
+		                        
+                            </div>
+                        </nav>
+                    
+                    
+                    <div class="col-lg-7 col-md-9 col-sm-12" id="wh_topic_body">
+                        <button id="wh_close_publication_toc_button" class="close-toc-button d-none" aria-label="Toggle publishing table of content" aria-controls="wh_publication_toc" aria-expanded="true">
+                            <span class="close-toc-icon-container">
+                                <span class="close-toc-icon"></span>     
+                            </span>
+                        </button>
+                        <button id="wh_close_topic_toc_button" class="close-toc-button d-none" aria-label="Toggle topic table of content" aria-controls="wh_topic_toc" aria-expanded="true">
+                            <span class="close-toc-icon-container">
+                                <span class="close-toc-icon"></span>     
+                            </span>
+                        </button>
+                        
+                        <div class=" wh_topic_content body "><main role="main"><article role="article" aria-labelledby="ariaid-title1"><h1 class="- topic/title title topictitle1" id="ariaid-title1" style="">1.2.7.4.78 SYS_FS_MEDIA_BLOCK_EVENT Enum</h1><div class="- topic/body body"></div><article class="- topic/topic topic nested1" aria-labelledby="ariaid-title2" id="c"><h2 class="- topic/title title topictitle2" id="ariaid-title2" style=""> C</h2><div class="- topic/body body"><pre class="+ topic/pre pr-d/codeblock pre codeblock c"><strong class="hl-keyword">typedef</strong> <strong class="hl-keyword">enum</strong>
+{
+    <em class="hl-comment">/* Block operation has been completed successfully. */</em>
+    SYS_FS_MEDIA_EVENT_BLOCK_COMMAND_COMPLETE = SYS_MEDIA_EVENT_BLOCK_COMMAND_COMPLETE,
+    
+    <em class="hl-comment">/* There was an error during the block operation */</em>
+    SYS_FS_MEDIA_EVENT_BLOCK_COMMAND_ERROR = SYS_MEDIA_EVENT_BLOCK_COMMAND_ERROR
+    
+} SYS_FS_MEDIA_BLOCK_EVENT;
+</pre></div></article><article class="- topic/topic topic nested1" aria-labelledby="ariaid-title3" id="summary"><h2 class="- topic/title title topictitle2" id="ariaid-title3" style=""> Summary</h2><div class="- topic/body body"><p class="- topic/p p">Identifies the possible events that can result from a request.</p></div></article><article class="- topic/topic topic nested1" aria-labelledby="ariaid-title4" id="description"><h2 class="- topic/title title topictitle2" id="ariaid-title4" style=""> Description</h2><div class="- topic/body body"><p class="- topic/p p">This enumeration identifies the possible events that can result from a
+media.</p><p class="- topic/p p">One of these values is passed in the "event" parameter of the event handling
 callback function that client registered with the driver by setting the
-event handler when a block request is completed.</p>
+event handler when a block request is completed.</p></div></article><article class="- topic/topic topic nested1" aria-labelledby="ariaid-title5" id="remarks"><h2 class="- topic/title title topictitle2" id="ariaid-title5" style=""> Remarks</h2><div class="- topic/body body"><p class="- topic/p p">Refer to sys_media.h for actual enumerations.</p></div></article></article></main></div>
+                        
+                        
+                        
+                        
+                        
+                        
+                    </div>
+                    
+                        <nav role="navigation" id="wh_topic_toc" aria-label="On this page" class="col-lg-2 d-none d-lg-block navbar d-print-none"> 
+                            <div id="wh_topic_toc_content">
+		                        
+	                            <div class=" wh_topic_toc "><div class="wh_topic_label">On this page</div><ul><li class="topic-item"><a href="#c" data-tocid="c"> C</a></li><li class="topic-item"><a href="#summary" data-tocid="summary"> Summary</a></li><li class="topic-item"><a href="#description" data-tocid="description"> Description</a></li><li class="topic-item"><a href="#remarks" data-tocid="remarks"> Remarks</a></li></ul></div>
+	                        	
+                        	</div>
+                        </nav>
+                    
+                </div>
+            </div>
+            
+            
+            
+        </div> 
+        <footer class="navbar navbar-default wh_footer">
+  <div class=" footer-container mx-auto ">
+    <div class="footer">
+  <div class="mchp-wh-footer">
+    <div class="mchp-footer">
+      <div class="mchp-footer-tier1">
+        <div class="spacer"></div>
+        <div class="mchp-footer-container">
+          <div class="mchp-footer-links mchp-social-media-links">
+            <div class="mchp-component-items">
+              <div class="mchp-component-item">
+                <a class="cmp-image__link" href="https://www.facebook.com/pages/Microchip-Technology-Inc/20320981741" target="_blank">
+                  <img class="cmp-image__image" alt="Microchip Facebook" src="oxygen-webhelp/template/resources/images/201016-corp-facebook.png"/>
+                </a>
+              </div>
+              <div class="mchp-component-item">
+                <a class="cmp-image__link" href="https://www.linkedin.com/company/microchip-technology" target="_blank">
+                  <img class="cmp-image__image" alt="Microchip LinkedIn" src="oxygen-webhelp/template/resources/images/201016-corp-linkedin.png"/>
+                </a>
+              </div>
+              <div class="mchp-component-item">
+                <a class="cmp-image__link" href="https://twitter.com/MicrochipTech" target="_blank">
+                  <img class="cmp-image__image" alt="Microchip Twitter" src="oxygen-webhelp/template/resources/images/201016-corp-twitter.png"/>
+                </a>
+              </div>
+              <div class="mchp-component-item">
+                <a class="cmp-image__link" href="https://www.youtube.com/user/MicrochipTechnology" target="_blank">
+                  <img class="cmp-image__image" alt="Microchip YouTube" src="oxygen-webhelp/template/resources/images/201016-corp-youtube.png"/>
+                </a>
+              </div>
+              <div class="mchp-component-item">
+                <a class="cmp-image__link" href="https://www.instagram.com/microchiptechnologyinc/" target="_blank">
+                  <img class="cmp-image__image" alt="Microchip Instagram" src="oxygen-webhelp/template/resources/images/201016-corp-instagram.png"/>
+                </a>
+              </div>
+              <div class="mchp-component-item">
+                <a class="cmp-image__link" href="https://www.weibo.com/microchiptech" target="_blank">
+                  <img class="cmp-image__image" alt="Microchip Weibo" src="oxygen-webhelp/template/resources/images/201016-corp-weibo.png"/>
+                </a>
+              </div>
+              <div class="mchp-component-item">
+                <a class="cmp-image__link" href="https://www.microchip.com/en-us/about/blog" target="_blank">
+                  <img class="cmp-image__image" alt="Microchip Blog" src="oxygen-webhelp/template/resources/images/201016-corp-blog.png"/>
+                </a>
+              </div>
+            </div>
+          </div>
+          <div class="mchp-footer-links">
+            <div class="mchp-component-items">
+              <div class="mchp-component-item">
+                <div class="link">
+                  <a href="https://www.microchip.com/about-us/contact-us" class="mchp-link__link">Contact</a>
+                  <span class="mchp-link__separator">|</span>
+                </div>
+              </div>
+              <div class="mchp-component-item ">
+                <div class="link">
+                  <a href="https://www.microchip.com/en-us/about/legal-information" class="mchp-link__link">Legal</a>
+                  <span class="mchp-link__separator">|</span>
+                </div>
+              </div>
+              <div class="mchp-component-item ">
+                <div class="link">
+                  <a href="https://www.microchip.com/en-us/about/legal-information/privacy-policy" class="mchp-link__link">Privacy Policy</a>
+                  <span class="mchp-link__separator">|</span>
+                </div>
+              </div>
+              <div class="mchp-component-item ">
+                <div class="link">
+                  <a href="https://www.microchip.com/en-us/about/legal-information/microchip-cookie-statement" class="mchp-link__link">Cookies</a>
+                  <span class="mchp-link__separator">|</span>
+                </div>
+              </div>
+              <div class="mchp-component-item">
+                <div class="link">
+                  <a href="https://careers.microchip.com/" class="mchp-link__link">Careers</a>
+                  <span class="mchp-link__separator"></span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="mchp-footer-newsletter">
+            <div class="cmp-text">
+              <p>Stay on the leading edge with our blog</p>
+            </div>
+            <div class="mchp-button-wrapper">
+              <a role="button" href="https://www.microchip.com/en-us/about/blog" class="mchp-button mchp-button-regular solid">
+                <span class="mchp-button__span">MicroSolutions</span>
+              </a>
+            </div>
+          </div>
+        </div>
+        <div class="graphic">
+          <img src="oxygen-webhelp/template/resources/images/footer-graphic.png"/>
+        </div>
+      </div>
+      <div class="mchp-footer-tier2">
+        <p class="mchp-copyright">© Copyright 1998-2022 Microchip Technology Inc. All rights reserved.</p>
+      </div>
+    </div>
+  </div>
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+  <script async="true" src="https://www.googletagmanager.com/gtag/js?id=UA-2724382-19"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];  
+    function gtag(){dataLayer.push(arguments);}  
+    gtag('js', new Date());   
+    gtag('config', 'UA-2724382-19');
+  </script>
 </div>
-</div>
-<div class="topic nested1" aria-labelledby="ariaid-title5" id="remarks"><h2 class="title topictitle2" id="ariaid-title5">Remarks</h2><div class="body"><p class="p">Refer to sys_media.h for actual enumerations.</p>
-</div>
-</div>
-</body>
+  </div>
+</footer>
+        
+        <div id="go2top" class="d-print-none">
+            <span class="oxy-icon oxy-icon-up"></span>
+        </div>
+        
+        <div id="modal_img_large" class="modal">
+            <span class="close oxy-icon oxy-icon-remove"></span>
+            <div id="modal_img_container"></div>
+            <div id="caption"></div>
+        </div>
+        
+        
+        
+    </body>
 </html>

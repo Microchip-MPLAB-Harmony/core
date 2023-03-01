@@ -1,336 +1,405 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE html
-  PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
-<head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-
-<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE11" /><meta name="copyright" content="(C) Copyright 2022" />
-<meta name="DC.rights.owner" content="(C) Copyright 2022" />
-<meta name="DC.type" content="topic" />
-<meta name="DC.title" content="DRV_MEMORY_AsyncEraseWrite Function" />
-<meta name="DC.relation" scheme="URI" content="GUID-E18B0923-4286-4E08-A2EB-9A482E0063AE.html" />
-<meta name="DC.format" content="XHTML" />
-<meta name="DC.identifier" content="drv-memory-asyncerasewrite-function" />
-<link rel="stylesheet" type="text/css" href="stylesheets/commonltr.css" />
-<link rel="stylesheet" type="text/css" href="stylesheets/atmel.css" />
-<link rel="stylesheet" type="text/css" href="./stylesheets/common-extended.css" /><title>DRV_MEMORY_AsyncEraseWrite Function</title>
-<meta name="Microsoft.Help.Id" content="GUID-EDFB1AB8-CD6B-446F-8E25-F2167287A1AF-drv-memory-asyncerasewrite-function" />
-<meta name="Microsoft.Help.TocParent" content="GUID-EDFB1AB8-CD6B-446F-8E25-F2167287A1AF" />
-<meta name="Microsoft.Help.TocOrder" content="0" />
-<meta name="Microsoft.Help.Locale" content="en-US" />
-<meta name="Microsoft.Help.TopicLocale" content="en-US" />
-<meta name="Microsoft.Help.DisplayVersion" content="MPLAB® Harmony Core Library Reference A 11/2021" />
-<script language="javascript">
-       
-       if (window.parent.location.protocol != 'file:') {
-				document.addEventListener('click', function(e) {
-				    if (e.target) {
-               if (e.target.nodeName == "A" ) {
-                    if (!e.target.target) {
-                      e.preventDefault();
-                      e.stopPropagation();
-                              
-                      var origUrl = window.parent.location.href.substr(0, window.parent.location.href.indexOf("?"));
-                      if (origUrl.length === 0) {
-                          origUrl = window.parent.location.href;
-                      }
-                      var href= e.target.getAttribute("href");
-                      var parts = href.split("#");
-          
-                      var url = "";
-                      if (parts.length == 2 ) {
-                        if (!parts[0].length) {
-                            url = window.parent.location.search.replace('?','')
-                        } else {
-                            url = parts[0].replace('.html','');
-                        }
-                      } else {
-                        url = parts[0].replace('.html','');
-                      }
-
-                      if (parts.length == 2) {
-                          url += "#" + parts[1];
-                      }
+<!DOCTYPE html><html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-us" lang="en-us" data-whc_version="24.1">
+    <head><link rel="shortcut icon" href="oxygen-webhelp\template\resources/images/favicon.ico"/><link rel="icon" href="oxygen-webhelp\template\resources/images/favicon.ico"/><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/><meta name="viewport" content="width=device-width, initial-scale=1.0"/><meta http-equiv="X-UA-Compatible" content="IE=edge"/><meta name="description" content="void DRV_MEMORY_AsyncEraseWrite ( const DRV_HANDLE handle, DRV_MEMORY_COMMAND_HANDLE * commandHandle, void * sourceBuffer, uint32_t blockStart, uint32_t nBlock ); Erase and Write data for the ..."/><meta name="copyright" content="(C) Copyright 2023"/><meta name="DC.rights.owner" content="(C) Copyright 2023"/><meta name="DC.type" content="topic"/><meta name="DC.relation" content="GUID-E18B0923-4286-4E08-A2EB-9A482E0063AE.md"/><meta name="DC.format" content="HTML5"/><meta name="DC.identifier" content="drv-memory-asyncerasewrite-function"/><title>1.1.3.4.8 DRV_MEMORY_AsyncEraseWrite Function</title><!--  Generated with Oxygen version 24.1, build number 2022062014.  --><meta name="wh-path2root" content=""/><meta name="wh-toc-id" content="&lt;?xml version=&#34;1.0&#34; encoding=&#34;UTF-8&#34;?&gt;&lt;?workdir /D:\InfoShare\Data\Publish\Data\qzvtb5xcvan\work\temp?&gt;&lt;?workdir-uri file:/D:/InfoShare/Data/Publish/Data/qzvtb5xcvan/work/temp/?&gt;&lt;?path2project?&gt;&lt;?path2project-uri ./?&gt;&lt;?path2rootmap-uri ./?&gt;&lt;topic xmlns:ditaarch=&#34;http://dita.oasis-open.org/architecture/2005/&#34; xmlns:dita-ot=&#34;http://dita-ot.sourceforge.net/ns/201007/dita-ot&#34; class=&#34;- topic/topic &#34; ditaarch:DITAArchVersion=&#34;1.2&#34; domains=&#34;(topic hi-d) (topic ut-d) (topic indexing-d) (topic hazard-d) (topic abbrev-d) (topic pr-d) (topic sw-d) (topic ui-d)&#34; id=&#34;drv-memory-asyncerasewrite-function&#34; xtrf=&#34;file:/D:/InfoShare/Data/Publish/Data/qzvtb5xcvan/work/1/en-US/GUID-8D0CD4FB-C2B2-4AF4-8DB0-D6424CB9EAE1.md&#34; xtrc=&#34;topic:1;182:3&#34; specializations=&#34;&#34;&gt;&lt;title class=&#34;- topic/title &#34; xtrf=&#34;file:/D:/InfoShare/Data/Publish/Data/qzvtb5xcvan/work/1/en-US/GUID-8D0CD4FB-C2B2-4AF4-8DB0-D6424CB9EAE1.md&#34; xtrc=&#34;title:1;182:3&#34;&gt;DRV_MEMORY_AsyncEraseWrite Function&lt;/title&gt;&lt;body class=&#34;- topic/body &#34; xtrf=&#34;file:/D:/InfoShare/Data/Publish/Data/qzvtb5xcvan/work/1/en-US/GUID-8D0CD4FB-C2B2-4AF4-8DB0-D6424CB9EAE1.md&#34; xtrc=&#34;body:1;182:3&#34;/&gt;&lt;related-links class=&#34;- topic/related-links &#34;&gt;&lt;linkpool class=&#34;- topic/linkpool &#34; mapkeyref=&#34;GUID-4BA21645-85F2-46DA-ADDC-4292784EE8A4&#34; xtrc=&#34;topicref:13;3:3098&#34; xtrf=&#34;file:/D:/InfoShare/Data/Publish/Data/qzvtb5xcvan/work/1/en-US/GUID-3A3485CD-7BB0-4ABE-A1C2-6C54E7C3BDE3.ditamap&#34;&gt;&lt;link class=&#34;- topic/link &#34; format=&#34;dita&#34; href=&#34;GUID-E18B0923-4286-4E08-A2EB-9A482E0063AE.md&#34; mapclass=&#34;- map/topicref &#34; role=&#34;parent&#34; scope=&#34;local&#34; type=&#34;topic&#34; xtrc=&#34;topicref:5;3:1941&#34; xtrf=&#34;file:/D:/InfoShare/Data/Publish/Data/qzvtb5xcvan/work/1/en-US/GUID-3A3485CD-7BB0-4ABE-A1C2-6C54E7C3BDE3.ditamap&#34;&gt;&lt;?ditaot usertext?&gt;&lt;linktext class=&#34;- topic/linktext &#34;&gt;&lt;?ditaot gentext?&gt;Library Interface&lt;/linktext&gt;&lt;/link&gt;&lt;/linkpool&gt;&lt;/related-links&gt;&lt;topic class=&#34;- topic/topic &#34; ditaarch:DITAArchVersion=&#34;1.2&#34; domains=&#34;(topic hi-d) (topic ut-d) (topic indexing-d) (topic hazard-d) (topic abbrev-d) (topic pr-d) (topic sw-d) (topic ui-d)&#34; id=&#34;c&#34; xtrf=&#34;file:/D:/InfoShare/Data/Publish/Data/qzvtb5xcvan/work/1/en-US/GUID-8D0CD4FB-C2B2-4AF4-8DB0-D6424CB9EAE1.md&#34; xtrc=&#34;topic:2;182:3&#34; specializations=&#34;&#34;&gt;&lt;title class=&#34;- topic/title &#34; xtrf=&#34;file:/D:/InfoShare/Data/Publish/Data/qzvtb5xcvan/work/1/en-US/GUID-8D0CD4FB-C2B2-4AF4-8DB0-D6424CB9EAE1.md&#34; xtrc=&#34;title:2;182:3&#34;&gt;C&lt;/title&gt;&lt;body class=&#34;- topic/body &#34; xtrf=&#34;file:/D:/InfoShare/Data/Publish/Data/qzvtb5xcvan/work/1/en-US/GUID-8D0CD4FB-C2B2-4AF4-8DB0-D6424CB9EAE1.md&#34; xtrc=&#34;body:2;182:3&#34;&gt;&lt;codeblock class=&#34;+ topic/pre pr-d/codeblock &#34; xml:space=&#34;preserve&#34; outputclass=&#34;c&#34; xtrf=&#34;file:/D:/InfoShare/Data/Publish/Data/qzvtb5xcvan/work/1/en-US/GUID-8D0CD4FB-C2B2-4AF4-8DB0-D6424CB9EAE1.md&#34; xtrc=&#34;codeblock:1;182:3&#34;&gt;void DRV_MEMORY_AsyncEraseWrite ( const DRV_HANDLE handle, DRV_MEMORY_COMMAND_HANDLE * commandHandle, void * sourceBuffer, uint32_t blockStart, uint32_t nBlock );&lt;/codeblock&gt;&lt;/body&gt;&lt;/topic&gt;&lt;topic class=&#34;- topic/topic &#34; ditaarch:DITAArchVersion=&#34;1.2&#34; domains=&#34;(topic hi-d) (topic ut-d) (topic indexing-d) (topic hazard-d) (topic abbrev-d) (topic pr-d) (topic sw-d) (topic ui-d)&#34; id=&#34;summary&#34; xtrf=&#34;file:/D:/InfoShare/Data/Publish/Data/qzvtb5xcvan/work/1/en-US/GUID-8D0CD4FB-C2B2-4AF4-8DB0-D6424CB9EAE1.md&#34; xtrc=&#34;topic:3;182:3&#34; specializations=&#34;&#34;&gt;&lt;title class=&#34;- topic/title &#34; xtrf=&#34;file:/D:/InfoShare/Data/Publish/Data/qzvtb5xcvan/work/1/en-US/GUID-8D0CD4FB-C2B2-4AF4-8DB0-D6424CB9EAE1.md&#34; xtrc=&#34;title:3;182:3&#34;&gt;Summary&lt;/title&gt;&lt;body class=&#34;- topic/body &#34; xtrf=&#34;file:/D:/InfoShare/Data/Publish/Data/qzvtb5xcvan/work/1/en-US/GUID-8D0CD4FB-C2B2-4AF4-8DB0-D6424CB9EAE1.md&#34; xtrc=&#34;body:3;182:3&#34;&gt;&lt;p class=&#34;- topic/p &#34; xtrf=&#34;file:/D:/InfoShare/Data/Publish/Data/qzvtb5xcvan/work/1/en-US/GUID-8D0CD4FB-C2B2-4AF4-8DB0-D6424CB9EAE1.md&#34; xtrc=&#34;p:1;182:3&#34;&gt;Erase and Write data for the specified number of memory blocks in Asynchronous mode.&lt;/p&gt;&lt;/body&gt;&lt;/topic&gt;&lt;topic class=&#34;- topic/topic &#34; ditaarch:DITAArchVersion=&#34;1.2&#34; domains=&#34;(topic hi-d) (topic ut-d) (topic indexing-d) (topic hazard-d) (topic abbrev-d) (topic pr-d) (topic sw-d) (topic ui-d)&#34; id=&#34;description&#34; xtrf=&#34;file:/D:/InfoShare/Data/Publish/Data/qzvtb5xcvan/work/1/en-US/GUID-8D0CD4FB-C2B2-4AF4-8DB0-D6424CB9EAE1.md&#34; xtrc=&#34;topic:4;182:3&#34; specializations=&#34;&#34;&gt;&lt;title class=&#34;- topic/title &#34; xtrf=&#34;file:/D:/InfoShare/Data/Publish/Data/qzvtb5xcvan/work/1/en-US/GUID-8D0CD4FB-C2B2-4AF4-8DB0-D6424CB9EAE1.md&#34; xtrc=&#34;title:4;182:3&#34;&gt;Description&lt;/title&gt;&lt;body class=&#34;- topic/body &#34; xtrf=&#34;file:/D:/InfoShare/Data/Publish/Data/qzvtb5xcvan/work/1/en-US/GUID-8D0CD4FB-C2B2-4AF4-8DB0-D6424CB9EAE1.md&#34; xtrc=&#34;body:4;182:3&#34;&gt;&lt;p class=&#34;- topic/p &#34; xtrf=&#34;file:/D:/InfoShare/Data/Publish/Data/qzvtb5xcvan/work/1/en-US/GUID-8D0CD4FB-C2B2-4AF4-8DB0-D6424CB9EAE1.md&#34; xtrc=&#34;p:2;182:3&#34;&gt;This function combines the step of erasing a sector and then writing the page. The application can use this function if it wants to avoid having to explicitly delete a sector in order to update the pages contained in the sector.&lt;/p&gt;&lt;p class=&#34;- topic/p &#34; xtrf=&#34;file:/D:/InfoShare/Data/Publish/Data/qzvtb5xcvan/work/1/en-US/GUID-8D0CD4FB-C2B2-4AF4-8DB0-D6424CB9EAE1.md&#34; xtrc=&#34;p:3;182:3&#34;&gt;This function schedules a non-blocking operation to erase and write blocks of data into attached device memory.&lt;/p&gt;&lt;p class=&#34;- topic/p &#34; xtrf=&#34;file:/D:/InfoShare/Data/Publish/Data/qzvtb5xcvan/work/1/en-US/GUID-8D0CD4FB-C2B2-4AF4-8DB0-D6424CB9EAE1.md&#34; xtrc=&#34;p:4;182:3&#34;&gt;The function returns with a valid command handle in the commandHandle argument if the write request was scheduled successfully. The function adds the request to the hardware instance queue and returns immediately.&lt;/p&gt;&lt;p class=&#34;- topic/p &#34; xtrf=&#34;file:/D:/InfoShare/Data/Publish/Data/qzvtb5xcvan/work/1/en-US/GUID-8D0CD4FB-C2B2-4AF4-8DB0-D6424CB9EAE1.md&#34; xtrc=&#34;p:5;182:3&#34;&gt;While the request is in the queue, the application buffer is owned by the driver and should not be modified.&lt;/p&gt;&lt;p class=&#34;- topic/p &#34; xtrf=&#34;file:/D:/InfoShare/Data/Publish/Data/qzvtb5xcvan/work/1/en-US/GUID-8D0CD4FB-C2B2-4AF4-8DB0-D6424CB9EAE1.md&#34; xtrc=&#34;p:6;182:3&#34;&gt;The function returns DRV_MEMORY_COMMAND_HANDLE_INVALID in the commandHandle argument under the following circumstances:&lt;/p&gt;&lt;ul class=&#34;- topic/ul &#34; xtrf=&#34;file:/D:/InfoShare/Data/Publish/Data/qzvtb5xcvan/work/1/en-US/GUID-8D0CD4FB-C2B2-4AF4-8DB0-D6424CB9EAE1.md&#34; xtrc=&#34;ul:1;182:3&#34;&gt;&lt;li class=&#34;- topic/li &#34; xtrf=&#34;file:/D:/InfoShare/Data/Publish/Data/qzvtb5xcvan/work/1/en-US/GUID-8D0CD4FB-C2B2-4AF4-8DB0-D6424CB9EAE1.md&#34; xtrc=&#34;li:1;182:3&#34;&gt;&lt;p class=&#34;- topic/p &#34; xtrf=&#34;file:/D:/InfoShare/Data/Publish/Data/qzvtb5xcvan/work/1/en-US/GUID-8D0CD4FB-C2B2-4AF4-8DB0-D6424CB9EAE1.md&#34; xtrc=&#34;p:7;182:3&#34;&gt;if a buffer could not be allocated to the request&lt;/p&gt;&lt;/li&gt;&lt;li class=&#34;- topic/li &#34; xtrf=&#34;file:/D:/InfoShare/Data/Publish/Data/qzvtb5xcvan/work/1/en-US/GUID-8D0CD4FB-C2B2-4AF4-8DB0-D6424CB9EAE1.md&#34; xtrc=&#34;li:2;182:3&#34;&gt;&lt;p class=&#34;- topic/p &#34; xtrf=&#34;file:/D:/InfoShare/Data/Publish/Data/qzvtb5xcvan/work/1/en-US/GUID-8D0CD4FB-C2B2-4AF4-8DB0-D6424CB9EAE1.md&#34; xtrc=&#34;p:8;182:3&#34;&gt;if the sourceBuffer pointer is NULL&lt;/p&gt;&lt;/li&gt;&lt;li class=&#34;- topic/li &#34; xtrf=&#34;file:/D:/InfoShare/Data/Publish/Data/qzvtb5xcvan/work/1/en-US/GUID-8D0CD4FB-C2B2-4AF4-8DB0-D6424CB9EAE1.md&#34; xtrc=&#34;li:3;182:3&#34;&gt;&lt;p class=&#34;- topic/p &#34; xtrf=&#34;file:/D:/InfoShare/Data/Publish/Data/qzvtb5xcvan/work/1/en-US/GUID-8D0CD4FB-C2B2-4AF4-8DB0-D6424CB9EAE1.md&#34; xtrc=&#34;p:9;182:3&#34;&gt;if the client opened the driver for read only&lt;/p&gt;&lt;/li&gt;&lt;li class=&#34;- topic/li &#34; xtrf=&#34;file:/D:/InfoShare/Data/Publish/Data/qzvtb5xcvan/work/1/en-US/GUID-8D0CD4FB-C2B2-4AF4-8DB0-D6424CB9EAE1.md&#34; xtrc=&#34;li:4;182:3&#34;&gt;&lt;p class=&#34;- topic/p &#34; xtrf=&#34;file:/D:/InfoShare/Data/Publish/Data/qzvtb5xcvan/work/1/en-US/GUID-8D0CD4FB-C2B2-4AF4-8DB0-D6424CB9EAE1.md&#34; xtrc=&#34;p:10;182:3&#34;&gt;if the number of blocks to be written is either zero or more than the number of blocks actually available&lt;/p&gt;&lt;/li&gt;&lt;li class=&#34;- topic/li &#34; xtrf=&#34;file:/D:/InfoShare/Data/Publish/Data/qzvtb5xcvan/work/1/en-US/GUID-8D0CD4FB-C2B2-4AF4-8DB0-D6424CB9EAE1.md&#34; xtrc=&#34;li:5;182:3&#34;&gt;&lt;p class=&#34;- topic/p &#34; xtrf=&#34;file:/D:/InfoShare/Data/Publish/Data/qzvtb5xcvan/work/1/en-US/GUID-8D0CD4FB-C2B2-4AF4-8DB0-D6424CB9EAE1.md&#34; xtrc=&#34;p:11;182:3&#34;&gt;if the driver handle is invalid&lt;/p&gt;&lt;/li&gt;&lt;/ul&gt;&lt;p class=&#34;- topic/p &#34; xtrf=&#34;file:/D:/InfoShare/Data/Publish/Data/qzvtb5xcvan/work/1/en-US/GUID-8D0CD4FB-C2B2-4AF4-8DB0-D6424CB9EAE1.md&#34; xtrc=&#34;p:12;182:3&#34;&gt;If the requesting client registered an event callback with the driver, the driver will issue a DRV_MEMORY_EVENT_COMMAND_COMPLETE event if the buffer was processed successfully or DRV_MEMORY_EVENT_COMMAND_ERROR event if the buffer was not processed successfully.&lt;/p&gt;&lt;p class=&#34;- topic/p &#34; xtrf=&#34;file:/D:/InfoShare/Data/Publish/Data/qzvtb5xcvan/work/1/en-US/GUID-8D0CD4FB-C2B2-4AF4-8DB0-D6424CB9EAE1.md&#34; xtrc=&#34;p:13;182:3&#34;&gt;If the requesting client has not registered any transfer handler callback with the driver, he can call DRV_MEMORY_CommandStatusGet() API to know the current status of the request.&lt;/p&gt;&lt;/body&gt;&lt;/topic&gt;&lt;topic class=&#34;- topic/topic &#34; ditaarch:DITAArchVersion=&#34;1.2&#34; domains=&#34;(topic hi-d) (topic ut-d) (topic indexing-d) (topic hazard-d) (topic abbrev-d) (topic pr-d) (topic sw-d) (topic ui-d)&#34; id=&#34;precondition&#34; xtrf=&#34;file:/D:/InfoShare/Data/Publish/Data/qzvtb5xcvan/work/1/en-US/GUID-8D0CD4FB-C2B2-4AF4-8DB0-D6424CB9EAE1.md&#34; xtrc=&#34;topic:5;182:3&#34; specializations=&#34;&#34;&gt;&lt;title class=&#34;- topic/title &#34; xtrf=&#34;file:/D:/InfoShare/Data/Publish/Data/qzvtb5xcvan/work/1/en-US/GUID-8D0CD4FB-C2B2-4AF4-8DB0-D6424CB9EAE1.md&#34; xtrc=&#34;title:5;182:3&#34;&gt;Precondition&lt;/title&gt;&lt;body class=&#34;- topic/body &#34; xtrf=&#34;file:/D:/InfoShare/Data/Publish/Data/qzvtb5xcvan/work/1/en-US/GUID-8D0CD4FB-C2B2-4AF4-8DB0-D6424CB9EAE1.md&#34; xtrc=&#34;body:5;182:3&#34;&gt;&lt;p class=&#34;- topic/p &#34; xtrf=&#34;file:/D:/InfoShare/Data/Publish/Data/qzvtb5xcvan/work/1/en-US/GUID-8D0CD4FB-C2B2-4AF4-8DB0-D6424CB9EAE1.md&#34; xtrc=&#34;p:14;182:3&#34;&gt;The DRV_MEMORY_Open() must have been called with DRV_IO_INTENT_WRITE or DRV_IO_INTENT_READWRITE as a parameter to obtain a valid opened device handle.&lt;/p&gt;&lt;/body&gt;&lt;/topic&gt;&lt;topic class=&#34;- topic/topic &#34; ditaarch:DITAArchVersion=&#34;1.2&#34; domains=&#34;(topic hi-d) (topic ut-d) (topic indexing-d) (topic hazard-d) (topic abbrev-d) (topic pr-d) (topic sw-d) (topic ui-d)&#34; id=&#34;parameters&#34; xtrf=&#34;file:/D:/InfoShare/Data/Publish/Data/qzvtb5xcvan/work/1/en-US/GUID-8D0CD4FB-C2B2-4AF4-8DB0-D6424CB9EAE1.md&#34; xtrc=&#34;topic:6;182:3&#34; specializations=&#34;&#34;&gt;&lt;title class=&#34;- topic/title &#34; xtrf=&#34;file:/D:/InfoShare/Data/Publish/Data/qzvtb5xcvan/work/1/en-US/GUID-8D0CD4FB-C2B2-4AF4-8DB0-D6424CB9EAE1.md&#34; xtrc=&#34;title:6;182:3&#34;&gt;Parameters&lt;/title&gt;&lt;body class=&#34;- topic/body &#34; xtrf=&#34;file:/D:/InfoShare/Data/Publish/Data/qzvtb5xcvan/work/1/en-US/GUID-8D0CD4FB-C2B2-4AF4-8DB0-D6424CB9EAE1.md&#34; xtrc=&#34;body:6;182:3&#34;&gt;&lt;table class=&#34;- topic/table &#34; xtrf=&#34;file:/D:/InfoShare/Data/Publish/Data/qzvtb5xcvan/work/1/en-US/GUID-8D0CD4FB-C2B2-4AF4-8DB0-D6424CB9EAE1.md&#34; xtrc=&#34;table:1;182:3&#34;&gt;&lt;tgroup class=&#34;- topic/tgroup &#34; cols=&#34;2&#34; xtrf=&#34;file:/D:/InfoShare/Data/Publish/Data/qzvtb5xcvan/work/1/en-US/GUID-8D0CD4FB-C2B2-4AF4-8DB0-D6424CB9EAE1.md&#34; xtrc=&#34;tgroup:1;182:3&#34;&gt;&lt;colspec class=&#34;- topic/colspec &#34; colname=&#34;col1&#34; xtrf=&#34;file:/D:/InfoShare/Data/Publish/Data/qzvtb5xcvan/work/1/en-US/GUID-8D0CD4FB-C2B2-4AF4-8DB0-D6424CB9EAE1.md&#34; xtrc=&#34;colspec:1;182:3&#34; colnum=&#34;1&#34;/&gt;&lt;colspec class=&#34;- topic/colspec &#34; colname=&#34;col2&#34; xtrf=&#34;file:/D:/InfoShare/Data/Publish/Data/qzvtb5xcvan/work/1/en-US/GUID-8D0CD4FB-C2B2-4AF4-8DB0-D6424CB9EAE1.md&#34; xtrc=&#34;colspec:2;182:3&#34; colnum=&#34;2&#34;/&gt;&lt;thead class=&#34;- topic/thead &#34; xtrf=&#34;file:/D:/InfoShare/Data/Publish/Data/qzvtb5xcvan/work/1/en-US/GUID-8D0CD4FB-C2B2-4AF4-8DB0-D6424CB9EAE1.md&#34; xtrc=&#34;thead:1;182:3&#34;&gt;&lt;row class=&#34;- topic/row &#34; xtrf=&#34;file:/D:/InfoShare/Data/Publish/Data/qzvtb5xcvan/work/1/en-US/GUID-8D0CD4FB-C2B2-4AF4-8DB0-D6424CB9EAE1.md&#34; xtrc=&#34;row:1;182:3&#34;&gt;&lt;entry class=&#34;- topic/entry &#34; align=&#34;left&#34; xtrf=&#34;file:/D:/InfoShare/Data/Publish/Data/qzvtb5xcvan/work/1/en-US/GUID-8D0CD4FB-C2B2-4AF4-8DB0-D6424CB9EAE1.md&#34; xtrc=&#34;entry:1;182:3&#34; colname=&#34;col1&#34; dita-ot:x=&#34;1&#34; dita-ot:y=&#34;1&#34;&gt;Param&lt;/entry&gt;&lt;entry class=&#34;- topic/entry &#34; align=&#34;left&#34; xtrf=&#34;file:/D:/InfoShare/Data/Publish/Data/qzvtb5xcvan/work/1/en-US/GUID-8D0CD4FB-C2B2-4AF4-8DB0-D6424CB9EAE1.md&#34; xtrc=&#34;entry:2;182:3&#34; colname=&#34;col2&#34; dita-ot:x=&#34;2&#34; dita-ot:y=&#34;1&#34;&gt;Description&lt;/entry&gt;&lt;/row&gt;&lt;/thead&gt;&lt;tbody class=&#34;- topic/tbody &#34; xtrf=&#34;file:/D:/InfoShare/Data/Publish/Data/qzvtb5xcvan/work/1/en-US/GUID-8D0CD4FB-C2B2-4AF4-8DB0-D6424CB9EAE1.md&#34; xtrc=&#34;tbody:1;182:3&#34;&gt;&lt;row class=&#34;- topic/row &#34; xtrf=&#34;file:/D:/InfoShare/Data/Publish/Data/qzvtb5xcvan/work/1/en-US/GUID-8D0CD4FB-C2B2-4AF4-8DB0-D6424CB9EAE1.md&#34; xtrc=&#34;row:2;182:3&#34;&gt;&lt;entry class=&#34;- topic/entry &#34; align=&#34;left&#34; xtrf=&#34;file:/D:/InfoShare/Data/Publish/Data/qzvtb5xcvan/work/1/en-US/GUID-8D0CD4FB-C2B2-4AF4-8DB0-D6424CB9EAE1.md&#34; xtrc=&#34;entry:3;182:3&#34; colname=&#34;col1&#34; dita-ot:x=&#34;1&#34; dita-ot:y=&#34;2&#34;&gt;handle&lt;/entry&gt;&lt;entry class=&#34;- topic/entry &#34; align=&#34;left&#34; xtrf=&#34;file:/D:/InfoShare/Data/Publish/Data/qzvtb5xcvan/work/1/en-US/GUID-8D0CD4FB-C2B2-4AF4-8DB0-D6424CB9EAE1.md&#34; xtrc=&#34;entry:4;182:3&#34; colname=&#34;col2&#34; dita-ot:x=&#34;2&#34; dita-ot:y=&#34;2&#34;&gt;A valid open-instance handle, returned from the driver's open function&lt;/entry&gt;&lt;/row&gt;&lt;row class=&#34;- topic/row &#34; xtrf=&#34;file:/D:/InfoShare/Data/Publish/Data/qzvtb5xcvan/work/1/en-US/GUID-8D0CD4FB-C2B2-4AF4-8DB0-D6424CB9EAE1.md&#34; xtrc=&#34;row:3;182:3&#34;&gt;&lt;entry class=&#34;- topic/entry &#34; align=&#34;left&#34; xtrf=&#34;file:/D:/InfoShare/Data/Publish/Data/qzvtb5xcvan/work/1/en-US/GUID-8D0CD4FB-C2B2-4AF4-8DB0-D6424CB9EAE1.md&#34; xtrc=&#34;entry:5;182:3&#34; colname=&#34;col1&#34; dita-ot:x=&#34;1&#34; dita-ot:y=&#34;3&#34;&gt;commandHandle&lt;/entry&gt;&lt;entry class=&#34;- topic/entry &#34; align=&#34;left&#34; xtrf=&#34;file:/D:/InfoShare/Data/Publish/Data/qzvtb5xcvan/work/1/en-US/GUID-8D0CD4FB-C2B2-4AF4-8DB0-D6424CB9EAE1.md&#34; xtrc=&#34;entry:6;182:3&#34; colname=&#34;col2&#34; dita-ot:x=&#34;2&#34; dita-ot:y=&#34;3&#34;&gt;Pointer to an argument that will contain the return command handle. If NULL, then command handle is not returned.&lt;/entry&gt;&lt;/row&gt;&lt;row class=&#34;- topic/row &#34; xtrf=&#34;file:/D:/InfoShare/Data/Publish/Data/qzvtb5xcvan/work/1/en-US/GUID-8D0CD4FB-C2B2-4AF4-8DB0-D6424CB9EAE1.md&#34; xtrc=&#34;row:4;182:3&#34;&gt;&lt;entry class=&#34;- topic/entry &#34; align=&#34;left&#34; xtrf=&#34;file:/D:/InfoShare/Data/Publish/Data/qzvtb5xcvan/work/1/en-US/GUID-8D0CD4FB-C2B2-4AF4-8DB0-D6424CB9EAE1.md&#34; xtrc=&#34;entry:7;182:3&#34; colname=&#34;col1&#34; dita-ot:x=&#34;1&#34; dita-ot:y=&#34;4&#34;&gt;sourceBuffer&lt;/entry&gt;&lt;entry class=&#34;- topic/entry &#34; align=&#34;left&#34; xtrf=&#34;file:/D:/InfoShare/Data/Publish/Data/qzvtb5xcvan/work/1/en-US/GUID-8D0CD4FB-C2B2-4AF4-8DB0-D6424CB9EAE1.md&#34; xtrc=&#34;entry:8;182:3&#34; colname=&#34;col2&#34; dita-ot:x=&#34;2&#34; dita-ot:y=&#34;4&#34;&gt;The source buffer containing data to be programmed into media device memory&lt;/entry&gt;&lt;/row&gt;&lt;row class=&#34;- topic/row &#34; xtrf=&#34;file:/D:/InfoShare/Data/Publish/Data/qzvtb5xcvan/work/1/en-US/GUID-8D0CD4FB-C2B2-4AF4-8DB0-D6424CB9EAE1.md&#34; xtrc=&#34;row:5;182:3&#34;&gt;&lt;entry class=&#34;- topic/entry &#34; align=&#34;left&#34; xtrf=&#34;file:/D:/InfoShare/Data/Publish/Data/qzvtb5xcvan/work/1/en-US/GUID-8D0CD4FB-C2B2-4AF4-8DB0-D6424CB9EAE1.md&#34; xtrc=&#34;entry:9;182:3&#34; colname=&#34;col1&#34; dita-ot:x=&#34;1&#34; dita-ot:y=&#34;5&#34;&gt;blockStart&lt;/entry&gt;&lt;entry class=&#34;- topic/entry &#34; align=&#34;left&#34; xtrf=&#34;file:/D:/InfoShare/Data/Publish/Data/qzvtb5xcvan/work/1/en-US/GUID-8D0CD4FB-C2B2-4AF4-8DB0-D6424CB9EAE1.md&#34; xtrc=&#34;entry:10;182:3&#34; colname=&#34;col2&#34; dita-ot:x=&#34;2&#34; dita-ot:y=&#34;5&#34;&gt;Write block start where the write should begin.&lt;/entry&gt;&lt;/row&gt;&lt;row class=&#34;- topic/row &#34; xtrf=&#34;file:/D:/InfoShare/Data/Publish/Data/qzvtb5xcvan/work/1/en-US/GUID-8D0CD4FB-C2B2-4AF4-8DB0-D6424CB9EAE1.md&#34; xtrc=&#34;row:6;182:3&#34;&gt;&lt;entry class=&#34;- topic/entry &#34; align=&#34;left&#34; xtrf=&#34;file:/D:/InfoShare/Data/Publish/Data/qzvtb5xcvan/work/1/en-US/GUID-8D0CD4FB-C2B2-4AF4-8DB0-D6424CB9EAE1.md&#34; xtrc=&#34;entry:11;182:3&#34; colname=&#34;col1&#34; dita-ot:x=&#34;1&#34; dita-ot:y=&#34;6&#34;&gt;nBlock&lt;/entry&gt;&lt;entry class=&#34;- topic/entry &#34; align=&#34;left&#34; xtrf=&#34;file:/D:/InfoShare/Data/Publish/Data/qzvtb5xcvan/work/1/en-US/GUID-8D0CD4FB-C2B2-4AF4-8DB0-D6424CB9EAE1.md&#34; xtrc=&#34;entry:12;182:3&#34; colname=&#34;col2&#34; dita-ot:x=&#34;2&#34; dita-ot:y=&#34;6&#34;&gt;Total number of blocks to be written.&lt;/entry&gt;&lt;/row&gt;&lt;/tbody&gt;&lt;/tgroup&gt;&lt;/table&gt;&lt;/body&gt;&lt;/topic&gt;&lt;topic class=&#34;- topic/topic &#34; ditaarch:DITAArchVersion=&#34;1.2&#34; domains=&#34;(topic hi-d) (topic ut-d) (topic indexing-d) (topic hazard-d) (topic abbrev-d) (topic pr-d) (topic sw-d) (topic ui-d)&#34; id=&#34;returns&#34; xtrf=&#34;file:/D:/InfoShare/Data/Publish/Data/qzvtb5xcvan/work/1/en-US/GUID-8D0CD4FB-C2B2-4AF4-8DB0-D6424CB9EAE1.md&#34; xtrc=&#34;topic:7;182:3&#34; specializations=&#34;&#34;&gt;&lt;title class=&#34;- topic/title &#34; xtrf=&#34;file:/D:/InfoShare/Data/Publish/Data/qzvtb5xcvan/work/1/en-US/GUID-8D0CD4FB-C2B2-4AF4-8DB0-D6424CB9EAE1.md&#34; xtrc=&#34;title:7;182:3&#34;&gt;Returns&lt;/title&gt;&lt;body class=&#34;- topic/body &#34; xtrf=&#34;file:/D:/InfoShare/Data/Publish/Data/qzvtb5xcvan/work/1/en-US/GUID-8D0CD4FB-C2B2-4AF4-8DB0-D6424CB9EAE1.md&#34; xtrc=&#34;body:7;182:3&#34;&gt;&lt;p class=&#34;- topic/p &#34; xtrf=&#34;file:/D:/InfoShare/Data/Publish/Data/qzvtb5xcvan/work/1/en-US/GUID-8D0CD4FB-C2B2-4AF4-8DB0-D6424CB9EAE1.md&#34; xtrc=&#34;p:15;182:3&#34;&gt;The command handle is returned in the commandHandle argument. It Will be DRV_MEMORY_COMMAND_HANDLE_INVALID if the request was not queued.&lt;/p&gt;&lt;/body&gt;&lt;/topic&gt;&lt;topic class=&#34;- topic/topic &#34; ditaarch:DITAArchVersion=&#34;1.2&#34; domains=&#34;(topic hi-d) (topic ut-d) (topic indexing-d) (topic hazard-d) (topic abbrev-d) (topic pr-d) (topic sw-d) (topic ui-d)&#34; id=&#34;example&#34; xtrf=&#34;file:/D:/InfoShare/Data/Publish/Data/qzvtb5xcvan/work/1/en-US/GUID-8D0CD4FB-C2B2-4AF4-8DB0-D6424CB9EAE1.md&#34; xtrc=&#34;topic:8;182:3&#34; specializations=&#34;&#34;&gt;&lt;title class=&#34;- topic/title &#34; xtrf=&#34;file:/D:/InfoShare/Data/Publish/Data/qzvtb5xcvan/work/1/en-US/GUID-8D0CD4FB-C2B2-4AF4-8DB0-D6424CB9EAE1.md&#34; xtrc=&#34;title:8;182:3&#34;&gt;Example&lt;/title&gt;&lt;body class=&#34;- topic/body &#34; xtrf=&#34;file:/D:/InfoShare/Data/Publish/Data/qzvtb5xcvan/work/1/en-US/GUID-8D0CD4FB-C2B2-4AF4-8DB0-D6424CB9EAE1.md&#34; xtrc=&#34;body:8;182:3&#34;&gt;&lt;codeblock class=&#34;+ topic/pre pr-d/codeblock &#34; xml:space=&#34;preserve&#34; outputclass=&#34;c&#34; xtrf=&#34;file:/D:/InfoShare/Data/Publish/Data/qzvtb5xcvan/work/1/en-US/GUID-8D0CD4FB-C2B2-4AF4-8DB0-D6424CB9EAE1.md&#34; xtrc=&#34;codeblock:2;182:3&#34;&gt;#define BUFFER_SIZE 4096 uint8_t buffer[BUFFER_SIZE]; // Use DRV_MEMORY_GeometryGet () to find the write region geometry. uint32_t blockStart = 0x0; uint32_t nBlock = BUFFER_SIZE / block_size; // block_size for write geometry DRV_MEMORY_COMMAND_HANDLE commandHandle; // memoryHandle is the handle returned by the DRV_MEMORY_Open function. // Client registers an event handler with driver // Event is received when the erase-write request is completed. void appTransferHandler ( DRV_MEMORY_EVENT event, DRV_MEMORY_COMMAND_HANDLE commandHandle, uintptr_t context ) { switch(event) { case DRV_MEMORY_EVENT_COMMAND_COMPLETE: { xfer_done = true; break; } case DRV_MEMORY_EVENT_COMMAND_ERROR: { // Handle Error break; } default: { break; } } } DRV_MEMORY_TransferHandlerSet(memoryHandle, appTransferHandler, (uintptr_t)NULL); DRV_MEMORY_AsyncEraseWrite(memoryHandle, &amp;amp;commandHandle, &amp;amp;myBuffer, blockStart, nBlock); if(DRV_MEMORY_COMMAND_HANDLE_INVALID == commandHandle) { // Error handling here } // Wait for erase to be completed while(!xfer_done); &lt;/codeblock&gt;&lt;/body&gt;&lt;/topic&gt;&lt;topic class=&#34;- topic/topic &#34; ditaarch:DITAArchVersion=&#34;1.2&#34; domains=&#34;(topic hi-d) (topic ut-d) (topic indexing-d) (topic hazard-d) (topic abbrev-d) (topic pr-d) (topic sw-d) (topic ui-d)&#34; id=&#34;remarks&#34; xtrf=&#34;file:/D:/InfoShare/Data/Publish/Data/qzvtb5xcvan/work/1/en-US/GUID-8D0CD4FB-C2B2-4AF4-8DB0-D6424CB9EAE1.md&#34; xtrc=&#34;topic:9;182:3&#34; specializations=&#34;&#34;&gt;&lt;title class=&#34;- topic/title &#34; xtrf=&#34;file:/D:/InfoShare/Data/Publish/Data/qzvtb5xcvan/work/1/en-US/GUID-8D0CD4FB-C2B2-4AF4-8DB0-D6424CB9EAE1.md&#34; xtrc=&#34;title:9;182:3&#34;&gt;Remarks&lt;/title&gt;&lt;body class=&#34;- topic/body &#34; xtrf=&#34;file:/D:/InfoShare/Data/Publish/Data/qzvtb5xcvan/work/1/en-US/GUID-8D0CD4FB-C2B2-4AF4-8DB0-D6424CB9EAE1.md&#34; xtrc=&#34;body:9;182:3&#34;&gt;&lt;p class=&#34;- topic/p &#34; xtrf=&#34;file:/D:/InfoShare/Data/Publish/Data/qzvtb5xcvan/work/1/en-US/GUID-8D0CD4FB-C2B2-4AF4-8DB0-D6424CB9EAE1.md&#34; xtrc=&#34;p:16;182:3&#34;&gt;This API is supported in Both Bare-Metal and RTOS environment.&lt;/p&gt;&lt;/body&gt;&lt;/topic&gt;&lt;/topic&gt;"/><meta name="wh-source-relpath" content="GUID-8D0CD4FB-C2B2-4AF4-8DB0-D6424CB9EAE1.md"/><meta name="wh-out-relpath" content="GUID-8D0CD4FB-C2B2-4AF4-8DB0-D6424CB9EAE1.html"/>
+    <!-- Latest compiled and minified Bootstrap CSS -->
+    <link rel="stylesheet" type="text/css" href="./oxygen-webhelp/lib/bootstrap/css/bootstrap.min.css"/>
     
-                      window.parent.location.href = origUrl + "?" + url;
+    <link rel="stylesheet" href="./oxygen-webhelp/lib/jquery-ui/jquery-ui.min.css"/>
+    
+    <!-- Template default styles  -->
+    <link rel="stylesheet" type="text/css" href="./oxygen-webhelp/app/topic-page.css?buildId=2022062014"/>
+    
+    
+    <script src="./oxygen-webhelp/lib/jquery/jquery-3.5.1.min.js"></script>
+    
+    <script data-main="./oxygen-webhelp/app/topic-page.js" src="./oxygen-webhelp/lib/requirejs/require.js"></script>
+<link rel="stylesheet" type="text/css" href="oxygen-webhelp/template/microchip.css?buildId=2022062014"/><link rel="stylesheet" type="text/css" href="oxygen-webhelp/template/notes.css?buildId=2022062014"/>
+<script src="mchp-context-help.js"></script>
+<link href="https://fonts.googleapis.com/css?family=Open+Sans:400,600,300" rel="stylesheet" type="text/css"/>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML" async="" type="text/javascript"></script>
+</head>
 
-                      return false;
-                    }
-               }
-            }
-				});
-			}
+    <body id="drv-memory-asyncerasewrite-function" class="wh_topic_page frmBody">
+        <a href="#wh_topic_body" class="sr-only sr-only-focusable">
+            Jump to main content
+        </a>
+        
+        
+        
+        
+        <header class="navbar navbar-default wh_header">
+    <div class="container-fluid">
+        <div class="wh_header_flex_container navbar-nav navbar-expand-md navbar-dark">
+            <div class="wh_logo_and_publication_title_container">
+                <div class="wh_logo_and_publication_title">
+                    
+                    <a href="index.html" class=" wh_logo d-none d-sm-block "><img src="oxygen-webhelp\template\resources/images/microchip.png" alt="MPLAB® Harmony Core Library "/></a>
+                    <div class=" wh_publication_title "><a href="index.html">MPLAB® Harmony Core Library </a></div>
+                    
+                </div>
+                
+                
+            </div>
 
-		</script><script language="javascript">
-        function cpy(id, button) {
-        
-            var element = document.getElementById(id);
-            var content = element.getAttribute("content");
-            var textArea = document.createElement("textarea");
-            
-            // Place in the top-left corner of screen regardless of scroll position.
-            textArea.style.position = 'fixed';
-            textArea.style.top = 0;
-            textArea.style.left = 0;
-            
-            // Ensure it has a small width and height. Setting to 1px / 1em
-            // doesn't work as this gives a negative w/h on some browsers.
-            textArea.style.width = '2em';
-            textArea.style.height = '2em';
-            
-            // We don't need padding, reducing the size if it does flash render.
-            textArea.style.padding = 0;
-            
-            // Clean up any borders.
-            textArea.style.border = 'none';
-            textArea.style.outline = 'none';
-            textArea.style.boxShadow = 'none';
-            
-            // Avoid flash of the white box if rendered for any reason.
-            textArea.style.background = 'transparent';
-            
-            
-            textArea.value = content;
-            
-            document.body.appendChild(textArea);
-            textArea.focus();
-            textArea.select();
-            
-            try {
-               var successful = document.execCommand('copy');
-               var msg = successful ? 'successful' : 'unsuccessful';
-               if (!button.classList.contains("copied")){
-                  button.textContent = "Copied";
-                  button.classList.add("copied");
-                  setTimeout(function(){
-                    button.textContent = "Copy";
-                    button.classList.remove("copied");
-                  },1000);
-               }
-            } catch (err) {
-              console.log('Oops, unable to copy');
-            }
-            
-            document.body.removeChild(textArea);
-        }
-      </script><script language="javascript">
-          
-          // Add the MathML namespace to html
-          var html = document.getElementsByTagName("html")[0],
-          head = document.getElementsByTagName("head")[0];
-          
-          var mathJax = document.createElement("script");
-          mathJax.src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-MML-AM_CHTML";
-          head.appendChild(mathJax);
-          
-          html.setAttribute("xmlns:m","http://www.w3.org/1998/Math/MathML");
-          
-          function inIframe() { try { return window.self !== window.top; } catch (e) { return true; } }
-          
-          if (!inIframe()) { 
-          
-          var Default = "index.html?GUID-8D0CD4FB-C2B2-4AF4-8DB0-D6424CB9EAE1"; 
-          
-          var displaylocation = "value" + window.location.href;
-          
-          var GUIDS = displaylocation.split('GUID');          
-          
-          if (displaylocation.indexOf('#GUID') != -1) {            
-          var First = GUIDS[1].split('.html');  
-          if (GUIDS[3]){First = GUIDS[2].split('.html');}
-          if (GUIDS[4]){First = GUIDS[3].split('.html');}
-          if (GUIDS[5]){First = GUIDS[4].split('.html');}
-          
-          var Second = GUIDS[2].split('#');   
-          if (GUIDS[3]){Second = GUIDS[3].split('#');}
-          if (GUIDS[4]){Second = GUIDS[4].split('#');}
-          if (GUIDS[5]){Second = GUIDS[5].split('#');}
-          
-          Default = "index.html?" + "GUID" + First[0] + "GUID" + Second[0];     
-          }                    
-          window.top.location = Default;
-          }       
-          
-        </script><style xml:space="">
-        
-          button.copy-code{
-            display:none;
-            padding:0.7em 1.4em;
-            margin:0 0.3em 0.3em 0;
-            border-radius:0.15em;
-            box-sizing: border-box;
-            text-decoration:none;
-            font-family:'Roboto',sans-serif;
-            text-transform:uppercase;
-            font-weight:400;
-            color:#FFFFFF;
-            background-color:#9c9c9c;
-            box-shadow:inset 0 -0.6em 0 -0.35em rgba(0,0,0,0.17);
-            text-align:center;
-            position:relative;
-            border: 0;
-            float: right;
-            border-radius: .5em;
-            cursor: pointer;
-          }
-          button.copy-code:active{
-            top:0.1em;
-          }
-          
-          pre:hover button.copy-code{
-            display: inline-block !important;
-          }
-          button.copy-code.copied {
-            cursor: default !important;
-          }
-          
-          
-          @media all and (max-width:30em){
-            button.copy-code{
-              display:block;
-              margin:0.4em auto;
-            }
-          }
+            <div class="wh_top_menu_and_indexterms_link collapse navbar-collapse" id="wh_top_menu_and_indexterms_link">
+                
+                
+                
+                
+            </div>
+        </div>
+    </div>
+</header>
         
         
-      </style></head>
-<body id="drv-memory-asyncerasewrite-function">
-<h1 class="title topictitle1" id="ariaid-title1">DRV_MEMORY_AsyncEraseWrite Function</h1><div class="body"></div>
-<div class="related-links">
-<div class="familylinks">
-<div class="parentlink"><strong>Parent topic:</strong> <a class="link" href="GUID-E18B0923-4286-4E08-A2EB-9A482E0063AE.html">Library Interface</a></div>
+         
+        
+        <div class=" wh_search_input navbar-form wh_topic_page_search search " role="form">
+            
+            
+            
+            <form id="searchForm" method="get" role="search" action="search.html"><div><input type="search" placeholder="Search " class="wh_search_textfield" id="textToSearch" name="searchQuery" aria-label="Search query" required="required"/><button type="submit" class="wh_search_button" aria-label="Search"><span class="search_input_text">Search</span></button></div></form>
+            
+            <div class="mchp-color-stripe-grid-container">
+  <div class="mchp-main-bar mchp-orange-bar"></div>
+  <div class="mchp-main-bar mchp-blue-bar"></div>
+  <div class="mchp-main-bar mchp-green-bar"></div>
 </div>
-</div><div class="topic nested1" aria-labelledby="ariaid-title2" id="c"><h2 class="title topictitle2" id="ariaid-title2">C</h2><div class="body"><pre class="pre codeblock language-c"><button title="Copy Code" class="copy-code" onclick="cpy('d196723e21', this);">Copy</button><code id="d196723e21" content="void DRV_MEMORY_AsyncEraseWrite&#xA;(&#xA;    const DRV_HANDLE handle,&#xA;    DRV_MEMORY_COMMAND_HANDLE * commandHandle,&#xA;    void * sourceBuffer,&#xA;    uint32_t blockStart,&#xA;    uint32_t nBlock&#xA;);"><span class="ph token keyword">void</span> DRV_MEMORY_AsyncEraseWrite
-<span class="ph token punctuation">(</span>
-    <span class="ph token keyword">const</span> DRV_HANDLE handle<span class="ph token punctuation">,</span>
-    DRV_MEMORY_COMMAND_HANDLE <span class="ph token operator">*</span> commandHandle<span class="ph token punctuation">,</span>
-    <span class="ph token keyword">void</span> <span class="ph token operator">*</span> sourceBuffer<span class="ph token punctuation">,</span>
-    uint32_t blockStart<span class="ph token punctuation">,</span>
+            
+        </div>
+        
+        <div class="container-fluid" id="wh_topic_container">
+            <div class="row">
+
+                <nav class="wh_tools d-print-none navbar-expand-md" aria-label="Tools">
+                    
+                    <div data-tooltip-position="bottom" class=" wh_breadcrumb "><ol class="d-print-none"><li><span class="home"><a href="index.html"><span>Home</span></a></span></li><li><div class="topicref" data-id="mplab-harmony-core-library"><div class="title"><a href="GUID-C04D97AB-D6E0-4CF5-9A80-CA64E36B6199.html"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">1</ph>
+MPLAB® Harmony Core Library</a></div></div></li><li><div class="topicref" data-id="driver-libraries"><div class="title"><a href="GUID-4FA4B38A-8C7F-46A3-9D08-4B8C5CE26712.html"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">1.1</ph>
+Driver Libraries</a></div></div></li><li><div class="topicref" data-id="memory-driver"><div class="title"><a href="GUID-0FFCD458-7F10-49C8-B068-E4E4B5439C47.html"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">1.1.3</ph>
+Memory Driver</a></div></div></li><li><div class="topicref" data-id="library-interface"><div class="title"><a href="GUID-E18B0923-4286-4E08-A2EB-9A482E0063AE.html"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">1.1.3.4</ph>
+Library Interface</a></div></div></li><li class="active"><div class="topicref" data-id="drv-memory-asyncerasewrite-function"><div class="title"><a href="GUID-8D0CD4FB-C2B2-4AF4-8DB0-D6424CB9EAE1.html"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">1.1.3.4.8</ph>
+DRV_MEMORY_AsyncEraseWrite Function</a></div></div></li></ol></div>
+                    
+                    
+                    
+                    <div class="wh_right_tools">
+                        <button class="wh_hide_highlight" aria-label="Toggle search highlights" title="Toggle search highlights"></button>
+                        <button class="webhelp_expand_collapse_sections" data-next-state="collapsed" aria-label="Collapse sections" title="Collapse sections"></button>
+                        
+                        
+                        
+                        
+                        <div class=" wh_print_link print d-none d-md-inline-block "><button onClick="window.print()" title="Print this page" aria-label="Print this page"></button></div>
+                        
+                        <button type="button" id="wh_toc_button" class="custom-toggler navbar-toggler collapsed wh_toggle_button navbar-light" aria-expanded="false" aria-label="Toggle publishing table of content" aria-controls="wh_publication_toc">
+                            <span class="navbar-toggler-icon"></span>
+                        </button>
+                    </div>
+                    
+                </nav>
+            </div>
+            
+            
+            
+            
+            <div class="wh_content_area">
+                <div class="row">
+                    
+                        <nav id="wh_publication_toc" class="col-lg-3 col-md-3 col-sm-12 d-md-block d-none d-print-none" aria-label="Table of Contents Container">
+                            <div id="wh_publication_toc_content">
+		                        
+                            	<div class=" wh_publication_toc " data-tooltip-position="right"><span class="expand-button-action-labels"><span id="button-expand-action" role="button" aria-label="Expand"></span><span id="button-collapse-action" role="button" aria-label="Collapse"></span><span id="button-pending-action" role="button" aria-label="Pending"></span></span><ul role="tree" aria-label="Table of Contents"><li role="treeitem" aria-expanded="true"><div data-tocid="mplab-harmony-core-library-d6800e9" class="topicref" data-id="mplab-harmony-core-library" data-state="expanded"><span role="button" tabindex="0" aria-labelledby="button-collapse-action mplab-harmony-core-library-d6800e9-link" class="wh-expand-btn"></span><div class="title"><a href="GUID-C04D97AB-D6E0-4CF5-9A80-CA64E36B6199.html" id="mplab-harmony-core-library-d6800e9-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">1</ph>
+MPLAB® Harmony Core Library</a></div></div><ul role="group" class="navbar-nav nav-list"><li role="treeitem" aria-expanded="true"><div data-tocid="driver-libraries-d6800e17" class="topicref" data-id="driver-libraries" data-state="expanded"><span role="button" tabindex="0" aria-labelledby="button-collapse-action driver-libraries-d6800e17-link" class="wh-expand-btn"></span><div class="title"><a href="GUID-4FA4B38A-8C7F-46A3-9D08-4B8C5CE26712.html" id="driver-libraries-d6800e17-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">1.1</ph>
+Driver Libraries</a></div></div><ul role="group" class="navbar-nav nav-list"><li role="treeitem" aria-expanded="false"><div data-tocid="common-driver-library-d6800e25" class="topicref" data-id="common-driver-library" data-state="not-ready"><span role="button" tabindex="0" aria-labelledby="button-expand-action common-driver-library-d6800e25-link" class="wh-expand-btn"></span><div class="title"><a href="GUID-DFB9A1FE-5BBB-4A10-A4B0-430BA7B9AF94.html" id="common-driver-library-d6800e25-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">1.1.1</ph>
+Common Driver Library</a></div></div></li><li role="treeitem" aria-expanded="false"><div data-tocid="i2c-driver-d6800e97" class="topicref" data-id="i2c-driver" data-state="not-ready"><span role="button" tabindex="0" aria-labelledby="button-expand-action i2c-driver-d6800e97-link" class="wh-expand-btn"></span><div class="title"><a href="GUID-4321CAFA-57B5-4633-9D43-0AE24B87C101.html" id="i2c-driver-d6800e97-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">1.1.2</ph>
+I2C Driver</a></div></div></li><li role="treeitem" aria-expanded="true"><div data-tocid="memory-driver-d6800e306" class="topicref" data-id="memory-driver" data-state="expanded"><span role="button" tabindex="0" aria-labelledby="button-collapse-action memory-driver-d6800e306-link" class="wh-expand-btn"></span><div class="title"><a href="GUID-0FFCD458-7F10-49C8-B068-E4E4B5439C47.html" id="memory-driver-d6800e306-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">1.1.3</ph>
+Memory Driver</a></div></div><ul role="group" class="navbar-nav nav-list"><li role="treeitem"><div data-tocid="how-the-library-works-d6800e314" class="topicref" data-id="how-the-library-works" data-state="leaf"><span role="button" class="wh-expand-btn"></span><div class="title"><a href="GUID-EAB93469-EF2D-48D7-AB27-B7E2A6B0A250.html" id="how-the-library-works-d6800e314-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">1.1.3.1</ph>
+How the Library Works</a></div></div></li><li role="treeitem"><div data-tocid="using-the-library-d6800e322" class="topicref" data-id="using-the-library" data-state="leaf"><span role="button" class="wh-expand-btn"></span><div class="title"><a href="GUID-8A5BD4DE-CB7C-4469-8159-D2A013406C01.html" id="using-the-library-d6800e322-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">1.1.3.2</ph>
+Using The Library</a></div></div></li><li role="treeitem"><div data-tocid="configuring-the-library-d6800e330" class="topicref" data-id="configuring-the-library" data-state="leaf"><span role="button" class="wh-expand-btn"></span><div class="title"><a href="GUID-524A96DC-3A65-435E-97E1-C8D40A5C927B.html" id="configuring-the-library-d6800e330-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">1.1.3.3</ph>
+Configuring The Library</a></div></div></li><li role="treeitem" aria-expanded="true"><div data-tocid="library-interface-d6800e338" class="topicref" data-id="library-interface" data-state="expanded"><span role="button" tabindex="0" aria-labelledby="button-collapse-action library-interface-d6800e338-link" class="wh-expand-btn"></span><div class="title"><a href="GUID-E18B0923-4286-4E08-A2EB-9A482E0063AE.html" id="library-interface-d6800e338-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">1.1.3.4</ph>
+Library Interface</a></div></div><ul role="group" class="navbar-nav nav-list"><li role="treeitem"><div data-tocid="drv-memory-initialize-function-d6800e346" class="topicref" data-id="drv-memory-initialize-function" data-state="leaf"><span role="button" class="wh-expand-btn"></span><div class="title"><a href="GUID-A19D31BD-CA9E-4C95-8C34-48C4F568CB46.html" id="drv-memory-initialize-function-d6800e346-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">1.1.3.4.1</ph>
+DRV_MEMORY_Initialize Function</a></div></div></li><li role="treeitem"><div data-tocid="drv-memory-status-function-d6800e354" class="topicref" data-id="drv-memory-status-function" data-state="leaf"><span role="button" class="wh-expand-btn"></span><div class="title"><a href="GUID-78A40801-3070-4F90-8BBC-C21C8AD1B362.html" id="drv-memory-status-function-d6800e354-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">1.1.3.4.2</ph>
+DRV_MEMORY_Status Function</a></div></div></li><li role="treeitem"><div data-tocid="drv-memory-tasks-function-d6800e362" class="topicref" data-id="drv-memory-tasks-function" data-state="leaf"><span role="button" class="wh-expand-btn"></span><div class="title"><a href="GUID-9C3DFDAE-818D-415D-8331-0F56F2817EBA.html" id="drv-memory-tasks-function-d6800e362-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">1.1.3.4.3</ph>
+DRV_MEMORY_Tasks Function</a></div></div></li><li role="treeitem"><div data-tocid="drv-memory-open-function-d6800e370" class="topicref" data-id="drv-memory-open-function" data-state="leaf"><span role="button" class="wh-expand-btn"></span><div class="title"><a href="GUID-E11AD2F4-E78A-41F1-A573-10270C7796D7.html" id="drv-memory-open-function-d6800e370-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">1.1.3.4.4</ph>
+DRV_MEMORY_Open Function</a></div></div></li><li role="treeitem"><div data-tocid="drv-memory-close-function-d6800e378" class="topicref" data-id="drv-memory-close-function" data-state="leaf"><span role="button" class="wh-expand-btn"></span><div class="title"><a href="GUID-8137CC20-0230-4197-A5B0-C6400C2617BC.html" id="drv-memory-close-function-d6800e378-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">1.1.3.4.5</ph>
+DRV_MEMORY_Close Function</a></div></div></li><li role="treeitem"><div data-tocid="drv-memory-asyncerase-function-d6800e386" class="topicref" data-id="drv-memory-asyncerase-function" data-state="leaf"><span role="button" class="wh-expand-btn"></span><div class="title"><a href="GUID-244989FC-1190-4854-8A64-9F0FAEF1B07C.html" id="drv-memory-asyncerase-function-d6800e386-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">1.1.3.4.6</ph>
+DRV_MEMORY_AsyncErase Function</a></div></div></li><li role="treeitem"><div data-tocid="drv-memory-syncerase-function-d6800e394" class="topicref" data-id="drv-memory-syncerase-function" data-state="leaf"><span role="button" class="wh-expand-btn"></span><div class="title"><a href="GUID-F499493F-2392-4CEC-B4B4-E61FD279CABE.html" id="drv-memory-syncerase-function-d6800e394-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">1.1.3.4.7</ph>
+DRV_MEMORY_SyncErase Function</a></div></div></li><li role="treeitem" class="active"><div data-tocid="drv-memory-asyncerasewrite-function-d6800e402" class="topicref" data-id="drv-memory-asyncerasewrite-function" data-state="leaf"><span role="button" class="wh-expand-btn"></span><div class="title"><a href="GUID-8D0CD4FB-C2B2-4AF4-8DB0-D6424CB9EAE1.html" id="drv-memory-asyncerasewrite-function-d6800e402-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">1.1.3.4.8</ph>
+DRV_MEMORY_AsyncEraseWrite Function</a></div></div></li><li role="treeitem"><div data-tocid="drv-memory-syncerasewrite-function-d6800e410" class="topicref" data-id="drv-memory-syncerasewrite-function" data-state="leaf"><span role="button" class="wh-expand-btn"></span><div class="title"><a href="GUID-0B4A66DB-3680-46D5-BC13-EEA9E8A84481.html" id="drv-memory-syncerasewrite-function-d6800e410-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">1.1.3.4.9</ph>
+DRV_MEMORY_SyncEraseWrite Function</a></div></div></li><li role="treeitem"><div data-tocid="drv-memory-asyncwrite-function-d6800e418" class="topicref" data-id="drv-memory-asyncwrite-function" data-state="leaf"><span role="button" class="wh-expand-btn"></span><div class="title"><a href="GUID-6655C843-3384-4DCB-8625-657E0EAD198B.html" id="drv-memory-asyncwrite-function-d6800e418-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">1.1.3.4.10</ph>
+DRV_MEMORY_AsyncWrite Function</a></div></div></li><li role="treeitem"><div data-tocid="drv-memory-syncwrite-function-d6800e427" class="topicref" data-id="drv-memory-syncwrite-function" data-state="leaf"><span role="button" class="wh-expand-btn"></span><div class="title"><a href="GUID-C8F255A5-C992-465D-A4B5-B62A2B89421F.html" id="drv-memory-syncwrite-function-d6800e427-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">1.1.3.4.11</ph>
+DRV_MEMORY_SyncWrite Function</a></div></div></li><li role="treeitem"><div data-tocid="drv-memory-asyncread-function-d6800e435" class="topicref" data-id="drv-memory-asyncread-function" data-state="leaf"><span role="button" class="wh-expand-btn"></span><div class="title"><a href="GUID-422BF1E5-FCA5-4BDA-86FF-1D69B0F9EE60.html" id="drv-memory-asyncread-function-d6800e435-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">1.1.3.4.12</ph>
+DRV_MEMORY_AsyncRead Function</a></div></div></li><li role="treeitem"><div data-tocid="drv-memory-syncread-function-d6800e443" class="topicref" data-id="drv-memory-syncread-function" data-state="leaf"><span role="button" class="wh-expand-btn"></span><div class="title"><a href="GUID-76235F7D-E608-44C6-AFA4-73A09FF0EA9C.html" id="drv-memory-syncread-function-d6800e443-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">1.1.3.4.13</ph>
+DRV_MEMORY_SyncRead Function</a></div></div></li><li role="treeitem"><div data-tocid="drv-memory-geometryget-function-d6800e451" class="topicref" data-id="drv-memory-geometryget-function" data-state="leaf"><span role="button" class="wh-expand-btn"></span><div class="title"><a href="GUID-40F0EA45-9E7D-4BE2-8DBF-31942FA1BD7D.html" id="drv-memory-geometryget-function-d6800e451-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">1.1.3.4.14</ph>
+DRV_MEMORY_GeometryGet Function</a></div></div></li><li role="treeitem"><div data-tocid="drv-memory-transferstatusget-function-d6800e459" class="topicref" data-id="drv-memory-transferstatusget-function" data-state="leaf"><span role="button" class="wh-expand-btn"></span><div class="title"><a href="GUID-B409B252-4361-430D-8B89-48AAE39FD066.html" id="drv-memory-transferstatusget-function-d6800e459-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">1.1.3.4.15</ph>
+DRV_MEMORY_TransferStatusGet Function</a></div></div></li><li role="treeitem"><div data-tocid="drv-memory-commandstatusget-function-d6800e467" class="topicref" data-id="drv-memory-commandstatusget-function" data-state="leaf"><span role="button" class="wh-expand-btn"></span><div class="title"><a href="GUID-6E6BFBF9-12EB-436D-9D2F-4611B260D7EF.html" id="drv-memory-commandstatusget-function-d6800e467-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">1.1.3.4.16</ph>
+DRV_MEMORY_CommandStatusGet Function</a></div></div></li><li role="treeitem"><div data-tocid="drv-memory-transferhandlerset-function-d6800e475" class="topicref" data-id="drv-memory-transferhandlerset-function" data-state="leaf"><span role="button" class="wh-expand-btn"></span><div class="title"><a href="GUID-066D0FA7-453C-4736-8064-5E4224C50558.html" id="drv-memory-transferhandlerset-function-d6800e475-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">1.1.3.4.17</ph>
+DRV_MEMORY_TransferHandlerSet Function</a></div></div></li><li role="treeitem"><div data-tocid="drv-memory-isattached-function-d6800e483" class="topicref" data-id="drv-memory-isattached-function" data-state="leaf"><span role="button" class="wh-expand-btn"></span><div class="title"><a href="GUID-3488A96B-8C3E-4967-9197-2376AB3B45E6.html" id="drv-memory-isattached-function-d6800e483-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">1.1.3.4.18</ph>
+DRV_MEMORY_IsAttached Function</a></div></div></li><li role="treeitem"><div data-tocid="drv-memory-iswriteprotected-function-d6800e491" class="topicref" data-id="drv-memory-iswriteprotected-function" data-state="leaf"><span role="button" class="wh-expand-btn"></span><div class="title"><a href="GUID-47211219-744B-487E-975A-C6D963B11DE7.html" id="drv-memory-iswriteprotected-function-d6800e491-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">1.1.3.4.19</ph>
+DRV_MEMORY_IsWriteProtected Function</a></div></div></li><li role="treeitem"><div data-tocid="drv-memory-addressget-function-d6800e499" class="topicref" data-id="drv-memory-addressget-function" data-state="leaf"><span role="button" class="wh-expand-btn"></span><div class="title"><a href="GUID-B4934CBC-6AF2-495C-AC8D-576C20729D5F.html" id="drv-memory-addressget-function-d6800e499-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">1.1.3.4.20</ph>
+DRV_MEMORY_AddressGet Function</a></div></div></li><li role="treeitem"><div data-tocid="drv-memory-erase-function-d6800e507" class="topicref" data-id="drv-memory-erase-function" data-state="leaf"><span role="button" class="wh-expand-btn"></span><div class="title"><a href="GUID-5587D300-1C17-4DCA-B342-9B2E74824EFB.html" id="drv-memory-erase-function-d6800e507-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">1.1.3.4.21</ph>
+DRV_MEMORY_Erase Function</a></div></div></li><li role="treeitem"><div data-tocid="drv-memory-erasewrite-function-d6800e516" class="topicref" data-id="drv-memory-erasewrite-function" data-state="leaf"><span role="button" class="wh-expand-btn"></span><div class="title"><a href="GUID-509B01EA-57F1-449C-A03F-EE3761F22F4E.html" id="drv-memory-erasewrite-function-d6800e516-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">1.1.3.4.22</ph>
+DRV_MEMORY_EraseWrite Function</a></div></div></li><li role="treeitem"><div data-tocid="drv-memory-write-function-d6800e524" class="topicref" data-id="drv-memory-write-function" data-state="leaf"><span role="button" class="wh-expand-btn"></span><div class="title"><a href="GUID-EF2E2FE9-A7F4-41F0-B5F3-3002C0E9396B.html" id="drv-memory-write-function-d6800e524-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">1.1.3.4.23</ph>
+DRV_MEMORY_Write Function</a></div></div></li><li role="treeitem"><div data-tocid="drv-memory-read-function-d6800e532" class="topicref" data-id="drv-memory-read-function" data-state="leaf"><span role="button" class="wh-expand-btn"></span><div class="title"><a href="GUID-C59F079A-EB80-4DFE-9FD1-B83486B907CE.html" id="drv-memory-read-function-d6800e532-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">1.1.3.4.24</ph>
+DRV_MEMORY_Read Function</a></div></div></li><li role="treeitem"><div data-tocid="drv-memory-command-handle-typedef-d6800e540" class="topicref" data-id="drv-memory-command-handle-typedef" data-state="leaf"><span role="button" class="wh-expand-btn"></span><div class="title"><a href="GUID-1F0928CE-E0E0-45E3-8717-E96769FA7B9F.html" id="drv-memory-command-handle-typedef-d6800e540-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">1.1.3.4.25</ph>
+DRV_MEMORY_COMMAND_HANDLE Typedef</a></div></div></li><li role="treeitem"><div data-tocid="drv-memory-command-handle-invalid-macro-d6800e548" class="topicref" data-id="drv-memory-command-handle-invalid-macro" data-state="leaf"><span role="button" class="wh-expand-btn"></span><div class="title"><a href="GUID-8095D76B-9C45-4295-94E8-D01CCCACAC91.html" id="drv-memory-command-handle-invalid-macro-d6800e548-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">1.1.3.4.26</ph>
+DRV_MEMORY_COMMAND_HANDLE_INVALID Macro</a></div></div></li><li role="treeitem"><div data-tocid="drv-memory-event-enum-d6800e556" class="topicref" data-id="drv-memory-event-enum" data-state="leaf"><span role="button" class="wh-expand-btn"></span><div class="title"><a href="GUID-F6ADE0BF-13E7-4331-80CE-9FA9B5C33750.html" id="drv-memory-event-enum-d6800e556-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">1.1.3.4.27</ph>
+DRV_MEMORY_EVENT Enum</a></div></div></li><li role="treeitem"><div data-tocid="drv-memory-command-status-enum-d6800e564" class="topicref" data-id="drv-memory-command-status-enum" data-state="leaf"><span role="button" class="wh-expand-btn"></span><div class="title"><a href="GUID-3C10B2F9-8190-47F4-864D-813923E49E2F.html" id="drv-memory-command-status-enum-d6800e564-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">1.1.3.4.28</ph>
+DRV_MEMORY_COMMAND_STATUS Enum</a></div></div></li><li role="treeitem"><div data-tocid="drv-memory-transfer-handler-typedef-d6800e572" class="topicref" data-id="drv-memory-transfer-handler-typedef" data-state="leaf"><span role="button" class="wh-expand-btn"></span><div class="title"><a href="GUID-377058D8-9B13-47BE-A92A-47523CB84B3B.html" id="drv-memory-transfer-handler-typedef-d6800e572-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">1.1.3.4.29</ph>
+DRV_MEMORY_TRANSFER_HANDLER Typedef</a></div></div></li><li role="treeitem"><div data-tocid="memory-device-transfer-status-enum-d6800e580" class="topicref" data-id="memory-device-transfer-status-enum" data-state="leaf"><span role="button" class="wh-expand-btn"></span><div class="title"><a href="GUID-FC3149C2-1EB6-47A0-8FA6-89584991B2BD.html" id="memory-device-transfer-status-enum-d6800e580-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">1.1.3.4.30</ph>
+MEMORY_DEVICE_TRANSFER_STATUS Enum</a></div></div></li><li role="treeitem"><div data-tocid="memory-device-geometry-struct-d6800e588" class="topicref" data-id="memory-device-geometry-struct" data-state="leaf"><span role="button" class="wh-expand-btn"></span><div class="title"><a href="GUID-5E1BD4E4-2CE2-43D1-B83A-CA20B9F7F3DD.html" id="memory-device-geometry-struct-d6800e588-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">1.1.3.4.31</ph>
+MEMORY_DEVICE_GEOMETRY Struct</a></div></div></li><li role="treeitem"><div data-tocid="drv-memory-device-interface-struct-d6800e596" class="topicref" data-id="drv-memory-device-interface-struct" data-state="leaf"><span role="button" class="wh-expand-btn"></span><div class="title"><a href="GUID-65ACFCA1-A979-4EE6-B224-6CC63491ACED.html" id="drv-memory-device-interface-struct-d6800e596-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">1.1.3.4.32</ph>
+DRV_MEMORY_DEVICE_INTERFACE Struct</a></div></div></li><li role="treeitem"><div data-tocid="drv-memory-init-struct-d6800e605" class="topicref" data-id="drv-memory-init-struct" data-state="leaf"><span role="button" class="wh-expand-btn"></span><div class="title"><a href="GUID-FCE79155-DFAA-434F-B53C-FB851BD38651.html" id="drv-memory-init-struct-d6800e605-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">1.1.3.4.33</ph>
+DRV_MEMORY_INIT Struct</a></div></div></li></ul></li></ul></li><li role="treeitem" aria-expanded="false"><div data-tocid="nand-flash-driver-d6800e613" class="topicref" data-id="nand-flash-driver" data-state="not-ready"><span role="button" tabindex="0" aria-labelledby="button-expand-action nand-flash-driver-d6800e613-link" class="wh-expand-btn"></span><div class="title"><a href="GUID-BFFB8AD8-CD11-49AB-8C23-F860A883EFE6.html" id="nand-flash-driver-d6800e613-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">1.1.4</ph>
+NAND Flash Driver</a></div></div></li><li role="treeitem" aria-expanded="false"><div data-tocid="parallel-prom-drivers-d6800e822" class="topicref" data-id="parallel-prom-drivers" data-state="not-ready"><span role="button" tabindex="0" aria-labelledby="button-expand-action parallel-prom-drivers-d6800e822-link" class="wh-expand-btn"></span><div class="title"><a href="GUID-5AE89E9A-282F-42F6-845E-A513176335DA.html" id="parallel-prom-drivers-d6800e822-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">1.1.5</ph>
+Parallel PROM Drivers</a></div></div></li><li role="treeitem" aria-expanded="false"><div data-tocid="sdmmc-driver-d6800e950" class="topicref" data-id="sdmmc-driver" data-state="not-ready"><span role="button" tabindex="0" aria-labelledby="button-expand-action sdmmc-driver-d6800e950-link" class="wh-expand-btn"></span><div class="title"><a href="GUID-013A85E2-6948-44FA-907E-7DC945B5CE82.html" id="sdmmc-driver-d6800e950-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">1.1.6</ph>
+SDMMC Driver</a></div></div></li><li role="treeitem" aria-expanded="false"><div data-tocid="sdspi-driver-d6800e1127" class="topicref" data-id="sdspi-driver" data-state="not-ready"><span role="button" tabindex="0" aria-labelledby="button-expand-action sdspi-driver-d6800e1127-link" class="wh-expand-btn"></span><div class="title"><a href="GUID-89A8332D-B4D0-4989-8602-EACDE3EE74AC.html" id="sdspi-driver-d6800e1127-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">1.1.7</ph>
+SDSPI Driver</a></div></div></li><li role="treeitem" aria-expanded="false"><div data-tocid="spi-driver-d6800e1336" class="topicref" data-id="spi-driver" data-state="not-ready"><span role="button" tabindex="0" aria-labelledby="button-expand-action spi-driver-d6800e1336-link" class="wh-expand-btn"></span><div class="title"><a href="GUID-B2925496-394D-47ED-BD1E-1AB2149934FA.html" id="spi-driver-d6800e1336-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">1.1.8</ph>
+SPI Driver</a></div></div></li><li role="treeitem" aria-expanded="false"><div data-tocid="usart-driver-d6800e1554" class="topicref" data-id="usart-driver" data-state="not-ready"><span role="button" tabindex="0" aria-labelledby="button-expand-action usart-driver-d6800e1554-link" class="wh-expand-btn"></span><div class="title"><a href="GUID-3DC66955-0F7E-4747-9790-893CA81987A6.html" id="usart-driver-d6800e1554-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">1.1.9</ph>
+USART Driver</a></div></div></li><li role="treeitem" aria-expanded="false"><div data-tocid="i2c-eeprom-drivers-d6800e1780" class="topicref" data-id="i2c-eeprom-drivers" data-state="not-ready"><span role="button" tabindex="0" aria-labelledby="button-expand-action i2c-eeprom-drivers-d6800e1780-link" class="wh-expand-btn"></span><div class="title"><a href="GUID-84AD8BE3-4D9F-4F36-AB5F-160B9B90F177.html" id="i2c-eeprom-drivers-d6800e1780-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">1.1.10</ph>
+I2C EEPROM Drivers</a></div></div></li><li role="treeitem" aria-expanded="false"><div data-tocid="spi-eeprom-drivers-d6800e1934" class="topicref" data-id="spi-eeprom-drivers" data-state="not-ready"><span role="button" tabindex="0" aria-labelledby="button-expand-action spi-eeprom-drivers-d6800e1934-link" class="wh-expand-btn"></span><div class="title"><a href="GUID-E5D1E930-88E3-47F4-9ECD-EDE02BF9B07D.html" id="spi-eeprom-drivers-d6800e1934-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">1.1.11</ph>
+SPI EEPROM Drivers</a></div></div></li><li role="treeitem" aria-expanded="false"><div data-tocid="spi-flash-drivers-d6800e2087" class="topicref" data-id="spi-flash-drivers" data-state="not-ready"><span role="button" tabindex="0" aria-labelledby="button-expand-action spi-flash-drivers-d6800e2087-link" class="wh-expand-btn"></span><div class="title"><a href="GUID-3B80B7B5-A8B5-436E-9135-38CDEA3A638B.html" id="spi-flash-drivers-d6800e2087-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">1.1.12</ph>
+SPI Flash Drivers</a></div></div></li><li role="treeitem" aria-expanded="false"><div data-tocid="sqi-flash-drivers-d6800e2264" class="topicref" data-id="sqi-flash-drivers" data-state="not-ready"><span role="button" tabindex="0" aria-labelledby="button-expand-action sqi-flash-drivers-d6800e2264-link" class="wh-expand-btn"></span><div class="title"><a href="GUID-41B61931-E124-4512-A689-5B0643F249E8.html" id="sqi-flash-drivers-d6800e2264-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">1.1.13</ph>
+SQI Flash Drivers</a></div></div></li></ul></li><li role="treeitem" aria-expanded="false"><div data-tocid="system-service-libraries-d6800e2771" class="topicref" data-id="system-service-libraries" data-state="not-ready"><span role="button" tabindex="0" aria-labelledby="button-expand-action system-service-libraries-d6800e2771-link" class="wh-expand-btn"></span><div class="title"><a href="GUID-EA5ADDDE-73D5-43CB-B474-0752CA9A1A50.html" id="system-service-libraries-d6800e2771-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">1.2</ph>
+System Service Libraries</a></div></div></li><li role="treeitem" aria-expanded="false"><div data-tocid="software-libraries-d6800e5031" class="topicref" data-id="software-libraries" data-state="not-ready"><span role="button" tabindex="0" aria-labelledby="button-expand-action software-libraries-d6800e5031-link" class="wh-expand-btn"></span><div class="title"><a href="GUID-7249D18B-E049-45D9-96DD-B6329375E344.html" id="software-libraries-d6800e5031-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">1.3</ph>
+Software Libraries</a></div></div></li><li role="treeitem" aria-expanded="false"><div data-tocid="osal-library-d6800e5305" class="topicref" data-id="osal-library" data-state="not-ready"><span role="button" tabindex="0" aria-labelledby="button-expand-action osal-library-d6800e5305-link" class="wh-expand-btn"></span><div class="title"><a href="GUID-8AEFE0B0-CE35-4F99-ACF4-7C8E10D3BBB6.html" id="osal-library-d6800e5305-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">1.4</ph>
+OSAL Library</a></div></div></li><li role="treeitem" aria-expanded="false"><div data-tocid="third-party-products-d6800e5546" class="topicref" data-id="third-party-products" data-state="not-ready"><span role="button" tabindex="0" aria-labelledby="button-expand-action third-party-products-d6800e5546-link" class="wh-expand-btn"></span><div class="title"><a href="GUID-2FB7347D-8FBD-411F-88D8-58A813EA9498.html" id="third-party-products-d6800e5546-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">1.5</ph>
+Third party Products</a></div></div></li><li role="treeitem"><div data-tocid="configuring-the-harmony-core-library-d6800e5586" class="topicref" data-id="configuring-the-harmony-core-library" data-state="leaf"><span role="button" class="wh-expand-btn"></span><div class="title"><a href="GUID-F1244C57-71EF-492B-8104-473C8CECC20F.html" id="configuring-the-harmony-core-library-d6800e5586-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">1.6</ph>
+Configuring The Harmony Core Library</a></div></div></li></ul></li></ul></div>
+		                        
+                            </div>
+                        </nav>
+                    
+                    
+                    <div class="col-lg-7 col-md-9 col-sm-12" id="wh_topic_body">
+                        <button id="wh_close_publication_toc_button" class="close-toc-button d-none" aria-label="Toggle publishing table of content" aria-controls="wh_publication_toc" aria-expanded="true">
+                            <span class="close-toc-icon-container">
+                                <span class="close-toc-icon"></span>     
+                            </span>
+                        </button>
+                        <button id="wh_close_topic_toc_button" class="close-toc-button d-none" aria-label="Toggle topic table of content" aria-controls="wh_topic_toc" aria-expanded="true">
+                            <span class="close-toc-icon-container">
+                                <span class="close-toc-icon"></span>     
+                            </span>
+                        </button>
+                        
+                        <div class=" wh_topic_content body "><main role="main"><article role="article" aria-labelledby="ariaid-title1"><h1 class="- topic/title title topictitle1" id="ariaid-title1" style="">1.1.3.4.8 DRV_MEMORY_AsyncEraseWrite Function</h1><div class="- topic/body body"></div><article class="- topic/topic topic nested1" aria-labelledby="ariaid-title2" id="c"><h2 class="- topic/title title topictitle2" id="ariaid-title2" style=""> C</h2><div class="- topic/body body"><pre class="+ topic/pre pr-d/codeblock pre codeblock c"><strong class="hl-keyword">void</strong> DRV_MEMORY_AsyncEraseWrite
+(
+    <strong class="hl-keyword">const</strong> DRV_HANDLE handle,
+    DRV_MEMORY_COMMAND_HANDLE * commandHandle,
+    <strong class="hl-keyword">void</strong> * sourceBuffer,
+    uint32_t blockStart,
     uint32_t nBlock
-<span class="ph token punctuation">)</span><span class="ph token punctuation">;</span></code></pre></div>
-</div>
-<div class="topic nested1" aria-labelledby="ariaid-title3" id="summary"><h2 class="title topictitle2" id="ariaid-title3">Summary</h2><div class="body"><p class="p">Erase and Write data for the specified number of memory blocks in Asynchronous mode.</p>
-</div>
-</div>
-<div class="topic nested1" aria-labelledby="ariaid-title4" id="description"><h2 class="title topictitle2" id="ariaid-title4">Description</h2><div class="body"><p class="p">This function combines the step of erasing a sector and then writing the
+);</pre></div></article><article class="- topic/topic topic nested1" aria-labelledby="ariaid-title3" id="summary"><h2 class="- topic/title title topictitle2" id="ariaid-title3" style=""> Summary</h2><div class="- topic/body body"><p class="- topic/p p">Erase and Write data for the specified number of memory blocks in Asynchronous mode.</p></div></article><article class="- topic/topic topic nested1" aria-labelledby="ariaid-title4" id="description"><h2 class="- topic/title title topictitle2" id="ariaid-title4" style=""> Description</h2><div class="- topic/body body"><p class="- topic/p p">This function combines the step of erasing a sector and then writing the
 page. The application can use this function if it wants to avoid having to
 explicitly delete a sector in order to update the pages contained in the
-sector.</p>
-<p class="p">This function schedules a non-blocking operation to erase and write blocks
-of data into attached device memory.</p>
-<p class="p">The function returns with a valid command handle in the commandHandle argument
+sector.</p><p class="- topic/p p">This function schedules a non-blocking operation to erase and write blocks
+of data into attached device memory.</p><p class="- topic/p p">The function returns with a valid command handle in the commandHandle argument
 if the write request was scheduled successfully. The function adds the request
-to the hardware instance queue and returns immediately.</p>
-<p class="p">While the request is in the queue, the application buffer is owned by the driver
-and should not be modified.</p>
-<p class="p">The function returns DRV_MEMORY_COMMAND_HANDLE_INVALID in the commandHandle
-argument under the following circumstances:</p>
-<ul class="ul"><li class="li"><p class="p">if a buffer could not be allocated to the request</p>
-</li>
-<li class="li"><p class="p">if the sourceBuffer pointer is NULL</p>
-</li>
-<li class="li"><p class="p">if the client opened the driver for read only</p>
-</li>
-<li class="li"><p class="p">if the number of blocks to be written is either zero or more than the number of blocks actually available</p>
-</li>
-<li class="li"><p class="p">if the driver handle is invalid</p>
-</li>
-</ul>
-<p class="p">If the requesting client registered an event callback with the driver, the
+to the hardware instance queue and returns immediately.</p><p class="- topic/p p">While the request is in the queue, the application buffer is owned by the driver
+and should not be modified.</p><p class="- topic/p p">The function returns DRV_MEMORY_COMMAND_HANDLE_INVALID in the commandHandle
+argument under the following circumstances:</p><ul class="- topic/ul ul"><li class="- topic/li li"><p class="- topic/p p">if a buffer could not be allocated to the request</p></li><li class="- topic/li li"><p class="- topic/p p">if the sourceBuffer pointer is NULL</p></li><li class="- topic/li li"><p class="- topic/p p">if the client opened the driver for read only</p></li><li class="- topic/li li"><p class="- topic/p p">if the number of blocks to be written is either zero or more than the number of blocks actually available</p></li><li class="- topic/li li"><p class="- topic/p p">if the driver handle is invalid</p></li></ul><p class="- topic/p p">If the requesting client registered an event callback with the driver, the
 driver will issue a DRV_MEMORY_EVENT_COMMAND_COMPLETE event if the buffer
 was processed successfully or DRV_MEMORY_EVENT_COMMAND_ERROR event if the
-buffer was not processed successfully.</p>
-<p class="p">If the requesting client has not registered any transfer handler callback
+buffer was not processed successfully.</p><p class="- topic/p p">If the requesting client has not registered any transfer handler callback
 with the driver, he can call DRV_MEMORY_CommandStatusGet() API to know
-the current status of the request.</p>
-</div>
-</div>
-<div class="topic nested1" aria-labelledby="ariaid-title5" id="precondition"><h2 class="title topictitle2" id="ariaid-title5">Precondition</h2><div class="body"><p class="p">The DRV_MEMORY_Open() must have been called with DRV_IO_INTENT_WRITE or DRV_IO_INTENT_READWRITE as a parameter to obtain a valid opened device handle.</p>
-</div>
-</div>
-<div class="topic nested1" aria-labelledby="ariaid-title6" id="parameters"><h2 class="title topictitle2" id="ariaid-title6">Parameters</h2><div class="body">
-<div class="tablenoborder"><table cellpadding="4" cellspacing="0" summary="" class="table" frame="border" border="1" rules="all"><col style="width:" /><col style="width:" /><thead class="thead" style="text-align:left;"><tr class="row"><th class="entry cellrowborder" style="text-align:left;vertical-align:middle;" id="d196723e113"><span>Param</span></th>
-<th class="entry cellrowborder" style="text-align:left;vertical-align:middle;" id="d196723e115"><span>Description</span></th>
-</tr>
-</thead>
-<tbody class="tbody"><tr class="row"><td class="entry cellrowborder" style="text-align:left;vertical-align:middle;" headers="d196723e113 "><span>handle</span></td>
-<td class="entry cellrowborder" style="text-align:left;vertical-align:middle;" headers="d196723e115 "><span>A valid open-instance handle, returned from the driver's open function</span></td>
-</tr>
-<tr class="row"><td class="entry cellrowborder" style="text-align:left;vertical-align:middle;" headers="d196723e113 "><span>commandHandle</span></td>
-<td class="entry cellrowborder" style="text-align:left;vertical-align:middle;" headers="d196723e115 "><span>Pointer to an argument that will contain the return command handle. If NULL, then command handle is not returned.</span></td>
-</tr>
-<tr class="row"><td class="entry cellrowborder" style="text-align:left;vertical-align:middle;" headers="d196723e113 "><span>sourceBuffer</span></td>
-<td class="entry cellrowborder" style="text-align:left;vertical-align:middle;" headers="d196723e115 "><span>The source buffer containing data to be programmed into media device memory</span></td>
-</tr>
-<tr class="row"><td class="entry cellrowborder" style="text-align:left;vertical-align:middle;" headers="d196723e113 "><span>blockStart</span></td>
-<td class="entry cellrowborder" style="text-align:left;vertical-align:middle;" headers="d196723e115 "><span>Write block start where the write should begin.</span></td>
-</tr>
-<tr class="row"><td class="entry cellrowborder" style="text-align:left;vertical-align:middle;" headers="d196723e113 "><span>nBlock</span></td>
-<td class="entry cellrowborder" style="text-align:left;vertical-align:middle;" headers="d196723e115 "><span>Total number of blocks to be written.</span></td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
-</div>
-<div class="topic nested1" aria-labelledby="ariaid-title7" id="returns"><h2 class="title topictitle2" id="ariaid-title7">Returns</h2><div class="body"><p class="p">The command handle is returned in the commandHandle argument. It Will be DRV_MEMORY_COMMAND_HANDLE_INVALID if the request was not queued.</p>
-</div>
-</div>
-<div class="topic nested1" aria-labelledby="ariaid-title8" id="example"><h2 class="title topictitle2" id="ariaid-title8">Example</h2><div class="body"><pre class="pre codeblock language-c"><button title="Copy Code" class="copy-code" onclick="cpy('d196723e153', this);">Copy</button><code id="d196723e153" content="#define BUFFER_SIZE 4096&#xA;uint8_t buffer[BUFFER_SIZE];&#xA;&#xA;// Use DRV_MEMORY_GeometryGet () to find the write region geometry.&#xA;uint32_t blockStart = 0x0;&#xA;uint32_t nBlock = BUFFER_SIZE / block_size; // block_size for write geometry&#xA;DRV_MEMORY_COMMAND_HANDLE commandHandle;&#xA;&#xA;// memoryHandle is the handle returned by the DRV_MEMORY_Open function.&#xA;// Client registers an event handler with driver&#xA;&#xA;// Event is received when the erase-write request is completed.&#xA;void appTransferHandler&#xA;(&#xA;    DRV_MEMORY_EVENT event,&#xA;    DRV_MEMORY_COMMAND_HANDLE commandHandle,&#xA;    uintptr_t context&#xA;)&#xA;{&#xA;    switch(event)&#xA;    {&#xA;        case DRV_MEMORY_EVENT_COMMAND_COMPLETE:&#xA;        {&#xA;            xfer_done = true;&#xA;            break;&#xA;        }&#xA;&#xA;        case DRV_MEMORY_EVENT_COMMAND_ERROR:&#xA;        {&#xA;            // Handle Error&#xA;            break;&#xA;        }&#xA;&#xA;        default:&#xA;        {&#xA;            break;&#xA;        }&#xA;    }&#xA;}&#xA;&#xA;DRV_MEMORY_TransferHandlerSet(memoryHandle, appTransferHandler, (uintptr_t)NULL);&#xA;&#xA;DRV_MEMORY_AsyncEraseWrite(memoryHandle, &amp;commandHandle, &amp;myBuffer, blockStart, nBlock);&#xA;&#xA;if(DRV_MEMORY_COMMAND_HANDLE_INVALID == commandHandle)&#xA;{&#xA;    // Error handling here&#xA;}&#xA;&#xA;// Wait for erase to be completed&#xA;while(!xfer_done);&#xA;"><span class="ph token macro property">#<span class="ph token directive keyword">define</span> BUFFER_SIZE 4096</span>
-uint8_t buffer<span class="ph token punctuation">[</span>BUFFER_SIZE<span class="ph token punctuation">]</span><span class="ph token punctuation">;</span>
+the current status of the request.</p></div></article><article class="- topic/topic topic nested1" aria-labelledby="ariaid-title5" id="precondition"><h2 class="- topic/title title topictitle2" id="ariaid-title5" style=""> Precondition</h2><div class="- topic/body body"><p class="- topic/p p">The DRV_MEMORY_Open() must have been called with DRV_IO_INTENT_WRITE or DRV_IO_INTENT_READWRITE as a parameter to obtain a valid opened device handle.</p></div></article><article class="- topic/topic topic nested1" aria-labelledby="ariaid-title6" id="parameters"><h2 class="- topic/title title topictitle2" id="ariaid-title6" style=""> Parameters</h2><div class="- topic/body body"><div class="table-container"><table class="- topic/table table" data-cols="2"><caption></caption><colgroup><col/><col/></colgroup><thead class="- topic/thead thead"><tr class="- topic/row"><th class="- topic/entry entry align-left colsep-0 rowsep-0" id="parameters__entry__1">Param</th><th class="- topic/entry entry align-left colsep-0 rowsep-0" id="parameters__entry__2">Description</th></tr></thead><tbody class="- topic/tbody tbody"><tr class="- topic/row"><td class="- topic/entry entry align-left colsep-0 rowsep-0" headers="parameters__entry__1">handle</td><td class="- topic/entry entry align-left colsep-0 rowsep-0" headers="parameters__entry__2">A valid open-instance handle, returned from the driver's open function</td></tr><tr class="- topic/row"><td class="- topic/entry entry align-left colsep-0 rowsep-0" headers="parameters__entry__1">commandHandle</td><td class="- topic/entry entry align-left colsep-0 rowsep-0" headers="parameters__entry__2">Pointer to an argument that will contain the return command handle. If NULL, then command handle is not returned.</td></tr><tr class="- topic/row"><td class="- topic/entry entry align-left colsep-0 rowsep-0" headers="parameters__entry__1">sourceBuffer</td><td class="- topic/entry entry align-left colsep-0 rowsep-0" headers="parameters__entry__2">The source buffer containing data to be programmed into media device memory</td></tr><tr class="- topic/row"><td class="- topic/entry entry align-left colsep-0 rowsep-0" headers="parameters__entry__1">blockStart</td><td class="- topic/entry entry align-left colsep-0 rowsep-0" headers="parameters__entry__2">Write block start where the write should begin.</td></tr><tr class="- topic/row"><td class="- topic/entry entry align-left colsep-0 rowsep-0" headers="parameters__entry__1">nBlock</td><td class="- topic/entry entry align-left colsep-0 rowsep-0" headers="parameters__entry__2">Total number of blocks to be written.</td></tr></tbody></table></div></div></article><article class="- topic/topic topic nested1" aria-labelledby="ariaid-title7" id="returns"><h2 class="- topic/title title topictitle2" id="ariaid-title7" style=""> Returns</h2><div class="- topic/body body"><p class="- topic/p p">The command handle is returned in the commandHandle argument. It Will be DRV_MEMORY_COMMAND_HANDLE_INVALID if the request was not queued.</p></div></article><article class="- topic/topic topic nested1" aria-labelledby="ariaid-title8" id="example"><h2 class="- topic/title title topictitle2" id="ariaid-title8" style=""> Example</h2><div class="- topic/body body"><pre class="+ topic/pre pr-d/codeblock pre codeblock c"><span class="hl-directive">#define</span> <span class="hl-defines">BUFFER_SIZE</span> <span class="hl-number">4096</span>
+uint8_t buffer[BUFFER_SIZE];
 
-<span class="ph token comment">// Use DRV_MEMORY_GeometryGet () to find the write region geometry.</span>
-uint32_t blockStart <span class="ph token operator">=</span> <span class="ph token number">0x0</span><span class="ph token punctuation">;</span>
-uint32_t nBlock <span class="ph token operator">=</span> BUFFER_SIZE <span class="ph token operator">/</span> block_size<span class="ph token punctuation">;</span> <span class="ph token comment">// block_size for write geometry</span>
-DRV_MEMORY_COMMAND_HANDLE commandHandle<span class="ph token punctuation">;</span>
+<em class="hl-comment">// Use DRV_MEMORY_GeometryGet () to find the write region geometry.</em>
+uint32_t blockStart = <span class="hl-number">0x0</span>;
+uint32_t nBlock = BUFFER_SIZE / block_size; <em class="hl-comment">// block_size for write geometry</em>
+DRV_MEMORY_COMMAND_HANDLE commandHandle;
 
-<span class="ph token comment">// memoryHandle is the handle returned by the DRV_MEMORY_Open function.</span>
-<span class="ph token comment">// Client registers an event handler with driver</span>
+<em class="hl-comment">// memoryHandle is the handle returned by the DRV_MEMORY_Open function.</em>
+<em class="hl-comment">// Client registers an event handler with driver</em>
 
-<span class="ph token comment">// Event is received when the erase-write request is completed.</span>
-<span class="ph token keyword">void</span> appTransferHandler
-<span class="ph token punctuation">(</span>
-    DRV_MEMORY_EVENT event<span class="ph token punctuation">,</span>
-    DRV_MEMORY_COMMAND_HANDLE commandHandle<span class="ph token punctuation">,</span>
+<em class="hl-comment">// Event is received when the erase-write request is completed.</em>
+<strong class="hl-keyword">void</strong> appTransferHandler
+(
+    DRV_MEMORY_EVENT event,
+    DRV_MEMORY_COMMAND_HANDLE commandHandle,
     uintptr_t context
-<span class="ph token punctuation">)</span>
-<span class="ph token punctuation">{</span>
-    <span class="ph token keyword">switch</span><span class="ph token punctuation">(</span>event<span class="ph token punctuation">)</span>
-    <span class="ph token punctuation">{</span>
-        <span class="ph token keyword">case</span> DRV_MEMORY_EVENT_COMMAND_COMPLETE<span class="ph token operator">:</span>
-        <span class="ph token punctuation">{</span>
-            xfer_done <span class="ph token operator">=</span> true<span class="ph token punctuation">;</span>
-            <span class="ph token keyword">break</span><span class="ph token punctuation">;</span>
-        <span class="ph token punctuation">}</span>
+)
+{
+    <strong class="hl-keyword">switch</strong>(event)
+    {
+        <strong class="hl-keyword">case</strong> DRV_MEMORY_EVENT_COMMAND_COMPLETE:
+        {
+            xfer_done = true;
+            <strong class="hl-keyword">break</strong>;
+        }
 
-        <span class="ph token keyword">case</span> DRV_MEMORY_EVENT_COMMAND_ERROR<span class="ph token operator">:</span>
-        <span class="ph token punctuation">{</span>
-            <span class="ph token comment">// Handle Error</span>
-            <span class="ph token keyword">break</span><span class="ph token punctuation">;</span>
-        <span class="ph token punctuation">}</span>
+        <strong class="hl-keyword">case</strong> DRV_MEMORY_EVENT_COMMAND_ERROR:
+        {
+            <em class="hl-comment">// Handle Error</em>
+            <strong class="hl-keyword">break</strong>;
+        }
 
-        <span class="ph token keyword">default</span><span class="ph token operator">:</span>
-        <span class="ph token punctuation">{</span>
-            <span class="ph token keyword">break</span><span class="ph token punctuation">;</span>
-        <span class="ph token punctuation">}</span>
-    <span class="ph token punctuation">}</span>
-<span class="ph token punctuation">}</span>
+        <strong class="hl-keyword">default</strong>:
+        {
+            <strong class="hl-keyword">break</strong>;
+        }
+    }
+}
 
-<span class="ph token function">DRV_MEMORY_TransferHandlerSet</span><span class="ph token punctuation">(</span>memoryHandle<span class="ph token punctuation">,</span> appTransferHandler<span class="ph token punctuation">,</span> <span class="ph token punctuation">(</span>uintptr_t<span class="ph token punctuation">)</span><span class="ph token constant">NULL</span><span class="ph token punctuation">)</span><span class="ph token punctuation">;</span>
+DRV_MEMORY_TransferHandlerSet(memoryHandle, appTransferHandler, (uintptr_t)NULL);
 
-<span class="ph token function">DRV_MEMORY_AsyncEraseWrite</span><span class="ph token punctuation">(</span>memoryHandle<span class="ph token punctuation">,</span> <span class="ph token operator">&amp;</span>commandHandle<span class="ph token punctuation">,</span> <span class="ph token operator">&amp;</span>myBuffer<span class="ph token punctuation">,</span> blockStart<span class="ph token punctuation">,</span> nBlock<span class="ph token punctuation">)</span><span class="ph token punctuation">;</span>
+DRV_MEMORY_AsyncEraseWrite(memoryHandle, &amp;commandHandle, &amp;myBuffer, blockStart, nBlock);
 
-<span class="ph token keyword">if</span><span class="ph token punctuation">(</span>DRV_MEMORY_COMMAND_HANDLE_INVALID <span class="ph token operator">==</span> commandHandle<span class="ph token punctuation">)</span>
-<span class="ph token punctuation">{</span>
-    <span class="ph token comment">// Error handling here</span>
-<span class="ph token punctuation">}</span>
+<strong class="hl-keyword">if</strong>(DRV_MEMORY_COMMAND_HANDLE_INVALID == commandHandle)
+{
+    <em class="hl-comment">// Error handling here</em>
+}
 
-<span class="ph token comment">// Wait for erase to be completed</span>
-<span class="ph token keyword">while</span><span class="ph token punctuation">(</span><span class="ph token operator">!</span>xfer_done<span class="ph token punctuation">)</span><span class="ph token punctuation">;</span>
-</code></pre></div>
+<em class="hl-comment">// Wait for erase to be completed</em>
+<strong class="hl-keyword">while</strong>(!xfer_done);
+</pre></div></article><article class="- topic/topic topic nested1" aria-labelledby="ariaid-title9" id="remarks"><h2 class="- topic/title title topictitle2" id="ariaid-title9" style=""> Remarks</h2><div class="- topic/body body"><p class="- topic/p p">This API is supported in Both Bare-Metal and RTOS environment.</p></div></article></article></main></div>
+                        
+                        
+                        
+                        
+                        
+                        
+                    </div>
+                    
+                        <nav role="navigation" id="wh_topic_toc" aria-label="On this page" class="col-lg-2 d-none d-lg-block navbar d-print-none"> 
+                            <div id="wh_topic_toc_content">
+		                        
+	                            <div class=" wh_topic_toc "><div class="wh_topic_label">On this page</div><ul><li class="topic-item"><a href="#c" data-tocid="c"> C</a></li><li class="topic-item"><a href="#summary" data-tocid="summary"> Summary</a></li><li class="topic-item"><a href="#description" data-tocid="description"> Description</a></li><li class="topic-item"><a href="#precondition" data-tocid="precondition"> Precondition</a></li><li class="topic-item"><a href="#parameters" data-tocid="parameters"> Parameters</a></li><li class="topic-item"><a href="#returns" data-tocid="returns"> Returns</a></li><li class="topic-item"><a href="#example" data-tocid="example"> Example</a></li><li class="topic-item"><a href="#remarks" data-tocid="remarks"> Remarks</a></li></ul></div>
+	                        	
+                        	</div>
+                        </nav>
+                    
+                </div>
+            </div>
+            
+            
+            
+        </div> 
+        <footer class="navbar navbar-default wh_footer">
+  <div class=" footer-container mx-auto ">
+    <div class="footer">
+  <div class="mchp-wh-footer">
+    <div class="mchp-footer">
+      <div class="mchp-footer-tier1">
+        <div class="spacer"></div>
+        <div class="mchp-footer-container">
+          <div class="mchp-footer-links mchp-social-media-links">
+            <div class="mchp-component-items">
+              <div class="mchp-component-item">
+                <a class="cmp-image__link" href="https://www.facebook.com/pages/Microchip-Technology-Inc/20320981741" target="_blank">
+                  <img class="cmp-image__image" alt="Microchip Facebook" src="oxygen-webhelp/template/resources/images/201016-corp-facebook.png"/>
+                </a>
+              </div>
+              <div class="mchp-component-item">
+                <a class="cmp-image__link" href="https://www.linkedin.com/company/microchip-technology" target="_blank">
+                  <img class="cmp-image__image" alt="Microchip LinkedIn" src="oxygen-webhelp/template/resources/images/201016-corp-linkedin.png"/>
+                </a>
+              </div>
+              <div class="mchp-component-item">
+                <a class="cmp-image__link" href="https://twitter.com/MicrochipTech" target="_blank">
+                  <img class="cmp-image__image" alt="Microchip Twitter" src="oxygen-webhelp/template/resources/images/201016-corp-twitter.png"/>
+                </a>
+              </div>
+              <div class="mchp-component-item">
+                <a class="cmp-image__link" href="https://www.youtube.com/user/MicrochipTechnology" target="_blank">
+                  <img class="cmp-image__image" alt="Microchip YouTube" src="oxygen-webhelp/template/resources/images/201016-corp-youtube.png"/>
+                </a>
+              </div>
+              <div class="mchp-component-item">
+                <a class="cmp-image__link" href="https://www.instagram.com/microchiptechnologyinc/" target="_blank">
+                  <img class="cmp-image__image" alt="Microchip Instagram" src="oxygen-webhelp/template/resources/images/201016-corp-instagram.png"/>
+                </a>
+              </div>
+              <div class="mchp-component-item">
+                <a class="cmp-image__link" href="https://www.weibo.com/microchiptech" target="_blank">
+                  <img class="cmp-image__image" alt="Microchip Weibo" src="oxygen-webhelp/template/resources/images/201016-corp-weibo.png"/>
+                </a>
+              </div>
+              <div class="mchp-component-item">
+                <a class="cmp-image__link" href="https://www.microchip.com/en-us/about/blog" target="_blank">
+                  <img class="cmp-image__image" alt="Microchip Blog" src="oxygen-webhelp/template/resources/images/201016-corp-blog.png"/>
+                </a>
+              </div>
+            </div>
+          </div>
+          <div class="mchp-footer-links">
+            <div class="mchp-component-items">
+              <div class="mchp-component-item">
+                <div class="link">
+                  <a href="https://www.microchip.com/about-us/contact-us" class="mchp-link__link">Contact</a>
+                  <span class="mchp-link__separator">|</span>
+                </div>
+              </div>
+              <div class="mchp-component-item ">
+                <div class="link">
+                  <a href="https://www.microchip.com/en-us/about/legal-information" class="mchp-link__link">Legal</a>
+                  <span class="mchp-link__separator">|</span>
+                </div>
+              </div>
+              <div class="mchp-component-item ">
+                <div class="link">
+                  <a href="https://www.microchip.com/en-us/about/legal-information/privacy-policy" class="mchp-link__link">Privacy Policy</a>
+                  <span class="mchp-link__separator">|</span>
+                </div>
+              </div>
+              <div class="mchp-component-item ">
+                <div class="link">
+                  <a href="https://www.microchip.com/en-us/about/legal-information/microchip-cookie-statement" class="mchp-link__link">Cookies</a>
+                  <span class="mchp-link__separator">|</span>
+                </div>
+              </div>
+              <div class="mchp-component-item">
+                <div class="link">
+                  <a href="https://careers.microchip.com/" class="mchp-link__link">Careers</a>
+                  <span class="mchp-link__separator"></span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="mchp-footer-newsletter">
+            <div class="cmp-text">
+              <p>Stay on the leading edge with our blog</p>
+            </div>
+            <div class="mchp-button-wrapper">
+              <a role="button" href="https://www.microchip.com/en-us/about/blog" class="mchp-button mchp-button-regular solid">
+                <span class="mchp-button__span">MicroSolutions</span>
+              </a>
+            </div>
+          </div>
+        </div>
+        <div class="graphic">
+          <img src="oxygen-webhelp/template/resources/images/footer-graphic.png"/>
+        </div>
+      </div>
+      <div class="mchp-footer-tier2">
+        <p class="mchp-copyright">© Copyright 1998-2022 Microchip Technology Inc. All rights reserved.</p>
+      </div>
+    </div>
+  </div>
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+  <script async="true" src="https://www.googletagmanager.com/gtag/js?id=UA-2724382-19"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];  
+    function gtag(){dataLayer.push(arguments);}  
+    gtag('js', new Date());   
+    gtag('config', 'UA-2724382-19');
+  </script>
 </div>
-<div class="topic nested1" aria-labelledby="ariaid-title9" id="remarks"><h2 class="title topictitle2" id="ariaid-title9">Remarks</h2><div class="body"><p class="p">This API is supported in Both Bare-Metal and RTOS environment.</p>
-</div>
-</div>
-</body>
+  </div>
+</footer>
+        
+        <div id="go2top" class="d-print-none">
+            <span class="oxy-icon oxy-icon-up"></span>
+        </div>
+        
+        <div id="modal_img_large" class="modal">
+            <span class="close oxy-icon oxy-icon-remove"></span>
+            <div id="modal_img_container"></div>
+            <div id="caption"></div>
+        </div>
+        
+        
+        
+    </body>
 </html>

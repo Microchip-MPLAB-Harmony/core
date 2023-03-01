@@ -1,0 +1,1 @@
+define({"title":"MPLAB® Harmony Core Library ","topics":[{"title":"<ph>1<\/ph>\nMPLAB® Harmony Core Library","href":"GUID-C04D97AB-D6E0-4CF5-9A80-CA64E36B6199.html","attributes":{"data-id":"mplab-harmony-core-library"},"menu":{"hasChildren":true},"tocID":"mplab-harmony-core-library-d6800e9","next":"mplab-harmony-core-library-d6800e9"}]});

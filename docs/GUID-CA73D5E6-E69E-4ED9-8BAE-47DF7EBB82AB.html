@@ -1,445 +1,514 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE html
-  PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
-<head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-
-<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE11" /><meta name="copyright" content="(C) Copyright 2022" />
-<meta name="DC.rights.owner" content="(C) Copyright 2022" />
-<meta name="DC.type" content="topic" />
-<meta name="DC.title" content="Using The Library" />
-<meta name="DC.relation" scheme="URI" content="GUID-7D1381D7-9A05-495B-B0A8-D195FA444618.html" />
-<meta name="DC.format" content="XHTML" />
-<meta name="DC.identifier" content="using-the-library" />
-<link rel="stylesheet" type="text/css" href="stylesheets/commonltr.css" />
-<link rel="stylesheet" type="text/css" href="stylesheets/atmel.css" />
-<link rel="stylesheet" type="text/css" href="./stylesheets/common-extended.css" /><title>Using The Library</title>
-<meta name="Microsoft.Help.Id" content="GUID-EDFB1AB8-CD6B-446F-8E25-F2167287A1AF-using-the-library" />
-<meta name="Microsoft.Help.TocParent" content="GUID-EDFB1AB8-CD6B-446F-8E25-F2167287A1AF" />
-<meta name="Microsoft.Help.TocOrder" content="0" />
-<meta name="Microsoft.Help.Locale" content="en-US" />
-<meta name="Microsoft.Help.TopicLocale" content="en-US" />
-<meta name="Microsoft.Help.DisplayVersion" content="MPLAB® Harmony Core Library Reference A 11/2021" />
-<script language="javascript">
-       
-       if (window.parent.location.protocol != 'file:') {
-				document.addEventListener('click', function(e) {
-				    if (e.target) {
-               if (e.target.nodeName == "A" ) {
-                    if (!e.target.target) {
-                      e.preventDefault();
-                      e.stopPropagation();
-                              
-                      var origUrl = window.parent.location.href.substr(0, window.parent.location.href.indexOf("?"));
-                      if (origUrl.length === 0) {
-                          origUrl = window.parent.location.href;
-                      }
-                      var href= e.target.getAttribute("href");
-                      var parts = href.split("#");
-          
-                      var url = "";
-                      if (parts.length == 2 ) {
-                        if (!parts[0].length) {
-                            url = window.parent.location.search.replace('?','')
-                        } else {
-                            url = parts[0].replace('.html','');
-                        }
-                      } else {
-                        url = parts[0].replace('.html','');
-                      }
-
-                      if (parts.length == 2) {
-                          url += "#" + parts[1];
-                      }
+<!DOCTYPE html><html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-us" lang="en-us" data-whc_version="24.1">
+    <head><link rel="shortcut icon" href="oxygen-webhelp\template\resources/images/favicon.ico"/><link rel="icon" href="oxygen-webhelp\template\resources/images/favicon.ico"/><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/><meta name="viewport" content="width=device-width, initial-scale=1.0"/><meta http-equiv="X-UA-Compatible" content="IE=edge"/><meta name="description" content="The Emulated EEPROM library builds on top of NVM or EFC PLIB and provides uniform interface to read/write to the Emulated EEPROM memory space. The library provides APIs to read and write data from/to ..."/><meta name="copyright" content="(C) Copyright 2023"/><meta name="DC.rights.owner" content="(C) Copyright 2023"/><meta name="DC.type" content="topic"/><meta name="DC.relation" content="GUID-7D1381D7-9A05-495B-B0A8-D195FA444618.md"/><meta name="DC.format" content="HTML5"/><meta name="DC.identifier" content="using-the-library"/><title>1.3.1.2 Using The Library</title><!--  Generated with Oxygen version 24.1, build number 2022062014.  --><meta name="wh-path2root" content=""/><meta name="wh-toc-id" content="&lt;?xml version=&#34;1.0&#34; encoding=&#34;UTF-8&#34;?&gt;&lt;?workdir /D:\InfoShare\Data\Publish\Data\qzvtb5xcvan\work\temp?&gt;&lt;?workdir-uri file:/D:/InfoShare/Data/Publish/Data/qzvtb5xcvan/work/temp/?&gt;&lt;?path2project?&gt;&lt;?path2project-uri ./?&gt;&lt;?path2rootmap-uri ./?&gt;&lt;topic xmlns:ditaarch=&#34;http://dita.oasis-open.org/architecture/2005/&#34; xmlns:dita-ot=&#34;http://dita-ot.sourceforge.net/ns/201007/dita-ot&#34; class=&#34;- topic/topic &#34; ditaarch:DITAArchVersion=&#34;1.2&#34; domains=&#34;(topic hi-d) (topic ut-d) (topic indexing-d) (topic hazard-d) (topic abbrev-d) (topic pr-d) (topic sw-d) (topic ui-d)&#34; id=&#34;using-the-library&#34; xtrf=&#34;file:/D:/InfoShare/Data/Publish/Data/qzvtb5xcvan/work/1/en-US/GUID-CA73D5E6-E69E-4ED9-8BAE-47DF7EBB82AB.md&#34; xtrc=&#34;topic:1;182:3&#34; specializations=&#34;&#34;&gt;&lt;title class=&#34;- topic/title &#34; xtrf=&#34;file:/D:/InfoShare/Data/Publish/Data/qzvtb5xcvan/work/1/en-US/GUID-CA73D5E6-E69E-4ED9-8BAE-47DF7EBB82AB.md&#34; xtrc=&#34;title:1;182:3&#34;&gt;Using The Library&lt;/title&gt;&lt;body class=&#34;- topic/body &#34; xtrf=&#34;file:/D:/InfoShare/Data/Publish/Data/qzvtb5xcvan/work/1/en-US/GUID-CA73D5E6-E69E-4ED9-8BAE-47DF7EBB82AB.md&#34; xtrc=&#34;body:1;182:3&#34;&gt;&lt;p class=&#34;- topic/p &#34; xtrf=&#34;file:/D:/InfoShare/Data/Publish/Data/qzvtb5xcvan/work/1/en-US/GUID-CA73D5E6-E69E-4ED9-8BAE-47DF7EBB82AB.md&#34; xtrc=&#34;p:1;182:3&#34;&gt;The Emulated EEPROM library builds on top of NVM or EFC PLIB and provides uniform interface to read/write to the Emulated EEPROM memory space.&lt;/p&gt;&lt;p class=&#34;- topic/p &#34; xtrf=&#34;file:/D:/InfoShare/Data/Publish/Data/qzvtb5xcvan/work/1/en-US/GUID-CA73D5E6-E69E-4ED9-8BAE-47DF7EBB82AB.md&#34; xtrc=&#34;p:2;182:3&#34;&gt;The library provides APIs to read and write data from/to a logical page. It also provides APIs to read/write variable number of data across page boundaries.&lt;/p&gt;&lt;p class=&#34;- topic/p &#34; xtrf=&#34;file:/D:/InfoShare/Data/Publish/Data/qzvtb5xcvan/work/1/en-US/GUID-CA73D5E6-E69E-4ED9-8BAE-47DF7EBB82AB.md&#34; xtrc=&#34;p:3;182:3&#34;&gt;In addition, it also provides APIs to format (initialize) the Emulated EEPROM memory region and status API that lets the application know if the Emulated EEPROM region is formatted and valid or not.&lt;/p&gt;&lt;p class=&#34;- topic/p &#34; xtrf=&#34;file:/D:/InfoShare/Data/Publish/Data/qzvtb5xcvan/work/1/en-US/GUID-CA73D5E6-E69E-4ED9-8BAE-47DF7EBB82AB.md&#34; xtrc=&#34;p:4;182:3&#34;&gt;&lt;b class=&#34;+ topic/ph hi-d/b &#34; xtrf=&#34;file:/D:/InfoShare/Data/Publish/Data/qzvtb5xcvan/work/1/en-US/GUID-CA73D5E6-E69E-4ED9-8BAE-47DF7EBB82AB.md&#34; xtrc=&#34;b:1;182:3&#34;&gt;Example application to read and write to Emulated EEPROM&lt;/b&gt;&lt;/p&gt;&lt;codeblock class=&#34;+ topic/pre pr-d/codeblock &#34; xml:space=&#34;preserve&#34; outputclass=&#34;c&#34; xtrf=&#34;file:/D:/InfoShare/Data/Publish/Data/qzvtb5xcvan/work/1/en-US/GUID-CA73D5E6-E69E-4ED9-8BAE-47DF7EBB82AB.md&#34; xtrc=&#34;codeblock:1;182:3&#34;&gt;#define SIZEOF(s, m) ((size_t) sizeof(((s *)0)-&amp;gt;m)) #define EMU_EEPROM_READ(MEM, DEST) EMU_EEPROM_BufferRead(offsetof(EEPROM_DATA, MEM), (uint8_t*)DEST, SIZEOF(EEPROM_DATA, MEM)) #define EMU_EEPROM_WRITE(MEM, DATA) EMU_EEPROM_BufferWrite(offsetof(EEPROM_DATA, MEM), (const uint8_t*)DATA, SIZEOF(EEPROM_DATA, MEM)) APP_DATA appData; EEPROM_DATA appTestData = {0}; EEPROM_DATA appRAMCopy = {0}; void APP_BufferFill(uint8_t* buffer, uint32_t nBytes) { uint32_t i; for (i = 0; i &amp;lt; nBytes; i++) { buffer[i] = i; } } void APP_Initialize ( void ) { /* Place the App state machine in its initial state. */ appData.state = APP_STATE_INIT; } void APP_Tasks ( void ) { EMU_EEPROM_STATUS libStatus; /* Check the application's current state. */ switch ( appData.state ) { /* Application's initial state. */ case APP_STATE_INIT: libStatus = EMU_EEPROM_StatusGet(); if (libStatus == EMU_EEPROM_STATUS_OK) { appData.state = APP_STATE_WRITE_DATA; } else if ((libStatus == EMU_EEPROM_STATUS_ERR_BAD_FORMAT) || (libStatus == EMU_EEPROM_STATUS_ERR_NOT_INITIALIZED)) { /* Format EEPROM memory space */ EMU_EEPROM_FormatMemory(); appData.state = APP_STATE_LIB_STATUS_VERIFY; } else { appData.state = APP_STATE_ERROR; } break; case APP_STATE_LIB_STATUS_VERIFY: /* Make sure the EEPROM Emulator is initialized successfully after it was formatted */ libStatus = EMU_EEPROM_StatusGet(); if (libStatus == EMU_EEPROM_STATUS_OK) { appData.state = APP_STATE_WRITE_DATA; } else { appData.state = APP_STATE_ERROR; } break; case APP_STATE_WRITE_DATA: /* For demonstration purpose, write some random values to EEPROM memory region */ appTestData.var_1 = 0x0A; EMU_EEPROM_WRITE(var_1, &amp;amp;appTestData.var_1); appTestData.var_2 = 0x1234; EMU_EEPROM_WRITE(var_2, &amp;amp;appTestData.var_2); appTestData.var_3 = 0x33445566; EMU_EEPROM_WRITE(var_3, &amp;amp;appTestData.var_3); appTestData.var_7 = 0x3189AB1C; EMU_EEPROM_WRITE(var_7, &amp;amp;appTestData.var_7); appTestData.var_7 = 0x9A7BC123; EMU_EEPROM_WRITE(var_7, &amp;amp;appTestData.var_7); appTestData.var_2 = 0x1256; EMU_EEPROM_WRITE(var_2, &amp;amp;appTestData.var_2); appTestData.var_7 = 0x882B7C9A; EMU_EEPROM_WRITE(var_7, &amp;amp;appTestData.var_7); appTestData.var_2 = 0x7788; EMU_EEPROM_WRITE(var_2, &amp;amp;appTestData.var_2); APP_BufferFill(appTestData.buffer_1, sizeof (appTestData.buffer_1)); EMU_EEPROM_WRITE(buffer_1, &amp;amp;appTestData.buffer_1); appTestData.var_11 = 0x7498AFDD; EMU_EEPROM_WRITE(var_11, &amp;amp;appTestData.var_11); appTestData.var_7 = 0x1788BB8D; EMU_EEPROM_WRITE(var_7, &amp;amp;appTestData.var_7); appTestData.var_10 = 0x7744AABB; EMU_EEPROM_WRITE(var_10, &amp;amp;appTestData.var_10); appTestData.var_2 = 0x9922; EMU_EEPROM_WRITE(var_2, &amp;amp;appTestData.var_2); appTestData.var_5 = 0x59AF; EMU_EEPROM_WRITE(var_5, &amp;amp;appTestData.var_5); appTestData.var_9 = 0x99AA; EMU_EEPROM_WRITE(var_9, &amp;amp;appTestData.var_9); appTestData.var_10 = 0x88888888; EMU_EEPROM_WRITE(var_10, &amp;amp;appTestData.var_10); appTestData.var_12 = 0x5577; EMU_EEPROM_WRITE(var_12, &amp;amp;appTestData.var_12); appTestData.var_10 = 0x1AC87439; EMU_EEPROM_WRITE(var_10, &amp;amp;appTestData.var_10); appTestData.var_8 = 0x752B9ACE; EMU_EEPROM_WRITE(var_8, &amp;amp;appTestData.var_8); appTestData.var_2 = 0xA765; EMU_EEPROM_WRITE(var_2, &amp;amp;appTestData.var_2); appTestData.var_4 = 0xA7; EMU_EEPROM_WRITE(var_4, &amp;amp;appTestData.var_4); appTestData.var_9 = 0xEEF1; EMU_EEPROM_WRITE(var_9, &amp;amp;appTestData.var_9); appTestData.var_6 = 0xF497; EMU_EEPROM_WRITE(var_6, &amp;amp;appTestData.var_6); /* Commit any data that may be in EEPROM Emulator library's cache to physical memory */ EMU_EEPROM_PageBufferCommit(); appData.state = APP_STATE_READ_DATA; break; case APP_STATE_READ_DATA: /* Randomly read back the written values */ EMU_EEPROM_READ(var_2, &amp;amp;appRAMCopy.var_2); EMU_EEPROM_READ(var_3, &amp;amp;appRAMCopy.var_3); EMU_EEPROM_READ(var_7, &amp;amp;appRAMCopy.var_7); EMU_EEPROM_READ(var_9, &amp;amp;appRAMCopy.var_9); EMU_EEPROM_READ(var_10, &amp;amp;appRAMCopy.var_10); EMU_EEPROM_READ(var_12, &amp;amp;appRAMCopy.var_12); EMU_EEPROM_READ(var_1, &amp;amp;appRAMCopy.var_1); EMU_EEPROM_READ(var_6, &amp;amp;appRAMCopy.var_6); EMU_EEPROM_READ(var_8, &amp;amp;appRAMCopy.var_8); EMU_EEPROM_READ(var_11, &amp;amp;appRAMCopy.var_11); EMU_EEPROM_READ(buffer_1, &amp;amp;appRAMCopy.buffer_1); EMU_EEPROM_READ(var_4, &amp;amp;appRAMCopy.var_4); EMU_EEPROM_READ(var_5, &amp;amp;appRAMCopy.var_5); appData.state = APP_STATE_VERIFY; break; case APP_STATE_VERIFY: if (memcmp((void const*)&amp;amp;appRAMCopy, (void const*)&amp;amp;appTestData, sizeof (EEPROM_DATA)) == 0) { LED_On(); } else { LED_Off(); } appData.state = APP_STATE_IDLE; break; case APP_STATE_IDLE: break; case APP_STATE_ERROR: break; /* TODO: implement your application state machine.*/ /* The default state should never be executed. */ default: { /* TODO: Handle error in application's state machine. */ break; } } } &lt;/codeblock&gt;&lt;/body&gt;&lt;related-links class=&#34;- topic/related-links &#34;&gt;&lt;linkpool class=&#34;- topic/linkpool &#34; mapkeyref=&#34;GUID-4BA21645-85F2-46DA-ADDC-4292784EE8A4&#34; xtrc=&#34;topicref:3;3:1654&#34; xtrf=&#34;file:/D:/InfoShare/Data/Publish/Data/qzvtb5xcvan/work/1/en-US/GUID-4789C820-B661-425A-8E90-60ED79990241.ditamap&#34;&gt;&lt;link class=&#34;- topic/link &#34; format=&#34;dita&#34; href=&#34;GUID-7D1381D7-9A05-495B-B0A8-D195FA444618.md&#34; mapclass=&#34;- map/topicref &#34; role=&#34;parent&#34; scope=&#34;local&#34; type=&#34;topic&#34; xtrc=&#34;topicref:1;3:1373&#34; xtrf=&#34;file:/D:/InfoShare/Data/Publish/Data/qzvtb5xcvan/work/1/en-US/GUID-4789C820-B661-425A-8E90-60ED79990241.ditamap&#34;&gt;&lt;?ditaot usertext?&gt;&lt;linktext class=&#34;- topic/linktext &#34;&gt;&lt;?ditaot gentext?&gt;Emulated EEPROM&lt;/linktext&gt;&lt;/link&gt;&lt;/linkpool&gt;&lt;/related-links&gt;&lt;/topic&gt;"/><meta name="wh-source-relpath" content="GUID-CA73D5E6-E69E-4ED9-8BAE-47DF7EBB82AB.md"/><meta name="wh-out-relpath" content="GUID-CA73D5E6-E69E-4ED9-8BAE-47DF7EBB82AB.html"/>
+    <!-- Latest compiled and minified Bootstrap CSS -->
+    <link rel="stylesheet" type="text/css" href="./oxygen-webhelp/lib/bootstrap/css/bootstrap.min.css"/>
     
-                      window.parent.location.href = origUrl + "?" + url;
+    <link rel="stylesheet" href="./oxygen-webhelp/lib/jquery-ui/jquery-ui.min.css"/>
+    
+    <!-- Template default styles  -->
+    <link rel="stylesheet" type="text/css" href="./oxygen-webhelp/app/topic-page.css?buildId=2022062014"/>
+    
+    
+    <script src="./oxygen-webhelp/lib/jquery/jquery-3.5.1.min.js"></script>
+    
+    <script data-main="./oxygen-webhelp/app/topic-page.js" src="./oxygen-webhelp/lib/requirejs/require.js"></script>
+<link rel="stylesheet" type="text/css" href="oxygen-webhelp/template/microchip.css?buildId=2022062014"/><link rel="stylesheet" type="text/css" href="oxygen-webhelp/template/notes.css?buildId=2022062014"/>
+<script src="mchp-context-help.js"></script>
+<link href="https://fonts.googleapis.com/css?family=Open+Sans:400,600,300" rel="stylesheet" type="text/css"/>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML" async="" type="text/javascript"></script>
+</head>
 
-                      return false;
-                    }
-               }
-            }
-				});
-			}
-
-		</script><script language="javascript">
-        function cpy(id, button) {
-        
-            var element = document.getElementById(id);
-            var content = element.getAttribute("content");
-            var textArea = document.createElement("textarea");
-            
-            // Place in the top-left corner of screen regardless of scroll position.
-            textArea.style.position = 'fixed';
-            textArea.style.top = 0;
-            textArea.style.left = 0;
-            
-            // Ensure it has a small width and height. Setting to 1px / 1em
-            // doesn't work as this gives a negative w/h on some browsers.
-            textArea.style.width = '2em';
-            textArea.style.height = '2em';
-            
-            // We don't need padding, reducing the size if it does flash render.
-            textArea.style.padding = 0;
-            
-            // Clean up any borders.
-            textArea.style.border = 'none';
-            textArea.style.outline = 'none';
-            textArea.style.boxShadow = 'none';
-            
-            // Avoid flash of the white box if rendered for any reason.
-            textArea.style.background = 'transparent';
-            
-            
-            textArea.value = content;
-            
-            document.body.appendChild(textArea);
-            textArea.focus();
-            textArea.select();
-            
-            try {
-               var successful = document.execCommand('copy');
-               var msg = successful ? 'successful' : 'unsuccessful';
-               if (!button.classList.contains("copied")){
-                  button.textContent = "Copied";
-                  button.classList.add("copied");
-                  setTimeout(function(){
-                    button.textContent = "Copy";
-                    button.classList.remove("copied");
-                  },1000);
-               }
-            } catch (err) {
-              console.log('Oops, unable to copy');
-            }
-            
-            document.body.removeChild(textArea);
-        }
-      </script><script language="javascript">
-          
-          // Add the MathML namespace to html
-          var html = document.getElementsByTagName("html")[0],
-          head = document.getElementsByTagName("head")[0];
-          
-          var mathJax = document.createElement("script");
-          mathJax.src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-MML-AM_CHTML";
-          head.appendChild(mathJax);
-          
-          html.setAttribute("xmlns:m","http://www.w3.org/1998/Math/MathML");
-          
-          function inIframe() { try { return window.self !== window.top; } catch (e) { return true; } }
-          
-          if (!inIframe()) { 
-          
-          var Default = "index.html?GUID-CA73D5E6-E69E-4ED9-8BAE-47DF7EBB82AB"; 
-          
-          var displaylocation = "value" + window.location.href;
-          
-          var GUIDS = displaylocation.split('GUID');          
-          
-          if (displaylocation.indexOf('#GUID') != -1) {            
-          var First = GUIDS[1].split('.html');  
-          if (GUIDS[3]){First = GUIDS[2].split('.html');}
-          if (GUIDS[4]){First = GUIDS[3].split('.html');}
-          if (GUIDS[5]){First = GUIDS[4].split('.html');}
-          
-          var Second = GUIDS[2].split('#');   
-          if (GUIDS[3]){Second = GUIDS[3].split('#');}
-          if (GUIDS[4]){Second = GUIDS[4].split('#');}
-          if (GUIDS[5]){Second = GUIDS[5].split('#');}
-          
-          Default = "index.html?" + "GUID" + First[0] + "GUID" + Second[0];     
-          }                    
-          window.top.location = Default;
-          }       
-          
-        </script><style xml:space="">
-        
-          button.copy-code{
-            display:none;
-            padding:0.7em 1.4em;
-            margin:0 0.3em 0.3em 0;
-            border-radius:0.15em;
-            box-sizing: border-box;
-            text-decoration:none;
-            font-family:'Roboto',sans-serif;
-            text-transform:uppercase;
-            font-weight:400;
-            color:#FFFFFF;
-            background-color:#9c9c9c;
-            box-shadow:inset 0 -0.6em 0 -0.35em rgba(0,0,0,0.17);
-            text-align:center;
-            position:relative;
-            border: 0;
-            float: right;
-            border-radius: .5em;
-            cursor: pointer;
-          }
-          button.copy-code:active{
-            top:0.1em;
-          }
-          
-          pre:hover button.copy-code{
-            display: inline-block !important;
-          }
-          button.copy-code.copied {
-            cursor: default !important;
-          }
-          
-          
-          @media all and (max-width:30em){
-            button.copy-code{
-              display:block;
-              margin:0.4em auto;
-            }
-          }
+    <body id="using-the-library" class="wh_topic_page frmBody">
+        <a href="#wh_topic_body" class="sr-only sr-only-focusable">
+            Jump to main content
+        </a>
         
         
-      </style></head>
-<body id="using-the-library">
-<h1 class="title topictitle1" id="ariaid-title1">Using The Library</h1><div class="body"><p class="p">The Emulated EEPROM library builds on top of NVM or EFC PLIB and provides uniform interface to read/write to the Emulated EEPROM memory space.</p>
-<p class="p">The library provides APIs to read and write data from/to a logical page. It also provides APIs to read/write variable number of data across page boundaries.</p>
-<p class="p">In addition, it also provides APIs to format (initialize) the Emulated EEPROM memory region and status API that lets the application know if the Emulated EEPROM region is formatted and valid or not.</p>
-<p class="p"><strong class="ph b">Example application to read and write to Emulated EEPROM</strong></p>
-<pre class="pre codeblock language-c"><button title="Copy Code" class="copy-code" onclick="cpy('d65200e19', this);">Copy</button><code id="d65200e19" content="#define SIZEOF(s, m) ((size_t) sizeof(((s *)0)-&gt;m))&#xA;&#xA;#define EMU_EEPROM_READ(MEM, DEST) EMU_EEPROM_BufferRead(offsetof(EEPROM_DATA, MEM), (uint8_t*)DEST, SIZEOF(EEPROM_DATA, MEM))&#xA;&#xA;#define EMU_EEPROM_WRITE(MEM, DATA) EMU_EEPROM_BufferWrite(offsetof(EEPROM_DATA, MEM), (const uint8_t*)DATA, SIZEOF(EEPROM_DATA, MEM))&#xA;&#xA;APP_DATA appData;&#xA;&#xA;EEPROM_DATA appTestData = {0};&#xA;EEPROM_DATA appRAMCopy = {0};&#xA;&#xA;void APP_BufferFill(uint8_t* buffer, uint32_t nBytes)&#xA;{&#xA;    uint32_t i;&#xA;&#xA;    for (i = 0; i &lt; nBytes; i++)&#xA;    {&#xA;        buffer[i] = i;&#xA;    }&#xA;}&#xA;&#xA;void APP_Initialize ( void )&#xA;{&#xA;    /* Place the App state machine in its initial state. */&#xA;    appData.state = APP_STATE_INIT;&#xA;}&#xA;&#xA;void APP_Tasks ( void )&#xA;{&#xA;    EMU_EEPROM_STATUS libStatus;&#xA;&#xA;    /* Check the application's current state. */&#xA;    switch ( appData.state )&#xA;    {&#xA;        /* Application's initial state. */&#xA;        case APP_STATE_INIT:&#xA;&#xA;            libStatus = EMU_EEPROM_StatusGet();&#xA;&#xA;            if (libStatus == EMU_EEPROM_STATUS_OK)&#xA;            {&#xA;                appData.state = APP_STATE_WRITE_DATA;&#xA;            }&#xA;            else if ((libStatus == EMU_EEPROM_STATUS_ERR_BAD_FORMAT) || (libStatus == EMU_EEPROM_STATUS_ERR_NOT_INITIALIZED))&#xA;            {&#xA;                /* Format EEPROM memory space */&#xA;                EMU_EEPROM_FormatMemory();&#xA;                appData.state = APP_STATE_LIB_STATUS_VERIFY;&#xA;            }&#xA;            else&#xA;            {&#xA;                appData.state = APP_STATE_ERROR;&#xA;            }&#xA;&#xA;            break;&#xA;&#xA;        case APP_STATE_LIB_STATUS_VERIFY:&#xA;&#xA;            /* Make sure the EEPROM Emulator is initialized successfully after it was formatted */&#xA;            libStatus = EMU_EEPROM_StatusGet();&#xA;&#xA;            if (libStatus == EMU_EEPROM_STATUS_OK)&#xA;            {&#xA;                appData.state = APP_STATE_WRITE_DATA;&#xA;            }&#xA;            else&#xA;            {&#xA;                appData.state = APP_STATE_ERROR;&#xA;            }&#xA;            break;&#xA;&#xA;        case APP_STATE_WRITE_DATA:&#xA;&#xA;            /* For demonstration purpose, write some random values to EEPROM memory region */&#xA;            appTestData.var_1 = 0x0A;&#xA;&#xA;            EMU_EEPROM_WRITE(var_1, &amp;appTestData.var_1);&#xA;&#xA;            appTestData.var_2 = 0x1234;&#xA;&#xA;            EMU_EEPROM_WRITE(var_2, &amp;appTestData.var_2);&#xA;&#xA;            appTestData.var_3 = 0x33445566;&#xA;&#xA;            EMU_EEPROM_WRITE(var_3, &amp;appTestData.var_3);&#xA;&#xA;            appTestData.var_7 = 0x3189AB1C;&#xA;&#xA;            EMU_EEPROM_WRITE(var_7, &amp;appTestData.var_7);&#xA;&#xA;            appTestData.var_7 = 0x9A7BC123;&#xA;&#xA;            EMU_EEPROM_WRITE(var_7, &amp;appTestData.var_7);&#xA;&#xA;            appTestData.var_2 = 0x1256;&#xA;&#xA;            EMU_EEPROM_WRITE(var_2, &amp;appTestData.var_2);&#xA;&#xA;            appTestData.var_7 = 0x882B7C9A;&#xA;&#xA;            EMU_EEPROM_WRITE(var_7, &amp;appTestData.var_7);&#xA;&#xA;            appTestData.var_2 = 0x7788;&#xA;&#xA;            EMU_EEPROM_WRITE(var_2, &amp;appTestData.var_2);&#xA;&#xA;            APP_BufferFill(appTestData.buffer_1, sizeof (appTestData.buffer_1));&#xA;&#xA;            EMU_EEPROM_WRITE(buffer_1, &amp;appTestData.buffer_1);&#xA;&#xA;            appTestData.var_11 = 0x7498AFDD;&#xA;&#xA;            EMU_EEPROM_WRITE(var_11, &amp;appTestData.var_11);&#xA;&#xA;            appTestData.var_7 = 0x1788BB8D;&#xA;&#xA;            EMU_EEPROM_WRITE(var_7, &amp;appTestData.var_7);&#xA;&#xA;            appTestData.var_10 = 0x7744AABB;&#xA;&#xA;            EMU_EEPROM_WRITE(var_10, &amp;appTestData.var_10);&#xA;&#xA;            appTestData.var_2 = 0x9922;&#xA;&#xA;            EMU_EEPROM_WRITE(var_2, &amp;appTestData.var_2);&#xA;&#xA;            appTestData.var_5 = 0x59AF;&#xA;&#xA;            EMU_EEPROM_WRITE(var_5, &amp;appTestData.var_5);&#xA;&#xA;            appTestData.var_9 = 0x99AA;&#xA;&#xA;            EMU_EEPROM_WRITE(var_9, &amp;appTestData.var_9);&#xA;&#xA;            appTestData.var_10 = 0x88888888;&#xA;&#xA;            EMU_EEPROM_WRITE(var_10, &amp;appTestData.var_10);&#xA;&#xA;            appTestData.var_12 = 0x5577;&#xA;&#xA;            EMU_EEPROM_WRITE(var_12, &amp;appTestData.var_12);&#xA;&#xA;            appTestData.var_10 = 0x1AC87439;&#xA;&#xA;            EMU_EEPROM_WRITE(var_10, &amp;appTestData.var_10);&#xA;&#xA;            appTestData.var_8 = 0x752B9ACE;&#xA;&#xA;            EMU_EEPROM_WRITE(var_8, &amp;appTestData.var_8);&#xA;&#xA;            appTestData.var_2 = 0xA765;&#xA;&#xA;            EMU_EEPROM_WRITE(var_2, &amp;appTestData.var_2);&#xA;&#xA;            appTestData.var_4 = 0xA7;&#xA;&#xA;            EMU_EEPROM_WRITE(var_4, &amp;appTestData.var_4);&#xA;&#xA;            appTestData.var_9 = 0xEEF1;&#xA;&#xA;            EMU_EEPROM_WRITE(var_9, &amp;appTestData.var_9);&#xA;&#xA;            appTestData.var_6 = 0xF497;&#xA;&#xA;            EMU_EEPROM_WRITE(var_6, &amp;appTestData.var_6);&#xA;&#xA;            /* Commit any data that may be in EEPROM Emulator library's cache to physical memory */&#xA;            EMU_EEPROM_PageBufferCommit();&#xA;&#xA;            appData.state = APP_STATE_READ_DATA;&#xA;&#xA;            break;&#xA;&#xA;        case APP_STATE_READ_DATA:&#xA;&#xA;            /* Randomly read back the written values */&#xA;            EMU_EEPROM_READ(var_2, &amp;appRAMCopy.var_2);&#xA;&#xA;            EMU_EEPROM_READ(var_3, &amp;appRAMCopy.var_3);&#xA;&#xA;            EMU_EEPROM_READ(var_7, &amp;appRAMCopy.var_7);&#xA;&#xA;            EMU_EEPROM_READ(var_9, &amp;appRAMCopy.var_9);&#xA;&#xA;            EMU_EEPROM_READ(var_10, &amp;appRAMCopy.var_10);&#xA;&#xA;            EMU_EEPROM_READ(var_12, &amp;appRAMCopy.var_12);&#xA;&#xA;            EMU_EEPROM_READ(var_1, &amp;appRAMCopy.var_1);&#xA;&#xA;            EMU_EEPROM_READ(var_6, &amp;appRAMCopy.var_6);&#xA;&#xA;            EMU_EEPROM_READ(var_8, &amp;appRAMCopy.var_8);&#xA;&#xA;            EMU_EEPROM_READ(var_11, &amp;appRAMCopy.var_11);&#xA;&#xA;            EMU_EEPROM_READ(buffer_1, &amp;appRAMCopy.buffer_1);&#xA;&#xA;            EMU_EEPROM_READ(var_4, &amp;appRAMCopy.var_4);&#xA;&#xA;            EMU_EEPROM_READ(var_5, &amp;appRAMCopy.var_5);&#xA;&#xA;            appData.state = APP_STATE_VERIFY;&#xA;&#xA;            break;&#xA;&#xA;        case APP_STATE_VERIFY:&#xA;            if (memcmp((void const*)&amp;appRAMCopy, (void const*)&amp;appTestData, sizeof (EEPROM_DATA)) == 0)&#xA;            {&#xA;                LED_On();&#xA;            }&#xA;            else&#xA;            {&#xA;                LED_Off();&#xA;            }&#xA;&#xA;            appData.state = APP_STATE_IDLE;&#xA;            break;&#xA;&#xA;        case APP_STATE_IDLE:&#xA;            break;&#xA;&#xA;        case APP_STATE_ERROR:&#xA;            break;&#xA;&#xA;        /* TODO: implement your application state machine.*/&#xA;&#xA;&#xA;        /* The default state should never be executed. */&#xA;        default:&#xA;        {&#xA;            /* TODO: Handle error in application's state machine. */&#xA;            break;&#xA;        }&#xA;    }&#xA;}&#xA;&#xA;"><span class="ph token macro property">#<span class="ph token directive keyword">define</span> SIZEOF(s, m) ((size_t) sizeof(((s *)0)-&gt;m))</span>
-
-<span class="ph token macro property">#<span class="ph token directive keyword">define</span> EMU_EEPROM_READ(MEM, DEST) EMU_EEPROM_BufferRead(offsetof(EEPROM_DATA, MEM), (uint8_t*)DEST, SIZEOF(EEPROM_DATA, MEM))</span>
-
-<span class="ph token macro property">#<span class="ph token directive keyword">define</span> EMU_EEPROM_WRITE(MEM, DATA) EMU_EEPROM_BufferWrite(offsetof(EEPROM_DATA, MEM), (const uint8_t*)DATA, SIZEOF(EEPROM_DATA, MEM))</span>
-
-APP_DATA appData<span class="ph token punctuation">;</span>
-
-EEPROM_DATA appTestData <span class="ph token operator">=</span> <span class="ph token punctuation">{</span><span class="ph token number">0</span><span class="ph token punctuation">}</span><span class="ph token punctuation">;</span>
-EEPROM_DATA appRAMCopy <span class="ph token operator">=</span> <span class="ph token punctuation">{</span><span class="ph token number">0</span><span class="ph token punctuation">}</span><span class="ph token punctuation">;</span>
-
-<span class="ph token keyword">void</span> <span class="ph token function">APP_BufferFill</span><span class="ph token punctuation">(</span>uint8_t<span class="ph token operator">*</span> buffer<span class="ph token punctuation">,</span> uint32_t nBytes<span class="ph token punctuation">)</span>
-<span class="ph token punctuation">{</span>
-    uint32_t i<span class="ph token punctuation">;</span>
-
-    <span class="ph token keyword">for</span> <span class="ph token punctuation">(</span>i <span class="ph token operator">=</span> <span class="ph token number">0</span><span class="ph token punctuation">;</span> i <span class="ph token operator">&lt;</span> nBytes<span class="ph token punctuation">;</span> i<span class="ph token operator">++</span><span class="ph token punctuation">)</span>
-    <span class="ph token punctuation">{</span>
-        buffer<span class="ph token punctuation">[</span>i<span class="ph token punctuation">]</span> <span class="ph token operator">=</span> i<span class="ph token punctuation">;</span>
-    <span class="ph token punctuation">}</span>
-<span class="ph token punctuation">}</span>
-
-<span class="ph token keyword">void</span> APP_Initialize <span class="ph token punctuation">(</span> <span class="ph token keyword">void</span> <span class="ph token punctuation">)</span>
-<span class="ph token punctuation">{</span>
-    <span class="ph token comment">/* Place the App state machine in its initial state. */</span>
-    appData<span class="ph token punctuation">.</span>state <span class="ph token operator">=</span> APP_STATE_INIT<span class="ph token punctuation">;</span>
-<span class="ph token punctuation">}</span>
-
-<span class="ph token keyword">void</span> APP_Tasks <span class="ph token punctuation">(</span> <span class="ph token keyword">void</span> <span class="ph token punctuation">)</span>
-<span class="ph token punctuation">{</span>
-    EMU_EEPROM_STATUS libStatus<span class="ph token punctuation">;</span>
-
-    <span class="ph token comment">/* Check the application's current state. */</span>
-    <span class="ph token keyword">switch</span> <span class="ph token punctuation">(</span> appData<span class="ph token punctuation">.</span>state <span class="ph token punctuation">)</span>
-    <span class="ph token punctuation">{</span>
-        <span class="ph token comment">/* Application's initial state. */</span>
-        <span class="ph token keyword">case</span> APP_STATE_INIT<span class="ph token operator">:</span>
-
-            libStatus <span class="ph token operator">=</span> <span class="ph token function">EMU_EEPROM_StatusGet</span><span class="ph token punctuation">(</span><span class="ph token punctuation">)</span><span class="ph token punctuation">;</span>
-
-            <span class="ph token keyword">if</span> <span class="ph token punctuation">(</span>libStatus <span class="ph token operator">==</span> EMU_EEPROM_STATUS_OK<span class="ph token punctuation">)</span>
-            <span class="ph token punctuation">{</span>
-                appData<span class="ph token punctuation">.</span>state <span class="ph token operator">=</span> APP_STATE_WRITE_DATA<span class="ph token punctuation">;</span>
-            <span class="ph token punctuation">}</span>
-            <span class="ph token keyword">else</span> <span class="ph token keyword">if</span> <span class="ph token punctuation">(</span><span class="ph token punctuation">(</span>libStatus <span class="ph token operator">==</span> EMU_EEPROM_STATUS_ERR_BAD_FORMAT<span class="ph token punctuation">)</span> <span class="ph token operator">||</span> <span class="ph token punctuation">(</span>libStatus <span class="ph token operator">==</span> EMU_EEPROM_STATUS_ERR_NOT_INITIALIZED<span class="ph token punctuation">)</span><span class="ph token punctuation">)</span>
-            <span class="ph token punctuation">{</span>
-                <span class="ph token comment">/* Format EEPROM memory space */</span>
-                <span class="ph token function">EMU_EEPROM_FormatMemory</span><span class="ph token punctuation">(</span><span class="ph token punctuation">)</span><span class="ph token punctuation">;</span>
-                appData<span class="ph token punctuation">.</span>state <span class="ph token operator">=</span> APP_STATE_LIB_STATUS_VERIFY<span class="ph token punctuation">;</span>
-            <span class="ph token punctuation">}</span>
-            <span class="ph token keyword">else</span>
-            <span class="ph token punctuation">{</span>
-                appData<span class="ph token punctuation">.</span>state <span class="ph token operator">=</span> APP_STATE_ERROR<span class="ph token punctuation">;</span>
-            <span class="ph token punctuation">}</span>
-
-            <span class="ph token keyword">break</span><span class="ph token punctuation">;</span>
-
-        <span class="ph token keyword">case</span> APP_STATE_LIB_STATUS_VERIFY<span class="ph token operator">:</span>
-
-            <span class="ph token comment">/* Make sure the EEPROM Emulator is initialized successfully after it was formatted */</span>
-            libStatus <span class="ph token operator">=</span> <span class="ph token function">EMU_EEPROM_StatusGet</span><span class="ph token punctuation">(</span><span class="ph token punctuation">)</span><span class="ph token punctuation">;</span>
-
-            <span class="ph token keyword">if</span> <span class="ph token punctuation">(</span>libStatus <span class="ph token operator">==</span> EMU_EEPROM_STATUS_OK<span class="ph token punctuation">)</span>
-            <span class="ph token punctuation">{</span>
-                appData<span class="ph token punctuation">.</span>state <span class="ph token operator">=</span> APP_STATE_WRITE_DATA<span class="ph token punctuation">;</span>
-            <span class="ph token punctuation">}</span>
-            <span class="ph token keyword">else</span>
-            <span class="ph token punctuation">{</span>
-                appData<span class="ph token punctuation">.</span>state <span class="ph token operator">=</span> APP_STATE_ERROR<span class="ph token punctuation">;</span>
-            <span class="ph token punctuation">}</span>
-            <span class="ph token keyword">break</span><span class="ph token punctuation">;</span>
-
-        <span class="ph token keyword">case</span> APP_STATE_WRITE_DATA<span class="ph token operator">:</span>
-
-            <span class="ph token comment">/* For demonstration purpose, write some random values to EEPROM memory region */</span>
-            appTestData<span class="ph token punctuation">.</span>var_1 <span class="ph token operator">=</span> <span class="ph token number">0x0A</span><span class="ph token punctuation">;</span>
-
-            <span class="ph token function">EMU_EEPROM_WRITE</span><span class="ph token punctuation">(</span>var_1<span class="ph token punctuation">,</span> <span class="ph token operator">&amp;</span>appTestData<span class="ph token punctuation">.</span>var_1<span class="ph token punctuation">)</span><span class="ph token punctuation">;</span>
-
-            appTestData<span class="ph token punctuation">.</span>var_2 <span class="ph token operator">=</span> <span class="ph token number">0x1234</span><span class="ph token punctuation">;</span>
-
-            <span class="ph token function">EMU_EEPROM_WRITE</span><span class="ph token punctuation">(</span>var_2<span class="ph token punctuation">,</span> <span class="ph token operator">&amp;</span>appTestData<span class="ph token punctuation">.</span>var_2<span class="ph token punctuation">)</span><span class="ph token punctuation">;</span>
-
-            appTestData<span class="ph token punctuation">.</span>var_3 <span class="ph token operator">=</span> <span class="ph token number">0x33445566</span><span class="ph token punctuation">;</span>
-
-            <span class="ph token function">EMU_EEPROM_WRITE</span><span class="ph token punctuation">(</span>var_3<span class="ph token punctuation">,</span> <span class="ph token operator">&amp;</span>appTestData<span class="ph token punctuation">.</span>var_3<span class="ph token punctuation">)</span><span class="ph token punctuation">;</span>
-
-            appTestData<span class="ph token punctuation">.</span>var_7 <span class="ph token operator">=</span> <span class="ph token number">0x3189AB1C</span><span class="ph token punctuation">;</span>
-
-            <span class="ph token function">EMU_EEPROM_WRITE</span><span class="ph token punctuation">(</span>var_7<span class="ph token punctuation">,</span> <span class="ph token operator">&amp;</span>appTestData<span class="ph token punctuation">.</span>var_7<span class="ph token punctuation">)</span><span class="ph token punctuation">;</span>
-
-            appTestData<span class="ph token punctuation">.</span>var_7 <span class="ph token operator">=</span> <span class="ph token number">0x9A7BC123</span><span class="ph token punctuation">;</span>
-
-            <span class="ph token function">EMU_EEPROM_WRITE</span><span class="ph token punctuation">(</span>var_7<span class="ph token punctuation">,</span> <span class="ph token operator">&amp;</span>appTestData<span class="ph token punctuation">.</span>var_7<span class="ph token punctuation">)</span><span class="ph token punctuation">;</span>
-
-            appTestData<span class="ph token punctuation">.</span>var_2 <span class="ph token operator">=</span> <span class="ph token number">0x1256</span><span class="ph token punctuation">;</span>
-
-            <span class="ph token function">EMU_EEPROM_WRITE</span><span class="ph token punctuation">(</span>var_2<span class="ph token punctuation">,</span> <span class="ph token operator">&amp;</span>appTestData<span class="ph token punctuation">.</span>var_2<span class="ph token punctuation">)</span><span class="ph token punctuation">;</span>
-
-            appTestData<span class="ph token punctuation">.</span>var_7 <span class="ph token operator">=</span> <span class="ph token number">0x882B7C9A</span><span class="ph token punctuation">;</span>
-
-            <span class="ph token function">EMU_EEPROM_WRITE</span><span class="ph token punctuation">(</span>var_7<span class="ph token punctuation">,</span> <span class="ph token operator">&amp;</span>appTestData<span class="ph token punctuation">.</span>var_7<span class="ph token punctuation">)</span><span class="ph token punctuation">;</span>
-
-            appTestData<span class="ph token punctuation">.</span>var_2 <span class="ph token operator">=</span> <span class="ph token number">0x7788</span><span class="ph token punctuation">;</span>
-
-            <span class="ph token function">EMU_EEPROM_WRITE</span><span class="ph token punctuation">(</span>var_2<span class="ph token punctuation">,</span> <span class="ph token operator">&amp;</span>appTestData<span class="ph token punctuation">.</span>var_2<span class="ph token punctuation">)</span><span class="ph token punctuation">;</span>
-
-            <span class="ph token function">APP_BufferFill</span><span class="ph token punctuation">(</span>appTestData<span class="ph token punctuation">.</span>buffer_1<span class="ph token punctuation">,</span> <span class="ph token keyword">sizeof</span> <span class="ph token punctuation">(</span>appTestData<span class="ph token punctuation">.</span>buffer_1<span class="ph token punctuation">)</span><span class="ph token punctuation">)</span><span class="ph token punctuation">;</span>
-
-            <span class="ph token function">EMU_EEPROM_WRITE</span><span class="ph token punctuation">(</span>buffer_1<span class="ph token punctuation">,</span> <span class="ph token operator">&amp;</span>appTestData<span class="ph token punctuation">.</span>buffer_1<span class="ph token punctuation">)</span><span class="ph token punctuation">;</span>
-
-            appTestData<span class="ph token punctuation">.</span>var_11 <span class="ph token operator">=</span> <span class="ph token number">0x7498AFDD</span><span class="ph token punctuation">;</span>
-
-            <span class="ph token function">EMU_EEPROM_WRITE</span><span class="ph token punctuation">(</span>var_11<span class="ph token punctuation">,</span> <span class="ph token operator">&amp;</span>appTestData<span class="ph token punctuation">.</span>var_11<span class="ph token punctuation">)</span><span class="ph token punctuation">;</span>
-
-            appTestData<span class="ph token punctuation">.</span>var_7 <span class="ph token operator">=</span> <span class="ph token number">0x1788BB8D</span><span class="ph token punctuation">;</span>
-
-            <span class="ph token function">EMU_EEPROM_WRITE</span><span class="ph token punctuation">(</span>var_7<span class="ph token punctuation">,</span> <span class="ph token operator">&amp;</span>appTestData<span class="ph token punctuation">.</span>var_7<span class="ph token punctuation">)</span><span class="ph token punctuation">;</span>
-
-            appTestData<span class="ph token punctuation">.</span>var_10 <span class="ph token operator">=</span> <span class="ph token number">0x7744AABB</span><span class="ph token punctuation">;</span>
-
-            <span class="ph token function">EMU_EEPROM_WRITE</span><span class="ph token punctuation">(</span>var_10<span class="ph token punctuation">,</span> <span class="ph token operator">&amp;</span>appTestData<span class="ph token punctuation">.</span>var_10<span class="ph token punctuation">)</span><span class="ph token punctuation">;</span>
-
-            appTestData<span class="ph token punctuation">.</span>var_2 <span class="ph token operator">=</span> <span class="ph token number">0x9922</span><span class="ph token punctuation">;</span>
-
-            <span class="ph token function">EMU_EEPROM_WRITE</span><span class="ph token punctuation">(</span>var_2<span class="ph token punctuation">,</span> <span class="ph token operator">&amp;</span>appTestData<span class="ph token punctuation">.</span>var_2<span class="ph token punctuation">)</span><span class="ph token punctuation">;</span>
-
-            appTestData<span class="ph token punctuation">.</span>var_5 <span class="ph token operator">=</span> <span class="ph token number">0x59AF</span><span class="ph token punctuation">;</span>
-
-            <span class="ph token function">EMU_EEPROM_WRITE</span><span class="ph token punctuation">(</span>var_5<span class="ph token punctuation">,</span> <span class="ph token operator">&amp;</span>appTestData<span class="ph token punctuation">.</span>var_5<span class="ph token punctuation">)</span><span class="ph token punctuation">;</span>
-
-            appTestData<span class="ph token punctuation">.</span>var_9 <span class="ph token operator">=</span> <span class="ph token number">0x99AA</span><span class="ph token punctuation">;</span>
-
-            <span class="ph token function">EMU_EEPROM_WRITE</span><span class="ph token punctuation">(</span>var_9<span class="ph token punctuation">,</span> <span class="ph token operator">&amp;</span>appTestData<span class="ph token punctuation">.</span>var_9<span class="ph token punctuation">)</span><span class="ph token punctuation">;</span>
-
-            appTestData<span class="ph token punctuation">.</span>var_10 <span class="ph token operator">=</span> <span class="ph token number">0x88888888</span><span class="ph token punctuation">;</span>
-
-            <span class="ph token function">EMU_EEPROM_WRITE</span><span class="ph token punctuation">(</span>var_10<span class="ph token punctuation">,</span> <span class="ph token operator">&amp;</span>appTestData<span class="ph token punctuation">.</span>var_10<span class="ph token punctuation">)</span><span class="ph token punctuation">;</span>
-
-            appTestData<span class="ph token punctuation">.</span>var_12 <span class="ph token operator">=</span> <span class="ph token number">0x5577</span><span class="ph token punctuation">;</span>
-
-            <span class="ph token function">EMU_EEPROM_WRITE</span><span class="ph token punctuation">(</span>var_12<span class="ph token punctuation">,</span> <span class="ph token operator">&amp;</span>appTestData<span class="ph token punctuation">.</span>var_12<span class="ph token punctuation">)</span><span class="ph token punctuation">;</span>
-
-            appTestData<span class="ph token punctuation">.</span>var_10 <span class="ph token operator">=</span> <span class="ph token number">0x1AC87439</span><span class="ph token punctuation">;</span>
-
-            <span class="ph token function">EMU_EEPROM_WRITE</span><span class="ph token punctuation">(</span>var_10<span class="ph token punctuation">,</span> <span class="ph token operator">&amp;</span>appTestData<span class="ph token punctuation">.</span>var_10<span class="ph token punctuation">)</span><span class="ph token punctuation">;</span>
-
-            appTestData<span class="ph token punctuation">.</span>var_8 <span class="ph token operator">=</span> <span class="ph token number">0x752B9ACE</span><span class="ph token punctuation">;</span>
-
-            <span class="ph token function">EMU_EEPROM_WRITE</span><span class="ph token punctuation">(</span>var_8<span class="ph token punctuation">,</span> <span class="ph token operator">&amp;</span>appTestData<span class="ph token punctuation">.</span>var_8<span class="ph token punctuation">)</span><span class="ph token punctuation">;</span>
-
-            appTestData<span class="ph token punctuation">.</span>var_2 <span class="ph token operator">=</span> <span class="ph token number">0xA765</span><span class="ph token punctuation">;</span>
-
-            <span class="ph token function">EMU_EEPROM_WRITE</span><span class="ph token punctuation">(</span>var_2<span class="ph token punctuation">,</span> <span class="ph token operator">&amp;</span>appTestData<span class="ph token punctuation">.</span>var_2<span class="ph token punctuation">)</span><span class="ph token punctuation">;</span>
-
-            appTestData<span class="ph token punctuation">.</span>var_4 <span class="ph token operator">=</span> <span class="ph token number">0xA7</span><span class="ph token punctuation">;</span>
-
-            <span class="ph token function">EMU_EEPROM_WRITE</span><span class="ph token punctuation">(</span>var_4<span class="ph token punctuation">,</span> <span class="ph token operator">&amp;</span>appTestData<span class="ph token punctuation">.</span>var_4<span class="ph token punctuation">)</span><span class="ph token punctuation">;</span>
-
-            appTestData<span class="ph token punctuation">.</span>var_9 <span class="ph token operator">=</span> <span class="ph token number">0xEEF1</span><span class="ph token punctuation">;</span>
-
-            <span class="ph token function">EMU_EEPROM_WRITE</span><span class="ph token punctuation">(</span>var_9<span class="ph token punctuation">,</span> <span class="ph token operator">&amp;</span>appTestData<span class="ph token punctuation">.</span>var_9<span class="ph token punctuation">)</span><span class="ph token punctuation">;</span>
-
-            appTestData<span class="ph token punctuation">.</span>var_6 <span class="ph token operator">=</span> <span class="ph token number">0xF497</span><span class="ph token punctuation">;</span>
-
-            <span class="ph token function">EMU_EEPROM_WRITE</span><span class="ph token punctuation">(</span>var_6<span class="ph token punctuation">,</span> <span class="ph token operator">&amp;</span>appTestData<span class="ph token punctuation">.</span>var_6<span class="ph token punctuation">)</span><span class="ph token punctuation">;</span>
-
-            <span class="ph token comment">/* Commit any data that may be in EEPROM Emulator library's cache to physical memory */</span>
-            <span class="ph token function">EMU_EEPROM_PageBufferCommit</span><span class="ph token punctuation">(</span><span class="ph token punctuation">)</span><span class="ph token punctuation">;</span>
-
-            appData<span class="ph token punctuation">.</span>state <span class="ph token operator">=</span> APP_STATE_READ_DATA<span class="ph token punctuation">;</span>
-
-            <span class="ph token keyword">break</span><span class="ph token punctuation">;</span>
-
-        <span class="ph token keyword">case</span> APP_STATE_READ_DATA<span class="ph token operator">:</span>
-
-            <span class="ph token comment">/* Randomly read back the written values */</span>
-            <span class="ph token function">EMU_EEPROM_READ</span><span class="ph token punctuation">(</span>var_2<span class="ph token punctuation">,</span> <span class="ph token operator">&amp;</span>appRAMCopy<span class="ph token punctuation">.</span>var_2<span class="ph token punctuation">)</span><span class="ph token punctuation">;</span>
-
-            <span class="ph token function">EMU_EEPROM_READ</span><span class="ph token punctuation">(</span>var_3<span class="ph token punctuation">,</span> <span class="ph token operator">&amp;</span>appRAMCopy<span class="ph token punctuation">.</span>var_3<span class="ph token punctuation">)</span><span class="ph token punctuation">;</span>
-
-            <span class="ph token function">EMU_EEPROM_READ</span><span class="ph token punctuation">(</span>var_7<span class="ph token punctuation">,</span> <span class="ph token operator">&amp;</span>appRAMCopy<span class="ph token punctuation">.</span>var_7<span class="ph token punctuation">)</span><span class="ph token punctuation">;</span>
-
-            <span class="ph token function">EMU_EEPROM_READ</span><span class="ph token punctuation">(</span>var_9<span class="ph token punctuation">,</span> <span class="ph token operator">&amp;</span>appRAMCopy<span class="ph token punctuation">.</span>var_9<span class="ph token punctuation">)</span><span class="ph token punctuation">;</span>
-
-            <span class="ph token function">EMU_EEPROM_READ</span><span class="ph token punctuation">(</span>var_10<span class="ph token punctuation">,</span> <span class="ph token operator">&amp;</span>appRAMCopy<span class="ph token punctuation">.</span>var_10<span class="ph token punctuation">)</span><span class="ph token punctuation">;</span>
-
-            <span class="ph token function">EMU_EEPROM_READ</span><span class="ph token punctuation">(</span>var_12<span class="ph token punctuation">,</span> <span class="ph token operator">&amp;</span>appRAMCopy<span class="ph token punctuation">.</span>var_12<span class="ph token punctuation">)</span><span class="ph token punctuation">;</span>
-
-            <span class="ph token function">EMU_EEPROM_READ</span><span class="ph token punctuation">(</span>var_1<span class="ph token punctuation">,</span> <span class="ph token operator">&amp;</span>appRAMCopy<span class="ph token punctuation">.</span>var_1<span class="ph token punctuation">)</span><span class="ph token punctuation">;</span>
-
-            <span class="ph token function">EMU_EEPROM_READ</span><span class="ph token punctuation">(</span>var_6<span class="ph token punctuation">,</span> <span class="ph token operator">&amp;</span>appRAMCopy<span class="ph token punctuation">.</span>var_6<span class="ph token punctuation">)</span><span class="ph token punctuation">;</span>
-
-            <span class="ph token function">EMU_EEPROM_READ</span><span class="ph token punctuation">(</span>var_8<span class="ph token punctuation">,</span> <span class="ph token operator">&amp;</span>appRAMCopy<span class="ph token punctuation">.</span>var_8<span class="ph token punctuation">)</span><span class="ph token punctuation">;</span>
-
-            <span class="ph token function">EMU_EEPROM_READ</span><span class="ph token punctuation">(</span>var_11<span class="ph token punctuation">,</span> <span class="ph token operator">&amp;</span>appRAMCopy<span class="ph token punctuation">.</span>var_11<span class="ph token punctuation">)</span><span class="ph token punctuation">;</span>
-
-            <span class="ph token function">EMU_EEPROM_READ</span><span class="ph token punctuation">(</span>buffer_1<span class="ph token punctuation">,</span> <span class="ph token operator">&amp;</span>appRAMCopy<span class="ph token punctuation">.</span>buffer_1<span class="ph token punctuation">)</span><span class="ph token punctuation">;</span>
-
-            <span class="ph token function">EMU_EEPROM_READ</span><span class="ph token punctuation">(</span>var_4<span class="ph token punctuation">,</span> <span class="ph token operator">&amp;</span>appRAMCopy<span class="ph token punctuation">.</span>var_4<span class="ph token punctuation">)</span><span class="ph token punctuation">;</span>
-
-            <span class="ph token function">EMU_EEPROM_READ</span><span class="ph token punctuation">(</span>var_5<span class="ph token punctuation">,</span> <span class="ph token operator">&amp;</span>appRAMCopy<span class="ph token punctuation">.</span>var_5<span class="ph token punctuation">)</span><span class="ph token punctuation">;</span>
-
-            appData<span class="ph token punctuation">.</span>state <span class="ph token operator">=</span> APP_STATE_VERIFY<span class="ph token punctuation">;</span>
-
-            <span class="ph token keyword">break</span><span class="ph token punctuation">;</span>
-
-        <span class="ph token keyword">case</span> APP_STATE_VERIFY<span class="ph token operator">:</span>
-            <span class="ph token keyword">if</span> <span class="ph token punctuation">(</span><span class="ph token function">memcmp</span><span class="ph token punctuation">(</span><span class="ph token punctuation">(</span><span class="ph token keyword">void</span> <span class="ph token keyword">const</span><span class="ph token operator">*</span><span class="ph token punctuation">)</span><span class="ph token operator">&amp;</span>appRAMCopy<span class="ph token punctuation">,</span> <span class="ph token punctuation">(</span><span class="ph token keyword">void</span> <span class="ph token keyword">const</span><span class="ph token operator">*</span><span class="ph token punctuation">)</span><span class="ph token operator">&amp;</span>appTestData<span class="ph token punctuation">,</span> <span class="ph token keyword">sizeof</span> <span class="ph token punctuation">(</span>EEPROM_DATA<span class="ph token punctuation">)</span><span class="ph token punctuation">)</span> <span class="ph token operator">==</span> <span class="ph token number">0</span><span class="ph token punctuation">)</span>
-            <span class="ph token punctuation">{</span>
-                <span class="ph token function">LED_On</span><span class="ph token punctuation">(</span><span class="ph token punctuation">)</span><span class="ph token punctuation">;</span>
-            <span class="ph token punctuation">}</span>
-            <span class="ph token keyword">else</span>
-            <span class="ph token punctuation">{</span>
-                <span class="ph token function">LED_Off</span><span class="ph token punctuation">(</span><span class="ph token punctuation">)</span><span class="ph token punctuation">;</span>
-            <span class="ph token punctuation">}</span>
-
-            appData<span class="ph token punctuation">.</span>state <span class="ph token operator">=</span> APP_STATE_IDLE<span class="ph token punctuation">;</span>
-            <span class="ph token keyword">break</span><span class="ph token punctuation">;</span>
-
-        <span class="ph token keyword">case</span> APP_STATE_IDLE<span class="ph token operator">:</span>
-            <span class="ph token keyword">break</span><span class="ph token punctuation">;</span>
-
-        <span class="ph token keyword">case</span> APP_STATE_ERROR<span class="ph token operator">:</span>
-            <span class="ph token keyword">break</span><span class="ph token punctuation">;</span>
-
-        <span class="ph token comment">/* TODO: implement your application state machine.*/</span>
-
-
-        <span class="ph token comment">/* The default state should never be executed. */</span>
-        <span class="ph token keyword">default</span><span class="ph token operator">:</span>
-        <span class="ph token punctuation">{</span>
-            <span class="ph token comment">/* TODO: Handle error in application's state machine. */</span>
-            <span class="ph token keyword">break</span><span class="ph token punctuation">;</span>
-        <span class="ph token punctuation">}</span>
-    <span class="ph token punctuation">}</span>
-<span class="ph token punctuation">}</span>
-
-</code></pre></div>
-<div class="related-links">
-<div class="familylinks">
-<div class="parentlink"><strong>Parent topic:</strong> <a class="link" href="GUID-7D1381D7-9A05-495B-B0A8-D195FA444618.html">Emulated EEPROM</a></div>
+        
+        
+        <header class="navbar navbar-default wh_header">
+    <div class="container-fluid">
+        <div class="wh_header_flex_container navbar-nav navbar-expand-md navbar-dark">
+            <div class="wh_logo_and_publication_title_container">
+                <div class="wh_logo_and_publication_title">
+                    
+                    <a href="index.html" class=" wh_logo d-none d-sm-block "><img src="oxygen-webhelp\template\resources/images/microchip.png" alt="MPLAB® Harmony Core Library "/></a>
+                    <div class=" wh_publication_title "><a href="index.html">MPLAB® Harmony Core Library </a></div>
+                    
+                </div>
+                
+                
+            </div>
+
+            <div class="wh_top_menu_and_indexterms_link collapse navbar-collapse" id="wh_top_menu_and_indexterms_link">
+                
+                
+                
+                
+            </div>
+        </div>
+    </div>
+</header>
+        
+        
+         
+        
+        <div class=" wh_search_input navbar-form wh_topic_page_search search " role="form">
+            
+            
+            
+            <form id="searchForm" method="get" role="search" action="search.html"><div><input type="search" placeholder="Search " class="wh_search_textfield" id="textToSearch" name="searchQuery" aria-label="Search query" required="required"/><button type="submit" class="wh_search_button" aria-label="Search"><span class="search_input_text">Search</span></button></div></form>
+            
+            <div class="mchp-color-stripe-grid-container">
+  <div class="mchp-main-bar mchp-orange-bar"></div>
+  <div class="mchp-main-bar mchp-blue-bar"></div>
+  <div class="mchp-main-bar mchp-green-bar"></div>
 </div>
-</div></body>
+            
+        </div>
+        
+        <div class="container-fluid" id="wh_topic_container">
+            <div class="row">
+
+                <nav class="wh_tools d-print-none navbar-expand-md" aria-label="Tools">
+                    
+                    <div data-tooltip-position="bottom" class=" wh_breadcrumb "><ol class="d-print-none"><li><span class="home"><a href="index.html"><span>Home</span></a></span></li><li><div class="topicref" data-id="mplab-harmony-core-library"><div class="title"><a href="GUID-C04D97AB-D6E0-4CF5-9A80-CA64E36B6199.html"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">1</ph>
+MPLAB® Harmony Core Library</a></div></div></li><li><div class="topicref" data-id="software-libraries"><div class="title"><a href="GUID-7249D18B-E049-45D9-96DD-B6329375E344.html"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">1.3</ph>
+Software Libraries</a></div></div></li><li><div class="topicref" data-id="emulated-eeprom"><div class="title"><a href="GUID-7D1381D7-9A05-495B-B0A8-D195FA444618.html"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">1.3.1</ph>
+Emulated EEPROM</a></div></div></li><li class="active"><div class="topicref" data-id="using-the-library"><div class="title"><a href="GUID-CA73D5E6-E69E-4ED9-8BAE-47DF7EBB82AB.html"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">1.3.1.2</ph>
+Using The Library</a></div></div></li></ol></div>
+                    
+                    
+                    
+                    <div class="wh_right_tools">
+                        <button class="wh_hide_highlight" aria-label="Toggle search highlights" title="Toggle search highlights"></button>
+                        <button class="webhelp_expand_collapse_sections" data-next-state="collapsed" aria-label="Collapse sections" title="Collapse sections"></button>
+                        
+                        
+                        
+                        
+                        <div class=" wh_print_link print d-none d-md-inline-block "><button onClick="window.print()" title="Print this page" aria-label="Print this page"></button></div>
+                        
+                        <button type="button" id="wh_toc_button" class="custom-toggler navbar-toggler collapsed wh_toggle_button navbar-light" aria-expanded="false" aria-label="Toggle publishing table of content" aria-controls="wh_publication_toc">
+                            <span class="navbar-toggler-icon"></span>
+                        </button>
+                    </div>
+                    
+                </nav>
+            </div>
+            
+            
+            
+            
+            <div class="wh_content_area">
+                <div class="row">
+                    
+                        <nav id="wh_publication_toc" class="col-lg-3 col-md-3 col-sm-12 d-md-block d-none d-print-none" aria-label="Table of Contents Container">
+                            <div id="wh_publication_toc_content">
+		                        
+                            	<div class=" wh_publication_toc " data-tooltip-position="right"><span class="expand-button-action-labels"><span id="button-expand-action" role="button" aria-label="Expand"></span><span id="button-collapse-action" role="button" aria-label="Collapse"></span><span id="button-pending-action" role="button" aria-label="Pending"></span></span><ul role="tree" aria-label="Table of Contents"><li role="treeitem" aria-expanded="true"><div data-tocid="mplab-harmony-core-library-d6800e9" class="topicref" data-id="mplab-harmony-core-library" data-state="expanded"><span role="button" tabindex="0" aria-labelledby="button-collapse-action mplab-harmony-core-library-d6800e9-link" class="wh-expand-btn"></span><div class="title"><a href="GUID-C04D97AB-D6E0-4CF5-9A80-CA64E36B6199.html" id="mplab-harmony-core-library-d6800e9-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">1</ph>
+MPLAB® Harmony Core Library</a></div></div><ul role="group" class="navbar-nav nav-list"><li role="treeitem" aria-expanded="false"><div data-tocid="driver-libraries-d6800e17" class="topicref" data-id="driver-libraries" data-state="not-ready"><span role="button" tabindex="0" aria-labelledby="button-expand-action driver-libraries-d6800e17-link" class="wh-expand-btn"></span><div class="title"><a href="GUID-4FA4B38A-8C7F-46A3-9D08-4B8C5CE26712.html" id="driver-libraries-d6800e17-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">1.1</ph>
+Driver Libraries</a></div></div></li><li role="treeitem" aria-expanded="false"><div data-tocid="system-service-libraries-d6800e2771" class="topicref" data-id="system-service-libraries" data-state="not-ready"><span role="button" tabindex="0" aria-labelledby="button-expand-action system-service-libraries-d6800e2771-link" class="wh-expand-btn"></span><div class="title"><a href="GUID-EA5ADDDE-73D5-43CB-B474-0752CA9A1A50.html" id="system-service-libraries-d6800e2771-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">1.2</ph>
+System Service Libraries</a></div></div></li><li role="treeitem" aria-expanded="true"><div data-tocid="software-libraries-d6800e5031" class="topicref" data-id="software-libraries" data-state="expanded"><span role="button" tabindex="0" aria-labelledby="button-collapse-action software-libraries-d6800e5031-link" class="wh-expand-btn"></span><div class="title"><a href="GUID-7249D18B-E049-45D9-96DD-B6329375E344.html" id="software-libraries-d6800e5031-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">1.3</ph>
+Software Libraries</a></div></div><ul role="group" class="navbar-nav nav-list"><li role="treeitem" aria-expanded="true"><div data-tocid="emulated-eeprom-d6800e5039" class="topicref" data-id="emulated-eeprom" data-state="expanded"><span role="button" tabindex="0" aria-labelledby="button-collapse-action emulated-eeprom-d6800e5039-link" class="wh-expand-btn"></span><div class="title"><a href="GUID-7D1381D7-9A05-495B-B0A8-D195FA444618.html" id="emulated-eeprom-d6800e5039-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">1.3.1</ph>
+Emulated EEPROM</a></div></div><ul role="group" class="navbar-nav nav-list"><li role="treeitem"><div data-tocid="how-the-library-works-d6800e5047" class="topicref" data-id="how-the-library-works" data-state="leaf"><span role="button" class="wh-expand-btn"></span><div class="title"><a href="GUID-F2389E2B-C0EA-4408-B910-EBC4B92C005F.html" id="how-the-library-works-d6800e5047-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">1.3.1.1</ph>
+How the Library Works</a></div></div></li><li role="treeitem" class="active"><div data-tocid="using-the-library-d6800e5055" class="topicref" data-id="using-the-library" data-state="leaf"><span role="button" class="wh-expand-btn"></span><div class="title"><a href="GUID-CA73D5E6-E69E-4ED9-8BAE-47DF7EBB82AB.html" id="using-the-library-d6800e5055-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">1.3.1.2</ph>
+Using The Library</a></div></div></li><li role="treeitem"><div data-tocid="configuring-the-library-d6800e5063" class="topicref" data-id="configuring-the-library" data-state="leaf"><span role="button" class="wh-expand-btn"></span><div class="title"><a href="GUID-E082A9CA-FC12-4A79-8A83-E0902DF83721.html" id="configuring-the-library-d6800e5063-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">1.3.1.3</ph>
+Configuring The Library</a></div></div></li><li role="treeitem" aria-expanded="false"><div data-tocid="library-interface-d6800e5071" class="topicref" data-id="library-interface" data-state="not-ready"><span role="button" tabindex="0" aria-labelledby="button-expand-action library-interface-d6800e5071-link" class="wh-expand-btn"></span><div class="title"><a href="GUID-000B6F77-4664-4A72-9723-F697040A7436.html" id="library-interface-d6800e5071-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">1.3.1.4</ph>
+Library Interface</a></div></div></li></ul></li><li role="treeitem" aria-expanded="false"><div data-tocid="i2c-bit-bang-d6800e5168" class="topicref" data-id="i2c-bit-bang" data-state="not-ready"><span role="button" tabindex="0" aria-labelledby="button-expand-action i2c-bit-bang-d6800e5168-link" class="wh-expand-btn"></span><div class="title"><a href="GUID-64D5F998-D72C-42CD-902F-D3FED8339A94.html" id="i2c-bit-bang-d6800e5168-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">1.3.2</ph>
+I2C Bit Bang</a></div></div></li></ul></li><li role="treeitem" aria-expanded="false"><div data-tocid="osal-library-d6800e5305" class="topicref" data-id="osal-library" data-state="not-ready"><span role="button" tabindex="0" aria-labelledby="button-expand-action osal-library-d6800e5305-link" class="wh-expand-btn"></span><div class="title"><a href="GUID-8AEFE0B0-CE35-4F99-ACF4-7C8E10D3BBB6.html" id="osal-library-d6800e5305-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">1.4</ph>
+OSAL Library</a></div></div></li><li role="treeitem" aria-expanded="false"><div data-tocid="third-party-products-d6800e5546" class="topicref" data-id="third-party-products" data-state="not-ready"><span role="button" tabindex="0" aria-labelledby="button-expand-action third-party-products-d6800e5546-link" class="wh-expand-btn"></span><div class="title"><a href="GUID-2FB7347D-8FBD-411F-88D8-58A813EA9498.html" id="third-party-products-d6800e5546-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">1.5</ph>
+Third party Products</a></div></div></li><li role="treeitem"><div data-tocid="configuring-the-harmony-core-library-d6800e5586" class="topicref" data-id="configuring-the-harmony-core-library" data-state="leaf"><span role="button" class="wh-expand-btn"></span><div class="title"><a href="GUID-F1244C57-71EF-492B-8104-473C8CECC20F.html" id="configuring-the-harmony-core-library-d6800e5586-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">1.6</ph>
+Configuring The Harmony Core Library</a></div></div></li></ul></li></ul></div>
+		                        
+                            </div>
+                        </nav>
+                    
+                    
+                    <div class="col-lg-9 col-md-9 col-sm-12" id="wh_topic_body">
+                        <button id="wh_close_publication_toc_button" class="close-toc-button d-none" aria-label="Toggle publishing table of content" aria-controls="wh_publication_toc" aria-expanded="true">
+                            <span class="close-toc-icon-container">
+                                <span class="close-toc-icon"></span>     
+                            </span>
+                        </button>
+                        
+                        
+                        <div class=" wh_topic_content body "><main role="main"><article role="article" aria-labelledby="ariaid-title1"><h1 class="- topic/title title topictitle1" id="ariaid-title1" style="">1.3.1.2 Using The Library</h1><div class="- topic/body body"><p class="- topic/p p">The Emulated EEPROM library builds on top of NVM or EFC PLIB and provides uniform interface to read/write to the Emulated EEPROM memory space.</p><p class="- topic/p p">The library provides APIs to read and write data from/to a logical page. It also provides APIs to read/write variable number of data across page boundaries.</p><p class="- topic/p p">In addition, it also provides APIs to format (initialize) the Emulated EEPROM memory region and status API that lets the application know if the Emulated EEPROM region is formatted and valid or not.</p><p class="- topic/p p"><strong class="+ topic/ph hi-d/b ph b">Example application to read and write to Emulated EEPROM</strong></p><pre class="+ topic/pre pr-d/codeblock pre codeblock c"><span class="hl-directive">#define</span> <span class="hl-functions">SIZEOF</span>(s, m) ((size_t) <strong class="hl-keyword">sizeof</strong>(((s *)<span class="hl-number">0</span>)-&gt;m))
+
+<span class="hl-directive">#define</span> <span class="hl-functions">EMU_EEPROM_READ</span>(MEM, DEST) EMU_EEPROM_BufferRead(offsetof(EEPROM_DATA, MEM), (uint8_t*)DEST, SIZEOF(EEPROM_DATA, MEM))
+
+<span class="hl-directive">#define</span> <span class="hl-functions">EMU_EEPROM_WRITE</span>(MEM, DATA) EMU_EEPROM_BufferWrite(offsetof(EEPROM_DATA, MEM), (<strong class="hl-keyword">const</strong> uint8_t*)DATA, SIZEOF(EEPROM_DATA, MEM))
+
+APP_DATA appData;
+
+EEPROM_DATA appTestData = {<span class="hl-number">0</span>};
+EEPROM_DATA appRAMCopy = {<span class="hl-number">0</span>};
+
+<strong class="hl-keyword">void</strong> <span class="hl-functions">APP_BufferFill</span>(uint8_t* buffer, uint32_t nBytes)
+{
+    uint32_t i;
+
+    <strong class="hl-keyword">for</strong> (i = <span class="hl-number">0</span>; i &lt; nBytes; i++)
+    {
+        buffer[i] = i;
+    }
+}
+
+<strong class="hl-keyword">void</strong> APP_Initialize ( <strong class="hl-keyword">void</strong> )
+{
+    <em class="hl-comment">/* Place the App state machine in its initial state. */</em>
+    appData.state = APP_STATE_INIT;
+}
+
+<strong class="hl-keyword">void</strong> APP_Tasks ( <strong class="hl-keyword">void</strong> )
+{
+    EMU_EEPROM_STATUS libStatus;
+
+    <em class="hl-comment">/* Check the application's current state. */</em>
+    <strong class="hl-keyword">switch</strong> ( appData.state )
+    {
+        <em class="hl-comment">/* Application's initial state. */</em>
+        <strong class="hl-keyword">case</strong> APP_STATE_INIT:
+
+            libStatus = EMU_EEPROM_StatusGet();
+
+            <strong class="hl-keyword">if</strong> (libStatus == EMU_EEPROM_STATUS_OK)
+            {
+                appData.state = APP_STATE_WRITE_DATA;
+            }
+            <strong class="hl-keyword">else</strong> <strong class="hl-keyword">if</strong> ((libStatus == EMU_EEPROM_STATUS_ERR_BAD_FORMAT) || (libStatus == EMU_EEPROM_STATUS_ERR_NOT_INITIALIZED))
+            {
+                <em class="hl-comment">/* Format EEPROM memory space */</em>
+                EMU_EEPROM_FormatMemory();
+                appData.state = APP_STATE_LIB_STATUS_VERIFY;
+            }
+            <strong class="hl-keyword">else</strong>
+            {
+                appData.state = APP_STATE_ERROR;
+            }
+
+            <strong class="hl-keyword">break</strong>;
+
+        <strong class="hl-keyword">case</strong> APP_STATE_LIB_STATUS_VERIFY:
+
+            <em class="hl-comment">/* Make sure the EEPROM Emulator is initialized successfully after it was formatted */</em>
+            libStatus = EMU_EEPROM_StatusGet();
+
+            <strong class="hl-keyword">if</strong> (libStatus == EMU_EEPROM_STATUS_OK)
+            {
+                appData.state = APP_STATE_WRITE_DATA;
+            }
+            <strong class="hl-keyword">else</strong>
+            {
+                appData.state = APP_STATE_ERROR;
+            }
+            <strong class="hl-keyword">break</strong>;
+
+        <strong class="hl-keyword">case</strong> APP_STATE_WRITE_DATA:
+
+            <em class="hl-comment">/* For demonstration purpose, write some random values to EEPROM memory region */</em>
+            appTestData.var_<span class="hl-number">1</span> = <span class="hl-number">0x0A</span>;
+
+            EMU_EEPROM_WRITE(var_<span class="hl-number">1</span>, &amp;appTestData.var_<span class="hl-number">1</span>);
+
+            appTestData.var_<span class="hl-number">2</span> = <span class="hl-number">0x1234</span>;
+
+            EMU_EEPROM_WRITE(var_<span class="hl-number">2</span>, &amp;appTestData.var_<span class="hl-number">2</span>);
+
+            appTestData.var_<span class="hl-number">3</span> = <span class="hl-number">0x33445566</span>;
+
+            EMU_EEPROM_WRITE(var_<span class="hl-number">3</span>, &amp;appTestData.var_<span class="hl-number">3</span>);
+
+            appTestData.var_<span class="hl-number">7</span> = <span class="hl-number">0x3189AB1C</span>;
+
+            EMU_EEPROM_WRITE(var_<span class="hl-number">7</span>, &amp;appTestData.var_<span class="hl-number">7</span>);
+
+            appTestData.var_<span class="hl-number">7</span> = <span class="hl-number">0x9A7BC123</span>;
+
+            EMU_EEPROM_WRITE(var_<span class="hl-number">7</span>, &amp;appTestData.var_<span class="hl-number">7</span>);
+
+            appTestData.var_<span class="hl-number">2</span> = <span class="hl-number">0x1256</span>;
+
+            EMU_EEPROM_WRITE(var_<span class="hl-number">2</span>, &amp;appTestData.var_<span class="hl-number">2</span>);
+
+            appTestData.var_<span class="hl-number">7</span> = <span class="hl-number">0x882B7C9A</span>;
+
+            EMU_EEPROM_WRITE(var_<span class="hl-number">7</span>, &amp;appTestData.var_<span class="hl-number">7</span>);
+
+            appTestData.var_<span class="hl-number">2</span> = <span class="hl-number">0x7788</span>;
+
+            EMU_EEPROM_WRITE(var_<span class="hl-number">2</span>, &amp;appTestData.var_<span class="hl-number">2</span>);
+
+            APP_BufferFill(appTestData.buffer_<span class="hl-number">1</span>, <strong class="hl-keyword">sizeof</strong> (appTestData.buffer_<span class="hl-number">1</span>));
+
+            EMU_EEPROM_WRITE(buffer_<span class="hl-number">1</span>, &amp;appTestData.buffer_<span class="hl-number">1</span>);
+
+            appTestData.var_<span class="hl-number">11</span> = <span class="hl-number">0x7498AFDD</span>;
+
+            EMU_EEPROM_WRITE(var_<span class="hl-number">11</span>, &amp;appTestData.var_<span class="hl-number">11</span>);
+
+            appTestData.var_<span class="hl-number">7</span> = <span class="hl-number">0x1788BB8D</span>;
+
+            EMU_EEPROM_WRITE(var_<span class="hl-number">7</span>, &amp;appTestData.var_<span class="hl-number">7</span>);
+
+            appTestData.var_<span class="hl-number">10</span> = <span class="hl-number">0x7744AABB</span>;
+
+            EMU_EEPROM_WRITE(var_<span class="hl-number">10</span>, &amp;appTestData.var_<span class="hl-number">10</span>);
+
+            appTestData.var_<span class="hl-number">2</span> = <span class="hl-number">0x9922</span>;
+
+            EMU_EEPROM_WRITE(var_<span class="hl-number">2</span>, &amp;appTestData.var_<span class="hl-number">2</span>);
+
+            appTestData.var_<span class="hl-number">5</span> = <span class="hl-number">0x59AF</span>;
+
+            EMU_EEPROM_WRITE(var_<span class="hl-number">5</span>, &amp;appTestData.var_<span class="hl-number">5</span>);
+
+            appTestData.var_<span class="hl-number">9</span> = <span class="hl-number">0x99AA</span>;
+
+            EMU_EEPROM_WRITE(var_<span class="hl-number">9</span>, &amp;appTestData.var_<span class="hl-number">9</span>);
+
+            appTestData.var_<span class="hl-number">10</span> = <span class="hl-number">0x88888888</span>;
+
+            EMU_EEPROM_WRITE(var_<span class="hl-number">10</span>, &amp;appTestData.var_<span class="hl-number">10</span>);
+
+            appTestData.var_<span class="hl-number">12</span> = <span class="hl-number">0x5577</span>;
+
+            EMU_EEPROM_WRITE(var_<span class="hl-number">12</span>, &amp;appTestData.var_<span class="hl-number">12</span>);
+
+            appTestData.var_<span class="hl-number">10</span> = <span class="hl-number">0x1AC87439</span>;
+
+            EMU_EEPROM_WRITE(var_<span class="hl-number">10</span>, &amp;appTestData.var_<span class="hl-number">10</span>);
+
+            appTestData.var_<span class="hl-number">8</span> = <span class="hl-number">0x752B9ACE</span>;
+
+            EMU_EEPROM_WRITE(var_<span class="hl-number">8</span>, &amp;appTestData.var_<span class="hl-number">8</span>);
+
+            appTestData.var_<span class="hl-number">2</span> = <span class="hl-number">0xA765</span>;
+
+            EMU_EEPROM_WRITE(var_<span class="hl-number">2</span>, &amp;appTestData.var_<span class="hl-number">2</span>);
+
+            appTestData.var_<span class="hl-number">4</span> = <span class="hl-number">0xA7</span>;
+
+            EMU_EEPROM_WRITE(var_<span class="hl-number">4</span>, &amp;appTestData.var_<span class="hl-number">4</span>);
+
+            appTestData.var_<span class="hl-number">9</span> = <span class="hl-number">0xEEF1</span>;
+
+            EMU_EEPROM_WRITE(var_<span class="hl-number">9</span>, &amp;appTestData.var_<span class="hl-number">9</span>);
+
+            appTestData.var_<span class="hl-number">6</span> = <span class="hl-number">0xF497</span>;
+
+            EMU_EEPROM_WRITE(var_<span class="hl-number">6</span>, &amp;appTestData.var_<span class="hl-number">6</span>);
+
+            <em class="hl-comment">/* Commit any data that may be in EEPROM Emulator library's cache to physical memory */</em>
+            EMU_EEPROM_PageBufferCommit();
+
+            appData.state = APP_STATE_READ_DATA;
+
+            <strong class="hl-keyword">break</strong>;
+
+        <strong class="hl-keyword">case</strong> APP_STATE_READ_DATA:
+
+            <em class="hl-comment">/* Randomly read back the written values */</em>
+            EMU_EEPROM_READ(var_<span class="hl-number">2</span>, &amp;appRAMCopy.var_<span class="hl-number">2</span>);
+
+            EMU_EEPROM_READ(var_<span class="hl-number">3</span>, &amp;appRAMCopy.var_<span class="hl-number">3</span>);
+
+            EMU_EEPROM_READ(var_<span class="hl-number">7</span>, &amp;appRAMCopy.var_<span class="hl-number">7</span>);
+
+            EMU_EEPROM_READ(var_<span class="hl-number">9</span>, &amp;appRAMCopy.var_<span class="hl-number">9</span>);
+
+            EMU_EEPROM_READ(var_<span class="hl-number">10</span>, &amp;appRAMCopy.var_<span class="hl-number">10</span>);
+
+            EMU_EEPROM_READ(var_<span class="hl-number">12</span>, &amp;appRAMCopy.var_<span class="hl-number">12</span>);
+
+            EMU_EEPROM_READ(var_<span class="hl-number">1</span>, &amp;appRAMCopy.var_<span class="hl-number">1</span>);
+
+            EMU_EEPROM_READ(var_<span class="hl-number">6</span>, &amp;appRAMCopy.var_<span class="hl-number">6</span>);
+
+            EMU_EEPROM_READ(var_<span class="hl-number">8</span>, &amp;appRAMCopy.var_<span class="hl-number">8</span>);
+
+            EMU_EEPROM_READ(var_<span class="hl-number">11</span>, &amp;appRAMCopy.var_<span class="hl-number">11</span>);
+
+            EMU_EEPROM_READ(buffer_<span class="hl-number">1</span>, &amp;appRAMCopy.buffer_<span class="hl-number">1</span>);
+
+            EMU_EEPROM_READ(var_<span class="hl-number">4</span>, &amp;appRAMCopy.var_<span class="hl-number">4</span>);
+
+            EMU_EEPROM_READ(var_<span class="hl-number">5</span>, &amp;appRAMCopy.var_<span class="hl-number">5</span>);
+
+            appData.state = APP_STATE_VERIFY;
+
+            <strong class="hl-keyword">break</strong>;
+
+        <strong class="hl-keyword">case</strong> APP_STATE_VERIFY:
+            <strong class="hl-keyword">if</strong> (memcmp((<strong class="hl-keyword">void</strong> <strong class="hl-keyword">const</strong>*)&amp;appRAMCopy, (<strong class="hl-keyword">void</strong> <strong class="hl-keyword">const</strong>*)&amp;appTestData, <strong class="hl-keyword">sizeof</strong> (EEPROM_DATA)) == <span class="hl-number">0</span>)
+            {
+                LED_On();
+            }
+            <strong class="hl-keyword">else</strong>
+            {
+                LED_Off();
+            }
+
+            appData.state = APP_STATE_IDLE;
+            <strong class="hl-keyword">break</strong>;
+
+        <strong class="hl-keyword">case</strong> APP_STATE_IDLE:
+            <strong class="hl-keyword">break</strong>;
+
+        <strong class="hl-keyword">case</strong> APP_STATE_ERROR:
+            <strong class="hl-keyword">break</strong>;
+
+        <em class="hl-comment">/* TODO: implement your application state machine.*/</em>
+
+
+        <em class="hl-comment">/* The default state should never be executed. */</em>
+        <strong class="hl-keyword">default</strong>:
+        {
+            <em class="hl-comment">/* TODO: Handle error in application's state machine. */</em>
+            <strong class="hl-keyword">break</strong>;
+        }
+    }
+}
+
+</pre></div></article></main></div>
+                        
+                        
+                        
+                        
+                        
+                        
+                    </div>
+                    
+                </div>
+            </div>
+            
+            
+            
+        </div> 
+        <footer class="navbar navbar-default wh_footer">
+  <div class=" footer-container mx-auto ">
+    <div class="footer">
+  <div class="mchp-wh-footer">
+    <div class="mchp-footer">
+      <div class="mchp-footer-tier1">
+        <div class="spacer"></div>
+        <div class="mchp-footer-container">
+          <div class="mchp-footer-links mchp-social-media-links">
+            <div class="mchp-component-items">
+              <div class="mchp-component-item">
+                <a class="cmp-image__link" href="https://www.facebook.com/pages/Microchip-Technology-Inc/20320981741" target="_blank">
+                  <img class="cmp-image__image" alt="Microchip Facebook" src="oxygen-webhelp/template/resources/images/201016-corp-facebook.png"/>
+                </a>
+              </div>
+              <div class="mchp-component-item">
+                <a class="cmp-image__link" href="https://www.linkedin.com/company/microchip-technology" target="_blank">
+                  <img class="cmp-image__image" alt="Microchip LinkedIn" src="oxygen-webhelp/template/resources/images/201016-corp-linkedin.png"/>
+                </a>
+              </div>
+              <div class="mchp-component-item">
+                <a class="cmp-image__link" href="https://twitter.com/MicrochipTech" target="_blank">
+                  <img class="cmp-image__image" alt="Microchip Twitter" src="oxygen-webhelp/template/resources/images/201016-corp-twitter.png"/>
+                </a>
+              </div>
+              <div class="mchp-component-item">
+                <a class="cmp-image__link" href="https://www.youtube.com/user/MicrochipTechnology" target="_blank">
+                  <img class="cmp-image__image" alt="Microchip YouTube" src="oxygen-webhelp/template/resources/images/201016-corp-youtube.png"/>
+                </a>
+              </div>
+              <div class="mchp-component-item">
+                <a class="cmp-image__link" href="https://www.instagram.com/microchiptechnologyinc/" target="_blank">
+                  <img class="cmp-image__image" alt="Microchip Instagram" src="oxygen-webhelp/template/resources/images/201016-corp-instagram.png"/>
+                </a>
+              </div>
+              <div class="mchp-component-item">
+                <a class="cmp-image__link" href="https://www.weibo.com/microchiptech" target="_blank">
+                  <img class="cmp-image__image" alt="Microchip Weibo" src="oxygen-webhelp/template/resources/images/201016-corp-weibo.png"/>
+                </a>
+              </div>
+              <div class="mchp-component-item">
+                <a class="cmp-image__link" href="https://www.microchip.com/en-us/about/blog" target="_blank">
+                  <img class="cmp-image__image" alt="Microchip Blog" src="oxygen-webhelp/template/resources/images/201016-corp-blog.png"/>
+                </a>
+              </div>
+            </div>
+          </div>
+          <div class="mchp-footer-links">
+            <div class="mchp-component-items">
+              <div class="mchp-component-item">
+                <div class="link">
+                  <a href="https://www.microchip.com/about-us/contact-us" class="mchp-link__link">Contact</a>
+                  <span class="mchp-link__separator">|</span>
+                </div>
+              </div>
+              <div class="mchp-component-item ">
+                <div class="link">
+                  <a href="https://www.microchip.com/en-us/about/legal-information" class="mchp-link__link">Legal</a>
+                  <span class="mchp-link__separator">|</span>
+                </div>
+              </div>
+              <div class="mchp-component-item ">
+                <div class="link">
+                  <a href="https://www.microchip.com/en-us/about/legal-information/privacy-policy" class="mchp-link__link">Privacy Policy</a>
+                  <span class="mchp-link__separator">|</span>
+                </div>
+              </div>
+              <div class="mchp-component-item ">
+                <div class="link">
+                  <a href="https://www.microchip.com/en-us/about/legal-information/microchip-cookie-statement" class="mchp-link__link">Cookies</a>
+                  <span class="mchp-link__separator">|</span>
+                </div>
+              </div>
+              <div class="mchp-component-item">
+                <div class="link">
+                  <a href="https://careers.microchip.com/" class="mchp-link__link">Careers</a>
+                  <span class="mchp-link__separator"></span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="mchp-footer-newsletter">
+            <div class="cmp-text">
+              <p>Stay on the leading edge with our blog</p>
+            </div>
+            <div class="mchp-button-wrapper">
+              <a role="button" href="https://www.microchip.com/en-us/about/blog" class="mchp-button mchp-button-regular solid">
+                <span class="mchp-button__span">MicroSolutions</span>
+              </a>
+            </div>
+          </div>
+        </div>
+        <div class="graphic">
+          <img src="oxygen-webhelp/template/resources/images/footer-graphic.png"/>
+        </div>
+      </div>
+      <div class="mchp-footer-tier2">
+        <p class="mchp-copyright">© Copyright 1998-2022 Microchip Technology Inc. All rights reserved.</p>
+      </div>
+    </div>
+  </div>
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+  <script async="true" src="https://www.googletagmanager.com/gtag/js?id=UA-2724382-19"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];  
+    function gtag(){dataLayer.push(arguments);}  
+    gtag('js', new Date());   
+    gtag('config', 'UA-2724382-19');
+  </script>
+</div>
+  </div>
+</footer>
+        
+        <div id="go2top" class="d-print-none">
+            <span class="oxy-icon oxy-icon-up"></span>
+        </div>
+        
+        <div id="modal_img_large" class="modal">
+            <span class="close oxy-icon oxy-icon-remove"></span>
+            <div id="modal_img_container"></div>
+            <div id="caption"></div>
+        </div>
+        
+        
+        
+    </body>
 </html>

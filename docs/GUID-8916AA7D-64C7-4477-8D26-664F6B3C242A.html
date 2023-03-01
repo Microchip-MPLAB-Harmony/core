@@ -1,482 +1,549 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE html
-  PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
-<head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-
-<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE11" /><meta name="copyright" content="(C) Copyright 2022" />
-<meta name="DC.rights.owner" content="(C) Copyright 2022" />
-<meta name="DC.type" content="topic" />
-<meta name="DC.title" content="Using The Library" />
-<meta name="DC.relation" scheme="URI" content="GUID-4321CAFA-57B5-4633-9D43-0AE24B87C101.html" />
-<meta name="DC.format" content="XHTML" />
-<meta name="DC.identifier" content="using-the-library" />
-<link rel="stylesheet" type="text/css" href="stylesheets/commonltr.css" />
-<link rel="stylesheet" type="text/css" href="stylesheets/atmel.css" />
-<link rel="stylesheet" type="text/css" href="./stylesheets/common-extended.css" /><title>Using The Library</title>
-<meta name="Microsoft.Help.Id" content="GUID-EDFB1AB8-CD6B-446F-8E25-F2167287A1AF-using-the-library" />
-<meta name="Microsoft.Help.TocParent" content="GUID-EDFB1AB8-CD6B-446F-8E25-F2167287A1AF" />
-<meta name="Microsoft.Help.TocOrder" content="0" />
-<meta name="Microsoft.Help.Locale" content="en-US" />
-<meta name="Microsoft.Help.TopicLocale" content="en-US" />
-<meta name="Microsoft.Help.DisplayVersion" content="MPLAB® Harmony Core Library Reference A 11/2021" />
-<script language="javascript">
-       
-       if (window.parent.location.protocol != 'file:') {
-				document.addEventListener('click', function(e) {
-				    if (e.target) {
-               if (e.target.nodeName == "A" ) {
-                    if (!e.target.target) {
-                      e.preventDefault();
-                      e.stopPropagation();
-                              
-                      var origUrl = window.parent.location.href.substr(0, window.parent.location.href.indexOf("?"));
-                      if (origUrl.length === 0) {
-                          origUrl = window.parent.location.href;
-                      }
-                      var href= e.target.getAttribute("href");
-                      var parts = href.split("#");
-          
-                      var url = "";
-                      if (parts.length == 2 ) {
-                        if (!parts[0].length) {
-                            url = window.parent.location.search.replace('?','')
-                        } else {
-                            url = parts[0].replace('.html','');
-                        }
-                      } else {
-                        url = parts[0].replace('.html','');
-                      }
-
-                      if (parts.length == 2) {
-                          url += "#" + parts[1];
-                      }
+<!DOCTYPE html><html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-us" lang="en-us" data-whc_version="24.1">
+    <head><link rel="shortcut icon" href="oxygen-webhelp\template\resources/images/favicon.ico"/><link rel="icon" href="oxygen-webhelp\template\resources/images/favicon.ico"/><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/><meta name="viewport" content="width=device-width, initial-scale=1.0"/><meta http-equiv="X-UA-Compatible" content="IE=edge"/><meta name="description" content="The I2C driver builds on top of the I2C peripheral library (PLIB) and provides write, read and write-read API's in blocking and non-blocking mode for I2C master functionality. Provides Write, Read and ..."/><meta name="copyright" content="(C) Copyright 2023"/><meta name="DC.rights.owner" content="(C) Copyright 2023"/><meta name="DC.type" content="topic"/><meta name="DC.relation" content="GUID-4321CAFA-57B5-4633-9D43-0AE24B87C101.md"/><meta name="DC.format" content="HTML5"/><meta name="DC.identifier" content="using-the-library"/><title>1.1.2.2 Using The Library</title><!--  Generated with Oxygen version 24.1, build number 2022062014.  --><meta name="wh-path2root" content=""/><meta name="wh-toc-id" content="&lt;?xml version=&#34;1.0&#34; encoding=&#34;UTF-8&#34;?&gt;&lt;?workdir /D:\InfoShare\Data\Publish\Data\qzvtb5xcvan\work\temp?&gt;&lt;?workdir-uri file:/D:/InfoShare/Data/Publish/Data/qzvtb5xcvan/work/temp/?&gt;&lt;?path2project?&gt;&lt;?path2project-uri ./?&gt;&lt;?path2rootmap-uri ./?&gt;&lt;topic xmlns:ditaarch=&#34;http://dita.oasis-open.org/architecture/2005/&#34; xmlns:dita-ot=&#34;http://dita-ot.sourceforge.net/ns/201007/dita-ot&#34; class=&#34;- topic/topic &#34; ditaarch:DITAArchVersion=&#34;1.2&#34; domains=&#34;(topic hi-d) (topic ut-d) (topic indexing-d) (topic hazard-d) (topic abbrev-d) (topic pr-d) (topic sw-d) (topic ui-d)&#34; id=&#34;using-the-library&#34; xtrf=&#34;file:/D:/InfoShare/Data/Publish/Data/qzvtb5xcvan/work/1/en-US/GUID-8916AA7D-64C7-4477-8D26-664F6B3C242A.md&#34; xtrc=&#34;topic:1;182:3&#34; specializations=&#34;&#34;&gt;&lt;title class=&#34;- topic/title &#34; xtrf=&#34;file:/D:/InfoShare/Data/Publish/Data/qzvtb5xcvan/work/1/en-US/GUID-8916AA7D-64C7-4477-8D26-664F6B3C242A.md&#34; xtrc=&#34;title:1;182:3&#34;&gt;Using The Library&lt;/title&gt;&lt;body class=&#34;- topic/body &#34; xtrf=&#34;file:/D:/InfoShare/Data/Publish/Data/qzvtb5xcvan/work/1/en-US/GUID-8916AA7D-64C7-4477-8D26-664F6B3C242A.md&#34; xtrc=&#34;body:1;182:3&#34;&gt;&lt;p class=&#34;- topic/p &#34; xtrf=&#34;file:/D:/InfoShare/Data/Publish/Data/qzvtb5xcvan/work/1/en-US/GUID-8916AA7D-64C7-4477-8D26-664F6B3C242A.md&#34; xtrc=&#34;p:1;182:3&#34;&gt;The I2C driver builds on top of the I2C peripheral library (PLIB) and provides write, read and write-read API's in blocking and non-blocking mode for I2C master functionality.&lt;/p&gt;&lt;ul class=&#34;- topic/ul &#34; xtrf=&#34;file:/D:/InfoShare/Data/Publish/Data/qzvtb5xcvan/work/1/en-US/GUID-8916AA7D-64C7-4477-8D26-664F6B3C242A.md&#34; xtrc=&#34;ul:1;182:3&#34;&gt;&lt;li class=&#34;- topic/li &#34; xtrf=&#34;file:/D:/InfoShare/Data/Publish/Data/qzvtb5xcvan/work/1/en-US/GUID-8916AA7D-64C7-4477-8D26-664F6B3C242A.md&#34; xtrc=&#34;li:1;182:3&#34;&gt;&lt;p class=&#34;- topic/p &#34; xtrf=&#34;file:/D:/InfoShare/Data/Publish/Data/qzvtb5xcvan/work/1/en-US/GUID-8916AA7D-64C7-4477-8D26-664F6B3C242A.md&#34; xtrc=&#34;p:2;182:3&#34;&gt;Provides Write, Read and Write followed by Read API's.&lt;/p&gt;&lt;/li&gt;&lt;li class=&#34;- topic/li &#34; xtrf=&#34;file:/D:/InfoShare/Data/Publish/Data/qzvtb5xcvan/work/1/en-US/GUID-8916AA7D-64C7-4477-8D26-664F6B3C242A.md&#34; xtrc=&#34;li:2;182:3&#34;&gt;&lt;p class=&#34;- topic/p &#34; xtrf=&#34;file:/D:/InfoShare/Data/Publish/Data/qzvtb5xcvan/work/1/en-US/GUID-8916AA7D-64C7-4477-8D26-664F6B3C242A.md&#34; xtrc=&#34;p:3;182:3&#34;&gt;Supports multiple slaves connected to the same I2C peripheral instance (multi-client mode).&lt;/p&gt;&lt;/li&gt;&lt;li class=&#34;- topic/li &#34; xtrf=&#34;file:/D:/InfoShare/Data/Publish/Data/qzvtb5xcvan/work/1/en-US/GUID-8916AA7D-64C7-4477-8D26-664F6B3C242A.md&#34; xtrc=&#34;li:3;182:3&#34;&gt;&lt;p class=&#34;- topic/p &#34; xtrf=&#34;file:/D:/InfoShare/Data/Publish/Data/qzvtb5xcvan/work/1/en-US/GUID-8916AA7D-64C7-4477-8D26-664F6B3C242A.md&#34; xtrc=&#34;p:4;182:3&#34;&gt;In asynchronous (non-blocking) mode, application can either register a callback to get notified once the data transfer is complete or can poll the status of the data transfer using the status APIs&lt;/p&gt;&lt;/li&gt;&lt;li class=&#34;- topic/li &#34; xtrf=&#34;file:/D:/InfoShare/Data/Publish/Data/qzvtb5xcvan/work/1/en-US/GUID-8916AA7D-64C7-4477-8D26-664F6B3C242A.md&#34; xtrc=&#34;li:4;182:3&#34;&gt;&lt;p class=&#34;- topic/p &#34; xtrf=&#34;file:/D:/InfoShare/Data/Publish/Data/qzvtb5xcvan/work/1/en-US/GUID-8916AA7D-64C7-4477-8D26-664F6B3C242A.md&#34; xtrc=&#34;p:5;182:3&#34;&gt;In asynchronous mode, application can queue more than one transmit/receive requests without waiting for the previous request to be completed. The number of transmit/receive requests that can be queued depends on the depth of the transfer queue configured using the MHC&lt;/p&gt;&lt;/li&gt;&lt;li class=&#34;- topic/li &#34; xtrf=&#34;file:/D:/InfoShare/Data/Publish/Data/qzvtb5xcvan/work/1/en-US/GUID-8916AA7D-64C7-4477-8D26-664F6B3C242A.md&#34; xtrc=&#34;li:5;182:3&#34;&gt;&lt;p class=&#34;- topic/p &#34; xtrf=&#34;file:/D:/InfoShare/Data/Publish/Data/qzvtb5xcvan/work/1/en-US/GUID-8916AA7D-64C7-4477-8D26-664F6B3C242A.md&#34; xtrc=&#34;p:6;182:3&#34;&gt;The asynchronous mode is supported in both bare-metal and RTOS environment&lt;/p&gt;&lt;/li&gt;&lt;li class=&#34;- topic/li &#34; xtrf=&#34;file:/D:/InfoShare/Data/Publish/Data/qzvtb5xcvan/work/1/en-US/GUID-8916AA7D-64C7-4477-8D26-664F6B3C242A.md&#34; xtrc=&#34;li:6;182:3&#34;&gt;&lt;p class=&#34;- topic/p &#34; xtrf=&#34;file:/D:/InfoShare/Data/Publish/Data/qzvtb5xcvan/work/1/en-US/GUID-8916AA7D-64C7-4477-8D26-664F6B3C242A.md&#34; xtrc=&#34;p:7;182:3&#34;&gt;The synchronous (blocking) mode of the driver is supported only in an RTOS environment&lt;/p&gt;&lt;/li&gt;&lt;li class=&#34;- topic/li &#34; xtrf=&#34;file:/D:/InfoShare/Data/Publish/Data/qzvtb5xcvan/work/1/en-US/GUID-8916AA7D-64C7-4477-8D26-664F6B3C242A.md&#34; xtrc=&#34;li:7;182:3&#34;&gt;&lt;p class=&#34;- topic/p &#34; xtrf=&#34;file:/D:/InfoShare/Data/Publish/Data/qzvtb5xcvan/work/1/en-US/GUID-8916AA7D-64C7-4477-8D26-664F6B3C242A.md&#34; xtrc=&#34;p:8;182:3&#34;&gt;The synchronous mode of the driver does not support callback or queuing multiple requests. This is because the implementation is blocking in nature&lt;/p&gt;&lt;/li&gt;&lt;/ul&gt;&lt;p class=&#34;- topic/p &#34; xtrf=&#34;file:/D:/InfoShare/Data/Publish/Data/qzvtb5xcvan/work/1/en-US/GUID-8916AA7D-64C7-4477-8D26-664F6B3C242A.md&#34; xtrc=&#34;p:9;182:3&#34;&gt;&lt;b class=&#34;+ topic/ph hi-d/b &#34; xtrf=&#34;file:/D:/InfoShare/Data/Publish/Data/qzvtb5xcvan/work/1/en-US/GUID-8916AA7D-64C7-4477-8D26-664F6B3C242A.md&#34; xtrc=&#34;b:1;182:3&#34;&gt;Example application to Read and Write from I2C EEPROM in Asynchronous mode&lt;/b&gt;&lt;/p&gt;&lt;codeblock class=&#34;+ topic/pre pr-d/codeblock &#34; xml:space=&#34;preserve&#34; outputclass=&#34;c&#34; xtrf=&#34;file:/D:/InfoShare/Data/Publish/Data/qzvtb5xcvan/work/1/en-US/GUID-8916AA7D-64C7-4477-8D26-664F6B3C242A.md&#34; xtrc=&#34;codeblock:1;182:3&#34;&gt;#define APP_EEPROM_MEMORY_ADDR 0x0000 /* Size of the string written to EEPROM must be less than or equal to the EEPROM page size */ #define APP_EEPROM_TEST_DATA &#34;I2C EEPROM Demo&#34; #define APP_EEPROM_TEST_DATA_SIZE (sizeof(APP_EEPROM_TEST_DATA)-1) #define APP_EEPROM_RX_BUFFER_SIZE APP_EEPROM_TEST_DATA_SIZE #if APP_EEPROM_ADDR_LEN_BITS == 18 || APP_EEPROM_ADDR_LEN_BITS == 16 /* For 18 bit address, A16 and A17 are part of the EEPROM slave address. * The A16 and A17 bits are set to 0 in this demonstration. */ #define APP_EEPROM_NUM_ADDR_BYTES 2 #elif APP_EEPROM_ADDR_LEN_BITS == 8 #define APP_EEPROM_NUM_ADDR_BYTES 1 #endif #define APP_EEPROM_TX_BUFFER_SIZE (APP_EEPROM_TEST_DATA_SIZE + APP_EEPROM_NUM_ADDR_BYTES) APP_DATA appData; static uint8_t testTxData[APP_EEPROM_TX_BUFFER_SIZE] = {0}; static uint8_t testRxData[APP_EEPROM_RX_BUFFER_SIZE] = {0}; void APP_I2CEventHandler ( DRV_I2C_TRANSFER_EVENT event, DRV_I2C_TRANSFER_HANDLE transferHandle, uintptr_t context ) { APP_TRANSFER_STATUS* transferStatus = (APP_TRANSFER_STATUS*)context; if (event == DRV_I2C_TRANSFER_EVENT_COMPLETE) { if (transferStatus) { *transferStatus = APP_TRANSFER_STATUS_SUCCESS; } } else { if (transferStatus) { *transferStatus = APP_TRANSFER_STATUS_ERROR; } } } void APP_Initialize ( void ) { /* Initialize the appData structure. */ appData.state = APP_STATE_INIT; appData.drvI2CHandle = DRV_HANDLE_INVALID; appData.transferHandle = DRV_I2C_TRANSFER_HANDLE_INVALID; appData.transferStatus = APP_TRANSFER_STATUS_ERROR; #if APP_EEPROM_NUM_ADDR_BYTES == 2 testTxData[0] = (APP_EEPROM_MEMORY_ADDR &amp;gt;&amp;gt; 8); testTxData[1] = APP_EEPROM_MEMORY_ADDR; memcpy(&amp;amp;testTxData[2], (const void*)APP_EEPROM_TEST_DATA, APP_EEPROM_TEST_DATA_SIZE); #else testTxData[0] = APP_EEPROM_MEMORY_ADDR; memcpy(&amp;amp;testTxData[1], (const void*)APP_EEPROM_TEST_DATA, APP_EEPROM_TEST_DATA_SIZE); #endif } void APP_Tasks ( void ) { /* Check the application's current state. */ switch ( appData.state ) { /* Application's initial state. */ case APP_STATE_INIT: /* Open the I2C Driver */ appData.drvI2CHandle = DRV_I2C_Open( DRV_I2C_INDEX_0, DRV_IO_INTENT_READWRITE ); if(appData.drvI2CHandle == DRV_HANDLE_INVALID) { appData.state = APP_STATE_ERROR; } else { /* Register the I2C Driver event Handler */ DRV_I2C_TransferEventHandlerSet( appData.drvI2CHandle, APP_I2CEventHandler, (uintptr_t)&amp;amp;appData.transferStatus ); appData.state = APP_STATE_IS_EEPROM_READY; } break; case APP_STATE_IS_EEPROM_READY: appData.transferStatus = APP_TRANSFER_STATUS_IN_PROGRESS; /* Add a dummy write transfer request to verify whether EEPROM is ready */ DRV_I2C_WriteTransferAdd( appData.drvI2CHandle, APP_EEPROM_SLAVE_ADDR, (void *)&amp;amp;appData.dummyData, 1, &amp;amp;appData.transferHandle ); if( appData.transferHandle == DRV_I2C_TRANSFER_HANDLE_INVALID ) { appData.state = APP_STATE_ERROR; } else { appData.state = APP_STATE_DATA_WRITE; } break; case APP_STATE_DATA_WRITE: if (appData.transferStatus == APP_TRANSFER_STATUS_SUCCESS) { appData.transferStatus = APP_TRANSFER_STATUS_IN_PROGRESS; /* Add a request to write the application data */ DRV_I2C_WriteTransferAdd( appData.drvI2CHandle, APP_EEPROM_SLAVE_ADDR, (void *)&amp;amp;testTxData[0], APP_EEPROM_TX_BUFFER_SIZE, &amp;amp;appData.transferHandle ); if( appData.transferHandle == DRV_I2C_TRANSFER_HANDLE_INVALID ) { appData.state = APP_STATE_ERROR; } else { appData.state = APP_STATE_WAIT_WRITE_COMPLETE; } } else if (appData.transferStatus == APP_TRANSFER_STATUS_ERROR) { //EEPROM is not ready. Keep checking until it is ready to receive commands. //Some EEPROMs need stabilization time before they can start responding to commands. appData.state = APP_STATE_IS_EEPROM_READY; } break; case APP_STATE_WAIT_WRITE_COMPLETE: if (appData.transferStatus == APP_TRANSFER_STATUS_SUCCESS) { appData.transferStatus = APP_TRANSFER_STATUS_IN_PROGRESS; /* Add a dummy write request to check if EEPROM's internal write cycle is complete */ DRV_I2C_WriteTransferAdd( appData.drvI2CHandle, APP_EEPROM_SLAVE_ADDR, (void *)&amp;amp;appData.dummyData, 1, &amp;amp;appData.transferHandle ); if( appData.transferHandle == DRV_I2C_TRANSFER_HANDLE_INVALID ) { appData.state = APP_STATE_ERROR; } else { appData.state = APP_STATE_EEPROM_CHECK_INTERNAL_WRITE_STATUS; } } else if (appData.transferStatus == APP_TRANSFER_STATUS_ERROR) { appData.state = APP_STATE_ERROR; } break; case APP_STATE_EEPROM_CHECK_INTERNAL_WRITE_STATUS: if (appData.transferStatus == APP_TRANSFER_STATUS_SUCCESS) { appData.state = APP_STATE_DATA_READ; } else if (appData.transferStatus == APP_TRANSFER_STATUS_ERROR) { appData.transferStatus = APP_TRANSFER_STATUS_IN_PROGRESS; /* Keep checking if EEPROM's internal write cycle is complete */ DRV_I2C_WriteTransferAdd( appData.drvI2CHandle, APP_EEPROM_SLAVE_ADDR, (void *)&amp;amp;appData.dummyData, 1, &amp;amp;appData.transferHandle ); if( appData.transferHandle == DRV_I2C_TRANSFER_HANDLE_INVALID ) { appData.state = APP_STATE_ERROR; } } break; case APP_STATE_DATA_READ: appData.transferStatus = APP_TRANSFER_STATUS_IN_PROGRESS; /* Add a request to read data from EEPROM. */ DRV_I2C_WriteReadTransferAdd( appData.drvI2CHandle, APP_EEPROM_SLAVE_ADDR, (void *)&amp;amp;testTxData[0], APP_EEPROM_NUM_ADDR_BYTES, (void *)&amp;amp;testRxData[0], APP_EEPROM_TEST_DATA_SIZE, &amp;amp;appData.transferHandle ); if( appData.transferHandle == DRV_I2C_TRANSFER_HANDLE_INVALID ) { appData.state = APP_STATE_ERROR; } else { appData.state = APP_STATE_WAIT_READ_COMPLETE; } break; case APP_STATE_WAIT_READ_COMPLETE: if (appData.transferStatus == APP_TRANSFER_STATUS_SUCCESS) { appData.state = APP_STATE_DATA_VERIFY; } else if (appData.transferStatus == APP_TRANSFER_STATUS_ERROR) { appData.state = APP_STATE_ERROR; } break; case APP_STATE_DATA_VERIFY: /* Compare data written and data read */ if (memcmp(&amp;amp;testTxData[APP_EEPROM_NUM_ADDR_BYTES], &amp;amp;testRxData[0], APP_EEPROM_TEST_DATA_SIZE) == 0) { appData.state = APP_STATE_SUCCESS; } else { appData.state = APP_STATE_ERROR; } break; case APP_STATE_SUCCESS: appData.state = APP_STATE_IDLE; break; case APP_STATE_ERROR: appData.state = APP_STATE_IDLE; break; case APP_STATE_IDLE: default: break; } }&lt;/codeblock&gt;&lt;/body&gt;&lt;related-links class=&#34;- topic/related-links &#34;&gt;&lt;linkpool class=&#34;- topic/linkpool &#34; mapkeyref=&#34;GUID-4BA21645-85F2-46DA-ADDC-4292784EE8A4&#34; xtrc=&#34;topicref:3;3:1646&#34; xtrf=&#34;file:/D:/InfoShare/Data/Publish/Data/qzvtb5xcvan/work/1/en-US/GUID-3875C8CE-DDBC-4D35-A951-AF14B709F11A.ditamap&#34;&gt;&lt;link class=&#34;- topic/link &#34; format=&#34;dita&#34; href=&#34;GUID-4321CAFA-57B5-4633-9D43-0AE24B87C101.md&#34; mapclass=&#34;- map/topicref &#34; role=&#34;parent&#34; scope=&#34;local&#34; type=&#34;topic&#34; xtrc=&#34;topicref:1;3:1365&#34; xtrf=&#34;file:/D:/InfoShare/Data/Publish/Data/qzvtb5xcvan/work/1/en-US/GUID-3875C8CE-DDBC-4D35-A951-AF14B709F11A.ditamap&#34;&gt;&lt;?ditaot usertext?&gt;&lt;linktext class=&#34;- topic/linktext &#34;&gt;&lt;?ditaot gentext?&gt;I2C Driver&lt;/linktext&gt;&lt;/link&gt;&lt;/linkpool&gt;&lt;/related-links&gt;&lt;/topic&gt;"/><meta name="wh-source-relpath" content="GUID-8916AA7D-64C7-4477-8D26-664F6B3C242A.md"/><meta name="wh-out-relpath" content="GUID-8916AA7D-64C7-4477-8D26-664F6B3C242A.html"/>
+    <!-- Latest compiled and minified Bootstrap CSS -->
+    <link rel="stylesheet" type="text/css" href="./oxygen-webhelp/lib/bootstrap/css/bootstrap.min.css"/>
     
-                      window.parent.location.href = origUrl + "?" + url;
+    <link rel="stylesheet" href="./oxygen-webhelp/lib/jquery-ui/jquery-ui.min.css"/>
+    
+    <!-- Template default styles  -->
+    <link rel="stylesheet" type="text/css" href="./oxygen-webhelp/app/topic-page.css?buildId=2022062014"/>
+    
+    
+    <script src="./oxygen-webhelp/lib/jquery/jquery-3.5.1.min.js"></script>
+    
+    <script data-main="./oxygen-webhelp/app/topic-page.js" src="./oxygen-webhelp/lib/requirejs/require.js"></script>
+<link rel="stylesheet" type="text/css" href="oxygen-webhelp/template/microchip.css?buildId=2022062014"/><link rel="stylesheet" type="text/css" href="oxygen-webhelp/template/notes.css?buildId=2022062014"/>
+<script src="mchp-context-help.js"></script>
+<link href="https://fonts.googleapis.com/css?family=Open+Sans:400,600,300" rel="stylesheet" type="text/css"/>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML" async="" type="text/javascript"></script>
+</head>
 
-                      return false;
-                    }
-               }
-            }
-				});
-			}
-
-		</script><script language="javascript">
-        function cpy(id, button) {
-        
-            var element = document.getElementById(id);
-            var content = element.getAttribute("content");
-            var textArea = document.createElement("textarea");
-            
-            // Place in the top-left corner of screen regardless of scroll position.
-            textArea.style.position = 'fixed';
-            textArea.style.top = 0;
-            textArea.style.left = 0;
-            
-            // Ensure it has a small width and height. Setting to 1px / 1em
-            // doesn't work as this gives a negative w/h on some browsers.
-            textArea.style.width = '2em';
-            textArea.style.height = '2em';
-            
-            // We don't need padding, reducing the size if it does flash render.
-            textArea.style.padding = 0;
-            
-            // Clean up any borders.
-            textArea.style.border = 'none';
-            textArea.style.outline = 'none';
-            textArea.style.boxShadow = 'none';
-            
-            // Avoid flash of the white box if rendered for any reason.
-            textArea.style.background = 'transparent';
-            
-            
-            textArea.value = content;
-            
-            document.body.appendChild(textArea);
-            textArea.focus();
-            textArea.select();
-            
-            try {
-               var successful = document.execCommand('copy');
-               var msg = successful ? 'successful' : 'unsuccessful';
-               if (!button.classList.contains("copied")){
-                  button.textContent = "Copied";
-                  button.classList.add("copied");
-                  setTimeout(function(){
-                    button.textContent = "Copy";
-                    button.classList.remove("copied");
-                  },1000);
-               }
-            } catch (err) {
-              console.log('Oops, unable to copy');
-            }
-            
-            document.body.removeChild(textArea);
-        }
-      </script><script language="javascript">
-          
-          // Add the MathML namespace to html
-          var html = document.getElementsByTagName("html")[0],
-          head = document.getElementsByTagName("head")[0];
-          
-          var mathJax = document.createElement("script");
-          mathJax.src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-MML-AM_CHTML";
-          head.appendChild(mathJax);
-          
-          html.setAttribute("xmlns:m","http://www.w3.org/1998/Math/MathML");
-          
-          function inIframe() { try { return window.self !== window.top; } catch (e) { return true; } }
-          
-          if (!inIframe()) { 
-          
-          var Default = "index.html?GUID-8916AA7D-64C7-4477-8D26-664F6B3C242A"; 
-          
-          var displaylocation = "value" + window.location.href;
-          
-          var GUIDS = displaylocation.split('GUID');          
-          
-          if (displaylocation.indexOf('#GUID') != -1) {            
-          var First = GUIDS[1].split('.html');  
-          if (GUIDS[3]){First = GUIDS[2].split('.html');}
-          if (GUIDS[4]){First = GUIDS[3].split('.html');}
-          if (GUIDS[5]){First = GUIDS[4].split('.html');}
-          
-          var Second = GUIDS[2].split('#');   
-          if (GUIDS[3]){Second = GUIDS[3].split('#');}
-          if (GUIDS[4]){Second = GUIDS[4].split('#');}
-          if (GUIDS[5]){Second = GUIDS[5].split('#');}
-          
-          Default = "index.html?" + "GUID" + First[0] + "GUID" + Second[0];     
-          }                    
-          window.top.location = Default;
-          }       
-          
-        </script><style xml:space="">
-        
-          button.copy-code{
-            display:none;
-            padding:0.7em 1.4em;
-            margin:0 0.3em 0.3em 0;
-            border-radius:0.15em;
-            box-sizing: border-box;
-            text-decoration:none;
-            font-family:'Roboto',sans-serif;
-            text-transform:uppercase;
-            font-weight:400;
-            color:#FFFFFF;
-            background-color:#9c9c9c;
-            box-shadow:inset 0 -0.6em 0 -0.35em rgba(0,0,0,0.17);
-            text-align:center;
-            position:relative;
-            border: 0;
-            float: right;
-            border-radius: .5em;
-            cursor: pointer;
-          }
-          button.copy-code:active{
-            top:0.1em;
-          }
-          
-          pre:hover button.copy-code{
-            display: inline-block !important;
-          }
-          button.copy-code.copied {
-            cursor: default !important;
-          }
-          
-          
-          @media all and (max-width:30em){
-            button.copy-code{
-              display:block;
-              margin:0.4em auto;
-            }
-          }
+    <body id="using-the-library" class="wh_topic_page frmBody">
+        <a href="#wh_topic_body" class="sr-only sr-only-focusable">
+            Jump to main content
+        </a>
         
         
-      </style></head>
-<body id="using-the-library">
-<h1 class="title topictitle1" id="ariaid-title1">Using The Library</h1><div class="body"><p class="p">The I2C driver builds on top of the I2C peripheral library (PLIB) and provides write, read and write-read API's in blocking and non-blocking mode for I2C master functionality.</p>
-<ul class="ul"><li class="li"><p class="p">Provides Write, Read and Write followed by Read API's.</p>
-</li>
-<li class="li"><p class="p">Supports multiple slaves connected to the same I2C peripheral instance (multi-client mode).</p>
-</li>
-<li class="li"><p class="p">In asynchronous (non-blocking) mode, application can either register a callback to get notified once the data transfer is complete or can poll the status of the data transfer using the status APIs</p>
-</li>
-<li class="li"><p class="p">In asynchronous mode, application can queue more than one transmit/receive requests without waiting for the previous request to be completed. The number of transmit/receive requests that can be queued depends on the depth of the transfer queue configured using the MHC</p>
-</li>
-<li class="li"><p class="p">The asynchronous mode is supported in both bare-metal and RTOS environment</p>
-</li>
-<li class="li"><p class="p">The synchronous (blocking) mode of the driver is supported only in an RTOS environment</p>
-</li>
-<li class="li"><p class="p">The synchronous mode of the driver does not support callback or queuing multiple requests. This is because the implementation is blocking in nature</p>
-</li>
-</ul>
-<p class="p"><strong class="ph b">Example application to Read and Write from I2C EEPROM in Asynchronous mode</strong></p>
-<pre class="pre codeblock language-c"><button title="Copy Code" class="copy-code" onclick="cpy('d58918e37', this);">Copy</button><code id="d58918e37" content="#define APP_EEPROM_MEMORY_ADDR                  0x0000&#xA;&#xA;/* Size of the string written to EEPROM must be less than or equal to the EEPROM page size */&#xA;#define APP_EEPROM_TEST_DATA                    &#34;I2C EEPROM Demo&#34;&#xA;#define APP_EEPROM_TEST_DATA_SIZE               (sizeof(APP_EEPROM_TEST_DATA)-1)&#xA;#define APP_EEPROM_RX_BUFFER_SIZE               APP_EEPROM_TEST_DATA_SIZE&#xA;&#xA;#if APP_EEPROM_ADDR_LEN_BITS == 18 || APP_EEPROM_ADDR_LEN_BITS == 16&#xA;    /* For 18 bit address, A16 and A17 are part of the EEPROM slave address.&#xA;     * The A16 and A17 bits are set to 0 in this demonstration. */&#xA;    #define APP_EEPROM_NUM_ADDR_BYTES           2&#xA;#elif APP_EEPROM_ADDR_LEN_BITS == 8&#xA;    #define APP_EEPROM_NUM_ADDR_BYTES           1&#xA;#endif&#xA;&#xA;#define APP_EEPROM_TX_BUFFER_SIZE        (APP_EEPROM_TEST_DATA_SIZE + APP_EEPROM_NUM_ADDR_BYTES)&#xA;&#xA;APP_DATA appData;&#xA;&#xA;static uint8_t testTxData[APP_EEPROM_TX_BUFFER_SIZE] = {0};&#xA;static uint8_t testRxData[APP_EEPROM_RX_BUFFER_SIZE] = {0};&#xA;&#xA;void APP_I2CEventHandler (&#xA;    DRV_I2C_TRANSFER_EVENT event,&#xA;    DRV_I2C_TRANSFER_HANDLE transferHandle,&#xA;    uintptr_t context&#xA;)&#xA;{&#xA;    APP_TRANSFER_STATUS* transferStatus = (APP_TRANSFER_STATUS*)context;&#xA;&#xA;    if (event == DRV_I2C_TRANSFER_EVENT_COMPLETE)&#xA;    {&#xA;        if (transferStatus)&#xA;        {&#xA;            *transferStatus = APP_TRANSFER_STATUS_SUCCESS;&#xA;        }&#xA;    }&#xA;    else&#xA;    {&#xA;        if (transferStatus)&#xA;        {&#xA;            *transferStatus = APP_TRANSFER_STATUS_ERROR;&#xA;        }&#xA;    }&#xA;}&#xA;&#xA;void APP_Initialize ( void )&#xA;{&#xA;    /* Initialize the appData structure. */&#xA;    appData.state = APP_STATE_INIT;&#xA;    appData.drvI2CHandle   = DRV_HANDLE_INVALID;&#xA;    appData.transferHandle = DRV_I2C_TRANSFER_HANDLE_INVALID;&#xA;    appData.transferStatus = APP_TRANSFER_STATUS_ERROR;&#xA;&#xA;#if APP_EEPROM_NUM_ADDR_BYTES == 2&#xA;    testTxData[0] = (APP_EEPROM_MEMORY_ADDR &gt;&gt; 8);&#xA;    testTxData[1] = APP_EEPROM_MEMORY_ADDR;&#xA;    memcpy(&amp;testTxData[2], (const void*)APP_EEPROM_TEST_DATA, APP_EEPROM_TEST_DATA_SIZE);&#xA;#else&#xA;    testTxData[0] = APP_EEPROM_MEMORY_ADDR;&#xA;    memcpy(&amp;testTxData[1], (const void*)APP_EEPROM_TEST_DATA, APP_EEPROM_TEST_DATA_SIZE);&#xA;#endif&#xA;&#xA;}&#xA;&#xA;void APP_Tasks ( void )&#xA;{&#xA;    /* Check the application's current state. */&#xA;    switch ( appData.state )&#xA;    {&#xA;        /* Application's initial state. */&#xA;        case APP_STATE_INIT:&#xA;&#xA;            /* Open the I2C Driver */&#xA;            appData.drvI2CHandle = DRV_I2C_Open( DRV_I2C_INDEX_0, DRV_IO_INTENT_READWRITE );&#xA;            if(appData.drvI2CHandle == DRV_HANDLE_INVALID)&#xA;            {&#xA;                appData.state = APP_STATE_ERROR;&#xA;            }&#xA;            else&#xA;            {&#xA;                /* Register the I2C Driver event Handler */&#xA;                DRV_I2C_TransferEventHandlerSet(&#xA;                    appData.drvI2CHandle,&#xA;                    APP_I2CEventHandler,&#xA;                    (uintptr_t)&amp;appData.transferStatus&#xA;                );&#xA;                appData.state  = APP_STATE_IS_EEPROM_READY;&#xA;            }&#xA;            break;&#xA;&#xA;        case APP_STATE_IS_EEPROM_READY:&#xA;&#xA;            appData.transferStatus = APP_TRANSFER_STATUS_IN_PROGRESS;&#xA;            /* Add a dummy write transfer request to verify whether EEPROM is ready */&#xA;            DRV_I2C_WriteTransferAdd(&#xA;                appData.drvI2CHandle,&#xA;                APP_EEPROM_SLAVE_ADDR,&#xA;                (void *)&amp;appData.dummyData,&#xA;                1,&#xA;                &amp;appData.transferHandle&#xA;            );&#xA;&#xA;            if( appData.transferHandle == DRV_I2C_TRANSFER_HANDLE_INVALID )&#xA;            {&#xA;                appData.state = APP_STATE_ERROR;&#xA;            }&#xA;            else&#xA;            {&#xA;                appData.state = APP_STATE_DATA_WRITE;&#xA;            }&#xA;            break;&#xA;&#xA;        case APP_STATE_DATA_WRITE:&#xA;            if (appData.transferStatus == APP_TRANSFER_STATUS_SUCCESS)&#xA;            {&#xA;                appData.transferStatus = APP_TRANSFER_STATUS_IN_PROGRESS;&#xA;&#xA;                /* Add a request to write the application data */&#xA;                DRV_I2C_WriteTransferAdd(&#xA;                    appData.drvI2CHandle,&#xA;                    APP_EEPROM_SLAVE_ADDR,&#xA;                    (void *)&amp;testTxData[0],&#xA;                    APP_EEPROM_TX_BUFFER_SIZE,&#xA;                    &amp;appData.transferHandle&#xA;                );&#xA;&#xA;                if( appData.transferHandle == DRV_I2C_TRANSFER_HANDLE_INVALID )&#xA;                {&#xA;                    appData.state = APP_STATE_ERROR;&#xA;                }&#xA;                else&#xA;                {&#xA;                    appData.state = APP_STATE_WAIT_WRITE_COMPLETE;&#xA;                }&#xA;            }&#xA;            else if (appData.transferStatus == APP_TRANSFER_STATUS_ERROR)&#xA;            {&#xA;                //EEPROM is not ready. Keep checking until it is ready to receive commands.&#xA;                //Some EEPROMs need stabilization time before they can start responding to commands.&#xA;                appData.state = APP_STATE_IS_EEPROM_READY;&#xA;            }&#xA;            break;&#xA;&#xA;        case APP_STATE_WAIT_WRITE_COMPLETE:&#xA;            if (appData.transferStatus == APP_TRANSFER_STATUS_SUCCESS)&#xA;            {&#xA;                appData.transferStatus = APP_TRANSFER_STATUS_IN_PROGRESS;&#xA;&#xA;                /* Add a dummy write request to check if EEPROM's internal write cycle is complete */&#xA;                DRV_I2C_WriteTransferAdd(&#xA;                    appData.drvI2CHandle,&#xA;                    APP_EEPROM_SLAVE_ADDR,&#xA;                    (void *)&amp;appData.dummyData,&#xA;                    1,&#xA;                    &amp;appData.transferHandle&#xA;                );&#xA;&#xA;                if( appData.transferHandle == DRV_I2C_TRANSFER_HANDLE_INVALID )&#xA;                {&#xA;                    appData.state = APP_STATE_ERROR;&#xA;                }&#xA;                else&#xA;                {&#xA;                    appData.state = APP_STATE_EEPROM_CHECK_INTERNAL_WRITE_STATUS;&#xA;                }&#xA;            }&#xA;            else if (appData.transferStatus == APP_TRANSFER_STATUS_ERROR)&#xA;            {&#xA;                appData.state = APP_STATE_ERROR;&#xA;            }&#xA;            break;&#xA;&#xA;        case APP_STATE_EEPROM_CHECK_INTERNAL_WRITE_STATUS:&#xA;            if (appData.transferStatus == APP_TRANSFER_STATUS_SUCCESS)&#xA;            {&#xA;                appData.state = APP_STATE_DATA_READ;&#xA;            }&#xA;            else if (appData.transferStatus == APP_TRANSFER_STATUS_ERROR)&#xA;            {&#xA;                appData.transferStatus = APP_TRANSFER_STATUS_IN_PROGRESS;&#xA;&#xA;                /* Keep checking if EEPROM's internal write cycle is complete */&#xA;                DRV_I2C_WriteTransferAdd(&#xA;                    appData.drvI2CHandle,&#xA;                    APP_EEPROM_SLAVE_ADDR,&#xA;                    (void *)&amp;appData.dummyData,&#xA;                    1,&#xA;                    &amp;appData.transferHandle&#xA;                );&#xA;&#xA;                if( appData.transferHandle == DRV_I2C_TRANSFER_HANDLE_INVALID )&#xA;                {&#xA;                    appData.state = APP_STATE_ERROR;&#xA;                }&#xA;            }&#xA;            break;&#xA;&#xA;        case APP_STATE_DATA_READ:&#xA;&#xA;            appData.transferStatus = APP_TRANSFER_STATUS_IN_PROGRESS;&#xA;&#xA;            /* Add a request to read data from EEPROM. */&#xA;            DRV_I2C_WriteReadTransferAdd(&#xA;                appData.drvI2CHandle,&#xA;                APP_EEPROM_SLAVE_ADDR,&#xA;                (void *)&amp;testTxData[0],&#xA;                APP_EEPROM_NUM_ADDR_BYTES,&#xA;                (void *)&amp;testRxData[0],&#xA;                APP_EEPROM_TEST_DATA_SIZE,&#xA;                &amp;appData.transferHandle&#xA;            );&#xA;&#xA;            if( appData.transferHandle == DRV_I2C_TRANSFER_HANDLE_INVALID )&#xA;            {&#xA;                appData.state = APP_STATE_ERROR;&#xA;            }&#xA;            else&#xA;            {&#xA;                appData.state = APP_STATE_WAIT_READ_COMPLETE;&#xA;            }&#xA;            break;&#xA;&#xA;        case APP_STATE_WAIT_READ_COMPLETE:&#xA;            if (appData.transferStatus == APP_TRANSFER_STATUS_SUCCESS)&#xA;            {&#xA;                appData.state = APP_STATE_DATA_VERIFY;&#xA;            }&#xA;            else if (appData.transferStatus == APP_TRANSFER_STATUS_ERROR)&#xA;            {&#xA;                appData.state = APP_STATE_ERROR;&#xA;            }&#xA;            break;&#xA;&#xA;        case APP_STATE_DATA_VERIFY:&#xA;&#xA;            /* Compare data written and data read */&#xA;            if (memcmp(&amp;testTxData[APP_EEPROM_NUM_ADDR_BYTES], &amp;testRxData[0], APP_EEPROM_TEST_DATA_SIZE) == 0)&#xA;            {&#xA;                appData.state = APP_STATE_SUCCESS;&#xA;            }&#xA;            else&#xA;            {&#xA;                appData.state = APP_STATE_ERROR;&#xA;            }&#xA;            break;&#xA;&#xA;        case APP_STATE_SUCCESS:&#xA;&#xA;            appData.state = APP_STATE_IDLE;&#xA;            break;&#xA;&#xA;        case APP_STATE_ERROR:&#xA;&#xA;            appData.state = APP_STATE_IDLE;&#xA;            break;&#xA;&#xA;        case APP_STATE_IDLE:&#xA;        default:&#xA;            break;&#xA;    }&#xA;}"><span class="ph token macro property">#<span class="ph token directive keyword">define</span> APP_EEPROM_MEMORY_ADDR                  0x0000</span>
+        
+        
+        <header class="navbar navbar-default wh_header">
+    <div class="container-fluid">
+        <div class="wh_header_flex_container navbar-nav navbar-expand-md navbar-dark">
+            <div class="wh_logo_and_publication_title_container">
+                <div class="wh_logo_and_publication_title">
+                    
+                    <a href="index.html" class=" wh_logo d-none d-sm-block "><img src="oxygen-webhelp\template\resources/images/microchip.png" alt="MPLAB® Harmony Core Library "/></a>
+                    <div class=" wh_publication_title "><a href="index.html">MPLAB® Harmony Core Library </a></div>
+                    
+                </div>
+                
+                
+            </div>
 
-<span class="ph token comment">/* Size of the string written to EEPROM must be less than or equal to the EEPROM page size */</span>
-<span class="ph token macro property">#<span class="ph token directive keyword">define</span> APP_EEPROM_TEST_DATA                    "I2C EEPROM Demo"</span>
-<span class="ph token macro property">#<span class="ph token directive keyword">define</span> APP_EEPROM_TEST_DATA_SIZE               (sizeof(APP_EEPROM_TEST_DATA)-1)</span>
-<span class="ph token macro property">#<span class="ph token directive keyword">define</span> APP_EEPROM_RX_BUFFER_SIZE               APP_EEPROM_TEST_DATA_SIZE</span>
-
-<span class="ph token macro property">#<span class="ph token directive keyword">if</span> APP_EEPROM_ADDR_LEN_BITS == 18 || APP_EEPROM_ADDR_LEN_BITS == 16</span>
-    <span class="ph token comment">/* For 18 bit address, A16 and A17 are part of the EEPROM slave address.
-     * The A16 and A17 bits are set to 0 in this demonstration. */</span>
-    <span class="ph token macro property">#<span class="ph token directive keyword">define</span> APP_EEPROM_NUM_ADDR_BYTES           2</span>
-<span class="ph token macro property">#<span class="ph token directive keyword">elif</span> APP_EEPROM_ADDR_LEN_BITS == 8</span>
-    <span class="ph token macro property">#<span class="ph token directive keyword">define</span> APP_EEPROM_NUM_ADDR_BYTES           1</span>
-<span class="ph token macro property">#<span class="ph token directive keyword">endif</span></span>
-
-<span class="ph token macro property">#<span class="ph token directive keyword">define</span> APP_EEPROM_TX_BUFFER_SIZE        (APP_EEPROM_TEST_DATA_SIZE + APP_EEPROM_NUM_ADDR_BYTES)</span>
-
-APP_DATA appData<span class="ph token punctuation">;</span>
-
-<span class="ph token keyword">static</span> uint8_t testTxData<span class="ph token punctuation">[</span>APP_EEPROM_TX_BUFFER_SIZE<span class="ph token punctuation">]</span> <span class="ph token operator">=</span> <span class="ph token punctuation">{</span><span class="ph token number">0</span><span class="ph token punctuation">}</span><span class="ph token punctuation">;</span>
-<span class="ph token keyword">static</span> uint8_t testRxData<span class="ph token punctuation">[</span>APP_EEPROM_RX_BUFFER_SIZE<span class="ph token punctuation">]</span> <span class="ph token operator">=</span> <span class="ph token punctuation">{</span><span class="ph token number">0</span><span class="ph token punctuation">}</span><span class="ph token punctuation">;</span>
-
-<span class="ph token keyword">void</span> APP_I2CEventHandler <span class="ph token punctuation">(</span>
-    DRV_I2C_TRANSFER_EVENT event<span class="ph token punctuation">,</span>
-    DRV_I2C_TRANSFER_HANDLE transferHandle<span class="ph token punctuation">,</span>
-    uintptr_t context
-<span class="ph token punctuation">)</span>
-<span class="ph token punctuation">{</span>
-    APP_TRANSFER_STATUS<span class="ph token operator">*</span> transferStatus <span class="ph token operator">=</span> <span class="ph token punctuation">(</span>APP_TRANSFER_STATUS<span class="ph token operator">*</span><span class="ph token punctuation">)</span>context<span class="ph token punctuation">;</span>
-
-    <span class="ph token keyword">if</span> <span class="ph token punctuation">(</span>event <span class="ph token operator">==</span> DRV_I2C_TRANSFER_EVENT_COMPLETE<span class="ph token punctuation">)</span>
-    <span class="ph token punctuation">{</span>
-        <span class="ph token keyword">if</span> <span class="ph token punctuation">(</span>transferStatus<span class="ph token punctuation">)</span>
-        <span class="ph token punctuation">{</span>
-            <span class="ph token operator">*</span>transferStatus <span class="ph token operator">=</span> APP_TRANSFER_STATUS_SUCCESS<span class="ph token punctuation">;</span>
-        <span class="ph token punctuation">}</span>
-    <span class="ph token punctuation">}</span>
-    <span class="ph token keyword">else</span>
-    <span class="ph token punctuation">{</span>
-        <span class="ph token keyword">if</span> <span class="ph token punctuation">(</span>transferStatus<span class="ph token punctuation">)</span>
-        <span class="ph token punctuation">{</span>
-            <span class="ph token operator">*</span>transferStatus <span class="ph token operator">=</span> APP_TRANSFER_STATUS_ERROR<span class="ph token punctuation">;</span>
-        <span class="ph token punctuation">}</span>
-    <span class="ph token punctuation">}</span>
-<span class="ph token punctuation">}</span>
-
-<span class="ph token keyword">void</span> APP_Initialize <span class="ph token punctuation">(</span> <span class="ph token keyword">void</span> <span class="ph token punctuation">)</span>
-<span class="ph token punctuation">{</span>
-    <span class="ph token comment">/* Initialize the appData structure. */</span>
-    appData<span class="ph token punctuation">.</span>state <span class="ph token operator">=</span> APP_STATE_INIT<span class="ph token punctuation">;</span>
-    appData<span class="ph token punctuation">.</span>drvI2CHandle   <span class="ph token operator">=</span> DRV_HANDLE_INVALID<span class="ph token punctuation">;</span>
-    appData<span class="ph token punctuation">.</span>transferHandle <span class="ph token operator">=</span> DRV_I2C_TRANSFER_HANDLE_INVALID<span class="ph token punctuation">;</span>
-    appData<span class="ph token punctuation">.</span>transferStatus <span class="ph token operator">=</span> APP_TRANSFER_STATUS_ERROR<span class="ph token punctuation">;</span>
-
-<span class="ph token macro property">#<span class="ph token directive keyword">if</span> APP_EEPROM_NUM_ADDR_BYTES == 2</span>
-    testTxData<span class="ph token punctuation">[</span><span class="ph token number">0</span><span class="ph token punctuation">]</span> <span class="ph token operator">=</span> <span class="ph token punctuation">(</span>APP_EEPROM_MEMORY_ADDR <span class="ph token operator">&gt;&gt;</span> <span class="ph token number">8</span><span class="ph token punctuation">)</span><span class="ph token punctuation">;</span>
-    testTxData<span class="ph token punctuation">[</span><span class="ph token number">1</span><span class="ph token punctuation">]</span> <span class="ph token operator">=</span> APP_EEPROM_MEMORY_ADDR<span class="ph token punctuation">;</span>
-    <span class="ph token function">memcpy</span><span class="ph token punctuation">(</span><span class="ph token operator">&amp;</span>testTxData<span class="ph token punctuation">[</span><span class="ph token number">2</span><span class="ph token punctuation">]</span><span class="ph token punctuation">,</span> <span class="ph token punctuation">(</span><span class="ph token keyword">const</span> <span class="ph token keyword">void</span><span class="ph token operator">*</span><span class="ph token punctuation">)</span>APP_EEPROM_TEST_DATA<span class="ph token punctuation">,</span> APP_EEPROM_TEST_DATA_SIZE<span class="ph token punctuation">)</span><span class="ph token punctuation">;</span>
-<span class="ph token macro property">#<span class="ph token directive keyword">else</span></span>
-    testTxData<span class="ph token punctuation">[</span><span class="ph token number">0</span><span class="ph token punctuation">]</span> <span class="ph token operator">=</span> APP_EEPROM_MEMORY_ADDR<span class="ph token punctuation">;</span>
-    <span class="ph token function">memcpy</span><span class="ph token punctuation">(</span><span class="ph token operator">&amp;</span>testTxData<span class="ph token punctuation">[</span><span class="ph token number">1</span><span class="ph token punctuation">]</span><span class="ph token punctuation">,</span> <span class="ph token punctuation">(</span><span class="ph token keyword">const</span> <span class="ph token keyword">void</span><span class="ph token operator">*</span><span class="ph token punctuation">)</span>APP_EEPROM_TEST_DATA<span class="ph token punctuation">,</span> APP_EEPROM_TEST_DATA_SIZE<span class="ph token punctuation">)</span><span class="ph token punctuation">;</span>
-<span class="ph token macro property">#<span class="ph token directive keyword">endif</span></span>
-
-<span class="ph token punctuation">}</span>
-
-<span class="ph token keyword">void</span> APP_Tasks <span class="ph token punctuation">(</span> <span class="ph token keyword">void</span> <span class="ph token punctuation">)</span>
-<span class="ph token punctuation">{</span>
-    <span class="ph token comment">/* Check the application's current state. */</span>
-    <span class="ph token keyword">switch</span> <span class="ph token punctuation">(</span> appData<span class="ph token punctuation">.</span>state <span class="ph token punctuation">)</span>
-    <span class="ph token punctuation">{</span>
-        <span class="ph token comment">/* Application's initial state. */</span>
-        <span class="ph token keyword">case</span> APP_STATE_INIT<span class="ph token operator">:</span>
-
-            <span class="ph token comment">/* Open the I2C Driver */</span>
-            appData<span class="ph token punctuation">.</span>drvI2CHandle <span class="ph token operator">=</span> <span class="ph token function">DRV_I2C_Open</span><span class="ph token punctuation">(</span> DRV_I2C_INDEX_0<span class="ph token punctuation">,</span> DRV_IO_INTENT_READWRITE <span class="ph token punctuation">)</span><span class="ph token punctuation">;</span>
-            <span class="ph token keyword">if</span><span class="ph token punctuation">(</span>appData<span class="ph token punctuation">.</span>drvI2CHandle <span class="ph token operator">==</span> DRV_HANDLE_INVALID<span class="ph token punctuation">)</span>
-            <span class="ph token punctuation">{</span>
-                appData<span class="ph token punctuation">.</span>state <span class="ph token operator">=</span> APP_STATE_ERROR<span class="ph token punctuation">;</span>
-            <span class="ph token punctuation">}</span>
-            <span class="ph token keyword">else</span>
-            <span class="ph token punctuation">{</span>
-                <span class="ph token comment">/* Register the I2C Driver event Handler */</span>
-                <span class="ph token function">DRV_I2C_TransferEventHandlerSet</span><span class="ph token punctuation">(</span>
-                    appData<span class="ph token punctuation">.</span>drvI2CHandle<span class="ph token punctuation">,</span>
-                    APP_I2CEventHandler<span class="ph token punctuation">,</span>
-                    <span class="ph token punctuation">(</span>uintptr_t<span class="ph token punctuation">)</span><span class="ph token operator">&amp;</span>appData<span class="ph token punctuation">.</span>transferStatus
-                <span class="ph token punctuation">)</span><span class="ph token punctuation">;</span>
-                appData<span class="ph token punctuation">.</span>state  <span class="ph token operator">=</span> APP_STATE_IS_EEPROM_READY<span class="ph token punctuation">;</span>
-            <span class="ph token punctuation">}</span>
-            <span class="ph token keyword">break</span><span class="ph token punctuation">;</span>
-
-        <span class="ph token keyword">case</span> APP_STATE_IS_EEPROM_READY<span class="ph token operator">:</span>
-
-            appData<span class="ph token punctuation">.</span>transferStatus <span class="ph token operator">=</span> APP_TRANSFER_STATUS_IN_PROGRESS<span class="ph token punctuation">;</span>
-            <span class="ph token comment">/* Add a dummy write transfer request to verify whether EEPROM is ready */</span>
-            <span class="ph token function">DRV_I2C_WriteTransferAdd</span><span class="ph token punctuation">(</span>
-                appData<span class="ph token punctuation">.</span>drvI2CHandle<span class="ph token punctuation">,</span>
-                APP_EEPROM_SLAVE_ADDR<span class="ph token punctuation">,</span>
-                <span class="ph token punctuation">(</span><span class="ph token keyword">void</span> <span class="ph token operator">*</span><span class="ph token punctuation">)</span><span class="ph token operator">&amp;</span>appData<span class="ph token punctuation">.</span>dummyData<span class="ph token punctuation">,</span>
-                <span class="ph token number">1</span><span class="ph token punctuation">,</span>
-                <span class="ph token operator">&amp;</span>appData<span class="ph token punctuation">.</span>transferHandle
-            <span class="ph token punctuation">)</span><span class="ph token punctuation">;</span>
-
-            <span class="ph token keyword">if</span><span class="ph token punctuation">(</span> appData<span class="ph token punctuation">.</span>transferHandle <span class="ph token operator">==</span> DRV_I2C_TRANSFER_HANDLE_INVALID <span class="ph token punctuation">)</span>
-            <span class="ph token punctuation">{</span>
-                appData<span class="ph token punctuation">.</span>state <span class="ph token operator">=</span> APP_STATE_ERROR<span class="ph token punctuation">;</span>
-            <span class="ph token punctuation">}</span>
-            <span class="ph token keyword">else</span>
-            <span class="ph token punctuation">{</span>
-                appData<span class="ph token punctuation">.</span>state <span class="ph token operator">=</span> APP_STATE_DATA_WRITE<span class="ph token punctuation">;</span>
-            <span class="ph token punctuation">}</span>
-            <span class="ph token keyword">break</span><span class="ph token punctuation">;</span>
-
-        <span class="ph token keyword">case</span> APP_STATE_DATA_WRITE<span class="ph token operator">:</span>
-            <span class="ph token keyword">if</span> <span class="ph token punctuation">(</span>appData<span class="ph token punctuation">.</span>transferStatus <span class="ph token operator">==</span> APP_TRANSFER_STATUS_SUCCESS<span class="ph token punctuation">)</span>
-            <span class="ph token punctuation">{</span>
-                appData<span class="ph token punctuation">.</span>transferStatus <span class="ph token operator">=</span> APP_TRANSFER_STATUS_IN_PROGRESS<span class="ph token punctuation">;</span>
-
-                <span class="ph token comment">/* Add a request to write the application data */</span>
-                <span class="ph token function">DRV_I2C_WriteTransferAdd</span><span class="ph token punctuation">(</span>
-                    appData<span class="ph token punctuation">.</span>drvI2CHandle<span class="ph token punctuation">,</span>
-                    APP_EEPROM_SLAVE_ADDR<span class="ph token punctuation">,</span>
-                    <span class="ph token punctuation">(</span><span class="ph token keyword">void</span> <span class="ph token operator">*</span><span class="ph token punctuation">)</span><span class="ph token operator">&amp;</span>testTxData<span class="ph token punctuation">[</span><span class="ph token number">0</span><span class="ph token punctuation">]</span><span class="ph token punctuation">,</span>
-                    APP_EEPROM_TX_BUFFER_SIZE<span class="ph token punctuation">,</span>
-                    <span class="ph token operator">&amp;</span>appData<span class="ph token punctuation">.</span>transferHandle
-                <span class="ph token punctuation">)</span><span class="ph token punctuation">;</span>
-
-                <span class="ph token keyword">if</span><span class="ph token punctuation">(</span> appData<span class="ph token punctuation">.</span>transferHandle <span class="ph token operator">==</span> DRV_I2C_TRANSFER_HANDLE_INVALID <span class="ph token punctuation">)</span>
-                <span class="ph token punctuation">{</span>
-                    appData<span class="ph token punctuation">.</span>state <span class="ph token operator">=</span> APP_STATE_ERROR<span class="ph token punctuation">;</span>
-                <span class="ph token punctuation">}</span>
-                <span class="ph token keyword">else</span>
-                <span class="ph token punctuation">{</span>
-                    appData<span class="ph token punctuation">.</span>state <span class="ph token operator">=</span> APP_STATE_WAIT_WRITE_COMPLETE<span class="ph token punctuation">;</span>
-                <span class="ph token punctuation">}</span>
-            <span class="ph token punctuation">}</span>
-            <span class="ph token keyword">else</span> <span class="ph token keyword">if</span> <span class="ph token punctuation">(</span>appData<span class="ph token punctuation">.</span>transferStatus <span class="ph token operator">==</span> APP_TRANSFER_STATUS_ERROR<span class="ph token punctuation">)</span>
-            <span class="ph token punctuation">{</span>
-                <span class="ph token comment">//EEPROM is not ready. Keep checking until it is ready to receive commands.</span>
-                <span class="ph token comment">//Some EEPROMs need stabilization time before they can start responding to commands.</span>
-                appData<span class="ph token punctuation">.</span>state <span class="ph token operator">=</span> APP_STATE_IS_EEPROM_READY<span class="ph token punctuation">;</span>
-            <span class="ph token punctuation">}</span>
-            <span class="ph token keyword">break</span><span class="ph token punctuation">;</span>
-
-        <span class="ph token keyword">case</span> APP_STATE_WAIT_WRITE_COMPLETE<span class="ph token operator">:</span>
-            <span class="ph token keyword">if</span> <span class="ph token punctuation">(</span>appData<span class="ph token punctuation">.</span>transferStatus <span class="ph token operator">==</span> APP_TRANSFER_STATUS_SUCCESS<span class="ph token punctuation">)</span>
-            <span class="ph token punctuation">{</span>
-                appData<span class="ph token punctuation">.</span>transferStatus <span class="ph token operator">=</span> APP_TRANSFER_STATUS_IN_PROGRESS<span class="ph token punctuation">;</span>
-
-                <span class="ph token comment">/* Add a dummy write request to check if EEPROM's internal write cycle is complete */</span>
-                <span class="ph token function">DRV_I2C_WriteTransferAdd</span><span class="ph token punctuation">(</span>
-                    appData<span class="ph token punctuation">.</span>drvI2CHandle<span class="ph token punctuation">,</span>
-                    APP_EEPROM_SLAVE_ADDR<span class="ph token punctuation">,</span>
-                    <span class="ph token punctuation">(</span><span class="ph token keyword">void</span> <span class="ph token operator">*</span><span class="ph token punctuation">)</span><span class="ph token operator">&amp;</span>appData<span class="ph token punctuation">.</span>dummyData<span class="ph token punctuation">,</span>
-                    <span class="ph token number">1</span><span class="ph token punctuation">,</span>
-                    <span class="ph token operator">&amp;</span>appData<span class="ph token punctuation">.</span>transferHandle
-                <span class="ph token punctuation">)</span><span class="ph token punctuation">;</span>
-
-                <span class="ph token keyword">if</span><span class="ph token punctuation">(</span> appData<span class="ph token punctuation">.</span>transferHandle <span class="ph token operator">==</span> DRV_I2C_TRANSFER_HANDLE_INVALID <span class="ph token punctuation">)</span>
-                <span class="ph token punctuation">{</span>
-                    appData<span class="ph token punctuation">.</span>state <span class="ph token operator">=</span> APP_STATE_ERROR<span class="ph token punctuation">;</span>
-                <span class="ph token punctuation">}</span>
-                <span class="ph token keyword">else</span>
-                <span class="ph token punctuation">{</span>
-                    appData<span class="ph token punctuation">.</span>state <span class="ph token operator">=</span> APP_STATE_EEPROM_CHECK_INTERNAL_WRITE_STATUS<span class="ph token punctuation">;</span>
-                <span class="ph token punctuation">}</span>
-            <span class="ph token punctuation">}</span>
-            <span class="ph token keyword">else</span> <span class="ph token keyword">if</span> <span class="ph token punctuation">(</span>appData<span class="ph token punctuation">.</span>transferStatus <span class="ph token operator">==</span> APP_TRANSFER_STATUS_ERROR<span class="ph token punctuation">)</span>
-            <span class="ph token punctuation">{</span>
-                appData<span class="ph token punctuation">.</span>state <span class="ph token operator">=</span> APP_STATE_ERROR<span class="ph token punctuation">;</span>
-            <span class="ph token punctuation">}</span>
-            <span class="ph token keyword">break</span><span class="ph token punctuation">;</span>
-
-        <span class="ph token keyword">case</span> APP_STATE_EEPROM_CHECK_INTERNAL_WRITE_STATUS<span class="ph token operator">:</span>
-            <span class="ph token keyword">if</span> <span class="ph token punctuation">(</span>appData<span class="ph token punctuation">.</span>transferStatus <span class="ph token operator">==</span> APP_TRANSFER_STATUS_SUCCESS<span class="ph token punctuation">)</span>
-            <span class="ph token punctuation">{</span>
-                appData<span class="ph token punctuation">.</span>state <span class="ph token operator">=</span> APP_STATE_DATA_READ<span class="ph token punctuation">;</span>
-            <span class="ph token punctuation">}</span>
-            <span class="ph token keyword">else</span> <span class="ph token keyword">if</span> <span class="ph token punctuation">(</span>appData<span class="ph token punctuation">.</span>transferStatus <span class="ph token operator">==</span> APP_TRANSFER_STATUS_ERROR<span class="ph token punctuation">)</span>
-            <span class="ph token punctuation">{</span>
-                appData<span class="ph token punctuation">.</span>transferStatus <span class="ph token operator">=</span> APP_TRANSFER_STATUS_IN_PROGRESS<span class="ph token punctuation">;</span>
-
-                <span class="ph token comment">/* Keep checking if EEPROM's internal write cycle is complete */</span>
-                <span class="ph token function">DRV_I2C_WriteTransferAdd</span><span class="ph token punctuation">(</span>
-                    appData<span class="ph token punctuation">.</span>drvI2CHandle<span class="ph token punctuation">,</span>
-                    APP_EEPROM_SLAVE_ADDR<span class="ph token punctuation">,</span>
-                    <span class="ph token punctuation">(</span><span class="ph token keyword">void</span> <span class="ph token operator">*</span><span class="ph token punctuation">)</span><span class="ph token operator">&amp;</span>appData<span class="ph token punctuation">.</span>dummyData<span class="ph token punctuation">,</span>
-                    <span class="ph token number">1</span><span class="ph token punctuation">,</span>
-                    <span class="ph token operator">&amp;</span>appData<span class="ph token punctuation">.</span>transferHandle
-                <span class="ph token punctuation">)</span><span class="ph token punctuation">;</span>
-
-                <span class="ph token keyword">if</span><span class="ph token punctuation">(</span> appData<span class="ph token punctuation">.</span>transferHandle <span class="ph token operator">==</span> DRV_I2C_TRANSFER_HANDLE_INVALID <span class="ph token punctuation">)</span>
-                <span class="ph token punctuation">{</span>
-                    appData<span class="ph token punctuation">.</span>state <span class="ph token operator">=</span> APP_STATE_ERROR<span class="ph token punctuation">;</span>
-                <span class="ph token punctuation">}</span>
-            <span class="ph token punctuation">}</span>
-            <span class="ph token keyword">break</span><span class="ph token punctuation">;</span>
-
-        <span class="ph token keyword">case</span> APP_STATE_DATA_READ<span class="ph token operator">:</span>
-
-            appData<span class="ph token punctuation">.</span>transferStatus <span class="ph token operator">=</span> APP_TRANSFER_STATUS_IN_PROGRESS<span class="ph token punctuation">;</span>
-
-            <span class="ph token comment">/* Add a request to read data from EEPROM. */</span>
-            <span class="ph token function">DRV_I2C_WriteReadTransferAdd</span><span class="ph token punctuation">(</span>
-                appData<span class="ph token punctuation">.</span>drvI2CHandle<span class="ph token punctuation">,</span>
-                APP_EEPROM_SLAVE_ADDR<span class="ph token punctuation">,</span>
-                <span class="ph token punctuation">(</span><span class="ph token keyword">void</span> <span class="ph token operator">*</span><span class="ph token punctuation">)</span><span class="ph token operator">&amp;</span>testTxData<span class="ph token punctuation">[</span><span class="ph token number">0</span><span class="ph token punctuation">]</span><span class="ph token punctuation">,</span>
-                APP_EEPROM_NUM_ADDR_BYTES<span class="ph token punctuation">,</span>
-                <span class="ph token punctuation">(</span><span class="ph token keyword">void</span> <span class="ph token operator">*</span><span class="ph token punctuation">)</span><span class="ph token operator">&amp;</span>testRxData<span class="ph token punctuation">[</span><span class="ph token number">0</span><span class="ph token punctuation">]</span><span class="ph token punctuation">,</span>
-                APP_EEPROM_TEST_DATA_SIZE<span class="ph token punctuation">,</span>
-                <span class="ph token operator">&amp;</span>appData<span class="ph token punctuation">.</span>transferHandle
-            <span class="ph token punctuation">)</span><span class="ph token punctuation">;</span>
-
-            <span class="ph token keyword">if</span><span class="ph token punctuation">(</span> appData<span class="ph token punctuation">.</span>transferHandle <span class="ph token operator">==</span> DRV_I2C_TRANSFER_HANDLE_INVALID <span class="ph token punctuation">)</span>
-            <span class="ph token punctuation">{</span>
-                appData<span class="ph token punctuation">.</span>state <span class="ph token operator">=</span> APP_STATE_ERROR<span class="ph token punctuation">;</span>
-            <span class="ph token punctuation">}</span>
-            <span class="ph token keyword">else</span>
-            <span class="ph token punctuation">{</span>
-                appData<span class="ph token punctuation">.</span>state <span class="ph token operator">=</span> APP_STATE_WAIT_READ_COMPLETE<span class="ph token punctuation">;</span>
-            <span class="ph token punctuation">}</span>
-            <span class="ph token keyword">break</span><span class="ph token punctuation">;</span>
-
-        <span class="ph token keyword">case</span> APP_STATE_WAIT_READ_COMPLETE<span class="ph token operator">:</span>
-            <span class="ph token keyword">if</span> <span class="ph token punctuation">(</span>appData<span class="ph token punctuation">.</span>transferStatus <span class="ph token operator">==</span> APP_TRANSFER_STATUS_SUCCESS<span class="ph token punctuation">)</span>
-            <span class="ph token punctuation">{</span>
-                appData<span class="ph token punctuation">.</span>state <span class="ph token operator">=</span> APP_STATE_DATA_VERIFY<span class="ph token punctuation">;</span>
-            <span class="ph token punctuation">}</span>
-            <span class="ph token keyword">else</span> <span class="ph token keyword">if</span> <span class="ph token punctuation">(</span>appData<span class="ph token punctuation">.</span>transferStatus <span class="ph token operator">==</span> APP_TRANSFER_STATUS_ERROR<span class="ph token punctuation">)</span>
-            <span class="ph token punctuation">{</span>
-                appData<span class="ph token punctuation">.</span>state <span class="ph token operator">=</span> APP_STATE_ERROR<span class="ph token punctuation">;</span>
-            <span class="ph token punctuation">}</span>
-            <span class="ph token keyword">break</span><span class="ph token punctuation">;</span>
-
-        <span class="ph token keyword">case</span> APP_STATE_DATA_VERIFY<span class="ph token operator">:</span>
-
-            <span class="ph token comment">/* Compare data written and data read */</span>
-            <span class="ph token keyword">if</span> <span class="ph token punctuation">(</span><span class="ph token function">memcmp</span><span class="ph token punctuation">(</span><span class="ph token operator">&amp;</span>testTxData<span class="ph token punctuation">[</span>APP_EEPROM_NUM_ADDR_BYTES<span class="ph token punctuation">]</span><span class="ph token punctuation">,</span> <span class="ph token operator">&amp;</span>testRxData<span class="ph token punctuation">[</span><span class="ph token number">0</span><span class="ph token punctuation">]</span><span class="ph token punctuation">,</span> APP_EEPROM_TEST_DATA_SIZE<span class="ph token punctuation">)</span> <span class="ph token operator">==</span> <span class="ph token number">0</span><span class="ph token punctuation">)</span>
-            <span class="ph token punctuation">{</span>
-                appData<span class="ph token punctuation">.</span>state <span class="ph token operator">=</span> APP_STATE_SUCCESS<span class="ph token punctuation">;</span>
-            <span class="ph token punctuation">}</span>
-            <span class="ph token keyword">else</span>
-            <span class="ph token punctuation">{</span>
-                appData<span class="ph token punctuation">.</span>state <span class="ph token operator">=</span> APP_STATE_ERROR<span class="ph token punctuation">;</span>
-            <span class="ph token punctuation">}</span>
-            <span class="ph token keyword">break</span><span class="ph token punctuation">;</span>
-
-        <span class="ph token keyword">case</span> APP_STATE_SUCCESS<span class="ph token operator">:</span>
-
-            appData<span class="ph token punctuation">.</span>state <span class="ph token operator">=</span> APP_STATE_IDLE<span class="ph token punctuation">;</span>
-            <span class="ph token keyword">break</span><span class="ph token punctuation">;</span>
-
-        <span class="ph token keyword">case</span> APP_STATE_ERROR<span class="ph token operator">:</span>
-
-            appData<span class="ph token punctuation">.</span>state <span class="ph token operator">=</span> APP_STATE_IDLE<span class="ph token punctuation">;</span>
-            <span class="ph token keyword">break</span><span class="ph token punctuation">;</span>
-
-        <span class="ph token keyword">case</span> APP_STATE_IDLE<span class="ph token operator">:</span>
-        <span class="ph token keyword">default</span><span class="ph token operator">:</span>
-            <span class="ph token keyword">break</span><span class="ph token punctuation">;</span>
-    <span class="ph token punctuation">}</span>
-<span class="ph token punctuation">}</span></code></pre></div>
-<div class="related-links">
-<div class="familylinks">
-<div class="parentlink"><strong>Parent topic:</strong> <a class="link" href="GUID-4321CAFA-57B5-4633-9D43-0AE24B87C101.html">I2C Driver</a></div>
+            <div class="wh_top_menu_and_indexterms_link collapse navbar-collapse" id="wh_top_menu_and_indexterms_link">
+                
+                
+                
+                
+            </div>
+        </div>
+    </div>
+</header>
+        
+        
+         
+        
+        <div class=" wh_search_input navbar-form wh_topic_page_search search " role="form">
+            
+            
+            
+            <form id="searchForm" method="get" role="search" action="search.html"><div><input type="search" placeholder="Search " class="wh_search_textfield" id="textToSearch" name="searchQuery" aria-label="Search query" required="required"/><button type="submit" class="wh_search_button" aria-label="Search"><span class="search_input_text">Search</span></button></div></form>
+            
+            <div class="mchp-color-stripe-grid-container">
+  <div class="mchp-main-bar mchp-orange-bar"></div>
+  <div class="mchp-main-bar mchp-blue-bar"></div>
+  <div class="mchp-main-bar mchp-green-bar"></div>
 </div>
-</div></body>
+            
+        </div>
+        
+        <div class="container-fluid" id="wh_topic_container">
+            <div class="row">
+
+                <nav class="wh_tools d-print-none navbar-expand-md" aria-label="Tools">
+                    
+                    <div data-tooltip-position="bottom" class=" wh_breadcrumb "><ol class="d-print-none"><li><span class="home"><a href="index.html"><span>Home</span></a></span></li><li><div class="topicref" data-id="mplab-harmony-core-library"><div class="title"><a href="GUID-C04D97AB-D6E0-4CF5-9A80-CA64E36B6199.html"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">1</ph>
+MPLAB® Harmony Core Library</a></div></div></li><li><div class="topicref" data-id="driver-libraries"><div class="title"><a href="GUID-4FA4B38A-8C7F-46A3-9D08-4B8C5CE26712.html"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">1.1</ph>
+Driver Libraries</a></div></div></li><li><div class="topicref" data-id="i2c-driver"><div class="title"><a href="GUID-4321CAFA-57B5-4633-9D43-0AE24B87C101.html"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">1.1.2</ph>
+I2C Driver</a></div></div></li><li class="active"><div class="topicref" data-id="using-the-library"><div class="title"><a href="GUID-8916AA7D-64C7-4477-8D26-664F6B3C242A.html"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">1.1.2.2</ph>
+Using The Library</a></div></div></li></ol></div>
+                    
+                    
+                    
+                    <div class="wh_right_tools">
+                        <button class="wh_hide_highlight" aria-label="Toggle search highlights" title="Toggle search highlights"></button>
+                        <button class="webhelp_expand_collapse_sections" data-next-state="collapsed" aria-label="Collapse sections" title="Collapse sections"></button>
+                        
+                        
+                        
+                        
+                        <div class=" wh_print_link print d-none d-md-inline-block "><button onClick="window.print()" title="Print this page" aria-label="Print this page"></button></div>
+                        
+                        <button type="button" id="wh_toc_button" class="custom-toggler navbar-toggler collapsed wh_toggle_button navbar-light" aria-expanded="false" aria-label="Toggle publishing table of content" aria-controls="wh_publication_toc">
+                            <span class="navbar-toggler-icon"></span>
+                        </button>
+                    </div>
+                    
+                </nav>
+            </div>
+            
+            
+            
+            
+            <div class="wh_content_area">
+                <div class="row">
+                    
+                        <nav id="wh_publication_toc" class="col-lg-3 col-md-3 col-sm-12 d-md-block d-none d-print-none" aria-label="Table of Contents Container">
+                            <div id="wh_publication_toc_content">
+		                        
+                            	<div class=" wh_publication_toc " data-tooltip-position="right"><span class="expand-button-action-labels"><span id="button-expand-action" role="button" aria-label="Expand"></span><span id="button-collapse-action" role="button" aria-label="Collapse"></span><span id="button-pending-action" role="button" aria-label="Pending"></span></span><ul role="tree" aria-label="Table of Contents"><li role="treeitem" aria-expanded="true"><div data-tocid="mplab-harmony-core-library-d6800e9" class="topicref" data-id="mplab-harmony-core-library" data-state="expanded"><span role="button" tabindex="0" aria-labelledby="button-collapse-action mplab-harmony-core-library-d6800e9-link" class="wh-expand-btn"></span><div class="title"><a href="GUID-C04D97AB-D6E0-4CF5-9A80-CA64E36B6199.html" id="mplab-harmony-core-library-d6800e9-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">1</ph>
+MPLAB® Harmony Core Library</a></div></div><ul role="group" class="navbar-nav nav-list"><li role="treeitem" aria-expanded="true"><div data-tocid="driver-libraries-d6800e17" class="topicref" data-id="driver-libraries" data-state="expanded"><span role="button" tabindex="0" aria-labelledby="button-collapse-action driver-libraries-d6800e17-link" class="wh-expand-btn"></span><div class="title"><a href="GUID-4FA4B38A-8C7F-46A3-9D08-4B8C5CE26712.html" id="driver-libraries-d6800e17-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">1.1</ph>
+Driver Libraries</a></div></div><ul role="group" class="navbar-nav nav-list"><li role="treeitem" aria-expanded="false"><div data-tocid="common-driver-library-d6800e25" class="topicref" data-id="common-driver-library" data-state="not-ready"><span role="button" tabindex="0" aria-labelledby="button-expand-action common-driver-library-d6800e25-link" class="wh-expand-btn"></span><div class="title"><a href="GUID-DFB9A1FE-5BBB-4A10-A4B0-430BA7B9AF94.html" id="common-driver-library-d6800e25-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">1.1.1</ph>
+Common Driver Library</a></div></div></li><li role="treeitem" aria-expanded="true"><div data-tocid="i2c-driver-d6800e97" class="topicref" data-id="i2c-driver" data-state="expanded"><span role="button" tabindex="0" aria-labelledby="button-collapse-action i2c-driver-d6800e97-link" class="wh-expand-btn"></span><div class="title"><a href="GUID-4321CAFA-57B5-4633-9D43-0AE24B87C101.html" id="i2c-driver-d6800e97-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">1.1.2</ph>
+I2C Driver</a></div></div><ul role="group" class="navbar-nav nav-list"><li role="treeitem"><div data-tocid="how-the-library-works-d6800e105" class="topicref" data-id="how-the-library-works" data-state="leaf"><span role="button" class="wh-expand-btn"></span><div class="title"><a href="GUID-A420B807-5F28-4CED-9759-6E0F87209108.html" id="how-the-library-works-d6800e105-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">1.1.2.1</ph>
+How the Library Works</a></div></div></li><li role="treeitem" class="active"><div data-tocid="using-the-library-d6800e113" class="topicref" data-id="using-the-library" data-state="leaf"><span role="button" class="wh-expand-btn"></span><div class="title"><a href="GUID-8916AA7D-64C7-4477-8D26-664F6B3C242A.html" id="using-the-library-d6800e113-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">1.1.2.2</ph>
+Using The Library</a></div></div></li><li role="treeitem"><div data-tocid="configuring-the-library-d6800e121" class="topicref" data-id="configuring-the-library" data-state="leaf"><span role="button" class="wh-expand-btn"></span><div class="title"><a href="GUID-5260AC5A-5DD0-4B08-9F03-7BB8E150DBE9.html" id="configuring-the-library-d6800e121-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">1.1.2.3</ph>
+Configuring The Library</a></div></div></li><li role="treeitem" aria-expanded="false"><div data-tocid="library-interface-d6800e129" class="topicref" data-id="library-interface" data-state="not-ready"><span role="button" tabindex="0" aria-labelledby="button-expand-action library-interface-d6800e129-link" class="wh-expand-btn"></span><div class="title"><a href="GUID-5A5146D2-73C2-43B1-8ADE-95E0184AF1A5.html" id="library-interface-d6800e129-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">1.1.2.4</ph>
+Library Interface</a></div></div></li></ul></li><li role="treeitem" aria-expanded="false"><div data-tocid="memory-driver-d6800e306" class="topicref" data-id="memory-driver" data-state="not-ready"><span role="button" tabindex="0" aria-labelledby="button-expand-action memory-driver-d6800e306-link" class="wh-expand-btn"></span><div class="title"><a href="GUID-0FFCD458-7F10-49C8-B068-E4E4B5439C47.html" id="memory-driver-d6800e306-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">1.1.3</ph>
+Memory Driver</a></div></div></li><li role="treeitem" aria-expanded="false"><div data-tocid="nand-flash-driver-d6800e613" class="topicref" data-id="nand-flash-driver" data-state="not-ready"><span role="button" tabindex="0" aria-labelledby="button-expand-action nand-flash-driver-d6800e613-link" class="wh-expand-btn"></span><div class="title"><a href="GUID-BFFB8AD8-CD11-49AB-8C23-F860A883EFE6.html" id="nand-flash-driver-d6800e613-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">1.1.4</ph>
+NAND Flash Driver</a></div></div></li><li role="treeitem" aria-expanded="false"><div data-tocid="parallel-prom-drivers-d6800e822" class="topicref" data-id="parallel-prom-drivers" data-state="not-ready"><span role="button" tabindex="0" aria-labelledby="button-expand-action parallel-prom-drivers-d6800e822-link" class="wh-expand-btn"></span><div class="title"><a href="GUID-5AE89E9A-282F-42F6-845E-A513176335DA.html" id="parallel-prom-drivers-d6800e822-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">1.1.5</ph>
+Parallel PROM Drivers</a></div></div></li><li role="treeitem" aria-expanded="false"><div data-tocid="sdmmc-driver-d6800e950" class="topicref" data-id="sdmmc-driver" data-state="not-ready"><span role="button" tabindex="0" aria-labelledby="button-expand-action sdmmc-driver-d6800e950-link" class="wh-expand-btn"></span><div class="title"><a href="GUID-013A85E2-6948-44FA-907E-7DC945B5CE82.html" id="sdmmc-driver-d6800e950-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">1.1.6</ph>
+SDMMC Driver</a></div></div></li><li role="treeitem" aria-expanded="false"><div data-tocid="sdspi-driver-d6800e1127" class="topicref" data-id="sdspi-driver" data-state="not-ready"><span role="button" tabindex="0" aria-labelledby="button-expand-action sdspi-driver-d6800e1127-link" class="wh-expand-btn"></span><div class="title"><a href="GUID-89A8332D-B4D0-4989-8602-EACDE3EE74AC.html" id="sdspi-driver-d6800e1127-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">1.1.7</ph>
+SDSPI Driver</a></div></div></li><li role="treeitem" aria-expanded="false"><div data-tocid="spi-driver-d6800e1336" class="topicref" data-id="spi-driver" data-state="not-ready"><span role="button" tabindex="0" aria-labelledby="button-expand-action spi-driver-d6800e1336-link" class="wh-expand-btn"></span><div class="title"><a href="GUID-B2925496-394D-47ED-BD1E-1AB2149934FA.html" id="spi-driver-d6800e1336-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">1.1.8</ph>
+SPI Driver</a></div></div></li><li role="treeitem" aria-expanded="false"><div data-tocid="usart-driver-d6800e1554" class="topicref" data-id="usart-driver" data-state="not-ready"><span role="button" tabindex="0" aria-labelledby="button-expand-action usart-driver-d6800e1554-link" class="wh-expand-btn"></span><div class="title"><a href="GUID-3DC66955-0F7E-4747-9790-893CA81987A6.html" id="usart-driver-d6800e1554-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">1.1.9</ph>
+USART Driver</a></div></div></li><li role="treeitem" aria-expanded="false"><div data-tocid="i2c-eeprom-drivers-d6800e1780" class="topicref" data-id="i2c-eeprom-drivers" data-state="not-ready"><span role="button" tabindex="0" aria-labelledby="button-expand-action i2c-eeprom-drivers-d6800e1780-link" class="wh-expand-btn"></span><div class="title"><a href="GUID-84AD8BE3-4D9F-4F36-AB5F-160B9B90F177.html" id="i2c-eeprom-drivers-d6800e1780-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">1.1.10</ph>
+I2C EEPROM Drivers</a></div></div></li><li role="treeitem" aria-expanded="false"><div data-tocid="spi-eeprom-drivers-d6800e1934" class="topicref" data-id="spi-eeprom-drivers" data-state="not-ready"><span role="button" tabindex="0" aria-labelledby="button-expand-action spi-eeprom-drivers-d6800e1934-link" class="wh-expand-btn"></span><div class="title"><a href="GUID-E5D1E930-88E3-47F4-9ECD-EDE02BF9B07D.html" id="spi-eeprom-drivers-d6800e1934-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">1.1.11</ph>
+SPI EEPROM Drivers</a></div></div></li><li role="treeitem" aria-expanded="false"><div data-tocid="spi-flash-drivers-d6800e2087" class="topicref" data-id="spi-flash-drivers" data-state="not-ready"><span role="button" tabindex="0" aria-labelledby="button-expand-action spi-flash-drivers-d6800e2087-link" class="wh-expand-btn"></span><div class="title"><a href="GUID-3B80B7B5-A8B5-436E-9135-38CDEA3A638B.html" id="spi-flash-drivers-d6800e2087-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">1.1.12</ph>
+SPI Flash Drivers</a></div></div></li><li role="treeitem" aria-expanded="false"><div data-tocid="sqi-flash-drivers-d6800e2264" class="topicref" data-id="sqi-flash-drivers" data-state="not-ready"><span role="button" tabindex="0" aria-labelledby="button-expand-action sqi-flash-drivers-d6800e2264-link" class="wh-expand-btn"></span><div class="title"><a href="GUID-41B61931-E124-4512-A689-5B0643F249E8.html" id="sqi-flash-drivers-d6800e2264-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">1.1.13</ph>
+SQI Flash Drivers</a></div></div></li></ul></li><li role="treeitem" aria-expanded="false"><div data-tocid="system-service-libraries-d6800e2771" class="topicref" data-id="system-service-libraries" data-state="not-ready"><span role="button" tabindex="0" aria-labelledby="button-expand-action system-service-libraries-d6800e2771-link" class="wh-expand-btn"></span><div class="title"><a href="GUID-EA5ADDDE-73D5-43CB-B474-0752CA9A1A50.html" id="system-service-libraries-d6800e2771-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">1.2</ph>
+System Service Libraries</a></div></div></li><li role="treeitem" aria-expanded="false"><div data-tocid="software-libraries-d6800e5031" class="topicref" data-id="software-libraries" data-state="not-ready"><span role="button" tabindex="0" aria-labelledby="button-expand-action software-libraries-d6800e5031-link" class="wh-expand-btn"></span><div class="title"><a href="GUID-7249D18B-E049-45D9-96DD-B6329375E344.html" id="software-libraries-d6800e5031-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">1.3</ph>
+Software Libraries</a></div></div></li><li role="treeitem" aria-expanded="false"><div data-tocid="osal-library-d6800e5305" class="topicref" data-id="osal-library" data-state="not-ready"><span role="button" tabindex="0" aria-labelledby="button-expand-action osal-library-d6800e5305-link" class="wh-expand-btn"></span><div class="title"><a href="GUID-8AEFE0B0-CE35-4F99-ACF4-7C8E10D3BBB6.html" id="osal-library-d6800e5305-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">1.4</ph>
+OSAL Library</a></div></div></li><li role="treeitem" aria-expanded="false"><div data-tocid="third-party-products-d6800e5546" class="topicref" data-id="third-party-products" data-state="not-ready"><span role="button" tabindex="0" aria-labelledby="button-expand-action third-party-products-d6800e5546-link" class="wh-expand-btn"></span><div class="title"><a href="GUID-2FB7347D-8FBD-411F-88D8-58A813EA9498.html" id="third-party-products-d6800e5546-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">1.5</ph>
+Third party Products</a></div></div></li><li role="treeitem"><div data-tocid="configuring-the-harmony-core-library-d6800e5586" class="topicref" data-id="configuring-the-harmony-core-library" data-state="leaf"><span role="button" class="wh-expand-btn"></span><div class="title"><a href="GUID-F1244C57-71EF-492B-8104-473C8CECC20F.html" id="configuring-the-harmony-core-library-d6800e5586-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">1.6</ph>
+Configuring The Harmony Core Library</a></div></div></li></ul></li></ul></div>
+		                        
+                            </div>
+                        </nav>
+                    
+                    
+                    <div class="col-lg-9 col-md-9 col-sm-12" id="wh_topic_body">
+                        <button id="wh_close_publication_toc_button" class="close-toc-button d-none" aria-label="Toggle publishing table of content" aria-controls="wh_publication_toc" aria-expanded="true">
+                            <span class="close-toc-icon-container">
+                                <span class="close-toc-icon"></span>     
+                            </span>
+                        </button>
+                        
+                        
+                        <div class=" wh_topic_content body "><main role="main"><article role="article" aria-labelledby="ariaid-title1"><h1 class="- topic/title title topictitle1" id="ariaid-title1" style="">1.1.2.2 Using The Library</h1><div class="- topic/body body"><p class="- topic/p p">The I2C driver builds on top of the I2C peripheral library (PLIB) and provides write, read and write-read API's in blocking and non-blocking mode for I2C master functionality.</p><ul class="- topic/ul ul"><li class="- topic/li li"><p class="- topic/p p">Provides Write, Read and Write followed by Read API's.</p></li><li class="- topic/li li"><p class="- topic/p p">Supports multiple slaves connected to the same I2C peripheral instance (multi-client mode).</p></li><li class="- topic/li li"><p class="- topic/p p">In asynchronous (non-blocking) mode, application can either register a callback to get notified once the data transfer is complete or can poll the status of the data transfer using the status APIs</p></li><li class="- topic/li li"><p class="- topic/p p">In asynchronous mode, application can queue more than one transmit/receive requests without waiting for the previous request to be completed. The number of transmit/receive requests that can be queued depends on the depth of the transfer queue configured using the MHC</p></li><li class="- topic/li li"><p class="- topic/p p">The asynchronous mode is supported in both bare-metal and RTOS environment</p></li><li class="- topic/li li"><p class="- topic/p p">The synchronous (blocking) mode of the driver is supported only in an RTOS environment</p></li><li class="- topic/li li"><p class="- topic/p p">The synchronous mode of the driver does not support callback or queuing multiple requests. This is because the implementation is blocking in nature</p></li></ul><p class="- topic/p p"><strong class="+ topic/ph hi-d/b ph b">Example application to Read and Write from I2C EEPROM in Asynchronous mode</strong></p><pre class="+ topic/pre pr-d/codeblock pre codeblock c"><span class="hl-directive">#define</span> <span class="hl-defines">APP_EEPROM_MEMORY_ADDR</span>                  <span class="hl-number">0x0000</span>
+
+<em class="hl-comment">/* Size of the string written to EEPROM must be less than or equal to the EEPROM page size */</em>
+<span class="hl-directive">#define</span> <span class="hl-defines">APP_EEPROM_TEST_DATA</span>                    <span class="hl-string">"I2C EEPROM Demo"</span>
+<span class="hl-directive">#define</span> <span class="hl-defines">APP_EEPROM_TEST_DATA_SIZE</span>               (<strong class="hl-keyword">sizeof</strong>(APP_EEPROM_TEST_DATA)-<span class="hl-number">1</span>)
+<span class="hl-directive">#define</span> <span class="hl-defines">APP_EEPROM_RX_BUFFER_SIZE</span>               APP_EEPROM_TEST_DATA_SIZE
+
+#<strong class="hl-keyword">if</strong> APP_EEPROM_ADDR_LEN_BITS == <span class="hl-number">18</span> || APP_EEPROM_ADDR_LEN_BITS == <span class="hl-number">16</span>
+    <em class="hl-comment">/* For 18 bit address, A16 and A17 are part of the EEPROM slave address.
+     * The A16 and A17 bits are set to 0 in this demonstration. */</em>
+    <span class="hl-directive">#define</span> <span class="hl-defines">APP_EEPROM_NUM_ADDR_BYTES</span>           <span class="hl-number">2</span>
+#elif APP_EEPROM_ADDR_LEN_BITS == <span class="hl-number">8</span>
+    <span class="hl-directive">#define</span> <span class="hl-defines">APP_EEPROM_NUM_ADDR_BYTES</span>           <span class="hl-number">1</span>
+#endif
+
+<span class="hl-directive">#define</span> <span class="hl-defines">APP_EEPROM_TX_BUFFER_SIZE</span>        (APP_EEPROM_TEST_DATA_SIZE + APP_EEPROM_NUM_ADDR_BYTES)
+
+APP_DATA appData;
+
+<strong class="hl-keyword">static</strong> uint8_t testTxData[APP_EEPROM_TX_BUFFER_SIZE] = {<span class="hl-number">0</span>};
+<strong class="hl-keyword">static</strong> uint8_t testRxData[APP_EEPROM_RX_BUFFER_SIZE] = {<span class="hl-number">0</span>};
+
+<strong class="hl-keyword">void</strong> APP_I2CEventHandler (
+    DRV_I2C_TRANSFER_EVENT event,
+    DRV_I2C_TRANSFER_HANDLE transferHandle,
+    uintptr_t context
+)
+{
+    APP_TRANSFER_STATUS* transferStatus = (APP_TRANSFER_STATUS*)context;
+
+    <strong class="hl-keyword">if</strong> (event == DRV_I2C_TRANSFER_EVENT_COMPLETE)
+    {
+        <strong class="hl-keyword">if</strong> (transferStatus)
+        {
+            *transferStatus = APP_TRANSFER_STATUS_SUCCESS;
+        }
+    }
+    <strong class="hl-keyword">else</strong>
+    {
+        <strong class="hl-keyword">if</strong> (transferStatus)
+        {
+            *transferStatus = APP_TRANSFER_STATUS_ERROR;
+        }
+    }
+}
+
+<strong class="hl-keyword">void</strong> APP_Initialize ( <strong class="hl-keyword">void</strong> )
+{
+    <em class="hl-comment">/* Initialize the appData structure. */</em>
+    appData.state = APP_STATE_INIT;
+    appData.drvI2CHandle   = DRV_HANDLE_INVALID;
+    appData.transferHandle = DRV_I2C_TRANSFER_HANDLE_INVALID;
+    appData.transferStatus = APP_TRANSFER_STATUS_ERROR;
+
+#<strong class="hl-keyword">if</strong> APP_EEPROM_NUM_ADDR_BYTES == <span class="hl-number">2</span>
+    testTxData[<span class="hl-number">0</span>] = (APP_EEPROM_MEMORY_ADDR &gt;&gt; <span class="hl-number">8</span>);
+    testTxData[<span class="hl-number">1</span>] = APP_EEPROM_MEMORY_ADDR;
+    memcpy(&amp;testTxData[<span class="hl-number">2</span>], (<strong class="hl-keyword">const</strong> <strong class="hl-keyword">void</strong>*)APP_EEPROM_TEST_DATA, APP_EEPROM_TEST_DATA_SIZE);
+#<strong class="hl-keyword">else</strong>
+    testTxData[<span class="hl-number">0</span>] = APP_EEPROM_MEMORY_ADDR;
+    memcpy(&amp;testTxData[<span class="hl-number">1</span>], (<strong class="hl-keyword">const</strong> <strong class="hl-keyword">void</strong>*)APP_EEPROM_TEST_DATA, APP_EEPROM_TEST_DATA_SIZE);
+#endif
+
+}
+
+<strong class="hl-keyword">void</strong> APP_Tasks ( <strong class="hl-keyword">void</strong> )
+{
+    <em class="hl-comment">/* Check the application's current state. */</em>
+    <strong class="hl-keyword">switch</strong> ( appData.state )
+    {
+        <em class="hl-comment">/* Application's initial state. */</em>
+        <strong class="hl-keyword">case</strong> APP_STATE_INIT:
+
+            <em class="hl-comment">/* Open the I2C Driver */</em>
+            appData.drvI2CHandle = DRV_I2C_Open( DRV_I2C_INDEX_<span class="hl-number">0</span>, DRV_IO_INTENT_READWRITE );
+            <strong class="hl-keyword">if</strong>(appData.drvI2CHandle == DRV_HANDLE_INVALID)
+            {
+                appData.state = APP_STATE_ERROR;
+            }
+            <strong class="hl-keyword">else</strong>
+            {
+                <em class="hl-comment">/* Register the I2C Driver event Handler */</em>
+                DRV_I2C_TransferEventHandlerSet(
+                    appData.drvI2CHandle,
+                    APP_I2CEventHandler,
+                    (uintptr_t)&amp;appData.transferStatus
+                );
+                appData.state  = APP_STATE_IS_EEPROM_READY;
+            }
+            <strong class="hl-keyword">break</strong>;
+
+        <strong class="hl-keyword">case</strong> APP_STATE_IS_EEPROM_READY:
+
+            appData.transferStatus = APP_TRANSFER_STATUS_IN_PROGRESS;
+            <em class="hl-comment">/* Add a dummy write transfer request to verify whether EEPROM is ready */</em>
+            DRV_I2C_WriteTransferAdd(
+                appData.drvI2CHandle,
+                APP_EEPROM_SLAVE_ADDR,
+                (<strong class="hl-keyword">void</strong> *)&amp;appData.dummyData,
+                <span class="hl-number">1</span>,
+                &amp;appData.transferHandle
+            );
+
+            <strong class="hl-keyword">if</strong>( appData.transferHandle == DRV_I2C_TRANSFER_HANDLE_INVALID )
+            {
+                appData.state = APP_STATE_ERROR;
+            }
+            <strong class="hl-keyword">else</strong>
+            {
+                appData.state = APP_STATE_DATA_WRITE;
+            }
+            <strong class="hl-keyword">break</strong>;
+
+        <strong class="hl-keyword">case</strong> APP_STATE_DATA_WRITE:
+            <strong class="hl-keyword">if</strong> (appData.transferStatus == APP_TRANSFER_STATUS_SUCCESS)
+            {
+                appData.transferStatus = APP_TRANSFER_STATUS_IN_PROGRESS;
+
+                <em class="hl-comment">/* Add a request to write the application data */</em>
+                DRV_I2C_WriteTransferAdd(
+                    appData.drvI2CHandle,
+                    APP_EEPROM_SLAVE_ADDR,
+                    (<strong class="hl-keyword">void</strong> *)&amp;testTxData[<span class="hl-number">0</span>],
+                    APP_EEPROM_TX_BUFFER_SIZE,
+                    &amp;appData.transferHandle
+                );
+
+                <strong class="hl-keyword">if</strong>( appData.transferHandle == DRV_I2C_TRANSFER_HANDLE_INVALID )
+                {
+                    appData.state = APP_STATE_ERROR;
+                }
+                <strong class="hl-keyword">else</strong>
+                {
+                    appData.state = APP_STATE_WAIT_WRITE_COMPLETE;
+                }
+            }
+            <strong class="hl-keyword">else</strong> <strong class="hl-keyword">if</strong> (appData.transferStatus == APP_TRANSFER_STATUS_ERROR)
+            {
+                <em class="hl-comment">//EEPROM is not ready. Keep checking until it is ready to receive commands.</em>
+                <em class="hl-comment">//Some EEPROMs need stabilization time before they can start responding to commands.</em>
+                appData.state = APP_STATE_IS_EEPROM_READY;
+            }
+            <strong class="hl-keyword">break</strong>;
+
+        <strong class="hl-keyword">case</strong> APP_STATE_WAIT_WRITE_COMPLETE:
+            <strong class="hl-keyword">if</strong> (appData.transferStatus == APP_TRANSFER_STATUS_SUCCESS)
+            {
+                appData.transferStatus = APP_TRANSFER_STATUS_IN_PROGRESS;
+
+                <em class="hl-comment">/* Add a dummy write request to check if EEPROM's internal write cycle is complete */</em>
+                DRV_I2C_WriteTransferAdd(
+                    appData.drvI2CHandle,
+                    APP_EEPROM_SLAVE_ADDR,
+                    (<strong class="hl-keyword">void</strong> *)&amp;appData.dummyData,
+                    <span class="hl-number">1</span>,
+                    &amp;appData.transferHandle
+                );
+
+                <strong class="hl-keyword">if</strong>( appData.transferHandle == DRV_I2C_TRANSFER_HANDLE_INVALID )
+                {
+                    appData.state = APP_STATE_ERROR;
+                }
+                <strong class="hl-keyword">else</strong>
+                {
+                    appData.state = APP_STATE_EEPROM_CHECK_INTERNAL_WRITE_STATUS;
+                }
+            }
+            <strong class="hl-keyword">else</strong> <strong class="hl-keyword">if</strong> (appData.transferStatus == APP_TRANSFER_STATUS_ERROR)
+            {
+                appData.state = APP_STATE_ERROR;
+            }
+            <strong class="hl-keyword">break</strong>;
+
+        <strong class="hl-keyword">case</strong> APP_STATE_EEPROM_CHECK_INTERNAL_WRITE_STATUS:
+            <strong class="hl-keyword">if</strong> (appData.transferStatus == APP_TRANSFER_STATUS_SUCCESS)
+            {
+                appData.state = APP_STATE_DATA_READ;
+            }
+            <strong class="hl-keyword">else</strong> <strong class="hl-keyword">if</strong> (appData.transferStatus == APP_TRANSFER_STATUS_ERROR)
+            {
+                appData.transferStatus = APP_TRANSFER_STATUS_IN_PROGRESS;
+
+                <em class="hl-comment">/* Keep checking if EEPROM's internal write cycle is complete */</em>
+                DRV_I2C_WriteTransferAdd(
+                    appData.drvI2CHandle,
+                    APP_EEPROM_SLAVE_ADDR,
+                    (<strong class="hl-keyword">void</strong> *)&amp;appData.dummyData,
+                    <span class="hl-number">1</span>,
+                    &amp;appData.transferHandle
+                );
+
+                <strong class="hl-keyword">if</strong>( appData.transferHandle == DRV_I2C_TRANSFER_HANDLE_INVALID )
+                {
+                    appData.state = APP_STATE_ERROR;
+                }
+            }
+            <strong class="hl-keyword">break</strong>;
+
+        <strong class="hl-keyword">case</strong> APP_STATE_DATA_READ:
+
+            appData.transferStatus = APP_TRANSFER_STATUS_IN_PROGRESS;
+
+            <em class="hl-comment">/* Add a request to read data from EEPROM. */</em>
+            DRV_I2C_WriteReadTransferAdd(
+                appData.drvI2CHandle,
+                APP_EEPROM_SLAVE_ADDR,
+                (<strong class="hl-keyword">void</strong> *)&amp;testTxData[<span class="hl-number">0</span>],
+                APP_EEPROM_NUM_ADDR_BYTES,
+                (<strong class="hl-keyword">void</strong> *)&amp;testRxData[<span class="hl-number">0</span>],
+                APP_EEPROM_TEST_DATA_SIZE,
+                &amp;appData.transferHandle
+            );
+
+            <strong class="hl-keyword">if</strong>( appData.transferHandle == DRV_I2C_TRANSFER_HANDLE_INVALID )
+            {
+                appData.state = APP_STATE_ERROR;
+            }
+            <strong class="hl-keyword">else</strong>
+            {
+                appData.state = APP_STATE_WAIT_READ_COMPLETE;
+            }
+            <strong class="hl-keyword">break</strong>;
+
+        <strong class="hl-keyword">case</strong> APP_STATE_WAIT_READ_COMPLETE:
+            <strong class="hl-keyword">if</strong> (appData.transferStatus == APP_TRANSFER_STATUS_SUCCESS)
+            {
+                appData.state = APP_STATE_DATA_VERIFY;
+            }
+            <strong class="hl-keyword">else</strong> <strong class="hl-keyword">if</strong> (appData.transferStatus == APP_TRANSFER_STATUS_ERROR)
+            {
+                appData.state = APP_STATE_ERROR;
+            }
+            <strong class="hl-keyword">break</strong>;
+
+        <strong class="hl-keyword">case</strong> APP_STATE_DATA_VERIFY:
+
+            <em class="hl-comment">/* Compare data written and data read */</em>
+            <strong class="hl-keyword">if</strong> (memcmp(&amp;testTxData[APP_EEPROM_NUM_ADDR_BYTES], &amp;testRxData[<span class="hl-number">0</span>], APP_EEPROM_TEST_DATA_SIZE) == <span class="hl-number">0</span>)
+            {
+                appData.state = APP_STATE_SUCCESS;
+            }
+            <strong class="hl-keyword">else</strong>
+            {
+                appData.state = APP_STATE_ERROR;
+            }
+            <strong class="hl-keyword">break</strong>;
+
+        <strong class="hl-keyword">case</strong> APP_STATE_SUCCESS:
+
+            appData.state = APP_STATE_IDLE;
+            <strong class="hl-keyword">break</strong>;
+
+        <strong class="hl-keyword">case</strong> APP_STATE_ERROR:
+
+            appData.state = APP_STATE_IDLE;
+            <strong class="hl-keyword">break</strong>;
+
+        <strong class="hl-keyword">case</strong> APP_STATE_IDLE:
+        <strong class="hl-keyword">default</strong>:
+            <strong class="hl-keyword">break</strong>;
+    }
+}</pre></div></article></main></div>
+                        
+                        
+                        
+                        
+                        
+                        
+                    </div>
+                    
+                </div>
+            </div>
+            
+            
+            
+        </div> 
+        <footer class="navbar navbar-default wh_footer">
+  <div class=" footer-container mx-auto ">
+    <div class="footer">
+  <div class="mchp-wh-footer">
+    <div class="mchp-footer">
+      <div class="mchp-footer-tier1">
+        <div class="spacer"></div>
+        <div class="mchp-footer-container">
+          <div class="mchp-footer-links mchp-social-media-links">
+            <div class="mchp-component-items">
+              <div class="mchp-component-item">
+                <a class="cmp-image__link" href="https://www.facebook.com/pages/Microchip-Technology-Inc/20320981741" target="_blank">
+                  <img class="cmp-image__image" alt="Microchip Facebook" src="oxygen-webhelp/template/resources/images/201016-corp-facebook.png"/>
+                </a>
+              </div>
+              <div class="mchp-component-item">
+                <a class="cmp-image__link" href="https://www.linkedin.com/company/microchip-technology" target="_blank">
+                  <img class="cmp-image__image" alt="Microchip LinkedIn" src="oxygen-webhelp/template/resources/images/201016-corp-linkedin.png"/>
+                </a>
+              </div>
+              <div class="mchp-component-item">
+                <a class="cmp-image__link" href="https://twitter.com/MicrochipTech" target="_blank">
+                  <img class="cmp-image__image" alt="Microchip Twitter" src="oxygen-webhelp/template/resources/images/201016-corp-twitter.png"/>
+                </a>
+              </div>
+              <div class="mchp-component-item">
+                <a class="cmp-image__link" href="https://www.youtube.com/user/MicrochipTechnology" target="_blank">
+                  <img class="cmp-image__image" alt="Microchip YouTube" src="oxygen-webhelp/template/resources/images/201016-corp-youtube.png"/>
+                </a>
+              </div>
+              <div class="mchp-component-item">
+                <a class="cmp-image__link" href="https://www.instagram.com/microchiptechnologyinc/" target="_blank">
+                  <img class="cmp-image__image" alt="Microchip Instagram" src="oxygen-webhelp/template/resources/images/201016-corp-instagram.png"/>
+                </a>
+              </div>
+              <div class="mchp-component-item">
+                <a class="cmp-image__link" href="https://www.weibo.com/microchiptech" target="_blank">
+                  <img class="cmp-image__image" alt="Microchip Weibo" src="oxygen-webhelp/template/resources/images/201016-corp-weibo.png"/>
+                </a>
+              </div>
+              <div class="mchp-component-item">
+                <a class="cmp-image__link" href="https://www.microchip.com/en-us/about/blog" target="_blank">
+                  <img class="cmp-image__image" alt="Microchip Blog" src="oxygen-webhelp/template/resources/images/201016-corp-blog.png"/>
+                </a>
+              </div>
+            </div>
+          </div>
+          <div class="mchp-footer-links">
+            <div class="mchp-component-items">
+              <div class="mchp-component-item">
+                <div class="link">
+                  <a href="https://www.microchip.com/about-us/contact-us" class="mchp-link__link">Contact</a>
+                  <span class="mchp-link__separator">|</span>
+                </div>
+              </div>
+              <div class="mchp-component-item ">
+                <div class="link">
+                  <a href="https://www.microchip.com/en-us/about/legal-information" class="mchp-link__link">Legal</a>
+                  <span class="mchp-link__separator">|</span>
+                </div>
+              </div>
+              <div class="mchp-component-item ">
+                <div class="link">
+                  <a href="https://www.microchip.com/en-us/about/legal-information/privacy-policy" class="mchp-link__link">Privacy Policy</a>
+                  <span class="mchp-link__separator">|</span>
+                </div>
+              </div>
+              <div class="mchp-component-item ">
+                <div class="link">
+                  <a href="https://www.microchip.com/en-us/about/legal-information/microchip-cookie-statement" class="mchp-link__link">Cookies</a>
+                  <span class="mchp-link__separator">|</span>
+                </div>
+              </div>
+              <div class="mchp-component-item">
+                <div class="link">
+                  <a href="https://careers.microchip.com/" class="mchp-link__link">Careers</a>
+                  <span class="mchp-link__separator"></span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="mchp-footer-newsletter">
+            <div class="cmp-text">
+              <p>Stay on the leading edge with our blog</p>
+            </div>
+            <div class="mchp-button-wrapper">
+              <a role="button" href="https://www.microchip.com/en-us/about/blog" class="mchp-button mchp-button-regular solid">
+                <span class="mchp-button__span">MicroSolutions</span>
+              </a>
+            </div>
+          </div>
+        </div>
+        <div class="graphic">
+          <img src="oxygen-webhelp/template/resources/images/footer-graphic.png"/>
+        </div>
+      </div>
+      <div class="mchp-footer-tier2">
+        <p class="mchp-copyright">© Copyright 1998-2022 Microchip Technology Inc. All rights reserved.</p>
+      </div>
+    </div>
+  </div>
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+  <script async="true" src="https://www.googletagmanager.com/gtag/js?id=UA-2724382-19"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];  
+    function gtag(){dataLayer.push(arguments);}  
+    gtag('js', new Date());   
+    gtag('config', 'UA-2724382-19');
+  </script>
+</div>
+  </div>
+</footer>
+        
+        <div id="go2top" class="d-print-none">
+            <span class="oxy-icon oxy-icon-up"></span>
+        </div>
+        
+        <div id="modal_img_large" class="modal">
+            <span class="close oxy-icon oxy-icon-remove"></span>
+            <div id="modal_img_container"></div>
+            <div id="caption"></div>
+        </div>
+        
+        
+        
+    </body>
 </html>

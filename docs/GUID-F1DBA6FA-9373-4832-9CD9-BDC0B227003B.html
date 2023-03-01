@@ -1,413 +1,314 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE html
-  PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
-<head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-
-<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE11" /><meta name="copyright" content="(C) Copyright 2022" />
-<meta name="DC.rights.owner" content="(C) Copyright 2022" />
-<meta name="DC.type" content="topic" />
-<meta name="DC.title" content="Library Interface" />
-<meta name="DC.relation" scheme="URI" content="GUID-09F65940-7D05-4F78-81C9-6356B65DEF21.html" />
-<meta name="DC.relation" scheme="URI" content="GUID-FEBFF6DB-5F57-4360-90BF-E9DA46037C99.html" />
-<meta name="DC.relation" scheme="URI" content="GUID-26B2DB3A-8817-401C-8EA1-BA288827F83C.html" />
-<meta name="DC.relation" scheme="URI" content="GUID-ED55865F-5F73-4D1C-A894-6A26F9893190.html" />
-<meta name="DC.relation" scheme="URI" content="GUID-05239B51-F3DC-495F-A373-057A692D1CE2.html" />
-<meta name="DC.relation" scheme="URI" content="GUID-45D2280C-63E4-48FA-ABAD-450459998A8F.html" />
-<meta name="DC.relation" scheme="URI" content="GUID-EDAB3999-3E03-4C0B-94B6-066DE78EE636.html" />
-<meta name="DC.relation" scheme="URI" content="GUID-A4CE28DC-40B2-43C2-949E-69ABD5EFB2DC.html" />
-<meta name="DC.relation" scheme="URI" content="GUID-02B7E5B7-DE83-434E-B5A3-9428923F2D83.html" />
-<meta name="DC.relation" scheme="URI" content="GUID-3E6B809F-7256-4348-9596-7F338CC62EC5.html" />
-<meta name="DC.relation" scheme="URI" content="GUID-6979BCB1-F38B-455E-AFBB-FD2A09A823B4.html" />
-<meta name="DC.relation" scheme="URI" content="GUID-9A80603D-1A4B-4313-8D69-3C7F8E0CDDF0.html" />
-<meta name="DC.relation" scheme="URI" content="GUID-B6686A00-4544-4CFB-9F3C-9184AD2E0FDD.html" />
-<meta name="DC.relation" scheme="URI" content="GUID-918C3149-0EB2-4501-A80D-24BB98E67B5D.html" />
-<meta name="DC.relation" scheme="URI" content="GUID-BBAD84DF-1379-41FE-8BE1-9009BDC368AF.html" />
-<meta name="DC.relation" scheme="URI" content="GUID-740C7410-8069-4335-BB33-218D8F8B59F5.html" />
-<meta name="DC.relation" scheme="URI" content="GUID-FA0DA23C-BCD9-405F-8CC1-C7AE98205FC3.html" />
-<meta name="DC.relation" scheme="URI" content="GUID-1ACA0CDE-BB29-4A7F-AF3D-5461ECE86944.html" />
-<meta name="DC.relation" scheme="URI" content="GUID-B51DDD56-C465-4676-816B-85FFEE48544C.html" />
-<meta name="DC.relation" scheme="URI" content="GUID-51492B75-94E3-4BCE-960D-013CB51A2E19.html" />
-<meta name="DC.relation" scheme="URI" content="GUID-8BCDA47F-4CBC-4405-9F30-4A44B7DE67F3.html" />
-<meta name="DC.relation" scheme="URI" content="GUID-43DF0480-B8AC-4060-B932-0BF78B41CE23.html" />
-<meta name="DC.relation" scheme="URI" content="GUID-28219199-6917-43CE-A9D3-0C84F4017C28.html" />
-<meta name="DC.relation" scheme="URI" content="GUID-001CDE12-2461-42F4-8F72-783C6EB738D4.html" />
-<meta name="DC.relation" scheme="URI" content="GUID-3ABD051F-AA97-4C40-942D-EFC6A16486B8.html" />
-<meta name="DC.relation" scheme="URI" content="GUID-4F58DE9B-B3EE-4108-9290-15F90CC32FB0.html" />
-<meta name="DC.relation" scheme="URI" content="GUID-F6B65A05-37EC-4CCF-AFC3-0EC2EA264CDB.html" />
-<meta name="DC.relation" scheme="URI" content="GUID-85B8324A-FF53-4CBB-B687-C6BCE047FEDC.html" />
-<meta name="DC.relation" scheme="URI" content="GUID-827592EF-BDE9-4229-9A95-E2F6E8E55AF2.html" />
-<meta name="DC.format" content="XHTML" />
-<meta name="DC.identifier" content="library-interface" />
-<link rel="stylesheet" type="text/css" href="stylesheets/commonltr.css" />
-<link rel="stylesheet" type="text/css" href="stylesheets/atmel.css" />
-<link rel="stylesheet" type="text/css" href="./stylesheets/common-extended.css" /><title>Library Interface</title>
-<meta name="Microsoft.Help.Id" content="GUID-EDFB1AB8-CD6B-446F-8E25-F2167287A1AF-library-interface" />
-<meta name="Microsoft.Help.TocParent" content="GUID-EDFB1AB8-CD6B-446F-8E25-F2167287A1AF" />
-<meta name="Microsoft.Help.TocOrder" content="0" />
-<meta name="Microsoft.Help.Locale" content="en-US" />
-<meta name="Microsoft.Help.TopicLocale" content="en-US" />
-<meta name="Microsoft.Help.DisplayVersion" content="MPLAB® Harmony Core Library Reference A 11/2021" />
-<script language="javascript">
-       
-       if (window.parent.location.protocol != 'file:') {
-				document.addEventListener('click', function(e) {
-				    if (e.target) {
-               if (e.target.nodeName == "A" ) {
-                    if (!e.target.target) {
-                      e.preventDefault();
-                      e.stopPropagation();
-                              
-                      var origUrl = window.parent.location.href.substr(0, window.parent.location.href.indexOf("?"));
-                      if (origUrl.length === 0) {
-                          origUrl = window.parent.location.href;
-                      }
-                      var href= e.target.getAttribute("href");
-                      var parts = href.split("#");
-          
-                      var url = "";
-                      if (parts.length == 2 ) {
-                        if (!parts[0].length) {
-                            url = window.parent.location.search.replace('?','')
-                        } else {
-                            url = parts[0].replace('.html','');
-                        }
-                      } else {
-                        url = parts[0].replace('.html','');
-                      }
-
-                      if (parts.length == 2) {
-                          url += "#" + parts[1];
-                      }
+<!DOCTYPE html><html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-us" lang="en-us" data-whc_version="24.1">
+    <head><link rel="shortcut icon" href="oxygen-webhelp\template\resources/images/favicon.ico"/><link rel="icon" href="oxygen-webhelp\template\resources/images/favicon.ico"/><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/><meta name="viewport" content="width=device-width, initial-scale=1.0"/><meta http-equiv="X-UA-Compatible" content="IE=edge"/><meta name="description" content="Command System Service library provides the following interfaces: Functions Name Description SYS_CMD_Initialize Initializes data for the instance of the Command Processor module SYS_CMD_ADDGRP Allows ..."/><meta name="copyright" content="(C) Copyright 2023"/><meta name="DC.rights.owner" content="(C) Copyright 2023"/><meta name="DC.type" content="topic"/><meta name="DC.relation" content="GUID-09F65940-7D05-4F78-81C9-6356B65DEF21.md"/><meta name="DC.relation" content="GUID-FEBFF6DB-5F57-4360-90BF-E9DA46037C99.md"/><meta name="DC.relation" content="GUID-26B2DB3A-8817-401C-8EA1-BA288827F83C.md"/><meta name="DC.relation" content="GUID-ED55865F-5F73-4D1C-A894-6A26F9893190.md"/><meta name="DC.relation" content="GUID-05239B51-F3DC-495F-A373-057A692D1CE2.md"/><meta name="DC.relation" content="GUID-45D2280C-63E4-48FA-ABAD-450459998A8F.md"/><meta name="DC.relation" content="GUID-EDAB3999-3E03-4C0B-94B6-066DE78EE636.md"/><meta name="DC.relation" content="GUID-A4CE28DC-40B2-43C2-949E-69ABD5EFB2DC.md"/><meta name="DC.relation" content="GUID-02B7E5B7-DE83-434E-B5A3-9428923F2D83.md"/><meta name="DC.relation" content="GUID-3E6B809F-7256-4348-9596-7F338CC62EC5.md"/><meta name="DC.relation" content="GUID-6979BCB1-F38B-455E-AFBB-FD2A09A823B4.md"/><meta name="DC.relation" content="GUID-9A80603D-1A4B-4313-8D69-3C7F8E0CDDF0.md"/><meta name="DC.relation" content="GUID-B6686A00-4544-4CFB-9F3C-9184AD2E0FDD.md"/><meta name="DC.relation" content="GUID-918C3149-0EB2-4501-A80D-24BB98E67B5D.md"/><meta name="DC.relation" content="GUID-BBAD84DF-1379-41FE-8BE1-9009BDC368AF.md"/><meta name="DC.relation" content="GUID-740C7410-8069-4335-BB33-218D8F8B59F5.md"/><meta name="DC.relation" content="GUID-FA0DA23C-BCD9-405F-8CC1-C7AE98205FC3.md"/><meta name="DC.relation" content="GUID-1ACA0CDE-BB29-4A7F-AF3D-5461ECE86944.md"/><meta name="DC.relation" content="GUID-B51DDD56-C465-4676-816B-85FFEE48544C.md"/><meta name="DC.relation" content="GUID-51492B75-94E3-4BCE-960D-013CB51A2E19.md"/><meta name="DC.relation" content="GUID-8BCDA47F-4CBC-4405-9F30-4A44B7DE67F3.md"/><meta name="DC.relation" content="GUID-43DF0480-B8AC-4060-B932-0BF78B41CE23.md"/><meta name="DC.relation" content="GUID-28219199-6917-43CE-A9D3-0C84F4017C28.md"/><meta name="DC.relation" content="GUID-001CDE12-2461-42F4-8F72-783C6EB738D4.md"/><meta name="DC.relation" content="GUID-3ABD051F-AA97-4C40-942D-EFC6A16486B8.md"/><meta name="DC.relation" content="GUID-4F58DE9B-B3EE-4108-9290-15F90CC32FB0.md"/><meta name="DC.relation" content="GUID-F6B65A05-37EC-4CCF-AFC3-0EC2EA264CDB.md"/><meta name="DC.relation" content="GUID-85B8324A-FF53-4CBB-B687-C6BCE047FEDC.md"/><meta name="DC.relation" content="GUID-827592EF-BDE9-4229-9A95-E2F6E8E55AF2.md"/><meta name="DC.format" content="HTML5"/><meta name="DC.identifier" content="library-interface"/><title>1.2.3.4 Library Interface</title><!--  Generated with Oxygen version 24.1, build number 2022062014.  --><meta name="wh-path2root" content=""/><meta name="wh-toc-id" content="&lt;?xml version=&#34;1.0&#34; encoding=&#34;UTF-8&#34;?&gt;&lt;?workdir /D:\InfoShare\Data\Publish\Data\qzvtb5xcvan\work\temp?&gt;&lt;?workdir-uri file:/D:/InfoShare/Data/Publish/Data/qzvtb5xcvan/work/temp/?&gt;&lt;?path2project?&gt;&lt;?path2project-uri ./?&gt;&lt;?path2rootmap-uri ./?&gt;&lt;topic xmlns:ditaarch=&#34;http://dita.oasis-open.org/architecture/2005/&#34; xmlns:dita-ot=&#34;http://dita-ot.sourceforge.net/ns/201007/dita-ot&#34; class=&#34;- topic/topic &#34; ditaarch:DITAArchVersion=&#34;1.2&#34; domains=&#34;(topic hi-d) (topic ut-d) (topic indexing-d) (topic hazard-d) (topic abbrev-d) (topic pr-d) (topic sw-d) (topic ui-d)&#34; id=&#34;library-interface&#34; xtrf=&#34;file:/D:/InfoShare/Data/Publish/Data/qzvtb5xcvan/work/1/en-US/GUID-F1DBA6FA-9373-4832-9CD9-BDC0B227003B.md&#34; xtrc=&#34;topic:1;182:3&#34; specializations=&#34;&#34;&gt;&lt;title class=&#34;- topic/title &#34; xtrf=&#34;file:/D:/InfoShare/Data/Publish/Data/qzvtb5xcvan/work/1/en-US/GUID-F1DBA6FA-9373-4832-9CD9-BDC0B227003B.md&#34; xtrc=&#34;title:1;182:3&#34;&gt;Library Interface&lt;/title&gt;&lt;body class=&#34;- topic/body &#34; xtrf=&#34;file:/D:/InfoShare/Data/Publish/Data/qzvtb5xcvan/work/1/en-US/GUID-F1DBA6FA-9373-4832-9CD9-BDC0B227003B.md&#34; xtrc=&#34;body:1;182:3&#34;&gt;&lt;p class=&#34;- topic/p &#34; xtrf=&#34;file:/D:/InfoShare/Data/Publish/Data/qzvtb5xcvan/work/1/en-US/GUID-F1DBA6FA-9373-4832-9CD9-BDC0B227003B.md&#34; xtrc=&#34;p:1;182:3&#34;&gt;Command System Service library provides the following interfaces:&lt;/p&gt;&lt;p class=&#34;- topic/p &#34; xtrf=&#34;file:/D:/InfoShare/Data/Publish/Data/qzvtb5xcvan/work/1/en-US/GUID-F1DBA6FA-9373-4832-9CD9-BDC0B227003B.md&#34; xtrc=&#34;p:2;182:3&#34;&gt;&lt;b class=&#34;+ topic/ph hi-d/b &#34; xtrf=&#34;file:/D:/InfoShare/Data/Publish/Data/qzvtb5xcvan/work/1/en-US/GUID-F1DBA6FA-9373-4832-9CD9-BDC0B227003B.md&#34; xtrc=&#34;b:1;182:3&#34;&gt;Functions&lt;/b&gt;&lt;/p&gt;&lt;table class=&#34;- topic/table &#34; xtrf=&#34;file:/D:/InfoShare/Data/Publish/Data/qzvtb5xcvan/work/1/en-US/GUID-F1DBA6FA-9373-4832-9CD9-BDC0B227003B.md&#34; xtrc=&#34;table:1;182:3&#34;&gt;&lt;tgroup class=&#34;- topic/tgroup &#34; cols=&#34;2&#34; xtrf=&#34;file:/D:/InfoShare/Data/Publish/Data/qzvtb5xcvan/work/1/en-US/GUID-F1DBA6FA-9373-4832-9CD9-BDC0B227003B.md&#34; xtrc=&#34;tgroup:1;182:3&#34;&gt;&lt;colspec class=&#34;- topic/colspec &#34; colname=&#34;col1&#34; xtrf=&#34;file:/D:/InfoShare/Data/Publish/Data/qzvtb5xcvan/work/1/en-US/GUID-F1DBA6FA-9373-4832-9CD9-BDC0B227003B.md&#34; xtrc=&#34;colspec:1;182:3&#34; colnum=&#34;1&#34;/&gt;&lt;colspec class=&#34;- topic/colspec &#34; colname=&#34;col2&#34; xtrf=&#34;file:/D:/InfoShare/Data/Publish/Data/qzvtb5xcvan/work/1/en-US/GUID-F1DBA6FA-9373-4832-9CD9-BDC0B227003B.md&#34; xtrc=&#34;colspec:2;182:3&#34; colnum=&#34;2&#34;/&gt;&lt;thead class=&#34;- topic/thead &#34; xtrf=&#34;file:/D:/InfoShare/Data/Publish/Data/qzvtb5xcvan/work/1/en-US/GUID-F1DBA6FA-9373-4832-9CD9-BDC0B227003B.md&#34; xtrc=&#34;thead:1;182:3&#34;&gt;&lt;row class=&#34;- topic/row &#34; xtrf=&#34;file:/D:/InfoShare/Data/Publish/Data/qzvtb5xcvan/work/1/en-US/GUID-F1DBA6FA-9373-4832-9CD9-BDC0B227003B.md&#34; xtrc=&#34;row:1;182:3&#34;&gt;&lt;entry class=&#34;- topic/entry &#34; align=&#34;left&#34; xtrf=&#34;file:/D:/InfoShare/Data/Publish/Data/qzvtb5xcvan/work/1/en-US/GUID-F1DBA6FA-9373-4832-9CD9-BDC0B227003B.md&#34; xtrc=&#34;entry:1;182:3&#34; colname=&#34;col1&#34; dita-ot:x=&#34;1&#34; dita-ot:y=&#34;1&#34;&gt;Name&lt;/entry&gt;&lt;entry class=&#34;- topic/entry &#34; align=&#34;left&#34; xtrf=&#34;file:/D:/InfoShare/Data/Publish/Data/qzvtb5xcvan/work/1/en-US/GUID-F1DBA6FA-9373-4832-9CD9-BDC0B227003B.md&#34; xtrc=&#34;entry:2;182:3&#34; colname=&#34;col2&#34; dita-ot:x=&#34;2&#34; dita-ot:y=&#34;1&#34;&gt;Description&lt;/entry&gt;&lt;/row&gt;&lt;/thead&gt;&lt;tbody class=&#34;- topic/tbody &#34; xtrf=&#34;file:/D:/InfoShare/Data/Publish/Data/qzvtb5xcvan/work/1/en-US/GUID-F1DBA6FA-9373-4832-9CD9-BDC0B227003B.md&#34; xtrc=&#34;tbody:1;182:3&#34;&gt;&lt;row class=&#34;- topic/row &#34; xtrf=&#34;file:/D:/InfoShare/Data/Publish/Data/qzvtb5xcvan/work/1/en-US/GUID-F1DBA6FA-9373-4832-9CD9-BDC0B227003B.md&#34; xtrc=&#34;row:2;182:3&#34;&gt;&lt;entry class=&#34;- topic/entry &#34; align=&#34;left&#34; xtrf=&#34;file:/D:/InfoShare/Data/Publish/Data/qzvtb5xcvan/work/1/en-US/GUID-F1DBA6FA-9373-4832-9CD9-BDC0B227003B.md&#34; xtrc=&#34;entry:3;182:3&#34; colname=&#34;col1&#34; dita-ot:x=&#34;1&#34; dita-ot:y=&#34;2&#34;&gt;SYS_CMD_Initialize&lt;/entry&gt;&lt;entry class=&#34;- topic/entry &#34; align=&#34;left&#34; xtrf=&#34;file:/D:/InfoShare/Data/Publish/Data/qzvtb5xcvan/work/1/en-US/GUID-F1DBA6FA-9373-4832-9CD9-BDC0B227003B.md&#34; xtrc=&#34;entry:4;182:3&#34; colname=&#34;col2&#34; dita-ot:x=&#34;2&#34; dita-ot:y=&#34;2&#34;&gt;Initializes data for the instance of the Command Processor module&lt;/entry&gt;&lt;/row&gt;&lt;row class=&#34;- topic/row &#34; xtrf=&#34;file:/D:/InfoShare/Data/Publish/Data/qzvtb5xcvan/work/1/en-US/GUID-F1DBA6FA-9373-4832-9CD9-BDC0B227003B.md&#34; xtrc=&#34;row:3;182:3&#34;&gt;&lt;entry class=&#34;- topic/entry &#34; align=&#34;left&#34; xtrf=&#34;file:/D:/InfoShare/Data/Publish/Data/qzvtb5xcvan/work/1/en-US/GUID-F1DBA6FA-9373-4832-9CD9-BDC0B227003B.md&#34; xtrc=&#34;entry:5;182:3&#34; colname=&#34;col1&#34; dita-ot:x=&#34;1&#34; dita-ot:y=&#34;3&#34;&gt;SYS_CMD_ADDGRP&lt;/entry&gt;&lt;entry class=&#34;- topic/entry &#34; align=&#34;left&#34; xtrf=&#34;file:/D:/InfoShare/Data/Publish/Data/qzvtb5xcvan/work/1/en-US/GUID-F1DBA6FA-9373-4832-9CD9-BDC0B227003B.md&#34; xtrc=&#34;entry:6;182:3&#34; colname=&#34;col2&#34; dita-ot:x=&#34;2&#34; dita-ot:y=&#34;3&#34;&gt;Allows clients to add command process to the Command Processor System Service&lt;/entry&gt;&lt;/row&gt;&lt;row class=&#34;- topic/row &#34; xtrf=&#34;file:/D:/InfoShare/Data/Publish/Data/qzvtb5xcvan/work/1/en-US/GUID-F1DBA6FA-9373-4832-9CD9-BDC0B227003B.md&#34; xtrc=&#34;row:4;182:3&#34;&gt;&lt;entry class=&#34;- topic/entry &#34; align=&#34;left&#34; xtrf=&#34;file:/D:/InfoShare/Data/Publish/Data/qzvtb5xcvan/work/1/en-US/GUID-F1DBA6FA-9373-4832-9CD9-BDC0B227003B.md&#34; xtrc=&#34;entry:7;182:3&#34; colname=&#34;col1&#34; dita-ot:x=&#34;1&#34; dita-ot:y=&#34;4&#34;&gt;SYS_CMD_DELETE&lt;/entry&gt;&lt;entry class=&#34;- topic/entry &#34; align=&#34;left&#34; xtrf=&#34;file:/D:/InfoShare/Data/Publish/Data/qzvtb5xcvan/work/1/en-US/GUID-F1DBA6FA-9373-4832-9CD9-BDC0B227003B.md&#34; xtrc=&#34;entry:8;182:3&#34; colname=&#34;col2&#34; dita-ot:x=&#34;2&#34; dita-ot:y=&#34;4&#34;&gt;Removes CMDIO parameters from the Command Processor System Service console&lt;/entry&gt;&lt;/row&gt;&lt;row class=&#34;- topic/row &#34; xtrf=&#34;file:/D:/InfoShare/Data/Publish/Data/qzvtb5xcvan/work/1/en-US/GUID-F1DBA6FA-9373-4832-9CD9-BDC0B227003B.md&#34; xtrc=&#34;row:5;182:3&#34;&gt;&lt;entry class=&#34;- topic/entry &#34; align=&#34;left&#34; xtrf=&#34;file:/D:/InfoShare/Data/Publish/Data/qzvtb5xcvan/work/1/en-US/GUID-F1DBA6FA-9373-4832-9CD9-BDC0B227003B.md&#34; xtrc=&#34;entry:9;182:3&#34; colname=&#34;col1&#34; dita-ot:x=&#34;1&#34; dita-ot:y=&#34;5&#34;&gt;SYS_CMD_READY_TO_READ&lt;/entry&gt;&lt;entry class=&#34;- topic/entry &#34; align=&#34;left&#34; xtrf=&#34;file:/D:/InfoShare/Data/Publish/Data/qzvtb5xcvan/work/1/en-US/GUID-F1DBA6FA-9373-4832-9CD9-BDC0B227003B.md&#34; xtrc=&#34;entry:10;182:3&#34; colname=&#34;col2&#34; dita-ot:x=&#34;2&#34; dita-ot:y=&#34;5&#34;&gt;Allows upper layer application to confirm that the command module is ready to accept command input&lt;/entry&gt;&lt;/row&gt;&lt;row class=&#34;- topic/row &#34; xtrf=&#34;file:/D:/InfoShare/Data/Publish/Data/qzvtb5xcvan/work/1/en-US/GUID-F1DBA6FA-9373-4832-9CD9-BDC0B227003B.md&#34; xtrc=&#34;row:6;182:3&#34;&gt;&lt;entry class=&#34;- topic/entry &#34; align=&#34;left&#34; xtrf=&#34;file:/D:/InfoShare/Data/Publish/Data/qzvtb5xcvan/work/1/en-US/GUID-F1DBA6FA-9373-4832-9CD9-BDC0B227003B.md&#34; xtrc=&#34;entry:11;182:3&#34; colname=&#34;col1&#34; dita-ot:x=&#34;1&#34; dita-ot:y=&#34;6&#34;&gt;SYS_CMD_READY_TO_WRITE&lt;/entry&gt;&lt;entry class=&#34;- topic/entry &#34; align=&#34;left&#34; xtrf=&#34;file:/D:/InfoShare/Data/Publish/Data/qzvtb5xcvan/work/1/en-US/GUID-F1DBA6FA-9373-4832-9CD9-BDC0B227003B.md&#34; xtrc=&#34;entry:12;182:3&#34; colname=&#34;col2&#34; dita-ot:x=&#34;2&#34; dita-ot:y=&#34;6&#34;&gt;Allows upper layer application to confirm that the command module is ready to write output to the Console System Service&lt;/entry&gt;&lt;/row&gt;&lt;row class=&#34;- topic/row &#34; xtrf=&#34;file:/D:/InfoShare/Data/Publish/Data/qzvtb5xcvan/work/1/en-US/GUID-F1DBA6FA-9373-4832-9CD9-BDC0B227003B.md&#34; xtrc=&#34;row:7;182:3&#34;&gt;&lt;entry class=&#34;- topic/entry &#34; align=&#34;left&#34; xtrf=&#34;file:/D:/InfoShare/Data/Publish/Data/qzvtb5xcvan/work/1/en-US/GUID-F1DBA6FA-9373-4832-9CD9-BDC0B227003B.md&#34; xtrc=&#34;entry:13;182:3&#34; colname=&#34;col1&#34; dita-ot:x=&#34;1&#34; dita-ot:y=&#34;7&#34;&gt;SYS_CMD_Tasks&lt;/entry&gt;&lt;entry class=&#34;- topic/entry &#34; align=&#34;left&#34; xtrf=&#34;file:/D:/InfoShare/Data/Publish/Data/qzvtb5xcvan/work/1/en-US/GUID-F1DBA6FA-9373-4832-9CD9-BDC0B227003B.md&#34; xtrc=&#34;entry:14;182:3&#34; colname=&#34;col2&#34; dita-ot:x=&#34;2&#34; dita-ot:y=&#34;7&#34;&gt;Maintains the Command Processor System Service's internal state machine&lt;/entry&gt;&lt;/row&gt;&lt;row class=&#34;- topic/row &#34; xtrf=&#34;file:/D:/InfoShare/Data/Publish/Data/qzvtb5xcvan/work/1/en-US/GUID-F1DBA6FA-9373-4832-9CD9-BDC0B227003B.md&#34; xtrc=&#34;row:8;182:3&#34;&gt;&lt;entry class=&#34;- topic/entry &#34; align=&#34;left&#34; xtrf=&#34;file:/D:/InfoShare/Data/Publish/Data/qzvtb5xcvan/work/1/en-US/GUID-F1DBA6FA-9373-4832-9CD9-BDC0B227003B.md&#34; xtrc=&#34;entry:15;182:3&#34; colname=&#34;col1&#34; dita-ot:x=&#34;1&#34; dita-ot:y=&#34;8&#34;&gt;SYS_CMD_MESSAGE&lt;/entry&gt;&lt;entry class=&#34;- topic/entry &#34; align=&#34;left&#34; xtrf=&#34;file:/D:/InfoShare/Data/Publish/Data/qzvtb5xcvan/work/1/en-US/GUID-F1DBA6FA-9373-4832-9CD9-BDC0B227003B.md&#34; xtrc=&#34;entry:16;182:3&#34; colname=&#34;col2&#34; dita-ot:x=&#34;2&#34; dita-ot:y=&#34;8&#34;&gt;Outputs a message to the Command Processor System Service console&lt;/entry&gt;&lt;/row&gt;&lt;row class=&#34;- topic/row &#34; xtrf=&#34;file:/D:/InfoShare/Data/Publish/Data/qzvtb5xcvan/work/1/en-US/GUID-F1DBA6FA-9373-4832-9CD9-BDC0B227003B.md&#34; xtrc=&#34;row:9;182:3&#34;&gt;&lt;entry class=&#34;- topic/entry &#34; align=&#34;left&#34; xtrf=&#34;file:/D:/InfoShare/Data/Publish/Data/qzvtb5xcvan/work/1/en-US/GUID-F1DBA6FA-9373-4832-9CD9-BDC0B227003B.md&#34; xtrc=&#34;entry:17;182:3&#34; colname=&#34;col1&#34; dita-ot:x=&#34;1&#34; dita-ot:y=&#34;9&#34;&gt;SYS_CMD_PRINT&lt;/entry&gt;&lt;entry class=&#34;- topic/entry &#34; align=&#34;left&#34; xtrf=&#34;file:/D:/InfoShare/Data/Publish/Data/qzvtb5xcvan/work/1/en-US/GUID-F1DBA6FA-9373-4832-9CD9-BDC0B227003B.md&#34; xtrc=&#34;entry:18;182:3&#34; colname=&#34;col2&#34; dita-ot:x=&#34;2&#34; dita-ot:y=&#34;9&#34;&gt;Outputs a printout to the Command Processor System Service console&lt;/entry&gt;&lt;/row&gt;&lt;row class=&#34;- topic/row &#34; xtrf=&#34;file:/D:/InfoShare/Data/Publish/Data/qzvtb5xcvan/work/1/en-US/GUID-F1DBA6FA-9373-4832-9CD9-BDC0B227003B.md&#34; xtrc=&#34;row:10;182:3&#34;&gt;&lt;entry class=&#34;- topic/entry &#34; align=&#34;left&#34; xtrf=&#34;file:/D:/InfoShare/Data/Publish/Data/qzvtb5xcvan/work/1/en-US/GUID-F1DBA6FA-9373-4832-9CD9-BDC0B227003B.md&#34; xtrc=&#34;entry:19;182:3&#34; colname=&#34;col1&#34; dita-ot:x=&#34;1&#34; dita-ot:y=&#34;10&#34;&gt;SYS_CMDIO_GET_HANDLE&lt;/entry&gt;&lt;entry class=&#34;- topic/entry &#34; align=&#34;left&#34; xtrf=&#34;file:/D:/InfoShare/Data/Publish/Data/qzvtb5xcvan/work/1/en-US/GUID-F1DBA6FA-9373-4832-9CD9-BDC0B227003B.md&#34; xtrc=&#34;entry:20;182:3&#34; colname=&#34;col2&#34; dita-ot:x=&#34;2&#34; dita-ot:y=&#34;10&#34;&gt;Gets the CMDIO Handle base via index&lt;/entry&gt;&lt;/row&gt;&lt;row class=&#34;- topic/row &#34; xtrf=&#34;file:/D:/InfoShare/Data/Publish/Data/qzvtb5xcvan/work/1/en-US/GUID-F1DBA6FA-9373-4832-9CD9-BDC0B227003B.md&#34; xtrc=&#34;row:11;182:3&#34;&gt;&lt;entry class=&#34;- topic/entry &#34; align=&#34;left&#34; xtrf=&#34;file:/D:/InfoShare/Data/Publish/Data/qzvtb5xcvan/work/1/en-US/GUID-F1DBA6FA-9373-4832-9CD9-BDC0B227003B.md&#34; xtrc=&#34;entry:21;182:3&#34; colname=&#34;col1&#34; dita-ot:x=&#34;1&#34; dita-ot:y=&#34;11&#34;&gt;SYS_CMDIO_ADD&lt;/entry&gt;&lt;entry class=&#34;- topic/entry &#34; align=&#34;left&#34; xtrf=&#34;file:/D:/InfoShare/Data/Publish/Data/qzvtb5xcvan/work/1/en-US/GUID-F1DBA6FA-9373-4832-9CD9-BDC0B227003B.md&#34; xtrc=&#34;entry:22;182:3&#34; colname=&#34;col2&#34; dita-ot:x=&#34;2&#34; dita-ot:y=&#34;11&#34;&gt;Adds CMDIO parameters to the Command Processor System Service console&lt;/entry&gt;&lt;/row&gt;&lt;/tbody&gt;&lt;/tgroup&gt;&lt;/table&gt;&lt;p class=&#34;- topic/p &#34; xtrf=&#34;file:/D:/InfoShare/Data/Publish/Data/qzvtb5xcvan/work/1/en-US/GUID-F1DBA6FA-9373-4832-9CD9-BDC0B227003B.md&#34; xtrc=&#34;p:3;182:3&#34;&gt;&lt;b class=&#34;+ topic/ph hi-d/b &#34; xtrf=&#34;file:/D:/InfoShare/Data/Publish/Data/qzvtb5xcvan/work/1/en-US/GUID-F1DBA6FA-9373-4832-9CD9-BDC0B227003B.md&#34; xtrc=&#34;b:2;182:3&#34;&gt;Data types and constants&lt;/b&gt;&lt;/p&gt;&lt;table class=&#34;- topic/table &#34; xtrf=&#34;file:/D:/InfoShare/Data/Publish/Data/qzvtb5xcvan/work/1/en-US/GUID-F1DBA6FA-9373-4832-9CD9-BDC0B227003B.md&#34; xtrc=&#34;table:2;182:3&#34;&gt;&lt;tgroup class=&#34;- topic/tgroup &#34; cols=&#34;3&#34; xtrf=&#34;file:/D:/InfoShare/Data/Publish/Data/qzvtb5xcvan/work/1/en-US/GUID-F1DBA6FA-9373-4832-9CD9-BDC0B227003B.md&#34; xtrc=&#34;tgroup:2;182:3&#34;&gt;&lt;colspec class=&#34;- topic/colspec &#34; colname=&#34;col1&#34; xtrf=&#34;file:/D:/InfoShare/Data/Publish/Data/qzvtb5xcvan/work/1/en-US/GUID-F1DBA6FA-9373-4832-9CD9-BDC0B227003B.md&#34; xtrc=&#34;colspec:3;182:3&#34; colnum=&#34;1&#34;/&gt;&lt;colspec class=&#34;- topic/colspec &#34; colname=&#34;col2&#34; xtrf=&#34;file:/D:/InfoShare/Data/Publish/Data/qzvtb5xcvan/work/1/en-US/GUID-F1DBA6FA-9373-4832-9CD9-BDC0B227003B.md&#34; xtrc=&#34;colspec:4;182:3&#34; colnum=&#34;2&#34;/&gt;&lt;colspec class=&#34;- topic/colspec &#34; colname=&#34;col3&#34; xtrf=&#34;file:/D:/InfoShare/Data/Publish/Data/qzvtb5xcvan/work/1/en-US/GUID-F1DBA6FA-9373-4832-9CD9-BDC0B227003B.md&#34; xtrc=&#34;colspec:5;182:3&#34; colnum=&#34;3&#34;/&gt;&lt;thead class=&#34;- topic/thead &#34; xtrf=&#34;file:/D:/InfoShare/Data/Publish/Data/qzvtb5xcvan/work/1/en-US/GUID-F1DBA6FA-9373-4832-9CD9-BDC0B227003B.md&#34; xtrc=&#34;thead:2;182:3&#34;&gt;&lt;row class=&#34;- topic/row &#34; xtrf=&#34;file:/D:/InfoShare/Data/Publish/Data/qzvtb5xcvan/work/1/en-US/GUID-F1DBA6FA-9373-4832-9CD9-BDC0B227003B.md&#34; xtrc=&#34;row:12;182:3&#34;&gt;&lt;entry class=&#34;- topic/entry &#34; align=&#34;left&#34; xtrf=&#34;file:/D:/InfoShare/Data/Publish/Data/qzvtb5xcvan/work/1/en-US/GUID-F1DBA6FA-9373-4832-9CD9-BDC0B227003B.md&#34; xtrc=&#34;entry:23;182:3&#34; colname=&#34;col1&#34; dita-ot:x=&#34;1&#34; dita-ot:y=&#34;1&#34;&gt;Name&lt;/entry&gt;&lt;entry class=&#34;- topic/entry &#34; align=&#34;left&#34; xtrf=&#34;file:/D:/InfoShare/Data/Publish/Data/qzvtb5xcvan/work/1/en-US/GUID-F1DBA6FA-9373-4832-9CD9-BDC0B227003B.md&#34; xtrc=&#34;entry:24;182:3&#34; colname=&#34;col2&#34; dita-ot:x=&#34;2&#34; dita-ot:y=&#34;1&#34;&gt;Type&lt;/entry&gt;&lt;entry class=&#34;- topic/entry &#34; align=&#34;left&#34; xtrf=&#34;file:/D:/InfoShare/Data/Publish/Data/qzvtb5xcvan/work/1/en-US/GUID-F1DBA6FA-9373-4832-9CD9-BDC0B227003B.md&#34; xtrc=&#34;entry:25;182:3&#34; colname=&#34;col3&#34; dita-ot:x=&#34;3&#34; dita-ot:y=&#34;1&#34;&gt;Description&lt;/entry&gt;&lt;/row&gt;&lt;/thead&gt;&lt;tbody class=&#34;- topic/tbody &#34; xtrf=&#34;file:/D:/InfoShare/Data/Publish/Data/qzvtb5xcvan/work/1/en-US/GUID-F1DBA6FA-9373-4832-9CD9-BDC0B227003B.md&#34; xtrc=&#34;tbody:2;182:3&#34;&gt;&lt;row class=&#34;- topic/row &#34; xtrf=&#34;file:/D:/InfoShare/Data/Publish/Data/qzvtb5xcvan/work/1/en-US/GUID-F1DBA6FA-9373-4832-9CD9-BDC0B227003B.md&#34; xtrc=&#34;row:13;182:3&#34;&gt;&lt;entry class=&#34;- topic/entry &#34; align=&#34;left&#34; xtrf=&#34;file:/D:/InfoShare/Data/Publish/Data/qzvtb5xcvan/work/1/en-US/GUID-F1DBA6FA-9373-4832-9CD9-BDC0B227003B.md&#34; xtrc=&#34;entry:26;182:3&#34; colname=&#34;col1&#34; dita-ot:x=&#34;1&#34; dita-ot:y=&#34;2&#34;&gt;COMMAND_HISTORY_DEPTH&lt;/entry&gt;&lt;entry class=&#34;- topic/entry &#34; align=&#34;left&#34; xtrf=&#34;file:/D:/InfoShare/Data/Publish/Data/qzvtb5xcvan/work/1/en-US/GUID-F1DBA6FA-9373-4832-9CD9-BDC0B227003B.md&#34; xtrc=&#34;entry:27;182:3&#34; colname=&#34;col2&#34; dita-ot:x=&#34;2&#34; dita-ot:y=&#34;2&#34;&gt;Macro&lt;/entry&gt;&lt;entry class=&#34;- topic/entry &#34; align=&#34;left&#34; xtrf=&#34;file:/D:/InfoShare/Data/Publish/Data/qzvtb5xcvan/work/1/en-US/GUID-F1DBA6FA-9373-4832-9CD9-BDC0B227003B.md&#34; xtrc=&#34;entry:28;182:3&#34; colname=&#34;col3&#34; dita-ot:x=&#34;3&#34; dita-ot:y=&#34;2&#34;&gt;Command Processor System Service Maximum Depth of Command History&lt;/entry&gt;&lt;/row&gt;&lt;row class=&#34;- topic/row &#34; xtrf=&#34;file:/D:/InfoShare/Data/Publish/Data/qzvtb5xcvan/work/1/en-US/GUID-F1DBA6FA-9373-4832-9CD9-BDC0B227003B.md&#34; xtrc=&#34;row:14;182:3&#34;&gt;&lt;entry class=&#34;- topic/entry &#34; align=&#34;left&#34; xtrf=&#34;file:/D:/InfoShare/Data/Publish/Data/qzvtb5xcvan/work/1/en-US/GUID-F1DBA6FA-9373-4832-9CD9-BDC0B227003B.md&#34; xtrc=&#34;entry:29;182:3&#34; colname=&#34;col1&#34; dita-ot:x=&#34;1&#34; dita-ot:y=&#34;3&#34;&gt;SYS_CMD_MAX_LENGTH&lt;/entry&gt;&lt;entry class=&#34;- topic/entry &#34; align=&#34;left&#34; xtrf=&#34;file:/D:/InfoShare/Data/Publish/Data/qzvtb5xcvan/work/1/en-US/GUID-F1DBA6FA-9373-4832-9CD9-BDC0B227003B.md&#34; xtrc=&#34;entry:30;182:3&#34; colname=&#34;col2&#34; dita-ot:x=&#34;2&#34; dita-ot:y=&#34;3&#34;&gt;Macro&lt;/entry&gt;&lt;entry class=&#34;- topic/entry &#34; align=&#34;left&#34; xtrf=&#34;file:/D:/InfoShare/Data/Publish/Data/qzvtb5xcvan/work/1/en-US/GUID-F1DBA6FA-9373-4832-9CD9-BDC0B227003B.md&#34; xtrc=&#34;entry:31;182:3&#34; colname=&#34;col3&#34; dita-ot:x=&#34;3&#34; dita-ot:y=&#34;3&#34;&gt;Command Processor System Service Command Buffer Maximum Length definition&lt;/entry&gt;&lt;/row&gt;&lt;row class=&#34;- topic/row &#34; xtrf=&#34;file:/D:/InfoShare/Data/Publish/Data/qzvtb5xcvan/work/1/en-US/GUID-F1DBA6FA-9373-4832-9CD9-BDC0B227003B.md&#34; xtrc=&#34;row:15;182:3&#34;&gt;&lt;entry class=&#34;- topic/entry &#34; align=&#34;left&#34; xtrf=&#34;file:/D:/InfoShare/Data/Publish/Data/qzvtb5xcvan/work/1/en-US/GUID-F1DBA6FA-9373-4832-9CD9-BDC0B227003B.md&#34; xtrc=&#34;entry:32;182:3&#34; colname=&#34;col1&#34; dita-ot:x=&#34;1&#34; dita-ot:y=&#34;4&#34;&gt;SYS_CMD_READ_BUFFER_SIZE&lt;/entry&gt;&lt;entry class=&#34;- topic/entry &#34; align=&#34;left&#34; xtrf=&#34;file:/D:/InfoShare/Data/Publish/Data/qzvtb5xcvan/work/1/en-US/GUID-F1DBA6FA-9373-4832-9CD9-BDC0B227003B.md&#34; xtrc=&#34;entry:33;182:3&#34; colname=&#34;col2&#34; dita-ot:x=&#34;2&#34; dita-ot:y=&#34;4&#34;&gt;Macro&lt;/entry&gt;&lt;entry class=&#34;- topic/entry &#34; align=&#34;left&#34; xtrf=&#34;file:/D:/InfoShare/Data/Publish/Data/qzvtb5xcvan/work/1/en-US/GUID-F1DBA6FA-9373-4832-9CD9-BDC0B227003B.md&#34; xtrc=&#34;entry:34;182:3&#34; colname=&#34;col3&#34; dita-ot:x=&#34;3&#34; dita-ot:y=&#34;4&#34;&gt;Command Processor System Service Read Buffer Size definition&lt;/entry&gt;&lt;/row&gt;&lt;row class=&#34;- topic/row &#34; xtrf=&#34;file:/D:/InfoShare/Data/Publish/Data/qzvtb5xcvan/work/1/en-US/GUID-F1DBA6FA-9373-4832-9CD9-BDC0B227003B.md&#34; xtrc=&#34;row:16;182:3&#34;&gt;&lt;entry class=&#34;- topic/entry &#34; align=&#34;left&#34; xtrf=&#34;file:/D:/InfoShare/Data/Publish/Data/qzvtb5xcvan/work/1/en-US/GUID-F1DBA6FA-9373-4832-9CD9-BDC0B227003B.md&#34; xtrc=&#34;entry:35;182:3&#34; colname=&#34;col1&#34; dita-ot:x=&#34;1&#34; dita-ot:y=&#34;5&#34;&gt;SYS_CMD_CallbackFunction&lt;/entry&gt;&lt;entry class=&#34;- topic/entry &#34; align=&#34;left&#34; xtrf=&#34;file:/D:/InfoShare/Data/Publish/Data/qzvtb5xcvan/work/1/en-US/GUID-F1DBA6FA-9373-4832-9CD9-BDC0B227003B.md&#34; xtrc=&#34;entry:36;182:3&#34; colname=&#34;col2&#34; dita-ot:x=&#34;2&#34; dita-ot:y=&#34;5&#34;&gt;Typedef&lt;/entry&gt;&lt;entry class=&#34;- topic/entry &#34; align=&#34;left&#34; xtrf=&#34;file:/D:/InfoShare/Data/Publish/Data/qzvtb5xcvan/work/1/en-US/GUID-F1DBA6FA-9373-4832-9CD9-BDC0B227003B.md&#34; xtrc=&#34;entry:37;182:3&#34; colname=&#34;col3&#34; dita-ot:x=&#34;3&#34; dita-ot:y=&#34;5&#34;&gt;Command Callback Function Handle&lt;/entry&gt;&lt;/row&gt;&lt;row class=&#34;- topic/row &#34; xtrf=&#34;file:/D:/InfoShare/Data/Publish/Data/qzvtb5xcvan/work/1/en-US/GUID-F1DBA6FA-9373-4832-9CD9-BDC0B227003B.md&#34; xtrc=&#34;row:17;182:3&#34;&gt;&lt;entry class=&#34;- topic/entry &#34; align=&#34;left&#34; xtrf=&#34;file:/D:/InfoShare/Data/Publish/Data/qzvtb5xcvan/work/1/en-US/GUID-F1DBA6FA-9373-4832-9CD9-BDC0B227003B.md&#34; xtrc=&#34;entry:38;182:3&#34; colname=&#34;col1&#34; dita-ot:x=&#34;1&#34; dita-ot:y=&#34;6&#34;&gt;SYS_CMD_HANDLE&lt;/entry&gt;&lt;entry class=&#34;- topic/entry &#34; align=&#34;left&#34; xtrf=&#34;file:/D:/InfoShare/Data/Publish/Data/qzvtb5xcvan/work/1/en-US/GUID-F1DBA6FA-9373-4832-9CD9-BDC0B227003B.md&#34; xtrc=&#34;entry:39;182:3&#34; colname=&#34;col2&#34; dita-ot:x=&#34;2&#34; dita-ot:y=&#34;6&#34;&gt;Typedef&lt;/entry&gt;&lt;entry class=&#34;- topic/entry &#34; align=&#34;left&#34; xtrf=&#34;file:/D:/InfoShare/Data/Publish/Data/qzvtb5xcvan/work/1/en-US/GUID-F1DBA6FA-9373-4832-9CD9-BDC0B227003B.md&#34; xtrc=&#34;entry:40;182:3&#34; colname=&#34;col3&#34; dita-ot:x=&#34;3&#34; dita-ot:y=&#34;6&#34;&gt;Identifies a particular Command I/O instance&lt;/entry&gt;&lt;/row&gt;&lt;row class=&#34;- topic/row &#34; xtrf=&#34;file:/D:/InfoShare/Data/Publish/Data/qzvtb5xcvan/work/1/en-US/GUID-F1DBA6FA-9373-4832-9CD9-BDC0B227003B.md&#34; xtrc=&#34;row:18;182:3&#34;&gt;&lt;entry class=&#34;- topic/entry &#34; align=&#34;left&#34; xtrf=&#34;file:/D:/InfoShare/Data/Publish/Data/qzvtb5xcvan/work/1/en-US/GUID-F1DBA6FA-9373-4832-9CD9-BDC0B227003B.md&#34; xtrc=&#34;entry:41;182:3&#34; colname=&#34;col1&#34; dita-ot:x=&#34;1&#34; dita-ot:y=&#34;7&#34;&gt;SYS_CMD_MSG_FNC&lt;/entry&gt;&lt;entry class=&#34;- topic/entry &#34; align=&#34;left&#34; xtrf=&#34;file:/D:/InfoShare/Data/Publish/Data/qzvtb5xcvan/work/1/en-US/GUID-F1DBA6FA-9373-4832-9CD9-BDC0B227003B.md&#34; xtrc=&#34;entry:42;182:3&#34; colname=&#34;col2&#34; dita-ot:x=&#34;2&#34; dita-ot:y=&#34;7&#34;&gt;Typedef&lt;/entry&gt;&lt;entry class=&#34;- topic/entry &#34; align=&#34;left&#34; xtrf=&#34;file:/D:/InfoShare/Data/Publish/Data/qzvtb5xcvan/work/1/en-US/GUID-F1DBA6FA-9373-4832-9CD9-BDC0B227003B.md&#34; xtrc=&#34;entry:43;182:3&#34; colname=&#34;col3&#34; dita-ot:x=&#34;3&#34; dita-ot:y=&#34;7&#34;&gt;Identifies a message function API&lt;/entry&gt;&lt;/row&gt;&lt;row class=&#34;- topic/row &#34; xtrf=&#34;file:/D:/InfoShare/Data/Publish/Data/qzvtb5xcvan/work/1/en-US/GUID-F1DBA6FA-9373-4832-9CD9-BDC0B227003B.md&#34; xtrc=&#34;row:19;182:3&#34;&gt;&lt;entry class=&#34;- topic/entry &#34; align=&#34;left&#34; xtrf=&#34;file:/D:/InfoShare/Data/Publish/Data/qzvtb5xcvan/work/1/en-US/GUID-F1DBA6FA-9373-4832-9CD9-BDC0B227003B.md&#34; xtrc=&#34;entry:44;182:3&#34; colname=&#34;col1&#34; dita-ot:x=&#34;1&#34; dita-ot:y=&#34;8&#34;&gt;SYS_CMD_PRINT_FNC&lt;/entry&gt;&lt;entry class=&#34;- topic/entry &#34; align=&#34;left&#34; xtrf=&#34;file:/D:/InfoShare/Data/Publish/Data/qzvtb5xcvan/work/1/en-US/GUID-F1DBA6FA-9373-4832-9CD9-BDC0B227003B.md&#34; xtrc=&#34;entry:45;182:3&#34; colname=&#34;col2&#34; dita-ot:x=&#34;2&#34; dita-ot:y=&#34;8&#34;&gt;Typedef&lt;/entry&gt;&lt;entry class=&#34;- topic/entry &#34; align=&#34;left&#34; xtrf=&#34;file:/D:/InfoShare/Data/Publish/Data/qzvtb5xcvan/work/1/en-US/GUID-F1DBA6FA-9373-4832-9CD9-BDC0B227003B.md&#34; xtrc=&#34;entry:46;182:3&#34; colname=&#34;col3&#34; dita-ot:x=&#34;3&#34; dita-ot:y=&#34;8&#34;&gt;Identifies a print function API&lt;/entry&gt;&lt;/row&gt;&lt;row class=&#34;- topic/row &#34; xtrf=&#34;file:/D:/InfoShare/Data/Publish/Data/qzvtb5xcvan/work/1/en-US/GUID-F1DBA6FA-9373-4832-9CD9-BDC0B227003B.md&#34; xtrc=&#34;row:20;182:3&#34;&gt;&lt;entry class=&#34;- topic/entry &#34; align=&#34;left&#34; xtrf=&#34;file:/D:/InfoShare/Data/Publish/Data/qzvtb5xcvan/work/1/en-US/GUID-F1DBA6FA-9373-4832-9CD9-BDC0B227003B.md&#34; xtrc=&#34;entry:47;182:3&#34; colname=&#34;col1&#34; dita-ot:x=&#34;1&#34; dita-ot:y=&#34;9&#34;&gt;SYS_CMD_PUTC_FNC&lt;/entry&gt;&lt;entry class=&#34;- topic/entry &#34; align=&#34;left&#34; xtrf=&#34;file:/D:/InfoShare/Data/Publish/Data/qzvtb5xcvan/work/1/en-US/GUID-F1DBA6FA-9373-4832-9CD9-BDC0B227003B.md&#34; xtrc=&#34;entry:48;182:3&#34; colname=&#34;col2&#34; dita-ot:x=&#34;2&#34; dita-ot:y=&#34;9&#34;&gt;Typedef&lt;/entry&gt;&lt;entry class=&#34;- topic/entry &#34; align=&#34;left&#34; xtrf=&#34;file:/D:/InfoShare/Data/Publish/Data/qzvtb5xcvan/work/1/en-US/GUID-F1DBA6FA-9373-4832-9CD9-BDC0B227003B.md&#34; xtrc=&#34;entry:49;182:3&#34; colname=&#34;col3&#34; dita-ot:x=&#34;3&#34; dita-ot:y=&#34;9&#34;&gt;Identifies a single character print function API&lt;/entry&gt;&lt;/row&gt;&lt;row class=&#34;- topic/row &#34; xtrf=&#34;file:/D:/InfoShare/Data/Publish/Data/qzvtb5xcvan/work/1/en-US/GUID-F1DBA6FA-9373-4832-9CD9-BDC0B227003B.md&#34; xtrc=&#34;row:21;182:3&#34;&gt;&lt;entry class=&#34;- topic/entry &#34; align=&#34;left&#34; xtrf=&#34;file:/D:/InfoShare/Data/Publish/Data/qzvtb5xcvan/work/1/en-US/GUID-F1DBA6FA-9373-4832-9CD9-BDC0B227003B.md&#34; xtrc=&#34;entry:50;182:3&#34; colname=&#34;col1&#34; dita-ot:x=&#34;1&#34; dita-ot:y=&#34;10&#34;&gt;SYS_CMD_DATA_RDY_FNC&lt;/entry&gt;&lt;entry class=&#34;- topic/entry &#34; align=&#34;left&#34; xtrf=&#34;file:/D:/InfoShare/Data/Publish/Data/qzvtb5xcvan/work/1/en-US/GUID-F1DBA6FA-9373-4832-9CD9-BDC0B227003B.md&#34; xtrc=&#34;entry:51;182:3&#34; colname=&#34;col2&#34; dita-ot:x=&#34;2&#34; dita-ot:y=&#34;10&#34;&gt;Typedef&lt;/entry&gt;&lt;entry class=&#34;- topic/entry &#34; align=&#34;left&#34; xtrf=&#34;file:/D:/InfoShare/Data/Publish/Data/qzvtb5xcvan/work/1/en-US/GUID-F1DBA6FA-9373-4832-9CD9-BDC0B227003B.md&#34; xtrc=&#34;entry:52;182:3&#34; colname=&#34;col3&#34; dita-ot:x=&#34;3&#34; dita-ot:y=&#34;10&#34;&gt;Identifies a data available function API&lt;/entry&gt;&lt;/row&gt;&lt;row class=&#34;- topic/row &#34; xtrf=&#34;file:/D:/InfoShare/Data/Publish/Data/qzvtb5xcvan/work/1/en-US/GUID-F1DBA6FA-9373-4832-9CD9-BDC0B227003B.md&#34; xtrc=&#34;row:22;182:3&#34;&gt;&lt;entry class=&#34;- topic/entry &#34; align=&#34;left&#34; xtrf=&#34;file:/D:/InfoShare/Data/Publish/Data/qzvtb5xcvan/work/1/en-US/GUID-F1DBA6FA-9373-4832-9CD9-BDC0B227003B.md&#34; xtrc=&#34;entry:53;182:3&#34; colname=&#34;col1&#34; dita-ot:x=&#34;1&#34; dita-ot:y=&#34;11&#34;&gt;SYS_CMD_GETC_FNC&lt;/entry&gt;&lt;entry class=&#34;- topic/entry &#34; align=&#34;left&#34; xtrf=&#34;file:/D:/InfoShare/Data/Publish/Data/qzvtb5xcvan/work/1/en-US/GUID-F1DBA6FA-9373-4832-9CD9-BDC0B227003B.md&#34; xtrc=&#34;entry:54;182:3&#34; colname=&#34;col2&#34; dita-ot:x=&#34;2&#34; dita-ot:y=&#34;11&#34;&gt;Typedef&lt;/entry&gt;&lt;entry class=&#34;- topic/entry &#34; align=&#34;left&#34; xtrf=&#34;file:/D:/InfoShare/Data/Publish/Data/qzvtb5xcvan/work/1/en-US/GUID-F1DBA6FA-9373-4832-9CD9-BDC0B227003B.md&#34; xtrc=&#34;entry:55;182:3&#34; colname=&#34;col3&#34; dita-ot:x=&#34;3&#34; dita-ot:y=&#34;11&#34;&gt;Identifies a get single character function API&lt;/entry&gt;&lt;/row&gt;&lt;row class=&#34;- topic/row &#34; xtrf=&#34;file:/D:/InfoShare/Data/Publish/Data/qzvtb5xcvan/work/1/en-US/GUID-F1DBA6FA-9373-4832-9CD9-BDC0B227003B.md&#34; xtrc=&#34;row:23;182:3&#34;&gt;&lt;entry class=&#34;- topic/entry &#34; align=&#34;left&#34; xtrf=&#34;file:/D:/InfoShare/Data/Publish/Data/qzvtb5xcvan/work/1/en-US/GUID-F1DBA6FA-9373-4832-9CD9-BDC0B227003B.md&#34; xtrc=&#34;entry:56;182:3&#34; colname=&#34;col1&#34; dita-ot:x=&#34;1&#34; dita-ot:y=&#34;12&#34;&gt;SYS_CMD_READC_FNC&lt;/entry&gt;&lt;entry class=&#34;- topic/entry &#34; align=&#34;left&#34; xtrf=&#34;file:/D:/InfoShare/Data/Publish/Data/qzvtb5xcvan/work/1/en-US/GUID-F1DBA6FA-9373-4832-9CD9-BDC0B227003B.md&#34; xtrc=&#34;entry:57;182:3&#34; colname=&#34;col2&#34; dita-ot:x=&#34;2&#34; dita-ot:y=&#34;12&#34;&gt;Typedef&lt;/entry&gt;&lt;entry class=&#34;- topic/entry &#34; align=&#34;left&#34; xtrf=&#34;file:/D:/InfoShare/Data/Publish/Data/qzvtb5xcvan/work/1/en-US/GUID-F1DBA6FA-9373-4832-9CD9-BDC0B227003B.md&#34; xtrc=&#34;entry:58;182:3&#34; colname=&#34;col3&#34; dita-ot:x=&#34;3&#34; dita-ot:y=&#34;12&#34;&gt;Identifies a read single character function API&lt;/entry&gt;&lt;/row&gt;&lt;row class=&#34;- topic/row &#34; xtrf=&#34;file:/D:/InfoShare/Data/Publish/Data/qzvtb5xcvan/work/1/en-US/GUID-F1DBA6FA-9373-4832-9CD9-BDC0B227003B.md&#34; xtrc=&#34;row:24;182:3&#34;&gt;&lt;entry class=&#34;- topic/entry &#34; align=&#34;left&#34; xtrf=&#34;file:/D:/InfoShare/Data/Publish/Data/qzvtb5xcvan/work/1/en-US/GUID-F1DBA6FA-9373-4832-9CD9-BDC0B227003B.md&#34; xtrc=&#34;entry:59;182:3&#34; colname=&#34;col1&#34; dita-ot:x=&#34;1&#34; dita-ot:y=&#34;13&#34;&gt;SYS_CMD_API&lt;/entry&gt;&lt;entry class=&#34;- topic/entry &#34; align=&#34;left&#34; xtrf=&#34;file:/D:/InfoShare/Data/Publish/Data/qzvtb5xcvan/work/1/en-US/GUID-F1DBA6FA-9373-4832-9CD9-BDC0B227003B.md&#34; xtrc=&#34;entry:60;182:3&#34; colname=&#34;col2&#34; dita-ot:x=&#34;2&#34; dita-ot:y=&#34;13&#34;&gt;Struct&lt;/entry&gt;&lt;entry class=&#34;- topic/entry &#34; align=&#34;left&#34; xtrf=&#34;file:/D:/InfoShare/Data/Publish/Data/qzvtb5xcvan/work/1/en-US/GUID-F1DBA6FA-9373-4832-9CD9-BDC0B227003B.md&#34; xtrc=&#34;entry:61;182:3&#34; colname=&#34;col3&#34; dita-ot:x=&#34;3&#34; dita-ot:y=&#34;13&#34;&gt;Identifies the Command API structure&lt;/entry&gt;&lt;/row&gt;&lt;row class=&#34;- topic/row &#34; xtrf=&#34;file:/D:/InfoShare/Data/Publish/Data/qzvtb5xcvan/work/1/en-US/GUID-F1DBA6FA-9373-4832-9CD9-BDC0B227003B.md&#34; xtrc=&#34;row:25;182:3&#34;&gt;&lt;entry class=&#34;- topic/entry &#34; align=&#34;left&#34; xtrf=&#34;file:/D:/InfoShare/Data/Publish/Data/qzvtb5xcvan/work/1/en-US/GUID-F1DBA6FA-9373-4832-9CD9-BDC0B227003B.md&#34; xtrc=&#34;entry:62;182:3&#34; colname=&#34;col1&#34; dita-ot:x=&#34;1&#34; dita-ot:y=&#34;14&#34;&gt;SYS_CMD_EVENT&lt;/entry&gt;&lt;entry class=&#34;- topic/entry &#34; align=&#34;left&#34; xtrf=&#34;file:/D:/InfoShare/Data/Publish/Data/qzvtb5xcvan/work/1/en-US/GUID-F1DBA6FA-9373-4832-9CD9-BDC0B227003B.md&#34; xtrc=&#34;entry:63;182:3&#34; colname=&#34;col2&#34; dita-ot:x=&#34;2&#34; dita-ot:y=&#34;14&#34;&gt;Enum&lt;/entry&gt;&lt;entry class=&#34;- topic/entry &#34; align=&#34;left&#34; xtrf=&#34;file:/D:/InfoShare/Data/Publish/Data/qzvtb5xcvan/work/1/en-US/GUID-F1DBA6FA-9373-4832-9CD9-BDC0B227003B.md&#34; xtrc=&#34;entry:64;182:3&#34; colname=&#34;col3&#34; dita-ot:x=&#34;3&#34; dita-ot:y=&#34;14&#34;&gt;Identifies the Command Event Types&lt;/entry&gt;&lt;/row&gt;&lt;row class=&#34;- topic/row &#34; xtrf=&#34;file:/D:/InfoShare/Data/Publish/Data/qzvtb5xcvan/work/1/en-US/GUID-F1DBA6FA-9373-4832-9CD9-BDC0B227003B.md&#34; xtrc=&#34;row:26;182:3&#34;&gt;&lt;entry class=&#34;- topic/entry &#34; align=&#34;left&#34; xtrf=&#34;file:/D:/InfoShare/Data/Publish/Data/qzvtb5xcvan/work/1/en-US/GUID-F1DBA6FA-9373-4832-9CD9-BDC0B227003B.md&#34; xtrc=&#34;entry:65;182:3&#34; colname=&#34;col1&#34; dita-ot:x=&#34;1&#34; dita-ot:y=&#34;15&#34;&gt;SYS_CMD_CONSOLE_IO_PARAM&lt;/entry&gt;&lt;entry class=&#34;- topic/entry &#34; align=&#34;left&#34; xtrf=&#34;file:/D:/InfoShare/Data/Publish/Data/qzvtb5xcvan/work/1/en-US/GUID-F1DBA6FA-9373-4832-9CD9-BDC0B227003B.md&#34; xtrc=&#34;entry:66;182:3&#34; colname=&#34;col2&#34; dita-ot:x=&#34;2&#34; dita-ot:y=&#34;15&#34;&gt;Enum&lt;/entry&gt;&lt;entry class=&#34;- topic/entry &#34; align=&#34;left&#34; xtrf=&#34;file:/D:/InfoShare/Data/Publish/Data/qzvtb5xcvan/work/1/en-US/GUID-F1DBA6FA-9373-4832-9CD9-BDC0B227003B.md&#34; xtrc=&#34;entry:67;182:3&#34; colname=&#34;col3&#34; dita-ot:x=&#34;3&#34; dita-ot:y=&#34;15&#34;&gt;Defines whether the command module is single character or full command read&lt;/entry&gt;&lt;/row&gt;&lt;row class=&#34;- topic/row &#34; xtrf=&#34;file:/D:/InfoShare/Data/Publish/Data/qzvtb5xcvan/work/1/en-US/GUID-F1DBA6FA-9373-4832-9CD9-BDC0B227003B.md&#34; xtrc=&#34;row:27;182:3&#34;&gt;&lt;entry class=&#34;- topic/entry &#34; align=&#34;left&#34; xtrf=&#34;file:/D:/InfoShare/Data/Publish/Data/qzvtb5xcvan/work/1/en-US/GUID-F1DBA6FA-9373-4832-9CD9-BDC0B227003B.md&#34; xtrc=&#34;entry:68;182:3&#34; colname=&#34;col1&#34; dita-ot:x=&#34;1&#34; dita-ot:y=&#34;16&#34;&gt;SYS_CMD_INIT&lt;/entry&gt;&lt;entry class=&#34;- topic/entry &#34; align=&#34;left&#34; xtrf=&#34;file:/D:/InfoShare/Data/Publish/Data/qzvtb5xcvan/work/1/en-US/GUID-F1DBA6FA-9373-4832-9CD9-BDC0B227003B.md&#34; xtrc=&#34;entry:69;182:3&#34; colname=&#34;col2&#34; dita-ot:x=&#34;2&#34; dita-ot:y=&#34;16&#34;&gt;Struct&lt;/entry&gt;&lt;entry class=&#34;- topic/entry &#34; align=&#34;left&#34; xtrf=&#34;file:/D:/InfoShare/Data/Publish/Data/qzvtb5xcvan/work/1/en-US/GUID-F1DBA6FA-9373-4832-9CD9-BDC0B227003B.md&#34; xtrc=&#34;entry:70;182:3&#34; colname=&#34;col3&#34; dita-ot:x=&#34;3&#34; dita-ot:y=&#34;16&#34;&gt;Identifies the system command initialize structure&lt;/entry&gt;&lt;/row&gt;&lt;row class=&#34;- topic/row &#34; xtrf=&#34;file:/D:/InfoShare/Data/Publish/Data/qzvtb5xcvan/work/1/en-US/GUID-F1DBA6FA-9373-4832-9CD9-BDC0B227003B.md&#34; xtrc=&#34;row:28;182:3&#34;&gt;&lt;entry class=&#34;- topic/entry &#34; align=&#34;left&#34; xtrf=&#34;file:/D:/InfoShare/Data/Publish/Data/qzvtb5xcvan/work/1/en-US/GUID-F1DBA6FA-9373-4832-9CD9-BDC0B227003B.md&#34; xtrc=&#34;entry:71;182:3&#34; colname=&#34;col1&#34; dita-ot:x=&#34;1&#34; dita-ot:y=&#34;17&#34;&gt;SYS_CMD_DEVICE_NODE&lt;/entry&gt;&lt;entry class=&#34;- topic/entry &#34; align=&#34;left&#34; xtrf=&#34;file:/D:/InfoShare/Data/Publish/Data/qzvtb5xcvan/work/1/en-US/GUID-F1DBA6FA-9373-4832-9CD9-BDC0B227003B.md&#34; xtrc=&#34;entry:72;182:3&#34; colname=&#34;col2&#34; dita-ot:x=&#34;2&#34; dita-ot:y=&#34;17&#34;&gt;Struct&lt;/entry&gt;&lt;entry class=&#34;- topic/entry &#34; align=&#34;left&#34; xtrf=&#34;file:/D:/InfoShare/Data/Publish/Data/qzvtb5xcvan/work/1/en-US/GUID-F1DBA6FA-9373-4832-9CD9-BDC0B227003B.md&#34; xtrc=&#34;entry:73;182:3&#34; colname=&#34;col3&#34; dita-ot:x=&#34;3&#34; dita-ot:y=&#34;17&#34;&gt;Defines the data structure to store each command instance&lt;/entry&gt;&lt;/row&gt;&lt;row class=&#34;- topic/row &#34; xtrf=&#34;file:/D:/InfoShare/Data/Publish/Data/qzvtb5xcvan/work/1/en-US/GUID-F1DBA6FA-9373-4832-9CD9-BDC0B227003B.md&#34; xtrc=&#34;row:29;182:3&#34;&gt;&lt;entry class=&#34;- topic/entry &#34; align=&#34;left&#34; xtrf=&#34;file:/D:/InfoShare/Data/Publish/Data/qzvtb5xcvan/work/1/en-US/GUID-F1DBA6FA-9373-4832-9CD9-BDC0B227003B.md&#34; xtrc=&#34;entry:74;182:3&#34; colname=&#34;col1&#34; dita-ot:x=&#34;1&#34; dita-ot:y=&#34;18&#34;&gt;SYS_CMD_FNC&lt;/entry&gt;&lt;entry class=&#34;- topic/entry &#34; align=&#34;left&#34; xtrf=&#34;file:/D:/InfoShare/Data/Publish/Data/qzvtb5xcvan/work/1/en-US/GUID-F1DBA6FA-9373-4832-9CD9-BDC0B227003B.md&#34; xtrc=&#34;entry:75;182:3&#34; colname=&#34;col2&#34; dita-ot:x=&#34;2&#34; dita-ot:y=&#34;18&#34;&gt;Typedef&lt;/entry&gt;&lt;entry class=&#34;- topic/entry &#34; align=&#34;left&#34; xtrf=&#34;file:/D:/InfoShare/Data/Publish/Data/qzvtb5xcvan/work/1/en-US/GUID-F1DBA6FA-9373-4832-9CD9-BDC0B227003B.md&#34; xtrc=&#34;entry:76;182:3&#34; colname=&#34;col3&#34; dita-ot:x=&#34;3&#34; dita-ot:y=&#34;18&#34;&gt;Identifies the command process function API&lt;/entry&gt;&lt;/row&gt;&lt;row class=&#34;- topic/row &#34; xtrf=&#34;file:/D:/InfoShare/Data/Publish/Data/qzvtb5xcvan/work/1/en-US/GUID-F1DBA6FA-9373-4832-9CD9-BDC0B227003B.md&#34; xtrc=&#34;row:30;182:3&#34;&gt;&lt;entry class=&#34;- topic/entry &#34; align=&#34;left&#34; xtrf=&#34;file:/D:/InfoShare/Data/Publish/Data/qzvtb5xcvan/work/1/en-US/GUID-F1DBA6FA-9373-4832-9CD9-BDC0B227003B.md&#34; xtrc=&#34;entry:77;182:3&#34; colname=&#34;col1&#34; dita-ot:x=&#34;1&#34; dita-ot:y=&#34;19&#34;&gt;SYS_CMD_DESCRIPTOR&lt;/entry&gt;&lt;entry class=&#34;- topic/entry &#34; align=&#34;left&#34; xtrf=&#34;file:/D:/InfoShare/Data/Publish/Data/qzvtb5xcvan/work/1/en-US/GUID-F1DBA6FA-9373-4832-9CD9-BDC0B227003B.md&#34; xtrc=&#34;entry:78;182:3&#34; colname=&#34;col2&#34; dita-ot:x=&#34;2&#34; dita-ot:y=&#34;19&#34;&gt;Struct&lt;/entry&gt;&lt;entry class=&#34;- topic/entry &#34; align=&#34;left&#34; xtrf=&#34;file:/D:/InfoShare/Data/Publish/Data/qzvtb5xcvan/work/1/en-US/GUID-F1DBA6FA-9373-4832-9CD9-BDC0B227003B.md&#34; xtrc=&#34;entry:79;182:3&#34; colname=&#34;col3&#34; dita-ot:x=&#34;3&#34; dita-ot:y=&#34;19&#34;&gt;Defines the descriptor structure for a single command process&lt;/entry&gt;&lt;/row&gt;&lt;/tbody&gt;&lt;/tgroup&gt;&lt;/table&gt;&lt;/body&gt;&lt;related-links class=&#34;- topic/related-links &#34;&gt;&lt;linkpool class=&#34;- topic/linkpool &#34; mapkeyref=&#34;GUID-4BA21645-85F2-46DA-ADDC-4292784EE8A4&#34; xtrc=&#34;topicref:5;3:1942&#34; xtrf=&#34;file:/D:/InfoShare/Data/Publish/Data/qzvtb5xcvan/work/1/en-US/GUID-13771DE6-0316-432A-AF6B-DF7E0FF4F066.ditamap&#34;&gt;&lt;link class=&#34;- topic/link &#34; format=&#34;dita&#34; href=&#34;GUID-09F65940-7D05-4F78-81C9-6356B65DEF21.md&#34; mapclass=&#34;- map/topicref &#34; role=&#34;parent&#34; scope=&#34;local&#34; type=&#34;topic&#34; xtrc=&#34;topicref:1;3:1369&#34; xtrf=&#34;file:/D:/InfoShare/Data/Publish/Data/qzvtb5xcvan/work/1/en-US/GUID-13771DE6-0316-432A-AF6B-DF7E0FF4F066.ditamap&#34;&gt;&lt;?ditaot usertext?&gt;&lt;linktext class=&#34;- topic/linktext &#34;&gt;&lt;?ditaot gentext?&gt;Command Processor System Service&lt;/linktext&gt;&lt;/link&gt;&lt;linkpool class=&#34;- topic/linkpool &#34; xtrc=&#34;topicref:5;3:1942&#34; xtrf=&#34;file:/D:/InfoShare/Data/Publish/Data/qzvtb5xcvan/work/1/en-US/GUID-13771DE6-0316-432A-AF6B-DF7E0FF4F066.ditamap&#34;&gt;&lt;link class=&#34;- topic/link &#34; format=&#34;dita&#34; href=&#34;GUID-FEBFF6DB-5F57-4360-90BF-E9DA46037C99.md&#34; mapclass=&#34;- map/topicref &#34; role=&#34;child&#34; scope=&#34;local&#34; type=&#34;topic&#34; xtrc=&#34;topicref:6;3:2077&#34; xtrf=&#34;file:/D:/InfoShare/Data/Publish/Data/qzvtb5xcvan/work/1/en-US/GUID-13771DE6-0316-432A-AF6B-DF7E0FF4F066.ditamap&#34;&gt;&lt;?ditaot usertext?&gt;&lt;linktext class=&#34;- topic/linktext &#34;&gt;&lt;?ditaot gentext?&gt;SYS_CMD_Initialize Function&lt;/linktext&gt;&lt;/link&gt;&lt;link class=&#34;- topic/link &#34; format=&#34;dita&#34; href=&#34;GUID-26B2DB3A-8817-401C-8EA1-BA288827F83C.md&#34; mapclass=&#34;- map/topicref &#34; role=&#34;child&#34; scope=&#34;local&#34; type=&#34;topic&#34; xtrc=&#34;topicref:7;3:2223&#34; xtrf=&#34;file:/D:/InfoShare/Data/Publish/Data/qzvtb5xcvan/work/1/en-US/GUID-13771DE6-0316-432A-AF6B-DF7E0FF4F066.ditamap&#34;&gt;&lt;?ditaot usertext?&gt;&lt;linktext class=&#34;- topic/linktext &#34;&gt;&lt;?ditaot gentext?&gt;SYS_CMD_ADDGRP Function&lt;/linktext&gt;&lt;/link&gt;&lt;link class=&#34;- topic/link &#34; format=&#34;dita&#34; href=&#34;GUID-ED55865F-5F73-4D1C-A894-6A26F9893190.md&#34; mapclass=&#34;- map/topicref &#34; role=&#34;child&#34; scope=&#34;local&#34; type=&#34;topic&#34; xtrc=&#34;topicref:8;3:2369&#34; xtrf=&#34;file:/D:/InfoShare/Data/Publish/Data/qzvtb5xcvan/work/1/en-US/GUID-13771DE6-0316-432A-AF6B-DF7E0FF4F066.ditamap&#34;&gt;&lt;?ditaot usertext?&gt;&lt;linktext class=&#34;- topic/linktext &#34;&gt;&lt;?ditaot gentext?&gt;SYS_CMD_DELETE Function&lt;/linktext&gt;&lt;/link&gt;&lt;link class=&#34;- topic/link &#34; format=&#34;dita&#34; href=&#34;GUID-05239B51-F3DC-495F-A373-057A692D1CE2.md&#34; mapclass=&#34;- map/topicref &#34; role=&#34;child&#34; scope=&#34;local&#34; type=&#34;topic&#34; xtrc=&#34;topicref:9;3:2515&#34; xtrf=&#34;file:/D:/InfoShare/Data/Publish/Data/qzvtb5xcvan/work/1/en-US/GUID-13771DE6-0316-432A-AF6B-DF7E0FF4F066.ditamap&#34;&gt;&lt;?ditaot usertext?&gt;&lt;linktext class=&#34;- topic/linktext &#34;&gt;&lt;?ditaot gentext?&gt;SYS_CMD_READY_TO_READ Function&lt;/linktext&gt;&lt;/link&gt;&lt;link class=&#34;- topic/link &#34; format=&#34;dita&#34; href=&#34;GUID-45D2280C-63E4-48FA-ABAD-450459998A8F.md&#34; mapclass=&#34;- map/topicref &#34; role=&#34;child&#34; scope=&#34;local&#34; type=&#34;topic&#34; xtrc=&#34;topicref:10;3:2661&#34; xtrf=&#34;file:/D:/InfoShare/Data/Publish/Data/qzvtb5xcvan/work/1/en-US/GUID-13771DE6-0316-432A-AF6B-DF7E0FF4F066.ditamap&#34;&gt;&lt;?ditaot usertext?&gt;&lt;linktext class=&#34;- topic/linktext &#34;&gt;&lt;?ditaot gentext?&gt;SYS_CMD_READY_TO_WRITE Function&lt;/linktext&gt;&lt;/link&gt;&lt;link class=&#34;- topic/link &#34; format=&#34;dita&#34; href=&#34;GUID-EDAB3999-3E03-4C0B-94B6-066DE78EE636.md&#34; mapclass=&#34;- map/topicref &#34; role=&#34;child&#34; scope=&#34;local&#34; type=&#34;topic&#34; xtrc=&#34;topicref:11;3:2807&#34; xtrf=&#34;file:/D:/InfoShare/Data/Publish/Data/qzvtb5xcvan/work/1/en-US/GUID-13771DE6-0316-432A-AF6B-DF7E0FF4F066.ditamap&#34;&gt;&lt;?ditaot usertext?&gt;&lt;linktext class=&#34;- topic/linktext &#34;&gt;&lt;?ditaot gentext?&gt;SYS_CMD_Tasks Function&lt;/linktext&gt;&lt;/link&gt;&lt;link class=&#34;- topic/link &#34; format=&#34;dita&#34; href=&#34;GUID-A4CE28DC-40B2-43C2-949E-69ABD5EFB2DC.md&#34; mapclass=&#34;- map/topicref &#34; role=&#34;child&#34; scope=&#34;local&#34; type=&#34;topic&#34; xtrc=&#34;topicref:12;3:2953&#34; xtrf=&#34;file:/D:/InfoShare/Data/Publish/Data/qzvtb5xcvan/work/1/en-US/GUID-13771DE6-0316-432A-AF6B-DF7E0FF4F066.ditamap&#34;&gt;&lt;?ditaot usertext?&gt;&lt;linktext class=&#34;- topic/linktext &#34;&gt;&lt;?ditaot gentext?&gt;SYS_CMD_MESSAGE Function&lt;/linktext&gt;&lt;/link&gt;&lt;link class=&#34;- topic/link &#34; format=&#34;dita&#34; href=&#34;GUID-02B7E5B7-DE83-434E-B5A3-9428923F2D83.md&#34; mapclass=&#34;- map/topicref &#34; role=&#34;child&#34; scope=&#34;local&#34; type=&#34;topic&#34; xtrc=&#34;topicref:13;3:3099&#34; xtrf=&#34;file:/D:/InfoShare/Data/Publish/Data/qzvtb5xcvan/work/1/en-US/GUID-13771DE6-0316-432A-AF6B-DF7E0FF4F066.ditamap&#34;&gt;&lt;?ditaot usertext?&gt;&lt;linktext class=&#34;- topic/linktext &#34;&gt;&lt;?ditaot gentext?&gt;SYS_CMD_PRINT Function&lt;/linktext&gt;&lt;/link&gt;&lt;link class=&#34;- topic/link &#34; format=&#34;dita&#34; href=&#34;GUID-3E6B809F-7256-4348-9596-7F338CC62EC5.md&#34; mapclass=&#34;- map/topicref &#34; role=&#34;child&#34; scope=&#34;local&#34; type=&#34;topic&#34; xtrc=&#34;topicref:14;3:3245&#34; xtrf=&#34;file:/D:/InfoShare/Data/Publish/Data/qzvtb5xcvan/work/1/en-US/GUID-13771DE6-0316-432A-AF6B-DF7E0FF4F066.ditamap&#34;&gt;&lt;?ditaot usertext?&gt;&lt;linktext class=&#34;- topic/linktext &#34;&gt;&lt;?ditaot gentext?&gt;SYS_CMDIO_GET_HANDLE Function&lt;/linktext&gt;&lt;/link&gt;&lt;link class=&#34;- topic/link &#34; format=&#34;dita&#34; href=&#34;GUID-6979BCB1-F38B-455E-AFBB-FD2A09A823B4.md&#34; mapclass=&#34;- map/topicref &#34; role=&#34;child&#34; scope=&#34;local&#34; type=&#34;topic&#34; xtrc=&#34;topicref:15;3:3391&#34; xtrf=&#34;file:/D:/InfoShare/Data/Publish/Data/qzvtb5xcvan/work/1/en-US/GUID-13771DE6-0316-432A-AF6B-DF7E0FF4F066.ditamap&#34;&gt;&lt;?ditaot usertext?&gt;&lt;linktext class=&#34;- topic/linktext &#34;&gt;&lt;?ditaot gentext?&gt;SYS_CMDIO_ADD Function&lt;/linktext&gt;&lt;/link&gt;&lt;link class=&#34;- topic/link &#34; format=&#34;dita&#34; href=&#34;GUID-9A80603D-1A4B-4313-8D69-3C7F8E0CDDF0.md&#34; mapclass=&#34;- map/topicref &#34; role=&#34;child&#34; scope=&#34;local&#34; type=&#34;topic&#34; xtrc=&#34;topicref:16;3:3537&#34; xtrf=&#34;file:/D:/InfoShare/Data/Publish/Data/qzvtb5xcvan/work/1/en-US/GUID-13771DE6-0316-432A-AF6B-DF7E0FF4F066.ditamap&#34;&gt;&lt;?ditaot usertext?&gt;&lt;linktext class=&#34;- topic/linktext &#34;&gt;&lt;?ditaot gentext?&gt;COMMAND_HISTORY_DEPTH Macro&lt;/linktext&gt;&lt;/link&gt;&lt;link class=&#34;- topic/link &#34; format=&#34;dita&#34; href=&#34;GUID-B6686A00-4544-4CFB-9F3C-9184AD2E0FDD.md&#34; mapclass=&#34;- map/topicref &#34; role=&#34;child&#34; scope=&#34;local&#34; type=&#34;topic&#34; xtrc=&#34;topicref:17;3:3683&#34; xtrf=&#34;file:/D:/InfoShare/Data/Publish/Data/qzvtb5xcvan/work/1/en-US/GUID-13771DE6-0316-432A-AF6B-DF7E0FF4F066.ditamap&#34;&gt;&lt;?ditaot usertext?&gt;&lt;linktext class=&#34;- topic/linktext &#34;&gt;&lt;?ditaot gentext?&gt;SYS_CMD_MAX_LENGTH Macro&lt;/linktext&gt;&lt;/link&gt;&lt;link class=&#34;- topic/link &#34; format=&#34;dita&#34; href=&#34;GUID-918C3149-0EB2-4501-A80D-24BB98E67B5D.md&#34; mapclass=&#34;- map/topicref &#34; role=&#34;child&#34; scope=&#34;local&#34; type=&#34;topic&#34; xtrc=&#34;topicref:18;3:3829&#34; xtrf=&#34;file:/D:/InfoShare/Data/Publish/Data/qzvtb5xcvan/work/1/en-US/GUID-13771DE6-0316-432A-AF6B-DF7E0FF4F066.ditamap&#34;&gt;&lt;?ditaot usertext?&gt;&lt;linktext class=&#34;- topic/linktext &#34;&gt;&lt;?ditaot gentext?&gt;SYS_CMD_READ_BUFFER_SIZE Macro&lt;/linktext&gt;&lt;/link&gt;&lt;link class=&#34;- topic/link &#34; format=&#34;dita&#34; href=&#34;GUID-BBAD84DF-1379-41FE-8BE1-9009BDC368AF.md&#34; mapclass=&#34;- map/topicref &#34; role=&#34;child&#34; scope=&#34;local&#34; type=&#34;topic&#34; xtrc=&#34;topicref:19;3:3975&#34; xtrf=&#34;file:/D:/InfoShare/Data/Publish/Data/qzvtb5xcvan/work/1/en-US/GUID-13771DE6-0316-432A-AF6B-DF7E0FF4F066.ditamap&#34;&gt;&lt;?ditaot usertext?&gt;&lt;linktext class=&#34;- topic/linktext &#34;&gt;&lt;?ditaot gentext?&gt;SYS_CMD_CallbackFunction Typedef&lt;/linktext&gt;&lt;/link&gt;&lt;link class=&#34;- topic/link &#34; format=&#34;dita&#34; href=&#34;GUID-740C7410-8069-4335-BB33-218D8F8B59F5.md&#34; mapclass=&#34;- map/topicref &#34; role=&#34;child&#34; scope=&#34;local&#34; type=&#34;topic&#34; xtrc=&#34;topicref:20;3:4121&#34; xtrf=&#34;file:/D:/InfoShare/Data/Publish/Data/qzvtb5xcvan/work/1/en-US/GUID-13771DE6-0316-432A-AF6B-DF7E0FF4F066.ditamap&#34;&gt;&lt;?ditaot usertext?&gt;&lt;linktext class=&#34;- topic/linktext &#34;&gt;&lt;?ditaot gentext?&gt;SYS_CMD_HANDLE Typedef&lt;/linktext&gt;&lt;/link&gt;&lt;link class=&#34;- topic/link &#34; format=&#34;dita&#34; href=&#34;GUID-FA0DA23C-BCD9-405F-8CC1-C7AE98205FC3.md&#34; mapclass=&#34;- map/topicref &#34; role=&#34;child&#34; scope=&#34;local&#34; type=&#34;topic&#34; xtrc=&#34;topicref:21;3:4267&#34; xtrf=&#34;file:/D:/InfoShare/Data/Publish/Data/qzvtb5xcvan/work/1/en-US/GUID-13771DE6-0316-432A-AF6B-DF7E0FF4F066.ditamap&#34;&gt;&lt;?ditaot usertext?&gt;&lt;linktext class=&#34;- topic/linktext &#34;&gt;&lt;?ditaot gentext?&gt;SYS_CMD_MSG_FNC Typedef&lt;/linktext&gt;&lt;/link&gt;&lt;link class=&#34;- topic/link &#34; format=&#34;dita&#34; href=&#34;GUID-1ACA0CDE-BB29-4A7F-AF3D-5461ECE86944.md&#34; mapclass=&#34;- map/topicref &#34; role=&#34;child&#34; scope=&#34;local&#34; type=&#34;topic&#34; xtrc=&#34;topicref:22;3:4413&#34; xtrf=&#34;file:/D:/InfoShare/Data/Publish/Data/qzvtb5xcvan/work/1/en-US/GUID-13771DE6-0316-432A-AF6B-DF7E0FF4F066.ditamap&#34;&gt;&lt;?ditaot usertext?&gt;&lt;linktext class=&#34;- topic/linktext &#34;&gt;&lt;?ditaot gentext?&gt;SYS_CMD_PRINT_FNC Typedef&lt;/linktext&gt;&lt;/link&gt;&lt;link class=&#34;- topic/link &#34; format=&#34;dita&#34; href=&#34;GUID-B51DDD56-C465-4676-816B-85FFEE48544C.md&#34; mapclass=&#34;- map/topicref &#34; role=&#34;child&#34; scope=&#34;local&#34; type=&#34;topic&#34; xtrc=&#34;topicref:23;3:4559&#34; xtrf=&#34;file:/D:/InfoShare/Data/Publish/Data/qzvtb5xcvan/work/1/en-US/GUID-13771DE6-0316-432A-AF6B-DF7E0FF4F066.ditamap&#34;&gt;&lt;?ditaot usertext?&gt;&lt;linktext class=&#34;- topic/linktext &#34;&gt;&lt;?ditaot gentext?&gt;SYS_CMD_PUTC_FNC Typedef&lt;/linktext&gt;&lt;/link&gt;&lt;link class=&#34;- topic/link &#34; format=&#34;dita&#34; href=&#34;GUID-51492B75-94E3-4BCE-960D-013CB51A2E19.md&#34; mapclass=&#34;- map/topicref &#34; role=&#34;child&#34; scope=&#34;local&#34; type=&#34;topic&#34; xtrc=&#34;topicref:24;3:4705&#34; xtrf=&#34;file:/D:/InfoShare/Data/Publish/Data/qzvtb5xcvan/work/1/en-US/GUID-13771DE6-0316-432A-AF6B-DF7E0FF4F066.ditamap&#34;&gt;&lt;?ditaot usertext?&gt;&lt;linktext class=&#34;- topic/linktext &#34;&gt;&lt;?ditaot gentext?&gt;SYS_CMD_DATA_RDY_FNC Typedef&lt;/linktext&gt;&lt;/link&gt;&lt;link class=&#34;- topic/link &#34; format=&#34;dita&#34; href=&#34;GUID-8BCDA47F-4CBC-4405-9F30-4A44B7DE67F3.md&#34; mapclass=&#34;- map/topicref &#34; role=&#34;child&#34; scope=&#34;local&#34; type=&#34;topic&#34; xtrc=&#34;topicref:25;3:4851&#34; xtrf=&#34;file:/D:/InfoShare/Data/Publish/Data/qzvtb5xcvan/work/1/en-US/GUID-13771DE6-0316-432A-AF6B-DF7E0FF4F066.ditamap&#34;&gt;&lt;?ditaot usertext?&gt;&lt;linktext class=&#34;- topic/linktext &#34;&gt;&lt;?ditaot gentext?&gt;SYS_CMD_GETC_FNC Typedef&lt;/linktext&gt;&lt;/link&gt;&lt;link class=&#34;- topic/link &#34; format=&#34;dita&#34; href=&#34;GUID-43DF0480-B8AC-4060-B932-0BF78B41CE23.md&#34; mapclass=&#34;- map/topicref &#34; role=&#34;child&#34; scope=&#34;local&#34; type=&#34;topic&#34; xtrc=&#34;topicref:26;3:4997&#34; xtrf=&#34;file:/D:/InfoShare/Data/Publish/Data/qzvtb5xcvan/work/1/en-US/GUID-13771DE6-0316-432A-AF6B-DF7E0FF4F066.ditamap&#34;&gt;&lt;?ditaot usertext?&gt;&lt;linktext class=&#34;- topic/linktext &#34;&gt;&lt;?ditaot gentext?&gt;SYS_CMD_READC_FNC Typedef&lt;/linktext&gt;&lt;/link&gt;&lt;link class=&#34;- topic/link &#34; format=&#34;dita&#34; href=&#34;GUID-28219199-6917-43CE-A9D3-0C84F4017C28.md&#34; mapclass=&#34;- map/topicref &#34; role=&#34;child&#34; scope=&#34;local&#34; type=&#34;topic&#34; xtrc=&#34;topicref:27;3:5143&#34; xtrf=&#34;file:/D:/InfoShare/Data/Publish/Data/qzvtb5xcvan/work/1/en-US/GUID-13771DE6-0316-432A-AF6B-DF7E0FF4F066.ditamap&#34;&gt;&lt;?ditaot usertext?&gt;&lt;linktext class=&#34;- topic/linktext &#34;&gt;&lt;?ditaot gentext?&gt;SYS_CMD_API Struct&lt;/linktext&gt;&lt;/link&gt;&lt;link class=&#34;- topic/link &#34; format=&#34;dita&#34; href=&#34;GUID-001CDE12-2461-42F4-8F72-783C6EB738D4.md&#34; mapclass=&#34;- map/topicref &#34; role=&#34;child&#34; scope=&#34;local&#34; type=&#34;topic&#34; xtrc=&#34;topicref:28;3:5289&#34; xtrf=&#34;file:/D:/InfoShare/Data/Publish/Data/qzvtb5xcvan/work/1/en-US/GUID-13771DE6-0316-432A-AF6B-DF7E0FF4F066.ditamap&#34;&gt;&lt;?ditaot usertext?&gt;&lt;linktext class=&#34;- topic/linktext &#34;&gt;&lt;?ditaot gentext?&gt;SYS_CMD_EVENT Enum&lt;/linktext&gt;&lt;/link&gt;&lt;link class=&#34;- topic/link &#34; format=&#34;dita&#34; href=&#34;GUID-3ABD051F-AA97-4C40-942D-EFC6A16486B8.md&#34; mapclass=&#34;- map/topicref &#34; role=&#34;child&#34; scope=&#34;local&#34; type=&#34;topic&#34; xtrc=&#34;topicref:29;3:5435&#34; xtrf=&#34;file:/D:/InfoShare/Data/Publish/Data/qzvtb5xcvan/work/1/en-US/GUID-13771DE6-0316-432A-AF6B-DF7E0FF4F066.ditamap&#34;&gt;&lt;?ditaot usertext?&gt;&lt;linktext class=&#34;- topic/linktext &#34;&gt;&lt;?ditaot gentext?&gt;SYS_CMD_CONSOLE_IO_PARAM Enum&lt;/linktext&gt;&lt;/link&gt;&lt;link class=&#34;- topic/link &#34; format=&#34;dita&#34; href=&#34;GUID-4F58DE9B-B3EE-4108-9290-15F90CC32FB0.md&#34; mapclass=&#34;- map/topicref &#34; role=&#34;child&#34; scope=&#34;local&#34; type=&#34;topic&#34; xtrc=&#34;topicref:30;3:5581&#34; xtrf=&#34;file:/D:/InfoShare/Data/Publish/Data/qzvtb5xcvan/work/1/en-US/GUID-13771DE6-0316-432A-AF6B-DF7E0FF4F066.ditamap&#34;&gt;&lt;?ditaot usertext?&gt;&lt;linktext class=&#34;- topic/linktext &#34;&gt;&lt;?ditaot gentext?&gt;SYS_CMD_INIT Struct&lt;/linktext&gt;&lt;/link&gt;&lt;link class=&#34;- topic/link &#34; format=&#34;dita&#34; href=&#34;GUID-F6B65A05-37EC-4CCF-AFC3-0EC2EA264CDB.md&#34; mapclass=&#34;- map/topicref &#34; role=&#34;child&#34; scope=&#34;local&#34; type=&#34;topic&#34; xtrc=&#34;topicref:31;3:5727&#34; xtrf=&#34;file:/D:/InfoShare/Data/Publish/Data/qzvtb5xcvan/work/1/en-US/GUID-13771DE6-0316-432A-AF6B-DF7E0FF4F066.ditamap&#34;&gt;&lt;?ditaot usertext?&gt;&lt;linktext class=&#34;- topic/linktext &#34;&gt;&lt;?ditaot gentext?&gt;SYS_CMD_DEVICE_NODE Struct&lt;/linktext&gt;&lt;/link&gt;&lt;link class=&#34;- topic/link &#34; format=&#34;dita&#34; href=&#34;GUID-85B8324A-FF53-4CBB-B687-C6BCE047FEDC.md&#34; mapclass=&#34;- map/topicref &#34; role=&#34;child&#34; scope=&#34;local&#34; type=&#34;topic&#34; xtrc=&#34;topicref:32;3:5873&#34; xtrf=&#34;file:/D:/InfoShare/Data/Publish/Data/qzvtb5xcvan/work/1/en-US/GUID-13771DE6-0316-432A-AF6B-DF7E0FF4F066.ditamap&#34;&gt;&lt;?ditaot usertext?&gt;&lt;linktext class=&#34;- topic/linktext &#34;&gt;&lt;?ditaot gentext?&gt;SYS_CMD_FNC Typedef&lt;/linktext&gt;&lt;/link&gt;&lt;link class=&#34;- topic/link &#34; format=&#34;dita&#34; href=&#34;GUID-827592EF-BDE9-4229-9A95-E2F6E8E55AF2.md&#34; mapclass=&#34;- map/topicref &#34; role=&#34;child&#34; scope=&#34;local&#34; type=&#34;topic&#34; xtrc=&#34;topicref:33;3:6019&#34; xtrf=&#34;file:/D:/InfoShare/Data/Publish/Data/qzvtb5xcvan/work/1/en-US/GUID-13771DE6-0316-432A-AF6B-DF7E0FF4F066.ditamap&#34;&gt;&lt;?ditaot usertext?&gt;&lt;linktext class=&#34;- topic/linktext &#34;&gt;&lt;?ditaot gentext?&gt;SYS_CMD_DESCRIPTOR Struct&lt;/linktext&gt;&lt;/link&gt;&lt;/linkpool&gt;&lt;/linkpool&gt;&lt;/related-links&gt;&lt;/topic&gt;"/><meta name="wh-source-relpath" content="GUID-F1DBA6FA-9373-4832-9CD9-BDC0B227003B.md"/><meta name="wh-out-relpath" content="GUID-F1DBA6FA-9373-4832-9CD9-BDC0B227003B.html"/>
+    <!-- Latest compiled and minified Bootstrap CSS -->
+    <link rel="stylesheet" type="text/css" href="./oxygen-webhelp/lib/bootstrap/css/bootstrap.min.css"/>
     
-                      window.parent.location.href = origUrl + "?" + url;
+    <link rel="stylesheet" href="./oxygen-webhelp/lib/jquery-ui/jquery-ui.min.css"/>
+    
+    <!-- Template default styles  -->
+    <link rel="stylesheet" type="text/css" href="./oxygen-webhelp/app/topic-page.css?buildId=2022062014"/>
+    
+    
+    <script src="./oxygen-webhelp/lib/jquery/jquery-3.5.1.min.js"></script>
+    
+    <script data-main="./oxygen-webhelp/app/topic-page.js" src="./oxygen-webhelp/lib/requirejs/require.js"></script>
+<link rel="stylesheet" type="text/css" href="oxygen-webhelp/template/microchip.css?buildId=2022062014"/><link rel="stylesheet" type="text/css" href="oxygen-webhelp/template/notes.css?buildId=2022062014"/>
+<script src="mchp-context-help.js"></script>
+<link href="https://fonts.googleapis.com/css?family=Open+Sans:400,600,300" rel="stylesheet" type="text/css"/>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML" async="" type="text/javascript"></script>
+</head>
 
-                      return false;
-                    }
-               }
-            }
-				});
-			}
-
-		</script><script language="javascript">
-        function cpy(id, button) {
-        
-            var element = document.getElementById(id);
-            var content = element.getAttribute("content");
-            var textArea = document.createElement("textarea");
-            
-            // Place in the top-left corner of screen regardless of scroll position.
-            textArea.style.position = 'fixed';
-            textArea.style.top = 0;
-            textArea.style.left = 0;
-            
-            // Ensure it has a small width and height. Setting to 1px / 1em
-            // doesn't work as this gives a negative w/h on some browsers.
-            textArea.style.width = '2em';
-            textArea.style.height = '2em';
-            
-            // We don't need padding, reducing the size if it does flash render.
-            textArea.style.padding = 0;
-            
-            // Clean up any borders.
-            textArea.style.border = 'none';
-            textArea.style.outline = 'none';
-            textArea.style.boxShadow = 'none';
-            
-            // Avoid flash of the white box if rendered for any reason.
-            textArea.style.background = 'transparent';
-            
-            
-            textArea.value = content;
-            
-            document.body.appendChild(textArea);
-            textArea.focus();
-            textArea.select();
-            
-            try {
-               var successful = document.execCommand('copy');
-               var msg = successful ? 'successful' : 'unsuccessful';
-               if (!button.classList.contains("copied")){
-                  button.textContent = "Copied";
-                  button.classList.add("copied");
-                  setTimeout(function(){
-                    button.textContent = "Copy";
-                    button.classList.remove("copied");
-                  },1000);
-               }
-            } catch (err) {
-              console.log('Oops, unable to copy');
-            }
-            
-            document.body.removeChild(textArea);
-        }
-      </script><script language="javascript">
-          
-          // Add the MathML namespace to html
-          var html = document.getElementsByTagName("html")[0],
-          head = document.getElementsByTagName("head")[0];
-          
-          var mathJax = document.createElement("script");
-          mathJax.src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-MML-AM_CHTML";
-          head.appendChild(mathJax);
-          
-          html.setAttribute("xmlns:m","http://www.w3.org/1998/Math/MathML");
-          
-          function inIframe() { try { return window.self !== window.top; } catch (e) { return true; } }
-          
-          if (!inIframe()) { 
-          
-          var Default = "index.html?GUID-F1DBA6FA-9373-4832-9CD9-BDC0B227003B"; 
-          
-          var displaylocation = "value" + window.location.href;
-          
-          var GUIDS = displaylocation.split('GUID');          
-          
-          if (displaylocation.indexOf('#GUID') != -1) {            
-          var First = GUIDS[1].split('.html');  
-          if (GUIDS[3]){First = GUIDS[2].split('.html');}
-          if (GUIDS[4]){First = GUIDS[3].split('.html');}
-          if (GUIDS[5]){First = GUIDS[4].split('.html');}
-          
-          var Second = GUIDS[2].split('#');   
-          if (GUIDS[3]){Second = GUIDS[3].split('#');}
-          if (GUIDS[4]){Second = GUIDS[4].split('#');}
-          if (GUIDS[5]){Second = GUIDS[5].split('#');}
-          
-          Default = "index.html?" + "GUID" + First[0] + "GUID" + Second[0];     
-          }                    
-          window.top.location = Default;
-          }       
-          
-        </script><style xml:space="">
-        
-          button.copy-code{
-            display:none;
-            padding:0.7em 1.4em;
-            margin:0 0.3em 0.3em 0;
-            border-radius:0.15em;
-            box-sizing: border-box;
-            text-decoration:none;
-            font-family:'Roboto',sans-serif;
-            text-transform:uppercase;
-            font-weight:400;
-            color:#FFFFFF;
-            background-color:#9c9c9c;
-            box-shadow:inset 0 -0.6em 0 -0.35em rgba(0,0,0,0.17);
-            text-align:center;
-            position:relative;
-            border: 0;
-            float: right;
-            border-radius: .5em;
-            cursor: pointer;
-          }
-          button.copy-code:active{
-            top:0.1em;
-          }
-          
-          pre:hover button.copy-code{
-            display: inline-block !important;
-          }
-          button.copy-code.copied {
-            cursor: default !important;
-          }
-          
-          
-          @media all and (max-width:30em){
-            button.copy-code{
-              display:block;
-              margin:0.4em auto;
-            }
-          }
+    <body id="library-interface" class="wh_topic_page frmBody">
+        <a href="#wh_topic_body" class="sr-only sr-only-focusable">
+            Jump to main content
+        </a>
         
         
-      </style></head>
-<body id="library-interface">
-<h1 class="title topictitle1" id="ariaid-title1">Library Interface</h1><div class="body"><p class="p">Command System Service library provides the following interfaces:</p>
-<p class="p"><strong class="ph b">Functions</strong></p>
+        
+        
+        <header class="navbar navbar-default wh_header">
+    <div class="container-fluid">
+        <div class="wh_header_flex_container navbar-nav navbar-expand-md navbar-dark">
+            <div class="wh_logo_and_publication_title_container">
+                <div class="wh_logo_and_publication_title">
+                    
+                    <a href="index.html" class=" wh_logo d-none d-sm-block "><img src="oxygen-webhelp\template\resources/images/microchip.png" alt="MPLAB® Harmony Core Library "/></a>
+                    <div class=" wh_publication_title "><a href="index.html">MPLAB® Harmony Core Library </a></div>
+                    
+                </div>
+                
+                
+            </div>
 
-<div class="tablenoborder"><table cellpadding="4" cellspacing="0" summary="" class="table" frame="border" border="1" rules="all"><col style="width:" /><col style="width:" /><thead class="thead" style="text-align:left;"><tr class="row"><th class="entry cellrowborder" style="text-align:left;vertical-align:middle;" id="d114980e21"><span>Name</span></th>
-<th class="entry cellrowborder" style="text-align:left;vertical-align:middle;" id="d114980e23"><span>Description</span></th>
-</tr>
-</thead>
-<tbody class="tbody"><tr class="row"><td class="entry cellrowborder" style="text-align:left;vertical-align:middle;" headers="d114980e21 "><span>SYS_CMD_Initialize</span></td>
-<td class="entry cellrowborder" style="text-align:left;vertical-align:middle;" headers="d114980e23 "><span>Initializes data for the instance of the Command Processor module</span></td>
-</tr>
-<tr class="row"><td class="entry cellrowborder" style="text-align:left;vertical-align:middle;" headers="d114980e21 "><span>SYS_CMD_ADDGRP</span></td>
-<td class="entry cellrowborder" style="text-align:left;vertical-align:middle;" headers="d114980e23 "><span>Allows clients to add command process to the Command Processor System Service</span></td>
-</tr>
-<tr class="row"><td class="entry cellrowborder" style="text-align:left;vertical-align:middle;" headers="d114980e21 "><span>SYS_CMD_DELETE</span></td>
-<td class="entry cellrowborder" style="text-align:left;vertical-align:middle;" headers="d114980e23 "><span>Removes CMDIO parameters from the Command Processor System Service console</span></td>
-</tr>
-<tr class="row"><td class="entry cellrowborder" style="text-align:left;vertical-align:middle;" headers="d114980e21 "><span>SYS_CMD_READY_TO_READ</span></td>
-<td class="entry cellrowborder" style="text-align:left;vertical-align:middle;" headers="d114980e23 "><span>Allows upper layer application to confirm that the command module is ready to accept command input</span></td>
-</tr>
-<tr class="row"><td class="entry cellrowborder" style="text-align:left;vertical-align:middle;" headers="d114980e21 "><span>SYS_CMD_READY_TO_WRITE</span></td>
-<td class="entry cellrowborder" style="text-align:left;vertical-align:middle;" headers="d114980e23 "><span>Allows upper layer application to confirm that the command module is ready to write output to the Console System Service</span></td>
-</tr>
-<tr class="row"><td class="entry cellrowborder" style="text-align:left;vertical-align:middle;" headers="d114980e21 "><span>SYS_CMD_Tasks</span></td>
-<td class="entry cellrowborder" style="text-align:left;vertical-align:middle;" headers="d114980e23 "><span>Maintains the Command Processor System Service's internal state machine</span></td>
-</tr>
-<tr class="row"><td class="entry cellrowborder" style="text-align:left;vertical-align:middle;" headers="d114980e21 "><span>SYS_CMD_MESSAGE</span></td>
-<td class="entry cellrowborder" style="text-align:left;vertical-align:middle;" headers="d114980e23 "><span>Outputs a message to the Command Processor System Service console</span></td>
-</tr>
-<tr class="row"><td class="entry cellrowborder" style="text-align:left;vertical-align:middle;" headers="d114980e21 "><span>SYS_CMD_PRINT</span></td>
-<td class="entry cellrowborder" style="text-align:left;vertical-align:middle;" headers="d114980e23 "><span>Outputs a printout to the Command Processor System Service console</span></td>
-</tr>
-<tr class="row"><td class="entry cellrowborder" style="text-align:left;vertical-align:middle;" headers="d114980e21 "><span>SYS_CMDIO_GET_HANDLE</span></td>
-<td class="entry cellrowborder" style="text-align:left;vertical-align:middle;" headers="d114980e23 "><span>Gets the CMDIO Handle base via index</span></td>
-</tr>
-<tr class="row"><td class="entry cellrowborder" style="text-align:left;vertical-align:middle;" headers="d114980e21 "><span>SYS_CMDIO_ADD</span></td>
-<td class="entry cellrowborder" style="text-align:left;vertical-align:middle;" headers="d114980e23 "><span>Adds CMDIO parameters to the Command Processor System Service console</span></td>
-</tr>
-</tbody>
-</table>
+            <div class="wh_top_menu_and_indexterms_link collapse navbar-collapse" id="wh_top_menu_and_indexterms_link">
+                
+                
+                
+                
+            </div>
+        </div>
+    </div>
+</header>
+        
+        
+         
+        
+        <div class=" wh_search_input navbar-form wh_topic_page_search search " role="form">
+            
+            
+            
+            <form id="searchForm" method="get" role="search" action="search.html"><div><input type="search" placeholder="Search " class="wh_search_textfield" id="textToSearch" name="searchQuery" aria-label="Search query" required="required"/><button type="submit" class="wh_search_button" aria-label="Search"><span class="search_input_text">Search</span></button></div></form>
+            
+            <div class="mchp-color-stripe-grid-container">
+  <div class="mchp-main-bar mchp-orange-bar"></div>
+  <div class="mchp-main-bar mchp-blue-bar"></div>
+  <div class="mchp-main-bar mchp-green-bar"></div>
 </div>
-<p class="p"><strong class="ph b">Data types and constants</strong></p>
+            
+        </div>
+        
+        <div class="container-fluid" id="wh_topic_container">
+            <div class="row">
 
-<div class="tablenoborder"><table cellpadding="4" cellspacing="0" summary="" class="table" frame="border" border="1" rules="all"><col style="width:" /><col style="width:" /><col style="width:" /><thead class="thead" style="text-align:left;"><tr class="row"><th class="entry cellrowborder" style="text-align:left;vertical-align:middle;" id="d114980e86"><span>Name</span></th>
-<th class="entry cellrowborder" style="text-align:left;vertical-align:middle;" id="d114980e88"><span>Type</span></th>
-<th class="entry cellrowborder" style="text-align:left;vertical-align:middle;" id="d114980e90"><span>Description</span></th>
-</tr>
-</thead>
-<tbody class="tbody"><tr class="row"><td class="entry cellrowborder" style="text-align:left;vertical-align:middle;" headers="d114980e86 "><span>COMMAND_HISTORY_DEPTH</span></td>
-<td class="entry cellrowborder" style="text-align:left;vertical-align:middle;" headers="d114980e88 "><span>Macro</span></td>
-<td class="entry cellrowborder" style="text-align:left;vertical-align:middle;" headers="d114980e90 "><span>Command Processor System Service Maximum Depth of Command History</span></td>
-</tr>
-<tr class="row"><td class="entry cellrowborder" style="text-align:left;vertical-align:middle;" headers="d114980e86 "><span>SYS_CMD_MAX_LENGTH</span></td>
-<td class="entry cellrowborder" style="text-align:left;vertical-align:middle;" headers="d114980e88 "><span>Macro</span></td>
-<td class="entry cellrowborder" style="text-align:left;vertical-align:middle;" headers="d114980e90 "><span>Command Processor System Service Command Buffer Maximum Length definition</span></td>
-</tr>
-<tr class="row"><td class="entry cellrowborder" style="text-align:left;vertical-align:middle;" headers="d114980e86 "><span>SYS_CMD_READ_BUFFER_SIZE</span></td>
-<td class="entry cellrowborder" style="text-align:left;vertical-align:middle;" headers="d114980e88 "><span>Macro</span></td>
-<td class="entry cellrowborder" style="text-align:left;vertical-align:middle;" headers="d114980e90 "><span>Command Processor System Service Read Buffer Size definition</span></td>
-</tr>
-<tr class="row"><td class="entry cellrowborder" style="text-align:left;vertical-align:middle;" headers="d114980e86 "><span>SYS_CMD_CallbackFunction</span></td>
-<td class="entry cellrowborder" style="text-align:left;vertical-align:middle;" headers="d114980e88 "><span>Typedef</span></td>
-<td class="entry cellrowborder" style="text-align:left;vertical-align:middle;" headers="d114980e90 "><span>Command Callback Function Handle</span></td>
-</tr>
-<tr class="row"><td class="entry cellrowborder" style="text-align:left;vertical-align:middle;" headers="d114980e86 "><span>SYS_CMD_HANDLE</span></td>
-<td class="entry cellrowborder" style="text-align:left;vertical-align:middle;" headers="d114980e88 "><span>Typedef</span></td>
-<td class="entry cellrowborder" style="text-align:left;vertical-align:middle;" headers="d114980e90 "><span>Identifies a particular Command I/O instance</span></td>
-</tr>
-<tr class="row"><td class="entry cellrowborder" style="text-align:left;vertical-align:middle;" headers="d114980e86 "><span>SYS_CMD_MSG_FNC</span></td>
-<td class="entry cellrowborder" style="text-align:left;vertical-align:middle;" headers="d114980e88 "><span>Typedef</span></td>
-<td class="entry cellrowborder" style="text-align:left;vertical-align:middle;" headers="d114980e90 "><span>Identifies a message function API</span></td>
-</tr>
-<tr class="row"><td class="entry cellrowborder" style="text-align:left;vertical-align:middle;" headers="d114980e86 "><span>SYS_CMD_PRINT_FNC</span></td>
-<td class="entry cellrowborder" style="text-align:left;vertical-align:middle;" headers="d114980e88 "><span>Typedef</span></td>
-<td class="entry cellrowborder" style="text-align:left;vertical-align:middle;" headers="d114980e90 "><span>Identifies a print function API</span></td>
-</tr>
-<tr class="row"><td class="entry cellrowborder" style="text-align:left;vertical-align:middle;" headers="d114980e86 "><span>SYS_CMD_PUTC_FNC</span></td>
-<td class="entry cellrowborder" style="text-align:left;vertical-align:middle;" headers="d114980e88 "><span>Typedef</span></td>
-<td class="entry cellrowborder" style="text-align:left;vertical-align:middle;" headers="d114980e90 "><span>Identifies a single character print function API</span></td>
-</tr>
-<tr class="row"><td class="entry cellrowborder" style="text-align:left;vertical-align:middle;" headers="d114980e86 "><span>SYS_CMD_DATA_RDY_FNC</span></td>
-<td class="entry cellrowborder" style="text-align:left;vertical-align:middle;" headers="d114980e88 "><span>Typedef</span></td>
-<td class="entry cellrowborder" style="text-align:left;vertical-align:middle;" headers="d114980e90 "><span>Identifies a data available function API</span></td>
-</tr>
-<tr class="row"><td class="entry cellrowborder" style="text-align:left;vertical-align:middle;" headers="d114980e86 "><span>SYS_CMD_GETC_FNC</span></td>
-<td class="entry cellrowborder" style="text-align:left;vertical-align:middle;" headers="d114980e88 "><span>Typedef</span></td>
-<td class="entry cellrowborder" style="text-align:left;vertical-align:middle;" headers="d114980e90 "><span>Identifies a get single character function API</span></td>
-</tr>
-<tr class="row"><td class="entry cellrowborder" style="text-align:left;vertical-align:middle;" headers="d114980e86 "><span>SYS_CMD_READC_FNC</span></td>
-<td class="entry cellrowborder" style="text-align:left;vertical-align:middle;" headers="d114980e88 "><span>Typedef</span></td>
-<td class="entry cellrowborder" style="text-align:left;vertical-align:middle;" headers="d114980e90 "><span>Identifies a read single character function API</span></td>
-</tr>
-<tr class="row"><td class="entry cellrowborder" style="text-align:left;vertical-align:middle;" headers="d114980e86 "><span>SYS_CMD_API</span></td>
-<td class="entry cellrowborder" style="text-align:left;vertical-align:middle;" headers="d114980e88 "><span>Struct</span></td>
-<td class="entry cellrowborder" style="text-align:left;vertical-align:middle;" headers="d114980e90 "><span>Identifies the Command API structure</span></td>
-</tr>
-<tr class="row"><td class="entry cellrowborder" style="text-align:left;vertical-align:middle;" headers="d114980e86 "><span>SYS_CMD_EVENT</span></td>
-<td class="entry cellrowborder" style="text-align:left;vertical-align:middle;" headers="d114980e88 "><span>Enum</span></td>
-<td class="entry cellrowborder" style="text-align:left;vertical-align:middle;" headers="d114980e90 "><span>Identifies the Command Event Types</span></td>
-</tr>
-<tr class="row"><td class="entry cellrowborder" style="text-align:left;vertical-align:middle;" headers="d114980e86 "><span>SYS_CMD_CONSOLE_IO_PARAM</span></td>
-<td class="entry cellrowborder" style="text-align:left;vertical-align:middle;" headers="d114980e88 "><span>Enum</span></td>
-<td class="entry cellrowborder" style="text-align:left;vertical-align:middle;" headers="d114980e90 "><span>Defines whether the command module is single character or full command read</span></td>
-</tr>
-<tr class="row"><td class="entry cellrowborder" style="text-align:left;vertical-align:middle;" headers="d114980e86 "><span>SYS_CMD_INIT</span></td>
-<td class="entry cellrowborder" style="text-align:left;vertical-align:middle;" headers="d114980e88 "><span>Struct</span></td>
-<td class="entry cellrowborder" style="text-align:left;vertical-align:middle;" headers="d114980e90 "><span>Identifies the system command initialize structure</span></td>
-</tr>
-<tr class="row"><td class="entry cellrowborder" style="text-align:left;vertical-align:middle;" headers="d114980e86 "><span>SYS_CMD_DEVICE_NODE</span></td>
-<td class="entry cellrowborder" style="text-align:left;vertical-align:middle;" headers="d114980e88 "><span>Struct</span></td>
-<td class="entry cellrowborder" style="text-align:left;vertical-align:middle;" headers="d114980e90 "><span>Defines the data structure to store each command instance</span></td>
-</tr>
-<tr class="row"><td class="entry cellrowborder" style="text-align:left;vertical-align:middle;" headers="d114980e86 "><span>SYS_CMD_FNC</span></td>
-<td class="entry cellrowborder" style="text-align:left;vertical-align:middle;" headers="d114980e88 "><span>Typedef</span></td>
-<td class="entry cellrowborder" style="text-align:left;vertical-align:middle;" headers="d114980e90 "><span>Identifies the command process function API</span></td>
-</tr>
-<tr class="row"><td class="entry cellrowborder" style="text-align:left;vertical-align:middle;" headers="d114980e86 "><span>SYS_CMD_DESCRIPTOR</span></td>
-<td class="entry cellrowborder" style="text-align:left;vertical-align:middle;" headers="d114980e88 "><span>Struct</span></td>
-<td class="entry cellrowborder" style="text-align:left;vertical-align:middle;" headers="d114980e90 "><span>Defines the descriptor structure for a single command process</span></td>
-</tr>
-</tbody>
-</table>
+                <nav class="wh_tools d-print-none navbar-expand-md" aria-label="Tools">
+                    
+                    <div data-tooltip-position="bottom" class=" wh_breadcrumb "><ol class="d-print-none"><li><span class="home"><a href="index.html"><span>Home</span></a></span></li><li><div class="topicref" data-id="mplab-harmony-core-library"><div class="title"><a href="GUID-C04D97AB-D6E0-4CF5-9A80-CA64E36B6199.html"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">1</ph>
+MPLAB® Harmony Core Library</a></div></div></li><li><div class="topicref" data-id="system-service-libraries"><div class="title"><a href="GUID-EA5ADDDE-73D5-43CB-B474-0752CA9A1A50.html"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">1.2</ph>
+System Service Libraries</a></div></div></li><li><div class="topicref" data-id="command-processor-system-service"><div class="title"><a href="GUID-09F65940-7D05-4F78-81C9-6356B65DEF21.html"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">1.2.3</ph>
+Command Processor System Service</a></div></div></li><li class="active"><div class="topicref" data-id="library-interface"><div class="title"><a href="GUID-F1DBA6FA-9373-4832-9CD9-BDC0B227003B.html"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">1.2.3.4</ph>
+Library Interface</a></div></div></li></ol></div>
+                    
+                    
+                    
+                    <div class="wh_right_tools">
+                        <button class="wh_hide_highlight" aria-label="Toggle search highlights" title="Toggle search highlights"></button>
+                        <button class="webhelp_expand_collapse_sections" data-next-state="collapsed" aria-label="Collapse sections" title="Collapse sections"></button>
+                        
+                        
+                        
+                        
+                        <div class=" wh_print_link print d-none d-md-inline-block "><button onClick="window.print()" title="Print this page" aria-label="Print this page"></button></div>
+                        
+                        <button type="button" id="wh_toc_button" class="custom-toggler navbar-toggler collapsed wh_toggle_button navbar-light" aria-expanded="false" aria-label="Toggle publishing table of content" aria-controls="wh_publication_toc">
+                            <span class="navbar-toggler-icon"></span>
+                        </button>
+                    </div>
+                    
+                </nav>
+            </div>
+            
+            
+            
+            
+            <div class="wh_content_area">
+                <div class="row">
+                    
+                        <nav id="wh_publication_toc" class="col-lg-3 col-md-3 col-sm-12 d-md-block d-none d-print-none" aria-label="Table of Contents Container">
+                            <div id="wh_publication_toc_content">
+		                        
+                            	<div class=" wh_publication_toc " data-tooltip-position="right"><span class="expand-button-action-labels"><span id="button-expand-action" role="button" aria-label="Expand"></span><span id="button-collapse-action" role="button" aria-label="Collapse"></span><span id="button-pending-action" role="button" aria-label="Pending"></span></span><ul role="tree" aria-label="Table of Contents"><li role="treeitem" aria-expanded="true"><div data-tocid="mplab-harmony-core-library-d6800e9" class="topicref" data-id="mplab-harmony-core-library" data-state="expanded"><span role="button" tabindex="0" aria-labelledby="button-collapse-action mplab-harmony-core-library-d6800e9-link" class="wh-expand-btn"></span><div class="title"><a href="GUID-C04D97AB-D6E0-4CF5-9A80-CA64E36B6199.html" id="mplab-harmony-core-library-d6800e9-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">1</ph>
+MPLAB® Harmony Core Library</a></div></div><ul role="group" class="navbar-nav nav-list"><li role="treeitem" aria-expanded="false"><div data-tocid="driver-libraries-d6800e17" class="topicref" data-id="driver-libraries" data-state="not-ready"><span role="button" tabindex="0" aria-labelledby="button-expand-action driver-libraries-d6800e17-link" class="wh-expand-btn"></span><div class="title"><a href="GUID-4FA4B38A-8C7F-46A3-9D08-4B8C5CE26712.html" id="driver-libraries-d6800e17-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">1.1</ph>
+Driver Libraries</a></div></div></li><li role="treeitem" aria-expanded="true"><div data-tocid="system-service-libraries-d6800e2771" class="topicref" data-id="system-service-libraries" data-state="expanded"><span role="button" tabindex="0" aria-labelledby="button-collapse-action system-service-libraries-d6800e2771-link" class="wh-expand-btn"></span><div class="title"><a href="GUID-EA5ADDDE-73D5-43CB-B474-0752CA9A1A50.html" id="system-service-libraries-d6800e2771-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">1.2</ph>
+System Service Libraries</a></div></div><ul role="group" class="navbar-nav nav-list"><li role="treeitem" aria-expanded="false"><div data-tocid="common-system-services-library-d6800e2779" class="topicref" data-id="common-system-services-library" data-state="not-ready"><span role="button" tabindex="0" aria-labelledby="button-expand-action common-system-services-library-d6800e2779-link" class="wh-expand-btn"></span><div class="title"><a href="GUID-B6B51E48-2D3D-42F8-8493-3405F1639A9E.html" id="common-system-services-library-d6800e2779-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">1.2.1</ph>
+Common System Services Library</a></div></div></li><li role="treeitem" aria-expanded="false"><div data-tocid="cache-system-service-d6800e2956" class="topicref" data-id="cache-system-service" data-state="not-ready"><span role="button" tabindex="0" aria-labelledby="button-expand-action cache-system-service-d6800e2956-link" class="wh-expand-btn"></span><div class="title"><a href="GUID-4522BF0A-636F-448D-B87F-2342F8CBEB00.html" id="cache-system-service-d6800e2956-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">1.2.2</ph>
+Cache System Service</a></div></div></li><li role="treeitem" aria-expanded="true"><div data-tocid="command-processor-system-service-d6800e3069" class="topicref" data-id="command-processor-system-service" data-state="expanded"><span role="button" tabindex="0" aria-labelledby="button-collapse-action command-processor-system-service-d6800e3069-link" class="wh-expand-btn"></span><div class="title"><a href="GUID-09F65940-7D05-4F78-81C9-6356B65DEF21.html" id="command-processor-system-service-d6800e3069-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">1.2.3</ph>
+Command Processor System Service</a></div></div><ul role="group" class="navbar-nav nav-list"><li role="treeitem"><div data-tocid="how-the-library-works-d6800e3077" class="topicref" data-id="how-the-library-works" data-state="leaf"><span role="button" class="wh-expand-btn"></span><div class="title"><a href="GUID-AB133EBE-D69A-48C3-BF6E-111E569747E0.html" id="how-the-library-works-d6800e3077-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">1.2.3.1</ph>
+How the Library Works</a></div></div></li><li role="treeitem"><div data-tocid="using-the-library-d6800e3085" class="topicref" data-id="using-the-library" data-state="leaf"><span role="button" class="wh-expand-btn"></span><div class="title"><a href="GUID-8E82118C-F2B8-4394-A0C1-4E838387C179.html" id="using-the-library-d6800e3085-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">1.2.3.2</ph>
+Using The Library</a></div></div></li><li role="treeitem"><div data-tocid="configuring-the-library-d6800e3093" class="topicref" data-id="configuring-the-library" data-state="leaf"><span role="button" class="wh-expand-btn"></span><div class="title"><a href="GUID-61A204D5-4020-4A31-BC5F-833D079A2436.html" id="configuring-the-library-d6800e3093-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">1.2.3.3</ph>
+Configuring The Library</a></div></div></li><li role="treeitem" aria-expanded="true" class="active"><div data-tocid="library-interface-d6800e3101" class="topicref" data-id="library-interface" data-state="expanded"><span role="button" tabindex="0" aria-labelledby="button-collapse-action library-interface-d6800e3101-link" class="wh-expand-btn"></span><div class="title"><a href="GUID-F1DBA6FA-9373-4832-9CD9-BDC0B227003B.html" id="library-interface-d6800e3101-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">1.2.3.4</ph>
+Library Interface</a></div></div><ul role="group" class="navbar-nav nav-list"><li role="treeitem"><div data-tocid="sys-cmd-initialize-function-d6800e3109" class="topicref" data-id="sys-cmd-initialize-function" data-state="leaf"><span role="button" class="wh-expand-btn"></span><div class="title"><a href="GUID-FEBFF6DB-5F57-4360-90BF-E9DA46037C99.html" id="sys-cmd-initialize-function-d6800e3109-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">1.2.3.4.1</ph>
+SYS_CMD_Initialize Function</a></div></div></li><li role="treeitem"><div data-tocid="sys-cmd-addgrp-function-d6800e3117" class="topicref" data-id="sys-cmd-addgrp-function" data-state="leaf"><span role="button" class="wh-expand-btn"></span><div class="title"><a href="GUID-26B2DB3A-8817-401C-8EA1-BA288827F83C.html" id="sys-cmd-addgrp-function-d6800e3117-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">1.2.3.4.2</ph>
+SYS_CMD_ADDGRP Function</a></div></div></li><li role="treeitem"><div data-tocid="sys-cmd-delete-function-d6800e3125" class="topicref" data-id="sys-cmd-delete-function" data-state="leaf"><span role="button" class="wh-expand-btn"></span><div class="title"><a href="GUID-ED55865F-5F73-4D1C-A894-6A26F9893190.html" id="sys-cmd-delete-function-d6800e3125-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">1.2.3.4.3</ph>
+SYS_CMD_DELETE Function</a></div></div></li><li role="treeitem"><div data-tocid="sys-cmd-ready-to-read-function-d6800e3133" class="topicref" data-id="sys-cmd-ready-to-read-function" data-state="leaf"><span role="button" class="wh-expand-btn"></span><div class="title"><a href="GUID-05239B51-F3DC-495F-A373-057A692D1CE2.html" id="sys-cmd-ready-to-read-function-d6800e3133-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">1.2.3.4.4</ph>
+SYS_CMD_READY_TO_READ Function</a></div></div></li><li role="treeitem"><div data-tocid="sys-cmd-ready-to-write-function-d6800e3141" class="topicref" data-id="sys-cmd-ready-to-write-function" data-state="leaf"><span role="button" class="wh-expand-btn"></span><div class="title"><a href="GUID-45D2280C-63E4-48FA-ABAD-450459998A8F.html" id="sys-cmd-ready-to-write-function-d6800e3141-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">1.2.3.4.5</ph>
+SYS_CMD_READY_TO_WRITE Function</a></div></div></li><li role="treeitem"><div data-tocid="sys-cmd-tasks-function-d6800e3149" class="topicref" data-id="sys-cmd-tasks-function" data-state="leaf"><span role="button" class="wh-expand-btn"></span><div class="title"><a href="GUID-EDAB3999-3E03-4C0B-94B6-066DE78EE636.html" id="sys-cmd-tasks-function-d6800e3149-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">1.2.3.4.6</ph>
+SYS_CMD_Tasks Function</a></div></div></li><li role="treeitem"><div data-tocid="sys-cmd-message-function-d6800e3157" class="topicref" data-id="sys-cmd-message-function" data-state="leaf"><span role="button" class="wh-expand-btn"></span><div class="title"><a href="GUID-A4CE28DC-40B2-43C2-949E-69ABD5EFB2DC.html" id="sys-cmd-message-function-d6800e3157-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">1.2.3.4.7</ph>
+SYS_CMD_MESSAGE Function</a></div></div></li><li role="treeitem"><div data-tocid="sys-cmd-print-function-d6800e3165" class="topicref" data-id="sys-cmd-print-function" data-state="leaf"><span role="button" class="wh-expand-btn"></span><div class="title"><a href="GUID-02B7E5B7-DE83-434E-B5A3-9428923F2D83.html" id="sys-cmd-print-function-d6800e3165-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">1.2.3.4.8</ph>
+SYS_CMD_PRINT Function</a></div></div></li><li role="treeitem"><div data-tocid="sys-cmdio-get-handle-function-d6800e3173" class="topicref" data-id="sys-cmdio-get-handle-function" data-state="leaf"><span role="button" class="wh-expand-btn"></span><div class="title"><a href="GUID-3E6B809F-7256-4348-9596-7F338CC62EC5.html" id="sys-cmdio-get-handle-function-d6800e3173-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">1.2.3.4.9</ph>
+SYS_CMDIO_GET_HANDLE Function</a></div></div></li><li role="treeitem"><div data-tocid="sys-cmdio-add-function-d6800e3181" class="topicref" data-id="sys-cmdio-add-function" data-state="leaf"><span role="button" class="wh-expand-btn"></span><div class="title"><a href="GUID-6979BCB1-F38B-455E-AFBB-FD2A09A823B4.html" id="sys-cmdio-add-function-d6800e3181-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">1.2.3.4.10</ph>
+SYS_CMDIO_ADD Function</a></div></div></li><li role="treeitem"><div data-tocid="command-history-depth-macro-d6800e3190" class="topicref" data-id="command-history-depth-macro" data-state="leaf"><span role="button" class="wh-expand-btn"></span><div class="title"><a href="GUID-9A80603D-1A4B-4313-8D69-3C7F8E0CDDF0.html" id="command-history-depth-macro-d6800e3190-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">1.2.3.4.11</ph>
+COMMAND_HISTORY_DEPTH Macro</a></div></div></li><li role="treeitem"><div data-tocid="sys-cmd-max-length-macro-d6800e3198" class="topicref" data-id="sys-cmd-max-length-macro" data-state="leaf"><span role="button" class="wh-expand-btn"></span><div class="title"><a href="GUID-B6686A00-4544-4CFB-9F3C-9184AD2E0FDD.html" id="sys-cmd-max-length-macro-d6800e3198-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">1.2.3.4.12</ph>
+SYS_CMD_MAX_LENGTH Macro</a></div></div></li><li role="treeitem"><div data-tocid="sys-cmd-read-buffer-size-macro-d6800e3206" class="topicref" data-id="sys-cmd-read-buffer-size-macro" data-state="leaf"><span role="button" class="wh-expand-btn"></span><div class="title"><a href="GUID-918C3149-0EB2-4501-A80D-24BB98E67B5D.html" id="sys-cmd-read-buffer-size-macro-d6800e3206-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">1.2.3.4.13</ph>
+SYS_CMD_READ_BUFFER_SIZE Macro</a></div></div></li><li role="treeitem"><div data-tocid="sys-cmd-callbackfunction-typedef-d6800e3214" class="topicref" data-id="sys-cmd-callbackfunction-typedef" data-state="leaf"><span role="button" class="wh-expand-btn"></span><div class="title"><a href="GUID-BBAD84DF-1379-41FE-8BE1-9009BDC368AF.html" id="sys-cmd-callbackfunction-typedef-d6800e3214-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">1.2.3.4.14</ph>
+SYS_CMD_CallbackFunction Typedef</a></div></div></li><li role="treeitem"><div data-tocid="sys-cmd-handle-typedef-d6800e3222" class="topicref" data-id="sys-cmd-handle-typedef" data-state="leaf"><span role="button" class="wh-expand-btn"></span><div class="title"><a href="GUID-740C7410-8069-4335-BB33-218D8F8B59F5.html" id="sys-cmd-handle-typedef-d6800e3222-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">1.2.3.4.15</ph>
+SYS_CMD_HANDLE Typedef</a></div></div></li><li role="treeitem"><div data-tocid="sys-cmd-msg-fnc-typedef-d6800e3230" class="topicref" data-id="sys-cmd-msg-fnc-typedef" data-state="leaf"><span role="button" class="wh-expand-btn"></span><div class="title"><a href="GUID-FA0DA23C-BCD9-405F-8CC1-C7AE98205FC3.html" id="sys-cmd-msg-fnc-typedef-d6800e3230-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">1.2.3.4.16</ph>
+SYS_CMD_MSG_FNC Typedef</a></div></div></li><li role="treeitem"><div data-tocid="sys-cmd-print-fnc-typedef-d6800e3238" class="topicref" data-id="sys-cmd-print-fnc-typedef" data-state="leaf"><span role="button" class="wh-expand-btn"></span><div class="title"><a href="GUID-1ACA0CDE-BB29-4A7F-AF3D-5461ECE86944.html" id="sys-cmd-print-fnc-typedef-d6800e3238-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">1.2.3.4.17</ph>
+SYS_CMD_PRINT_FNC Typedef</a></div></div></li><li role="treeitem"><div data-tocid="sys-cmd-putc-fnc-typedef-d6800e3246" class="topicref" data-id="sys-cmd-putc-fnc-typedef" data-state="leaf"><span role="button" class="wh-expand-btn"></span><div class="title"><a href="GUID-B51DDD56-C465-4676-816B-85FFEE48544C.html" id="sys-cmd-putc-fnc-typedef-d6800e3246-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">1.2.3.4.18</ph>
+SYS_CMD_PUTC_FNC Typedef</a></div></div></li><li role="treeitem"><div data-tocid="sys-cmd-data-rdy-fnc-typedef-d6800e3254" class="topicref" data-id="sys-cmd-data-rdy-fnc-typedef" data-state="leaf"><span role="button" class="wh-expand-btn"></span><div class="title"><a href="GUID-51492B75-94E3-4BCE-960D-013CB51A2E19.html" id="sys-cmd-data-rdy-fnc-typedef-d6800e3254-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">1.2.3.4.19</ph>
+SYS_CMD_DATA_RDY_FNC Typedef</a></div></div></li><li role="treeitem"><div data-tocid="sys-cmd-getc-fnc-typedef-d6800e3262" class="topicref" data-id="sys-cmd-getc-fnc-typedef" data-state="leaf"><span role="button" class="wh-expand-btn"></span><div class="title"><a href="GUID-8BCDA47F-4CBC-4405-9F30-4A44B7DE67F3.html" id="sys-cmd-getc-fnc-typedef-d6800e3262-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">1.2.3.4.20</ph>
+SYS_CMD_GETC_FNC Typedef</a></div></div></li><li role="treeitem"><div data-tocid="sys-cmd-readc-fnc-typedef-d6800e3270" class="topicref" data-id="sys-cmd-readc-fnc-typedef" data-state="leaf"><span role="button" class="wh-expand-btn"></span><div class="title"><a href="GUID-43DF0480-B8AC-4060-B932-0BF78B41CE23.html" id="sys-cmd-readc-fnc-typedef-d6800e3270-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">1.2.3.4.21</ph>
+SYS_CMD_READC_FNC Typedef</a></div></div></li><li role="treeitem"><div data-tocid="sys-cmd-api-struct-d6800e3279" class="topicref" data-id="sys-cmd-api-struct" data-state="leaf"><span role="button" class="wh-expand-btn"></span><div class="title"><a href="GUID-28219199-6917-43CE-A9D3-0C84F4017C28.html" id="sys-cmd-api-struct-d6800e3279-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">1.2.3.4.22</ph>
+SYS_CMD_API Struct</a></div></div></li><li role="treeitem"><div data-tocid="sys-cmd-event-enum-d6800e3287" class="topicref" data-id="sys-cmd-event-enum" data-state="leaf"><span role="button" class="wh-expand-btn"></span><div class="title"><a href="GUID-001CDE12-2461-42F4-8F72-783C6EB738D4.html" id="sys-cmd-event-enum-d6800e3287-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">1.2.3.4.23</ph>
+SYS_CMD_EVENT Enum</a></div></div></li><li role="treeitem"><div data-tocid="sys-cmd-console-io-param-enum-d6800e3295" class="topicref" data-id="sys-cmd-console-io-param-enum" data-state="leaf"><span role="button" class="wh-expand-btn"></span><div class="title"><a href="GUID-3ABD051F-AA97-4C40-942D-EFC6A16486B8.html" id="sys-cmd-console-io-param-enum-d6800e3295-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">1.2.3.4.24</ph>
+SYS_CMD_CONSOLE_IO_PARAM Enum</a></div></div></li><li role="treeitem"><div data-tocid="sys-cmd-init-struct-d6800e3303" class="topicref" data-id="sys-cmd-init-struct" data-state="leaf"><span role="button" class="wh-expand-btn"></span><div class="title"><a href="GUID-4F58DE9B-B3EE-4108-9290-15F90CC32FB0.html" id="sys-cmd-init-struct-d6800e3303-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">1.2.3.4.25</ph>
+SYS_CMD_INIT Struct</a></div></div></li><li role="treeitem"><div data-tocid="sys-cmd-device-node-struct-d6800e3311" class="topicref" data-id="sys-cmd-device-node-struct" data-state="leaf"><span role="button" class="wh-expand-btn"></span><div class="title"><a href="GUID-F6B65A05-37EC-4CCF-AFC3-0EC2EA264CDB.html" id="sys-cmd-device-node-struct-d6800e3311-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">1.2.3.4.26</ph>
+SYS_CMD_DEVICE_NODE Struct</a></div></div></li><li role="treeitem"><div data-tocid="sys-cmd-fnc-typedef-d6800e3319" class="topicref" data-id="sys-cmd-fnc-typedef" data-state="leaf"><span role="button" class="wh-expand-btn"></span><div class="title"><a href="GUID-85B8324A-FF53-4CBB-B687-C6BCE047FEDC.html" id="sys-cmd-fnc-typedef-d6800e3319-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">1.2.3.4.27</ph>
+SYS_CMD_FNC Typedef</a></div></div></li><li role="treeitem"><div data-tocid="sys-cmd-descriptor-struct-d6800e3327" class="topicref" data-id="sys-cmd-descriptor-struct" data-state="leaf"><span role="button" class="wh-expand-btn"></span><div class="title"><a href="GUID-827592EF-BDE9-4229-9A95-E2F6E8E55AF2.html" id="sys-cmd-descriptor-struct-d6800e3327-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">1.2.3.4.28</ph>
+SYS_CMD_DESCRIPTOR Struct</a></div></div></li></ul></li></ul></li><li role="treeitem" aria-expanded="false"><div data-tocid="console-system-service-d6800e3335" class="topicref" data-id="console-system-service" data-state="not-ready"><span role="button" tabindex="0" aria-labelledby="button-expand-action console-system-service-d6800e3335-link" class="wh-expand-btn"></span><div class="title"><a href="GUID-C8EFF72A-1BBB-416E-BF89-EEA2B23EB27D.html" id="console-system-service-d6800e3335-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">1.2.4</ph>
+Console System Service</a></div></div></li><li role="treeitem" aria-expanded="false"><div data-tocid="debug-system-service-d6800e3553" class="topicref" data-id="debug-system-service" data-state="not-ready"><span role="button" tabindex="0" aria-labelledby="button-expand-action debug-system-service-d6800e3553-link" class="wh-expand-btn"></span><div class="title"><a href="GUID-4F625306-2206-49B1-8846-60C97E40A440.html" id="debug-system-service-d6800e3553-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">1.2.5</ph>
+Debug System Service</a></div></div></li><li role="treeitem" aria-expanded="false"><div data-tocid="direct-memory-access-dma-system-service-d6800e3682" class="topicref" data-id="direct-memory-access-dma-system-service" data-state="not-ready"><span role="button" tabindex="0" aria-labelledby="button-expand-action direct-memory-access-dma-system-service-d6800e3682-link" class="wh-expand-btn"></span><div class="title"><a href="GUID-DB773A68-76AC-4900-8C7C-3AC9C38BE0BD.html" id="direct-memory-access-dma-system-service-d6800e3682-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">1.2.6</ph>
+Direct Memory Access (DMA) System Service</a></div></div></li><li role="treeitem" aria-expanded="false"><div data-tocid="file-system-service-d6800e3787" class="topicref" data-id="file-system-service" data-state="not-ready"><span role="button" tabindex="0" aria-labelledby="button-expand-action file-system-service-d6800e3787-link" class="wh-expand-btn"></span><div class="title"><a href="GUID-066D09D2-5550-49D9-ADA2-60A702DB243E.html" id="file-system-service-d6800e3787-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">1.2.7</ph>
+File System Service</a></div></div></li><li role="treeitem" aria-expanded="false"><div data-tocid="interrupt-system-service-d6800e4547" class="topicref" data-id="interrupt-system-service" data-state="not-ready"><span role="button" tabindex="0" aria-labelledby="button-expand-action interrupt-system-service-d6800e4547-link" class="wh-expand-btn"></span><div class="title"><a href="GUID-AB36B81D-DB1C-43F0-950E-1E302FC77832.html" id="interrupt-system-service-d6800e4547-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">1.2.8</ph>
+Interrupt System Service</a></div></div></li><li role="treeitem" aria-expanded="false"><div data-tocid="ports-system-service-d6800e4652" class="topicref" data-id="ports-system-service" data-state="not-ready"><span role="button" tabindex="0" aria-labelledby="button-expand-action ports-system-service-d6800e4652-link" class="wh-expand-btn"></span><div class="title"><a href="GUID-89291D9B-92F4-4472-BAE0-9F007571CD35.html" id="ports-system-service-d6800e4652-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">1.2.9</ph>
+Ports System Service</a></div></div></li><li role="treeitem" aria-expanded="false"><div data-tocid="reset-system-service-d6800e4740" class="topicref" data-id="reset-system-service" data-state="not-ready"><span role="button" tabindex="0" aria-labelledby="button-expand-action reset-system-service-d6800e4740-link" class="wh-expand-btn"></span><div class="title"><a href="GUID-9B151BD6-CAB6-497E-867F-9D9543CB51A6.html" id="reset-system-service-d6800e4740-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">1.2.10</ph>
+Reset System Service</a></div></div></li><li role="treeitem" aria-expanded="false"><div data-tocid="time-system-service-d6800e4757" class="topicref" data-id="time-system-service" data-state="not-ready"><span role="button" tabindex="0" aria-labelledby="button-expand-action time-system-service-d6800e4757-link" class="wh-expand-btn"></span><div class="title"><a href="GUID-05D0B89A-EE4D-46D4-B58F-7402C56061AE.html" id="time-system-service-d6800e4757-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">1.2.11</ph>
+Time System Service</a></div></div></li></ul></li><li role="treeitem" aria-expanded="false"><div data-tocid="software-libraries-d6800e5031" class="topicref" data-id="software-libraries" data-state="not-ready"><span role="button" tabindex="0" aria-labelledby="button-expand-action software-libraries-d6800e5031-link" class="wh-expand-btn"></span><div class="title"><a href="GUID-7249D18B-E049-45D9-96DD-B6329375E344.html" id="software-libraries-d6800e5031-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">1.3</ph>
+Software Libraries</a></div></div></li><li role="treeitem" aria-expanded="false"><div data-tocid="osal-library-d6800e5305" class="topicref" data-id="osal-library" data-state="not-ready"><span role="button" tabindex="0" aria-labelledby="button-expand-action osal-library-d6800e5305-link" class="wh-expand-btn"></span><div class="title"><a href="GUID-8AEFE0B0-CE35-4F99-ACF4-7C8E10D3BBB6.html" id="osal-library-d6800e5305-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">1.4</ph>
+OSAL Library</a></div></div></li><li role="treeitem" aria-expanded="false"><div data-tocid="third-party-products-d6800e5546" class="topicref" data-id="third-party-products" data-state="not-ready"><span role="button" tabindex="0" aria-labelledby="button-expand-action third-party-products-d6800e5546-link" class="wh-expand-btn"></span><div class="title"><a href="GUID-2FB7347D-8FBD-411F-88D8-58A813EA9498.html" id="third-party-products-d6800e5546-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">1.5</ph>
+Third party Products</a></div></div></li><li role="treeitem"><div data-tocid="configuring-the-harmony-core-library-d6800e5586" class="topicref" data-id="configuring-the-harmony-core-library" data-state="leaf"><span role="button" class="wh-expand-btn"></span><div class="title"><a href="GUID-F1244C57-71EF-492B-8104-473C8CECC20F.html" id="configuring-the-harmony-core-library-d6800e5586-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">1.6</ph>
+Configuring The Harmony Core Library</a></div></div></li></ul></li></ul></div>
+		                        
+                            </div>
+                        </nav>
+                    
+                    
+                    <div class="col-lg-9 col-md-9 col-sm-12" id="wh_topic_body">
+                        <button id="wh_close_publication_toc_button" class="close-toc-button d-none" aria-label="Toggle publishing table of content" aria-controls="wh_publication_toc" aria-expanded="true">
+                            <span class="close-toc-icon-container">
+                                <span class="close-toc-icon"></span>     
+                            </span>
+                        </button>
+                        
+                        
+                        <div class=" wh_topic_content body "><main role="main"><article role="article" aria-labelledby="ariaid-title1"><h1 class="- topic/title title topictitle1" id="ariaid-title1" style="">1.2.3.4 Library Interface</h1><div class="- topic/body body"><p class="- topic/p p">Command System Service library provides the following interfaces:</p><p class="- topic/p p"><strong class="+ topic/ph hi-d/b ph b">Functions</strong></p><div class="table-container"><table class="- topic/table table" data-cols="2"><caption></caption><colgroup><col/><col/></colgroup><thead class="- topic/thead thead"><tr class="- topic/row"><th class="- topic/entry entry align-left colsep-0 rowsep-0" id="library-interface__entry__1">Name</th><th class="- topic/entry entry align-left colsep-0 rowsep-0" id="library-interface__entry__2">Description</th></tr></thead><tbody class="- topic/tbody tbody"><tr class="- topic/row"><td class="- topic/entry entry align-left colsep-0 rowsep-0" headers="library-interface__entry__1">SYS_CMD_Initialize</td><td class="- topic/entry entry align-left colsep-0 rowsep-0" headers="library-interface__entry__2">Initializes data for the instance of the Command Processor module</td></tr><tr class="- topic/row"><td class="- topic/entry entry align-left colsep-0 rowsep-0" headers="library-interface__entry__1">SYS_CMD_ADDGRP</td><td class="- topic/entry entry align-left colsep-0 rowsep-0" headers="library-interface__entry__2">Allows clients to add command process to the Command Processor System Service</td></tr><tr class="- topic/row"><td class="- topic/entry entry align-left colsep-0 rowsep-0" headers="library-interface__entry__1">SYS_CMD_DELETE</td><td class="- topic/entry entry align-left colsep-0 rowsep-0" headers="library-interface__entry__2">Removes CMDIO parameters from the Command Processor System Service console</td></tr><tr class="- topic/row"><td class="- topic/entry entry align-left colsep-0 rowsep-0" headers="library-interface__entry__1">SYS_CMD_READY_TO_READ</td><td class="- topic/entry entry align-left colsep-0 rowsep-0" headers="library-interface__entry__2">Allows upper layer application to confirm that the command module is ready to accept command input</td></tr><tr class="- topic/row"><td class="- topic/entry entry align-left colsep-0 rowsep-0" headers="library-interface__entry__1">SYS_CMD_READY_TO_WRITE</td><td class="- topic/entry entry align-left colsep-0 rowsep-0" headers="library-interface__entry__2">Allows upper layer application to confirm that the command module is ready to write output to the Console System Service</td></tr><tr class="- topic/row"><td class="- topic/entry entry align-left colsep-0 rowsep-0" headers="library-interface__entry__1">SYS_CMD_Tasks</td><td class="- topic/entry entry align-left colsep-0 rowsep-0" headers="library-interface__entry__2">Maintains the Command Processor System Service's internal state machine</td></tr><tr class="- topic/row"><td class="- topic/entry entry align-left colsep-0 rowsep-0" headers="library-interface__entry__1">SYS_CMD_MESSAGE</td><td class="- topic/entry entry align-left colsep-0 rowsep-0" headers="library-interface__entry__2">Outputs a message to the Command Processor System Service console</td></tr><tr class="- topic/row"><td class="- topic/entry entry align-left colsep-0 rowsep-0" headers="library-interface__entry__1">SYS_CMD_PRINT</td><td class="- topic/entry entry align-left colsep-0 rowsep-0" headers="library-interface__entry__2">Outputs a printout to the Command Processor System Service console</td></tr><tr class="- topic/row"><td class="- topic/entry entry align-left colsep-0 rowsep-0" headers="library-interface__entry__1">SYS_CMDIO_GET_HANDLE</td><td class="- topic/entry entry align-left colsep-0 rowsep-0" headers="library-interface__entry__2">Gets the CMDIO Handle base via index</td></tr><tr class="- topic/row"><td class="- topic/entry entry align-left colsep-0 rowsep-0" headers="library-interface__entry__1">SYS_CMDIO_ADD</td><td class="- topic/entry entry align-left colsep-0 rowsep-0" headers="library-interface__entry__2">Adds CMDIO parameters to the Command Processor System Service console</td></tr></tbody></table></div><p class="- topic/p p"><strong class="+ topic/ph hi-d/b ph b">Data types and constants</strong></p><div class="table-container"><table class="- topic/table table" data-cols="3"><caption></caption><colgroup><col/><col/><col/></colgroup><thead class="- topic/thead thead"><tr class="- topic/row"><th class="- topic/entry entry align-left colsep-0 rowsep-0" id="library-interface__entry__23">Name</th><th class="- topic/entry entry align-left colsep-0 rowsep-0" id="library-interface__entry__24">Type</th><th class="- topic/entry entry align-left colsep-0 rowsep-0" id="library-interface__entry__25">Description</th></tr></thead><tbody class="- topic/tbody tbody"><tr class="- topic/row"><td class="- topic/entry entry align-left colsep-0 rowsep-0" headers="library-interface__entry__23">COMMAND_HISTORY_DEPTH</td><td class="- topic/entry entry align-left colsep-0 rowsep-0" headers="library-interface__entry__24">Macro</td><td class="- topic/entry entry align-left colsep-0 rowsep-0" headers="library-interface__entry__25">Command Processor System Service Maximum Depth of Command History</td></tr><tr class="- topic/row"><td class="- topic/entry entry align-left colsep-0 rowsep-0" headers="library-interface__entry__23">SYS_CMD_MAX_LENGTH</td><td class="- topic/entry entry align-left colsep-0 rowsep-0" headers="library-interface__entry__24">Macro</td><td class="- topic/entry entry align-left colsep-0 rowsep-0" headers="library-interface__entry__25">Command Processor System Service Command Buffer Maximum Length definition</td></tr><tr class="- topic/row"><td class="- topic/entry entry align-left colsep-0 rowsep-0" headers="library-interface__entry__23">SYS_CMD_READ_BUFFER_SIZE</td><td class="- topic/entry entry align-left colsep-0 rowsep-0" headers="library-interface__entry__24">Macro</td><td class="- topic/entry entry align-left colsep-0 rowsep-0" headers="library-interface__entry__25">Command Processor System Service Read Buffer Size definition</td></tr><tr class="- topic/row"><td class="- topic/entry entry align-left colsep-0 rowsep-0" headers="library-interface__entry__23">SYS_CMD_CallbackFunction</td><td class="- topic/entry entry align-left colsep-0 rowsep-0" headers="library-interface__entry__24">Typedef</td><td class="- topic/entry entry align-left colsep-0 rowsep-0" headers="library-interface__entry__25">Command Callback Function Handle</td></tr><tr class="- topic/row"><td class="- topic/entry entry align-left colsep-0 rowsep-0" headers="library-interface__entry__23">SYS_CMD_HANDLE</td><td class="- topic/entry entry align-left colsep-0 rowsep-0" headers="library-interface__entry__24">Typedef</td><td class="- topic/entry entry align-left colsep-0 rowsep-0" headers="library-interface__entry__25">Identifies a particular Command I/O instance</td></tr><tr class="- topic/row"><td class="- topic/entry entry align-left colsep-0 rowsep-0" headers="library-interface__entry__23">SYS_CMD_MSG_FNC</td><td class="- topic/entry entry align-left colsep-0 rowsep-0" headers="library-interface__entry__24">Typedef</td><td class="- topic/entry entry align-left colsep-0 rowsep-0" headers="library-interface__entry__25">Identifies a message function API</td></tr><tr class="- topic/row"><td class="- topic/entry entry align-left colsep-0 rowsep-0" headers="library-interface__entry__23">SYS_CMD_PRINT_FNC</td><td class="- topic/entry entry align-left colsep-0 rowsep-0" headers="library-interface__entry__24">Typedef</td><td class="- topic/entry entry align-left colsep-0 rowsep-0" headers="library-interface__entry__25">Identifies a print function API</td></tr><tr class="- topic/row"><td class="- topic/entry entry align-left colsep-0 rowsep-0" headers="library-interface__entry__23">SYS_CMD_PUTC_FNC</td><td class="- topic/entry entry align-left colsep-0 rowsep-0" headers="library-interface__entry__24">Typedef</td><td class="- topic/entry entry align-left colsep-0 rowsep-0" headers="library-interface__entry__25">Identifies a single character print function API</td></tr><tr class="- topic/row"><td class="- topic/entry entry align-left colsep-0 rowsep-0" headers="library-interface__entry__23">SYS_CMD_DATA_RDY_FNC</td><td class="- topic/entry entry align-left colsep-0 rowsep-0" headers="library-interface__entry__24">Typedef</td><td class="- topic/entry entry align-left colsep-0 rowsep-0" headers="library-interface__entry__25">Identifies a data available function API</td></tr><tr class="- topic/row"><td class="- topic/entry entry align-left colsep-0 rowsep-0" headers="library-interface__entry__23">SYS_CMD_GETC_FNC</td><td class="- topic/entry entry align-left colsep-0 rowsep-0" headers="library-interface__entry__24">Typedef</td><td class="- topic/entry entry align-left colsep-0 rowsep-0" headers="library-interface__entry__25">Identifies a get single character function API</td></tr><tr class="- topic/row"><td class="- topic/entry entry align-left colsep-0 rowsep-0" headers="library-interface__entry__23">SYS_CMD_READC_FNC</td><td class="- topic/entry entry align-left colsep-0 rowsep-0" headers="library-interface__entry__24">Typedef</td><td class="- topic/entry entry align-left colsep-0 rowsep-0" headers="library-interface__entry__25">Identifies a read single character function API</td></tr><tr class="- topic/row"><td class="- topic/entry entry align-left colsep-0 rowsep-0" headers="library-interface__entry__23">SYS_CMD_API</td><td class="- topic/entry entry align-left colsep-0 rowsep-0" headers="library-interface__entry__24">Struct</td><td class="- topic/entry entry align-left colsep-0 rowsep-0" headers="library-interface__entry__25">Identifies the Command API structure</td></tr><tr class="- topic/row"><td class="- topic/entry entry align-left colsep-0 rowsep-0" headers="library-interface__entry__23">SYS_CMD_EVENT</td><td class="- topic/entry entry align-left colsep-0 rowsep-0" headers="library-interface__entry__24">Enum</td><td class="- topic/entry entry align-left colsep-0 rowsep-0" headers="library-interface__entry__25">Identifies the Command Event Types</td></tr><tr class="- topic/row"><td class="- topic/entry entry align-left colsep-0 rowsep-0" headers="library-interface__entry__23">SYS_CMD_CONSOLE_IO_PARAM</td><td class="- topic/entry entry align-left colsep-0 rowsep-0" headers="library-interface__entry__24">Enum</td><td class="- topic/entry entry align-left colsep-0 rowsep-0" headers="library-interface__entry__25">Defines whether the command module is single character or full command read</td></tr><tr class="- topic/row"><td class="- topic/entry entry align-left colsep-0 rowsep-0" headers="library-interface__entry__23">SYS_CMD_INIT</td><td class="- topic/entry entry align-left colsep-0 rowsep-0" headers="library-interface__entry__24">Struct</td><td class="- topic/entry entry align-left colsep-0 rowsep-0" headers="library-interface__entry__25">Identifies the system command initialize structure</td></tr><tr class="- topic/row"><td class="- topic/entry entry align-left colsep-0 rowsep-0" headers="library-interface__entry__23">SYS_CMD_DEVICE_NODE</td><td class="- topic/entry entry align-left colsep-0 rowsep-0" headers="library-interface__entry__24">Struct</td><td class="- topic/entry entry align-left colsep-0 rowsep-0" headers="library-interface__entry__25">Defines the data structure to store each command instance</td></tr><tr class="- topic/row"><td class="- topic/entry entry align-left colsep-0 rowsep-0" headers="library-interface__entry__23">SYS_CMD_FNC</td><td class="- topic/entry entry align-left colsep-0 rowsep-0" headers="library-interface__entry__24">Typedef</td><td class="- topic/entry entry align-left colsep-0 rowsep-0" headers="library-interface__entry__25">Identifies the command process function API</td></tr><tr class="- topic/row"><td class="- topic/entry entry align-left colsep-0 rowsep-0" headers="library-interface__entry__23">SYS_CMD_DESCRIPTOR</td><td class="- topic/entry entry align-left colsep-0 rowsep-0" headers="library-interface__entry__24">Struct</td><td class="- topic/entry entry align-left colsep-0 rowsep-0" headers="library-interface__entry__25">Defines the descriptor structure for a single command process</td></tr></tbody></table></div></div></article></main></div>
+                        
+                        
+                        
+                        
+                        
+                        
+                    </div>
+                    
+                </div>
+            </div>
+            
+            
+            
+        </div> 
+        <footer class="navbar navbar-default wh_footer">
+  <div class=" footer-container mx-auto ">
+    <div class="footer">
+  <div class="mchp-wh-footer">
+    <div class="mchp-footer">
+      <div class="mchp-footer-tier1">
+        <div class="spacer"></div>
+        <div class="mchp-footer-container">
+          <div class="mchp-footer-links mchp-social-media-links">
+            <div class="mchp-component-items">
+              <div class="mchp-component-item">
+                <a class="cmp-image__link" href="https://www.facebook.com/pages/Microchip-Technology-Inc/20320981741" target="_blank">
+                  <img class="cmp-image__image" alt="Microchip Facebook" src="oxygen-webhelp/template/resources/images/201016-corp-facebook.png"/>
+                </a>
+              </div>
+              <div class="mchp-component-item">
+                <a class="cmp-image__link" href="https://www.linkedin.com/company/microchip-technology" target="_blank">
+                  <img class="cmp-image__image" alt="Microchip LinkedIn" src="oxygen-webhelp/template/resources/images/201016-corp-linkedin.png"/>
+                </a>
+              </div>
+              <div class="mchp-component-item">
+                <a class="cmp-image__link" href="https://twitter.com/MicrochipTech" target="_blank">
+                  <img class="cmp-image__image" alt="Microchip Twitter" src="oxygen-webhelp/template/resources/images/201016-corp-twitter.png"/>
+                </a>
+              </div>
+              <div class="mchp-component-item">
+                <a class="cmp-image__link" href="https://www.youtube.com/user/MicrochipTechnology" target="_blank">
+                  <img class="cmp-image__image" alt="Microchip YouTube" src="oxygen-webhelp/template/resources/images/201016-corp-youtube.png"/>
+                </a>
+              </div>
+              <div class="mchp-component-item">
+                <a class="cmp-image__link" href="https://www.instagram.com/microchiptechnologyinc/" target="_blank">
+                  <img class="cmp-image__image" alt="Microchip Instagram" src="oxygen-webhelp/template/resources/images/201016-corp-instagram.png"/>
+                </a>
+              </div>
+              <div class="mchp-component-item">
+                <a class="cmp-image__link" href="https://www.weibo.com/microchiptech" target="_blank">
+                  <img class="cmp-image__image" alt="Microchip Weibo" src="oxygen-webhelp/template/resources/images/201016-corp-weibo.png"/>
+                </a>
+              </div>
+              <div class="mchp-component-item">
+                <a class="cmp-image__link" href="https://www.microchip.com/en-us/about/blog" target="_blank">
+                  <img class="cmp-image__image" alt="Microchip Blog" src="oxygen-webhelp/template/resources/images/201016-corp-blog.png"/>
+                </a>
+              </div>
+            </div>
+          </div>
+          <div class="mchp-footer-links">
+            <div class="mchp-component-items">
+              <div class="mchp-component-item">
+                <div class="link">
+                  <a href="https://www.microchip.com/about-us/contact-us" class="mchp-link__link">Contact</a>
+                  <span class="mchp-link__separator">|</span>
+                </div>
+              </div>
+              <div class="mchp-component-item ">
+                <div class="link">
+                  <a href="https://www.microchip.com/en-us/about/legal-information" class="mchp-link__link">Legal</a>
+                  <span class="mchp-link__separator">|</span>
+                </div>
+              </div>
+              <div class="mchp-component-item ">
+                <div class="link">
+                  <a href="https://www.microchip.com/en-us/about/legal-information/privacy-policy" class="mchp-link__link">Privacy Policy</a>
+                  <span class="mchp-link__separator">|</span>
+                </div>
+              </div>
+              <div class="mchp-component-item ">
+                <div class="link">
+                  <a href="https://www.microchip.com/en-us/about/legal-information/microchip-cookie-statement" class="mchp-link__link">Cookies</a>
+                  <span class="mchp-link__separator">|</span>
+                </div>
+              </div>
+              <div class="mchp-component-item">
+                <div class="link">
+                  <a href="https://careers.microchip.com/" class="mchp-link__link">Careers</a>
+                  <span class="mchp-link__separator"></span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="mchp-footer-newsletter">
+            <div class="cmp-text">
+              <p>Stay on the leading edge with our blog</p>
+            </div>
+            <div class="mchp-button-wrapper">
+              <a role="button" href="https://www.microchip.com/en-us/about/blog" class="mchp-button mchp-button-regular solid">
+                <span class="mchp-button__span">MicroSolutions</span>
+              </a>
+            </div>
+          </div>
+        </div>
+        <div class="graphic">
+          <img src="oxygen-webhelp/template/resources/images/footer-graphic.png"/>
+        </div>
+      </div>
+      <div class="mchp-footer-tier2">
+        <p class="mchp-copyright">© Copyright 1998-2022 Microchip Technology Inc. All rights reserved.</p>
+      </div>
+    </div>
+  </div>
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+  <script async="true" src="https://www.googletagmanager.com/gtag/js?id=UA-2724382-19"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];  
+    function gtag(){dataLayer.push(arguments);}  
+    gtag('js', new Date());   
+    gtag('config', 'UA-2724382-19');
+  </script>
 </div>
-</div>
-<div class="related-links">
-<ul class="ullinks">
-<li class="link ulchildlink"><strong><a href="GUID-FEBFF6DB-5F57-4360-90BF-E9DA46037C99.html">SYS_CMD_Initialize Function</a></strong><br />
-</li>
-<li class="link ulchildlink"><strong><a href="GUID-26B2DB3A-8817-401C-8EA1-BA288827F83C.html">SYS_CMD_ADDGRP Function</a></strong><br />
-</li>
-<li class="link ulchildlink"><strong><a href="GUID-ED55865F-5F73-4D1C-A894-6A26F9893190.html">SYS_CMD_DELETE Function</a></strong><br />
-</li>
-<li class="link ulchildlink"><strong><a href="GUID-05239B51-F3DC-495F-A373-057A692D1CE2.html">SYS_CMD_READY_TO_READ Function</a></strong><br />
-</li>
-<li class="link ulchildlink"><strong><a href="GUID-45D2280C-63E4-48FA-ABAD-450459998A8F.html">SYS_CMD_READY_TO_WRITE Function</a></strong><br />
-</li>
-<li class="link ulchildlink"><strong><a href="GUID-EDAB3999-3E03-4C0B-94B6-066DE78EE636.html">SYS_CMD_Tasks Function</a></strong><br />
-</li>
-<li class="link ulchildlink"><strong><a href="GUID-A4CE28DC-40B2-43C2-949E-69ABD5EFB2DC.html">SYS_CMD_MESSAGE Function</a></strong><br />
-</li>
-<li class="link ulchildlink"><strong><a href="GUID-02B7E5B7-DE83-434E-B5A3-9428923F2D83.html">SYS_CMD_PRINT Function</a></strong><br />
-</li>
-<li class="link ulchildlink"><strong><a href="GUID-3E6B809F-7256-4348-9596-7F338CC62EC5.html">SYS_CMDIO_GET_HANDLE Function</a></strong><br />
-</li>
-<li class="link ulchildlink"><strong><a href="GUID-6979BCB1-F38B-455E-AFBB-FD2A09A823B4.html">SYS_CMDIO_ADD Function</a></strong><br />
-</li>
-<li class="link ulchildlink"><strong><a href="GUID-9A80603D-1A4B-4313-8D69-3C7F8E0CDDF0.html">COMMAND_HISTORY_DEPTH Macro</a></strong><br />
-</li>
-<li class="link ulchildlink"><strong><a href="GUID-B6686A00-4544-4CFB-9F3C-9184AD2E0FDD.html">SYS_CMD_MAX_LENGTH Macro</a></strong><br />
-</li>
-<li class="link ulchildlink"><strong><a href="GUID-918C3149-0EB2-4501-A80D-24BB98E67B5D.html">SYS_CMD_READ_BUFFER_SIZE Macro</a></strong><br />
-</li>
-<li class="link ulchildlink"><strong><a href="GUID-BBAD84DF-1379-41FE-8BE1-9009BDC368AF.html">SYS_CMD_CallbackFunction Typedef</a></strong><br />
-</li>
-<li class="link ulchildlink"><strong><a href="GUID-740C7410-8069-4335-BB33-218D8F8B59F5.html">SYS_CMD_HANDLE Typedef</a></strong><br />
-</li>
-<li class="link ulchildlink"><strong><a href="GUID-FA0DA23C-BCD9-405F-8CC1-C7AE98205FC3.html">SYS_CMD_MSG_FNC Typedef</a></strong><br />
-</li>
-<li class="link ulchildlink"><strong><a href="GUID-1ACA0CDE-BB29-4A7F-AF3D-5461ECE86944.html">SYS_CMD_PRINT_FNC Typedef</a></strong><br />
-</li>
-<li class="link ulchildlink"><strong><a href="GUID-B51DDD56-C465-4676-816B-85FFEE48544C.html">SYS_CMD_PUTC_FNC Typedef</a></strong><br />
-</li>
-<li class="link ulchildlink"><strong><a href="GUID-51492B75-94E3-4BCE-960D-013CB51A2E19.html">SYS_CMD_DATA_RDY_FNC Typedef</a></strong><br />
-</li>
-<li class="link ulchildlink"><strong><a href="GUID-8BCDA47F-4CBC-4405-9F30-4A44B7DE67F3.html">SYS_CMD_GETC_FNC Typedef</a></strong><br />
-</li>
-<li class="link ulchildlink"><strong><a href="GUID-43DF0480-B8AC-4060-B932-0BF78B41CE23.html">SYS_CMD_READC_FNC Typedef</a></strong><br />
-</li>
-<li class="link ulchildlink"><strong><a href="GUID-28219199-6917-43CE-A9D3-0C84F4017C28.html">SYS_CMD_API Struct</a></strong><br />
-</li>
-<li class="link ulchildlink"><strong><a href="GUID-001CDE12-2461-42F4-8F72-783C6EB738D4.html">SYS_CMD_EVENT Enum</a></strong><br />
-</li>
-<li class="link ulchildlink"><strong><a href="GUID-3ABD051F-AA97-4C40-942D-EFC6A16486B8.html">SYS_CMD_CONSOLE_IO_PARAM Enum</a></strong><br />
-</li>
-<li class="link ulchildlink"><strong><a href="GUID-4F58DE9B-B3EE-4108-9290-15F90CC32FB0.html">SYS_CMD_INIT Struct</a></strong><br />
-</li>
-<li class="link ulchildlink"><strong><a href="GUID-F6B65A05-37EC-4CCF-AFC3-0EC2EA264CDB.html">SYS_CMD_DEVICE_NODE Struct</a></strong><br />
-</li>
-<li class="link ulchildlink"><strong><a href="GUID-85B8324A-FF53-4CBB-B687-C6BCE047FEDC.html">SYS_CMD_FNC Typedef</a></strong><br />
-</li>
-<li class="link ulchildlink"><strong><a href="GUID-827592EF-BDE9-4229-9A95-E2F6E8E55AF2.html">SYS_CMD_DESCRIPTOR Struct</a></strong><br />
-</li>
-</ul>
-
-<div class="familylinks">
-<div class="parentlink"><strong>Parent topic:</strong> <a class="link" href="GUID-09F65940-7D05-4F78-81C9-6356B65DEF21.html">Command Processor System Service</a></div>
-</div>
-</div></body>
+  </div>
+</footer>
+        
+        <div id="go2top" class="d-print-none">
+            <span class="oxy-icon oxy-icon-up"></span>
+        </div>
+        
+        <div id="modal_img_large" class="modal">
+            <span class="close oxy-icon oxy-icon-remove"></span>
+            <div id="modal_img_container"></div>
+            <div id="caption"></div>
+        </div>
+        
+        
+        
+    </body>
 </html>

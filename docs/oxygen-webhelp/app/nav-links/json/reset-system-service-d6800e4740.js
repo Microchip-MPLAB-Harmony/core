@@ -1,0 +1,1 @@
+define({"topics":[{"title":"<ph>1.2.10.1<\/ph>\nSYS_RESET_SoftwareReset Function","href":"GUID-B464623F-D8AA-489B-80DB-52B72F040893.html","attributes":{"data-id":"sys-reset-softwarereset-function"},"menu":{"hasChildren":false},"tocID":"sys-reset-softwarereset-function-d6800e4748","topics":[]}]});
