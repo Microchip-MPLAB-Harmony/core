@@ -20,11 +20,17 @@ Same as v3.12.0-E1
 
 ### Development Tools
 
+For CEC173x family of devices:
+
 - [MPLAB® X IDE v6.05](https://www.microchip.com/mplab/mplab-x-ide)
 - [MPLAB® XC32 C/C++ Compiler v4.21](https://www.microchip.com/mplab/compilers)
 - MPLAB® X IDE plug-ins:
   - MPLAB® Code Configurator 5.2.2 or higher
 
+For all other parts:
+
+  - Same as v3.12.0-E1
+  
 ### Notes
 
 -  None
