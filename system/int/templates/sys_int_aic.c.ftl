@@ -60,16 +60,6 @@
 #define INT_InterruptPendingSet     SYS_INT_SourceStatusSet
 #define INT_InterruptPendingClear   SYS_INT_SourceStatusClear
 
-<#if core.CoreArchitecture?matches("ARM926.*")>
-#ifndef CPSR_I_Pos
-#define CPSR_I_Pos      7U
-#endif
-
-#ifndef CPSR_I_Msk
-#define CPSR_I_Msk      (1UL << CPSR_I_Pos)
-#endif
-</#if>
-
 // *****************************************************************************
 // *****************************************************************************
 // Section: Implementation
@@ -77,15 +67,6 @@
 // *****************************************************************************
 
 // private methods *************************************************************
-
-<#if core.CoreArchitecture?matches("ARM926.*")>
-static inline unsigned int __get_CPSR( void )
-{
-    unsigned int value = 0;
-    asm volatile( "MRS %0, cpsr" : "=r"(value) );
-    return value;
-}
-</#if>
 
 static aic_registers_t *
 laicInstanceGet( IRQn_Type aSrcSelection )
