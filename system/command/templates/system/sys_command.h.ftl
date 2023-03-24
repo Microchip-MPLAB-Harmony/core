@@ -72,7 +72,7 @@
 //SYS_CMD_BUFFER_DMA_READY is defined in configuration.h by MHC, this is here in-case MHC is not used
 #ifndef SYS_CMD_BUFFER_DMA_READY
     #define SYS_CMD_BUFFER_DMA_READY //Define this for MX
-    /* #define SYS_CMD_BUFFER_DMA_READY        __attribute__((coherent)) __attribute__((aligned(4))) //Define this for MZ */
+    /* #define SYS_CMD_BUFFER_DMA_READY        __attribute__((coherent)) __attribute__((aligned(4))) */ //Define this for MZ
 #endif
 
 #ifndef SYS_COMMAND_INCLUDE_APIS
@@ -294,13 +294,13 @@ typedef struct
     SYS_CMD_PRINT_FNC print;
 
     // Put single char function API
-    SYS_CMD_PUTC_FNC  putc;
+    SYS_CMD_PUTC_FNC  putc_t;
 
     // Data available API
     SYS_CMD_DATA_RDY_FNC isRdy;
 
     // Get single data API
-    SYS_CMD_GETC_FNC getc;
+    SYS_CMD_GETC_FNC getc_t;
 
 } SYS_CMD_API;
 
@@ -610,6 +610,14 @@ bool    SYS_CMD_READY_TO_READ( void );
 #endif
 
 // *****************************************************************************
+/* MISRA C-2012 Rule 8.6 deviated:1 Deviation record ID -  H3_MISRAC_2012_R_8_6_DR_1 */
+<#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
+<#if core.COMPILER_CHOICE == "XC32">
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wunknown-pragmas"
+</#if>
+#pragma coverity compliance block deviate:1 "MISRA C-2012 Rule 8.6" "H3_MISRAC_2012_R_8_6_DR_1"    
+</#if>
 /* Function:
     bool SYS_CMD_READY_TO_WRITE( void )
 
@@ -638,7 +646,13 @@ bool    SYS_CMD_READY_TO_READ( void );
 bool    SYS_CMD_READY_TO_WRITE( void );
 #endif
 
-
+<#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
+#pragma coverity compliance end_block "MISRA C-2012 Rule 8.6"
+<#if core.COMPILER_CHOICE == "XC32">
+#pragma GCC diagnostic pop
+</#if>    
+</#if>
+/* MISRAC 2012 deviation block end */
 // *****************************************************************************
 /* Function:
     bool SYS_CMD_Tasks( void )
@@ -802,7 +816,7 @@ SYS_CMD_DEVICE_NODE* SYS_CMDIO_GET_HANDLE(short num);
     None.
 */
 #ifdef SYS_CMD_ENABLE
-bool SYS_CMD_DELETE(SYS_CMD_DEVICE_NODE* pDevNode);
+bool SYS_CMD_DELETE(SYS_CMD_DEVICE_NODE* pDeviceNode);
 #endif
 
 
@@ -836,10 +850,7 @@ bool SYS_CMD_DELETE(SYS_CMD_DEVICE_NODE* pDevNode);
     <code>
 
     bool myCmdHandler(const SYS_CMD_DESCRIPTOR* pCmdTbl, SYS_CMD_DEVICE_NODE* pCmdIO, char* cmdBuff, size_t bufSize, void* hParam)
-    {
-        // examine/modify the incoming cmdBuff
-        // return true if the command is completely processed
-        // return false if SYS_CMD needs to process this command
+    {        
         return false;
     }
 
@@ -879,9 +890,7 @@ SYS_CMD_HANDLE  SYS_CMD_CallbackRegister(const SYS_CMD_DESCRIPTOR* pCmdTbl, SYS_
 
   Example:
     <code>
-    SYS_CMD_HANDLE myHandle = SYS_CMD_CallbackRegister(myCmdGroup, myCmdCallback, myParam );
-    // process incoming commands
-    // now we're done with it
+    SYS_CMD_HANDLE myHandle = SYS_CMD_CallbackRegister(myCmdGroup, myCmdCallback, myParam );   
     SYS_CMD_CallbackDeregister(myHandle);
     </code>
 

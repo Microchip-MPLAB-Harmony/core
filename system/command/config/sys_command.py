@@ -237,11 +237,12 @@ def instantiateComponent(commandComponent):
     commandHeaderFile.setMarkup(True)
 
     commandSourceFile = commandComponent.createFileSymbol("SYS_COMMAND_SOURCE", None)
-    commandSourceFile.setSourcePath("system/command/src/sys_command.c")
+    commandSourceFile.setSourcePath("system/command/src/sys_command.c.ftl")
     commandSourceFile.setOutputName("sys_command.c")
     commandSourceFile.setDestPath("system/command/src")
     commandSourceFile.setProjectPath("config/" + configName + "/system/command/")
     commandSourceFile.setType("SOURCE")
+    commandSourceFile.setMarkup(True)
     commandSourceFile.setOverwrite(True)
 
     commandSystemDefFile = commandComponent.createFileSymbol("SYS_CONSOLE_SYS_DEF", None)
