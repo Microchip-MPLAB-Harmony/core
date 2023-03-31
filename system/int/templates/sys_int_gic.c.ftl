@@ -83,7 +83,7 @@ bool SYS_INT_SourceDisable( INT_SOURCE source )
 
     processorStatus = SYS_INT_Disable();
 
-    intSrcStatus = (bool) GIC_GetEnableIRQ(source);
+    intSrcStatus = (GIC_GetEnableIRQ(source) != 0U);
 
     GIC_DisableIRQ( source );
 
