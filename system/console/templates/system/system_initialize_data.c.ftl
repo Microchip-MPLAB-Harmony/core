@@ -2,8 +2,21 @@
 
 <#if SYS_CONSOLE_DEVICE_SET == "UART">
 
-/* Declared in console device implementation (sys_console_uart.c) */
-extern const SYS_CONSOLE_DEV_DESC sysConsoleUARTDevDesc;
+static const SYS_CONSOLE_DEV_DESC sysConsoleUARTDevDesc =
+{
+    .consoleDevice              = SYS_CONSOLE_DEV_USART,
+    .intent                     = DRV_IO_INTENT_READWRITE,
+    .init                       = Console_UART_Initialize,
+    .read_t                       = Console_UART_Read,
+    .readFreeBufferCountGet     = Console_UART_ReadFreeBufferCountGet,
+    .readCountGet               = Console_UART_ReadCountGet,
+    .write_t                      = Console_UART_Write,
+    .writeFreeBufferCountGet    = Console_UART_WriteFreeBufferCountGet,
+    .writeCountGet              = Console_UART_WriteCountGet,
+    .task                       = Console_UART_Tasks,
+    .status                     = Console_UART_Status,
+    .flush                      = Console_UART_Flush,
+};
 
 const SYS_CONSOLE_UART_PLIB_INTERFACE sysConsole${INDEX?string}UARTPlibAPI =
 {
@@ -38,8 +51,22 @@ static uint8_t CACHE_ALIGN sysConsole${INDEX?string}USBCdcWrBuffer[SYS_CONSOLE_U
 static uint8_t sysConsole${INDEX?string}USBCdcRdRingBuffer[SYS_CONSOLE_USB_CDC_RD_BUFFER_SIZE_IDX${INDEX?string}];
 static uint8_t sysConsole${INDEX?string}USBCdcWrRingBuffer[SYS_CONSOLE_USB_CDC_WR_BUFFER_SIZE_IDX${INDEX?string}];
 
-/* Declared in console device implementation (sys_console_usb_cdc.c) */
-extern const SYS_CONSOLE_DEV_DESC sysConsoleUSBCdcDevDesc;
+/* Expose the USB CDC console layer APIs to the Console System Service */
+const SYS_CONSOLE_DEV_DESC sysConsoleUSBCdcDevDesc =
+{
+    .consoleDevice              = SYS_CONSOLE_DEV_USB_CDC,
+    .intent                     = DRV_IO_INTENT_READWRITE,
+    .init                       = Console_USB_CDC_Initialize,
+    .read_t                       = Console_USB_CDC_Read,
+    .readFreeBufferCountGet     = Console_USB_CDC_ReadFreeBufferCountGet,
+    .readCountGet               = Console_USB_CDC_ReadCountGet,
+    .write_t                      = Console_USB_CDC_Write,
+    .writeFreeBufferCountGet    = Console_USB_CDC_WriteFreeBufferCountGet,
+    .writeCountGet              = Console_USB_CDC_WriteCountGet,
+    .task                       = Console_USB_CDC_Tasks,
+    .status                     = Console_USB_CDC_Status,
+    .flush                      = Console_USB_CDC_Flush,
+};
 
 const SYS_CONSOLE_USB_CDC_INIT_DATA sysConsole${INDEX?string}USBCdcInitData =
 {

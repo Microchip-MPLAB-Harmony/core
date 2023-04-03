@@ -58,6 +58,12 @@
 #include "system/system.h"
 #include "driver/driver.h"
 #include "system/console/src/sys_console_local.h"
+<#if SYS_CONSOLE_UART_CONNECTION_COUNTER gt 0>
+#include "src/sys_console_uart.h"
+</#if>
+<#if SYS_CONSOLE_USB_CONNECTION_COUNTER gt 0>
+#include "src/sys_console_usb_cdc.h"
+</#if>
 
 // DOM-IGNORE-BEGIN
 #ifdef __cplusplus
@@ -162,30 +168,6 @@
 </#if>    
 </#if>
 /* MISRAC 2012 deviation block end */
-
-// *****************************************************************************
-/*  Console Status enumeration
-
-  Summary:
-    System Console Status.
-
-  Description:
-    This enumeration lists the current status/state of a system console module 
-
-  Remarks:
-    None.
-*/
-typedef enum
-{
-    SYS_CONSOLE_STATUS_NOT_CONFIGURED,
-
-    SYS_CONSOLE_STATUS_CONFIGURED,
-
-    SYS_CONSOLE_STATUS_BUSY,
-
-    SYS_CONSOLE_STATUS_ERROR
-
-} SYS_CONSOLE_STATUS;
 
 // *****************************************************************************
 /*  Console device enumeration
