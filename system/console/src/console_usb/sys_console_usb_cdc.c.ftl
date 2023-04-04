@@ -81,6 +81,25 @@ static CONS_USB_CDC_DEVICE gConsoleUSBCdcData;
 /* Return the pointer to the USB CDC instance specific data */
 #define CONSOLE_USB_CDC_GET_INSTANCE(index)    ((index) >= (SYS_CONSOLE_USB_CDC_MAX_INSTANCES))? (NULL) : (&gConsoleUSBCdcData.cdcInstance[index])
 
+extern const SYS_CONSOLE_DEV_DESC sysConsoleUSBCdcDevDesc;
+
+/* Expose the USB CDC console layer APIs to the Console System Service */
+const SYS_CONSOLE_DEV_DESC sysConsoleUSBCdcDevDesc =
+{
+    .consoleDevice              = SYS_CONSOLE_DEV_USB_CDC,
+    .intent                     = DRV_IO_INTENT_READWRITE,
+    .init                       = Console_USB_CDC_Initialize,
+    .read_t                       = Console_USB_CDC_Read,
+    .readFreeBufferCountGet     = Console_USB_CDC_ReadFreeBufferCountGet,
+    .readCountGet               = Console_USB_CDC_ReadCountGet,
+    .write_t                      = Console_USB_CDC_Write,
+    .writeFreeBufferCountGet    = Console_USB_CDC_WriteFreeBufferCountGet,
+    .writeCountGet              = Console_USB_CDC_WriteCountGet,
+    .task                       = Console_USB_CDC_Tasks,
+    .status                     = Console_USB_CDC_Status,
+    .flush                      = Console_USB_CDC_Flush,
+};
+
 // *****************************************************************************
 // *****************************************************************************
 // USB CDC Function Event Handler.

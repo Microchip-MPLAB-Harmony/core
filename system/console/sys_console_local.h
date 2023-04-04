@@ -70,30 +70,6 @@ extern "C" {
 
 typedef uintptr_t CONSOLE_DEVICE_INDEX;
 
-// *****************************************************************************
-/*  Console Status enumeration
-
-  Summary:
-    System Console Status.
-
-  Description:
-    This enumeration lists the current status/state of a system console module 
-
-  Remarks:
-    None.
-*/
-typedef enum
-{
-    SYS_CONSOLE_STATUS_NOT_CONFIGURED,
-
-    SYS_CONSOLE_STATUS_CONFIGURED,
-
-    SYS_CONSOLE_STATUS_BUSY,
-
-    SYS_CONSOLE_STATUS_ERROR
-
-} SYS_CONSOLE_STATUS;
-
 //DOM-IGNORE-BEGIN
 #ifdef __cplusplus
 }
