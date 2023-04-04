@@ -380,7 +380,7 @@ typedef enum
 
     DRV_SDSPI_CMD_DETECT_WAIT_POLL_TIMER_EXPIRY,
 
-    DRV_SDSPI_CMD_DETECT_CHECK_FOR_CARD,
+    DRV_SDSPI_CMD_DETECT_CHK_FOR_CARD,
 
     /* Check whether the card has been detached. */
     DRV_SDSPI_CMD_DETECT_CHECK_FOR_DETACH

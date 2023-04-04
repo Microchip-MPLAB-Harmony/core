@@ -1327,9 +1327,9 @@ static DRV_SDSPI_ATTACH lDRV_SDSPI_MediaCommandDetect ( SYS_MODULE_OBJ object )
 <#if DRV_SDSPI_INTERFACE_TYPE == "SPI_PLIB">
             (void) DRV_SDSPI_SPISpeedSetup(dObj, DRV_SDSPI_SPI_INITIAL_SPEED);
 </#if>
-            dObj->cmdDetectState = DRV_SDSPI_CMD_DETECT_CHECK_FOR_CARD;
+            dObj->cmdDetectState = DRV_SDSPI_CMD_DETECT_CHK_FOR_CARD;
             /* Fall through */
-        case DRV_SDSPI_CMD_DETECT_CHECK_FOR_CARD:
+        case DRV_SDSPI_CMD_DETECT_CHK_FOR_CARD:
 
             if (lDRV_SDSPI_SendInitClockPulses(dObj) == true)
             {

@@ -910,7 +910,7 @@ static DRV_SDSPI_ATTACH lDRV_SDSPI_MediaCommandDetect
             if (DRV_SDSPI_SPISpeedSetup(dObj, DRV_SDSPI_SPI_INITIAL_SPEED, dObj->chipSelectPin) == true)
 </#if>
             {
-                dObj->cmdDetectState = DRV_SDSPI_CMD_DETECT_CHECK_FOR_CARD;
+                dObj->cmdDetectState = DRV_SDSPI_CMD_DETECT_CHK_FOR_CARD;
             }
             else
             {
@@ -918,7 +918,7 @@ static DRV_SDSPI_ATTACH lDRV_SDSPI_MediaCommandDetect
             }
             break;
 
-        case DRV_SDSPI_CMD_DETECT_CHECK_FOR_CARD:
+        case DRV_SDSPI_CMD_DETECT_CHK_FOR_CARD:
 
             /* Send CMD0 to reset the media. If the card is physically present,
                then we should get a valid response. Toggle chip select, to make
@@ -969,7 +969,7 @@ static DRV_SDSPI_ATTACH lDRV_SDSPI_MediaCommandDetect
                 /* Re-enable Chip Select */
                 (void) DRV_SDSPI_SPISpeedSetup(dObj, DRV_SDSPI_SPI_INITIAL_SPEED, dObj->chipSelectPin);
 </#if>
-                dObj->cmdDetectState = DRV_SDSPI_CMD_DETECT_CHECK_FOR_CARD;
+                dObj->cmdDetectState = DRV_SDSPI_CMD_DETECT_CHK_FOR_CARD;
                 dObj->sdState = TASK_STATE_IDLE;
             }
             else
@@ -989,7 +989,7 @@ static DRV_SDSPI_ATTACH lDRV_SDSPI_MediaCommandDetect
                 if (dObj->cmdResponse.response1.byte != CMD_R1_END_BIT_SET)
                 {
                     /* Assuming that the card is not present. */
-                    dObj->cmdDetectState = DRV_SDSPI_CMD_DETECT_CHECK_FOR_CARD;
+                    dObj->cmdDetectState = DRV_SDSPI_CMD_DETECT_CHK_FOR_CARD;
                 }
                 else
                 {
@@ -1000,7 +1000,7 @@ static DRV_SDSPI_ATTACH lDRV_SDSPI_MediaCommandDetect
             else if (dObj->cmdState == DRV_SDSPI_CMD_EXEC_ERROR)
             {
                 dObj->sdState = TASK_STATE_IDLE;
-                dObj->cmdDetectState = DRV_SDSPI_CMD_DETECT_CHECK_FOR_CARD;
+                dObj->cmdDetectState = DRV_SDSPI_CMD_DETECT_CHK_FOR_CARD;
             }
             else
             {
@@ -1022,16 +1022,16 @@ static DRV_SDSPI_ATTACH lDRV_SDSPI_MediaCommandDetect
                 if (DRV_SDSPI_SPIExclusiveAccess(dObj, true) == true)
                 {
                     dObj->sdState = TASK_STATE_CARD_STATUS;
-                    dObj->cmdDetectState = DRV_SDSPI_CMD_DETECT_CHECK_FOR_CMD_SEND;
+                    dObj->cmdDetectState = DRV_SDSPI_CMD_DETECT_CHK_FOR_CMD_SEND;
                 }
                 <#else>
                 dObj->sdState = TASK_STATE_CARD_STATUS;
-                dObj->cmdDetectState = DRV_SDSPI_CMD_DETECT_CHECK_FOR_CMD_SEND;
+                dObj->cmdDetectState = DRV_SDSPI_CMD_DETECT_CHK_FOR_CMD_SEND;
                 </#if>
             }
             break;
 
-        case DRV_SDSPI_CMD_DETECT_CHECK_FOR_CMD_SEND:
+        case DRV_SDSPI_CMD_DETECT_CHK_FOR_CMD_SEND:
 
             /* Here the default state of the card is attached */
             cardStatus = DRV_SDSPI_IS_ATTACHED;
@@ -1049,14 +1049,14 @@ static DRV_SDSPI_ATTACH lDRV_SDSPI_MediaCommandDetect
                 else
                 {
                     dObj->sdState = TASK_STATE_IDLE;
-                    dObj->cmdDetectState = DRV_SDSPI_CMD_DETECT_CHECK_FOR_CARD;
+                    dObj->cmdDetectState = DRV_SDSPI_CMD_DETECT_CHK_FOR_CARD;
                     cardStatus = DRV_SDSPI_IS_DETACHED;
                 }
             }
             else if (dObj->cmdState == DRV_SDSPI_CMD_EXEC_ERROR)
             {
                 dObj->sdState = TASK_STATE_IDLE;
-                dObj->cmdDetectState = DRV_SDSPI_CMD_DETECT_CHECK_FOR_CARD;
+                dObj->cmdDetectState = DRV_SDSPI_CMD_DETECT_CHK_FOR_CARD;
                 cardStatus = DRV_SDSPI_IS_DETACHED;
             }
             else
@@ -1081,7 +1081,7 @@ static DRV_SDSPI_ATTACH lDRV_SDSPI_MediaCommandDetect
             else
             {
                 dObj->sdState = TASK_STATE_IDLE;
-                dObj->cmdDetectState = DRV_SDSPI_CMD_DETECT_CHECK_FOR_CARD;
+                dObj->cmdDetectState = DRV_SDSPI_CMD_DETECT_CHK_FOR_CARD;
                 cardStatus = DRV_SDSPI_IS_DETACHED;
             }
             break;
@@ -1100,14 +1100,14 @@ static DRV_SDSPI_ATTACH lDRV_SDSPI_MediaCommandDetect
                 }
                 else
                 {
-                    dObj->cmdDetectState = DRV_SDSPI_CMD_DETECT_CHECK_FOR_CARD;
+                    dObj->cmdDetectState = DRV_SDSPI_CMD_DETECT_CHK_FOR_CARD;
                     cardStatus = DRV_SDSPI_IS_DETACHED;
                 }
             }
             else if (dObj->spiTransferStatus == DRV_SDSPI_SPI_TRANSFER_STATUS_ERROR)
             {
                 dObj->sdState = TASK_STATE_IDLE;
-                dObj->cmdDetectState = DRV_SDSPI_CMD_DETECT_CHECK_FOR_CARD;
+                dObj->cmdDetectState = DRV_SDSPI_CMD_DETECT_CHK_FOR_CARD;
                 cardStatus = DRV_SDSPI_IS_DETACHED;
             }
             else
