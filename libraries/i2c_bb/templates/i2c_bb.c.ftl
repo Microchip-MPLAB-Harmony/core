@@ -296,7 +296,10 @@ static void ${I2CBB_INSTANCE_NAME}_tasks(void)
             (${I2CBB_INSTANCE_NAME?lower_case}Obj.I2CSWCounter > 0U) &&
             (${I2CBB_INSTANCE_NAME?lower_case}Obj.readSize > 0U)) {
             ${I2CBB_INSTANCE_NAME?lower_case}Obj.I2CReadData <<= 1;
-            ${I2CBB_INSTANCE_NAME?lower_case}Obj.I2CReadData |= (uint16_t)SYS_PORT_PinRead(pInitData->i2cbbSDAPin);
+            if (SYS_PORT_PinRead(pInitData->i2cbbSDAPin))
+            {
+                ${I2CBB_INSTANCE_NAME?lower_case}Obj.I2CReadData |= 0x01U;
+            }
           }
           if (${I2CBB_INSTANCE_NAME?lower_case}Obj.I2CSWCounter == 0U) {
 <#if I2C_INCLUDE_FORCED_WRITE_API == false>
