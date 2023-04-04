@@ -95,7 +95,7 @@ typedef enum
     SYS_DMA_CHANNEL_${i},
 </#list>
 </#if>
-    SYS_DMA_CHANNEL_NONE = -1
+    SYS_DMA_CHANNEL_NONE = 0xFFFFFFFFU
 
 } SYS_DMA_CHANNEL;
 

@@ -93,6 +93,8 @@ typedef enum
 </#list>
 </#if>    
 
+    SYS_DMA_CHANNEL_NONE = 0xFFFFFFFFU
+
 } SYS_DMA_CHANNEL;
 
 // *****************************************************************************
