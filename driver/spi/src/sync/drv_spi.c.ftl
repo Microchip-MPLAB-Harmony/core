@@ -1004,7 +1004,7 @@ bool DRV_SPI_WriteReadTransfer(const DRV_HANDLE handle,
                 dObj->pTransmitData = pTransmitData;
 </#if>
 
-                if (lDRV_SPI_DriverHandleValidate(dObj, pTransmitData, txSize, pReceiveData, rxSize) == true)
+                if (lDRV_SPI_StartDMATransfer(dObj, pTransmitData, txSize, pReceiveData, rxSize) == true)
                 {
                     isTransferInProgress = true;
                 }
