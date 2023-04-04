@@ -283,7 +283,7 @@ static MEMORY_DEVICE_TRANSFER_STATUS DRV_MEMORY_HandleRead
     uint32_t nBlocks
 )
 {
-    uint32_t transferStatus = (uint32_t)MEMORY_DEVICE_TRANSFER_ERROR_UNKNOWN;
+    MEMORY_DEVICE_TRANSFER_STATUS transferStatus = MEMORY_DEVICE_TRANSFER_ERROR_UNKNOWN;
     uint32_t address = 0;
 
     switch (dObj->readState)
@@ -301,7 +301,7 @@ static MEMORY_DEVICE_TRANSFER_STATUS DRV_MEMORY_HandleRead
             if (dObj->memoryDevice->Read(dObj->memDevHandle, (void *)data, nBlocks, address) == true)
             {
                 dObj->readState = DRV_MEMORY_READ_MEM_STATUS;
-                transferStatus = (uint32_t)MEMORY_DEVICE_TRANSFER_BUSY;
+                transferStatus = MEMORY_DEVICE_TRANSFER_BUSY;
                 /* Fall through For immediate check */
             }
             else
@@ -318,7 +318,7 @@ static MEMORY_DEVICE_TRANSFER_STATUS DRV_MEMORY_HandleRead
         }
     }
 
-    return ((MEMORY_DEVICE_TRANSFER_STATUS)transferStatus);
+    return transferStatus;
 }
 
 static MEMORY_DEVICE_TRANSFER_STATUS DRV_MEMORY_HandleWrite
@@ -329,7 +329,7 @@ static MEMORY_DEVICE_TRANSFER_STATUS DRV_MEMORY_HandleWrite
     uint32_t nBlocks
 )
 {
-    uint32_t transferStatus = (uint32_t)MEMORY_DEVICE_TRANSFER_ERROR_UNKNOWN;
+    MEMORY_DEVICE_TRANSFER_STATUS transferStatus = MEMORY_DEVICE_TRANSFER_ERROR_UNKNOWN;
 
     switch (dObj->writeState)
     {
@@ -350,7 +350,7 @@ static MEMORY_DEVICE_TRANSFER_STATUS DRV_MEMORY_HandleWrite
             if (dObj->memoryDevice->PageWrite(dObj->memDevHandle, (void *)dObj->writePtr, dObj->blockAddress) == true)
             {
                 dObj->writeState = DRV_MEMORY_WRITE_MEM_STATUS;
-                transferStatus = (uint32_t)MEMORY_DEVICE_TRANSFER_BUSY;
+                transferStatus = MEMORY_DEVICE_TRANSFER_BUSY;
                 /* Fall through For immediate check */
             }
             else
@@ -364,7 +364,7 @@ static MEMORY_DEVICE_TRANSFER_STATUS DRV_MEMORY_HandleWrite
         {
             transferStatus = dObj->memoryDevice->TransferStatusGet(dObj->memDevHandle);
 
-            if (transferStatus == (uint32_t)MEMORY_DEVICE_TRANSFER_COMPLETED)
+            if (transferStatus == MEMORY_DEVICE_TRANSFER_COMPLETED)
             {
                 dObj->nBlocks--;
 
@@ -375,7 +375,7 @@ static MEMORY_DEVICE_TRANSFER_STATUS DRV_MEMORY_HandleWrite
                     dObj->writePtr += dObj->writeBlockSize;
 
                     dObj->writeState = DRV_MEMORY_WRITE_MEM;
-                    transferStatus = (uint32_t)MEMORY_DEVICE_TRANSFER_BUSY;
+                    transferStatus = MEMORY_DEVICE_TRANSFER_BUSY;
                 }
             }
 
@@ -383,7 +383,7 @@ static MEMORY_DEVICE_TRANSFER_STATUS DRV_MEMORY_HandleWrite
         }
     }
 
-    return ((MEMORY_DEVICE_TRANSFER_STATUS)transferStatus);
+    return transferStatus;
 }
 
 static MEMORY_DEVICE_TRANSFER_STATUS DRV_MEMORY_HandleErase
@@ -394,7 +394,7 @@ static MEMORY_DEVICE_TRANSFER_STATUS DRV_MEMORY_HandleErase
     uint32_t nBlocks
 )
 {
-    uint32_t transferStatus = (uint32_t)MEMORY_DEVICE_TRANSFER_ERROR_UNKNOWN;
+    MEMORY_DEVICE_TRANSFER_STATUS transferStatus = MEMORY_DEVICE_TRANSFER_ERROR_UNKNOWN;
 
     switch (dObj->eraseState)
     {
@@ -413,7 +413,7 @@ static MEMORY_DEVICE_TRANSFER_STATUS DRV_MEMORY_HandleErase
             if (dObj->memoryDevice->SectorErase(dObj->memDevHandle, dObj->blockAddress) == true)
             {
                 dObj->eraseState = DRV_MEMORY_ERASE_CMD_STATUS;
-                transferStatus = (uint32_t)MEMORY_DEVICE_TRANSFER_BUSY;
+                transferStatus = MEMORY_DEVICE_TRANSFER_BUSY;
                 /* Fall through For immediate check */
             }
             else
@@ -427,7 +427,7 @@ static MEMORY_DEVICE_TRANSFER_STATUS DRV_MEMORY_HandleErase
         {
             transferStatus = dObj->memoryDevice->TransferStatusGet(dObj->memDevHandle);
 
-            if (transferStatus == (uint32_t)MEMORY_DEVICE_TRANSFER_COMPLETED)
+            if (transferStatus == MEMORY_DEVICE_TRANSFER_COMPLETED)
             {
                 dObj->nBlocks--;
 
@@ -437,7 +437,7 @@ static MEMORY_DEVICE_TRANSFER_STATUS DRV_MEMORY_HandleErase
                     dObj->blockAddress += dObj->eraseBlockSize;
 
                     dObj->eraseState = DRV_MEMORY_ERASE_CMD;
-                    transferStatus = (uint32_t)MEMORY_DEVICE_TRANSFER_BUSY;
+                    transferStatus = MEMORY_DEVICE_TRANSFER_BUSY;
                 }
             }
 
@@ -445,7 +445,7 @@ static MEMORY_DEVICE_TRANSFER_STATUS DRV_MEMORY_HandleErase
         }
     }
 
-    return ((MEMORY_DEVICE_TRANSFER_STATUS)transferStatus);
+    return transferStatus;
 }
 
 static MEMORY_DEVICE_TRANSFER_STATUS DRV_MEMORY_HandleEraseWrite
@@ -460,7 +460,7 @@ static MEMORY_DEVICE_TRANSFER_STATUS DRV_MEMORY_HandleEraseWrite
     uint8_t pagesPerSector = (uint8_t)(dObj->eraseBlockSize / dObj->writeBlockSize);
     uint32_t readBlockStart = 0;
 
-    uint32_t transferStatus = (uint32_t)MEMORY_DEVICE_TRANSFER_ERROR_UNKNOWN;
+    MEMORY_DEVICE_TRANSFER_STATUS transferStatus = MEMORY_DEVICE_TRANSFER_ERROR_UNKNOWN;
 
     switch (dObj->ewState)
     {
@@ -493,7 +493,7 @@ static MEMORY_DEVICE_TRANSFER_STATUS DRV_MEMORY_HandleEraseWrite
                 dObj->writePtr = bufferObj->buffer;
                 dObj->ewState = DRV_MEMORY_EW_ERASE_SECTOR;
 
-                transferStatus = (uint32_t)MEMORY_DEVICE_TRANSFER_BUSY;
+                transferStatus = MEMORY_DEVICE_TRANSFER_BUSY;
 
                 break;
             }
@@ -505,9 +505,9 @@ static MEMORY_DEVICE_TRANSFER_STATUS DRV_MEMORY_HandleEraseWrite
         {
             readBlockStart = (dObj->sectorNumber * dObj->eraseBlockSize);
 
-            transferStatus = (uint32_t)DRV_MEMORY_HandleRead (dObj, dObj->ewBuffer, readBlockStart, dObj->eraseBlockSize);
+            transferStatus = DRV_MEMORY_HandleRead (dObj, dObj->ewBuffer, readBlockStart, dObj->eraseBlockSize);
 
-            if (transferStatus == (uint32_t)MEMORY_DEVICE_TRANSFER_COMPLETED)
+            if (transferStatus == MEMORY_DEVICE_TRANSFER_COMPLETED)
             {
                 /* Find the offset from which the data is to be overlaid. */
                 dObj->blockOffsetInSector *= dObj->writeBlockSize;
@@ -516,7 +516,7 @@ static MEMORY_DEVICE_TRANSFER_STATUS DRV_MEMORY_HandleEraseWrite
 
                 dObj->ewState = DRV_MEMORY_EW_ERASE_SECTOR;
 
-                transferStatus = (uint32_t)MEMORY_DEVICE_TRANSFER_BUSY;
+                transferStatus = MEMORY_DEVICE_TRANSFER_BUSY;
 
                 /* Fall through for Erase operation. */
             }
@@ -528,21 +528,21 @@ static MEMORY_DEVICE_TRANSFER_STATUS DRV_MEMORY_HandleEraseWrite
 
         case DRV_MEMORY_EW_ERASE_SECTOR:
         {
-            transferStatus = (uint32_t)DRV_MEMORY_HandleErase(dObj, NULL, dObj->sectorNumber, 1);
-            if (transferStatus == (uint32_t)MEMORY_DEVICE_TRANSFER_COMPLETED)
+            transferStatus = DRV_MEMORY_HandleErase(dObj, NULL, dObj->sectorNumber, 1);
+            if (transferStatus == MEMORY_DEVICE_TRANSFER_COMPLETED)
             {
                 dObj->ewState = DRV_MEMORY_EW_WRITE_SECTOR;
 
-                transferStatus = (uint32_t)MEMORY_DEVICE_TRANSFER_BUSY;
+                transferStatus = MEMORY_DEVICE_TRANSFER_BUSY;
             }
             break;
         }
 
         case DRV_MEMORY_EW_WRITE_SECTOR:
         {
-            transferStatus = (uint32_t)DRV_MEMORY_HandleWrite (dObj, dObj->writePtr, dObj->sectorNumber * pagesPerSector, pagesPerSector);
+            transferStatus = DRV_MEMORY_HandleWrite (dObj, dObj->writePtr, dObj->sectorNumber * pagesPerSector, pagesPerSector);
 
-            if (transferStatus == (uint32_t)MEMORY_DEVICE_TRANSFER_COMPLETED)
+            if (transferStatus == MEMORY_DEVICE_TRANSFER_COMPLETED)
             {
                 if ((bufferObj->nBlocks - dObj->nBlocksToWrite) == 0U)
                 {
@@ -557,14 +557,14 @@ static MEMORY_DEVICE_TRANSFER_STATUS DRV_MEMORY_HandleEraseWrite
                 bufferObj->buffer += (dObj->nBlocksToWrite * dObj->writeBlockSize);
                 dObj->ewState = DRV_MEMORY_EW_INIT;
 
-                transferStatus = (uint32_t)MEMORY_DEVICE_TRANSFER_BUSY;
+                transferStatus = MEMORY_DEVICE_TRANSFER_BUSY;
             }
 
             break;
         }
     }
 
-    return ((MEMORY_DEVICE_TRANSFER_STATUS)transferStatus);
+    return transferStatus;
 }
 /* MISRA C-2012 Rule 10.4 deviated below. False Positive record ID -  H3_MISRAC_2012_R_10_4_DR_1 */
 <#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
