@@ -195,6 +195,7 @@ def instantiateComponent(sst39Component):
     sst39SourceFile.setDestPath("driver/sst39/src/")
     sst39SourceFile.setProjectPath("config/" + configName + "/driver/sst39/")
     sst39SourceFile.setType("SOURCE")
+    sst39SourceFile.setMarkup(True)
     sst39SourceFile.setOverwrite(True)
 
     # System Template Files

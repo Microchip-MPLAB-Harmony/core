@@ -78,11 +78,11 @@
     None.
 */
 
-/* Pointer to 8-bit write data to SST39 memory interface. */
-typedef void (* DRV_SST39_PLIB_WRITE)(uint32_t, uint8_t);
+/* Pointer to 8-bit write_t data to SST39 memory interface. */
+typedef void (* DRV_SST39_PLIB_WRITE)(uint32_t dataAddress, uint8_t data);
 
-/* Pointer to 8-bit read data to SST39 memory interface. */
-typedef uint8_t (* DRV_SST39_PLIB_READ)(uint32_t);
+/* Pointer to 8-bit read_t data to SST39 memory interface. */
+typedef uint8_t (* DRV_SST39_PLIB_READ)(uint32_t dataAddress);
 
 /* Pointer to disable ECC to SST39 memory interface. */
 typedef bool (* DRV_SST39_PLIB_ECC_DISABLE)(uint8_t chipSelect);
@@ -93,10 +93,10 @@ typedef bool (* DRV_SST39_PLIB_ECC_ENABLE)(uint8_t chipSelect);
 typedef struct
 {
     /* SST39 PLIB write API */
-    DRV_SST39_PLIB_WRITE                     write;
+    DRV_SST39_PLIB_WRITE                     write_t;
 
     /* SST39 PLIB read API */
-    DRV_SST39_PLIB_READ                      read;
+    DRV_SST39_PLIB_READ                      read_t;
 
     /* SST39 PLIB Disable ECC API */
     DRV_SST39_PLIB_ECC_DISABLE               eccDisable;

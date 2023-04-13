@@ -68,7 +68,8 @@ static DRV_SST39_OBJECT *dObj = &gDrvSST39Obj;
 bool DRV_SST39_ReadProductId( const DRV_HANDLE handle, uint8_t* manufacturer, uint8_t* device )
 {
     bool status = false;
-    uint8_t isCacheEnabled = (DATA_CACHE_IS_ENABLED() != 0U);
+    bool cacheCheck = (DATA_CACHE_IS_ENABLED() != 0U);
+    uint8_t isCacheEnabled = (uint8_t)cacheCheck;
     bool isEccEnabled = false;
 
     if(handle == DRV_HANDLE_INVALID)
@@ -79,37 +80,43 @@ bool DRV_SST39_ReadProductId( const DRV_HANDLE handle, uint8_t* manufacturer, ui
     /* Disable ECC for PROM commands write if enabled */
     isEccEnabled = dObj->sst39Plib->eccDisable((uint8_t)DRV_SST39_CHIP_SELECT);
 
-    if (isCacheEnabled)
+    if (isCacheEnabled != 0U)
+    {
         DCACHE_DISABLE();
+    }
 
-    dObj->sst39Plib->write(DRV_SST39_START_ADDRESS+0x5555U, 0xAAU);
+    dObj->sst39Plib->write_t(DRV_SST39_START_ADDRESS+0x5555U, 0xAAU);
     __DSB();
     __ISB();
-    dObj->sst39Plib->write(DRV_SST39_START_ADDRESS+0x2AAAU, 0x55U);
+    dObj->sst39Plib->write_t(DRV_SST39_START_ADDRESS+0x2AAAU, 0x55U);
     __DSB();
     __ISB();
-    dObj->sst39Plib->write(DRV_SST39_START_ADDRESS+0x5555U, 0x90U);
+    dObj->sst39Plib->write_t(DRV_SST39_START_ADDRESS+0x5555U, 0x90U);
     __DSB();
     __ISB();
 
     /* Read ID */
     
-    *manufacturer = dObj->sst39Plib->read(DRV_SST39_START_ADDRESS);
-    *device = dObj->sst39Plib->read(DRV_SST39_START_ADDRESS+1);
+    *manufacturer = dObj->sst39Plib->read_t(DRV_SST39_START_ADDRESS);
+    *device = dObj->sst39Plib->read_t(DRV_SST39_START_ADDRESS+1U);
 
     __DSB();
     __ISB();
 
-    dObj->sst39Plib->write(DRV_SST39_START_ADDRESS+0x5555U, 0xF0U);
+    dObj->sst39Plib->write_t(DRV_SST39_START_ADDRESS+0x5555U, 0xF0U);
     __DSB();
     __ISB();
 
-    if (isCacheEnabled)
+    if (isCacheEnabled != 0U)
+    {
         DCACHE_ENABLE();
+    }
 
     /* Enable back ECC if it was disabled */
     if (isEccEnabled)
-        dObj->sst39Plib->eccEnable((uint8_t)DRV_SST39_CHIP_SELECT);
+    {
+        (void) dObj->sst39Plib->eccEnable((uint8_t)DRV_SST39_CHIP_SELECT);
+    }
 
     status = true;
  
@@ -129,7 +136,7 @@ bool DRV_SST39_Read( const DRV_HANDLE handle, void *rx_data, uint32_t rx_data_le
 
     for (i=0; i<rx_data_length; i++)
     {
-        pBuffer[i] = dObj->sst39Plib->read(address+i);
+        pBuffer[i] = dObj->sst39Plib->read_t(address+i);
     }
 
     status = true;
@@ -140,7 +147,8 @@ bool DRV_SST39_Read( const DRV_HANDLE handle, void *rx_data, uint32_t rx_data_le
 bool DRV_SST39_PageWrite( const DRV_HANDLE handle, void *tx_data, uint32_t address )
 {
     bool status = false;
-    uint8_t isCacheEnabled = (DATA_CACHE_IS_ENABLED() != 0U);
+    bool cacheCheck = (DATA_CACHE_IS_ENABLED() != 0U);
+    uint8_t isCacheEnabled = (uint8_t)cacheCheck;
     uint32_t index = 0U;
     uint8_t* pBuffer = (uint8_t*)tx_data;
     uint8_t readData = 0U;
@@ -154,39 +162,45 @@ bool DRV_SST39_PageWrite( const DRV_HANDLE handle, void *tx_data, uint32_t addre
     /* Disable ECC for PROM commands write if enabled */
     isEccEnabled = dObj->sst39Plib->eccDisable((uint8_t)DRV_SST39_CHIP_SELECT);
 
-    if (isCacheEnabled)
+    if (isCacheEnabled != 0U)
+    {
         DCACHE_DISABLE();
+    }
 
     for (index=0;index<DRV_SST39_PAGE_SIZE;index++)
     {
         /* Send Program Byte command */
-        dObj->sst39Plib->write(DRV_SST39_START_ADDRESS+0x5555U, 0xAAU);
+        dObj->sst39Plib->write_t(DRV_SST39_START_ADDRESS+0x5555U, 0xAAU);
         __DSB();
         __ISB();
-        dObj->sst39Plib->write(DRV_SST39_START_ADDRESS+0x2AAAU, 0x55U);
+        dObj->sst39Plib->write_t(DRV_SST39_START_ADDRESS+0x2AAAU, 0x55U);
         __DSB();
         __ISB();
-        dObj->sst39Plib->write(DRV_SST39_START_ADDRESS+0x5555U, 0xA0U);
+        dObj->sst39Plib->write_t(DRV_SST39_START_ADDRESS+0x5555U, 0xA0U);
         __DSB();
         __ISB();
-         dObj->sst39Plib->write(address+index, pBuffer[index]);
+         dObj->sst39Plib->write_t(address+index, pBuffer[index]);
         __DSB();
         __ISB();
     
         /* Wait Program Byte by polling bit DQ7 */
         do
         {
-            readData = dObj->sst39Plib->read(address+index);
+            readData = dObj->sst39Plib->read_t(address+index);
         }
         while ( (readData & 0x80U) != (pBuffer[index] & 0x80U) );
     }
 
-    if (isCacheEnabled)
+    if (isCacheEnabled != 0U)
+    {
         DCACHE_ENABLE();
+    }
 
     /* Enable back ECC if it was disabled */
     if (isEccEnabled)
-        dObj->sst39Plib->eccEnable((uint8_t)DRV_SST39_CHIP_SELECT);
+    {
+        (void) dObj->sst39Plib->eccEnable((uint8_t)DRV_SST39_CHIP_SELECT);
+    }
 
     status = true;
 
@@ -195,7 +209,8 @@ bool DRV_SST39_PageWrite( const DRV_HANDLE handle, void *tx_data, uint32_t addre
 
 bool DRV_SST39_SectorErase( const DRV_HANDLE handle, uint32_t address )
 {
-    uint8_t isCacheEnabled = (DATA_CACHE_IS_ENABLED() != 0U);
+    bool cacheCheck = (DATA_CACHE_IS_ENABLED() != 0U);
+    uint8_t isCacheEnabled = (uint8_t)cacheCheck;
     uint8_t readData = 0U;
     bool isEccEnabled = false;
 
@@ -207,49 +222,56 @@ bool DRV_SST39_SectorErase( const DRV_HANDLE handle, uint32_t address )
     /* Disable ECC for PROM commands write if enabled */
     isEccEnabled = dObj->sst39Plib->eccDisable((uint8_t)DRV_SST39_CHIP_SELECT);
  
-    if (isCacheEnabled)
+    if (isCacheEnabled != 0U)
+    {
         DCACHE_DISABLE();
+    }
 
     /* Send Chip erase command */
-    dObj->sst39Plib->write(DRV_SST39_START_ADDRESS+0x5555U, 0xAAU);
+    dObj->sst39Plib->write_t(DRV_SST39_START_ADDRESS+0x5555U, 0xAAU);
     __DSB();
     __ISB();
-    dObj->sst39Plib->write(DRV_SST39_START_ADDRESS+0x2AAAU, 0x55U);
+    dObj->sst39Plib->write_t(DRV_SST39_START_ADDRESS+0x2AAAU, 0x55U);
     __DSB();
     __ISB();
-    dObj->sst39Plib->write(DRV_SST39_START_ADDRESS+0x5555U, 0x80U);
+    dObj->sst39Plib->write_t(DRV_SST39_START_ADDRESS+0x5555U, 0x80U);
     __DSB();
     __ISB();
-    dObj->sst39Plib->write(DRV_SST39_START_ADDRESS+0x5555U, 0xAAU);
+    dObj->sst39Plib->write_t(DRV_SST39_START_ADDRESS+0x5555U, 0xAAU);
     __DSB();
     __ISB();
-    dObj->sst39Plib->write(DRV_SST39_START_ADDRESS+0x2AAAU, 0x55U);
+    dObj->sst39Plib->write_t(DRV_SST39_START_ADDRESS+0x2AAAU, 0x55U);
     __DSB();
     __ISB();
-    dObj->sst39Plib->write(address, 0x30U);
+    dObj->sst39Plib->write_t(address, 0x30U);
     __DSB();
     __ISB();
     
     /* Wait Erase by polling bit DQ7 */
     do
     {
-        readData = dObj->sst39Plib->read(address);
+        readData = dObj->sst39Plib->read_t(address);
     }
     while ( (readData & 0x80U) == 0x00U );
 
-    if (isCacheEnabled)
+    if (isCacheEnabled != 0U)
+    {
         DCACHE_ENABLE();
+    }
 
     /* Enable back ECC if it was disabled */
     if (isEccEnabled)
-        dObj->sst39Plib->eccEnable((uint8_t)DRV_SST39_CHIP_SELECT);
+    {
+        (void) dObj->sst39Plib->eccEnable((uint8_t)DRV_SST39_CHIP_SELECT);
+    }
 
     return true;
 }
 
 bool DRV_SST39_ChipErase( const DRV_HANDLE handle )
 {
-    uint8_t isCacheEnabled = (DATA_CACHE_IS_ENABLED() != 0);
+    bool cacheCheck = (DATA_CACHE_IS_ENABLED() != 0U);
+    uint8_t isCacheEnabled = (uint8_t)cacheCheck;
     uint8_t readData = 0;
     bool isEccEnabled = false;
 
@@ -261,59 +283,70 @@ bool DRV_SST39_ChipErase( const DRV_HANDLE handle )
     /* Disable ECC for PROM commands write if enabled */
     isEccEnabled = dObj->sst39Plib->eccDisable((uint8_t)DRV_SST39_CHIP_SELECT);
 
-    if (isCacheEnabled)
+    if (isCacheEnabled != 0U)
+    {
         DCACHE_DISABLE();
+    }
 
     /* Send Chip erase command */
-    dObj->sst39Plib->write(DRV_SST39_START_ADDRESS+0x5555U, 0xAAU);
+    dObj->sst39Plib->write_t(DRV_SST39_START_ADDRESS+0x5555U, 0xAAU);
     __DSB();
     __ISB();
-    dObj->sst39Plib->write(DRV_SST39_START_ADDRESS+0x2AAAU, 0x55U);
+    dObj->sst39Plib->write_t(DRV_SST39_START_ADDRESS+0x2AAAU, 0x55U);
     __DSB();
     __ISB();
-    dObj->sst39Plib->write(DRV_SST39_START_ADDRESS+0x5555U, 0x80U);
+    dObj->sst39Plib->write_t(DRV_SST39_START_ADDRESS+0x5555U, 0x80U);
     __DSB();
     __ISB();
-    dObj->sst39Plib->write(DRV_SST39_START_ADDRESS+0x5555U, 0xAAU);
+    dObj->sst39Plib->write_t(DRV_SST39_START_ADDRESS+0x5555U, 0xAAU);
     __DSB();
     __ISB();
-    dObj->sst39Plib->write(DRV_SST39_START_ADDRESS+0x2AAAU, 0x55U);
+    dObj->sst39Plib->write_t(DRV_SST39_START_ADDRESS+0x2AAAU, 0x55U);
     __DSB();
     __ISB();
-    dObj->sst39Plib->write(DRV_SST39_START_ADDRESS+0x5555U, 0x10U);
+    dObj->sst39Plib->write_t(DRV_SST39_START_ADDRESS+0x5555U, 0x10U);
     __DSB();
     __ISB();
 
     /* Wait Erase by polling bit DQ7 */
     do
     {
-        readData = dObj->sst39Plib->read(DRV_SST39_START_ADDRESS);
+        readData = dObj->sst39Plib->read_t(DRV_SST39_START_ADDRESS);
     }
     while ( (readData & 0x80U) == 0x00U );
 
-    if (isCacheEnabled)
+    if (isCacheEnabled != 0U)
+    {
         DCACHE_ENABLE();
+    }
 
     /* Enable back ECC if it was disabled */
     if (isEccEnabled)
-        dObj->sst39Plib->eccEnable((uint8_t)DRV_SST39_CHIP_SELECT);
+    {
+        (void) dObj->sst39Plib->eccEnable((uint8_t)DRV_SST39_CHIP_SELECT);
+    }
 
     return true;
 }
 
 DRV_HANDLE DRV_SST39_Open( const SYS_MODULE_INDEX drvIndex, const DRV_IO_INTENT ioIntent )
 {
+    uint32_t status;
     if ((dObj->status != SYS_STATUS_READY) ||
         (dObj->nClients >= DRV_SST39_CLIENTS_NUMBER))
     {
-        return DRV_HANDLE_INVALID;
+        status = DRV_HANDLE_INVALID;
+    }
+    else
+    {
+        dObj->nClients++;
+
+        dObj->ioIntent = ioIntent;
+        
+        status = ((DRV_HANDLE)drvIndex);
     }
 
-    dObj->nClients++;
-
-    dObj->ioIntent = ioIntent;
-
-    return ((DRV_HANDLE)drvIndex);
+    return status;
 }
 
 void DRV_SST39_Close( const DRV_HANDLE handle )
@@ -325,6 +358,17 @@ void DRV_SST39_Close( const DRV_HANDLE handle )
     }
 }
 
+/* MISRA C-2012 Rule 11.3, 11.8 deviated below. Deviation record ID -  
+   H3_MISRAC_2012_R_11_3_DR_1 & H3_MISRAC_2012_R_11_8_DR_1*/
+<#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
+<#if core.COMPILER_CHOICE == "XC32">
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wunknown-pragmas"
+</#if>
+#pragma coverity compliance block \
+(deviate:1 "MISRA C-2012 Rule 11.3" "H3_MISRAC_2012_R_11_3_DR_1" )\
+(deviate:1 "MISRA C-2012 Rule 11.8" "H3_MISRAC_2012_R_11_8_DR_1" )   
+</#if>
 SYS_MODULE_OBJ DRV_SST39_Initialize
 (
     const SYS_MODULE_INDEX drvIndex,
@@ -356,6 +400,15 @@ SYS_MODULE_OBJ DRV_SST39_Initialize
     /* Return the driver index */
     return ( (SYS_MODULE_OBJ)drvIndex );
 }
+
+<#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
+#pragma coverity compliance end_block "MISRA C-2012 Rule 11.3"
+#pragma coverity compliance end_block "MISRA C-2012 Rule 11.8"
+<#if core.COMPILER_CHOICE == "XC32">
+#pragma GCC diagnostic pop
+</#if>    
+</#if> 
+/* MISRAC 2012 deviation block end */
 
 SYS_STATUS DRV_SST39_Status( const SYS_MODULE_INDEX drvIndex )
 {

@@ -78,11 +78,11 @@
     None.
 */
 
-/* Pointer to 16-bit write data to SST38 memory interface. */
-typedef void (* DRV_SST38_PLIB_WRITE)(uint32_t, uint16_t);
+/* Pointer to 16-bit write_t data to SST38 memory interface. */
+typedef void (* DRV_SST38_PLIB_WRITE)(uint32_t dataAddress, uint16_t data);
 
-/* Pointer to 16-bit read data to SST38 memory interface. */
-typedef uint16_t (* DRV_SST38_PLIB_READ)(uint32_t);
+/* Pointer to 16-bit read_t data to SST38 memory interface. */
+typedef uint16_t (* DRV_SST38_PLIB_READ)(uint32_t dataAddress);
 
 /* Pointer to disable ECC to SST38 memory interface. */
 typedef bool (* DRV_SST38_PLIB_ECC_DISABLE)(uint8_t chipSelect);
@@ -93,10 +93,10 @@ typedef bool (* DRV_SST38_PLIB_ECC_ENABLE)(uint8_t chipSelect);
 typedef struct
 {
     /* SST38 PLIB write API */
-    DRV_SST38_PLIB_WRITE                     write;
+    DRV_SST38_PLIB_WRITE                     write_t;
 
-    /* SST38 PLIB read API */
-    DRV_SST38_PLIB_READ                      read;
+    /* SST38 PLIB API */
+    DRV_SST38_PLIB_READ                      read_t;
 
     /* SST38 PLIB Disable ECC API */
     DRV_SST38_PLIB_ECC_DISABLE               eccDisable;

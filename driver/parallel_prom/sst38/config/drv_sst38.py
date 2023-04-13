@@ -233,6 +233,7 @@ def instantiateComponent(sst38Component):
     sst38SourceFile.setDestPath("driver/sst38/src/")
     sst38SourceFile.setProjectPath("config/" + configName + "/driver/sst38/")
     sst38SourceFile.setType("SOURCE")
+    sst38SourceFile.setMarkup(True)
     sst38SourceFile.setOverwrite(True)
 
     # System Template Files
