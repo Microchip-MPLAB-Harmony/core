@@ -89,25 +89,26 @@ static uint32_t gSstFlashIdSizeTable [11][2] = {
 static uint32_t DRV_W25_GetFlashSize( uint8_t deviceId )
 {
     uint8_t i = 0;
+    uint32_t readFlashIdSize = 0U;
 
-    for (i = 0; i < 11; i++)
+    for (i = 0; i < 11U; i++)
     {
         if (deviceId == gSstFlashIdSizeTable[i][0])
         {
-            return gSstFlashIdSizeTable[i][1];
+            readFlashIdSize = gSstFlashIdSizeTable[i][1];
         }
     }
 
-    return 0;
+    return readFlashIdSize;
 }
 
 static bool DRV_W25_ResetFlash(void)
 {
     bool status = false;
 
-    memset((void *)&qmspiXfer, 0, sizeof(QMSPI_XFER_T));
+    (void) memset((void *)&qmspiXfer, 0, sizeof(QMSPI_XFER_T));
 
-    qmspiXfer.command = W25_CMD_FLASH_RESET_ENABLE;
+    qmspiXfer.command = (uint8_t)W25_CMD_FLASH_RESET_ENABLE;
     qmspiXfer.qmspi_ifc_mode = SINGLE_BIT_SPI;
 
     if (dObj->w25Plib->Write(&qmspiXfer, NULL, 0) == false)
@@ -115,7 +116,7 @@ static bool DRV_W25_ResetFlash(void)
         return status;
     }
 
-    qmspiXfer.command = W25_CMD_FLASH_RESET;
+    qmspiXfer.command = (uint8_t)W25_CMD_FLASH_RESET;
     qmspiXfer.qmspi_ifc_mode = SINGLE_BIT_SPI;
 
     status  = dObj->w25Plib->Write(&qmspiXfer, NULL, 0);
@@ -127,9 +128,9 @@ static bool DRV_W25_WriteEnable(void)
 {
     bool status = false;
 
-    memset((void *)&qmspiXfer, 0, sizeof(QMSPI_XFER_T));
+    (void) memset((void *)&qmspiXfer, 0, sizeof(QMSPI_XFER_T));
 
-    qmspiXfer.command = W25_CMD_WRITE_ENABLE;
+    qmspiXfer.command = (uint8_t)W25_CMD_WRITE_ENABLE;
     qmspiXfer.qmspi_ifc_mode = SINGLE_BIT_SPI;
 
     status  = dObj->w25Plib->Write(&qmspiXfer, NULL, 0);
@@ -157,9 +158,9 @@ bool DRV_W25_UnlockFlash( const DRV_HANDLE handle )
         return status;
     }
 
-    memset((void *)&qmspiXfer, 0, sizeof(QMSPI_XFER_T));
+    (void) memset((void *)&qmspiXfer, 0, sizeof(QMSPI_XFER_T));
 
-    qmspiXfer.command = W25_CMD_UNPROTECT_GLOBAL;
+    qmspiXfer.command = (uint8_t)W25_CMD_UNPROTECT_GLOBAL;
     qmspiXfer.qmspi_ifc_mode = SINGLE_BIT_SPI;
 
     status  = dObj->w25Plib->Write(&qmspiXfer, NULL, 0);
@@ -176,9 +177,9 @@ bool DRV_W25_ReadJedecId( const DRV_HANDLE handle, void *jedec_id)
         return status;
     }
 
-    memset((void *)&qmspiXfer, 0, sizeof(QMSPI_XFER_T));
+    (void) memset((void *)&qmspiXfer, 0, sizeof(QMSPI_XFER_T));
 
-    qmspiXfer.command = W25_CMD_JEDEC_ID_READ;
+    qmspiXfer.command = (uint8_t)W25_CMD_JEDEC_ID_READ;
     qmspiXfer.qmspi_ifc_mode = SINGLE_BIT_SPI;
 
     status  = dObj->w25Plib->Read(&qmspiXfer, jedec_id, 3);
@@ -195,9 +196,9 @@ bool DRV_W25_ReadStatus( const DRV_HANDLE handle, void *rx_data, uint32_t rx_dat
         return status;
     }
 
-    memset((void *)&qmspiXfer, 0, sizeof(QMSPI_XFER_T));
+    (void) memset((void *)&qmspiXfer, 0, sizeof(QMSPI_XFER_T));
 
-    qmspiXfer.command = W25_CMD_READ_STATUS_REG;
+    qmspiXfer.command = (uint8_t)W25_CMD_READ_STATUS_REG;
     qmspiXfer.qmspi_ifc_mode = SINGLE_BIT_SPI;
 
     status  = dObj->w25Plib->Read(&qmspiXfer, rx_data, rx_data_length);
@@ -226,10 +227,14 @@ DRV_W25_TRANSFER_STATUS DRV_W25_TransferStatusGet( const DRV_HANDLE handle )
         return status;
     }
 
-    if(reg_status & (1<<0))
+    if((reg_status & (1UL << 0)) != 0U)
+    {
         status = DRV_W25_TRANSFER_BUSY;
+    }
     else
+    {
         status = DRV_W25_TRANSFER_COMPLETED;
+    }
 
     return status;
 }
@@ -237,30 +242,32 @@ DRV_W25_TRANSFER_STATUS DRV_W25_TransferStatusGet( const DRV_HANDLE handle )
 bool DRV_W25_Read( const DRV_HANDLE handle, void *rx_data, uint32_t rx_data_length, uint32_t address )
 {
     bool status = false;
+    uint32_t transferRead;
 
     if (handle == DRV_HANDLE_INVALID)
     {
         return status;
     }
 
-    memset((void *)&qmspiDescXfer, 0, sizeof(QMSPI_DESCRIPTOR_XFER_T));
+    (void) memset((void *)&qmspiDescXfer, 0, sizeof(QMSPI_DESCRIPTOR_XFER_T));
 
-    qmspiDescXfer.command = W25_CMD_FAST_READ_QUAD_IO;
+    qmspiDescXfer.command = (uint8_t)W25_CMD_FAST_READ_QUAD_IO;
     qmspiDescXfer.qmspi_ifc_mode = QUAD_IO;
     qmspiDescXfer.address = address;
     qmspiDescXfer.ldma_enable = true;
     qmspiDescXfer.ldma_channel_num = QMSPI_LDMA_CHANNEL_0;
-	if (address > ADDR_24_BIT_MASK)
-	{
+    if (address > ADDR_24_BIT_MASK)
+    {
         qmspiDescXfer.num_of_dummy_byte = 2;
-		qmspiDescXfer.address_32_bit_en = true;
-	}
-	else
-	{
+        qmspiDescXfer.address_32_bit_en = true;
+    }
+    else
+    {
         qmspiDescXfer.num_of_dummy_byte = 3;
     }
 
-    status = dObj->w25Plib->DMATransferRead(&qmspiDescXfer, rx_data, rx_data_length);
+    transferRead = dObj->w25Plib->DMATransferRead(&qmspiDescXfer, rx_data, rx_data_length);
+    status = (bool)transferRead;
 
     gDrvW25Obj.curOpType = DRV_W25_OPERATION_TYPE_READ;
 
@@ -270,6 +277,7 @@ bool DRV_W25_Read( const DRV_HANDLE handle, void *rx_data, uint32_t rx_data_leng
 bool DRV_W25_PageWrite( const DRV_HANDLE handle, void *tx_data, uint32_t address )
 {
     bool status = false;
+    uint32_t transferWrite;
 
     if (handle == DRV_HANDLE_INVALID)
     {
@@ -281,19 +289,20 @@ bool DRV_W25_PageWrite( const DRV_HANDLE handle, void *tx_data, uint32_t address
         return status;
     }
 
-    memset((void *)&qmspiDescXfer, 0, sizeof(QMSPI_DESCRIPTOR_XFER_T));
+    (void) memset((void *)&qmspiDescXfer, 0, sizeof(QMSPI_DESCRIPTOR_XFER_T));
 
-    qmspiDescXfer.command = W25_CMD_QUAD_INPUT_PAGE_PROGRAM;
+    qmspiDescXfer.command = (uint8_t)W25_CMD_QUAD_INPUT_PAGE_PROGRAM;
     qmspiDescXfer.qmspi_ifc_mode = QUAD_OUTPUT;
     qmspiDescXfer.address = address;
     qmspiDescXfer.ldma_enable = true;
     qmspiDescXfer.ldma_channel_num = QMSPI_LDMA_CHANNEL_0;
-	if (address > ADDR_24_BIT_MASK)
-	{
-		qmspiDescXfer.address_32_bit_en = true;
-	}
+    if (address > ADDR_24_BIT_MASK)
+    {
+        qmspiDescXfer.address_32_bit_en = true;
+    }
 
-    status = dObj->w25Plib->DMATransferWrite(&qmspiDescXfer, tx_data, DRV_W25_PAGE_SIZE);
+    transferWrite = dObj->w25Plib->DMATransferWrite(&qmspiDescXfer, tx_data, DRV_W25_PAGE_SIZE);
+    status = (bool)transferWrite;
 
     gDrvW25Obj.curOpType = DRV_W25_OPERATION_TYPE_WRITE;
 
@@ -309,16 +318,16 @@ static bool DRV_W25_Erase(uint8_t instruction, uint32_t address , bool address_e
         return status;
     }
 
-    memset((void *)&qmspiXfer, 0, sizeof(QMSPI_XFER_T));
+    (void) memset((void *)&qmspiXfer, 0, sizeof(QMSPI_XFER_T));
 
     qmspiXfer.command = instruction;
     qmspiXfer.qmspi_ifc_mode = SINGLE_BIT_SPI;
     qmspiXfer.address_enable = address_enable;
     qmspiXfer.address = address;
-	if (address > ADDR_24_BIT_MASK)
-	{
-		qmspiXfer.address_32_bit_en = true;
-	}
+    if (address > ADDR_24_BIT_MASK)
+    {
+        qmspiXfer.address_32_bit_en = true;
+    }
 
     status = dObj->w25Plib->Write(&qmspiXfer, NULL, 0);
 
@@ -334,7 +343,7 @@ bool DRV_W25_SectorErase( const DRV_HANDLE handle, uint32_t address )
         return false;
     }
 
-    return (DRV_W25_Erase(W25_CMD_SECTOR_ERASE, address, true));
+    return (DRV_W25_Erase((uint8_t)W25_CMD_SECTOR_ERASE, address, true));
 }
 
 bool DRV_W25_BlockErase( const DRV_HANDLE handle, uint32_t address )
@@ -344,7 +353,7 @@ bool DRV_W25_BlockErase( const DRV_HANDLE handle, uint32_t address )
         return false;
     }
 
-    return (DRV_W25_Erase(W25_CMD_BLOCK_ERASE_64K, address, true));
+    return (DRV_W25_Erase((uint8_t)W25_CMD_BLOCK_ERASE_64K, address, true));
 }
 
 bool DRV_W25_ChipErase( const DRV_HANDLE handle )
@@ -354,54 +363,69 @@ bool DRV_W25_ChipErase( const DRV_HANDLE handle )
         return false;
     }
 
-    return (DRV_W25_Erase(W25_CMD_CHIP_ERASE, 0, false));
+    return (DRV_W25_Erase((uint8_t)W25_CMD_CHIP_ERASE, 0, false));
 }
 
 bool DRV_W25_GeometryGet( const DRV_HANDLE handle, DRV_W25_GEOMETRY *geometry )
 {
     uint32_t flash_size = 0;
     uint8_t  jedec_id[3] = { 0 };
+    bool status = true;
 
     if (DRV_W25_ReadJedecId(handle, (void *)&jedec_id[0]) == false)
     {
-        return false;
+        status = false;
     }
-
-    flash_size = DRV_W25_GetFlashSize(jedec_id[2]);
-
-    if ((flash_size == 0) ||
-        (DRV_W25_START_ADDRESS >= flash_size))
+    else
     {
-        return false;
+        flash_size = DRV_W25_GetFlashSize(jedec_id[2]);
+
+        if (flash_size == 0U)
+        {
+            status = false;
+        }
+        
+        if(DRV_W25_START_ADDRESS >= flash_size)
+        {
+            status = false;
+        }
+        else if(status == true)
+        {
+            flash_size = flash_size - DRV_W25_START_ADDRESS;
+
+            /* Flash size should be at-least of a Erase Block size */
+            if (flash_size < DRV_W25_ERASE_BUFFER_SIZE)
+            {
+              status = false;
+            }
+            else
+            {
+               /* Read block size and number of blocks */
+               geometry->read_blockSize = 1;
+               geometry->read_numBlocks = flash_size;
+
+               /* Write block size and number of blocks */
+               geometry->write_blockSize = DRV_W25_PAGE_SIZE;
+               geometry->write_numBlocks = (flash_size / DRV_W25_PAGE_SIZE);
+
+               /* Erase block size and number of blocks */
+               geometry->erase_blockSize = DRV_W25_ERASE_BUFFER_SIZE;
+               geometry->erase_numBlocks = (flash_size / DRV_W25_ERASE_BUFFER_SIZE);
+
+               geometry->numReadRegions = 1;
+               geometry->numWriteRegions = 1;
+               geometry->numEraseRegions = 1;
+
+               geometry->blockStartAddress = DRV_W25_START_ADDRESS;
+            }
+        }
+        else
+        {
+           /* Do Nothing */
+        }
     }
 
-    flash_size = flash_size - DRV_W25_START_ADDRESS;
-
-    /* Flash size should be at-least of a Erase Block size */
-    if (flash_size < DRV_W25_ERASE_BUFFER_SIZE)
-    {
-        return false;
-    }
-
-    /* Read block size and number of blocks */
-    geometry->read_blockSize = 1;
-    geometry->read_numBlocks = flash_size;
-
-    /* Write block size and number of blocks */
-    geometry->write_blockSize = DRV_W25_PAGE_SIZE;
-    geometry->write_numBlocks = (flash_size / DRV_W25_PAGE_SIZE);
-
-    /* Erase block size and number of blocks */
-    geometry->erase_blockSize = DRV_W25_ERASE_BUFFER_SIZE;
-    geometry->erase_numBlocks = (flash_size / DRV_W25_ERASE_BUFFER_SIZE);
-
-    geometry->numReadRegions = 1;
-    geometry->numWriteRegions = 1;
-    geometry->numEraseRegions = 1;
-
-    geometry->blockStartAddress = DRV_W25_START_ADDRESS;
-
-    return true;
+    return status;
 }
 
 DRV_HANDLE DRV_W25_Open( const SYS_MODULE_INDEX drvIndex, const DRV_IO_INTENT ioIntent )
@@ -418,7 +442,7 @@ DRV_HANDLE DRV_W25_Open( const SYS_MODULE_INDEX drvIndex, const DRV_IO_INTENT io
         return DRV_HANDLE_INVALID;
     }
 
-    if ((ioIntent & DRV_IO_INTENT_WRITE) == (DRV_IO_INTENT_WRITE))
+    if (((uint32_t)ioIntent & (uint32_t)DRV_IO_INTENT_WRITE) == ((uint32_t)DRV_IO_INTENT_WRITE))
     {
         /* Unlock the Flash */
         if (DRV_W25_UnlockFlash((DRV_HANDLE)drvIndex) == false)
@@ -437,11 +461,23 @@ DRV_HANDLE DRV_W25_Open( const SYS_MODULE_INDEX drvIndex, const DRV_IO_INTENT io
 void DRV_W25_Close( const DRV_HANDLE handle )
 {
     if ( (handle != DRV_HANDLE_INVALID) &&
-         (dObj->nClients > 0))
+         (dObj->nClients > 0U))
     {
         dObj->nClients--;
     }
 }
+
+/* MISRA C-2012 Rule 11.3, 11.8 deviated below. Deviation record ID -
+   H3_MISRAC_2012_R_11_3_DR_1 & H3_MISRAC_2012_R_11_8_DR_1*/
+<#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
+<#if core.COMPILER_CHOICE == "XC32">
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wunknown-pragmas"
+</#if>
+#pragma coverity compliance block \
+(deviate:1 "MISRA C-2012 Rule 11.3" "H3_MISRAC_2012_R_11_3_DR_1" )\
+(deviate:1 "MISRA C-2012 Rule 11.8" "H3_MISRAC_2012_R_11_8_DR_1" )
+</#if>
 
 SYS_MODULE_OBJ DRV_W25_Initialize
 (
@@ -474,6 +510,15 @@ SYS_MODULE_OBJ DRV_W25_Initialize
     /* Return the driver index */
     return ( (SYS_MODULE_OBJ)drvIndex );
 }
+
+<#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
+#pragma coverity compliance end_block "MISRA C-2012 Rule 11.3"
+#pragma coverity compliance end_block "MISRA C-2012 Rule 11.8"
+<#if core.COMPILER_CHOICE == "XC32">
+#pragma GCC diagnostic pop
+</#if>
+</#if>
+/* MISRAC 2012 deviation block end */
 
 SYS_STATUS DRV_W25_Status( const SYS_MODULE_INDEX drvIndex )
 {

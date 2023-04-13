@@ -41,8 +41,8 @@
 *******************************************************************************/
 //DOM-IGNORE-END
 
-#ifndef _DRV_W25_H
-#define _DRV_W25_H
+#ifndef DRV_W25_H
+#define DRV_W25_H
 
 // *****************************************************************************
 // *****************************************************************************
@@ -153,9 +153,7 @@ typedef struct
     Otherwise it returns SYS_MODULE_OBJ_INVALID.
 
   Example:
-    <code>
-    // This code snippet shows an example of initializing the W25 Driver
-    // with W25256JV flash device attached.
+    <code>    
 
     SYS_MODULE_OBJ  objectHandle;
 
@@ -176,7 +174,7 @@ typedef struct
 
     if (SYS_MODULE_OBJ_INVALID == objectHandle)
     {
-        // Handle error
+        
     }
     </code>
 
@@ -239,7 +237,7 @@ SYS_MODULE_OBJ DRV_W25_Initialize
     handle = DRV_W25_Open(DRV_W25_INDEX);
     if (DRV_HANDLE_INVALID == handle)
     {
-        // Unable to open the driver
+        
     }
     </code>
 
@@ -274,7 +272,7 @@ DRV_HANDLE DRV_W25_Open( const SYS_MODULE_INDEX drvIndex, const DRV_IO_INTENT io
 
   Example:
     <code>
-    DRV_HANDLE handle;  // Returned from DRV_W25_Open
+    DRV_HANDLE handle;  
 
     DRV_W25_Close(handle);
     </code>
@@ -323,7 +321,7 @@ void DRV_W25_Close( const DRV_HANDLE handle );
 
     if (status == SYS_STATUS_READY)
     {
-        // W25 driver is initialized and ready to accept requests.
+        
     }
     </code>
 
@@ -362,11 +360,11 @@ SYS_STATUS DRV_W25_Status( const SYS_MODULE_INDEX drvIndex );
 
   Example:
     <code>
-    DRV_HANDLE handle;  // Returned from DRV_W25_Open
+    DRV_HANDLE handle;  
 
     if(DRV_W25_UnlockFlash(handle) == false)
     {
-        // Error handling here
+        
     }
 
     </code>
@@ -404,12 +402,12 @@ bool DRV_W25_UnlockFlash( const DRV_HANDLE handle );
   Example:
     <code>
 
-    DRV_HANDLE handle;  // Returned from DRV_W25_Open
+    DRV_HANDLE handle;  
     uint32_t jedec_id = 0;
 
     if(DRV_W25_ReadJedecId(handle, &jedec_id) == false)
     {
-        // Error handling here
+       
     }
 
     </code>
@@ -455,15 +453,14 @@ bool DRV_W25_ReadJedecId( const DRV_HANDLE handle, void *jedec_id );
   Example:
     <code>
 
-    DRV_HANDLE handle;  // Returned from DRV_W25_Open
+    DRV_HANDLE handle;  
     uint32_t sectorStart = 0;
 
     if(DRV_W25_SectorErase(handle, sectorStart) == false)
     {
-        // Error handling here
+        
     }
-
-    // Wait for erase to be completed
+    
     while(DRV_W25_TRANSFER_BUSY == DRV_W25_TransferStatusGet(handle));
 
     </code>
@@ -509,15 +506,14 @@ bool DRV_W25_SectorErase( const DRV_HANDLE handle, uint32_t address );
   Example:
     <code>
 
-    DRV_HANDLE handle;  // Returned from DRV_W25_Open
+    DRV_HANDLE handle;  
     uint32_t blockStart = 0;
 
     if(DRV_W25_SectorErase(handle, blockStart) == false)
     {
-        // Error handling here
+       
     }
-
-    // Wait for erase to be completed
+    
     while(DRV_W25_TransferStatusGet(handle) == DRV_W25_TRANSFER_BUSY);
 
     </code>
@@ -560,14 +556,13 @@ bool DRV_W25_BlockErase( const DRV_HANDLE handle, uint32_t address );
   Example:
     <code>
 
-    DRV_HANDLE handle;  // Returned from DRV_W25_Open
+    DRV_HANDLE handle;  
 
     if(DRV_W25_ChipErase(handle) == flase)
     {
-        // Error handling here
+        
     }
-
-    // Wait for erase to be completed
+    
     while(DRV_W25_TransferStatusGet(handle) == DRV_W25_TRANSFER_BUSY);
 
     </code>
@@ -616,15 +611,14 @@ bool DRV_W25_ChipErase( const DRV_HANDLE handle );
     #define BUFFER_SIZE  1024
     #define MEM_ADDRESS  0x0
 
-    DRV_HANDLE handle;  // Returned from DRV_W25_Open
+    DRV_HANDLE handle;  
     uint8_t CACHE_ALIGN readBuffer[BUFFER_SIZE];
 
     if (DRV_W25_Read(handle, (void *)&readBuffer, BUFFER_SIZE, MEM_ADDRESS) == false)
     {
-        // Error handling here
+        
     }
-
-    // Wait for read to be completed
+    
     while(DRV_W25_TransferStatusGet(handle) == DRV_W25_TRANSFER_BUSY);
 
     </code>
@@ -686,16 +680,15 @@ bool DRV_W25_Read( const DRV_HANDLE handle, void *rx_data, uint32_t rx_data_leng
     #define BUFFER_SIZE  1024
     #define MEM_ADDRESS  0x0
 
-    DRV_HANDLE handle;  // Returned from DRV_W25_Open
+    DRV_HANDLE handle; 
     uint8_t CACHE_ALIGN writeBuffer[BUFFER_SIZE];
     bool status = false;
 
     if(false == DRV_W25_SectorErase(handle))
     {
-        // Error handling here
+        
     }
-
-    // Wait for erase to be completed
+    
     while(DRV_W25_TransferStatusGet(handle) == DRV_W25_TRANSFER_BUSY);
 
     for (uint32_t j = 0; j < BUFFER_SIZE; j += PAGE_SIZE)
@@ -705,15 +698,14 @@ bool DRV_W25_Read( const DRV_HANDLE handle, void *rx_data, uint32_t rx_data_leng
             status = false;
             break;
         }
-
-        // Wait for write to be completed
+        
         while(DRV_W25_TransferStatusGet(handle) == DRV_W25_TRANSFER_BUSY);
         status = true;
     }
 
     if(status == false)
     {
-        // Error handling here
+        
     }
 
     </code>
@@ -754,11 +746,11 @@ bool DRV_W25_PageWrite( const DRV_HANDLE handle, void *tx_data, uint32_t address
   Example:
     <code>
 
-    DRV_HANDLE handle;  // Returned from DRV_W25_Open
+    DRV_HANDLE handle; 
 
     if (DRV_W25_TransferStatusGet(handle) == DRV_W25_TRANSFER_COMPLETED)
     {
-        // Operation Done
+       
     }
     </code>
 
@@ -798,7 +790,7 @@ DRV_W25_TRANSFER_STATUS DRV_W25_TransferStatusGet( const DRV_HANDLE handle );
   Example:
     <code>
 
-    DRV_HANDLE handle;  // Returned from DRV_W25_Open
+    DRV_HANDLE handle;  
 
     DRV_W25_GEOMETRY w25FlashGeometry;
 
@@ -824,12 +816,14 @@ DRV_W25_TRANSFER_STATUS DRV_W25_TransferStatusGet( const DRV_HANDLE handle );
 
 bool DRV_W25_GeometryGet( const DRV_HANDLE handle, DRV_W25_GEOMETRY *geometry );
 
+bool DRV_W25_ReadStatus( const DRV_HANDLE handle, void *rx_data, uint32_t rx_data_length );
+
 
 #ifdef __cplusplus
 }
 #endif
 
-#endif // #ifndef _DRV_W25_H
+#endif // #ifndef DRV_W25_H
 /*******************************************************************************
  End of File
 */
