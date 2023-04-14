@@ -49,6 +49,9 @@
 
 #include "driver/memory/src/drv_memory_local.h"
 #include "system/debug/sys_debug.h"
+<#if DRV_MEMORY_COMMON_FS_ENABLE == true>
+#include "driver/memory/src/drv_memory_file_system.h"
+</#if>
 
 // *****************************************************************************
 // *****************************************************************************
@@ -747,16 +750,6 @@ static void DRV_MEMORY_SetupXfer
 // *****************************************************************************
 // *****************************************************************************
 
-void DRV_MEMORY_RegisterWithSysFs ( const SYS_MODULE_INDEX drvIndex, uint8_t mediaType);
-
-__WEAK void DRV_MEMORY_RegisterWithSysFs
-(
-    const SYS_MODULE_INDEX drvIndex,
-    uint8_t mediaType
-)
-{
-
-}
 /* MISRA C-2012 Rule 11.1, 11.3 and 11.8 deviated below. 
 Deviation record ID -  H3_MISRAC_2012_R_11_1_DR_1, H3_MISRAC_2012_R_11_3_DR_1 & H3_MISRAC_2012_R_11_8_DR_1 */
 <#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
@@ -837,10 +830,12 @@ SYS_MODULE_OBJ DRV_MEMORY_Initialize
         return SYS_MODULE_OBJ_INVALID;
     }
 
+<#if DRV_MEMORY_COMMON_FS_ENABLE == true>
     if (memoryInit->isFsEnabled == true)
     {
         DRV_MEMORY_RegisterWithSysFs(drvIndex, memoryInit->deviceMediaType);
     }
+</#if>
 
     /* Set the driver state as busy as the attached memory device needs to be opened and
      * queried for the geometry data. */

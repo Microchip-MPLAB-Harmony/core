@@ -178,6 +178,17 @@ def instantiateComponent(memoryCommonComponent):
     memoryCommonFsSourceFile.setMarkup(True)
     memoryCommonFsSourceFile.setEnabled((memoryCommonFsEnable.getValue() == True))
     memoryCommonFsSourceFile.setDependencies(enableFileSystemIntegration, ["DRV_MEMORY_COMMON_FS_ENABLE"])
+    
+    memoryCommonFsHeaderFile = memoryCommonComponent.createFileSymbol("DRV_MEMORY_FS_HEADER", None)
+    memoryCommonFsHeaderFile.setSourcePath("driver/memory/templates/drv_memory_file_system.h.ftl")
+    memoryCommonFsHeaderFile.setOutputName("drv_memory_file_system.h")
+    memoryCommonFsHeaderFile.setDestPath("driver/memory/src")
+    memoryCommonFsHeaderFile.setProjectPath("config/" + configName + "/driver/memory/")
+    memoryCommonFsHeaderFile.setType("HEADER")
+    memoryCommonFsHeaderFile.setOverwrite(True)
+    memoryCommonFsHeaderFile.setMarkup(True)
+    memoryCommonFsHeaderFile.setEnabled((memoryCommonFsEnable.getValue() == True))
+    memoryCommonFsHeaderFile.setDependencies(enableFileSystemIntegration, ["DRV_MEMORY_COMMON_FS_ENABLE"])
 
     memoryCommonSystemDefFile = memoryCommonComponent.createFileSymbol("DRV_MEMORY_SYS_DEF_COMMON", None)
     memoryCommonSystemDefFile.setType("STRING")

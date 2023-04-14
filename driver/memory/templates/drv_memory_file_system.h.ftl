@@ -5,7 +5,7 @@
     Microchip Technology Inc.
 
   File Name:
-    drv_memory_file_system.c
+    drv_memory_file_system.h
 
   Summary:
     MEMORY Driver Interface Definition
@@ -41,6 +41,8 @@
 * THAT YOU HAVE PAID DIRECTLY TO MICROCHIP FOR THIS SOFTWARE.
 *******************************************************************************/
 //DOM-IGNORE-END
+#ifndef DRV_MEMORY_FILE_SYSTEM_H
+#define DRV_MEMORY_FILE_SYSTEM_H
 
 // *****************************************************************************
 // *****************************************************************************
@@ -48,7 +50,14 @@
 // *****************************************************************************
 // *****************************************************************************
 
-#include "driver/memory/src/drv_memory_file_system.h"
+#include "driver/memory/src/drv_memory_local.h"
+#include "system/fs/sys_fs_media_manager.h"
+
+// DOM-IGNORE-BEGIN
+#ifdef __cplusplus  // Provide C++ Compatibility
+    extern "C" {
+#endif
+// DOM-IGNORE-END
 
 // *****************************************************************************
 // *****************************************************************************
@@ -56,42 +65,6 @@
 // *****************************************************************************
 // *****************************************************************************
 
-/* FS Function registration table. */
-typedef SYS_FS_MEDIA_COMMAND_STATUS (* CommandStatusGetType)( DRV_HANDLE, SYS_FS_MEDIA_BLOCK_COMMAND_HANDLE );
-
-<#if DRV_MEMORY_COMMON_MODE == "Asynchronous" >
-    <#lt>const SYS_FS_MEDIA_FUNCTIONS memoryMediaFunctions =
-    <#lt>{
-    <#lt>    .mediaStatusGet     = DRV_MEMORY_IsAttached,
-    <#lt>    .mediaGeometryGet   = DRV_MEMORY_GeometryGet,
-    <#lt>    .sectorRead         = DRV_MEMORY_AsyncRead,
-    <#lt>    .sectorWrite        = DRV_MEMORY_AsyncEraseWrite,
-    <#lt>    .eventHandlerset    = DRV_MEMORY_TransferHandlerSet,
-    <#lt>    .commandStatusGet   = (CommandStatusGetType)DRV_MEMORY_CommandStatusGet,
-    <#lt>    .Read               = DRV_MEMORY_AsyncRead,
-    <#lt>    .erase              = DRV_MEMORY_AsyncErase,
-    <#lt>    .addressGet         = DRV_MEMORY_AddressGet,
-    <#lt>    .open               = DRV_MEMORY_Open,
-    <#lt>    .close              = DRV_MEMORY_Close,
-    <#lt>    .tasks              = DRV_MEMORY_Tasks,
-    <#lt>};
-<#else>
-    <#lt>const SYS_FS_MEDIA_FUNCTIONS memoryMediaFunctions =
-    <#lt>{
-    <#lt>    .mediaStatusGet     = DRV_MEMORY_IsAttached,
-    <#lt>    .mediaGeometryGet   = DRV_MEMORY_GeometryGet,
-    <#lt>    .sectorRead         = DRV_MEMORY_Read,
-    <#lt>    .sectorWrite        = DRV_MEMORY_EraseWrite,
-    <#lt>    .eventHandlerset    = DRV_MEMORY_TransferHandlerSet,
-    <#lt>    .commandStatusGet   = (CommandStatusGetType)DRV_MEMORY_CommandStatusGet,
-    <#lt>    .Read               = DRV_MEMORY_Read,
-    <#lt>    .erase              = DRV_MEMORY_Erase,
-    <#lt>    .addressGet         = DRV_MEMORY_AddressGet,
-    <#lt>    .open               = DRV_MEMORY_Open,
-    <#lt>    .close              = DRV_MEMORY_Close,
-    <#lt>    .tasks              = NULL,
-    <#lt>};
-</#if>
 
 // *****************************************************************************
 // *****************************************************************************
@@ -99,13 +72,10 @@ typedef SYS_FS_MEDIA_COMMAND_STATUS (* CommandStatusGetType)( DRV_HANDLE, SYS_FS
 // *****************************************************************************
 // *****************************************************************************
 
-void DRV_MEMORY_RegisterWithSysFs( const SYS_MODULE_INDEX drvIndex, uint8_t mediaType)
-{
-    SYS_FS_MEDIA_MANAGER_Register
-    (
-        (SYS_MODULE_OBJ)drvIndex,
-        (SYS_MODULE_INDEX)drvIndex,
-        &memoryMediaFunctions,
-        (SYS_FS_MEDIA_TYPE)mediaType
-    );
+void DRV_MEMORY_RegisterWithSysFs( const SYS_MODULE_INDEX drvIndex, uint8_t mediaType);
+
+#ifdef __cplusplus
 }
+#endif
+
+#endif //#ifndef DRV_MEMORY_FILE_SYSTEM_H
