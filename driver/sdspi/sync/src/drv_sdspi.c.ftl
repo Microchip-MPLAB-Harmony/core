@@ -57,7 +57,9 @@
 #include "system/cache/sys_cache.h"
 </#if>
 </#if>
-
+<#if drv_sdspi.DRV_SDSPI_COMMON_FS_ENABLE == true>
+#include "driver/sdspi/src/drv_sdspi_file_system.h"
+</#if>
 
 // *****************************************************************************
 // *****************************************************************************
@@ -250,7 +252,7 @@ static uint32_t lDRV_SDSPI_ProcessCSD(uint8_t* csdPtr)
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Wunknown-pragmas"
 </#if>
-#pragma coverity compliance block deviate:21 "MISRA C-2012 Rule 11.8" "H3_MISRAC_2012_R_11_8_DR_1"    
+#pragma coverity compliance block deviate:21 "MISRA C-2012 Rule 11.8" "H3_MISRAC_2012_R_11_8_DR_1"
 </#if>
 
 static bool lDRV_SDSPI_CommandSend(
@@ -413,7 +415,7 @@ static bool lDRV_SDSPI_SendInitClockPulses(DRV_SDSPI_OBJ* const dObj)
 }
 
 <#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
-#pragma coverity compliance block deviate:6 "MISRA C-2012 Rule 11.3" "H3_MISRAC_2012_R_11_3_DR_1"    
+#pragma coverity compliance block deviate:6 "MISRA C-2012 Rule 11.3" "H3_MISRAC_2012_R_11_3_DR_1"
 </#if>
 /* MISRA C-2012 Rule 11.3  deviated:6 Deviation record ID -  H3_MISRAC_2012_R_11_3_DR_1 */
 
@@ -966,7 +968,7 @@ static bool lDRV_SDSPI_Read(
     return isSuccess;
 }
 <#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
-#pragma coverity compliance block fp:7 "MISRA C-2012 Rule 10.4" "H3_MISRAC_2012_R_10_4_DR_1"    
+#pragma coverity compliance block fp:7 "MISRA C-2012 Rule 10.4" "H3_MISRAC_2012_R_10_4_DR_1"
 </#if>
 /* MISRA C-2012 Rule 10.4 False positive:7 Deviation record ID -  H3_MISRAC_2012_R_10_4_DR_1 */
 
@@ -1153,12 +1155,12 @@ static void lDRV_SDSPI_UpdateGeometry( DRV_SDSPI_OBJ *dObj )
     dObj->mediaGeometryObj.geometryTable = (SYS_MEDIA_REGION_GEOMETRY *)&dObj->mediaGeometryTable;
 }
 
-/* MISRA C-2012 Rule 16.1, and 16.3 deviated below. 
+/* MISRA C-2012 Rule 16.1, and 16.3 deviated below.
 Deviation record ID -  H3_MISRAC_2012_R_16_1_DR_1 & H3_MISRAC_2012_R_16_3_DR_1*/
 <#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
 #pragma coverity compliance block \
 (deviate:2 "MISRA C-2012 Rule 16.1" "H3_MISRAC_2012_R_16_1_DR_1" )\
-(deviate:12 "MISRA C-2012 Rule 16.3" "H3_MISRAC_2012_R_16_3_DR_1" )   
+(deviate:12 "MISRA C-2012 Rule 16.3" "H3_MISRAC_2012_R_16_3_DR_1" )
 </#if>
 
 static void lDRV_SDSPI_MediaInitialize( SYS_MODULE_OBJ object )
@@ -1363,7 +1365,7 @@ static DRV_SDSPI_ATTACH lDRV_SDSPI_MediaCommandDetect ( SYS_MODULE_OBJ object )
 
 <#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
 #pragma coverity compliance end_block "MISRA C-2012 Rule 16.1"
-#pragma coverity compliance end_block "MISRA C-2012 Rule 16.3"   
+#pragma coverity compliance end_block "MISRA C-2012 Rule 16.3"
 </#if>
 /* MISRAC 2012 deviation block end */
 
@@ -1499,17 +1501,6 @@ void DRV_SDSPI_Tasks ( SYS_MODULE_OBJ object )
 // Section: Driver Interface Function Definitions
 // *****************************************************************************
 // *****************************************************************************
-
-void DRV_SDSPI_RegisterWithSysFs ( const SYS_MODULE_INDEX drvIndex );
-
-__WEAK void DRV_SDSPI_RegisterWithSysFs
-(
-    const SYS_MODULE_INDEX drvIndex
-)
-{
-    /* Weak function to avoid compiler warning when registration with FS is
-     * not enabled. */
-}
 
 SYS_MODULE_OBJ DRV_SDSPI_Initialize(
     const SYS_MODULE_INDEX drvIndex,
@@ -1666,11 +1657,13 @@ SYS_MODULE_OBJ DRV_SDSPI_Initialize(
 </#if>
 </#if>
 
+<#if drv_sdspi.DRV_SDSPI_COMMON_FS_ENABLE == true>
     /* Register with file system*/
     if (dObj->isFsEnabled == true)
     {
         DRV_SDSPI_RegisterWithSysFs(drvIndex);
     }
+</#if>
 
     /* Update the status */
     dObj->status = SYS_STATUS_READY;
@@ -1679,7 +1672,7 @@ SYS_MODULE_OBJ DRV_SDSPI_Initialize(
     return ( (SYS_MODULE_OBJ)drvIndex );
 }
 <#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
-#pragma coverity compliance end_block "MISRA C-2012 Rule 11.3"   
+#pragma coverity compliance end_block "MISRA C-2012 Rule 11.3"
 </#if>
 /* MISRAC 2012 deviation block end */
 
@@ -1802,7 +1795,7 @@ void DRV_SDSPI_Close( const DRV_HANDLE handle )
     }
 }
 <#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
-#pragma coverity compliance end_block "MISRA C-2012 Rule 10.4"   
+#pragma coverity compliance end_block "MISRA C-2012 Rule 10.4"
 </#if>
 /* MISRAC 2012 deviation block end */
 
@@ -1896,7 +1889,7 @@ SYS_MEDIA_GEOMETRY* DRV_SDSPI_GeometryGet ( const DRV_HANDLE handle )
 
 /* MISRA C-2012 Rule 11.1  deviated:1 Deviation record ID -  H3_MISRAC_2012_R_11_1_DR_1 */
 <#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
-#pragma coverity compliance block deviate:1 "MISRA C-2012 Rule 11.1" "H3_MISRAC_2012_R_11_1_DR_1"    
+#pragma coverity compliance block deviate:1 "MISRA C-2012 Rule 11.1" "H3_MISRAC_2012_R_11_1_DR_1"
 </#if>
 void DRV_SDSPI_EventHandlerSet
 (
@@ -1916,7 +1909,7 @@ void DRV_SDSPI_EventHandlerSet
     }
 }
 <#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
-#pragma coverity compliance end_block "MISRA C-2012 Rule 11.1"    
+#pragma coverity compliance end_block "MISRA C-2012 Rule 11.1"
 </#if>
 /* MISRAC 2012 deviation block end */
 
@@ -1924,7 +1917,7 @@ void DRV_SDSPI_EventHandlerSet
 #pragma coverity compliance end_block "MISRA C-2012 Rule 11.8"
 <#if core.COMPILER_CHOICE == "XC32">
 #pragma GCC diagnostic pop
-</#if>    
+</#if>
 </#if>
 /* MISRAC 2012 deviation block end */
 

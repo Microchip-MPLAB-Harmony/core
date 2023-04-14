@@ -5,7 +5,7 @@
     Microchip Technology Inc.
 
   File Name:
-    drv_sdspi_file_system.c
+    drv_sdspi_file_system.h
 
   Summary:
     SD Card (SPI) Driver Interface Definition
@@ -41,6 +41,8 @@
 * THAT YOU HAVE PAID DIRECTLY TO MICROCHIP FOR THIS SOFTWARE.
  *******************************************************************************/
 // DOM-IGNORE-END
+#ifndef DRV_SDSPI_FILE_SYSTEM_H
+#define DRV_SDSPI_FILE_SYSTEM_H
 
 // *****************************************************************************
 // *****************************************************************************
@@ -48,50 +50,20 @@
 // *****************************************************************************
 // *****************************************************************************
 
-#include "driver/sdspi/src/drv_sdspi_file_system.h"
+#include "driver/sdspi/drv_sdspi.h"
+#include "system/fs/sys_fs_media_manager.h"
 
+// DOM-IGNORE-BEGIN
+#ifdef __cplusplus  // Provide C++ Compatibility
+    extern "C" {
+#endif
+// DOM-IGNORE-END
 // *****************************************************************************
 // *****************************************************************************
 // Section: Global objects
 // *****************************************************************************
 // *****************************************************************************
 
-/* FS Function registration table. */
-typedef SYS_FS_MEDIA_COMMAND_STATUS (* CommandStatusGetType)( DRV_HANDLE, SYS_FS_MEDIA_BLOCK_COMMAND_HANDLE );    
-
-<#if DRV_SDSPI_COMMON_MODE == "Asynchronous" >
-    <#lt>const SYS_FS_MEDIA_FUNCTIONS sdspiMediaFunctions =
-    <#lt>{
-    <#lt>    .mediaStatusGet     = DRV_SDSPI_IsAttached,
-    <#lt>    .mediaGeometryGet   = DRV_SDSPI_GeometryGet,
-    <#lt>    .sectorRead         = DRV_SDSPI_AsyncRead,
-    <#lt>    .sectorWrite        = DRV_SDSPI_AsyncWrite,
-    <#lt>    .eventHandlerset    = DRV_SDSPI_EventHandlerSet,
-    <#lt>    .commandStatusGet   = (CommandStatusGetType) DRV_SDSPI_CommandStatusGet,
-    <#lt>    .Read               = DRV_SDSPI_AsyncRead,
-    <#lt>    .erase              = NULL,
-    <#lt>    .addressGet         = NULL,
-    <#lt>    .open               = DRV_SDSPI_Open,
-    <#lt>    .close              = DRV_SDSPI_Close,
-    <#lt>    .tasks              = DRV_SDSPI_Tasks,
-    <#lt>};
-<#else>
-    <#lt>const SYS_FS_MEDIA_FUNCTIONS sdspiMediaFunctions =
-    <#lt>{
-    <#lt>    .mediaStatusGet     = DRV_SDSPI_IsAttached,
-    <#lt>    .mediaGeometryGet   = DRV_SDSPI_GeometryGet,
-    <#lt>    .sectorRead         = DRV_SDSPI_Read,
-    <#lt>    .sectorWrite        = DRV_SDSPI_Write,
-    <#lt>    .eventHandlerset    = DRV_SDSPI_EventHandlerSet,
-    <#lt>    .commandStatusGet   = (CommandStatusGetType) DRV_SDSPI_CommandStatusGet,
-    <#lt>    .Read               = DRV_SDSPI_Read,
-    <#lt>    .erase              = NULL,
-    <#lt>    .addressGet         = NULL,
-    <#lt>    .open               = DRV_SDSPI_Open,
-    <#lt>    .close              = DRV_SDSPI_Close,
-    <#lt>    .tasks              = NULL,
-    <#lt>};
-</#if>
 
 // *****************************************************************************
 // *****************************************************************************
@@ -99,13 +71,10 @@ typedef SYS_FS_MEDIA_COMMAND_STATUS (* CommandStatusGetType)( DRV_HANDLE, SYS_FS
 // *****************************************************************************
 // *****************************************************************************
 
-void DRV_SDSPI_RegisterWithSysFs( const SYS_MODULE_INDEX drvIndex)
-{
-    SYS_FS_MEDIA_MANAGER_Register
-    (
-        (SYS_MODULE_OBJ)drvIndex,
-        (SYS_MODULE_INDEX)drvIndex,
-        &sdspiMediaFunctions,
-        (SYS_FS_MEDIA_TYPE)SYS_FS_MEDIA_TYPE_SD_CARD
-    );
+void DRV_SDSPI_RegisterWithSysFs( const SYS_MODULE_INDEX drvIndex);
+
+#ifdef __cplusplus
 }
+#endif
+
+#endif //#ifndef DRV_SDSPI_FILE_SYSTEM_H

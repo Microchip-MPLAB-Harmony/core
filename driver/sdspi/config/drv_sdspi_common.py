@@ -194,6 +194,17 @@ def instantiateComponent(sdspiComponentCommon):
     sdspiCommonFsSourceFile.setMarkup(True)
     sdspiCommonFsSourceFile.setEnabled((sdspiCommonFsEnable.getValue() == True))
     sdspiCommonFsSourceFile.setDependencies(enableFileSystemIntegration, ["DRV_SDSPI_COMMON_FS_ENABLE"])
+    
+    sdspiCommonFsHeaderFile = sdspiComponentCommon.createFileSymbol("DRV_SDSPI_FS_HEADER", None)
+    sdspiCommonFsHeaderFile.setSourcePath("driver/sdspi/templates/drv_sdspi_file_system.h.ftl")
+    sdspiCommonFsHeaderFile.setOutputName("drv_sdspi_file_system.h")
+    sdspiCommonFsHeaderFile.setDestPath("driver/sdspi/src")
+    sdspiCommonFsHeaderFile.setProjectPath("config/" + configName + "/driver/sdspi/")
+    sdspiCommonFsHeaderFile.setType("HEADER")
+    sdspiCommonFsHeaderFile.setOverwrite(True)
+    sdspiCommonFsHeaderFile.setMarkup(True)
+    sdspiCommonFsHeaderFile.setEnabled((sdspiCommonFsEnable.getValue() == True))
+    sdspiCommonFsHeaderFile.setDependencies(enableFileSystemIntegration, ["DRV_SDSPI_COMMON_FS_ENABLE"])
 
     sdspiSymCommonSysCfgFile = sdspiComponentCommon.createFileSymbol("DRV_SDSPI_COMMON_CFG", None)
     sdspiSymCommonSysCfgFile.setType("STRING")
