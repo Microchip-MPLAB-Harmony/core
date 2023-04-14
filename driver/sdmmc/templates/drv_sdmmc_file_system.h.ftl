@@ -5,7 +5,7 @@
     Microchip Technology Inc.
 
   File Name:
-    drv_sdmmc_file_system.c
+    drv_sdmmc_file_system.h
 
   Summary:
     SDMMC Driver File System Interface Implementation
@@ -39,36 +39,28 @@
 * THAT YOU HAVE PAID DIRECTLY TO MICROCHIP FOR THIS SOFTWARE.
 *******************************************************************************/
 //DOM-IGNORE-END
-
+#ifndef DRV_SDMMC_FILE_SYSTEM_H
+#define DRV_SDMMC_FILE_SYSTEM_H
 // *****************************************************************************
 // *****************************************************************************
 // Section: Include Files
 // *****************************************************************************
 // *****************************************************************************
 
-#include "driver/sdmmc/src/drv_sdmmc_file_system.h"
+#include "driver/sdmmc/drv_sdmmc.h"
+#include "system/fs/sys_fs_media_manager.h"
 
+// DOM-IGNORE-BEGIN
+#ifdef __cplusplus  // Provide C++ Compatibility
+    extern "C" {
+#endif
+// DOM-IGNORE-END
 // *****************************************************************************
 // *****************************************************************************
 // Section: Global objects
 // *****************************************************************************
 // *****************************************************************************
 
-/* FS Function registration table. */
-typedef SYS_FS_MEDIA_COMMAND_STATUS (* CommandStatusGetType)( DRV_HANDLE, SYS_FS_MEDIA_BLOCK_COMMAND_HANDLE );
-
-const SYS_FS_MEDIA_FUNCTIONS sdmmcMediaFunctions =
-{
-    .mediaStatusGet     = DRV_SDMMC_IsAttached,
-    .mediaGeometryGet   = DRV_SDMMC_GeometryGet,
-    .sectorRead         = DRV_SDMMC_AsyncRead,
-    .sectorWrite        = DRV_SDMMC_AsyncWrite,
-    .eventHandlerset    = DRV_SDMMC_EventHandlerSet,
-    .commandStatusGet   = (CommandStatusGetType)DRV_SDMMC_CommandStatus,
-    .open               = DRV_SDMMC_Open,
-    .close              = DRV_SDMMC_Close,
-    .tasks              = DRV_SDMMC_Tasks
-};
 
 // *****************************************************************************
 // *****************************************************************************
@@ -76,13 +68,10 @@ const SYS_FS_MEDIA_FUNCTIONS sdmmcMediaFunctions =
 // *****************************************************************************
 // *****************************************************************************
 
-void DRV_SDMMC_RegisterWithSysFs( const SYS_MODULE_INDEX drvIndex)
-{
-    SYS_FS_MEDIA_MANAGER_Register
-    (
-        (SYS_MODULE_OBJ)drvIndex,
-        (SYS_MODULE_INDEX)drvIndex,
-        &sdmmcMediaFunctions,
-        SYS_FS_MEDIA_TYPE_SD_CARD
-    );
+void DRV_SDMMC_RegisterWithSysFs( const SYS_MODULE_INDEX drvIndex);
+
+#ifdef __cplusplus
 }
+#endif
+
+#endif //#ifndef DRV_SDMMC_FILE_SYSTEM_H

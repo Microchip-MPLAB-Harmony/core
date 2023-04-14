@@ -135,6 +135,17 @@ def instantiateComponent(sdmmcCommonComponent):
     sdmmcCommonFsSourceFile.setEnabled((sdmmcCommonFsEnable.getValue() == True))
     sdmmcCommonFsSourceFile.setDependencies(enableFileSystemIntegration, ["DRV_SDMMC_COMMON_FS_ENABLE"])
 
+    sdmmcCommonFsHeaderFile = sdmmcCommonComponent.createFileSymbol("DRV_SDMMC_FS_HEADER", None)
+    sdmmcCommonFsHeaderFile.setSourcePath("driver/sdmmc/templates/drv_sdmmc_file_system.h.ftl")
+    sdmmcCommonFsHeaderFile.setOutputName("drv_sdmmc_file_system.h")
+    sdmmcCommonFsHeaderFile.setDestPath("driver/sdmmc/src")
+    sdmmcCommonFsHeaderFile.setProjectPath("config/" + configName + "/driver/sdmmc/")
+    sdmmcCommonFsHeaderFile.setType("HEADER")
+    sdmmcCommonFsHeaderFile.setOverwrite(True)
+    sdmmcCommonFsHeaderFile.setMarkup(True)
+    sdmmcCommonFsHeaderFile.setEnabled((sdmmcCommonFsEnable.getValue() == True))
+    sdmmcCommonFsHeaderFile.setDependencies(enableFileSystemIntegration, ["DRV_SDMMC_COMMON_FS_ENABLE"])
+
     sdmmcCommonSystemDefFile = sdmmcCommonComponent.createFileSymbol("DRV_SDMMC_SYS_DEF_COMMON", None)
     sdmmcCommonSystemDefFile.setType("STRING")
     sdmmcCommonSystemDefFile.setOutputName("core.LIST_SYSTEM_DEFINITIONS_H_INCLUDES")
