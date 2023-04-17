@@ -40,8 +40,8 @@ System Service Media Interface Declarations and Types
 *******************************************************************************/
 //DOM-IGNORE-END
 
-#ifndef _SYS_MEDIA_INTERFACE_H_
-#define _SYS_MEDIA_INTERFACE_H_
+#ifndef SYS_MEDIA_INTERFACE_H_
+#define SYS_MEDIA_INTERFACE_H_
 
 // DOM-IGNORE-BEGIN
 #ifdef __cplusplus  // Provide C++ Compatibility
