@@ -1,6 +1,6 @@
 // <editor-fold defaultstate="collapsed" desc="DRV_NAND_FLASH Initialization Data">
 
-const DRV_NAND_FLASH_PLIB_INTERFACE drvNandFlashPlibAPI = {
+static const DRV_NAND_FLASH_PLIB_INTERFACE drvNandFlashPlibAPI = {
     .DataAddressGet              = ${DRV_NAND_FLASH_PLIB}_DataAddressGet,
     .CommandWrite                = ${DRV_NAND_FLASH_PLIB}_CommandWrite,
     .CommandWrite16              = ${DRV_NAND_FLASH_PLIB}_CommandWrite16,
@@ -22,7 +22,7 @@ const DRV_NAND_FLASH_PLIB_INTERFACE drvNandFlashPlibAPI = {
 </#if>
 };
 
-const DRV_NAND_FLASH_INIT drvNandFlashInitData =
+static const DRV_NAND_FLASH_INIT drvNandFlashInitData =
 {
     .nandFlashPlib         = &drvNandFlashPlibAPI,
 };
