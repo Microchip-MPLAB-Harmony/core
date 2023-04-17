@@ -1,7 +1,7 @@
 // <editor-fold defaultstate="collapsed" desc="DRV_AT25 Initialization Data">
 
 /* SPI PLIB Interface Initialization for AT25 Driver */
-const DRV_AT25_PLIB_INTERFACE drvAT25PlibAPI = {
+static const DRV_AT25_PLIB_INTERFACE drvAT25PlibAPI = {
 
     /* SPI PLIB WriteRead function */
     .writeRead = (DRV_AT25_PLIB_WRITE_READ)${.vars["${DRV_AT25_PLIB?lower_case}"].SPI_PLIB_API_PREFIX}_WriteRead,
@@ -20,7 +20,7 @@ const DRV_AT25_PLIB_INTERFACE drvAT25PlibAPI = {
 };
 
 /* AT25 Driver Initialization Data */
-const DRV_AT25_INIT drvAT25InitData =
+static const DRV_AT25_INIT drvAT25InitData =
 {
     /* SPI PLIB API  interface*/
     .spiPlib = &drvAT25PlibAPI,
