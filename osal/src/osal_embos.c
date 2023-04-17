@@ -570,7 +570,7 @@ const char* OSAL_Name()
 *   }
 *
 */
-OSAL_RESULT OSAL_Initialize()
+OSAL_RESULT OSAL_Initialize(void)
 {
   return OSAL_RESULT_TRUE;
 }

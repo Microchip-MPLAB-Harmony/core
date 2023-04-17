@@ -800,7 +800,7 @@ const char __inline__  __attribute__ ((always_inline)) *OSAL_Name(void)
 
   Remarks:
  */
-OSAL_RESULT OSAL_Initialize()
+OSAL_RESULT OSAL_Initialize(void)
 {
   // nothing required
   return OSAL_RESULT_TRUE;

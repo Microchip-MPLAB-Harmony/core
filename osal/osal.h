@@ -250,14 +250,11 @@
     <code>
     if (OSAL_SEM_Pend(&semUARTRX, 50) == OSAL_RESULT_TRUE)
     {
-        // character available
-        c = DRV_USART_ReadByte(drvID);
-        ...
+       c = DRV_USART_ReadByte(drvID);        
     }
     else
     {
-        // character not available, resend prompt
-        ...
+       
     }
     </code>
 
@@ -328,13 +325,9 @@
     <code>
      void __ISR(UART_2_VECTOR) _UART2RXHandler()
      {
-        char c;
-
-        // read the character
-        c = U2RXREG;
-        // clear the interrupt flag
-        IFS1bits.U2IF = 0;
-        // post a semaphore indicating a character has been received
+        char c;        
+        c = U2RXREG;        
+        IFS1bits.U2IF = 0;        
         OSAL_SEM_PostISR(&semSignal);
 
      }
@@ -379,16 +372,13 @@
 
      if (semCount > 0)
      {
-        // obtain the semaphore
          if (OSAL_SEM_Pend(&semUART) == OSAL_RESULT_TRUE)
          {
-            // perform processing on the comm channel
             ...
          }
      }
      else
      {
-        // no comm channels available
         ...
      }
     </code>
@@ -433,9 +423,7 @@
   Example:
     <code>
      OSAL_CRITSECT_DATA_TYPE IntState;
-     // prevent other tasks pre-empting this sequence of code
      IntState = OSAL_CRIT_Enter(OSAL_CRIT_TYPE_HIGH);
-     // modify the peripheral
      DRV_USART_Reinitialize( objUSART,  &initData);
      OSAL_CRIT_Leave(OSAL_CRIT_TYPE_HIGH, IntState);
     </code>
@@ -480,10 +468,8 @@
 
   Example:
     <code>
-     OSAL_CRITSECT_DATA_TYPE IntState;
-     // prevent other tasks pre-empting this sequence of code
+     OSAL_CRITSECT_DATA_TYPE IntState;     
      intState = OSAL_CRIT_Enter(OSAL_CRIT_TYPE_LOW);
-     // modify the peripheral
      DRV_USART_Reinitialize( objUSART,  &initData);
      OSAL_CRIT_Leave(OSAL_CRIT_TYPE_LOW, IntState);
     </code>
@@ -544,7 +530,6 @@
     ...
      if (OSAL_MUTEX_Lock(&mutexData, 1000) == OSAL_RESULT_TRUE)
      {
-        // manipulate the shared data
         ...
      }
     </code>
@@ -621,10 +606,8 @@
     ...
      if (OSAL_MUTEX_Lock(&mutexData, 1000) == OSAL_RESULT_TRUE)
      {
-        // manipulate the shared data
         ...
 
-        // unlock the mutex
         OSAL_MUTEX_Unlock(&mutexData);
      }
     </code>
@@ -661,10 +644,7 @@
     ...
     if (OSAL_MUTEX_Lock(&mutexData, 1000) == OSAL_RESULT_TRUE)
     {
-        // manipulate the shared data
-        ...
-
-        // unlock the mutex
+        
         OSAL_MUTEX_Unlock(&mutexData);
     }
     </code>
@@ -703,7 +683,6 @@
 
   Example:
     <code>
-    // create a working array
     uint8_t* pData;
 
      pData = OSAL_Malloc(32);
@@ -743,18 +722,14 @@
     None.
 
   Example:
-    <code>
-    // create a working array
+    <code>    
     uint8_t* pData;
 
      pData = OSAL_Malloc(32);
      if (pData != NULL)
      {
-        ...
-
-        // deallocate the memory
+        ...        
         OSAL_Free(pData);
-        // and prevent it accidentally being used again
         pData = NULL;
      }
     </code>
@@ -827,8 +802,7 @@
     * const char* -   Name of the underlying RTOS or NULL
 
   Example:
-    <code>
-    // get the RTOS name
+    <code>    
     const char* sName;
 
     sName = OSAL_Name();

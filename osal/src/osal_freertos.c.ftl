@@ -294,9 +294,6 @@ OSAL_RESULT OSAL_SEM_Create(OSAL_SEM_HANDLE_TYPE* semID, OSAL_SEM_TYPE type, uin
 <#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
 #pragma coverity compliance end_block "MISRA C-2012 Rule 16.1"
 #pragma coverity compliance end_block "MISRA C-2012 Rule 16.3"
-<#if core.COMPILER_CHOICE == "XC32">
-#pragma GCC diagnostic pop
-</#if>    
 </#if> 
 /* MISRAC 2012 deviation block end */
 // *****************************************************************************
@@ -438,6 +435,14 @@ OSAL_RESULT OSAL_SEM_Post(OSAL_SEM_HANDLE_TYPE* semID)
 }
 
 // *****************************************************************************
+/* MISRA C-2012 Rule 15.6, 14.4,20.7 deviated below. Deviation record ID -  
+   H3_MISRAC_2012_R_14_4_DR_1, H3_MISRAC_2012_R_15_6_DR_1 & H3_MISRAC_2012_R_20_7_DR_1*/
+<#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
+#pragma coverity compliance block \
+(deviate:1 "MISRA C-2012 Rule 14.4" "H3_MISRAC_2012_R_14_4_DR_1" )\
+(deviate:1 "MISRA C-2012 Rule 15.6" "H3_MISRAC_2012_R_15_6_DR_1" )\
+(deviate:1 "MISRA C-2012 Rule 20.7" "H3_MISRAC_2012_R_20_7_DR_1" )   
+</#if>
 /* Function: OSAL_RESULT OSAL_SEM_PostISR(OSAL_SEM_HANDLE_TYPE* semID)
 
   Summary:
@@ -493,6 +498,15 @@ OSAL_RESULT OSAL_SEM_PostISR(OSAL_SEM_HANDLE_TYPE* semID)
   return (OSAL_RESULT)OSAL_RESULT_FALSE;
 }
 
+<#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
+#pragma coverity compliance end_block "MISRA C-2012 Rule 14.4"
+#pragma coverity compliance end_block "MISRA C-2012 Rule 15.6"
+#pragma coverity compliance end_block "MISRA C-2012 Rule 20.7"
+<#if core.COMPILER_CHOICE == "XC32">
+#pragma GCC diagnostic pop
+</#if>    
+</#if>
+/* MISRAC 2012 deviation block end */
 // *****************************************************************************
 /* Function: uint8_t OSAL_SEM_GetCount(OSAL_SEM_HANDLE_TYPE* semID)
 

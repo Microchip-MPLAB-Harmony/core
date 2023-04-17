@@ -846,7 +846,7 @@ void OSAL_Free(void* pData)
 
   Remarks:
  */
-OSAL_RESULT OSAL_Initialize()
+OSAL_RESULT OSAL_Initialize(void)
 {
   // nothing required
   return OSAL_RESULT_TRUE;
