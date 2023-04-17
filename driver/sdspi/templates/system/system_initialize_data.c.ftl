@@ -8,18 +8,29 @@ static DRV_SDSPI_CLIENT_OBJ drvSDSPI${INDEX}ClientObjPool[DRV_SDSPI_CLIENTS_NUMB
 static DRV_SDSPI_BUFFER_OBJ drvSDSPI${INDEX}TransferObjPool[DRV_SDSPI_QUEUE_SIZE_IDX${INDEX?string}];
 </#if>
 
+/* MISRA C-2012 Rule 11.1, 11.8 deviated below. Deviation record ID -  
+   H3_MISRAC_2012_R_11_1_DR_1 & H3_MISRAC_2012_R_11_8_DR_1*/
+<#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
+<#if core.COMPILER_CHOICE == "XC32">
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wunknown-pragmas"
+</#if>
+#pragma coverity compliance block \
+(deviate:3 "MISRA C-2012 Rule 11.1" "H3_MISRAC_2012_R_11_1_DR_1" )\
+(deviate:2 "MISRA C-2012 Rule 11.8" "H3_MISRAC_2012_R_11_8_DR_1" )   
+</#if>
 <#if DRV_SDSPI_INTERFACE_TYPE == "SPI_PLIB">
 /* SPI PLIB Interface Initialization for SDSPI Driver */
-const DRV_SDSPI_PLIB_INTERFACE drvSDSPI${INDEX?string}PlibAPI = {
+static const DRV_SDSPI_PLIB_INTERFACE drvSDSPI${INDEX?string}PlibAPI = {
 
     /* SPI PLIB WriteRead function */
     .writeRead = (DRV_SDSPI_PLIB_WRITEREAD)${.vars["${DRV_SDSPI_PLIB?lower_case}"].SPI_PLIB_API_PREFIX}_WriteRead,
 
     /* SPI PLIB Write function */
-    .write = (DRV_SDSPI_PLIB_WRITE)${.vars["${DRV_SDSPI_PLIB?lower_case}"].SPI_PLIB_API_PREFIX}_Write,
+    .write_t = (DRV_SDSPI_PLIB_WRITE)${.vars["${DRV_SDSPI_PLIB?lower_case}"].SPI_PLIB_API_PREFIX}_Write,
 
     /* SPI PLIB Read function */
-    .read = (DRV_SDSPI_PLIB_READ)${.vars["${DRV_SDSPI_PLIB?lower_case}"].SPI_PLIB_API_PREFIX}_Read,
+    .read_t = (DRV_SDSPI_PLIB_READ)${.vars["${DRV_SDSPI_PLIB?lower_case}"].SPI_PLIB_API_PREFIX}_Read,
 
     /* SPI PLIB Transfer Status function */
     .isTransmitterBusy = (DRV_SPI_PLIB_TRANSMITTER_IS_BUSY)${.vars["${DRV_SDSPI_PLIB?lower_case}"].SPI_PLIB_API_PREFIX}_IsTransmitterBusy,
@@ -31,66 +42,66 @@ const DRV_SDSPI_PLIB_INTERFACE drvSDSPI${INDEX?string}PlibAPI = {
 };
 
 <@compress single_line=true>
-const uint32_t drvSDSPI${INDEX?string}remapDataBits[]=
+static const uint32_t drvSDSPI${INDEX?string}remapDataBits[]=
 {
     <#if .vars["${DRV_SDSPI_PLIB?lower_case}"].SPI_CHARSIZE_BITS_8_BIT_MASK?has_content>
         ${.vars["${DRV_SDSPI_PLIB?lower_case}"].SPI_CHARSIZE_BITS_8_BIT_MASK},
     <#else>
-        0xFFFFFFFF,
+        0xFFFFFFFFU,
     </#if>
 
     <#if .vars["${DRV_SDSPI_PLIB?lower_case}"].SPI_CHARSIZE_BITS_9_BIT_MASK?has_content>
         ${.vars["${DRV_SDSPI_PLIB?lower_case}"].SPI_CHARSIZE_BITS_9_BIT_MASK},
     <#else>
-        0xFFFFFFFF,
+        0xFFFFFFFFU,
     </#if>
 
     <#if .vars["${DRV_SDSPI_PLIB?lower_case}"].SPI_CHARSIZE_BITS_10_BIT_MASK?has_content>
         ${.vars["${DRV_SDSPI_PLIB?lower_case}"].SPI_CHARSIZE_BITS_10_BIT_MASK},
     <#else>
-        0xFFFFFFFF,
+        0xFFFFFFFFU,
     </#if>
 
     <#if .vars["${DRV_SDSPI_PLIB?lower_case}"].SPI_CHARSIZE_BITS_11_BIT_MASK?has_content>
         ${.vars["${DRV_SDSPI_PLIB?lower_case}"].SPI_CHARSIZE_BITS_11_BIT_MASK},
      <#else>
-        0xFFFFFFFF,
+        0xFFFFFFFFU,
     </#if>
 
     <#if .vars["${DRV_SDSPI_PLIB?lower_case}"].SPI_CHARSIZE_BITS_12_BIT_MASK?has_content>
         ${.vars["${DRV_SDSPI_PLIB?lower_case}"].SPI_CHARSIZE_BITS_12_BIT_MASK},
     <#else>
-        0xFFFFFFFF,
+        0xFFFFFFFFU,
     </#if>
 
     <#if .vars["${DRV_SDSPI_PLIB?lower_case}"].SPI_CHARSIZE_BITS_13_BIT_MASK?has_content>
         ${.vars["${DRV_SDSPI_PLIB?lower_case}"].SPI_CHARSIZE_BITS_13_BIT_MASK},
     <#else>
-        0xFFFFFFFF,
+        0xFFFFFFFFU,
     </#if>
 
     <#if .vars["${DRV_SDSPI_PLIB?lower_case}"].SPI_CHARSIZE_BITS_14_BIT_MASK?has_content>
         ${.vars["${DRV_SDSPI_PLIB?lower_case}"].SPI_CHARSIZE_BITS_14_BIT_MASK},
     <#else>
-        0xFFFFFFFF,
+        0xFFFFFFFFU,
     </#if>
 
     <#if .vars["${DRV_SDSPI_PLIB?lower_case}"].SPI_CHARSIZE_BITS_15_BIT_MASK?has_content>
         ${.vars["${DRV_SDSPI_PLIB?lower_case}"].SPI_CHARSIZE_BITS_15_BIT_MASK},
     <#else>
-        0xFFFFFFFF,
+        0xFFFFFFFFU,
     </#if>
 
     <#if .vars["${DRV_SDSPI_PLIB?lower_case}"].SPI_CHARSIZE_BITS_16_BIT_MASK?has_content>
         ${.vars["${DRV_SDSPI_PLIB?lower_case}"].SPI_CHARSIZE_BITS_16_BIT_MASK}
     <#else>
-        0xFFFFFFFF
+        0xFFFFFFFFU
     </#if>
 };
 </@compress>
 
 <@compress single_line=true>
-const uint32_t drvSDSPI${INDEX?string}remapClockPolarity[] =
+static const uint32_t drvSDSPI${INDEX?string}remapClockPolarity[] =
 {
     ${.vars["${DRV_SDSPI_PLIB?lower_case}"].SPI_CLOCK_POLARITY_LOW_MASK},
     ${.vars["${DRV_SDSPI_PLIB?lower_case}"].SPI_CLOCK_POLARITY_HIGH_MASK}
@@ -98,7 +109,7 @@ const uint32_t drvSDSPI${INDEX?string}remapClockPolarity[] =
 </@compress>
 
 <@compress single_line=true>
-const uint32_t drvSDSPI${INDEX?string}remapClockPhase[] =
+static const uint32_t drvSDSPI${INDEX?string}remapClockPhase[] =
 {
     ${.vars["${DRV_SDSPI_PLIB?lower_case}"].SPI_CLOCK_PHASE_TRAILING_MASK},
     ${.vars["${DRV_SDSPI_PLIB?lower_case}"].SPI_CLOCK_PHASE_LEADING_MASK}
@@ -108,7 +119,7 @@ const uint32_t drvSDSPI${INDEX?string}remapClockPhase[] =
 </#if>
 
 /* SDSPI Driver Initialization Data */
-const DRV_SDSPI_INIT drvSDSPI${INDEX?string}InitData =
+static const DRV_SDSPI_INIT drvSDSPI${INDEX?string}InitData =
 {
 <#if DRV_SDSPI_INTERFACE_TYPE == "SPI_PLIB">
     /* SD Card SPI PLIB API interface*/
@@ -176,5 +187,12 @@ const DRV_SDSPI_INIT drvSDSPI${INDEX?string}InitData =
 </#if>
 </#if>
 };
-
+<#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
+#pragma coverity compliance end_block "MISRA C-2012 Rule 11.1"
+#pragma coverity compliance end_block "MISRA C-2012 Rule 11.8"
+<#if core.COMPILER_CHOICE == "XC32">
+#pragma GCC diagnostic pop
+</#if>    
+</#if>
+/* MISRAC 2012 deviation block end */
 // </editor-fold>

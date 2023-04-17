@@ -276,10 +276,10 @@ static bool lDRV_SDSPI_CommandSend(
     /* Frame the command */
     dObj->cmdRespBuffer[0] = ((uint8_t)gDrvSDSPICmdTable[command].commandCode | DRV_SDSPI_TRANSMIT_SET);
     /* SD Card expects argument in big-endian format */
-    dObj->cmdRespBuffer[1] = ((uint8_t*)&arg)[3];
-    dObj->cmdRespBuffer[2] = ((uint8_t*)&arg)[2];
-    dObj->cmdRespBuffer[3] = ((uint8_t*)&arg)[1];
-    dObj->cmdRespBuffer[4] = ((uint8_t*)&arg)[0];
+    dObj->cmdRespBuffer[1] = (uint8_t)(arg >> 24);
+    dObj->cmdRespBuffer[2] = (uint8_t)(arg >> 16);
+    dObj->cmdRespBuffer[3] = (uint8_t)(arg >> 8);
+    dObj->cmdRespBuffer[4] = (uint8_t)(arg);
     dObj->cmdRespBuffer[5] = gDrvSDSPICmdTable[command].crc;
     /* Dummy data. Only used in case of DRV_SDSPI_STOP_TRANSMISSION */
     dObj->cmdRespBuffer[6] = 0xFF;
@@ -578,7 +578,7 @@ static bool lDRV_SDSPI_ReadCSD(DRV_SDSPI_OBJ* const dObj)
         /* Data token(1) + CSD(16) + CRC(2) + Dummy(1) = 20 Bytes */
         if (DRV_SDSPI_SPIRead(dObj, (void*)dObj->cmdRespBuffer, DRV_SDSPI_CSD_READ_SIZE) == true)
         {
-            (void) memcpy(dObj->csdData, (const void*)dObj->cmdRespBuffer, DRV_SDSPI_CSD_READ_SIZE);
+            (void) memcpy(dObj->csdData, (uint8_t *)dObj->cmdRespBuffer, DRV_SDSPI_CSD_READ_SIZE);
             /* Process the received CSD data from the SD Card */
             dObj->discCapacity = lDRV_SDSPI_ProcessCSD(dObj->csdData);
             isSuccess = true;
@@ -605,7 +605,7 @@ static bool lDRV_SDSPI_ReadCID(DRV_SDSPI_OBJ* const dObj)
         /* Data token(1) + CID(16) + CRC(2) + Dummy(1) = 20 Bytes */
         if (DRV_SDSPI_SPIRead(dObj, (void*)dObj->cmdRespBuffer, DRV_SDSPI_CID_READ_SIZE) == true)
         {
-            (void) memcpy(dObj->cidData, (const void*)dObj->cmdRespBuffer, DRV_SDSPI_CID_READ_SIZE);
+            (void) memcpy(dObj->cidData, (uint8_t *)dObj->cmdRespBuffer, DRV_SDSPI_CID_READ_SIZE);
             isSuccess = true;
         }
     }
@@ -637,12 +637,14 @@ static void lDRV_SDSPI_CheckWriteProtectStatus
 {
     dObj->isWriteProtected = 0U;
 
+#if defined (DRV_SDSPI_ENABLE_WRITE_PROTECT_CHECK)
     /* Check if the Write Protect check is enabled */
     if (DRV_SDSPI_EnableWriteProtectCheck())
     {
         /* Read from the pin */
         dObj->isWriteProtected = (uint8_t)(SYS_PORT_PinRead (dObj->writeProtectPin));
     }
+#endif
 }
 
 static bool lDRV_SDSPI_ReadResponseWithTimeout(
@@ -1350,7 +1352,7 @@ static DRV_SDSPI_ATTACH lDRV_SDSPI_MediaCommandDetect ( SYS_MODULE_OBJ object )
                 /* Data token(1) + CID(16) + CRC(2) + Dummy(1) = 20 Bytes */
                 if (DRV_SDSPI_SPIRead(dObj, (void*)dObj->cmdRespBuffer, DRV_SDSPI_CID_READ_SIZE) == true)
                 {
-                    if (memcmp(dObj->cidData, (const void*)dObj->cmdRespBuffer, DRV_SDSPI_CID_READ_SIZE - 1) == 0)
+                    if (memcmp(dObj->cidData, (uint8_t *)dObj->cmdRespBuffer, DRV_SDSPI_CID_READ_SIZE - 1) == 0)
                     {
                         isCardAttached = DRV_SDSPI_IS_ATTACHED;
                     }
@@ -1501,6 +1503,10 @@ void DRV_SDSPI_Tasks ( SYS_MODULE_OBJ object )
 // Section: Driver Interface Function Definitions
 // *****************************************************************************
 // *****************************************************************************
+/* MISRA C-2012 Rule 11.1 deviated:2 Deviation record ID -  H3_MISRAC_2012_R_11_1_DR_1 */
+<#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
+#pragma coverity compliance block deviate:2 "MISRA C-2012 Rule 11.1" "H3_MISRAC_2012_R_11_1_DR_1"    
+</#if>
 
 SYS_MODULE_OBJ DRV_SDSPI_Initialize(
     const SYS_MODULE_INDEX drvIndex,
@@ -1672,7 +1678,7 @@ SYS_MODULE_OBJ DRV_SDSPI_Initialize(
     return ( (SYS_MODULE_OBJ)drvIndex );
 }
 <#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
-#pragma coverity compliance end_block "MISRA C-2012 Rule 11.3"
+#pragma coverity compliance end_block "MISRA C-2012 Rule 11.1"  
 </#if>
 /* MISRAC 2012 deviation block end */
 
@@ -1765,7 +1771,7 @@ SYS_STATUS DRV_SDSPI_Status( SYS_MODULE_OBJ object )
     return (gDrvSDSPIObj[object].status);
 }
 
-void DRV_SDSPI_Close( const DRV_HANDLE handle )
+void DRV_SDSPI_Close( DRV_HANDLE handle )
 {
     DRV_SDSPI_CLIENT_OBJ* clientObj;
     DRV_SDSPI_OBJ* dObj;

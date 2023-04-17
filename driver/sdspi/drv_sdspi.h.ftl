@@ -488,7 +488,7 @@ DRV_HANDLE DRV_SDSPI_Open(const SYS_MODULE_INDEX drvIndex, const DRV_IO_INTENT i
     Usually there is no need for the driver client to verify that the Close
     operation has completed.
 */
-void DRV_SDSPI_Close(const DRV_HANDLE handle);
+void DRV_SDSPI_Close(DRV_HANDLE handle);
 
 // *****************************************************************************
 /* Function:

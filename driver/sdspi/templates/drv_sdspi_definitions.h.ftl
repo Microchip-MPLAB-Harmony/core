@@ -143,19 +143,19 @@ typedef struct
 
 } DRV_SDSPI_TRANSFER_SETUP;
 
-typedef    void (* DRV_SDSPI_PLIB_CALLBACK)( uintptr_t );
+typedef    void (* DRV_SDSPI_PLIB_CALLBACK)( uintptr_t context);
 
-typedef    bool (* DRV_SDSPI_PLIB_WRITEREAD)(void*, size_t, void *, size_t);
+typedef    bool (* DRV_SDSPI_PLIB_WRITEREAD)(void* pTransmitData, size_t txSize, void * pReceiveData, size_t rxSize);
 
-typedef    bool (* DRV_SDSPI_PLIB_WRITE)(void*, size_t);
+typedef    bool (* DRV_SDSPI_PLIB_WRITE)(void* pTransmitData, size_t rxSize);
 
-typedef    bool (* DRV_SDSPI_PLIB_READ)(void*, size_t);
+typedef    bool (* DRV_SDSPI_PLIB_READ)(void* pReceiveData, size_t rxSize);
 
 typedef    bool (* DRV_SDSPI_PLIB_SETUP)(DRV_SDSPI_TRANSFER_SETUP * setup, uint32_t spiSourceClock);
 
 typedef    bool (* DRV_SPI_PLIB_TRANSMITTER_IS_BUSY)(void);
 
-typedef    void (* DRV_SDSPI_PLIB_CALLBACK_REGISTER)(DRV_SDSPI_PLIB_CALLBACK, uintptr_t);
+typedef    void (* DRV_SDSPI_PLIB_CALLBACK_REGISTER)(DRV_SDSPI_PLIB_CALLBACK callbackFunction, uintptr_t obj);
 
 // *****************************************************************************
 /* SDSPI Driver PLIB Interface Data
@@ -177,10 +177,10 @@ typedef struct
     DRV_SDSPI_PLIB_WRITEREAD               writeRead;
 
     /* SDSPI PLIB write API */
-    DRV_SDSPI_PLIB_WRITE                   write;
+    DRV_SDSPI_PLIB_WRITE                   write_t;
 
     /* SDSPI PLIB read API */
-    DRV_SDSPI_PLIB_READ                    read;
+    DRV_SDSPI_PLIB_READ                    read_t;
 
     DRV_SDSPI_PLIB_SETUP                   transferSetup;
 

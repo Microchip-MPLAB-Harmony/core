@@ -145,14 +145,14 @@ void DRV_SDSPI_RX_DMA_CallbackHandler(
             dObj->nBytesTransferred += size;
 
             /* Always set up the rx channel first */
-            SYS_DMA_ChannelTransfer(
+            (void) SYS_DMA_ChannelTransfer(
                 dObj->rxDMAChannel,
                 (const void*)dObj->rxAddress,
                 (const void *)&((uint8_t*)dObj->pReceiveData)[index],
                 size
             );
 
-            SYS_DMA_ChannelTransfer(
+            (void) SYS_DMA_ChannelTransfer(
                 dObj->txDMAChannel,
                 (const void *)dObj->pDummyDataBuffer,
                 (const void*)dObj->txAddress,
@@ -174,14 +174,14 @@ void DRV_SDSPI_RX_DMA_CallbackHandler(
             dObj->nBytesTransferred += size;
 
             /* Always set up the rx channel first */
-            SYS_DMA_ChannelTransfer(
+            (void) SYS_DMA_ChannelTransfer(
                 dObj->rxDMAChannel,
                 (const void*)dObj->rxAddress,
                 (const void *)dObj->pDummyDataBuffer,
                 size
             );
 
-            SYS_DMA_ChannelTransfer(
+            (void) SYS_DMA_ChannelTransfer(
                 dObj->txDMAChannel,
                 (const void *)&((uint8_t*)dObj->pTransmitData)[index],
                 (const void*)dObj->txAddress,
@@ -192,7 +192,10 @@ void DRV_SDSPI_RX_DMA_CallbackHandler(
         {
             dObj->spiTransferStatus = DRV_SDSPI_SPI_TRANSFER_STATUS_COMPLETE;
             /* Make sure that the last byte is shifted out before CS is de-asserted */
-            while (dObj->spiPlib->isTransmitterBusy());
+            while (dObj->spiPlib->isTransmitterBusy())
+            {
+                /* Do Nothing */
+            }
             SYS_PORT_PinSet(dObj->chipSelectPin);
         }
     }
@@ -200,7 +203,10 @@ void DRV_SDSPI_RX_DMA_CallbackHandler(
     {
         dObj->spiTransferStatus = DRV_SDSPI_SPI_TRANSFER_STATUS_ERROR;
         /* Make sure that the last byte is shifted out before CS is de-asserted */
-        while (dObj->spiPlib->isTransmitterBusy());
+        while (dObj->spiPlib->isTransmitterBusy())
+        {
+            /* Do Nothing */
+        }
         SYS_PORT_PinSet(dObj->chipSelectPin);
     }
 }
@@ -268,14 +274,14 @@ static bool lDRV_SDSPI_DMA_Write(
     dObj->nBytesTransferred += size;
 
     /* Always set up the rx channel first */
-    SYS_DMA_ChannelTransfer(
+    (void) SYS_DMA_ChannelTransfer(
         dObj->rxDMAChannel,
         (const void*)dObj->rxAddress,
         (const void *)dObj->pDummyDataBuffer,
         size
     );
 
-    SYS_DMA_ChannelTransfer(
+    (void) SYS_DMA_ChannelTransfer(
         dObj->txDMAChannel,
         (const void *)pWriteBuffer,
         (const void*)dObj->txAddress,
@@ -326,14 +332,14 @@ static bool lDRV_SDSPI_DMA_Read(
     dObj->nBytesTransferred += size;
 
     /* Always set up the rx channel first */
-    SYS_DMA_ChannelTransfer(
+    (void) SYS_DMA_ChannelTransfer(
         dObj->rxDMAChannel,
         (const void*)dObj->rxAddress,
         (const void *)pReadBuffer,
         size
     );
 
-    SYS_DMA_ChannelTransfer(
+    (void) SYS_DMA_ChannelTransfer(
         dObj->txDMAChannel,
         (const void *)dObj->pDummyDataBuffer,
         (const void*)dObj->txAddress,
@@ -377,7 +383,10 @@ void DRV_SDSPI_RX_DMA_CallbackHandler(
     }
 
     /* Make sure that the last byte is shifted out before CS is de-asserted */
-    while (dObj->spiPlib->isTransmitterBusy());
+    while (dObj->spiPlib->isTransmitterBusy())
+    {
+        /* Do Nothing */
+    }
     SYS_PORT_PinSet(dObj->chipSelectPin);
 }
 
@@ -434,7 +443,7 @@ static bool lDRV_SDSPI_DMA_Write(
         SYS_DMA_DESTINATION_ADDRESSING_MODE_FIXED
     );
 
-    SYS_DMA_ChannelTransfer(
+    (void) SYS_DMA_ChannelTransfer(
         dObj->rxDMAChannel,
         (const void *)dObj->rxAddress,      /* Source Address */
         (const void*)&dObj->rxDummyData,    /* Destination Address */
@@ -448,7 +457,7 @@ static bool lDRV_SDSPI_DMA_Write(
         SYS_DMA_DESTINATION_ADDRESSING_MODE_FIXED
     );
 
-    SYS_DMA_ChannelTransfer(
+    (void) SYS_DMA_ChannelTransfer(
         dObj->txDMAChannel,
         (const void *)pWriteBuffer,         /* Source Address */
         (const void*)dObj->txAddress,       /* Destination Address */
@@ -490,7 +499,7 @@ static bool lDRV_SDSPI_DMA_Read(
         SYS_DMA_DESTINATION_ADDRESSING_MODE_INCREMENTED
     );
 
-    SYS_DMA_ChannelTransfer(
+    (void) SYS_DMA_ChannelTransfer(
         dObj->rxDMAChannel,
         (const void *)dObj->rxAddress,      /* Source Address */
         (const void*)pReadBuffer,           /* Destination Address */
@@ -505,7 +514,7 @@ static bool lDRV_SDSPI_DMA_Read(
         SYS_DMA_DESTINATION_ADDRESSING_MODE_FIXED
     );
 
-    SYS_DMA_ChannelTransfer(
+    (void) SYS_DMA_ChannelTransfer(
         dObj->txDMAChannel,
         (const void *)dObj->txDummyData,        /* Source Address */
         (const void*)dObj->txAddress,           /* Destination Address */
@@ -555,7 +564,7 @@ bool DRV_SDSPI_SPIWrite(
     }
     else
     {
-        if (dObj->spiPlib->write (pWriteBuffer, nBytes) == false)
+        if (dObj->spiPlib->write_t (pWriteBuffer, nBytes) == false)
         {
             SYS_PORT_PinSet(dObj->chipSelectPin);
         }
@@ -565,7 +574,7 @@ bool DRV_SDSPI_SPIWrite(
         }
     }
 <#else>
-    if (dObj->spiPlib->write (pWriteBuffer, nBytes) == false)
+    if (dObj->spiPlib->write_t (pWriteBuffer, nBytes) == false)
     {
         SYS_PORT_PinSet(dObj->chipSelectPin);
     }
@@ -617,7 +626,7 @@ bool DRV_SDSPI_SPIRead(
     }
     else
     {
-        if (dObj->spiPlib->read (pReadBuffer, nBytes) == false)
+        if (dObj->spiPlib->read_t (pReadBuffer, nBytes) == false)
         {
             SYS_PORT_PinSet(dObj->chipSelectPin);
         }
@@ -627,7 +636,7 @@ bool DRV_SDSPI_SPIRead(
         }
     }
 <#else>
-    if (dObj->spiPlib->read (pReadBuffer, nBytes) == false)
+    if (dObj->spiPlib->read_t (pReadBuffer, nBytes) == false)
     {
         SYS_PORT_PinSet(dObj->chipSelectPin);
     }
@@ -663,13 +672,13 @@ bool DRV_SDSPI_SPIWriteWithChipSelectDisabled(
     }
     else
     {
-        if (dObj->spiPlib->write (pWriteBuffer, nBytes) == true)
+        if (dObj->spiPlib->write_t (pWriteBuffer, nBytes) == true)
         {
             isSuccess = true;
         }
     }
 <#else>
-    if (dObj->spiPlib->write (pWriteBuffer, nBytes) == true)
+    if (dObj->spiPlib->write_t (pWriteBuffer, nBytes) == true)
     {
         isSuccess = true;
     }
@@ -851,10 +860,16 @@ bool DRV_SDSPI_SPISpeedSetup(
     /* SD Card reads the data on the rising edge of SCK, which means SPI Mode 0
      * and 3 => CPOL = 0, CPHA = 0 and CPOL = 1, CPHA = 1 are supported */
 
-    sdspiSetup.baudRateInHz = clockFrequency;
+    sdspiSetup.baudRateInHz = clockFrequency;    
     sdspiSetup.clockPhase = DRV_SDSPI_CLOCK_PHASE_VALID_LEADING_EDGE;
     sdspiSetup.clockPolarity = DRV_SDSPI_CLOCK_POLARITY_IDLE_LOW;
     sdspiSetup.dataBits = DRV_SDSPI_DATA_BITS_8;
+    sdspiSetup.chipSelect = SYS_PORT_PIN_NONE;
+    sdspiSetup.csPolarity = DRV_SDSPI_CS_POLARITY_ACTIVE_LOW;
+    
+    (void)sdspiSetup.baudRateInHz;
+    (void)sdspiSetup.chipSelect;
+    (void)sdspiSetup.csPolarity;    
 
     setupRemap = sdspiSetup;
 

@@ -40,8 +40,8 @@
  *******************************************************************************/
 // DOM-IGNORE-END
 
-#ifndef _DRV_SDSPI_PLIB_INTERFACE_H
-#define _DRV_SDSPI_PLIB_INTERFACE_H
+#ifndef DRV_SDSPI_PLIB_INTERFACE_H
+#define DRV_SDSPI_PLIB_INTERFACE_H
 
 // *****************************************************************************
 // *****************************************************************************
@@ -309,4 +309,4 @@ bool DRV_SDSPI_SPISpeedSetup(
     uint32_t clockFrequency
 );
 
-#endif //#ifndef _DRV_SDSPI_PLIB_INTERFACE_H
+#endif //#ifndef DRV_SDSPI_PLIB_INTERFACE_H

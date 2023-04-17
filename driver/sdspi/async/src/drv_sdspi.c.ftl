@@ -232,12 +232,14 @@ static void lDRV_SDSPI_CheckWriteProtectStatus
 {
     dObj->isWriteProtected = (uint8_t)false;
 
+#if defined (DRV_SDSPI_ENABLE_WRITE_PROTECT_CHECK)
     /* Check if the Write Protect check is enabled */
     if (DRV_SDSPI_EnableWriteProtectCheck())
     {
         /* Read from the pin */
         dObj->isWriteProtected = (uint8_t)SYS_PORT_PinRead (dObj->writeProtectPin);
     }
+#endif
 }
 
 static DRV_SDSPI_BUFFER_OBJ* lDRV_SDSPI_FreeBufferObjectGet(DRV_SDSPI_CLIENT_OBJ* clientObj)
@@ -1046,7 +1048,7 @@ static DRV_SDSPI_ATTACH lDRV_SDSPI_MediaCommandDetect
             {
                 if (dObj->cmdResponse.response1.byte == 0x00U)
                 {
-                    dObj->cmdDetectState = DRV_SDSPI_CMD_DETECT_CHK_FOR_DETACH_RD_CID_DAT;
+                    dObj->cmdDetectState = DRV_SDSPI_CMD_DETECT_CHK_FR_DETACH_RD_CID_DAT;
                 }
                 else
                 {
@@ -1067,7 +1069,7 @@ static DRV_SDSPI_ATTACH lDRV_SDSPI_MediaCommandDetect
             }
             break;
 
-        case DRV_SDSPI_CMD_DETECT_CHK_FOR_DETACH_RD_CID_DAT:
+        case DRV_SDSPI_CMD_DETECT_CHK_FR_DETACH_RD_CID_DAT:
 
             /* Here the default state of the card is attached */
             cardStatus = DRV_SDSPI_IS_ATTACHED;
@@ -1078,7 +1080,7 @@ static DRV_SDSPI_ATTACH lDRV_SDSPI_MediaCommandDetect
              */
             if (DRV_SDSPI_SPIRead(dObj, &gDrvSDSPITempCidData[object], DRV_SDSPI_CID_READ_SIZE) == true)
             {
-                dObj->cmdDetectState = DRV_SDSPI_CMD_DETECT_CHK_FOR_DETACH_PRCS_CID_DAT;
+                dObj->cmdDetectState = DRV_SDSPI_CMD_DETECT_CHK_FOR_DTCH_PRCS_CID_DAT;
             }
             else
             {
@@ -1088,7 +1090,7 @@ static DRV_SDSPI_ATTACH lDRV_SDSPI_MediaCommandDetect
             }
             break;
 
-        case DRV_SDSPI_CMD_DETECT_CHK_FOR_DETACH_PRCS_CID_DAT:
+        case DRV_SDSPI_CMD_DETECT_CHK_FOR_DTCH_PRCS_CID_DAT:
 
             /* Here the default state of the card is attached */
             cardStatus = DRV_SDSPI_IS_ATTACHED;
@@ -2391,7 +2393,10 @@ static void lDRV_SDSPI_BufferIOTasks
 // Section: Driver Interface Function Definitions
 // *****************************************************************************
 // *****************************************************************************
-
+/* MISRA C-2012 Rule 11.1 deviated:2 Deviation record ID -  H3_MISRAC_2012_R_11_1_DR_1 */
+<#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
+#pragma coverity compliance block deviate:2 "MISRA C-2012 Rule 11.1" "H3_MISRAC_2012_R_11_1_DR_1"    
+</#if>
 SYS_MODULE_OBJ DRV_SDSPI_Initialize
 (
     const SYS_MODULE_INDEX drvIndex,
