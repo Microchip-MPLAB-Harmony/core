@@ -2244,6 +2244,8 @@ SYS_FS_RESULT SYS_FS_CurrentWorkingDirectoryGet
     char cwd[SYS_FS_CWD_STRING_LEN] = { 0 };
     char *ptr = NULL;
     OSAL_RESULT osalResult = OSAL_RESULT_FALSE;
+    char str[] = "/mnt/";
+    uint8_t i = 0U;
 
     if ((buffer == NULL) || (len == 0U))
     {
@@ -2310,8 +2312,11 @@ SYS_FS_RESULT SYS_FS_CurrentWorkingDirectoryGet
 
         ptr = buffer;
         (void) memset (ptr, 0, len);
-
-        (void) memcpy (ptr, "/mnt/", 5);
+        
+        for(i = 0U; str[i] < '\0' ; i++)
+        {
+            ptr[i] = str[i];
+        }
         ptr += 5;
 
         (void) memcpy (ptr, disk->mountName, disk->mountNameLength);

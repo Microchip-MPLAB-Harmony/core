@@ -24,8 +24,16 @@
 -->
 // <editor-fold defaultstate="collapsed" desc="File System Initialization Data">
 
+/* MISRA C-2012 Rule 11.1 deviated:2 Deviation record ID -  H3_MISRAC_2012_R_11_1_DR_1 */
+<#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
+<#if core.COMPILER_CHOICE == "XC32">
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wunknown-pragmas"
+</#if>
+#pragma coverity compliance block deviate:2 "MISRA C-2012 Rule 11.1" "H3_MISRAC_2012_R_11_1_DR_1"    
+</#if>
 <#if SYS_FS_AUTO_MOUNT == true>
-    <#lt>const SYS_FS_MEDIA_MOUNT_DATA sysfsMountTable[SYS_FS_VOLUME_NUMBER] =
+    <#lt> const SYS_FS_MEDIA_MOUNT_DATA sysfsMountTable[SYS_FS_VOLUME_NUMBER] =
     <#lt>{
             <#list 0..4 as i>
                 <#assign FS_ENABLE = "SYS_FS_IDX" + i>
@@ -58,7 +66,7 @@
 </#if>
 
 <#if SYS_FS_FAT == true>
-    <#lt>const SYS_FS_FUNCTIONS FatFsFunctions =
+    <#lt>static const SYS_FS_FUNCTIONS FatFsFunctions =
     <#lt>{
     <#lt>    .mount             = FATFS_mount,
     <#lt>    .unmount           = FATFS_unmount,
@@ -120,7 +128,7 @@
 </#if>
 
 <#if SYS_FS_MPFS == true>
-    <#lt>const SYS_FS_FUNCTIONS MPFSFunctions =
+    <#lt>static const SYS_FS_FUNCTIONS MPFSFunctions =
     <#lt>{
     <#lt>    .mount             = MPFS_Mount,
     <#lt>    .unmount           = MPFS_Unmount,
@@ -160,7 +168,7 @@
 </#if>
 
 <#if SYS_FS_LFS == true>
-    <#lt>const SYS_FS_FUNCTIONS LittleFSFunctions =
+    <#lt>static const SYS_FS_FUNCTIONS LittleFSFunctions =
     <#lt>{
     <#lt>    .mount             = LITTLEFS_mount,
     <#lt>    .unmount           = LITTLEFS_unmount,
@@ -210,7 +218,7 @@
 </#if>
 
 <#if SYS_FS_FILEX == true>
-    <#lt>const SYS_FS_FUNCTIONS FileXFunctions =
+    <#lt>static const SYS_FS_FUNCTIONS FileXFunctions =
     <#lt>{
     <#lt>    .mount             = FILEX_mount,
     <#lt>    .unmount           = FILEX_unmount,
@@ -272,7 +280,7 @@
 </#if>
 
 <#if SYS_FS_FAT == true && SYS_FS_MPFS == true && SYS_FS_LFS == true && SYS_FS_FILEX == true>
-    <#lt>const SYS_FS_REGISTRATION_TABLE sysFSInit [ SYS_FS_MAX_FILE_SYSTEM_TYPE ] =
+    <#lt>static const SYS_FS_REGISTRATION_TABLE sysFSInit [ SYS_FS_MAX_FILE_SYSTEM_TYPE ] =
     <#lt>{
     <#lt>    {
     <#lt>        .nativeFileSystemType = FAT,
@@ -292,7 +300,7 @@
     <#lt>    }
     <#lt>};
 <#elseif SYS_FS_FAT == true && SYS_FS_MPFS == true && SYS_FS_LFS == true && SYS_FS_FILEX == false>
-    <#lt>const SYS_FS_REGISTRATION_TABLE sysFSInit [ SYS_FS_MAX_FILE_SYSTEM_TYPE ] =
+    <#lt>static const SYS_FS_REGISTRATION_TABLE sysFSInit [ SYS_FS_MAX_FILE_SYSTEM_TYPE ] =
     <#lt>{
     <#lt>    {
     <#lt>        .nativeFileSystemType = FAT,
@@ -308,7 +316,7 @@
     <#lt>    }
     <#lt>};
 <#elseif SYS_FS_FAT == true && SYS_FS_MPFS == true && SYS_FS_LFS == false && SYS_FS_FILEX == true>
-    <#lt>const SYS_FS_REGISTRATION_TABLE sysFSInit [ SYS_FS_MAX_FILE_SYSTEM_TYPE ] =
+    <#lt>static const SYS_FS_REGISTRATION_TABLE sysFSInit [ SYS_FS_MAX_FILE_SYSTEM_TYPE ] =
     <#lt>{
     <#lt>    {
     <#lt>        .nativeFileSystemType = FAT,
@@ -324,7 +332,7 @@
     <#lt>    }
     <#lt>};
 <#elseif SYS_FS_FAT == true && SYS_FS_MPFS == true && SYS_FS_LFS == false && SYS_FS_FILEX == false>
-    <#lt>const SYS_FS_REGISTRATION_TABLE sysFSInit [ SYS_FS_MAX_FILE_SYSTEM_TYPE ] =
+    <#lt>static const SYS_FS_REGISTRATION_TABLE sysFSInit [ SYS_FS_MAX_FILE_SYSTEM_TYPE ] =
     <#lt>{
     <#lt>    {
     <#lt>        .nativeFileSystemType = FAT,
@@ -336,7 +344,7 @@
     <#lt>    }
     <#lt>};
 <#elseif SYS_FS_FAT == true && SYS_FS_MPFS == false && SYS_FS_LFS == true && SYS_FS_FILEX == true>
-    <#lt>const SYS_FS_REGISTRATION_TABLE sysFSInit [ SYS_FS_MAX_FILE_SYSTEM_TYPE ] =
+    <#lt>static const SYS_FS_REGISTRATION_TABLE sysFSInit [ SYS_FS_MAX_FILE_SYSTEM_TYPE ] =
     <#lt>{
     <#lt>    {
     <#lt>        .nativeFileSystemType = FAT,
@@ -352,7 +360,7 @@
     <#lt>    }
     <#lt>};
 <#elseif SYS_FS_FAT == true && SYS_FS_MPFS == false && SYS_FS_LFS == true && SYS_FS_FILEX == false>
-    <#lt>const SYS_FS_REGISTRATION_TABLE sysFSInit [ SYS_FS_MAX_FILE_SYSTEM_TYPE ] =
+    <#lt>static const SYS_FS_REGISTRATION_TABLE sysFSInit [ SYS_FS_MAX_FILE_SYSTEM_TYPE ] =
     <#lt>{
     <#lt>    {
     <#lt>        .nativeFileSystemType = FAT,
@@ -364,7 +372,7 @@
     <#lt>    }
     <#lt>};
 <#elseif SYS_FS_FAT == true && SYS_FS_MPFS == false && SYS_FS_LFS == false && SYS_FS_FILEX == true>
-    <#lt>const SYS_FS_REGISTRATION_TABLE sysFSInit [ SYS_FS_MAX_FILE_SYSTEM_TYPE ] =
+    <#lt>static const SYS_FS_REGISTRATION_TABLE sysFSInit [ SYS_FS_MAX_FILE_SYSTEM_TYPE ] =
     <#lt>{
     <#lt>    {
     <#lt>        .nativeFileSystemType = FAT,
@@ -376,7 +384,7 @@
     <#lt>    }
     <#lt>};
 <#elseif SYS_FS_FAT == true && SYS_FS_MPFS == false && SYS_FS_LFS == false && SYS_FS_FILEX == false>
-    <#lt>const SYS_FS_REGISTRATION_TABLE sysFSInit [ SYS_FS_MAX_FILE_SYSTEM_TYPE ] =
+    <#lt>static const SYS_FS_REGISTRATION_TABLE sysFSInit [ SYS_FS_MAX_FILE_SYSTEM_TYPE ] =
     <#lt>{
     <#lt>    {
     <#lt>        .nativeFileSystemType = FAT,
@@ -384,7 +392,7 @@
     <#lt>    }
     <#lt>};
 <#elseif SYS_FS_FAT == false && SYS_FS_MPFS == true && SYS_FS_LFS == true && SYS_FS_FILEX == true>
-    <#lt>const SYS_FS_REGISTRATION_TABLE sysFSInit [ SYS_FS_MAX_FILE_SYSTEM_TYPE ] =
+    <#lt>static const SYS_FS_REGISTRATION_TABLE sysFSInit [ SYS_FS_MAX_FILE_SYSTEM_TYPE ] =
     <#lt>{
     <#lt>    {
     <#lt>        .nativeFileSystemType = MPFS2,
@@ -400,7 +408,7 @@
     <#lt>    }
     <#lt>};
 <#elseif SYS_FS_FAT == false && SYS_FS_MPFS == true && SYS_FS_LFS == true && SYS_FS_FILEX == false>
-    <#lt>const SYS_FS_REGISTRATION_TABLE sysFSInit [ SYS_FS_MAX_FILE_SYSTEM_TYPE ] =
+    <#lt>static const SYS_FS_REGISTRATION_TABLE sysFSInit [ SYS_FS_MAX_FILE_SYSTEM_TYPE ] =
     <#lt>{
     <#lt>    {
     <#lt>        .nativeFileSystemType = MPFS2,
@@ -412,7 +420,7 @@
     <#lt>    }
     <#lt>};
 <#elseif SYS_FS_FAT == false && SYS_FS_MPFS == true && SYS_FS_LFS == false && SYS_FS_FILEX == true>
-    <#lt>const SYS_FS_REGISTRATION_TABLE sysFSInit [ SYS_FS_MAX_FILE_SYSTEM_TYPE ] =
+    <#lt>static const SYS_FS_REGISTRATION_TABLE sysFSInit [ SYS_FS_MAX_FILE_SYSTEM_TYPE ] =
     <#lt>{
     <#lt>    {
     <#lt>        .nativeFileSystemType = MPFS2,
@@ -424,7 +432,7 @@
     <#lt>    }
     <#lt>};
 <#elseif SYS_FS_FAT == false && SYS_FS_MPFS == true && SYS_FS_LFS == false && SYS_FS_FILEX == false>
-    <#lt>const SYS_FS_REGISTRATION_TABLE sysFSInit [ SYS_FS_MAX_FILE_SYSTEM_TYPE ] =
+    <#lt>static const SYS_FS_REGISTRATION_TABLE sysFSInit [ SYS_FS_MAX_FILE_SYSTEM_TYPE ] =
     <#lt>{
     <#lt>    {
     <#lt>        .nativeFileSystemType = MPFS2,
@@ -432,7 +440,7 @@
     <#lt>    }
     <#lt>};
 <#elseif SYS_FS_FAT == false && SYS_FS_MPFS == false && SYS_FS_LFS == true && SYS_FS_FILEX == true>
-    <#lt>const SYS_FS_REGISTRATION_TABLE sysFSInit [ SYS_FS_MAX_FILE_SYSTEM_TYPE ] =
+    <#lt>static const SYS_FS_REGISTRATION_TABLE sysFSInit [ SYS_FS_MAX_FILE_SYSTEM_TYPE ] =
     <#lt>{
     <#lt>    {
     <#lt>        .nativeFileSystemType = LITTLEFS,
@@ -444,7 +452,7 @@
     <#lt>    }
     <#lt>};
 <#elseif SYS_FS_FAT == false && SYS_FS_MPFS == false && SYS_FS_LFS == true && SYS_FS_FILEX == false>
-    <#lt>const SYS_FS_REGISTRATION_TABLE sysFSInit [ SYS_FS_MAX_FILE_SYSTEM_TYPE ] =
+    <#lt>static const SYS_FS_REGISTRATION_TABLE sysFSInit [ SYS_FS_MAX_FILE_SYSTEM_TYPE ] =
     <#lt>{
     <#lt>    {
     <#lt>        .nativeFileSystemType = LITTLEFS,
@@ -452,7 +460,7 @@
     <#lt>    }
     <#lt>};
 <#elseif SYS_FS_FAT == false && SYS_FS_MPFS == false && SYS_FS_LFS == false && SYS_FS_FILEX == true>
-    <#lt>const SYS_FS_REGISTRATION_TABLE sysFSInit [ SYS_FS_MAX_FILE_SYSTEM_TYPE ] =
+    <#lt>static const SYS_FS_REGISTRATION_TABLE sysFSInit [ SYS_FS_MAX_FILE_SYSTEM_TYPE ] =
     <#lt>{
     <#lt>    {
     <#lt>        .nativeFileSystemType = FILEX,
@@ -461,7 +469,13 @@
     <#lt>};
 </#if>
 
-
+<#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
+#pragma coverity compliance end_block "MISRA C-2012 Rule 11.1"
+<#if core.COMPILER_CHOICE == "XC32">
+#pragma GCC diagnostic pop
+</#if>    
+</#if>
+/* MISRAC 2012 deviation block end */
 // </editor-fold>
 <#--
 /*******************************************************************************

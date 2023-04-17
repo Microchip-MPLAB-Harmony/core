@@ -24,13 +24,13 @@
 -->
 
 <#if (HarmonyCore.SELECT_RTOS)?? && HarmonyCore.SELECT_RTOS == "FreeRTOS">
-    <#lt>void _SYS_FS_Tasks(  void *pvParameters  )
+    <#lt>static void lSYS_FS_Tasks(  void *pvParameters  )
     <#lt>{
-    <#lt>    while(1)
+    <#lt>    while(true)
     <#lt>    {
     <#lt>        SYS_FS_Tasks();
              <#if SYS_FS_RTOS_USE_DELAY >
-    <#lt>        vTaskDelay(${SYS_FS_RTOS_DELAY} / portTICK_PERIOD_MS);
+    <#lt>        vTaskDelay(${SYS_FS_RTOS_DELAY}U / portTICK_PERIOD_MS);
              </#if>
     <#lt>    }
     <#lt>}
@@ -38,9 +38,9 @@
     <#lt>TX_THREAD      _SYS_FS_Task_TCB;
     <#lt>uint8_t*       _SYS_FS_Task_Stk_Ptr;
 
-    <#lt>static void _SYS_FS_Tasks( ULONG thread_input )
+    <#lt>static void lSYS_FS_Tasks( ULONG thread_input )
     <#lt>{
-    <#lt>    while(1)
+    <#lt>    while(true)
     <#lt>    {
     <#lt>        SYS_FS_Tasks();
              <#if SYS_FS_RTOS_USE_DELAY >
@@ -52,12 +52,12 @@
     <#lt>OS_TCB  _SYS_FS_Tasks_TCB;
     <#lt>CPU_STK _SYS_FS_TasksStk[SYS_FS_STACK_SIZE];
 
-    <#lt>void _SYS_FS_Tasks(  void *pvParameters  )
+    <#lt>static void lSYS_FS_Tasks(  void *pvParameters  )
     <#lt>{
     <#if SYS_FS_RTOS_USE_DELAY == true>
     <#lt>    OS_ERR os_err;
     </#if>
-    <#lt>    while(1)
+    <#lt>    while(true)
     <#lt>    {
     <#lt>        SYS_FS_Tasks();
     <#if SYS_FS_RTOS_USE_DELAY == true>
@@ -66,9 +66,9 @@
     <#lt>    }
     <#lt>}
 <#elseif (HarmonyCore.SELECT_RTOS)?? && HarmonyCore.SELECT_RTOS == "MbedOS">
-    <#lt>void _SYS_FS_Tasks( void *pvParameters )
+    <#lt>static void lSYS_FS_Tasks( void *pvParameters )
     <#lt>{
-    <#lt>    while(1)
+    <#lt>    while(true)
     <#lt>    {
     <#lt>        SYS_FS_Tasks();
              <#if SYS_FS_RTOS_USE_DELAY == true>

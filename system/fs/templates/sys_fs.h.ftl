@@ -749,6 +749,14 @@ typedef void (* SYS_FS_EVENT_HANDLER)
 
 
 // *****************************************************************************
+/* MISRA C-2012 Rule 21.2 deviated:1 Deviation record ID -  H3_MISRAC_2012_R_21_2_DR_1 */
+<#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
+<#if core.COMPILER_CHOICE == "XC32">
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wunknown-pragmas"
+</#if>
+#pragma coverity compliance block deviate:1 "MISRA C-2012 Rule 21.2" "H3_MISRAC_2012_R_21_2_DR_1"    
+</#if>
 /* SYS FS File time structure
 
   Summary:
@@ -799,6 +807,10 @@ typedef union
     uint32_t packedTime;
 } SYS_FS_TIME;
 
+<#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
+#pragma coverity compliance end_block "MISRA C-2012 Rule 21.2"
+</#if>
+/* MISRAC 2012 deviation block end */
 // ****************************************************************************
 // ****************************************************************************
 // Section: File System Abstraction Layer Interface Routines
@@ -1213,10 +1225,6 @@ SYS_FS_RESULT SYS_FS_Unmount
 */
 /* MISRA C-2012 Rule 8.6 deviated:5 Deviation record ID -  H3_MISRAC_2012_R_8_6_DR_1 */
 <#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
-<#if core.COMPILER_CHOICE == "XC32">
-#pragma GCC diagnostic push
-#pragma GCC diagnostic ignored "-Wunknown-pragmas"
-</#if>
 #pragma coverity compliance block deviate:5 "MISRA C-2012 Rule 8.6" "H3_MISRAC_2012_R_8_6_DR_1"    
 </#if>
 void SYS_FS_EventHandlerSet

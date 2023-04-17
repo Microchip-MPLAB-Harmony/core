@@ -26,7 +26,7 @@
 <#if (HarmonyCore.SELECT_RTOS)?? && HarmonyCore.SELECT_RTOS == "BareMetal">
     <#lt>SYS_FS_Tasks();
 <#elseif (HarmonyCore.SELECT_RTOS)?? && HarmonyCore.SELECT_RTOS == "FreeRTOS">
-    <#lt>    xTaskCreate( _SYS_FS_Tasks,
+    <#lt>    (void) xTaskCreate( lSYS_FS_Tasks,
     <#lt>        "SYS_FS_TASKS",
     <#lt>        SYS_FS_STACK_SIZE,
     <#lt>        (void*)NULL,

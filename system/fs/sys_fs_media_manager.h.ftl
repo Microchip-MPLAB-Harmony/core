@@ -137,6 +137,10 @@ typedef uintptr_t SYS_FS_MEDIA_HANDLE;
 #define SYS_FS_MEDIA_BLOCK_COMMAND_HANDLE_INVALID SYS_MEDIA_BLOCK_COMMAND_HANDLE_INVALID
 
 // *****************************************************************************
+/* MISRA C-2012 Rule 5.2 deviated:2 Deviation record ID -  H3_MISRAC_2012_R_5_2_DR_1 */
+<#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
+#pragma coverity compliance block deviate:2 "MISRA C-2012 Rule 5.2" "H3_MISRAC_2012_R_5_2_DR_1"    
+</#if>
 /* SYS FS Media Events
 
    Summary
@@ -165,6 +169,7 @@ typedef enum
 } SYS_FS_MEDIA_BLOCK_EVENT;
 
 <#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
+#pragma coverity compliance end_block "MISRA C-2012 Rule 5.2"
 #pragma coverity compliance end_block "MISRA C-2012 Rule 5.5"
 </#if>
 /* MISRAC 2012 deviation block end */
@@ -735,7 +740,7 @@ bool SYS_FS_MEDIA_MANAGER_VolumePropertyGet
 
 bool SYS_FS_MEDIA_MANAGER_MediaStatusGet
 (
-    const char *deviceName
+    const char *volumeName
 );
 
 //*****************************************************************************
@@ -846,6 +851,7 @@ uintptr_t SYS_FS_MEDIA_MANAGER_AddressGet
 <#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
 #pragma coverity compliance block \
 (deviate:1 "MISRA C-2012 Rule 5.1" "H3_MISRAC_2012_R_5_1_DR_1" )\
+(deviate:1 "MISRA C-2012 Rule 5.2" "H3_MISRAC_2012_R_5_1_DR_1" )\
 (deviate:1 "MISRA C-2012 Rule 8.6" "H3_MISRAC_2012_R_8_6_DR_1" )   
 </#if>
 
@@ -856,6 +862,7 @@ void SYS_FS_MEDIA_MANAGER_EventHandlerSet
 );
 <#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
 #pragma coverity compliance end_block "MISRA C-2012 Rule 5.1"
+#pragma coverity compliance end_block "MISRA C-2012 Rule 5.2"
 #pragma coverity compliance end_block "MISRA C-2012 Rule 8.6"
 <#if core.COMPILER_CHOICE == "XC32">
 #pragma GCC diagnostic pop
@@ -974,6 +981,7 @@ void SYS_FS_MEDIA_MANAGER_Tasks
     void
 );
 
+extern const SYS_FS_MEDIA_MOUNT_DATA sysfsMountTable[];
 //DOM-IGNORE-BEGIN
 #ifdef __cplusplus
 }

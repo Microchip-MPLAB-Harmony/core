@@ -46,14 +46,14 @@
 
 <#if SYS_FS_AUTO_MOUNT == true>
     <#lt>#define SYS_FS_AUTOMOUNT_ENABLE           true
-    <#lt>#define SYS_FS_CLIENT_NUMBER              ${SYS_FS_CLIENT_NUMBER}
+    <#lt>#define SYS_FS_CLIENT_NUMBER              ${SYS_FS_CLIENT_NUMBER}U
 <#else>
     <#lt>#define SYS_FS_AUTOMOUNT_ENABLE           false
 </#if>
 #define SYS_FS_MAX_FILES                  (${SYS_FS_MAX_FILES}U)
 #define SYS_FS_MAX_FILE_SYSTEM_TYPE       (${SYS_FS_MAX_FILE_SYSTEM_TYPE}U)
 #define SYS_FS_MEDIA_MAX_BLOCK_SIZE       (${SYS_FS_MEDIA_MAX_BLOCK_SIZE})
-#define SYS_FS_MEDIA_MANAGER_BUFFER_SIZE  (${SYS_FS_MEDIA_MANAGER_BUFFER_SIZE})
+#define SYS_FS_MEDIA_MANAGER_BUFFER_SIZE  (${SYS_FS_MEDIA_MANAGER_BUFFER_SIZE}U)
 <#if SYS_FS_LFN_ENABLE == true>
     <#lt>#define SYS_FS_USE_LFN                    (1)
 <#else>
