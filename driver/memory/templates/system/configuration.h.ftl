@@ -8,10 +8,10 @@
 <#if DRV_MEMORY_PLIB?has_content >
     <#lt>#define DRV_MEMORY_DEVICE_START_ADDRESS      0x${.vars["${DRV_MEMORY_DEVICE?lower_case}"].START_ADDRESS}
     <#lt>#define DRV_MEMORY_DEVICE_MEDIA_SIZE         ${.vars["${DRV_MEMORY_DEVICE?lower_case}"].MEMORY_MEDIA_SIZE}UL
-    <#lt>#define DRV_MEMORY_DEVICE_MEDIA_SIZE_BYTES   (DRV_MEMORY_DEVICE_MEDIA_SIZE * 1024)
-    <#lt>#define DRV_MEMORY_DEVICE_PROGRAM_SIZE       ${.vars["${DRV_MEMORY_DEVICE?lower_case}"].FLASH_PROGRAM_SIZE}
+    <#lt>#define DRV_MEMORY_DEVICE_MEDIA_SIZE_BYTES   (DRV_MEMORY_DEVICE_MEDIA_SIZE * 1024U)
+    <#lt>#define DRV_MEMORY_DEVICE_PROGRAM_SIZE       ${.vars["${DRV_MEMORY_DEVICE?lower_case}"].FLASH_PROGRAM_SIZE}U
     <#if DRV_MEMORY_ERASE_ENABLE >
-        <#lt>#define DRV_MEMORY_DEVICE_ERASE_SIZE         ${.vars["${DRV_MEMORY_DEVICE?lower_case}"].FLASH_ERASE_SIZE}
+        <#lt>#define DRV_MEMORY_DEVICE_ERASE_SIZE         ${.vars["${DRV_MEMORY_DEVICE?lower_case}"].FLASH_ERASE_SIZE}U
     </#if>
 </#if>
 

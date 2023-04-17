@@ -555,6 +555,7 @@ static MEMORY_DEVICE_TRANSFER_STATUS DRV_MEMORY_HandleEraseWrite
     DRV_MEMORY_BUFFER_OBJECT *bufferObj = dObj->currentBufObj;
     uint8_t pagesPerSector = (uint8_t)(dObj->eraseBlockSize / dObj->writeBlockSize);
     uint32_t readBlockStart = 0;
+    MEMORY_DEVICE_TRANSFER_STATUS memoryHandleRead;
 
     MEMORY_DEVICE_TRANSFER_STATUS transferStatus = MEMORY_DEVICE_TRANSFER_ERROR_UNKNOWN;
 

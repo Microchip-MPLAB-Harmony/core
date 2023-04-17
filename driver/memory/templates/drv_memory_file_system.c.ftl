@@ -1,4 +1,4 @@
-/******************************************************************************
+    /******************************************************************************
   MEMORY Driver File System Interface Implementation
 
   Company:
@@ -55,12 +55,20 @@
 // Section: Global objects
 // *****************************************************************************
 // *****************************************************************************
+/* MISRA C-2012 Rule 11.1 deviated:7 Deviation record ID -  H3_MISRAC_2012_R_11_1_DR_1 */
+<#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
+<#if core.COMPILER_CHOICE == "XC32">
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wunknown-pragmas"
+</#if>
+#pragma coverity compliance block deviate:7 "MISRA C-2012 Rule 11.1" "H3_MISRAC_2012_R_11_1_DR_1"    
+</#if>
 
 /* FS Function registration table. */
-typedef SYS_FS_MEDIA_COMMAND_STATUS (* CommandStatusGetType)( DRV_HANDLE, SYS_FS_MEDIA_BLOCK_COMMAND_HANDLE );
+typedef SYS_FS_MEDIA_COMMAND_STATUS (* CommandStatusGetType)( DRV_HANDLE handle, SYS_FS_MEDIA_BLOCK_COMMAND_HANDLE  commandHandle);
 
 <#if DRV_MEMORY_COMMON_MODE == "Asynchronous" >
-    <#lt>const SYS_FS_MEDIA_FUNCTIONS memoryMediaFunctions =
+    <#lt>static const SYS_FS_MEDIA_FUNCTIONS memoryMediaFunctions =
     <#lt>{
     <#lt>    .mediaStatusGet     = DRV_MEMORY_IsAttached,
     <#lt>    .mediaGeometryGet   = DRV_MEMORY_GeometryGet,
@@ -76,7 +84,7 @@ typedef SYS_FS_MEDIA_COMMAND_STATUS (* CommandStatusGetType)( DRV_HANDLE, SYS_FS
     <#lt>    .tasks              = DRV_MEMORY_Tasks,
     <#lt>};
 <#else>
-    <#lt>const SYS_FS_MEDIA_FUNCTIONS memoryMediaFunctions =
+    <#lt>static const SYS_FS_MEDIA_FUNCTIONS memoryMediaFunctions =
     <#lt>{
     <#lt>    .mediaStatusGet     = DRV_MEMORY_IsAttached,
     <#lt>    .mediaGeometryGet   = DRV_MEMORY_GeometryGet,
@@ -93,6 +101,13 @@ typedef SYS_FS_MEDIA_COMMAND_STATUS (* CommandStatusGetType)( DRV_HANDLE, SYS_FS
     <#lt>};
 </#if>
 
+<#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
+#pragma coverity compliance end_block "MISRA C-2012 Rule 11.1"
+<#if core.COMPILER_CHOICE == "XC32">
+#pragma GCC diagnostic pop
+</#if>    
+</#if>
+/* MISRAC 2012 deviation block end */
 // *****************************************************************************
 // *****************************************************************************
 // Section: MEMORY Driver File system interface Routines
@@ -101,7 +116,7 @@ typedef SYS_FS_MEDIA_COMMAND_STATUS (* CommandStatusGetType)( DRV_HANDLE, SYS_FS
 
 void DRV_MEMORY_RegisterWithSysFs( const SYS_MODULE_INDEX drvIndex, uint8_t mediaType)
 {
-    SYS_FS_MEDIA_MANAGER_Register
+    (void) SYS_FS_MEDIA_MANAGER_Register
     (
         (SYS_MODULE_OBJ)drvIndex,
         (SYS_MODULE_INDEX)drvIndex,

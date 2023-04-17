@@ -40,8 +40,8 @@
 *******************************************************************************/
 //DOM-IGNORE-END
 
-#ifndef _DRV_MEMORY_${DRV_MEMORY_DEVICE}_H
-#define _DRV_MEMORY_${DRV_MEMORY_DEVICE}_H
+#ifndef DRV_MEMORY_${DRV_MEMORY_DEVICE}_H
+#define DRV_MEMORY_${DRV_MEMORY_DEVICE}_H
 
 // *****************************************************************************
 // *****************************************************************************
@@ -82,7 +82,7 @@ bool ${DRV_MEMORY_PLIB}_GeometryGet( const DRV_HANDLE handle, MEMORY_DEVICE_GEOM
 }
 #endif
 
-#endif // #ifndef _DRV_MEMORY_${DRV_MEMORY_DEVICE}_H
+#endif // #ifndef DRV_MEMORY_${DRV_MEMORY_DEVICE}_H
 /*******************************************************************************
  End of File
 */
