@@ -1,7 +1,16 @@
 // <editor-fold defaultstate="collapsed" desc="DRV_AT24 Initialization Data">
 
+/* MISRA C-2012 Rule 11.1 deviated:4 Deviation record ID -  H3_MISRAC_2012_R_11_1_DR_1 */
+<#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
+<#if core.COMPILER_CHOICE == "XC32">
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wunknown-pragmas"
+</#if>
+#pragma coverity compliance block deviate:4 "MISRA C-2012 Rule 11.1" "H3_MISRAC_2012_R_11_1_DR_1"    
+</#if>
+
 /* I2C PLIB Interface Initialization for AT24 Driver */
-const DRV_AT24_PLIB_INTERFACE drvAT24PlibAPI = {
+static const DRV_AT24_PLIB_INTERFACE drvAT24PlibAPI = {
 
     /* I2C PLIB WriteRead function */
     .writeRead = (DRV_AT24_PLIB_WRITE_READ)${.vars["${DRV_AT24_PLIB?lower_case}"].I2C_PLIB_API_PREFIX}_WriteRead,
@@ -23,7 +32,7 @@ const DRV_AT24_PLIB_INTERFACE drvAT24PlibAPI = {
 };
 
 /* AT24 Driver Initialization Data */
-const DRV_AT24_INIT drvAT24InitData =
+static const DRV_AT24_INIT drvAT24InitData =
 {
     /* I2C PLIB API  interface*/
     .i2cPlib = &drvAT24PlibAPI,
@@ -43,4 +52,11 @@ const DRV_AT24_INIT drvAT24InitData =
     .blockStartAddress =    0x${START_ADDRESS},
 };
 
+<#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
+#pragma coverity compliance end_block "MISRA C-2012 Rule 11.1"
+<#if core.COMPILER_CHOICE == "XC32">
+#pragma GCC diagnostic pop
+</#if>    
+</#if>
+/* MISRAC 2012 deviation block end */
 // </editor-fold>
