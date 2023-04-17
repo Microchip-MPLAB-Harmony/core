@@ -479,7 +479,16 @@ static void lDRV_SPI_RemoveClientTransfersFromList(
 }
 
 <#if core.DMA_ENABLE?has_content && DRV_SPI_SYS_DMA_ENABLE == true>
+/* MISRA C-2012 Rule 11.1 deviated:2 Deviation record ID -  H3_MISRAC_2012_R_11_1_DR_1 */
+<#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
+<#if core.COMPILER_CHOICE == "XC32">
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wunknown-pragmas"
+</#if>
+#pragma coverity compliance block deviate:2 "MISRA C-2012 Rule 11.1" "H3_MISRAC_2012_R_11_1_DR_1"    
+</#if>
 <#if core.PRODUCT_FAMILY?matches("PIC32M.*") == true>
+
 static void lDRV_SPI_StartDMATransfer(DRV_SPI_TRANSFER_OBJ* transferObj)
 {
     DRV_SPI_CLIENT_OBJ* clientObj;
@@ -538,8 +547,8 @@ static void lDRV_SPI_StartDMATransfer(DRV_SPI_TRANSFER_OBJ* transferObj)
         transferObj->nBytesTransferred += size;
 
         /* Always set up the rx channel first */
-        SYS_DMA_ChannelTransfer(dObj->rxDMAChannel, (const void*)dObj->rxAddress, (const void *)transferObj->pReceiveData, size);
-        SYS_DMA_ChannelTransfer(dObj->txDMAChannel, (const void *)transferObj->pTransmitData, (const void*)dObj->txAddress, size);
+        (void) SYS_DMA_ChannelTransfer(dObj->rxDMAChannel, (const void*)dObj->rxAddress, (const void *)transferObj->pReceiveData, size);
+        (void) SYS_DMA_ChannelTransfer(dObj->txDMAChannel, (const void *)transferObj->pTransmitData, (const void*)dObj->txAddress, size);
     }
     else
     {
@@ -556,8 +565,8 @@ static void lDRV_SPI_StartDMATransfer(DRV_SPI_TRANSFER_OBJ* transferObj)
             transferObj->nBytesTransferred += size;
 
             /* Always set up the rx channel first */
-            SYS_DMA_ChannelTransfer(dObj->rxDMAChannel, (const void*)dObj->rxAddress, (const void *)transferObj->pReceiveData, size);
-            SYS_DMA_ChannelTransfer(dObj->txDMAChannel, (const void *)dObj->dummyDataBuffer, (const void*)dObj->txAddress, size);
+            (void) SYS_DMA_ChannelTransfer(dObj->rxDMAChannel, (const void*)dObj->rxAddress, (const void *)transferObj->pReceiveData, size);
+            (void) SYS_DMA_ChannelTransfer(dObj->txDMAChannel, (const void *)dObj->dummyDataBuffer, (const void*)dObj->txAddress, size);
 
         }
         else
@@ -573,8 +582,8 @@ static void lDRV_SPI_StartDMATransfer(DRV_SPI_TRANSFER_OBJ* transferObj)
             transferObj->nBytesTransferred += size;
 
             /* Always set up the rx channel first */
-            SYS_DMA_ChannelTransfer(dObj->rxDMAChannel, (const void*)dObj->rxAddress, (const void *)dObj->dummyDataBuffer, size);
-            SYS_DMA_ChannelTransfer(dObj->txDMAChannel, (const void *)transferObj->pTransmitData, (const void*)dObj->txAddress, size);
+            (void) SYS_DMA_ChannelTransfer(dObj->rxDMAChannel, (const void*)dObj->rxAddress, (const void *)dObj->dummyDataBuffer, size);
+            (void) SYS_DMA_ChannelTransfer(dObj->txDMAChannel, (const void *)transferObj->pTransmitData, (const void*)dObj->txAddress, size);
         }
     }
 }
@@ -641,13 +650,13 @@ static void lDRV_SPI_StartDMATransfer(DRV_SPI_TRANSFER_OBJ* transferObj)
         SYS_DMA_AddressingModeSetup(dObj->rxDMAChannel, SYS_DMA_SOURCE_ADDRESSING_MODE_FIXED, SYS_DMA_DESTINATION_ADDRESSING_MODE_FIXED);
         size = dObj->rxDummyDataSize;
         dObj->rxDummyDataSize = 0;
-        SYS_DMA_ChannelTransfer(dObj->rxDMAChannel, (const void*)dObj->rxAddress, (const void *)&dObj->rxDummyData, size);
+        (void) SYS_DMA_ChannelTransfer(dObj->rxDMAChannel, (const void*)dObj->rxAddress, (const void *)&dObj->rxDummyData, size);
     }
     else
     {
         /* Configure the RX DMA channel - to receive data in receive buffer */
         SYS_DMA_AddressingModeSetup(dObj->rxDMAChannel, SYS_DMA_SOURCE_ADDRESSING_MODE_FIXED, SYS_DMA_DESTINATION_ADDRESSING_MODE_INCREMENTED);
-        SYS_DMA_ChannelTransfer(dObj->rxDMAChannel, (const void*)dObj->rxAddress, (const void *)transferObj->pReceiveData, transferObj->rxSize);
+        (void) SYS_DMA_ChannelTransfer(dObj->rxDMAChannel, (const void*)dObj->rxAddress, (const void *)transferObj->pReceiveData, transferObj->rxSize);
     }
 
     if (transferObj->txSize == 0)
@@ -656,7 +665,7 @@ static void lDRV_SPI_StartDMATransfer(DRV_SPI_TRANSFER_OBJ* transferObj)
         SYS_DMA_AddressingModeSetup(dObj->txDMAChannel, SYS_DMA_SOURCE_ADDRESSING_MODE_FIXED, SYS_DMA_DESTINATION_ADDRESSING_MODE_FIXED);
         size = dObj->txDummyDataSize;
         dObj->txDummyDataSize = 0;
-        SYS_DMA_ChannelTransfer(dObj->txDMAChannel, (const void *)txDummyData, (const void*)dObj->txAddress, size);
+        (void) SYS_DMA_ChannelTransfer(dObj->txDMAChannel, (const void *)txDummyData, (const void*)dObj->txAddress, size);
     }
     else
     {
@@ -672,10 +681,17 @@ static void lDRV_SPI_StartDMATransfer(DRV_SPI_TRANSFER_OBJ* transferObj)
         {
             size = transferObj->txSize;
         }
-        SYS_DMA_ChannelTransfer(dObj->txDMAChannel, (const void *)transferObj->pTransmitData, (const void*)dObj->txAddress, size);
+        (void) SYS_DMA_ChannelTransfer(dObj->txDMAChannel, (const void *)transferObj->pTransmitData, (const void*)dObj->txAddress, size);
     }
 }
 </#if>
+<#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
+#pragma coverity compliance end_block "MISRA C-2012 Rule 11.1"
+<#if core.COMPILER_CHOICE == "XC32">
+#pragma GCC diagnostic pop
+</#if>    
+</#if>
+/* MISRAC 2012 deviation block end */
 </#if>
 
 static void lDRV_SPI_UpdateTransferSetupAndAssertCS(
@@ -701,7 +717,7 @@ static void lDRV_SPI_UpdateTransferSetupAndAssertCS(
         setupRemap.clockPhase = (DRV_SPI_CLOCK_PHASE)dObj->remapClockPhase[clientObj->setup.clockPhase];
         setupRemap.dataBits = (DRV_SPI_DATA_BITS)dObj->remapDataBits[clientObj->setup.dataBits];
 
-        dObj->spiPlib->setup(&setupRemap, USE_FREQ_CONFIGURED_IN_CLOCK_MANAGER);
+        (void) dObj->spiPlib->setup(&setupRemap, USE_FREQ_CONFIGURED_IN_CLOCK_MANAGER);
         dObj->lastClientHandle = transferObj->clientHandle;
         clientObj->setupChanged = false;
     }
@@ -916,8 +932,8 @@ void lDRV_SPI_RX_DMA_CallbackHandler(
         transferObj->nBytesTransferred += size;
 
         /* Always set up the rx channel first */
-        SYS_DMA_ChannelTransfer(dObj->rxDMAChannel, (const void*)dObj->rxAddress, (const void *)&((uint8_t*)transferObj->pReceiveData)[index], size);
-        SYS_DMA_ChannelTransfer(dObj->txDMAChannel, (const void *)dObj->dummyDataBuffer, (const void*)dObj->txAddress, size);
+        (void) SYS_DMA_ChannelTransfer(dObj->rxDMAChannel, (const void*)dObj->rxAddress, (const void *)&((uint8_t*)transferObj->pReceiveData)[index], size);
+        (void) SYS_DMA_ChannelTransfer(dObj->txDMAChannel, (const void *)dObj->dummyDataBuffer, (const void*)dObj->txAddress, size);
 
     }
     else if (transferObj->txPending > 0U)
@@ -935,13 +951,16 @@ void lDRV_SPI_RX_DMA_CallbackHandler(
         transferObj->nBytesTransferred += size;
 
         /* Always set up the rx channel first */
-        SYS_DMA_ChannelTransfer(dObj->rxDMAChannel, (const void*)dObj->rxAddress, (const void *)dObj->dummyDataBuffer, size);
-        SYS_DMA_ChannelTransfer(dObj->txDMAChannel, (const void *)&((uint8_t*)transferObj->pTransmitData)[index], (const void*)dObj->txAddress, size);
+        (void) SYS_DMA_ChannelTransfer(dObj->rxDMAChannel, (const void*)dObj->rxAddress, (const void *)dObj->dummyDataBuffer, size);
+        (void) SYS_DMA_ChannelTransfer(dObj->txDMAChannel, (const void *)&((uint8_t*)transferObj->pTransmitData)[index], (const void*)dObj->txAddress, size);
     }
     else
     {
         /* Make sure the shift register is empty before de-asserting the CS line */
-        while (dObj->spiPlib->isTransmitterBusy());
+        while (dObj->spiPlib->isTransmitterBusy())
+        {
+            /* Do Nothing */
+        }
 
         /* Transfer complete. De-assert Chip Select if it is defined by user. */
         if(clientObj->setup.chipSelect != SYS_PORT_PIN_NONE)
@@ -967,6 +986,10 @@ void lDRV_SPI_RX_DMA_CallbackHandler(
             else if(event == SYS_DMA_TRANSFER_ERROR)
             {
                 transferObj->event = DRV_SPI_TRANSFER_EVENT_ERROR;
+            }
+            else
+            {
+                /* Do Nothing */
             }
 
             /* Save the transfer handle and event locally before freeing the transfer object*/
@@ -1036,7 +1059,7 @@ void lDRV_SPI_TX_DMA_CallbackHandler(
         SYS_DMA_AddressingModeSetup(dObj->txDMAChannel, SYS_DMA_SOURCE_ADDRESSING_MODE_FIXED, SYS_DMA_DESTINATION_ADDRESSING_MODE_FIXED);
 
         /* Configure the transmit DMA channel */
-        SYS_DMA_ChannelTransfer(dObj->txDMAChannel, (const void*)txDummyData, (const void*)dObj->txAddress, dObj->txDummyDataSize);
+        (void) SYS_DMA_ChannelTransfer(dObj->txDMAChannel, (const void*)txDummyData, (const void*)dObj->txAddress, dObj->txDummyDataSize);
 
         dObj->txDummyDataSize = 0;
     }
@@ -1064,16 +1087,19 @@ void lDRV_SPI_RX_DMA_CallbackHandler(
         /* Configure DMA to receive dummy data */
         SYS_DMA_AddressingModeSetup(dObj->rxDMAChannel, SYS_DMA_SOURCE_ADDRESSING_MODE_FIXED, SYS_DMA_DESTINATION_ADDRESSING_MODE_FIXED);
 
-        SYS_DMA_ChannelTransfer(dObj->rxDMAChannel, (const void*)dObj->rxAddress, (const void *)&dObj->rxDummyData, dObj->rxDummyDataSize);
+        (void) SYS_DMA_ChannelTransfer(dObj->rxDMAChannel, (const void*)dObj->rxAddress, (const void *)&dObj->rxDummyData, dObj->rxDummyDataSize);
 
-        SYS_DMA_ChannelTransfer(dObj->txDMAChannel, (const void *)&((uint8_t*)transferObj->pTransmitData)[transferObj->rxSize], (const void*)dObj->txAddress, dObj->rxDummyDataSize);
+        (void) SYS_DMA_ChannelTransfer(dObj->txDMAChannel, (const void *)&((uint8_t*)transferObj->pTransmitData)[transferObj->rxSize], (const void*)dObj->txAddress, dObj->rxDummyDataSize);
 
         dObj->rxDummyDataSize = 0;
     }
     else
     {
         /* Make sure the shift register is empty before de-asserting the CS line */
-        while (dObj->spiPlib->isTransmitterBusy());
+        while (dObj->spiPlib->isTransmitterBusy())
+        {
+            /* Do Nothing */
+        }
 
         /* De-assert Chip Select if it is defined by user */
         if(clientObj->setup.chipSelect != SYS_PORT_PIN_NONE)
@@ -1099,6 +1125,10 @@ void lDRV_SPI_RX_DMA_CallbackHandler(
             else if(event == SYS_DMA_TRANSFER_ERROR)
             {
                 transferObj->event = DRV_SPI_TRANSFER_EVENT_ERROR;
+            }
+            else
+            {
+                /* Do Nothing */
             }
 
             /* Save the transfer handle and event locally before freeing the transfer object*/

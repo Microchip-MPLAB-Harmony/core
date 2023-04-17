@@ -658,7 +658,7 @@ bool DRV_SPI_TransferSetup ( const DRV_HANDLE handle, DRV_SPI_TRANSFER_SETUP * s
       driver instance or event handler of any other peripheral.
     - It should not be called directly in any ISR.
 */
-/* MISRA C-2012 Rule 8.6 deviated:5 Deviation record ID -  H3_MISRAC_2012_R_8_6_DR_1 */
+/* MISRA C-2012 Rule 8.6 deviated:9 Deviation record ID -  H3_MISRAC_2012_R_8_6_DR_1 */
 <#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
 <#if core.COMPILER_CHOICE == "XC32">
 #pragma GCC diagnostic push
@@ -1012,14 +1012,6 @@ void DRV_SPI_TransferEventHandlerSet( const DRV_HANDLE handle, const DRV_SPI_TRA
 
 DRV_SPI_TRANSFER_EVENT DRV_SPI_TransferStatusGet(const DRV_SPI_TRANSFER_HANDLE transferHandle );
 
-<#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
-#pragma coverity compliance end_block "MISRA C-2012 Rule 8.6"
-<#if core.COMPILER_CHOICE == "XC32">
-#pragma GCC diagnostic pop
-</#if>    
-</#if>
-/* MISRAC 2012 deviation block end */
-
 // *****************************************************************************
 // *****************************************************************************
 // Section: SPI Driver Synchronous(Blocking Model) Transfer Interface Routines
@@ -1275,6 +1267,13 @@ bool DRV_SPI_WriteReadTransfer(
 */
 bool DRV_SPI_Lock( const DRV_HANDLE handle, bool lock );
 
+<#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
+#pragma coverity compliance end_block "MISRA C-2012 Rule 8.6"
+<#if core.COMPILER_CHOICE == "XC32">
+#pragma GCC diagnostic pop
+</#if>    
+</#if>
+/* MISRAC 2012 deviation block end */
 //DOM-IGNORE-BEGIN
 #ifdef __cplusplus
 }

@@ -8,8 +8,16 @@ static DRV_SPI_CLIENT_OBJ drvSPI${INDEX}ClientObjPool[DRV_SPI_CLIENTS_NUMBER_IDX
 static DRV_SPI_TRANSFER_OBJ drvSPI${INDEX?string}TransferObjPool[DRV_SPI_QUEUE_SIZE_IDX${INDEX?string}];
 </#if>
 
+/* MISRA C-2012 Rule 11.1 deviated:2 Deviation record ID -  H3_MISRAC_2012_R_11_1_DR_1 */
+<#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
+<#if core.COMPILER_CHOICE == "XC32">
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wunknown-pragmas"
+</#if>
+#pragma coverity compliance block deviate:2 "MISRA C-2012 Rule 11.1" "H3_MISRAC_2012_R_11_1_DR_1"    
+</#if>
 /* SPI PLIB Interface Initialization */
-const DRV_SPI_PLIB_INTERFACE drvSPI${INDEX?string}PlibAPI = {
+static const DRV_SPI_PLIB_INTERFACE drvSPI${INDEX?string}PlibAPI = {
 
     /* SPI PLIB Setup */
     .setup = (DRV_SPI_PLIB_SETUP)${.vars["${DRV_SPI_PLIB?lower_case}"].SPI_PLIB_API_PREFIX}_TransferSetup,
@@ -23,74 +31,81 @@ const DRV_SPI_PLIB_INTERFACE drvSPI${INDEX?string}PlibAPI = {
     /* SPI PLIB Callback Register */
     .callbackRegister = (DRV_SPI_PLIB_CALLBACK_REGISTER)${.vars["${DRV_SPI_PLIB?lower_case}"].SPI_PLIB_API_PREFIX}_CallbackRegister,
 };
+<#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
+#pragma coverity compliance end_block "MISRA C-2012 Rule 11.1"
+<#if core.COMPILER_CHOICE == "XC32">
+#pragma GCC diagnostic pop
+</#if>    
+</#if>
+/* MISRAC 2012 deviation block end */
 
 <@compress single_line=true>
-const uint32_t drvSPI${INDEX?string}remapDataBits[]=
+static const uint32_t drvSPI${INDEX?string}remapDataBits[]=
 {
     <#if .vars["${DRV_SPI_PLIB?lower_case}"].SPI_CHARSIZE_BITS_8_BIT_MASK?has_content>
         ${.vars["${DRV_SPI_PLIB?lower_case}"].SPI_CHARSIZE_BITS_8_BIT_MASK},
     <#else>
-        0xFFFFFFFF,
+        0xFFFFFFFFU,
     </#if>
 
     <#if .vars["${DRV_SPI_PLIB?lower_case}"].SPI_CHARSIZE_BITS_9_BIT_MASK?has_content>
         ${.vars["${DRV_SPI_PLIB?lower_case}"].SPI_CHARSIZE_BITS_9_BIT_MASK},
     <#else>
-        0xFFFFFFFF,
+        0xFFFFFFFFU,
     </#if>
 
     <#if .vars["${DRV_SPI_PLIB?lower_case}"].SPI_CHARSIZE_BITS_10_BIT_MASK?has_content>
         ${.vars["${DRV_SPI_PLIB?lower_case}"].SPI_CHARSIZE_BITS_10_BIT_MASK},
     <#else>
-        0xFFFFFFFF,
+        0xFFFFFFFFU,
     </#if>
 
     <#if .vars["${DRV_SPI_PLIB?lower_case}"].SPI_CHARSIZE_BITS_11_BIT_MASK?has_content>
         ${.vars["${DRV_SPI_PLIB?lower_case}"].SPI_CHARSIZE_BITS_11_BIT_MASK},
      <#else>
-        0xFFFFFFFF,
+        0xFFFFFFFFU,
     </#if>
 
     <#if .vars["${DRV_SPI_PLIB?lower_case}"].SPI_CHARSIZE_BITS_12_BIT_MASK?has_content>
         ${.vars["${DRV_SPI_PLIB?lower_case}"].SPI_CHARSIZE_BITS_12_BIT_MASK},
     <#else>
-        0xFFFFFFFF,
+        0xFFFFFFFFU,
     </#if>
 
     <#if .vars["${DRV_SPI_PLIB?lower_case}"].SPI_CHARSIZE_BITS_13_BIT_MASK?has_content>
         ${.vars["${DRV_SPI_PLIB?lower_case}"].SPI_CHARSIZE_BITS_13_BIT_MASK},
     <#else>
-        0xFFFFFFFF,
+        0xFFFFFFFFU,
     </#if>
 
     <#if .vars["${DRV_SPI_PLIB?lower_case}"].SPI_CHARSIZE_BITS_14_BIT_MASK?has_content>
         ${.vars["${DRV_SPI_PLIB?lower_case}"].SPI_CHARSIZE_BITS_14_BIT_MASK},
     <#else>
-        0xFFFFFFFF,
+        0xFFFFFFFFU,
     </#if>
 
     <#if .vars["${DRV_SPI_PLIB?lower_case}"].SPI_CHARSIZE_BITS_15_BIT_MASK?has_content>
         ${.vars["${DRV_SPI_PLIB?lower_case}"].SPI_CHARSIZE_BITS_15_BIT_MASK},
     <#else>
-        0xFFFFFFFF,
+        0xFFFFFFFFU,
     </#if>
 
     <#if .vars["${DRV_SPI_PLIB?lower_case}"].SPI_CHARSIZE_BITS_16_BIT_MASK?has_content>
         ${.vars["${DRV_SPI_PLIB?lower_case}"].SPI_CHARSIZE_BITS_16_BIT_MASK},
     <#else>
-        0xFFFFFFFF,
+        0xFFFFFFFFU,
     </#if>
 	
 	<#if .vars["${DRV_SPI_PLIB?lower_case}"].SPI_CHARSIZE_BITS_32_BIT_MASK?has_content>
         ${.vars["${DRV_SPI_PLIB?lower_case}"].SPI_CHARSIZE_BITS_32_BIT_MASK}
     <#else>
-        0xFFFFFFFF
+        0xFFFFFFFFU
     </#if>
 };
 </@compress>
 
 <@compress single_line=true>
-const uint32_t drvSPI${INDEX?string}remapClockPolarity[] =
+static const uint32_t drvSPI${INDEX?string}remapClockPolarity[] =
 {
     ${.vars["${DRV_SPI_PLIB?lower_case}"].SPI_CLOCK_POLARITY_LOW_MASK},
     ${.vars["${DRV_SPI_PLIB?lower_case}"].SPI_CLOCK_POLARITY_HIGH_MASK}
@@ -98,7 +113,7 @@ const uint32_t drvSPI${INDEX?string}remapClockPolarity[] =
 </@compress>
 
 <@compress single_line=true>
-const uint32_t drvSPI${INDEX?string}remapClockPhase[] =
+static const uint32_t drvSPI${INDEX?string}remapClockPhase[] =
 {
     ${.vars["${DRV_SPI_PLIB?lower_case}"].SPI_CLOCK_PHASE_TRAILING_MASK},
     ${.vars["${DRV_SPI_PLIB?lower_case}"].SPI_CLOCK_PHASE_LEADING_MASK}
@@ -126,7 +141,7 @@ const uint32_t drvSPI${INDEX?string}remapClockPhase[] =
         <#assign SPI_PLIB_ERROR_INDEX = "core." + SPI_PLIB?eval + "_SPI_ERROR_INT_SRC">
     </#if>
 
-const DRV_SPI_INTERRUPT_SOURCES drvSPI${INDEX?string}InterruptSources =
+static const DRV_SPI_INTERRUPT_SOURCES drvSPI${INDEX?string}InterruptSources =
 {
     <#if SPI_PLIB_MULTI_IRQn?eval??>
         <#lt>    /* Peripheral has more than one interrupt vectors */
@@ -156,7 +171,7 @@ const DRV_SPI_INTERRUPT_SOURCES drvSPI${INDEX?string}InterruptSources =
         <#if SPI_PLIB_SINGLE_IRQn?eval??>
             <#lt>    .intSources.spiInterrupt             = ${SPI_PLIB_SINGLE_IRQn?eval},
         <#else>
-            <#lt>    .intSources.spiInterrupt             = ${DRV_SPI_PLIB}_IRQn,
+            <#lt>    .intSources.spiInterrupt             = (int32_t)${DRV_SPI_PLIB}_IRQn,
         </#if>
     </#if>
     <#if core.DMA_ENABLE?has_content && drv_spi.DRV_SPI_SYS_DMA_ENABLE == true>
@@ -170,15 +185,22 @@ const DRV_SPI_INTERRUPT_SOURCES drvSPI${INDEX?string}InterruptSources =
         <#else>
             <#if DRV_SPI_TX_RX_DMA == true>
                 <#lt>    /* DMA interrupt line */
-                <#lt>    .intSources.dmaInterrupt               = ${core.DMA_INSTANCE_NAME}_IRQn,
+                <#lt>    .intSources.dmaInterrupt               = (int32_t)${core.DMA_INSTANCE_NAME}_IRQn,
             </#if>
         </#if>
     </#if>
 };
 </#if>
-
+/* MISRA C-2012 Rule 11.8 deviated:2 Deviation record ID -  H3_MISRAC_2012_R_11_8_DR_1 */
+<#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
+<#if core.COMPILER_CHOICE == "XC32">
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wunknown-pragmas"
+</#if>
+#pragma coverity compliance block deviate:2 "MISRA C-2012 Rule 11.8" "H3_MISRAC_2012_R_11_8_DR_1"    
+</#if>
 /* SPI Driver Initialization Data */
-const DRV_SPI_INIT drvSPI${INDEX?string}InitData =
+static const DRV_SPI_INIT drvSPI${INDEX?string}InitData =
 {
     /* SPI PLIB API */
     .spiPlib = &drvSPI${INDEX?string}PlibAPI,
@@ -228,5 +250,11 @@ const DRV_SPI_INIT drvSPI${INDEX?string}InitData =
     .interruptSources = &drvSPI${INDEX?string}InterruptSources,
 </#if>
 };
-
+<#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
+#pragma coverity compliance end_block "MISRA C-2012 Rule 11.8"
+<#if core.COMPILER_CHOICE == "XC32">
+#pragma GCC diagnostic pop
+</#if>    
+</#if>
+/* MISRAC 2012 deviation block end */
 // </editor-fold>
