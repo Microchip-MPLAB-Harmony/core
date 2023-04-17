@@ -7,7 +7,15 @@ static DRV_USART_CLIENT_OBJ drvUSART${INDEX?string}ClientObjPool[DRV_USART_CLIEN
 static DRV_USART_BUFFER_OBJ drvUSART${INDEX?string}BufferObjPool[DRV_USART_QUEUE_SIZE_IDX${INDEX?string}];
 </#if>
 
-const DRV_USART_PLIB_INTERFACE drvUsart${INDEX?string}PlibAPI = {
+/* MISRA C-2012 Rule 11.1 deviated:2 Deviation record ID -  H3_MISRAC_2012_R_11_1_DR_1 */
+<#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
+<#if core.COMPILER_CHOICE == "XC32">
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wunknown-pragmas"
+</#if>
+#pragma coverity compliance block deviate:2 "MISRA C-2012 Rule 11.1" "H3_MISRAC_2012_R_11_1_DR_1"    
+</#if>
+static const DRV_USART_PLIB_INTERFACE drvUsart${INDEX?string}PlibAPI = {
     .readCallbackRegister = (DRV_USART_PLIB_READ_CALLBACK_REG)${.vars["${DRV_USART_PLIB?lower_case}"].USART_PLIB_API_PREFIX}_ReadCallbackRegister,
     .read_t = (DRV_USART_PLIB_READ)${.vars["${DRV_USART_PLIB?lower_case}"].USART_PLIB_API_PREFIX}_Read,
     .readIsBusy = (DRV_USART_PLIB_READ_IS_BUSY)${.vars["${DRV_USART_PLIB?lower_case}"].USART_PLIB_API_PREFIX}_ReadIsBusy,
@@ -20,106 +28,113 @@ const DRV_USART_PLIB_INTERFACE drvUsart${INDEX?string}PlibAPI = {
     .errorGet = (DRV_USART_PLIB_ERROR_GET)${.vars["${DRV_USART_PLIB?lower_case}"].USART_PLIB_API_PREFIX}_ErrorGet,
     .serialSetup = (DRV_USART_PLIB_SERIAL_SETUP)${.vars["${DRV_USART_PLIB?lower_case}"].USART_PLIB_API_PREFIX}_SerialSetup
 };
+<#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
+#pragma coverity compliance end_block "MISRA C-2012 Rule 11.1"
+<#if core.COMPILER_CHOICE == "XC32">
+#pragma GCC diagnostic pop
+</#if>    
+</#if>
+/* MISRAC 2012 deviation block end */
 
 <@compress single_line=true>
-const uint32_t drvUsart${INDEX?string}remapDataWidth[] = {
+static const uint32_t drvUsart${INDEX?string}remapDataWidth[] = {
     <#if .vars["${DRV_USART_PLIB?lower_case}"].USART_DATA_5_BIT_MASK?has_content>
         ${.vars["${DRV_USART_PLIB?lower_case}"].USART_DATA_5_BIT_MASK},
     <#else>
-        0xFFFFFFFF,
+        0xFFFFFFFFU,
     </#if>
 
     <#if .vars["${DRV_USART_PLIB?lower_case}"].USART_DATA_6_BIT_MASK?has_content>
         ${.vars["${DRV_USART_PLIB?lower_case}"].USART_DATA_6_BIT_MASK},
     <#else>
-        0xFFFFFFFF,
+        0xFFFFFFFFU,
     </#if>
 
     <#if .vars["${DRV_USART_PLIB?lower_case}"].USART_DATA_7_BIT_MASK?has_content>
         ${.vars["${DRV_USART_PLIB?lower_case}"].USART_DATA_7_BIT_MASK},
     <#else>
-        0xFFFFFFFF,
+        0xFFFFFFFFU,
     </#if>
 
     <#if .vars["${DRV_USART_PLIB?lower_case}"].USART_DATA_8_BIT_MASK?has_content>
         ${.vars["${DRV_USART_PLIB?lower_case}"].USART_DATA_8_BIT_MASK},
     <#else>
-        0xFFFFFFFF,
+        0xFFFFFFFFU,
     </#if>
 
     <#if .vars["${DRV_USART_PLIB?lower_case}"].USART_DATA_9_BIT_MASK?has_content>
         ${.vars["${DRV_USART_PLIB?lower_case}"].USART_DATA_9_BIT_MASK}
     <#else>
-        0xFFFFFFFF
+        0xFFFFFFFFU
     </#if>
 };
 </@compress>
 
 <@compress single_line=true>
-const uint32_t drvUsart${INDEX?string}remapParity[] = {
+static const uint32_t drvUsart${INDEX?string}remapParity[] = {
     <#if .vars["${DRV_USART_PLIB?lower_case}"].USART_PARITY_NONE_MASK?has_content>
         ${.vars["${DRV_USART_PLIB?lower_case}"].USART_PARITY_NONE_MASK},
     <#else>
-        0xFFFFFFFF,
+        0xFFFFFFFFU,
     </#if>
 
     <#if .vars["${DRV_USART_PLIB?lower_case}"].USART_PARITY_EVEN_MASK?has_content>
         ${.vars["${DRV_USART_PLIB?lower_case}"].USART_PARITY_EVEN_MASK},
     <#else>
-        0xFFFFFFFF,
+        0xFFFFFFFFU,
     </#if>
 
     <#if .vars["${DRV_USART_PLIB?lower_case}"].USART_PARITY_ODD_MASK?has_content>
         ${.vars["${DRV_USART_PLIB?lower_case}"].USART_PARITY_ODD_MASK},
     <#else>
-        0xFFFFFFFF,
+        0xFFFFFFFFU,
     </#if>
 
     <#if .vars["${DRV_USART_PLIB?lower_case}"].USART_PARITY_MARK_MASK?has_content>
         ${.vars["${DRV_USART_PLIB?lower_case}"].USART_PARITY_MARK_MASK},
     <#else>
-        0xFFFFFFFF,
+        0xFFFFFFFFU,
     </#if>
 
     <#if .vars["${DRV_USART_PLIB?lower_case}"].USART_PARITY_SPACE_MASK?has_content>
         ${.vars["${DRV_USART_PLIB?lower_case}"].USART_PARITY_SPACE_MASK},
     <#else>
-        0xFFFFFFFF,
+        0xFFFFFFFFU,
     </#if>
 
     <#if .vars["${DRV_USART_PLIB?lower_case}"].USART_PARITY_MULTIDROP_MASK?has_content>
         ${.vars["${DRV_USART_PLIB?lower_case}"].USART_PARITY_MULTIDROP_MASK}
     <#else>
-        0xFFFFFFFF
+        0xFFFFFFFFU
     </#if>
 };
 </@compress>
 
 <@compress single_line=true>
-const uint32_t drvUsart${INDEX?string}remapStopBits[] = {
+static const uint32_t drvUsart${INDEX?string}remapStopBits[] = {
 
     <#if .vars["${DRV_USART_PLIB?lower_case}"].USART_STOP_1_BIT_MASK?has_content>
         ${.vars["${DRV_USART_PLIB?lower_case}"].USART_STOP_1_BIT_MASK},
     <#else>
-        0xFFFFFFFF,
+        0xFFFFFFFFU,
     </#if>
 
     <#if .vars["${DRV_USART_PLIB?lower_case}"].USART_STOP_1_5_BIT_MASK?has_content>
         ${.vars["${DRV_USART_PLIB?lower_case}"].USART_STOP_1_5_BIT_MASK},
     <#else>
-        0xFFFFFFFF,
+        0xFFFFFFFFU,
     </#if>
 
     <#if .vars["${DRV_USART_PLIB?lower_case}"].USART_STOP_2_BIT_MASK?has_content>
         ${.vars["${DRV_USART_PLIB?lower_case}"].USART_STOP_2_BIT_MASK}
     <#else>
-        0xFFFFFFFF
+        0xFFFFFFFFU
     </#if>
 };
 </@compress>
 
 <@compress single_line=true>
-const uint32_t drvUsart${INDEX?string}remapError[] = {
+static const uint32_t drvUsart${INDEX?string}remapError[] = {
         ${.vars["${DRV_USART_PLIB?lower_case}"].USART_OVERRUN_ERROR_VALUE},
         ${.vars["${DRV_USART_PLIB?lower_case}"].USART_PARITY_ERROR_VALUE},
         ${.vars["${DRV_USART_PLIB?lower_case}"].USART_FRAMING_ERROR_VALUE}
@@ -147,7 +162,7 @@ const uint32_t drvUsart${INDEX?string}remapError[] = {
         <#assign USART_PLIB_ERROR_INDEX = "core." + USART_PLIB?eval + "_USART_ERROR_INT_SRC">
     </#if>
 
-const DRV_USART_INTERRUPT_SOURCES drvUSART${INDEX?string}InterruptSources =
+static const DRV_USART_INTERRUPT_SOURCES drvUSART${INDEX?string}InterruptSources =
 {
     <#if USART_PLIB_MULTI_IRQn?eval??>
         <#lt>    /* Peripheral has more than one interrupt vector */
@@ -184,7 +199,7 @@ const DRV_USART_INTERRUPT_SOURCES drvUSART${INDEX?string}InterruptSources =
         <#elseif USART_PLIB_SINGLE_IRQn?eval??>
             <#lt>    .intSources.usartInterrupt             = ${USART_PLIB_SINGLE_IRQn?eval},
         <#else>
-            <#lt>    .intSources.usartInterrupt             = ${DRV_USART_PLIB}_IRQn,
+            <#lt>    .intSources.usartInterrupt             = (int32_t)${DRV_USART_PLIB}_IRQn,
         </#if>
     </#if>
     <#if core.DMA_ENABLE?has_content && drv_usart.DRV_USART_SYS_DMA_ENABLE == true>
@@ -207,7 +222,7 @@ const DRV_USART_INTERRUPT_SOURCES drvUSART${INDEX?string}InterruptSources =
 };
 </#if>
 
-const DRV_USART_INIT drvUsart${INDEX?string}InitData =
+static const DRV_USART_INIT drvUsart${INDEX?string}InitData =
 {
     .usartPlib = &drvUsart${INDEX?string}PlibAPI,
 
