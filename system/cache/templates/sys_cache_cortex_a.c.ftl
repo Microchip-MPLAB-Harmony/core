@@ -141,7 +141,7 @@ void SYS_CACHE_CleanInvalidateDCache (void)
  */
 void SYS_CACHE_InvalidateDCache_by_Addr (uint32_t *addr, int32_t size)
 {
-    DCACHE_INVALIDATE_BY_ADDR(addr,(uint32_t)size);
+    DCACHE_INVALIDATE_BY_ADDR(addr,size);
 }
 
 /*
@@ -149,7 +149,7 @@ void SYS_CACHE_InvalidateDCache_by_Addr (uint32_t *addr, int32_t size)
  */
 void SYS_CACHE_CleanDCache_by_Addr (uint32_t *addr, int32_t size)
 {
-    DCACHE_CLEAN_BY_ADDR(addr,(uint32_t)size);
+    DCACHE_CLEAN_BY_ADDR(addr,size);
 }
 
 /* MISRA C-2012 Rule 5.1 deviated:1 Deviation record ID -  H3_MISRAC_2012_R_5_1_DR_1 */
@@ -166,7 +166,7 @@ void SYS_CACHE_CleanDCache_by_Addr (uint32_t *addr, int32_t size)
  */
 void SYS_CACHE_CleanInvalidateDCache_by_Addr (uint32_t *addr, int32_t size)
 {
-    DCACHE_CLEAN_INVALIDATE_BY_ADDR(addr,(uint32_t)size);
+    DCACHE_CLEAN_INVALIDATE_BY_ADDR(addr,size);
 }
 
 <#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
