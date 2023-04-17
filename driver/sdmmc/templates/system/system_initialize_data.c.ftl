@@ -30,8 +30,16 @@ static DRV_SDMMC_CLIENT_OBJ drvSDMMC${INDEX?string}ClientObjPool[DRV_SDMMC_CLIEN
 /* SDMMC Transfer Objects Pool */
 static DRV_SDMMC_BUFFER_OBJ drvSDMMC${INDEX?string}BufferObjPool[DRV_SDMMC_QUEUE_SIZE_IDX${INDEX?string}];
 
+/* MISRA C-2012 Rule 11.1 deviated:10 Deviation record ID -  H3_MISRAC_2012_R_11_1_DR_1 */
+<#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
+<#if core.COMPILER_CHOICE == "XC32">
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wunknown-pragmas"
+</#if>
+#pragma coverity compliance block deviate:10 "MISRA C-2012 Rule 11.1" "H3_MISRAC_2012_R_11_1_DR_1"    
+</#if>
 
-const DRV_SDMMC_PLIB_API drvSDMMC${INDEX?string}PlibAPI = {
+static const DRV_SDMMC_PLIB_API drvSDMMC${INDEX?string}PlibAPI = {
     .sdhostCallbackRegister = (DRV_SDMMC_PLIB_CALLBACK_REGISTER)${DRV_SDMMC_PLIB}_CallbackRegister,
     .sdhostInitModule = (DRV_SDMMC_PLIB_INIT_MODULE)${DRV_SDMMC_PLIB}_ModuleInit,
     .sdhostSetClock  = (DRV_SDMMC_PLIB_SET_CLOCK)${DRV_SDMMC_PLIB}_ClockSet,
@@ -66,7 +74,7 @@ const DRV_SDMMC_PLIB_API drvSDMMC${INDEX?string}PlibAPI = {
 };
 
 /*** SDMMC Driver Initialization Data ***/
-const DRV_SDMMC_INIT drvSDMMC${INDEX?string}InitData =
+static const DRV_SDMMC_INIT drvSDMMC${INDEX?string}InitData =
 {
     .sdmmcPlib                      = &drvSDMMC${INDEX?string}PlibAPI,
     .bufferObjPool                  = (uintptr_t)&drvSDMMC${INDEX?string}BufferObjPool[0],
@@ -91,4 +99,11 @@ const DRV_SDMMC_INIT drvSDMMC${INDEX?string}InitData =
 </#if>
 };
 
+<#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
+#pragma coverity compliance end_block "MISRA C-2012 Rule 11.1"
+<#if core.COMPILER_CHOICE == "XC32">
+#pragma GCC diagnostic pop
+</#if>    
+</#if>
+/* MISRAC 2012 deviation block end */
 // </editor-fold>

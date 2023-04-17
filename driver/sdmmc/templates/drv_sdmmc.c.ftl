@@ -420,6 +420,14 @@ static void lDRV_SDMMC_TimerCallback (
     *timeoutFlag = true;
 }
 
+/* MISRA C-2012 Rule 14.3 deviated:2 Deviation record ID -  H3_MISRAC_2012_R_14_3_DR_1 */
+<#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
+<#if core.COMPILER_CHOICE == "XC32">
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wunknown-pragmas"
+</#if>
+#pragma coverity compliance block deviate:2 "MISRA C-2012 Rule 14.3" "H3_MISRAC_2012_R_14_3_DR_1"    
+</#if>
 static void lDRV_SDMMC_InitCardContext ( uint32_t drvIndex, DRV_SDHOST_CARD_CTXT* cardCtxt )
 {
     cardCtxt->isAttached            = false;
@@ -664,6 +672,7 @@ static void lDRV_SDMMC_MediaInitialize (
 )
 {
     uint32_t response = 0;
+    uint32_t readBufferLen;
 
     switch (dObj->initState)
     {
@@ -1135,7 +1144,8 @@ static void lDRV_SDMMC_MediaInitialize (
             <#if core.DATA_CACHE_ENABLE?? && core.DATA_CACHE_ENABLE == true>
             /* Invalidate the cache to force the CPU to read the latest data
              * from the main memory. */
-            SYS_CACHE_InvalidateDCache_by_Addr((uint32_t *)dObj->cardCtxt.scrBuffer, (int32_t)DRV_SDMMC_SCR_BUFFER_LEN);
+            readBufferLen = DRV_SDMMC_SCR_BUFFER_LEN;
+            SYS_CACHE_InvalidateDCache_by_Addr((uint32_t *)dObj->cardCtxt.scrBuffer, (int32_t)readBufferLen);
             </#if>
 
             /* Set up the DMA for the data transfer. */
@@ -1479,6 +1489,13 @@ static void lDRV_SDMMC_MediaInitialize (
     }
 }
 
+<#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
+#pragma coverity compliance end_block "MISRA C-2012 Rule 14.3"
+<#if core.COMPILER_CHOICE == "XC32">
+#pragma GCC diagnostic pop
+</#if>    
+</#if>
+/* MISRAC 2012 deviation block end */
 // *****************************************************************************
 // *****************************************************************************
 // Section: Driver Interface Function Definitions
@@ -1979,6 +1996,7 @@ void DRV_SDMMC_Tasks( SYS_MODULE_OBJ object )
     DRV_SDMMC_EVENT evtStatus = DRV_SDMMC_EVENT_COMMAND_COMPLETE;
     uint32_t response = 0;
     static bool cardAttached = true;
+    uint32_t readNblocks;
 
     dObj = &gDrvSDMMCObj[object];
 
@@ -2405,13 +2423,15 @@ void DRV_SDMMC_Tasks( SYS_MODULE_OBJ object )
             {
                 /* Clean the cache to push the data to be written, from the cache
                  * memory to the main memory for the DMA */
-                SYS_CACHE_CleanDCache_by_Addr((uint32_t *)currentBufObj->buffer, (int32_t)(currentBufObj->nBlocks << 9));
+                readNblocks = (currentBufObj->nBlocks << 9);
+                SYS_CACHE_CleanDCache_by_Addr((uint32_t *)currentBufObj->buffer, (int32_t)readNblocks);
             }
             else if (currentBufObj->opType == DRV_SDMMC_OPERATION_TYPE_READ)
             {
                 /* Invalidate the cache to force the CPU to read the latest data
                  * from the main memory. */
-                SYS_CACHE_InvalidateDCache_by_Addr((uint32_t *)currentBufObj->buffer, (int32_t)(currentBufObj->nBlocks << 9));
+                readNblocks = (currentBufObj->nBlocks << 9);
+                SYS_CACHE_InvalidateDCache_by_Addr((uint32_t *)currentBufObj->buffer, (int32_t)readNblocks);
             }
             else
             {

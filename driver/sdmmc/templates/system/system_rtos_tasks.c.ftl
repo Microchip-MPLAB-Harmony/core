@@ -23,9 +23,9 @@
 *******************************************************************************/
 -->
 <#if HarmonyCore.SELECT_RTOS == "FreeRTOS">
-    <#lt>void _DRV_SDMMC${INDEX?string}_Tasks(  void *pvParameters  )
+    <#lt>static void lDRV_SDMMC${INDEX?string}_Tasks(  void *pvParameters  )
     <#lt>{
-    <#lt>    while(1)
+    <#lt>    while(true)
     <#lt>    {
     <#lt>        DRV_SDMMC_Tasks(sysObj.drvSDMMC${INDEX?string});
              <#if DRV_SDMMC_RTOS_USE_DELAY >
@@ -37,9 +37,9 @@
     <#lt>TX_THREAD      _DRV_SDMMC_${INDEX?string}_Task_TCB;
     <#lt>uint8_t*       _DRV_SDMMC_${INDEX?string}_Task_Stk_Ptr;
 
-    <#lt>static void _DRV_SDMMC_${INDEX?string}_Tasks( ULONG thread_input )
+    <#lt>static void lDRV_SDMMC_${INDEX?string}_Tasks( ULONG thread_input )
     <#lt>{
-    <#lt>    while(1)
+    <#lt>    while(true)
     <#lt>    {
     <#lt>        DRV_SDMMC_Tasks(sysObj.drvSDMMC${INDEX?string});
     <#if DRV_SDMMC_RTOS_USE_DELAY == true>
@@ -51,12 +51,12 @@
     <#lt>OS_TCB  _DRV_SDMMC_${INDEX?string}_Tasks_TCB;
     <#lt>CPU_STK _DRV_SDMMC_${INDEX?string}_TasksStk[DRV_SDMMC_STACK_SIZE_IDX${INDEX?string}];
 
-    <#lt>void _DRV_SDMMC_${INDEX?string}_Tasks(  void *pvParameters  )
+    <#lt>static void lDRV_SDMMC_${INDEX?string}_Tasks(  void *pvParameters  )
     <#lt>{
     <#if DRV_SDMMC_RTOS_USE_DELAY == true>
     <#lt>    OS_ERR os_err;
     </#if>
-    <#lt>    while(1)
+    <#lt>    while(true)
     <#lt>    {
     <#lt>        DRV_SDMMC_Tasks(sysObj.drvSDMMC${INDEX?string});
     <#if DRV_SDMMC_RTOS_USE_DELAY == true>
@@ -65,9 +65,9 @@
     <#lt>    }
     <#lt>}
 <#elseif (HarmonyCore.SELECT_RTOS)?? && HarmonyCore.SELECT_RTOS == "MbedOS">
-    <#lt>void _DRV_SDMMC_${INDEX?string}_Tasks( void *pvParameters )
+    <#lt>void lDRV_SDMMC_${INDEX?string}_Tasks( void *pvParameters )
     <#lt>{
-    <#lt>    while(1)
+    <#lt>    while(true)
     <#lt>    {
     <#lt>        DRV_SDMMC_Tasks(sysObj.drvSDMMC${INDEX?string});
     <#if DRV_SDMMC_RTOS_USE_DELAY == true>

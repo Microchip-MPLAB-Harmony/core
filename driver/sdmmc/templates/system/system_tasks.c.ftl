@@ -25,7 +25,7 @@
 <#if HarmonyCore.SELECT_RTOS == "BareMetal">
     <#lt>DRV_SDMMC_Tasks(sysObj.drvSDMMC${INDEX?string});
 <#elseif HarmonyCore.SELECT_RTOS == "FreeRTOS">
-    <#lt>    xTaskCreate( _DRV_SDMMC${INDEX?string}_Tasks,
+    <#lt>    (void) xTaskCreate( lDRV_SDMMC${INDEX?string}_Tasks,
     <#lt>        "DRV_SDMMC${INDEX?string}_Tasks",
     <#lt>        DRV_SDMMC_STACK_SIZE_IDX${INDEX?string},
     <#lt>        (void*)NULL,
