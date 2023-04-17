@@ -8,8 +8,16 @@ static DRV_I2C_CLIENT_OBJ drvI2C${INDEX}ClientObjPool[DRV_I2C_CLIENTS_NUMBER_IDX
 static DRV_I2C_TRANSFER_OBJ drvI2C${INDEX?string}TransferObj[DRV_I2C_QUEUE_SIZE_IDX${INDEX?string}];
 </#if>
 
+/* MISRA C-2012 Rule 11.1 deviated:2 Deviation record ID -  H3_MISRAC_2012_R_11_1_DR_1 */
+<#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
+<#if core.COMPILER_CHOICE == "XC32">
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wunknown-pragmas"
+</#if>
+#pragma coverity compliance block deviate:2 "MISRA C-2012 Rule 11.1" "H3_MISRAC_2012_R_11_1_DR_1"    
+</#if>
 /* I2C PLib Interface Initialization */
-const DRV_I2C_PLIB_INTERFACE drvI2C${INDEX?string}PLibAPI = {
+static const DRV_I2C_PLIB_INTERFACE drvI2C${INDEX?string}PLibAPI = {
 
     /* I2C PLib Transfer Read Add function */
     .read_t = (DRV_I2C_PLIB_READ)${.vars["${DRV_I2C_PLIB?lower_case}"].I2C_PLIB_API_PREFIX}_Read,
@@ -62,7 +70,7 @@ const DRV_I2C_PLIB_INTERFACE drvI2C${INDEX?string}PLibAPI = {
         <#assign I2C_PLIB_INT_INDEX5 = "core." + I2C_PLIB?eval + "_I2C_5_INT_SRC">
     </#if>
 
-const DRV_I2C_INTERRUPT_SOURCES drvI2C${INDEX?string}InterruptSources =
+static const DRV_I2C_INTERRUPT_SOURCES drvI2C${INDEX?string}InterruptSources =
 {
     <#if I2C_PLIB_MULTI_IRQn?eval??>
         <#lt>    /* Peripheral has more than one interrupt vector */
@@ -99,14 +107,14 @@ const DRV_I2C_INTERRUPT_SOURCES drvI2C${INDEX?string}InterruptSources =
         <#elseif I2C_PLIB_SINGLE_IRQn?eval??>
             <#lt>    .intSources.i2cInterrupt             = ${I2C_PLIB_SINGLE_IRQn?eval},
         <#else>
-            <#lt>    .intSources.i2cInterrupt             = ${DRV_I2C_PLIB}_IRQn,
+            <#lt>    .intSources.i2cInterrupt             = (int32_t)${DRV_I2C_PLIB}_IRQn,
         </#if>
     </#if>
 };
 </#if>
 
 /* I2C Driver Initialization Data */
-const DRV_I2C_INIT drvI2C${INDEX?string}InitData =
+static const DRV_I2C_INIT drvI2C${INDEX?string}InitData =
 {
     /* I2C PLib API */
     .i2cPlib = &drvI2C${INDEX?string}PLibAPI,
@@ -132,4 +140,11 @@ const DRV_I2C_INIT drvI2C${INDEX?string}InitData =
     .clockSpeed = DRV_I2C_CLOCK_SPEED_IDX${INDEX?string},
 };
 
+<#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
+#pragma coverity compliance end_block "MISRA C-2012 Rule 11.1"
+<#if core.COMPILER_CHOICE == "XC32">
+#pragma GCC diagnostic pop
+</#if>    
+</#if>
+/* MISRAC 2012 deviation block end */
 // </editor-fold>
