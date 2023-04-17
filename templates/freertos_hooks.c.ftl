@@ -39,6 +39,9 @@
 #include "FreeRTOS.h"
 #include "task.h"
 
+void vApplicationIdleHook( void );
+void vApplicationTickHook( void );
+void vAssertCalled( const char * pcFile, unsigned long ulLine );
 /*
 *********************************************************************************************************
 *                                          vApplicationStackOverflowHook()
@@ -54,17 +57,20 @@
 * Note(s)     : none.
 *********************************************************************************************************
 */
-void vApplicationStackOverflowHook( TaskHandle_t pxTask, char *pcTaskName )
+void vApplicationStackOverflowHook( TaskHandle_t xTask, char *pcTaskName )
 {
    ( void ) pcTaskName;
-   ( void ) pxTask;
+   ( void ) xTask;
 
    /* Run time task stack overflow checking is performed if
    configCHECK_FOR_STACK_OVERFLOW is defined to 1 or 2.  This hook  function is
    called if a task stack overflow is detected.  Note the system/interrupt
    stack is not checked. */
    taskDISABLE_INTERRUPTS();
-   for( ;; );
+   for( ;; )
+   {
+       /* Do Nothing */
+   }
 }
 
 /*
@@ -108,7 +114,10 @@ void vApplicationMallocFailedHook( void )
       to query the size of free heap space that remains (although it does not
       provide information on how the remaining heap might be fragmented). */
    taskDISABLE_INTERRUPTS();
-   for( ;; );
+   for( ;; )
+   {
+       /* Do Nothing */
+   }    
 }
 
 /*-----------------------------------------------------------*/
@@ -155,7 +164,7 @@ void vAssertCalled( const char * pcFile, unsigned long ulLine )
    {
       /* Set ul to a non-zero value using the debugger to step out of this
          function. */
-      while( ul == 0 )
+      while( ul == 0U )
       {
          portNOP();
       }

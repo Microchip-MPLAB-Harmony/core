@@ -1,3 +1,18 @@
+
+#ifndef FREERTOS_CONFIG_H
+#define FREERTOS_CONFIG_H
+
+/* MISRA C-2012 Rule 3.1, 5.4 deviated below. Deviation record ID -  
+   H3_MISRAC_2012_R_3_1_DR_1 & H3_MISRAC_2012_R_5_4_DR_1*/
+<#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
+<#if core.COMPILER_CHOICE == "XC32">
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wunknown-pragmas"
+</#if>
+#pragma coverity compliance block \
+(deviate:2 "MISRA C-2012 Rule 3.1" "H3_MISRAC_2012_R_3_1_DR_1" )\
+(deviate:2 "MISRA C-2012 Rule 5.4" "H3_MISRAC_2012_R_5_4_DR_1" )   
+</#if>
 /*
  * FreeRTOS Kernel V10.4.0
  * Copyright (C) 2019 Amazon.com, Inc. or its affiliates.  All Rights Reserved.
@@ -24,11 +39,7 @@
  *
  * 1 tab == 4 spaces!
  */
-
-
-#ifndef FREERTOS_CONFIG_H
-#define FREERTOS_CONFIG_H
-
+ 
 /*-----------------------------------------------------------
  * Application specific definitions.
  *
@@ -218,4 +229,12 @@ void ${FREERTOS_TRACE_MALLOC_FNC}(void *pAddr, size_t size);
 void ${FREERTOS_TRACE_FREE_FNC}(void *pAddr, size_t size);
 #endif
 </#if>
+<#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
+#pragma coverity compliance end_block "MISRA C-2012 Rule 3.1"
+#pragma coverity compliance end_block "MISRA C-2012 Rule 5.4"
+<#if core.COMPILER_CHOICE == "XC32">
+#pragma GCC diagnostic pop
+</#if>    
+</#if> 
+/* MISRAC 2012 deviation block end */
 #endif /* FREERTOS_CONFIG_H */

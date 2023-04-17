@@ -121,7 +121,7 @@
         <#lt>    /* Maintain the application's state machine. */
         <#lt>    ${core.LIST_SYSTEM_RTOS_TASKS_C_GEN_APP}
     </#if>
-    <#lt>    while(1)
+    <#lt>    while(true)
     <#lt>    {
     <#lt>    }
     <#lt>}

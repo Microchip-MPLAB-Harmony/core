@@ -5,7 +5,7 @@
     <#assign GEN_APP_TASK_ENABLE = "GEN_APP_TASK_ENABLE_" + i>
     <#if SELECT_RTOS == "FreeRTOS" && .vars[GEN_APP_TASK_ENABLE] == true>
     <#lt>    /* Create OS Thread for ${.vars[GEN_APP_TASK_NAME]?upper_case}_Tasks. */
-    <#lt>    xTaskCreate((TaskFunction_t) _${.vars[GEN_APP_TASK_NAME]?upper_case}_Tasks,
+    <#lt>    (void) xTaskCreate((TaskFunction_t) l${.vars[GEN_APP_TASK_NAME]?upper_case}_Tasks,
     <#lt>                "${.vars[GEN_APP_TASK_NAME]?upper_case}_Tasks",
     <#lt>                ${.vars[GEN_APP_RTOS_TASK_SIZE_BYTES] / 4},
     <#lt>                NULL,
