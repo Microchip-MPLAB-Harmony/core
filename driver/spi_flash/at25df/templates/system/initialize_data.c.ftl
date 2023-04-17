@@ -1,5 +1,5 @@
 /* SPI PLIB Interface Initialization for AT25DF Driver */
-const DRV_AT25DF_PLIB_INTERFACE drvAT25DFPlibAPI = {
+static const DRV_AT25DF_PLIB_INTERFACE drvAT25DFPlibAPI = {
 
     /* SPI PLIB WriteRead function */
     .writeRead = (DRV_AT25DF_PLIB_WRITE_READ)${.vars["${DRV_AT25DF_PLIB?lower_case}"].SPI_PLIB_API_PREFIX}_WriteRead,
@@ -18,7 +18,7 @@ const DRV_AT25DF_PLIB_INTERFACE drvAT25DFPlibAPI = {
 };
 
 /* AT25DF Driver Initialization Data */
-const DRV_AT25DF_INIT drvAT25DFInitData =
+static const DRV_AT25DF_INIT drvAT25DFInitData =
 {
     /* SPI PLIB API  interface*/
     .spiPlib = &drvAT25DFPlibAPI,
