@@ -382,8 +382,10 @@ typedef struct
 // *****************************************************************************
 // *****************************************************************************
 
+<#if SYS_CONSOLE_USB_CONNECTION_COUNTER gt 0>
 /* Declared in console device implementation (sys_console_usb_cdc.c) */
 extern const SYS_CONSOLE_DEV_DESC sysConsoleUSBCdcDevDesc;
+</#if>
 
 // *****************************************************************************
 /* Function:

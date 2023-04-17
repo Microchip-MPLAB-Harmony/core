@@ -109,7 +109,7 @@ SYS_MODULE_OBJ SYS_CONSOLE_Initialize(
 
     pConsoleObj = &consoleDeviceInstance[index];
 
-    if ((pConsoleObj->status == SYS_STATUS_UNINITIALIZED) && (initConfig != NULL))
+    if ((pConsoleObj->status == SYS_STATUS_UNINITIALIZED))
     {
         pConsoleObj->devIndex = initConfig->deviceIndex;
         pConsoleObj->devDesc = initConfig->consDevDesc;

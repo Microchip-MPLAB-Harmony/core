@@ -5,7 +5,7 @@
 /* Declared in console device implementation (sys_console_uart.c) */
 extern const SYS_CONSOLE_DEV_DESC sysConsoleUARTDevDesc;
 
-const SYS_CONSOLE_UART_PLIB_INTERFACE sysConsole${INDEX?string}UARTPlibAPI =
+static const SYS_CONSOLE_UART_PLIB_INTERFACE sysConsole${INDEX?string}UARTPlibAPI =
 {
     .read_t = (SYS_CONSOLE_UART_PLIB_READ)${.vars["${SYS_CONSOLE_DEVICE?lower_case}"].USART_PLIB_API_PREFIX}_Read,
 	.readCountGet = (SYS_CONSOLE_UART_PLIB_READ_COUNT_GET)${.vars["${SYS_CONSOLE_DEVICE?lower_case}"].USART_PLIB_API_PREFIX}_ReadCountGet,
@@ -15,12 +15,12 @@ const SYS_CONSOLE_UART_PLIB_INTERFACE sysConsole${INDEX?string}UARTPlibAPI =
 	.writeFreeBufferCountGet = (SYS_CONSOLE_UART_PLIB_WRITE_FREE_BUFFER_COUNT_GET)${.vars["${SYS_CONSOLE_DEVICE?lower_case}"].USART_PLIB_API_PREFIX}_WriteFreeBufferCountGet,
 };
 
-const SYS_CONSOLE_UART_INIT_DATA sysConsole${INDEX?string}UARTInitData =
+static const SYS_CONSOLE_UART_INIT_DATA sysConsole${INDEX?string}UARTInitData =
 {
     .uartPLIB = &sysConsole${INDEX?string}UARTPlibAPI,    
 };
 
-const SYS_CONSOLE_INIT sysConsole${INDEX?string}Init =
+static const SYS_CONSOLE_INIT sysConsole${INDEX?string}Init =
 {
     .deviceInitData = (const void*)&sysConsole${INDEX?string}UARTInitData,
     .consDevDesc = &sysConsoleUARTDevDesc,
