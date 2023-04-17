@@ -610,7 +610,7 @@ static SYS_TIME_HANDLE SYS_TIME_TimerObjectCreate(
 </#if>
 static void SYS_TIME_CounterInit(SYS_MODULE_INIT* init)
 {
-    uint64_t numerator;
+    uint64_t numerator, numeratorRead;
     SYS_TIME_COUNTER_OBJ* counterObj = (SYS_TIME_COUNTER_OBJ *)&gSystemCounterObj;
     SYS_TIME_INIT* initData = (SYS_TIME_INIT *)init;
 
@@ -619,7 +619,8 @@ static void SYS_TIME_CounterInit(SYS_MODULE_INIT* init)
 
     /*num_timer_cnts = (execution_cycles * timer_freq)/cpu_freq*/
     numerator = ((uint64_t)SYS_TIME_COMPARE_UPDATE_EXECUTION_CYCLES * counterObj->hwTimerFrequency);
-    counterObj->hwTimerCompareMargin = (numerator/(uint32_t)SYS_TIME_CPU_CLOCK_FREQUENCY) + 2U;
+    numeratorRead = (numerator/(uint64_t)SYS_TIME_CPU_CLOCK_FREQUENCY) + 2U;
+    counterObj->hwTimerCompareMargin = (uint32_t)numeratorRead;
 
     counterObj->hwTimerIntNum = initData->hwTimerIntNum;
     counterObj->hwTimerPreviousValue = 0;
