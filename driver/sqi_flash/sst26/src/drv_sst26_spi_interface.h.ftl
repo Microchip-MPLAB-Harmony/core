@@ -91,5 +91,6 @@ bool DRV_SST26_SPIWriteRead(
     DRV_SST26_OBJECT* dObj,
     DRV_SST26_TRANSFER_OBJ* transferObj
 );
+void DRV_SST26_Handler( void );
 
 #endif //#ifndef DRV_SST26_SPI_INTERFACE_H

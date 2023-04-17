@@ -513,7 +513,7 @@ bool DRV_SST26_Read( const DRV_HANDLE handle, void *rx_data, uint32_t rx_data_le
     SYS_CACHE_CleanDCache_by_Addr((uint32_t *)&sqiCmdBuffer[0], 10);
     SYS_CACHE_CleanDCache_by_Addr((uint32_t *)&sqiCmdDesc[0], 2 * (int32_t)sizeof(sqi_dma_desc_t));
     SYS_CACHE_CleanDCache_by_Addr((uint32_t *)&sqiBufDesc[0], (int32_t)i * (int32_t)sizeof(sqi_dma_desc_t));
-	SYS_CACHE_InvalidateDCache_by_Addr((uint32_t *)rx_data, (int32_t)rx_data_length);
+    SYS_CACHE_InvalidateDCache_by_Addr((uint32_t *)rx_data, (int32_t)rx_data_length);
 </#if>
 
     // Initialize the root buffer descriptor
@@ -647,6 +647,7 @@ bool DRV_SST26_ChipErase( const DRV_HANDLE handle )
 bool DRV_SST26_GeometryGet( const DRV_HANDLE handle, DRV_SST26_GEOMETRY *geometry )
 {
     uint32_t flash_size = 0;
+    bool status = true;
 
 <#if core.DATA_CACHE_ENABLE?? && core.DATA_CACHE_ENABLE == true >
     SYS_CACHE_InvalidateDCache_by_Addr((uint32_t *)sqiReadBuffer, 4);
@@ -654,46 +655,58 @@ bool DRV_SST26_GeometryGet( const DRV_HANDLE handle, DRV_SST26_GEOMETRY *geometr
 
     if (DRV_SST26_ReadJedecId(handle, (void *)sqiReadBuffer) == false)
     {
-        return false;
+        status = false;
     }
-
-    *((uint32_t*)jedecID) = *((uint32_t*)sqiReadBuffer);
-
-    flash_size = DRV_SST26_GetFlashSize(jedecID[2]);
-
-    if ((flash_size == 0U) ||
-        (DRV_SST26_START_ADDRESS >= flash_size))
+    else
     {
-        return false;
+
+        *((uint32_t*)jedecID) = *((uint32_t*)sqiReadBuffer);
+
+        flash_size = DRV_SST26_GetFlashSize(jedecID[2]);
+
+        if (flash_size == 0U) 
+        {
+            status = false;
+        }        
+        
+        if(DRV_SST26_START_ADDRESS >= flash_size)
+        {
+            status = false;
+        }
+        else
+        {
+            flash_size = flash_size - DRV_SST26_START_ADDRESS;
+
+            /* Flash size should be at-least of a Erase Block size */
+            if (flash_size < DRV_SST26_ERASE_BUFFER_SIZE)
+            {
+                status = false;
+            }
+            else
+            {
+
+                /* Read block size and number of blocks */
+                geometry->read_blockSize    = 1;
+                geometry->read_numBlocks    = flash_size;
+
+                /* Write block size and number of blocks */
+                geometry->write_blockSize   = DRV_SST26_PAGE_SIZE;
+                geometry->write_numBlocks   = (flash_size / DRV_SST26_PAGE_SIZE);
+
+                /* Erase block size and number of blocks */
+                geometry->erase_blockSize   = DRV_SST26_ERASE_BUFFER_SIZE;
+                geometry->erase_numBlocks   = (flash_size / DRV_SST26_ERASE_BUFFER_SIZE);
+
+                geometry->numReadRegions    = 1;
+                geometry->numWriteRegions   = 1;
+                geometry->numEraseRegions   = 1;
+
+                geometry->blockStartAddress = DRV_SST26_START_ADDRESS;
+            }
+        }
     }
 
-    flash_size = flash_size - DRV_SST26_START_ADDRESS;
-
-    /* Flash size should be at-least of a Erase Block size */
-    if (flash_size < DRV_SST26_ERASE_BUFFER_SIZE)
-    {
-        return false;
-    }
-
-    /* Read block size and number of blocks */
-    geometry->read_blockSize    = 1;
-    geometry->read_numBlocks    = flash_size;
-
-    /* Write block size and number of blocks */
-    geometry->write_blockSize   = DRV_SST26_PAGE_SIZE;
-    geometry->write_numBlocks   = (flash_size / DRV_SST26_PAGE_SIZE);
-
-    /* Erase block size and number of blocks */
-    geometry->erase_blockSize   = DRV_SST26_ERASE_BUFFER_SIZE;
-    geometry->erase_numBlocks   = (flash_size / DRV_SST26_ERASE_BUFFER_SIZE);
-
-    geometry->numReadRegions    = 1;
-    geometry->numWriteRegions   = 1;
-    geometry->numEraseRegions   = 1;
-
-    geometry->blockStartAddress = DRV_SST26_START_ADDRESS;
-
-    return true;
+    return status;
 }
 
 DRV_HANDLE DRV_SST26_Open( const SYS_MODULE_INDEX drvIndex, const DRV_IO_INTENT ioIntent )

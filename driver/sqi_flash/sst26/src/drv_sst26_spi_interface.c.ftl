@@ -49,10 +49,6 @@
 #include <string.h>
 #include "drv_sst26_spi_interface.h"
 
-extern void DRV_SST26_Handler(void);
-
-
-
 <#if DRV_SST26_INTERFACE_TYPE != "SPI_DRV">
 <#if DRV_SST26_TX_RX_DMA == true>
 

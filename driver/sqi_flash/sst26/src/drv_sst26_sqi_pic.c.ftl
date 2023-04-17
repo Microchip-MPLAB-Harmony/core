@@ -566,47 +566,58 @@ bool DRV_SST26_ChipErase( const DRV_HANDLE handle )
 bool DRV_SST26_GeometryGet( const DRV_HANDLE handle, DRV_SST26_GEOMETRY *geometry )
 {
     uint32_t flash_size = 0;
+    bool status = true;
 
     if (DRV_SST26_ReadJedecId(handle, (void *)&jedecID) == false)
     {
-        return false;
+        status = false;
     }
-
-    flash_size = DRV_SST26_GetFlashSize(jedecID[2]);
-
-    if ((flash_size == 0) ||
-        (DRV_SST26_START_ADDRESS >= flash_size))
+    else
     {
-        return false;
+        flash_size = DRV_SST26_GetFlashSize(jedecID[2]);
+
+        if (flash_size == 0U) 
+        {
+            status = false;
+        }
+        
+        if(DRV_SST26_START_ADDRESS >= flash_size)
+        {
+            status = false;
+        }
+        else
+        {
+            flash_size = flash_size - DRV_SST26_START_ADDRESS;
+
+            /* Flash size should be at-least of a Erase Block size */
+            if (flash_size < DRV_SST26_ERASE_BUFFER_SIZE)
+            {
+                status = false;
+            }
+            else
+            {
+                /* Read block size and number of blocks */
+                geometry->read_blockSize    = 1;
+                geometry->read_numBlocks    = flash_size;
+
+                /* Write block size and number of blocks */
+                geometry->write_blockSize   = DRV_SST26_PAGE_SIZE;
+                geometry->write_numBlocks   = (flash_size / DRV_SST26_PAGE_SIZE);
+
+                /* Erase block size and number of blocks */
+                geometry->erase_blockSize   = DRV_SST26_ERASE_BUFFER_SIZE;
+                geometry->erase_numBlocks   = (flash_size / DRV_SST26_ERASE_BUFFER_SIZE);
+
+                geometry->numReadRegions    = 1;
+                geometry->numWriteRegions   = 1;
+                geometry->numEraseRegions   = 1;
+
+                geometry->blockStartAddress = DRV_SST26_START_ADDRESS;
+            }
+        }
     }
 
-    flash_size = flash_size - DRV_SST26_START_ADDRESS;
-
-    /* Flash size should be at-least of a Erase Block size */
-    if (flash_size < DRV_SST26_ERASE_BUFFER_SIZE)
-    {
-        return false;
-    }
-
-    /* Read block size and number of blocks */
-    geometry->read_blockSize    = 1;
-    geometry->read_numBlocks    = flash_size;
-
-    /* Write block size and number of blocks */
-    geometry->write_blockSize   = DRV_SST26_PAGE_SIZE;
-    geometry->write_numBlocks   = (flash_size / DRV_SST26_PAGE_SIZE);
-
-    /* Erase block size and number of blocks */
-    geometry->erase_blockSize   = DRV_SST26_ERASE_BUFFER_SIZE;
-    geometry->erase_numBlocks   = (flash_size / DRV_SST26_ERASE_BUFFER_SIZE);
-
-    geometry->numReadRegions    = 1;
-    geometry->numWriteRegions   = 1;
-    geometry->numEraseRegions   = 1;
-
-    geometry->blockStartAddress = DRV_SST26_START_ADDRESS;
-
-    return true;
+    return status;
 }
 
 DRV_HANDLE DRV_SST26_Open( const SYS_MODULE_INDEX drvIndex, const DRV_IO_INTENT ioIntent )
