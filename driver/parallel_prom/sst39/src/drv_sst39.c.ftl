@@ -68,8 +68,7 @@ static DRV_SST39_OBJECT *dObj = &gDrvSST39Obj;
 bool DRV_SST39_ReadProductId( const DRV_HANDLE handle, uint8_t* manufacturer, uint8_t* device )
 {
     bool status = false;
-    bool cacheCheck = (DATA_CACHE_IS_ENABLED() != 0U);
-    uint8_t isCacheEnabled = (uint8_t)cacheCheck;
+    bool isCacheEnabled = (DATA_CACHE_IS_ENABLED() != 0U);
     bool isEccEnabled = false;
 
     if(handle == DRV_HANDLE_INVALID)
@@ -80,7 +79,7 @@ bool DRV_SST39_ReadProductId( const DRV_HANDLE handle, uint8_t* manufacturer, ui
     /* Disable ECC for PROM commands write if enabled */
     isEccEnabled = dObj->sst39Plib->eccDisable((uint8_t)DRV_SST39_CHIP_SELECT);
 
-    if (isCacheEnabled != 0U)
+    if (isCacheEnabled)
     {
         DCACHE_DISABLE();
     }
@@ -107,7 +106,7 @@ bool DRV_SST39_ReadProductId( const DRV_HANDLE handle, uint8_t* manufacturer, ui
     __DSB();
     __ISB();
 
-    if (isCacheEnabled != 0U)
+    if (isCacheEnabled)
     {
         DCACHE_ENABLE();
     }
@@ -147,8 +146,7 @@ bool DRV_SST39_Read( const DRV_HANDLE handle, void *rx_data, uint32_t rx_data_le
 bool DRV_SST39_PageWrite( const DRV_HANDLE handle, void *tx_data, uint32_t address )
 {
     bool status = false;
-    bool cacheCheck = (DATA_CACHE_IS_ENABLED() != 0U);
-    uint8_t isCacheEnabled = (uint8_t)cacheCheck;
+    bool isCacheEnabled = (DATA_CACHE_IS_ENABLED() != 0U);
     uint32_t index = 0U;
     uint8_t* pBuffer = (uint8_t*)tx_data;
     uint8_t readData = 0U;
@@ -162,7 +160,7 @@ bool DRV_SST39_PageWrite( const DRV_HANDLE handle, void *tx_data, uint32_t addre
     /* Disable ECC for PROM commands write if enabled */
     isEccEnabled = dObj->sst39Plib->eccDisable((uint8_t)DRV_SST39_CHIP_SELECT);
 
-    if (isCacheEnabled != 0U)
+    if (isCacheEnabled)
     {
         DCACHE_DISABLE();
     }
@@ -191,7 +189,7 @@ bool DRV_SST39_PageWrite( const DRV_HANDLE handle, void *tx_data, uint32_t addre
         while ( (readData & 0x80U) != (pBuffer[index] & 0x80U) );
     }
 
-    if (isCacheEnabled != 0U)
+    if (isCacheEnabled)
     {
         DCACHE_ENABLE();
     }
@@ -209,8 +207,7 @@ bool DRV_SST39_PageWrite( const DRV_HANDLE handle, void *tx_data, uint32_t addre
 
 bool DRV_SST39_SectorErase( const DRV_HANDLE handle, uint32_t address )
 {
-    bool cacheCheck = (DATA_CACHE_IS_ENABLED() != 0U);
-    uint8_t isCacheEnabled = (uint8_t)cacheCheck;
+    bool isCacheEnabled = (DATA_CACHE_IS_ENABLED() != 0U);
     uint8_t readData = 0U;
     bool isEccEnabled = false;
 
@@ -222,7 +219,7 @@ bool DRV_SST39_SectorErase( const DRV_HANDLE handle, uint32_t address )
     /* Disable ECC for PROM commands write if enabled */
     isEccEnabled = dObj->sst39Plib->eccDisable((uint8_t)DRV_SST39_CHIP_SELECT);
  
-    if (isCacheEnabled != 0U)
+    if (isCacheEnabled)
     {
         DCACHE_DISABLE();
     }
@@ -254,7 +251,7 @@ bool DRV_SST39_SectorErase( const DRV_HANDLE handle, uint32_t address )
     }
     while ( (readData & 0x80U) == 0x00U );
 
-    if (isCacheEnabled != 0U)
+    if (isCacheEnabled)
     {
         DCACHE_ENABLE();
     }
@@ -270,8 +267,7 @@ bool DRV_SST39_SectorErase( const DRV_HANDLE handle, uint32_t address )
 
 bool DRV_SST39_ChipErase( const DRV_HANDLE handle )
 {
-    bool cacheCheck = (DATA_CACHE_IS_ENABLED() != 0U);
-    uint8_t isCacheEnabled = (uint8_t)cacheCheck;
+    bool isCacheEnabled = (DATA_CACHE_IS_ENABLED() != 0U);
     uint8_t readData = 0;
     bool isEccEnabled = false;
 
@@ -283,7 +279,7 @@ bool DRV_SST39_ChipErase( const DRV_HANDLE handle )
     /* Disable ECC for PROM commands write if enabled */
     isEccEnabled = dObj->sst39Plib->eccDisable((uint8_t)DRV_SST39_CHIP_SELECT);
 
-    if (isCacheEnabled != 0U)
+    if (isCacheEnabled)
     {
         DCACHE_DISABLE();
     }
@@ -315,7 +311,7 @@ bool DRV_SST39_ChipErase( const DRV_HANDLE handle )
     }
     while ( (readData & 0x80U) == 0x00U );
 
-    if (isCacheEnabled != 0U)
+    if (isCacheEnabled)
     {
         DCACHE_ENABLE();
     }
