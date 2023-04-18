@@ -854,28 +854,16 @@ bool DRV_SDSPI_SPISpeedSetup(
 )
 {
     bool isSuccess = false;
-    DRV_SDSPI_TRANSFER_SETUP sdspiSetup;
     DRV_SDSPI_TRANSFER_SETUP setupRemap;
 
     /* SD Card reads the data on the rising edge of SCK, which means SPI Mode 0
-     * and 3 => CPOL = 0, CPHA = 0 and CPOL = 1, CPHA = 1 are supported */
+     * and 3 => CPOL = 0, CPHA = 0 and CPOL = 1, CPHA = 1 are supported */   
 
-    sdspiSetup.baudRateInHz = clockFrequency;    
-    sdspiSetup.clockPhase = DRV_SDSPI_CLOCK_PHASE_VALID_LEADING_EDGE;
-    sdspiSetup.clockPolarity = DRV_SDSPI_CLOCK_POLARITY_IDLE_LOW;
-    sdspiSetup.dataBits = DRV_SDSPI_DATA_BITS_8;
-    sdspiSetup.chipSelect = SYS_PORT_PIN_NONE;
-    sdspiSetup.csPolarity = DRV_SDSPI_CS_POLARITY_ACTIVE_LOW;
-    
-    (void)sdspiSetup.baudRateInHz;
-    (void)sdspiSetup.chipSelect;
-    (void)sdspiSetup.csPolarity;    
+    setupRemap.baudRateInHz = clockFrequency;
 
-    setupRemap = sdspiSetup;
-
-    setupRemap.clockPolarity = (DRV_SDSPI_CLOCK_POLARITY)dObj->remapClockPolarity[sdspiSetup.clockPolarity];
-    setupRemap.clockPhase = (DRV_SDSPI_CLOCK_PHASE)dObj->remapClockPhase[sdspiSetup.clockPhase];
-    setupRemap.dataBits = (DRV_SDSPI_DATA_BITS)dObj->remapDataBits[sdspiSetup.dataBits];
+    setupRemap.clockPolarity = (DRV_SDSPI_CLOCK_POLARITY)dObj->remapClockPolarity[DRV_SDSPI_CLOCK_POLARITY_IDLE_LOW];
+    setupRemap.clockPhase = (DRV_SDSPI_CLOCK_PHASE)dObj->remapClockPhase[DRV_SDSPI_CLOCK_PHASE_VALID_LEADING_EDGE];
+    setupRemap.dataBits = (DRV_SDSPI_DATA_BITS)dObj->remapDataBits[DRV_SDSPI_DATA_BITS_8];
 
     if ((setupRemap.clockPhase != DRV_SDSPI_CLOCK_PHASE_INVALID) &&
         (setupRemap.clockPolarity != DRV_SDSPI_CLOCK_POLARITY_INVALID) &&

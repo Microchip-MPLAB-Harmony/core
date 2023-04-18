@@ -147,7 +147,7 @@ typedef    void (* DRV_SDSPI_PLIB_CALLBACK)( uintptr_t context);
 
 typedef    bool (* DRV_SDSPI_PLIB_WRITEREAD)(void* pTransmitData, size_t txSize, void * pReceiveData, size_t rxSize);
 
-typedef    bool (* DRV_SDSPI_PLIB_WRITE)(void* pTransmitData, size_t rxSize);
+typedef    bool (* DRV_SDSPI_PLIB_WRITE)(void* pTransmitData, size_t txSize);
 
 typedef    bool (* DRV_SDSPI_PLIB_READ)(void* pReceiveData, size_t rxSize);
 
@@ -155,7 +155,7 @@ typedef    bool (* DRV_SDSPI_PLIB_SETUP)(DRV_SDSPI_TRANSFER_SETUP * setup, uint3
 
 typedef    bool (* DRV_SPI_PLIB_TRANSMITTER_IS_BUSY)(void);
 
-typedef    void (* DRV_SDSPI_PLIB_CALLBACK_REGISTER)(DRV_SDSPI_PLIB_CALLBACK callbackFunction, uintptr_t obj);
+typedef    void (* DRV_SDSPI_PLIB_CALLBACK_REGISTER)(DRV_SDSPI_PLIB_CALLBACK callbackFunction, uintptr_t context);
 
 // *****************************************************************************
 /* SDSPI Driver PLIB Interface Data

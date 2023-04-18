@@ -1080,7 +1080,7 @@ static DRV_SDSPI_ATTACH lDRV_SDSPI_MediaCommandDetect
              */
             if (DRV_SDSPI_SPIRead(dObj, &gDrvSDSPITempCidData[object], DRV_SDSPI_CID_READ_SIZE) == true)
             {
-                dObj->cmdDetectState = DRV_SDSPI_CMD_DETECT_CHK_FOR_DTCH_PRCS_CID_DAT;
+                dObj->cmdDetectState = DRV_SDSPI_CMD_DETECT_CHK_FOR_DETACH_PRCS_CID_DAT;
             }
             else
             {
@@ -1090,7 +1090,7 @@ static DRV_SDSPI_ATTACH lDRV_SDSPI_MediaCommandDetect
             }
             break;
 
-        case DRV_SDSPI_CMD_DETECT_CHK_FOR_DTCH_PRCS_CID_DAT:
+        case DRV_SDSPI_CMD_DETECT_CHK_FOR_DETACH_PRCS_CID_DAT:
 
             /* Here the default state of the card is attached */
             cardStatus = DRV_SDSPI_IS_ATTACHED;
