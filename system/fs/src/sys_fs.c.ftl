@@ -2313,7 +2313,7 @@ SYS_FS_RESULT SYS_FS_CurrentWorkingDirectoryGet
         ptr = buffer;
         (void) memset (ptr, 0, len);
         
-        for(i = 0U; str[i] < '\0' ; i++)
+        for(i = 0U; str[i] !='\0' ; i++)
         {
             ptr[i] = str[i];
         }
