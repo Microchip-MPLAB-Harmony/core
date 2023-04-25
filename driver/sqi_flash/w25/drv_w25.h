@@ -816,6 +816,42 @@ DRV_W25_TRANSFER_STATUS DRV_W25_TransferStatusGet( const DRV_HANDLE handle );
 
 bool DRV_W25_GeometryGet( const DRV_HANDLE handle, DRV_W25_GEOMETRY *geometry );
 
+// *****************************************************************************
+/* Function:
+bool DRV_W25_ReadStatus( const DRV_HANDLE handle, void *rx_data, uint32_t rx_data_length );
+Summary:
+Read the status register of the Flash device.
+Description:
+This routine read the status register of the Flash device. The application
+must use this routine where the status of a scheduled request needs to be
+polled on
+Preconditions:
+The DRV_W25_Open() routine must have been called for the
+specified W25 driver instance.
+Parameters:
+handle - A valid open-instance handle, returned from the driver's
+open routine
+rx_data         - Buffer pointer into which the register status read from the W25
+                  Flash memory will be placed.
+
+rx_data_length  - Total number of bytes to be read. It should not be greater than
+                  size of the status register.
+Returns:
+true - if status register is read from flash memory
+false - if status register command fails
+Example:
+<code>
+DRV_HANDLE handle; 
+uint8_t reg_status = 0;
+
+if (DRV_W25_ReadStatus(handle, (void *)&reg_status, 1) == false)
+{
+    return status;
+}
+</code>
+Remarks:
+None.
+*/
 bool DRV_W25_ReadStatus( const DRV_HANDLE handle, void *rx_data, uint32_t rx_data_length );
 
 

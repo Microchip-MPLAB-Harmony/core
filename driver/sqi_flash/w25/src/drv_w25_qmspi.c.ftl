@@ -89,17 +89,16 @@ static uint32_t gSstFlashIdSizeTable [11][2] = {
 static uint32_t DRV_W25_GetFlashSize( uint8_t deviceId )
 {
     uint8_t i = 0;
-    uint32_t readFlashIdSize = 0U;
 
     for (i = 0; i < 11U; i++)
     {
         if (deviceId == gSstFlashIdSizeTable[i][0])
         {
-            readFlashIdSize = gSstFlashIdSizeTable[i][1];
+            return gSstFlashIdSizeTable[i][1];
         }
     }
 
-    return readFlashIdSize;
+    return 0;
 }
 
 static bool DRV_W25_ResetFlash(void)
@@ -267,7 +266,7 @@ bool DRV_W25_Read( const DRV_HANDLE handle, void *rx_data, uint32_t rx_data_leng
     }
 
     transferRead = dObj->w25Plib->DMATransferRead(&qmspiDescXfer, rx_data, rx_data_length);
-    status = (bool)transferRead;
+    status = (transferRead != 0U);
 
     gDrvW25Obj.curOpType = DRV_W25_OPERATION_TYPE_READ;
 
@@ -302,7 +301,7 @@ bool DRV_W25_PageWrite( const DRV_HANDLE handle, void *tx_data, uint32_t address
     }
 
     transferWrite = dObj->w25Plib->DMATransferWrite(&qmspiDescXfer, tx_data, DRV_W25_PAGE_SIZE);
-    status = (bool)transferWrite;
+    status = (transferWrite != 0U);
 
     gDrvW25Obj.curOpType = DRV_W25_OPERATION_TYPE_WRITE;
 
