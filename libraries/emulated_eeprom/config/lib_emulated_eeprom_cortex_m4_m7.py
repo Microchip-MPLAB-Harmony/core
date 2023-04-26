@@ -339,8 +339,7 @@ def onAttachmentConnected(source, target):
         localComponent.setSymbolValue("EEPROM_EMULATOR_FLASH_SIZE", main_array_size)
         localComponent.setSymbolValue("EEPROM_EMULATOR_IS_DEPENDENCY_SATISFIED", True)
 
-    if localComponentID == "lib_emulated_eeprom_HarmonyCoreDependency":
-        Database.sendMessage("HarmonyCore", "ENABLE_SYS_COMMON", {"isEnabled":True})
+    Database.sendMessage("HarmonyCore", "ENABLE_SYS_COMMON", {"isEnabled":True})
 
 def onAttachmentDisconnected(source, target):
     localComponent = source["component"]
@@ -349,8 +348,7 @@ def onAttachmentDisconnected(source, target):
     if localComponentID == "lib_emulated_eeprom_MEMORY_dependency":
         localComponent.setSymbolValue("EEPROM_EMULATOR_IS_DEPENDENCY_SATISFIED", False)
 
-    if localComponentID == "lib_emulated_eeprom_HarmonyCoreDependency":
-        Database.sendMessage("HarmonyCore", "ENABLE_SYS_COMMON", {"isEnabled":False})
+    Database.sendMessage("HarmonyCore", "ENABLE_SYS_COMMON", {"isEnabled":False})
 
 def destroyComponent(emulated_eeprom):
     Database.sendMessage("HarmonyCore", "ENABLE_SYS_COMMON", {"isEnabled":False})
