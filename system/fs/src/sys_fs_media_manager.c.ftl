@@ -62,7 +62,7 @@ static const char *gSYSFSVolumeName [] = {
     "ram",
     "mtd",
 };
-<#if SYS_FS_FAT == true>
+<#if (SYS_FS_FAT == true) || (SYS_FS_FILEX == true)>
 /**/
 static const uint16_t gPartitionTypeOffset [4] =
 {
@@ -188,11 +188,11 @@ static SYS_FS_MEDIA_MANAGER_OBJ gSYSFSMediaManagerObj =
     <#lt>    and NVM with 1 partition.
 
     <#lt>    PARTITION VolToPart[SYS_FS_VOLUME_NUMBER] = {
-    <#lt>        {0, 1},    
-    <#lt>        {0, 2},   
-    <#lt>        {0, 3},   
-    <#lt>        {0, 4},   
-    <#lt>        {1, 1}    
+    <#lt>        {0, 1},
+    <#lt>        {0, 2},
+    <#lt>        {0, 3},
+    <#lt>        {0, 4},
+    <#lt>        {1, 1}
     <#lt>    };
 
     <#lt>Remarks:
@@ -237,7 +237,7 @@ static SYS_FS_MEDIA_MANAGER_OBJ gSYSFSMediaManagerObj =
 </#if>
 
 //*****************************************************************************
-/* MISRA C-2012 Rule 11.1, 11.8 deviated below. Deviation record ID -  
+/* MISRA C-2012 Rule 11.1, 11.8 deviated below. Deviation record ID -
    H3_MISRAC_2012_R_11_1_DR_1 & H3_MISRAC_2012_R_11_8_DR_1*/
 <#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
 <#if core.COMPILER_CHOICE == "XC32">
@@ -246,7 +246,7 @@ static SYS_FS_MEDIA_MANAGER_OBJ gSYSFSMediaManagerObj =
 </#if>
 #pragma coverity compliance block \
 (deviate:1 "MISRA C-2012 Rule 11.1" "H3_MISRAC_2012_R_11_1_DR_1" )\
-(deviate:3 "MISRA C-2012 Rule 11.8" "H3_MISRAC_2012_R_11_8_DR_1" )   
+(deviate:3 "MISRA C-2012 Rule 11.8" "H3_MISRAC_2012_R_11_8_DR_1" )
 </#if>
 /* Function:
     static void SYS_FS_MEDIA_T_MANAGER_HandleMediaDetach
@@ -613,14 +613,14 @@ static uint8_t SYS_FS_MEDIA_T_MANAGER_FindNextMedia
 }
 
 <#if SYS_FS_FAT == true || SYS_FS_FILEX == true>
-     /* MISRA C-2012 Rule 16.1 deviate: 1, 16.3 deviate:2 and 16.6 deviate:1. 
+     /* MISRA C-2012 Rule 16.1 deviate: 1, 16.3 deviate:2 and 16.6 deviate:1.
       Deviation record ID - H3_MISRAC_2012_R_16_1_DR_1, H3_MISRAC_2012_R_16_3_DR_1
       & H3_MISRAC_2012_R_16_6_DR_1 */
       <#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
       #pragma coverity compliance block \
       (deviate:1 "MISRA C-2012 Rule 16.1" "H3_MISRAC_2012_R_16_1_DR_1" )\
       (deviate:2 "MISRA C-2012 Rule 16.3" "H3_MISRAC_2012_R_16_3_DR_1" )\
-      (deviate:1 "MISRA C-2012 Rule 16.6" "H3_MISRAC_2012_R_16_6_DR_1" )      
+      (deviate:1 "MISRA C-2012 Rule 16.6" "H3_MISRAC_2012_R_16_6_DR_1" )
       </#if>
     <#lt>// *****************************************************************************
     <#lt>/* Function:
@@ -668,8 +668,8 @@ static uint8_t SYS_FS_MEDIA_T_MANAGER_FindNextMedia
     <#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
     #pragma coverity compliance end_block "MISRA C-2012 Rule 16.1"
     #pragma coverity compliance end_block "MISRA C-2012 Rule 16.3"
-    #pragma coverity compliance end_block "MISRA C-2012 Rule 16.6"        
-    </#if> 
+    #pragma coverity compliance end_block "MISRA C-2012 Rule 16.6"
+    </#if>
     /* MISRAC 2012 deviation block end */
 // *****************************************************************************
 /* Function:
@@ -1456,7 +1456,7 @@ bool SYS_FS_MEDIA_MANAGER_VolumePropertyGet
 <#if (SYS_FS_FAT == true || SYS_FS_MPFS == true || SYS_FS_FILEX == true) && SYS_FS_LFS == true>
                 else if (volumeObj->fsType == 'L')
 <#elseif SYS_FS_LFS == true>
-                if (volumeObj->fsType == (uint8_t)'L')              
+                if (volumeObj->fsType == (uint8_t)'L')
 </#if>
 <#if SYS_FS_LFS == true>
                 {
@@ -1478,7 +1478,7 @@ bool SYS_FS_MEDIA_MANAGER_VolumePropertyGet
 
     return false;
 }
-/* MISRA C-2012 Rule 5.1, 5.2 deviated below. Deviation record ID -  
+/* MISRA C-2012 Rule 5.1, 5.2 deviated below. Deviation record ID -
    H3_MISRAC_2012_R_5_1_DR_1 & H3_MISRAC_2012_R_5_2_DR_1*/
 <#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
 <#if core.COMPILER_CHOICE == "XC32">
@@ -1487,7 +1487,7 @@ bool SYS_FS_MEDIA_MANAGER_VolumePropertyGet
 </#if>
 #pragma coverity compliance block \
 (deviate:2 "MISRA C-2012 Rule 5.1" "H3_MISRAC_2012_R_5_1_DR_1" )\
-(deviate:1 "MISRA C-2012 Rule 5.2" "H3_MISRAC_2012_R_5_2_DR_1" )   
+(deviate:1 "MISRA C-2012 Rule 5.2" "H3_MISRAC_2012_R_5_2_DR_1" )
 </#if>
 <#if SYS_FS_AUTO_MOUNT == true>
     <#lt>//*****************************************************************************
@@ -1525,7 +1525,7 @@ bool SYS_FS_MEDIA_MANAGER_VolumePropertyGet
 <#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
 #pragma coverity compliance end_block "MISRA C-2012 Rule 11.1"
 #pragma coverity compliance end_block "MISRA C-2012 Rule 11.8"
-</#if> 
+</#if>
 /* MISRAC 2012 deviation block end */
 //*****************************************************************************
 /* Function:
@@ -1542,7 +1542,7 @@ bool SYS_FS_MEDIA_MANAGER_VolumePropertyGet
 
 ***************************************************************************/
 
-/* MISRA C-2012 Rule 11.1, 11.6 & 11.8 deviated below. Deviation record ID -  
+/* MISRA C-2012 Rule 11.1, 11.6 & 11.8 deviated below. Deviation record ID -
    H3_MISRAC_2012_R_11_1_DR_1, H3_MISRAC_2012_R_11_6_DR_1 & H3_MISRAC_2012_R_11_8_DR_1*/
 <#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
 #pragma coverity compliance block \
@@ -1611,8 +1611,8 @@ static void SYS_FS_MEDIA_MANAGER_EventHandler
 #pragma coverity compliance end_block "MISRA C-2012 Rule 11.8"
 <#if core.COMPILER_CHOICE == "XC32">
 #pragma GCC diagnostic pop
-</#if>    
-</#if> 
+</#if>
+</#if>
 /* MISRAC 2012 deviation block end */
 
 //*****************************************************************************
@@ -1933,7 +1933,7 @@ void SYS_FS_MEDIA_MANAGER_Tasks
 
         default:
                   /* Nothing to do */
-                  
+
             break;
     }
 }
