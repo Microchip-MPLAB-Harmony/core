@@ -50,6 +50,9 @@
 #include "driver/memory/src/drv_memory_local.h"
 #include "system/time/sys_time.h"
 #include "system/debug/sys_debug.h"
+<#if DRV_MEMORY_COMMON_FS_ENABLE == true>
+#include "driver/memory/src/drv_memory_file_system.h"
+</#if>
 
 // *****************************************************************************
 // *****************************************************************************
@@ -262,7 +265,7 @@ static bool DRV_MEMORY_UpdateGeometry( DRV_MEMORY_OBJECT *dObj )
 
     return true;
 }
-/* MISRA C-2012 Rule 16.1, 16.3, 16.5 and 16.6 deviated below. 
+/* MISRA C-2012 Rule 16.1, 16.3, 16.5 and 16.6 deviated below.
    Deviation record ID -  H3_MISRAC_2012_R_11_3_DR_1 & H3_MISRAC_2012_R_11_8_DR_1*/
 <#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
 <#if core.COMPILER_CHOICE == "XC32">
@@ -273,7 +276,7 @@ static bool DRV_MEMORY_UpdateGeometry( DRV_MEMORY_OBJECT *dObj )
 (deviate:4 "MISRA C-2012 Rule 16.1" "H3_MISRAC_2012_R_16_1_DR_1" )\
 (deviate:8 "MISRA C-2012 Rule 16.3" "H3_MISRAC_2012_R_16_3_DR_1" )\
 (deviate:4 "MISRA C-2012 Rule 16.5" "H3_MISRAC_2012_R_16_5_DR_1" )\
-(deviate:3 "MISRA C-2012 Rule 16.6" "H3_MISRAC_2012_R_16_6_DR_1" )    
+(deviate:3 "MISRA C-2012 Rule 16.6" "H3_MISRAC_2012_R_16_6_DR_1" )
 </#if>
 static MEMORY_DEVICE_TRANSFER_STATUS DRV_MEMORY_HandleRead
 (
@@ -568,15 +571,15 @@ static MEMORY_DEVICE_TRANSFER_STATUS DRV_MEMORY_HandleEraseWrite
 }
 /* MISRA C-2012 Rule 10.4 deviated below. False Positive record ID -  H3_MISRAC_2012_R_10_4_DR_1 */
 <#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
-#pragma coverity compliance block fp:9 "MISRA C-2012 Rule 10.4" "H3_MISRAC_2012_R_10_4_DR_1"        
+#pragma coverity compliance block fp:9 "MISRA C-2012 Rule 10.4" "H3_MISRAC_2012_R_10_4_DR_1"
 </#if>
 
 <#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
 #pragma coverity compliance end_block "MISRA C-2012 Rule 16.1"
 #pragma coverity compliance end_block "MISRA C-2012 Rule 16.3"
 #pragma coverity compliance end_block "MISRA C-2012 Rule 16.5"
-#pragma coverity compliance end_block "MISRA C-2012 Rule 16.6" 
-</#if> 
+#pragma coverity compliance end_block "MISRA C-2012 Rule 16.6"
+</#if>
 /* MISRAC 2012 deviation block end */
 
 static bool DRV_MEMORY_StartXfer( DRV_MEMORY_OBJECT *dObj )
@@ -759,16 +762,16 @@ static bool DRV_MEMORY_SetupXfer
 // *****************************************************************************
 // *****************************************************************************
 
-/* 
- * MISRA C-2012 Rule 11.1,11.3, and 11.8 deviated below. Deviation record ID -   
+/*
+ * MISRA C-2012 Rule 11.1,11.3, and 11.8 deviated below. Deviation record ID -
  * H3_MISRAC_2012_R_11_1_DR_1, H3_MISRAC_2012_R_11_3_DR_1 & H3_MISRAC_2012_R_11_8_DR_1
  */
 <#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
 #pragma coverity compliance block \
 (deviate:1 "MISRA C-2012 Rule 11.1" "H3_MISRAC_2012_R_11_1_DR_1" )\
 (deviate:1 "MISRA C-2012 Rule 11.3" "H3_MISRAC_2012_R_11_3_DR_1" )\
-(deviate:2 "MISRA C-2012 Rule 11.8" "H3_MISRAC_2012_R_11_8_DR_1" )   
-</#if>    
+(deviate:2 "MISRA C-2012 Rule 11.8" "H3_MISRAC_2012_R_11_8_DR_1" )
+</#if>
 
 SYS_MODULE_OBJ DRV_MEMORY_Initialize
 (
@@ -1192,7 +1195,7 @@ DRV_MEMORY_COMMAND_STATUS DRV_MEMORY_CommandStatusGet
     return status;
 }
 <#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
-#pragma coverity compliance end_block "MISRA C-2012 Rule 10.4"  
+#pragma coverity compliance end_block "MISRA C-2012 Rule 10.4"
 </#if>
 /* MISRAC 2012 deviation block end */
 
@@ -1224,8 +1227,8 @@ void DRV_MEMORY_TransferHandlerSet
 #pragma coverity compliance end_block "MISRA C-2012 Rule 11.8"
 <#if core.COMPILER_CHOICE == "XC32">
 #pragma GCC diagnostic pop
-</#if>    
-</#if> 
+</#if>
+</#if>
 /* MISRAC 2012 deviation block end */
 SYS_MEDIA_GEOMETRY * DRV_MEMORY_GeometryGet
 (
