@@ -112,21 +112,21 @@ def instantiateComponent(commandComponent):
     commandPrintBufferSize.setMin(512)
     commandPrintBufferSize.setMax(8192)
     commandPrintBufferSize.setDefaultValue(1024)
-    
+
     commandMaxGroups = commandComponent.createIntegerSymbol("SYS_COMMAND_MAX_CMD_GROUPS", None)
     commandMaxGroups.setLabel("Maximum Command Groups")
     commandMaxGroups.setHelp(sys_command_mcc_helpkeyword)
     commandMaxGroups.setMin(1)
     commandMaxGroups.setMax(65535)
     commandMaxGroups.setDefaultValue(8)
-    
+
     commandMaxArgsPerCmd = commandComponent.createIntegerSymbol("SYS_COMMAND_MAX_CMD_ARGS", None)
     commandMaxArgsPerCmd.setLabel("Maximum Arguments Per Command")
     commandMaxArgsPerCmd.setHelp(sys_command_mcc_helpkeyword)
     commandMaxArgsPerCmd.setMin(1)
     commandMaxArgsPerCmd.setMax(65535)
     commandMaxArgsPerCmd.setDefaultValue(8)
-    
+
     commandMaxCmdLengthPerCmd = commandComponent.createIntegerSymbol("SYS_COMMAND_MAX_CMD_LENGTH", None)
     commandMaxCmdLengthPerCmd.setLabel("Maximum Length Per Command")
     commandMaxCmdLengthPerCmd.setHelp(sys_command_mcc_helpkeyword)
@@ -282,6 +282,14 @@ def instantiateComponent(commandComponent):
     commandSystemRtosTasksFile.setMarkup(True)
     commandSystemRtosTasksFile.setEnabled(enable_rtos_settings)
     commandSystemRtosTasksFile.setDependencies(genRtosTask, ["HarmonyCore.SELECT_RTOS"])
+
+    commandSystemRtosTaskHandleFile = commandComponent.createFileSymbol("SYS_COMMAND_SYS_RTOS_TASK_HANDLE", None)
+    commandSystemRtosTaskHandleFile.setType("STRING")
+    commandSystemRtosTaskHandleFile.setOutputName("core.LIST_SYSTEM_TASKS_HANDLE_DECLARATION")
+    commandSystemRtosTaskHandleFile.setSourcePath("system/command/templates/system/system_cmd_rtos_tasks_handle_decl.h.ftl")
+    commandSystemRtosTaskHandleFile.setMarkup(True)
+    commandSystemRtosTaskHandleFile.setEnabled(enable_rtos_settings)
+    commandSystemRtosTaskHandleFile.setDependencies(genRtosTask, ["HarmonyCore.SELECT_RTOS"])
 
 ############################################################################
 #### Dependency ####
