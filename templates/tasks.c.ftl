@@ -56,6 +56,7 @@
     <#lt>#include "configuration.h"
 </#if>
 #include "definitions.h"
+#include "sys_tasks.h"
 <#if SELECT_RTOS == "MbedOS">
 #include "mbed.h"
 #include "platform/mbed_thread.h"

@@ -6,7 +6,7 @@
     <#assign GEN_APP_RTOS_TASK_USE_FPU_CONTEXT = "GEN_APP_RTOS_TASK_" + i + "_OPT_USE_FPU_CONTEXT">
     <#if SELECT_RTOS == "FreeRTOS" && .vars[GEN_APP_TASK_ENABLE] == true>
         <#lt>/* Handle for the ${.vars[GEN_APP_TASK_NAME]?upper_case}_Tasks. */
-        <#lt>static TaskHandle_t x${.vars[GEN_APP_TASK_NAME]?upper_case}_Tasks;
+        <#lt>TaskHandle_t x${.vars[GEN_APP_TASK_NAME]?upper_case}_Tasks;
 
         <#lt>static void l${.vars[GEN_APP_TASK_NAME]?upper_case}_Tasks(  void *pvParameters  )
         <#lt>{   <#if .vars[GEN_APP_RTOS_TASK_USE_FPU_CONTEXT]?? && .vars[GEN_APP_RTOS_TASK_USE_FPU_CONTEXT] == true>

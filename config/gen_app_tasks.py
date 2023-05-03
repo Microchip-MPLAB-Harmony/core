@@ -321,7 +321,7 @@ for count in range(0, genAppTaskMaxCount):
     genAppRtosTaskDelay[count].setVisible(False)
     genAppRtosTaskDelay[count].setDependencies(genAppRtosTaskOptionsVisible, ["GEN_APP_RTOS_TASK_" + str(count) + "_USE_DELAY"])
 
-    if (coreArch == "CORTEX-A5" or 
+    if (coreArch == "CORTEX-A5" or
     ("PIC32MZEF" == Database.getSymbolValue("core", "PRODUCT_FAMILY")) or
     ("PIC32MZDA" == Database.getSymbolValue("core", "PRODUCT_FAMILY")) or
     ("PIC32MK" in Database.getSymbolValue("core", "PRODUCT_FAMILY"))):
@@ -393,6 +393,15 @@ genAppRtosTasks.setSourcePath("templates/gen_rtos_tasks_macros.ftl")
 genAppRtosTasks.setMarkup(True)
 genAppRtosTasks.setEnabled(False)
 genAppRtosTasks.setDependencies(genRtosAppTask, ["SELECT_RTOS", "ENABLE_APP_FILE"])
+
+genAppRtosTasksDef = harmonyCoreComponent.createFileSymbol("GEN_RTOS_APP_TASKS_HANDLE_DECL", None)
+genAppRtosTasksDef.setType("STRING")
+genAppRtosTasksDef.setOutputName("core.LIST_SYSTEM_TASKS_HANDLE_DECLARATION")
+genAppRtosTasksDef.setSourcePath("/templates/gen_rtos_task_handle_decl.h.ftl")
+genAppRtosTasksDef.setMarkup(True)
+genAppRtosTasksDef.setEnabled(False)
+genAppRtosTasksDef.setDependencies(genRtosAppTask, ["SELECT_RTOS", "ENABLE_APP_FILE"])
+
 
 genAppRtosTasksDef = harmonyCoreComponent.createFileSymbol("GEN_RTOS_APP_TASKS_DEF", None)
 genAppRtosTasksDef.setType("STRING")

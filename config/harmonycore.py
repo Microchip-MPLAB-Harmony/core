@@ -208,6 +208,19 @@ def instantiateComponent(harmonyCoreComponent):
     confHeaderFile.setEnabled(False)
     confHeaderFile.setDependencies(genHarmonyFiles, ["ENABLE_DRV_COMMON", "ENABLE_SYS_COMMON", "ENABLE_APP_FILE"])
 
+
+    # generate sys_tasks.h file
+    taskHeaderFile = harmonyCoreComponent.createFileSymbol("SYS_TASKS_H", None)
+    taskHeaderFile.setSourcePath("templates/sys_tasks.h.ftl")
+    taskHeaderFile.setOutputName("sys_tasks.h")
+    taskHeaderFile.setMarkup(True)
+    taskHeaderFile.setOverwrite(True)
+    taskHeaderFile.setDestPath("")
+    taskHeaderFile.setProjectPath("config/" + configName + "/")
+    taskHeaderFile.setType("HEADER")
+    taskHeaderFile.setEnabled(False)
+    taskHeaderFile.setDependencies(genHarmonyFiles, ["ENABLE_DRV_COMMON", "ENABLE_SYS_COMMON", "ENABLE_APP_FILE", "SELECT_RTOS"])
+
     # generate tasks.c file
     taskSourceFile = harmonyCoreComponent.createFileSymbol("TASKS_C", None)
     taskSourceFile.setSourcePath("templates/tasks.c.ftl")
