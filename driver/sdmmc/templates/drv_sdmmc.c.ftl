@@ -426,7 +426,7 @@ static void lDRV_SDMMC_TimerCallback (
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Wunknown-pragmas"
 </#if>
-#pragma coverity compliance block deviate:2 "MISRA C-2012 Rule 14.3" "H3_MISRAC_2012_R_14_3_DR_1"    
+#pragma coverity compliance block deviate:2 "MISRA C-2012 Rule 14.3" "H3_MISRAC_2012_R_14_3_DR_1"
 </#if>
 static void lDRV_SDMMC_InitCardContext ( uint32_t drvIndex, DRV_SDHOST_CARD_CTXT* cardCtxt )
 {
@@ -672,7 +672,9 @@ static void lDRV_SDMMC_MediaInitialize (
 )
 {
     uint32_t response = 0;
+<#if core.DATA_CACHE_ENABLE?? && core.DATA_CACHE_ENABLE == true>
     uint32_t readBufferLen;
+</#if>
 
     switch (dObj->initState)
     {
@@ -1493,7 +1495,7 @@ static void lDRV_SDMMC_MediaInitialize (
 #pragma coverity compliance end_block "MISRA C-2012 Rule 14.3"
 <#if core.COMPILER_CHOICE == "XC32">
 #pragma GCC diagnostic pop
-</#if>    
+</#if>
 </#if>
 /* MISRAC 2012 deviation block end */
 // *****************************************************************************
@@ -1996,8 +1998,9 @@ void DRV_SDMMC_Tasks( SYS_MODULE_OBJ object )
     DRV_SDMMC_EVENT evtStatus = DRV_SDMMC_EVENT_COMMAND_COMPLETE;
     uint32_t response = 0;
     static bool cardAttached = true;
+<#if core.DATA_CACHE_ENABLE?? && core.DATA_CACHE_ENABLE == true>
     uint32_t readNblocks;
-
+</#if>
     dObj = &gDrvSDMMCObj[object];
 
     if (OSAL_MUTEX_Lock(&dObj->mutex, OSAL_WAIT_FOREVER) != OSAL_RESULT_TRUE)
