@@ -371,7 +371,7 @@ static void lDRV_SPI_PlibCallbackHandler(uintptr_t contextHandle)
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Wunknown-pragmas"
 </#if>
-#pragma coverity compliance block fp:4 "MISRA C-2012 Rule 10.4" "H3_MISRAC_2012_R_10_4_DR_1"    
+#pragma coverity compliance block fp:4 "MISRA C-2012 Rule 10.4" "H3_MISRAC_2012_R_10_4_DR_1"
 </#if>
 
 /* Locks the SPI driver for exclusive use by a client */
@@ -401,7 +401,7 @@ static bool DRV_SPI_ExclusiveUse( const DRV_HANDLE handle, bool useExclusive )
             else
             {
                 /* Guard against multiple threads trying to lock the driver */
-                if (OSAL_MUTEX_Lock(&dObj->mutexExclusiveUse , OSAL_WAIT_FOREVER ) == OSAL_RESULT_FALSE)
+                if (OSAL_MUTEX_Lock(&dObj->mutexExclusiveUse , OSAL_WAIT_FOREVER ) == OSAL_RESULT_FAIL)
                 {
                     isSuccess = false;
                 }
@@ -610,13 +610,13 @@ void lDRV_SPI_RX_DMA_CallbackHandler(SYS_DMA_TRANSFER_EVENT event, uintptr_t con
 // *****************************************************************************
 // *****************************************************************************
 
-/* MISRA C-2012 Rule 11.1, 11.3, 11.8 deviated below. Deviation record ID -  
+/* MISRA C-2012 Rule 11.1, 11.3, 11.8 deviated below. Deviation record ID -
     H3_MISRAC_2012_R_11_1_DR_1, H3_MISRAC_2012_R_11_3_DR_1 & H3_MISRAC_2012_R_11_8_DR_1*/
 <#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
 #pragma coverity compliance block \
 (deviate:2 "MISRA C-2012 Rule 11.1" "H3_MISRAC_2012_R_11_1_DR_1" )\
 (deviate:1 "MISRA C-2012 Rule 11.3" "H3_MISRAC_2012_R_11_3_DR_1" )\
-(deviate:1 "MISRA C-2012 Rule 11.8" "H3_MISRAC_2012_R_11_8_DR_1" )   
+(deviate:1 "MISRA C-2012 Rule 11.8" "H3_MISRAC_2012_R_11_8_DR_1" )
 </#if>
 SYS_MODULE_OBJ DRV_SPI_Initialize( const SYS_MODULE_INDEX drvIndex, const SYS_MODULE_INIT * const init )
 {
@@ -683,28 +683,28 @@ SYS_MODULE_OBJ DRV_SPI_Initialize( const SYS_MODULE_INDEX drvIndex, const SYS_MO
 </#if>
 </#if>
 
-    if (OSAL_MUTEX_Create(&dObj->transferMutex) == OSAL_RESULT_FALSE)
+    if (OSAL_MUTEX_Create(&dObj->transferMutex) == OSAL_RESULT_FAIL)
     {
         /*  If the mutex was not created because the memory required to
             hold the mutex could not be allocated then NULL is returned. */
         return SYS_MODULE_OBJ_INVALID;
     }
 
-    if (OSAL_MUTEX_Create(&dObj->clientMutex) == OSAL_RESULT_FALSE)
+    if (OSAL_MUTEX_Create(&dObj->clientMutex) == OSAL_RESULT_FAIL)
     {
         /*  If the mutex was not created because the memory required to
             hold the mutex could not be allocated then NULL is returned. */
         return SYS_MODULE_OBJ_INVALID;
     }
 
-    if (OSAL_SEM_Create(&dObj->transferDone,OSAL_SEM_TYPE_BINARY, 0, 0) == OSAL_RESULT_FALSE)
+    if (OSAL_SEM_Create(&dObj->transferDone,OSAL_SEM_TYPE_BINARY, 0, 0) == OSAL_RESULT_FAIL)
     {
         /* There was insufficient heap memory available for the semaphore to
         be created successfully. */
         return SYS_MODULE_OBJ_INVALID;
     }
 
-    if(OSAL_MUTEX_Create(&(dObj->mutexExclusiveUse)) != OSAL_RESULT_TRUE)
+    if(OSAL_MUTEX_Create(&(dObj->mutexExclusiveUse)) != OSAL_RESULT_SUCCESS)
     {
         return SYS_MODULE_OBJ_INVALID;
     }
@@ -743,8 +743,8 @@ SYS_MODULE_OBJ DRV_SPI_Initialize( const SYS_MODULE_INDEX drvIndex, const SYS_MO
 <#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
 #pragma coverity compliance end_block "MISRA C-2012 Rule 11.1"
 #pragma coverity compliance end_block "MISRA C-2012 Rule 11.3"
-#pragma coverity compliance end_block "MISRA C-2012 Rule 11.8"   
-</#if> 
+#pragma coverity compliance end_block "MISRA C-2012 Rule 11.8"
+</#if>
 /* MISRAC 2012 deviation block end */
 
 SYS_STATUS DRV_SPI_Status( SYS_MODULE_OBJ object)
@@ -783,7 +783,7 @@ DRV_HANDLE DRV_SPI_Open( const SYS_MODULE_INDEX drvIndex, const DRV_IO_INTENT io
     /* Acquire the instance specific mutex to protect the instance specific
      * client pool
      */
-    if (OSAL_MUTEX_Lock(&dObj->clientMutex , OSAL_WAIT_FOREVER ) == OSAL_RESULT_FALSE)
+    if (OSAL_MUTEX_Lock(&dObj->clientMutex , OSAL_WAIT_FOREVER ) == OSAL_RESULT_FAIL)
     {
         return DRV_HANDLE_INVALID;
     }
@@ -860,7 +860,7 @@ void DRV_SPI_Close( DRV_HANDLE handle )
         dObj = (DRV_SPI_OBJ *)clientObj->dObj;
 
         /* Acquire the client mutex to protect the client pool */
-        if (OSAL_MUTEX_Lock(&dObj->clientMutex , OSAL_WAIT_FOREVER ) == OSAL_RESULT_TRUE)
+        if (OSAL_MUTEX_Lock(&dObj->clientMutex , OSAL_WAIT_FOREVER ) == OSAL_RESULT_SUCCESS)
         {
             /* Release the mutex if the client being closed was using the driver in exclusive mode */
             if (dObj->exclusiveUseClientHandle == handle)
@@ -945,7 +945,7 @@ bool DRV_SPI_WriteReadTransfer(const DRV_HANDLE handle,
 
         if ((dObj->drvInExclusiveMode == true) && (dObj->exclusiveUseClientHandle != handle))
         {
-            if (OSAL_MUTEX_Lock(&dObj->mutexExclusiveUse , OSAL_WAIT_FOREVER ) == OSAL_RESULT_FALSE)
+            if (OSAL_MUTEX_Lock(&dObj->mutexExclusiveUse , OSAL_WAIT_FOREVER ) == OSAL_RESULT_FAIL)
             {
                 return isSuccess;
             }
@@ -956,7 +956,7 @@ bool DRV_SPI_WriteReadTransfer(const DRV_HANDLE handle,
         }
 
         /* Block other clients/threads from accessing the PLIB */
-        if (OSAL_MUTEX_Lock(&dObj->transferMutex, OSAL_WAIT_FOREVER ) == OSAL_RESULT_TRUE)
+        if (OSAL_MUTEX_Lock(&dObj->transferMutex, OSAL_WAIT_FOREVER ) == OSAL_RESULT_SUCCESS)
         {
             /* Update the PLIB Setup if current request is from a different client or
             setup has been changed dynamically for the client */
@@ -1035,7 +1035,7 @@ bool DRV_SPI_WriteReadTransfer(const DRV_HANDLE handle,
             if (isTransferInProgress == true)
             {
                 /* Wait till transfer completes. This semaphore is released from the ISR */
-                if (OSAL_SEM_Pend( &dObj->transferDone, OSAL_WAIT_FOREVER ) == OSAL_RESULT_TRUE)
+                if (OSAL_SEM_Pend( &dObj->transferDone, OSAL_WAIT_FOREVER ) == OSAL_RESULT_SUCCESS)
                 {
                     if (dObj->transferStatus == DRV_SPI_TRANSFER_STATUS_COMPLETE)
                     {
@@ -1061,7 +1061,7 @@ bool DRV_SPI_WriteReadTransfer(const DRV_HANDLE handle,
 #pragma coverity compliance end_block "MISRA C-2012 Rule 10.4"
 <#if core.COMPILER_CHOICE == "XC32">
 #pragma GCC diagnostic pop
-</#if>    
+</#if>
 </#if>
 /* MISRAC 2012 deviation block end */
 

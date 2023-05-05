@@ -77,8 +77,8 @@ static OS_UINT CSema_maxCount;
 *                  call to 'OSAL_SEM_Pend' would pass.
 *
 * Return value
-*   OSAL_RESULT_TRUE    - Semaphore created
-*   OSAL_RESULT_FALSE   - Semaphore creation failed
+*   OSAL_RESULT_SUCCESS    - Semaphore created
+*   OSAL_RESULT_FAIL   - Semaphore creation failed
 *
 * Notes
 *   Semaphore must have been declared using: OSAL_SEM_DECLARE(semID)
@@ -105,18 +105,18 @@ OSAL_RESULT OSAL_SEM_Create(OSAL_SEM_HANDLE_TYPE* semID, OSAL_SEM_TYPE type, uin
       }
       else // Binary Semaphore initialCount must be either "0" or "1"
       {
-        return OSAL_RESULT_FALSE;
+        return OSAL_RESULT_FAIL;
       }
 
       CSema_maxCount = 1;
 
-      return OSAL_RESULT_TRUE;
+      return OSAL_RESULT_SUCCESS;
 
     case OSAL_SEM_TYPE_COUNTING:
       OS_CreateCSema(semID, (OS_UINT)initialCount);
       CSema_maxCount = maxCount;
 
-      return OSAL_RESULT_TRUE;
+      return OSAL_RESULT_SUCCESS;
 
     default:
       return OSAL_RESULT_NOT_IMPLEMENTED;
@@ -134,8 +134,8 @@ OSAL_RESULT OSAL_SEM_Create(OSAL_SEM_HANDLE_TYPE* semID, OSAL_SEM_TYPE type, uin
 *   semID        - Pointer to the Semaphore ID
 *
 * Return value
-*   OSAL_RESULT_TRUE    - Semaphore deleted
-*   OSAL_RESULT_FALSE   - Semaphore deletion failed
+*   OSAL_RESULT_SUCCESS    - Semaphore deleted
+*   OSAL_RESULT_FAIL   - Semaphore deletion failed
 *
 * Notes
 *   Semaphore must have been declared using: OSAL_SEM_DECLARE(semID)
@@ -148,12 +148,12 @@ OSAL_RESULT OSAL_SEM_Delete(OSAL_SEM_HANDLE_TYPE* semID)
 {
   if (semID == NULL)
   {
-    return OSAL_RESULT_FALSE;
+    return OSAL_RESULT_FAIL;
   }
   else
   {
     OS_DeleteCSema(semID);
-    return OSAL_RESULT_TRUE;
+    return OSAL_RESULT_SUCCESS;
   }
 }
 
@@ -173,8 +173,8 @@ OSAL_RESULT OSAL_SEM_Delete(OSAL_SEM_HANDLE_TYPE* semID)
 *                  Other values - timeout delay
 *
 * Return value
-*   OSAL_RESULT_TRUE    - Semaphore obtained
-*   OSAL_RESULT_FALSE   - Semaphore obtaining failed
+*   OSAL_RESULT_SUCCESS    - Semaphore obtained
+*   OSAL_RESULT_FAIL   - Semaphore obtaining failed
 *
 * Notes
 *   Semaphore must have been declared using: OSAL_SEM_DECLARE(semID)
@@ -188,17 +188,17 @@ OSAL_RESULT OSAL_SEM_Pend(OSAL_SEM_HANDLE_TYPE* semID, uint16_t waitMS)
   if (waitMS == OSAL_WAIT_FOREVER)
   {
     OS_WaitCSema(semID);
-    return OSAL_RESULT_TRUE;
+    return OSAL_RESULT_SUCCESS;
   }
   else
   {
     if (OS_WaitCSemaTimed(semID, waitMS) == 1)
     {
-      return OSAL_RESULT_TRUE;
+      return OSAL_RESULT_SUCCESS;
     }
     else
     {
-      return OSAL_RESULT_FALSE;
+      return OSAL_RESULT_FAIL;
     }
   }
 }
@@ -215,7 +215,7 @@ OSAL_RESULT OSAL_SEM_Pend(OSAL_SEM_HANDLE_TYPE* semID, uint16_t waitMS)
 *   semID        - Semaphore ID
 *
 * Return value
-*   OSAL_RESULT_TRUE    - Semaphore signaled
+*   OSAL_RESULT_SUCCESS    - Semaphore signaled
 *
 * Notes
 *   Semaphore must have been declared using: OSAL_SEM_DECLARE(semID)
@@ -227,7 +227,7 @@ OSAL_RESULT OSAL_SEM_Pend(OSAL_SEM_HANDLE_TYPE* semID, uint16_t waitMS)
 OSAL_RESULT OSAL_SEM_Post(OSAL_SEM_HANDLE_TYPE* semID)
 {
   OS_SignalCSemaMax(semID, CSema_maxCount);
-  return OSAL_RESULT_TRUE;
+  return OSAL_RESULT_SUCCESS;
 }
 
 /*********************************************************************
@@ -242,7 +242,7 @@ OSAL_RESULT OSAL_SEM_Post(OSAL_SEM_HANDLE_TYPE* semID)
 *   semID        - Semaphore ID
 *
 * Return value
-*   OSAL_RESULT_TRUE    - Semaphore signaled
+*   OSAL_RESULT_SUCCESS    - Semaphore signaled
 *
 * Notes
 *   Semaphore must have been declared using: OSAL_SEM_DECLARE(semID)
@@ -254,7 +254,7 @@ OSAL_RESULT OSAL_SEM_Post(OSAL_SEM_HANDLE_TYPE* semID)
 OSAL_RESULT OSAL_SEM_PostISR(OSAL_SEM_HANDLE_TYPE* semID)
 {
   OS_SignalCSemaMax(semID, CSema_maxCount);
-  return OSAL_RESULT_TRUE;
+  return OSAL_RESULT_SUCCESS;
 }
 
 /*********************************************************************
@@ -268,7 +268,7 @@ OSAL_RESULT OSAL_SEM_PostISR(OSAL_SEM_HANDLE_TYPE* semID)
 *   semID        - Semaphore ID
 *
 * Return value
-*   OSAL_RESULT_TRUE    - Semaphore signaled
+*   OSAL_RESULT_SUCCESS    - Semaphore signaled
 *
 * Notes
 *   Semaphore must have been declared using: OSAL_SEM_DECLARE(semID)
@@ -374,7 +374,7 @@ void OSAL_CRIT_Leave(OSAL_CRIT_TYPE severity, OSAL_CRITSECT_DATA_TYPE status)
 *   mutexID        - Pointer to the mutex handle
 *
 * Return value
-*   OSAL_RESULT_TRUE    - Mutex created
+*   OSAL_RESULT_SUCCESS    - Mutex created
 *
 * Notes
 *   A Mutex must have been declared using: OSAL_MUTEX_DECLARE(mutexID)
@@ -386,7 +386,7 @@ void OSAL_CRIT_Leave(OSAL_CRIT_TYPE severity, OSAL_CRITSECT_DATA_TYPE status)
 OSAL_RESULT OSAL_MUTEX_Create(OSAL_MUTEX_HANDLE_TYPE* mutexID)
 {
   OS_CREATERSEMA(mutexID);
-  return OSAL_RESULT_TRUE;
+  return OSAL_RESULT_SUCCESS;
 }
 
 /*********************************************************************
@@ -400,8 +400,8 @@ OSAL_RESULT OSAL_MUTEX_Create(OSAL_MUTEX_HANDLE_TYPE* mutexID)
 *   mutexID        - Pointer to the mutex handle
 *
 * Return value
-*   OSAL_RESULT_TRUE    - Mutex deleted
-*   OSAL_RESULT_FALSE   - Mutex not deleted
+*   OSAL_RESULT_SUCCESS    - Mutex deleted
+*   OSAL_RESULT_FAIL   - Mutex not deleted
 *
 * Notes
 *   A Mutex must have been declared using: OSAL_MUTEX_DECLARE(mutexID)
@@ -414,12 +414,12 @@ OSAL_RESULT OSAL_MUTEX_Delete(OSAL_MUTEX_HANDLE_TYPE* mutexID)
 {
   if(OS_GetSemaValue(mutexID) != 0)
   {
-    return OSAL_RESULT_FALSE;
+    return OSAL_RESULT_FAIL;
   }
   else
   {
     OS_DeleteRSema(mutexID);
-    return OSAL_RESULT_TRUE;
+    return OSAL_RESULT_SUCCESS;
   }
 }
 
@@ -437,8 +437,8 @@ OSAL_RESULT OSAL_MUTEX_Delete(OSAL_MUTEX_HANDLE_TYPE* mutexID)
 *                    0 - not timeout, return immediately
 *
 * Return value
-*   OSAL_RESULT_TRUE    - Mutex locked
-*   OSAL_RESULT_FALSE   - Mutex not locked
+*   OSAL_RESULT_SUCCESS    - Mutex locked
+*   OSAL_RESULT_FAIL   - Mutex not locked
 *
 * Notes
 *   A Mutex must have been declared using: OSAL_MUTEX_DECLARE(mutexID)
@@ -448,7 +448,7 @@ OSAL_RESULT OSAL_MUTEX_Delete(OSAL_MUTEX_HANDLE_TYPE* mutexID)
 *
 *   OSAL_MUTEX_Create(&mutexID);
 *    ...
-*    if (OSAL_MUTEX_Lock(&mutexID, 1000) == OSAL_RESULT_TRUE) {
+*    if (OSAL_MUTEX_Lock(&mutexID, 1000) == OSAL_RESULT_SUCCESS) {
 *       // Do something
 *       ...
 *       // unlock the mutex
@@ -462,22 +462,22 @@ OSAL_RESULT OSAL_MUTEX_Lock(OSAL_MUTEX_HANDLE_TYPE* mutexID, uint16_t waitMS)
   {
     if (OS_UseTimed(mutexID, (OS_TIME)waitMS))
     {
-      return OSAL_RESULT_TRUE;
+      return OSAL_RESULT_SUCCESS;
     }
     else
     {
-      return OSAL_RESULT_FALSE;
+      return OSAL_RESULT_FAIL;
     }
   }
   else
   {
     if (OS_Use(mutexID))
     {
-      return OSAL_RESULT_TRUE;
+      return OSAL_RESULT_SUCCESS;
     }
     else
     {
-      return OSAL_RESULT_FALSE;
+      return OSAL_RESULT_FAIL;
     }
   }
 }
@@ -493,8 +493,8 @@ OSAL_RESULT OSAL_MUTEX_Lock(OSAL_MUTEX_HANDLE_TYPE* mutexID, uint16_t waitMS)
 *   mutexID        - Pointer to the mutex handle
 *
 * Return value
-*   OSAL_RESULT_TRUE    - Mutex unlocked
-*   OSAL_RESULT_FALSE   - Mutex not unlocked
+*   OSAL_RESULT_SUCCESS    - Mutex unlocked
+*   OSAL_RESULT_FAIL   - Mutex not unlocked
 *
 * Notes
 *   A Mutex must have been declared using: OSAL_MUTEX_DECLARE(mutexID)
@@ -504,7 +504,7 @@ OSAL_RESULT OSAL_MUTEX_Lock(OSAL_MUTEX_HANDLE_TYPE* mutexID, uint16_t waitMS)
 *
 *   OSAL_MUTEX_Create(&mutexID);
 *    ...
-*    if (OSAL_MUTEX_Lock(&mutexID, 1000) == OSAL_RESULT_TRUE) {
+*    if (OSAL_MUTEX_Lock(&mutexID, 1000) == OSAL_RESULT_SUCCESS) {
 *       // Do something
 *       ...
 *       // unlock the mutex
@@ -517,11 +517,11 @@ OSAL_RESULT OSAL_MUTEX_Unlock(OSAL_MUTEX_HANDLE_TYPE* mutexID)
   if (mutexID->UseCnt)
   {
     OS_Unuse(mutexID);
-    return OSAL_RESULT_TRUE;
+    return OSAL_RESULT_SUCCESS;
   }
   else
   {
-    return OSAL_RESULT_FALSE;
+    return OSAL_RESULT_FAIL;
   }
 }
 
@@ -561,7 +561,7 @@ const char* OSAL_Name()
 *   Initialize the underlying RTOS.
 *
 * Return value
-*   OSAL_RESULT_TRUE  - Initialization completed successfully.
+*   OSAL_RESULT_SUCCESS  - Initialization completed successfully.
 *
 * Example
 *   int main(void) {
@@ -572,7 +572,7 @@ const char* OSAL_Name()
 */
 OSAL_RESULT OSAL_Initialize(void)
 {
-  return OSAL_RESULT_TRUE;
+  return OSAL_RESULT_SUCCESS;
 }
 
 /*******************************************************************************

@@ -214,15 +214,15 @@ static DRV_USART_CLIENT_OBJ* lDRV_USART_DriverHandleValidate(DRV_HANDLE handle)
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Wunknown-pragmas"
 </#if>
-#pragma coverity compliance block fp:11 "MISRA C-2012 Rule 10.4" "H3_MISRAC_2012_R_10_4_DR_1"    
+#pragma coverity compliance block fp:11 "MISRA C-2012 Rule 10.4" "H3_MISRAC_2012_R_10_4_DR_1"
 </#if>
 
-/* MISRA C-2012 Rule 11.3, 11.8 deviated below. Deviation record ID -  
+/* MISRA C-2012 Rule 11.3, 11.8 deviated below. Deviation record ID -
 H3_MISRAC_2012_R_11_3_DR_1 & H3_MISRAC_2012_R_11_8_DR_1*/
 <#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
 #pragma coverity compliance block \
 (deviate:1 "MISRA C-2012 Rule 11.3" "H3_MISRAC_2012_R_11_3_DR_1" )\
-(deviate:1 "MISRA C-2012 Rule 11.8" "H3_MISRAC_2012_R_11_8_DR_1" )   
+(deviate:1 "MISRA C-2012 Rule 11.8" "H3_MISRAC_2012_R_11_8_DR_1" )
 </#if>
 SYS_MODULE_OBJ DRV_USART_Initialize( const SYS_MODULE_INDEX drvIndex, const SYS_MODULE_INIT * const init )
 {
@@ -265,35 +265,35 @@ SYS_MODULE_OBJ DRV_USART_Initialize( const SYS_MODULE_INDEX drvIndex, const SYS_
     dObj->remapError            = usartInit->remapError;
     dObj->dataWidth             = usartInit->dataWidth;
 
-    if (OSAL_MUTEX_Create(&dObj->clientMutex) == OSAL_RESULT_FALSE)
+    if (OSAL_MUTEX_Create(&dObj->clientMutex) == OSAL_RESULT_FAIL)
     {
         /*  If the mutex was not created because the memory required to
             hold the mutex could not be allocated then NULL is returned. */
         return SYS_MODULE_OBJ_INVALID;
     }
 
-    if (OSAL_MUTEX_Create(&dObj->txTransferMutex) == OSAL_RESULT_FALSE)
+    if (OSAL_MUTEX_Create(&dObj->txTransferMutex) == OSAL_RESULT_FAIL)
     {
         /*  If the mutex was not created because the memory required to
             hold the mutex could not be allocated then NULL is returned. */
         return SYS_MODULE_OBJ_INVALID;
     }
 
-    if (OSAL_MUTEX_Create(&dObj->rxTransferMutex) == OSAL_RESULT_FALSE)
+    if (OSAL_MUTEX_Create(&dObj->rxTransferMutex) == OSAL_RESULT_FAIL)
     {
         /*  If the mutex was not created because the memory required to
             hold the mutex could not be allocated then NULL is returned. */
         return SYS_MODULE_OBJ_INVALID;
     }
 
-    if (OSAL_SEM_Create(&dObj->txTransferDone, OSAL_SEM_TYPE_BINARY, 0, 0) == OSAL_RESULT_FALSE)
+    if (OSAL_SEM_Create(&dObj->txTransferDone, OSAL_SEM_TYPE_BINARY, 0, 0) == OSAL_RESULT_FAIL)
     {
         /* There was insufficient memory available for the semaphore to
         be created successfully. */
         return SYS_MODULE_OBJ_INVALID;
     }
 
-    if (OSAL_SEM_Create(&dObj->rxTransferDone, OSAL_SEM_TYPE_BINARY, 0, 0) == OSAL_RESULT_FALSE)
+    if (OSAL_SEM_Create(&dObj->rxTransferDone, OSAL_SEM_TYPE_BINARY, 0, 0) == OSAL_RESULT_FAIL)
     {
         /* There was insufficient memory available for the semaphore to
         be created successfully. */
@@ -358,8 +358,8 @@ SYS_MODULE_OBJ DRV_USART_Initialize( const SYS_MODULE_INDEX drvIndex, const SYS_
 }
 <#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
 #pragma coverity compliance end_block "MISRA C-2012 Rule 11.3"
-#pragma coverity compliance end_block "MISRA C-2012 Rule 11.8"   
-</#if> 
+#pragma coverity compliance end_block "MISRA C-2012 Rule 11.8"
+</#if>
 /* MISRAC 2012 deviation block end */
 
 SYS_STATUS DRV_USART_Status( SYS_MODULE_OBJ object)
@@ -398,7 +398,7 @@ DRV_HANDLE DRV_USART_Open( const SYS_MODULE_INDEX drvIndex, const DRV_IO_INTENT 
     /* Acquire the instance specific mutex to protect the instance specific
      * client pool
      */
-    if (OSAL_MUTEX_Lock(&dObj->clientMutex , OSAL_WAIT_FOREVER ) == OSAL_RESULT_FALSE)
+    if (OSAL_MUTEX_Lock(&dObj->clientMutex , OSAL_WAIT_FOREVER ) == OSAL_RESULT_FAIL)
     {
         return DRV_HANDLE_INVALID;
     }
@@ -462,7 +462,7 @@ DRV_HANDLE DRV_USART_Open( const SYS_MODULE_INDEX drvIndex, const DRV_IO_INTENT 
     /* Driver index is the handle */
     if(clientObj != NULL)
     {
-        return ((DRV_HANDLE)clientObj->clientHandle); 
+        return ((DRV_HANDLE)clientObj->clientHandle);
     }
     else
     {
@@ -517,7 +517,7 @@ void DRV_USART_Close( DRV_HANDLE handle )
         /* Acquire the instance specifc mutex to protect the instance specific
          * client pool
          */
-        if (OSAL_MUTEX_Lock(&dObj->clientMutex , OSAL_WAIT_FOREVER ) == OSAL_RESULT_TRUE)
+        if (OSAL_MUTEX_Lock(&dObj->clientMutex , OSAL_WAIT_FOREVER ) == OSAL_RESULT_SUCCESS)
         {
             /* Reduce the number of clients */
             dObj->nClients --;
@@ -569,7 +569,7 @@ bool DRV_USART_WriteBuffer
         dObj = clientObj->hDriver;
 
         /* Obtain transmit mutex */
-        if (OSAL_MUTEX_Lock(&dObj->txTransferMutex, OSAL_WAIT_FOREVER) == OSAL_RESULT_TRUE)
+        if (OSAL_MUTEX_Lock(&dObj->txTransferMutex, OSAL_WAIT_FOREVER) == OSAL_RESULT_SUCCESS)
         {
             /* Error is cleared for every new transfer */
             clientObj->errors = DRV_USART_ERROR_NONE;
@@ -623,7 +623,7 @@ bool DRV_USART_WriteBuffer
 </#if>
 
             /* Wait for transfer to complete */
-            if (OSAL_SEM_Pend(&dObj->txTransferDone, OSAL_WAIT_FOREVER) == OSAL_RESULT_TRUE)
+            if (OSAL_SEM_Pend(&dObj->txTransferDone, OSAL_WAIT_FOREVER) == OSAL_RESULT_SUCCESS)
             {
                 if (dObj->txRequestStatus == DRV_USART_REQUEST_STATUS_COMPLETE)
                 {
@@ -656,7 +656,7 @@ bool DRV_USART_ReadBuffer
         dObj = clientObj->hDriver;
 
         /* Obtain receive mutex */
-        if (OSAL_MUTEX_Lock(&dObj->rxTransferMutex, OSAL_WAIT_FOREVER) == OSAL_RESULT_TRUE)
+        if (OSAL_MUTEX_Lock(&dObj->rxTransferMutex, OSAL_WAIT_FOREVER) == OSAL_RESULT_SUCCESS)
         {
             /* Error is cleared for every new transfer */
             clientObj->errors = DRV_USART_ERROR_NONE;
@@ -709,7 +709,7 @@ bool DRV_USART_ReadBuffer
             (void) dObj->usartPlib->read_t(buffer, numbytes);
 </#if>
             /* Wait for transfer to complete */
-            if (OSAL_SEM_Pend(&dObj->rxTransferDone, OSAL_WAIT_FOREVER) == OSAL_RESULT_TRUE)
+            if (OSAL_SEM_Pend(&dObj->rxTransferDone, OSAL_WAIT_FOREVER) == OSAL_RESULT_SUCCESS)
             {
                 /* Check and return status */
                 if (dObj->rxRequestStatus == DRV_USART_REQUEST_STATUS_COMPLETE)
@@ -727,6 +727,6 @@ bool DRV_USART_ReadBuffer
 #pragma coverity compliance end_block "MISRA C-2012 Rule 10.4"
 <#if core.COMPILER_CHOICE == "XC32">
 #pragma GCC diagnostic pop
-</#if>   
+</#if>
 </#if>
 /* MISRAC 2012 deviation block end */

@@ -616,7 +616,7 @@ static bool DRV_MEMORY_StartXfer( DRV_MEMORY_OBJECT *dObj )
             /* Wait for the request to process before checking status. This semaphore is released from the
              * system timer handler
             */
-            if (OSAL_RESULT_TRUE == OSAL_SEM_Pend( &dObj->transferDone, OSAL_WAIT_FOREVER ))
+            if (OSAL_RESULT_SUCCESS == OSAL_SEM_Pend( &dObj->transferDone, OSAL_WAIT_FOREVER ))
             {
                     (void) SYS_TIME_TimerDestroy(handle);
             }
@@ -632,7 +632,7 @@ static bool DRV_MEMORY_StartXfer( DRV_MEMORY_OBJECT *dObj )
                 /* Wait for the request to process before checking status. This semaphore is released from the
                  * event handler called from attached memory device.
                 */
-                if (OSAL_RESULT_TRUE != OSAL_SEM_Pend( &dObj->transferDone, OSAL_WAIT_FOREVER ))
+                if (OSAL_RESULT_SUCCESS != OSAL_SEM_Pend( &dObj->transferDone, OSAL_WAIT_FOREVER ))
                 {
                     return false;
                 }
@@ -725,7 +725,7 @@ static bool DRV_MEMORY_SetupXfer
         return isSuccess;
     }
 
-    if (OSAL_MUTEX_Lock(&dObj->transferMutex, OSAL_WAIT_FOREVER ) == OSAL_RESULT_TRUE)
+    if (OSAL_MUTEX_Lock(&dObj->transferMutex, OSAL_WAIT_FOREVER ) == OSAL_RESULT_SUCCESS)
     {
         /* For Memory Device which do not support Erase */
         if (dObj->memoryDevice->SectorErase == NULL)
@@ -826,19 +826,19 @@ SYS_MODULE_OBJ DRV_MEMORY_Initialize
     /* Set the erase buffer */
     dObj->ewBuffer = memoryInit->ewBuffer;
 
-    if (OSAL_MUTEX_Create(&dObj->clientMutex) == OSAL_RESULT_FALSE)
+    if (OSAL_MUTEX_Create(&dObj->clientMutex) == OSAL_RESULT_FAIL)
     {
         /* There was insufficient memory available for the mutex to be created */
         return SYS_MODULE_OBJ_INVALID;
     }
 
-    if (OSAL_MUTEX_Create(&dObj->transferMutex) == OSAL_RESULT_FALSE)
+    if (OSAL_MUTEX_Create(&dObj->transferMutex) == OSAL_RESULT_FAIL)
     {
         /* There was insufficient memory available for the mutex to be created */
         return SYS_MODULE_OBJ_INVALID;
     }
 
-    if (OSAL_RESULT_FALSE == OSAL_SEM_Create(&dObj->transferDone,OSAL_SEM_TYPE_BINARY, 0, 0))
+    if (OSAL_RESULT_FAIL == OSAL_SEM_Create(&dObj->transferDone,OSAL_SEM_TYPE_BINARY, 0, 0))
     {
         /* There was insufficient memory available for the semaphore to be created */
         return SYS_MODULE_OBJ_INVALID;
@@ -942,7 +942,7 @@ DRV_HANDLE DRV_MEMORY_Open
     /* Acquire the instance specific mutex to protect the instance specific
      * client pool
      */
-    if (OSAL_MUTEX_Lock(&dObj->clientMutex , OSAL_WAIT_FOREVER ) == OSAL_RESULT_FALSE)
+    if (OSAL_MUTEX_Lock(&dObj->clientMutex , OSAL_WAIT_FOREVER ) == OSAL_RESULT_FAIL)
     {
         return DRV_HANDLE_INVALID;
     }
@@ -1028,7 +1028,7 @@ void DRV_MEMORY_Close
 
     dObj = &gDrvMemoryObj[clientObj->drvIndex];
 
-    if (OSAL_MUTEX_Lock(&dObj->clientMutex , OSAL_WAIT_FOREVER ) == OSAL_RESULT_TRUE)
+    if (OSAL_MUTEX_Lock(&dObj->clientMutex , OSAL_WAIT_FOREVER ) == OSAL_RESULT_SUCCESS)
     {
         /* Update the client count */
         dObj->numClients --;
@@ -1181,7 +1181,7 @@ DRV_MEMORY_COMMAND_STATUS DRV_MEMORY_CommandStatusGet
     /* Acquire the instance specific mutex to protect the instance specific
      * client pool
      */
-    if (OSAL_MUTEX_Lock(&dObj->transferMutex , OSAL_WAIT_FOREVER ) == OSAL_RESULT_TRUE)
+    if (OSAL_MUTEX_Lock(&dObj->transferMutex , OSAL_WAIT_FOREVER ) == OSAL_RESULT_SUCCESS)
     {
         /* Compare the buffer handle with buffer handle in the object */
         if(dObj->currentBufObj.commandHandle == commandHandle)

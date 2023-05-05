@@ -550,7 +550,7 @@ static bool lDRV_SDSPI_DMA_Read(
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Wunknown-pragmas"
 </#if>
-#pragma coverity compliance block fp:2 "MISRA C-2012 Rule 10.4" "H3_MISRAC_2012_R_10_4_DR_1"    
+#pragma coverity compliance block fp:2 "MISRA C-2012 Rule 10.4" "H3_MISRAC_2012_R_10_4_DR_1"
 </#if>
 /* SDSPI Write Block
 
@@ -604,7 +604,7 @@ bool DRV_SDSPI_SPIBlockWrite(
     }
 </#if>
 
-    if (OSAL_SEM_Pend( &dObj->transferDone, OSAL_WAIT_FOREVER ) == OSAL_RESULT_TRUE)
+    if (OSAL_SEM_Pend( &dObj->transferDone, OSAL_WAIT_FOREVER ) == OSAL_RESULT_SUCCESS)
     {
         if (dObj->spiTransferStatus == DRV_SDSPI_SPI_TRANSFER_STATUS_COMPLETE)
         {
@@ -748,7 +748,7 @@ bool DRV_SDSPI_SPIBlockRead(
     }
 
 </#if>
-    if (OSAL_SEM_Pend( &dObj->transferDone, OSAL_WAIT_FOREVER ) == OSAL_RESULT_TRUE)
+    if (OSAL_SEM_Pend( &dObj->transferDone, OSAL_WAIT_FOREVER ) == OSAL_RESULT_SUCCESS)
     {
         if (dObj->spiTransferStatus == DRV_SDSPI_SPI_TRANSFER_STATUS_COMPLETE)
         {
@@ -771,7 +771,7 @@ bool DRV_SDSPI_SPIBlockRead(
 #pragma coverity compliance end_block "MISRA C-2012 Rule 10.4"
 <#if core.COMPILER_CHOICE == "XC32">
 #pragma GCC diagnostic pop
-</#if>    
+</#if>
 </#if>
 /* MISRAC 2012 deviation block end */
 // *****************************************************************************

@@ -108,10 +108,13 @@ typedef enum OSAL_CRIT_TYPE {
   OSAL_CRIT_TYPE_HIGH
 } OSAL_CRIT_TYPE;
 
-typedef enum OSAL_RESULT {
+typedef enum OSAL_RESULT
+{
   OSAL_RESULT_NOT_IMPLEMENTED = -1,
-  OSAL_RESULT_FALSE           = 0,
-  OSAL_RESULT_TRUE            = 1
+  OSAL_RESULT_FALSE = 0,
+  OSAL_RESULT_FAIL = 0,
+  OSAL_RESULT_TRUE = 1,
+  OSAL_RESULT_SUCCESS = 1,
 } OSAL_RESULT;
 
 // *****************************************************************************

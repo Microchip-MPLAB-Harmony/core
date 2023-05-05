@@ -717,7 +717,7 @@ static void DRV_MEMORY_SetupXfer
         return;
     }
 
-    if (OSAL_MUTEX_Lock(&dObj->transferMutex, OSAL_WAIT_FOREVER ) == OSAL_RESULT_TRUE)
+    if (OSAL_MUTEX_Lock(&dObj->transferMutex, OSAL_WAIT_FOREVER ) == OSAL_RESULT_SUCCESS)
     {
         /* For Memory Device which do not support Erase */
         if (dObj->memoryDevice->SectorErase == NULL)
@@ -818,13 +818,13 @@ SYS_MODULE_OBJ DRV_MEMORY_Initialize
 
     dObj->state = DRV_MEMORY_PROCESS_QUEUE;
 
-    if (OSAL_MUTEX_Create(&dObj->clientMutex) == OSAL_RESULT_FALSE)
+    if (OSAL_MUTEX_Create(&dObj->clientMutex) == OSAL_RESULT_FAIL)
     {
         /* There was insufficient memory available for the mutex to be created */
         return SYS_MODULE_OBJ_INVALID;
     }
 
-    if (OSAL_MUTEX_Create(&dObj->transferMutex) == OSAL_RESULT_FALSE)
+    if (OSAL_MUTEX_Create(&dObj->transferMutex) == OSAL_RESULT_FAIL)
     {
         /* There was insufficient memory available for the mutex to be created */
         return SYS_MODULE_OBJ_INVALID;
@@ -930,7 +930,7 @@ DRV_HANDLE DRV_MEMORY_Open
     /* Acquire the instance specific mutex to protect the instance specific
      * client pool
      */
-    if (OSAL_MUTEX_Lock(&dObj->clientMutex , OSAL_WAIT_FOREVER ) == OSAL_RESULT_FALSE)
+    if (OSAL_MUTEX_Lock(&dObj->clientMutex , OSAL_WAIT_FOREVER ) == OSAL_RESULT_FAIL)
     {
         return DRV_HANDLE_INVALID;
     }
@@ -1016,7 +1016,7 @@ void DRV_MEMORY_Close
 
     dObj = &gDrvMemoryObj[clientObj->drvIndex];
 
-    if (OSAL_MUTEX_Lock(&dObj->clientMutex , OSAL_WAIT_FOREVER ) == OSAL_RESULT_TRUE)
+    if (OSAL_MUTEX_Lock(&dObj->clientMutex , OSAL_WAIT_FOREVER ) == OSAL_RESULT_SUCCESS)
     {
         DRV_MEMORY_RemoveClientBufferObjects (clientObj, dObj);
 
@@ -1148,7 +1148,7 @@ DRV_MEMORY_COMMAND_STATUS DRV_MEMORY_CommandStatusGet
     /* Acquire the instance specific mutex to protect the instance specific
      * client pool
      */
-    if (OSAL_MUTEX_Lock(&dObj->transferMutex , OSAL_WAIT_FOREVER ) == OSAL_RESULT_TRUE)
+    if (OSAL_MUTEX_Lock(&dObj->transferMutex , OSAL_WAIT_FOREVER ) == OSAL_RESULT_SUCCESS)
     {
         /* Compare the buffer handle with buffer handle in the object */
         if(dObj->buffObjArr[iEntry].commandHandle == commandHandle)
@@ -1184,7 +1184,7 @@ void DRV_MEMORY_Tasks( SYS_MODULE_OBJ object )
         return;
     }
 
-    if (OSAL_MUTEX_Lock(&dObj->transferMutex , OSAL_WAIT_FOREVER) != OSAL_RESULT_TRUE)
+    if (OSAL_MUTEX_Lock(&dObj->transferMutex , OSAL_WAIT_FOREVER) != OSAL_RESULT_SUCCESS)
     {
         return;
     }

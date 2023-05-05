@@ -271,7 +271,7 @@ static bool lDRV_SPI_ResourceLock(DRV_SPI_OBJ * dObj)
     if(dObj->interruptNestingCount == 0U)
     {
         /* Grab a mutex. This is okay because we are not in an interrupt context */
-        if(OSAL_MUTEX_Lock(&(dObj->mutexTransferObjects), OSAL_WAIT_FOREVER) == OSAL_RESULT_FALSE)
+        if(OSAL_MUTEX_Lock(&(dObj->mutexTransferObjects), OSAL_WAIT_FOREVER) == OSAL_RESULT_FAIL)
         {
             return false;
         }
@@ -485,7 +485,7 @@ static void lDRV_SPI_RemoveClientTransfersFromList(
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Wunknown-pragmas"
 </#if>
-#pragma coverity compliance block deviate:2 "MISRA C-2012 Rule 11.1" "H3_MISRAC_2012_R_11_1_DR_1"    
+#pragma coverity compliance block deviate:2 "MISRA C-2012 Rule 11.1" "H3_MISRAC_2012_R_11_1_DR_1"
 </#if>
 <#if core.PRODUCT_FAMILY?matches("PIC32M.*") == true>
 
@@ -689,7 +689,7 @@ static void lDRV_SPI_StartDMATransfer(DRV_SPI_TRANSFER_OBJ* transferObj)
 #pragma coverity compliance end_block "MISRA C-2012 Rule 11.1"
 <#if core.COMPILER_CHOICE == "XC32">
 #pragma GCC diagnostic pop
-</#if>    
+</#if>
 </#if>
 /* MISRAC 2012 deviation block end */
 </#if>
@@ -852,7 +852,7 @@ static bool DRV_SPI_ExclusiveUse( const DRV_HANDLE handle, bool useExclusive )
             else
             {
                 /* Guard against multiple threads trying to lock the driver */
-                if (OSAL_MUTEX_Lock(&dObj->mutexExclusiveUse , OSAL_WAIT_FOREVER ) == OSAL_RESULT_FALSE)
+                if (OSAL_MUTEX_Lock(&dObj->mutexExclusiveUse , OSAL_WAIT_FOREVER ) == OSAL_RESULT_FAIL)
                 {
                     isSuccess = false;
                 }
@@ -1213,17 +1213,17 @@ SYS_MODULE_OBJ DRV_SPI_Initialize (
     dObj = &gDrvSPIObj[drvIndex];
 
     /* Create mutexes */
-    if(OSAL_MUTEX_Create(&(dObj->mutexClientObjects)) != OSAL_RESULT_TRUE)
+    if(OSAL_MUTEX_Create(&(dObj->mutexClientObjects)) != OSAL_RESULT_SUCCESS)
     {
         return SYS_MODULE_OBJ_INVALID;
     }
 
-    if(OSAL_MUTEX_Create(&(dObj->mutexTransferObjects)) != OSAL_RESULT_TRUE)
+    if(OSAL_MUTEX_Create(&(dObj->mutexTransferObjects)) != OSAL_RESULT_SUCCESS)
     {
         return SYS_MODULE_OBJ_INVALID;
     }
 
-    if(OSAL_MUTEX_Create(&(dObj->mutexExclusiveUse)) != OSAL_RESULT_TRUE)
+    if(OSAL_MUTEX_Create(&(dObj->mutexExclusiveUse)) != OSAL_RESULT_SUCCESS)
     {
         return SYS_MODULE_OBJ_INVALID;
     }
@@ -1336,7 +1336,7 @@ DRV_HANDLE DRV_SPI_Open(
     dObj = &gDrvSPIObj[drvIndex];
 
     /* Guard against multiple threads trying to open the driver */
-    if (OSAL_MUTEX_Lock(&dObj->mutexClientObjects , OSAL_WAIT_FOREVER ) == OSAL_RESULT_FALSE)
+    if (OSAL_MUTEX_Lock(&dObj->mutexClientObjects , OSAL_WAIT_FOREVER ) == OSAL_RESULT_FAIL)
     {
         return DRV_HANDLE_INVALID;
     }
@@ -1430,7 +1430,7 @@ void DRV_SPI_Close( DRV_HANDLE handle )
     dObj = (DRV_SPI_OBJ *)&gDrvSPIObj[clientObj->drvIndex];
 
     /* Guard against multiple threads trying to open/close the driver */
-    if (OSAL_MUTEX_Lock(&dObj->mutexClientObjects , OSAL_WAIT_FOREVER ) == OSAL_RESULT_FALSE)
+    if (OSAL_MUTEX_Lock(&dObj->mutexClientObjects , OSAL_WAIT_FOREVER ) == OSAL_RESULT_FAIL)
     {
         SYS_DEBUG_MESSAGE(SYS_ERROR_ERROR, "Failed to get client mutex lock");
         return;

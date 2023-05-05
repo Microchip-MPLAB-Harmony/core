@@ -1670,7 +1670,7 @@ static void lDRV_SDSPI_AttachDetachTasks
     dObj = (DRV_SDSPI_OBJ*)&gDrvSDSPIObj[object];
 
     /* Block other clients/threads from accessing the SD Card */
-    if (OSAL_MUTEX_Lock(&dObj->transferMutex, OSAL_WAIT_FOREVER ) != OSAL_RESULT_TRUE)
+    if (OSAL_MUTEX_Lock(&dObj->transferMutex, OSAL_WAIT_FOREVER ) != OSAL_RESULT_SUCCESS)
     {
         return;
     }
@@ -1804,7 +1804,7 @@ static void lDRV_SDSPI_BufferIOTasks
     /* Get the driver object */
     dObj = (DRV_SDSPI_OBJ*)&gDrvSDSPIObj[object];
 
-    if (OSAL_MUTEX_Lock(&dObj->transferMutex, OSAL_WAIT_FOREVER) != OSAL_RESULT_TRUE)
+    if (OSAL_MUTEX_Lock(&dObj->transferMutex, OSAL_WAIT_FOREVER) != OSAL_RESULT_SUCCESS)
     {
         SYS_ASSERT(false, "SDSPI Driver: OSAL_MUTEX_Lock failed");
     }
@@ -2377,7 +2377,7 @@ static void lDRV_SDSPI_BufferIOTasks
             break;
     }
 
-    if (OSAL_MUTEX_Unlock(&dObj->transferMutex) != OSAL_RESULT_TRUE)
+    if (OSAL_MUTEX_Unlock(&dObj->transferMutex) != OSAL_RESULT_SUCCESS)
     {
         SYS_ASSERT(false, "SDCard Driver: OSAL_MUTEX_Unlock failed");
     }
@@ -2395,7 +2395,7 @@ static void lDRV_SDSPI_BufferIOTasks
 // *****************************************************************************
 /* MISRA C-2012 Rule 11.1 deviated:2 Deviation record ID -  H3_MISRAC_2012_R_11_1_DR_1 */
 <#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
-#pragma coverity compliance block deviate:2 "MISRA C-2012 Rule 11.1" "H3_MISRAC_2012_R_11_1_DR_1"    
+#pragma coverity compliance block deviate:2 "MISRA C-2012 Rule 11.1" "H3_MISRAC_2012_R_11_1_DR_1"
 </#if>
 SYS_MODULE_OBJ DRV_SDSPI_Initialize
 (
@@ -2423,14 +2423,14 @@ SYS_MODULE_OBJ DRV_SDSPI_Initialize
     /* Initialize the driver object's structure members */
     (void) memset (dObj, 0, sizeof(DRV_SDSPI_OBJ));
 
-    if (OSAL_MUTEX_Create(&dObj->transferMutex) == OSAL_RESULT_FALSE)
+    if (OSAL_MUTEX_Create(&dObj->transferMutex) == OSAL_RESULT_FAIL)
     {
         /* If the mutex was not created because the memory required to
         hold the mutex could not be allocated then NULL is returned. */
         return SYS_MODULE_OBJ_INVALID;
     }
 
-    if (OSAL_MUTEX_Create(&dObj->clientMutex) == OSAL_RESULT_FALSE)
+    if (OSAL_MUTEX_Create(&dObj->clientMutex) == OSAL_RESULT_FAIL)
     {
         /* If the mutex was not created because the memory required to
         hold the mutex could not be allocated then NULL is returned. */
@@ -2633,7 +2633,7 @@ DRV_HANDLE DRV_SDSPI_Open
 
     /* Acquire the instance specific mutex to protect the instance specific
      * client pool */
-    if (OSAL_MUTEX_Lock(&dObj->clientMutex , OSAL_WAIT_FOREVER ) == OSAL_RESULT_FALSE)
+    if (OSAL_MUTEX_Lock(&dObj->clientMutex , OSAL_WAIT_FOREVER ) == OSAL_RESULT_FAIL)
     {
         return DRV_HANDLE_INVALID;
     }
@@ -2706,7 +2706,7 @@ void DRV_SDSPI_Close (
     dObj = (DRV_SDSPI_OBJ* )&gDrvSDSPIObj[clientObj->drvIndex];
 
     /* Guard against multiple threads trying to open/close the driver */
-    if (OSAL_MUTEX_Lock(&dObj->clientMutex , OSAL_WAIT_FOREVER ) == OSAL_RESULT_FALSE)
+    if (OSAL_MUTEX_Lock(&dObj->clientMutex , OSAL_WAIT_FOREVER ) == OSAL_RESULT_FAIL)
     {
         return;
     }
@@ -2789,7 +2789,7 @@ static void DRV_SDSPI_SetupXfer(
         }
     }
 
-    if (OSAL_MUTEX_Lock(&dObj->transferMutex, OSAL_WAIT_FOREVER) != OSAL_RESULT_TRUE)
+    if (OSAL_MUTEX_Lock(&dObj->transferMutex, OSAL_WAIT_FOREVER) != OSAL_RESULT_SUCCESS)
     {
         return;
     }

@@ -1041,7 +1041,7 @@ static bool lDRV_SDSPI_SetupXfer (
     </#if>
 
     /* Block other clients/threads from accessing the SD Card */
-    if (OSAL_MUTEX_Lock(&dObj->transferMutex, OSAL_WAIT_FOREVER ) != OSAL_RESULT_TRUE)
+    if (OSAL_MUTEX_Lock(&dObj->transferMutex, OSAL_WAIT_FOREVER ) != OSAL_RESULT_SUCCESS)
     {
         <#if DRV_SDSPI_INTERFACE_TYPE == "SPI_DRV">
         (void) DRV_SDSPI_SPIExclusiveAccess(dObj, false);
@@ -1377,7 +1377,7 @@ static void lDRV_SDSPI_AttachDetachTasks ( SYS_MODULE_OBJ object )
     dObj = (DRV_SDSPI_OBJ*)DRV_SDSPI_INSTANCE_GET(object);
 
     /* Block other clients/threads from accessing the SD Card */
-    if (OSAL_MUTEX_Lock(&dObj->transferMutex, OSAL_WAIT_FOREVER ) != OSAL_RESULT_TRUE)
+    if (OSAL_MUTEX_Lock(&dObj->transferMutex, OSAL_WAIT_FOREVER ) != OSAL_RESULT_SUCCESS)
     {
         return;
     }
@@ -1505,7 +1505,7 @@ void DRV_SDSPI_Tasks ( SYS_MODULE_OBJ object )
 // *****************************************************************************
 /* MISRA C-2012 Rule 11.1 deviated:2 Deviation record ID -  H3_MISRAC_2012_R_11_1_DR_1 */
 <#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
-#pragma coverity compliance block deviate:2 "MISRA C-2012 Rule 11.1" "H3_MISRAC_2012_R_11_1_DR_1"    
+#pragma coverity compliance block deviate:2 "MISRA C-2012 Rule 11.1" "H3_MISRAC_2012_R_11_1_DR_1"
 </#if>
 
 SYS_MODULE_OBJ DRV_SDSPI_Initialize(
@@ -1536,21 +1536,21 @@ SYS_MODULE_OBJ DRV_SDSPI_Initialize(
         return SYS_MODULE_OBJ_INVALID;
     }
 
-    if (OSAL_MUTEX_Create(&dObj->transferMutex) == OSAL_RESULT_FALSE)
+    if (OSAL_MUTEX_Create(&dObj->transferMutex) == OSAL_RESULT_FAIL)
     {
         /* If the mutex was not created because the memory required to
         hold the mutex could not be allocated then NULL is returned. */
         return SYS_MODULE_OBJ_INVALID;
     }
 
-    if (OSAL_MUTEX_Create(&dObj->clientMutex) == OSAL_RESULT_FALSE)
+    if (OSAL_MUTEX_Create(&dObj->clientMutex) == OSAL_RESULT_FAIL)
     {
         /* If the mutex was not created because the memory required to
         hold the mutex could not be allocated then NULL is returned. */
         return SYS_MODULE_OBJ_INVALID;
     }
 
-    if (OSAL_SEM_Create(&dObj->transferDone,OSAL_SEM_TYPE_BINARY, 0, 0) == OSAL_RESULT_FALSE)
+    if (OSAL_SEM_Create(&dObj->transferDone,OSAL_SEM_TYPE_BINARY, 0, 0) == OSAL_RESULT_FAIL)
     {
         /* There was insufficient heap memory available for the semaphore to
         be created successfully. */
@@ -1678,7 +1678,7 @@ SYS_MODULE_OBJ DRV_SDSPI_Initialize(
     return ( (SYS_MODULE_OBJ)drvIndex );
 }
 <#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
-#pragma coverity compliance end_block "MISRA C-2012 Rule 11.1"  
+#pragma coverity compliance end_block "MISRA C-2012 Rule 11.1"
 </#if>
 /* MISRAC 2012 deviation block end */
 
@@ -1707,7 +1707,7 @@ DRV_HANDLE DRV_SDSPI_Open(
 
     /* Acquire the instance specific mutex to protect the instance specific
      * client pool */
-    if (OSAL_MUTEX_Lock(&dObj->clientMutex , OSAL_WAIT_FOREVER ) == OSAL_RESULT_FALSE)
+    if (OSAL_MUTEX_Lock(&dObj->clientMutex , OSAL_WAIT_FOREVER ) == OSAL_RESULT_FAIL)
     {
         return DRV_HANDLE_INVALID;
     }
@@ -1784,7 +1784,7 @@ void DRV_SDSPI_Close( DRV_HANDLE handle )
         dObj = (DRV_SDSPI_OBJ* )&gDrvSDSPIObj[clientObj->drvIndex];
 
         /* Acquire the client mutex to protect the client pool */
-        if (OSAL_MUTEX_Lock(&dObj->clientMutex , OSAL_WAIT_FOREVER ) == OSAL_RESULT_TRUE)
+        if (OSAL_MUTEX_Lock(&dObj->clientMutex , OSAL_WAIT_FOREVER ) == OSAL_RESULT_SUCCESS)
         {
             /* Reduce the number of clients */
             dObj->nClients--;

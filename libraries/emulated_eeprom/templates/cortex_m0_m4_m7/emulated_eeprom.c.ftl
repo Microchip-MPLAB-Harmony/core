@@ -155,7 +155,7 @@ static void EMU_EEPROM_NVMRowErase(const uint16_t row)
 
     while (${EEPROM_EMULATOR_NVM_PLIB}_IsBusy())
     {
-        /* Nothing to do*/    
+        /* Nothing to do*/
     }
 
 <#if core.DATA_CACHE_ENABLE?? && core.DATA_CACHE_ENABLE == true >
@@ -169,7 +169,7 @@ static void EMU_EEPROM_NVMRowErase(const uint16_t row)
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Wunknown-pragmas"
 </#if>
-#pragma coverity compliance block deviate:1 "MISRA C-2012 Rule 11.8" "H3_MISRAC_2012_R_11_8_DR_1"    
+#pragma coverity compliance block deviate:1 "MISRA C-2012 Rule 11.8" "H3_MISRAC_2012_R_11_8_DR_1"
 </#if>
 /** \internal
  *  \brief Fills the internal NVM controller page buffer in physical EEPROM memory space.
@@ -205,7 +205,7 @@ static void EMU_EEPROM_NVMBufferCommit(const uint16_t physical_page)
 
     while (${EEPROM_EMULATOR_NVM_PLIB}_IsBusy())
     {
-        /* Nothing to do*/    
+        /* Nothing to do*/
     }
 
 <#if core.DATA_CACHE_ENABLE?? && core.DATA_CACHE_ENABLE == true >
@@ -259,8 +259,8 @@ static void EMU_EEPROM_CachedDataCommit(void)
        EMU_EEPROM_NVMBufferCommit(eeprom_instance.page_map[cached_logical_page]);
 
        __DSB(); // Enforce ordering to prevent incorrect cache state
-       eeprom_instance.cache_active = false;       
-    }        
+       eeprom_instance.cache_active = false;
+    }
 }
 
 /**
@@ -268,7 +268,7 @@ static void EMU_EEPROM_CachedDataCommit(void)
  */
  /* MISRA C-2012 Rule 11.3 deviated:4 Deviation record ID -  H3_MISRAC_2012_R_11_3_DR_1 */
 <#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
-#pragma coverity compliance block deviate:8 "MISRA C-2012 Rule 11.3" "H3_MISRAC_2012_R_11_3_DR_1"    
+#pragma coverity compliance block deviate:8 "MISRA C-2012 Rule 11.3" "H3_MISRAC_2012_R_11_3_DR_1"
 </#if>
 static void EMU_EEPROM_MemFormat(void)
 {
@@ -608,7 +608,7 @@ static void EMU_EEPROM_MoveDataToSpare( const uint16_t row_number, const uint16_
     EMU_EEPROM_NVMRowErase(row_number);
 
     /* Keep the index of the new spare row */
-    eeprom_instance.spare_row = row_number;   
+    eeprom_instance.spare_row = row_number;
     return ;
 }
 
@@ -650,7 +650,7 @@ static EMU_EEPROM_STATUS EMU_EEPROM_PageDataRead( const uint16_t logical_page, u
 static EMU_EEPROM_STATUS EMU_EEPROM_PageDataWrite( const uint16_t logical_page, const uint8_t* const data)
 {
     uint16_t new_page = 0;
-    bool page_spare = false;    
+    bool page_spare = false;
 
     /* Ensure the emulated EEPROM has been initialized first */
     if (eeprom_instance.initialized == false)
@@ -765,7 +765,7 @@ static bool EMU_EEPROM_IsValidVersionStrExists(void)
 }
 
 <#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
-#pragma coverity compliance end_block "MISRA C-2012 Rule 11.3"  
+#pragma coverity compliance end_block "MISRA C-2012 Rule 11.3"
 </#if>
 /* MISRAC 2012 deviation block end */
 
@@ -788,20 +788,20 @@ static bool EMU_EEPROM_IsValidVersionStrExists(void)
  * \retval EMU_EEPROM_STATUS_ERR_BAD_FORMAT  Emulated EEPROM memory is corrupt or not
  *                                formatted or is incompatible with this version or scheme of the EEPROM emulator
  */
- 
-/* MISRA C-2012 Rule 10.4 False positive:7 Deviation record ID -  H3_MISRAC_2012_R_10_4_DR_1 */ 
+
+/* MISRA C-2012 Rule 10.4 False positive:7 Deviation record ID -  H3_MISRAC_2012_R_10_4_DR_1 */
 <#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
-#pragma coverity compliance block fp:7 "MISRA C-2012 Rule 10.4" "H3_MISRAC_2012_R_10_4_DR_1"    
-</#if> 
+#pragma coverity compliance block fp:7 "MISRA C-2012 Rule 10.4" "H3_MISRAC_2012_R_10_4_DR_1"
+</#if>
 SYS_MODULE_OBJ EMU_EEPROM_Initialize(const SYS_MODULE_INDEX drvIndex, const SYS_MODULE_INIT* const init)
 {
     /* Ensure the device fuses are configured for at least
      * one user EEPROM data row and one spare row */
 
-    eeprom_instance.status = EMU_EEPROM_STATUS_ERR_NOT_INITIALIZED;    
+    eeprom_instance.status = EMU_EEPROM_STATUS_ERR_NOT_INITIALIZED;
 
     /* Create mutex */
-    if(OSAL_MUTEX_Create(&eeprom_instance.EmulatedEEPROMAccessLock) != OSAL_RESULT_TRUE)
+    if(OSAL_MUTEX_Create(&eeprom_instance.EmulatedEEPROMAccessLock) != OSAL_RESULT_SUCCESS)
     {
         return SYS_MODULE_OBJ_INVALID;
     }
@@ -910,7 +910,7 @@ EMU_EEPROM_STATUS EMU_EEPROM_PageBufferCommit(void)
     EMU_EEPROM_STATUS error_code = EMU_EEPROM_STATUS_OK;
 
     /* Guard against multiple threads trying access the EEPROM memory */
-    if(OSAL_MUTEX_Lock(&eeprom_instance.EmulatedEEPROMAccessLock, OSAL_WAIT_FOREVER) == OSAL_RESULT_FALSE)
+    if(OSAL_MUTEX_Lock(&eeprom_instance.EmulatedEEPROMAccessLock, OSAL_WAIT_FOREVER) == OSAL_RESULT_FAIL)
     {
         return EMU_EEPROM_STATUS_ERR_NOT_INITIALIZED;
     }
@@ -934,7 +934,7 @@ bool EMU_EEPROM_FormatMemory(void)
     bool isSuccess = false;
 
     /* Guard against multiple threads trying access the EEPROM memory */
-    if(OSAL_MUTEX_Lock(&eeprom_instance.EmulatedEEPROMAccessLock, OSAL_WAIT_FOREVER) == OSAL_RESULT_FALSE)
+    if(OSAL_MUTEX_Lock(&eeprom_instance.EmulatedEEPROMAccessLock, OSAL_WAIT_FOREVER) == OSAL_RESULT_FAIL)
     {
         return isSuccess;
     }
@@ -1006,7 +1006,7 @@ EMU_EEPROM_STATUS EMU_EEPROM_PageWrite( const uint16_t logical_page, const uint8
     EMU_EEPROM_STATUS error_code = EMU_EEPROM_STATUS_OK;
 
     /* Guard against multiple threads trying access the EEPROM memory */
-    if(OSAL_MUTEX_Lock(&eeprom_instance.EmulatedEEPROMAccessLock, OSAL_WAIT_FOREVER) == OSAL_RESULT_FALSE)
+    if(OSAL_MUTEX_Lock(&eeprom_instance.EmulatedEEPROMAccessLock, OSAL_WAIT_FOREVER) == OSAL_RESULT_FAIL)
     {
         return EMU_EEPROM_STATUS_ERR_NOT_INITIALIZED;
     }
@@ -1039,7 +1039,7 @@ EMU_EEPROM_STATUS EMU_EEPROM_PageRead( const uint16_t logical_page, uint8_t *con
     EMU_EEPROM_STATUS error_code = EMU_EEPROM_STATUS_OK;
 
     /* Guard against multiple threads trying access the EEPROM memory */
-    if(OSAL_MUTEX_Lock(&eeprom_instance.EmulatedEEPROMAccessLock, OSAL_WAIT_FOREVER) == OSAL_RESULT_FALSE)
+    if(OSAL_MUTEX_Lock(&eeprom_instance.EmulatedEEPROMAccessLock, OSAL_WAIT_FOREVER) == OSAL_RESULT_FAIL)
     {
         return EMU_EEPROM_STATUS_ERR_NOT_INITIALIZED;
     }
@@ -1086,7 +1086,7 @@ EMU_EEPROM_STATUS EMU_EEPROM_BufferWrite( const uint16_t offset, const uint8_t *
     bool page_dirty = false;
 
     /* Guard against multiple threads trying access the EEPROM memory */
-    if(OSAL_MUTEX_Lock(&eeprom_instance.EmulatedEEPROMAccessLock, OSAL_WAIT_FOREVER) == OSAL_RESULT_FALSE)
+    if(OSAL_MUTEX_Lock(&eeprom_instance.EmulatedEEPROMAccessLock, OSAL_WAIT_FOREVER) == OSAL_RESULT_FAIL)
     {
         return EMU_EEPROM_STATUS_ERR_NOT_INITIALIZED;
     }
@@ -1187,7 +1187,7 @@ EMU_EEPROM_STATUS EMU_EEPROM_BufferRead( const uint16_t offset, uint8_t *const d
     uint16_t c = offset;
 
     /* Guard against multiple threads trying access the EEPROM memory */
-    if(OSAL_MUTEX_Lock(&eeprom_instance.EmulatedEEPROMAccessLock, OSAL_WAIT_FOREVER) == OSAL_RESULT_FALSE)
+    if(OSAL_MUTEX_Lock(&eeprom_instance.EmulatedEEPROMAccessLock, OSAL_WAIT_FOREVER) == OSAL_RESULT_FAIL)
     {
         return EMU_EEPROM_STATUS_ERR_NOT_INITIALIZED;
     }
@@ -1244,6 +1244,6 @@ EMU_EEPROM_STATUS EMU_EEPROM_BufferRead( const uint16_t offset, uint8_t *const d
 #pragma coverity compliance end_block "MISRA C-2012 Rule 10.4"
 <#if core.COMPILER_CHOICE == "XC32">
 #pragma GCC diagnostic pop
-</#if>   
+</#if>
 </#if>
 /* MISRAC 2012 deviation block end */

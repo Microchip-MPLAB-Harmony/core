@@ -1539,12 +1539,12 @@ SYS_MODULE_OBJ DRV_SDMMC_Initialize (
     /* Initialize the driver object's structure members */
     (void) memset (dObj, 0, sizeof(DRV_SDMMC_OBJ));
 
-    if(OSAL_MUTEX_Create(&dObj->mutex) != OSAL_RESULT_TRUE)
+    if(OSAL_MUTEX_Create(&dObj->mutex) != OSAL_RESULT_SUCCESS)
     {
         return SYS_MODULE_OBJ_INVALID;
     }
 
-    if(OSAL_MUTEX_Create(&dObj->mutexClientObjects) != OSAL_RESULT_TRUE)
+    if(OSAL_MUTEX_Create(&dObj->mutexClientObjects) != OSAL_RESULT_SUCCESS)
     {
         return SYS_MODULE_OBJ_INVALID;
     }
@@ -1625,7 +1625,7 @@ DRV_HANDLE DRV_SDMMC_Open (
     dObj = &gDrvSDMMCObj[drvIndex];
 
     /* Guard against multiple threads trying to open the driver */
-    if (OSAL_MUTEX_Lock(&dObj->mutexClientObjects , OSAL_WAIT_FOREVER ) == OSAL_RESULT_FALSE)
+    if (OSAL_MUTEX_Lock(&dObj->mutexClientObjects , OSAL_WAIT_FOREVER ) == OSAL_RESULT_FAIL)
     {
         return DRV_HANDLE_INVALID;
     }
@@ -1705,7 +1705,7 @@ void DRV_SDMMC_Close (
     dObj = (DRV_SDMMC_OBJ* )&gDrvSDMMCObj[clientObj->drvIndex];
 
     /* Guard against multiple threads trying to open/close the driver */
-    if (OSAL_MUTEX_Lock(&dObj->mutexClientObjects , OSAL_WAIT_FOREVER ) == OSAL_RESULT_FALSE)
+    if (OSAL_MUTEX_Lock(&dObj->mutexClientObjects , OSAL_WAIT_FOREVER ) == OSAL_RESULT_FAIL)
     {
         return;
     }
@@ -1784,7 +1784,7 @@ static void DRV_SDMMC_SetupXfer(
         }
     }
 
-    if (OSAL_MUTEX_Lock(&dObj->mutex, OSAL_WAIT_FOREVER) != OSAL_RESULT_TRUE)
+    if (OSAL_MUTEX_Lock(&dObj->mutex, OSAL_WAIT_FOREVER) != OSAL_RESULT_SUCCESS)
     {
         return;
     }
@@ -1927,7 +1927,7 @@ void DRV_SDMMC_EventHandlerSet (
     {
         dObj = (DRV_SDMMC_OBJ* )&gDrvSDMMCObj[clientObj->drvIndex];
 
-        if (OSAL_MUTEX_Lock(&dObj->mutex, OSAL_WAIT_FOREVER) == OSAL_RESULT_TRUE)
+        if (OSAL_MUTEX_Lock(&dObj->mutex, OSAL_WAIT_FOREVER) == OSAL_RESULT_SUCCESS)
         {
             /* Set the event handler */
             clientObj->eventHandler = (DRV_SDMMC_EVENT_HANDLER)eventHandler;
@@ -2003,7 +2003,7 @@ void DRV_SDMMC_Tasks( SYS_MODULE_OBJ object )
 </#if>
     dObj = &gDrvSDMMCObj[object];
 
-    if (OSAL_MUTEX_Lock(&dObj->mutex, OSAL_WAIT_FOREVER) != OSAL_RESULT_TRUE)
+    if (OSAL_MUTEX_Lock(&dObj->mutex, OSAL_WAIT_FOREVER) != OSAL_RESULT_SUCCESS)
     {
         SYS_ASSERT(false, "SDMMC Driver: OSAL_MUTEX_Lock failed");
     }
@@ -2630,7 +2630,7 @@ void DRV_SDMMC_Tasks( SYS_MODULE_OBJ object )
             break;
     }
 
-    if (OSAL_MUTEX_Unlock(&dObj->mutex) != OSAL_RESULT_TRUE)
+    if (OSAL_MUTEX_Unlock(&dObj->mutex) != OSAL_RESULT_SUCCESS)
     {
         SYS_ASSERT(false, "SDMMC Driver: OSAL_MUTEX_Unlock failed");
     }

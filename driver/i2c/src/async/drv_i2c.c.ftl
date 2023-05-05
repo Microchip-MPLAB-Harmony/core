@@ -121,7 +121,7 @@ static DRV_I2C_CLIENT_OBJ* lDRV_I2C_DriverHandleValidate(DRV_HANDLE handle)
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Wunknown-pragmas"
 </#if>
-#pragma coverity compliance block fp:5 "MISRA C-2012 Rule 10.4" "H3_MISRAC_2012_R_10_4_DR_1"        
+#pragma coverity compliance block fp:5 "MISRA C-2012 Rule 10.4" "H3_MISRAC_2012_R_10_4_DR_1"
 </#if>
 
 static bool lDRV_I2C_ResourceLock(DRV_I2C_OBJ * dObj)
@@ -137,7 +137,7 @@ static bool lDRV_I2C_ResourceLock(DRV_I2C_OBJ * dObj)
     if(dObj->interruptNestingCount == 0U)
     {
         /* Grab a mutex. This is okay because we are not in an interrupt context */
-        if(OSAL_MUTEX_Lock(&(dObj->mutexTransferObjects), OSAL_WAIT_FOREVER) == OSAL_RESULT_FALSE)
+        if(OSAL_MUTEX_Lock(&(dObj->mutexTransferObjects), OSAL_WAIT_FOREVER) == OSAL_RESULT_FAIL)
         {
             return false;
         }
@@ -498,15 +498,15 @@ SYS_MODULE_OBJ DRV_I2C_Initialize(
 <#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
 #pragma coverity compliance block \
 (deviate "MISRA C-2012 Rule 11.3" "H3_MISRAC_2012_R_11_3_DR_1" )\
-(deviate "MISRA C-2012 Rule 11.8" "H3_MISRAC_2012_R_11_8_DR_1" )   
-</#if> 
-   
+(deviate "MISRA C-2012 Rule 11.8" "H3_MISRAC_2012_R_11_8_DR_1" )
+</#if>
+
     DRV_I2C_INIT* i2cInit = (DRV_I2C_INIT*)init;
-    
+
 <#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
 #pragma coverity compliance end_block "MISRA C-2012 Rule 11.3"
 #pragma coverity compliance end_block "MISRA C-2012 Rule 11.8"
-</#if> 
+</#if>
 /* MISRAC 2012 deviation block end */
 
     /* Validate the request */
@@ -525,11 +525,11 @@ SYS_MODULE_OBJ DRV_I2C_Initialize(
     dObj = &gDrvI2CObj[drvIndex];
 
     /* Create mutex */
-    if(OSAL_MUTEX_Create(&(dObj->mutexClientObjects)) != OSAL_RESULT_TRUE)
+    if(OSAL_MUTEX_Create(&(dObj->mutexClientObjects)) != OSAL_RESULT_SUCCESS)
     {
         return SYS_MODULE_OBJ_INVALID;
     }
-    if(OSAL_MUTEX_Create(&(dObj->mutexTransferObjects)) != OSAL_RESULT_TRUE)
+    if(OSAL_MUTEX_Create(&(dObj->mutexTransferObjects)) != OSAL_RESULT_SUCCESS)
     {
         return SYS_MODULE_OBJ_INVALID;
     }
@@ -592,7 +592,7 @@ DRV_HANDLE DRV_I2C_Open(
     dObj = &gDrvI2CObj[drvIndex];
 
     /* Guard against multiple threads trying to open the driver */
-    if(OSAL_MUTEX_Lock(&(dObj->mutexClientObjects), OSAL_WAIT_FOREVER) == OSAL_RESULT_FALSE)
+    if(OSAL_MUTEX_Lock(&(dObj->mutexClientObjects), OSAL_WAIT_FOREVER) == OSAL_RESULT_FAIL)
     {
         return DRV_HANDLE_INVALID;
     }
@@ -679,7 +679,7 @@ void DRV_I2C_Close( const DRV_HANDLE handle )
     dObj = &gDrvI2CObj[clientObj->drvIndex];
 
     /* Guard against multiple threads trying to open/close the driver */
-    if(OSAL_MUTEX_Lock(&(dObj->mutexClientObjects), OSAL_WAIT_FOREVER) == OSAL_RESULT_FALSE)
+    if(OSAL_MUTEX_Lock(&(dObj->mutexClientObjects), OSAL_WAIT_FOREVER) == OSAL_RESULT_FAIL)
     {
         return;
     }
@@ -718,7 +718,7 @@ void DRV_I2C_Close( const DRV_HANDLE handle )
 #pragma coverity compliance end_block "MISRA C-2012 Rule 10.4"
 <#if core.COMPILER_CHOICE == "XC32">
 #pragma GCC diagnostic pop
-</#if>    
+</#if>
 </#if>
 /* MISRAC 2012 deviation block end */
 

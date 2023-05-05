@@ -89,9 +89,9 @@
     None
 
   Example:
-    <code>     
+    <code>
      OSAL_CRIT_Enter(OSAL_CRIT_TYPE_LOW);
-    
+
      DRV_USART_Reinitialize( objUSART,  &initData);
      OSAL_CRIT_Leave(OSAL_CRIT_TYPE_LOW);
     </code>
@@ -156,9 +156,9 @@ OSAL_CRITSECT_DATA_TYPE OSAL_CRIT_Enter(OSAL_CRIT_TYPE severity)
   Example:
     <code>
      OSAL_CRITSECT_DATA_TYPE intStatus;
-     
+
      intStatus = OSAL_CRIT_Enter(OSAL_CRIT_TYPE_LOW);
-     
+
      DRV_USART_Reinitialize( objUSART,  &initData);
      OSAL_CRIT_Leave(OSAL_CRIT_TYPE_LOW, intStatus);
     </code>
@@ -219,8 +219,8 @@ void OSAL_CRIT_Leave(OSAL_CRIT_TYPE severity, OSAL_CRITSECT_DATA_TYPE status)
                    call to 'OSAL_SEM_Pend' would pass.
 
   Returns:
-    OSAL_RESULT_TRUE    - Semaphore created
-    OSAL_RESULT_FALSE   - Semaphore creation failed
+    OSAL_RESULT_SUCCESS    - Semaphore created
+    OSAL_RESULT_FAIL   - Semaphore creation failed
 
   Example:
     <code>
@@ -229,7 +229,7 @@ void OSAL_CRIT_Leave(OSAL_CRIT_TYPE severity, OSAL_CRITSECT_DATA_TYPE status)
 
   Remarks:
  */
-/* MISRA C-2012 Rule 16.1, 16.3 deviated below. Deviation record ID -  
+/* MISRA C-2012 Rule 16.1, 16.3 deviated below. Deviation record ID -
    H3_MISRAC_2012_R_16_1_DR_1 & H3_MISRAC_2012_R_16_3_DR_1*/
 <#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
 <#if core.COMPILER_CHOICE == "XC32">
@@ -238,7 +238,7 @@ void OSAL_CRIT_Leave(OSAL_CRIT_TYPE severity, OSAL_CRITSECT_DATA_TYPE status)
 </#if>
 #pragma coverity compliance block \
 (deviate:1 "MISRA C-2012 Rule 16.1" "H3_MISRAC_2012_R_16_1_DR_1" )\
-(deviate:1 "MISRA C-2012 Rule 16.3" "H3_MISRAC_2012_R_16_3_DR_1" )   
+(deviate:1 "MISRA C-2012 Rule 16.3" "H3_MISRAC_2012_R_16_3_DR_1" )
 </#if>
 
 OSAL_RESULT OSAL_SEM_Create(OSAL_SEM_HANDLE_TYPE* semID, OSAL_SEM_TYPE type, uint8_t maxCount, uint8_t initialCount)
@@ -260,17 +260,17 @@ OSAL_RESULT OSAL_SEM_Create(OSAL_SEM_HANDLE_TYPE* semID, OSAL_SEM_TYPE type, uin
         {
           if (xSemaphoreGive(*(SemaphoreHandle_t*)semID) == (int32_t)pdTRUE)
           {
-            return (OSAL_RESULT)OSAL_RESULT_TRUE;
+            return (OSAL_RESULT)OSAL_RESULT_SUCCESS;
           }
           else
           {
-            return (OSAL_RESULT)OSAL_RESULT_FALSE;
+            return (OSAL_RESULT)OSAL_RESULT_FAIL;
           }
         }
       }
       else // for a Binary Semaphore initialCount must be either "0" or "1"
       {
-        return (OSAL_RESULT)OSAL_RESULT_FALSE;
+        return (OSAL_RESULT)OSAL_RESULT_FAIL;
       }
     break;
 
@@ -286,15 +286,15 @@ OSAL_RESULT OSAL_SEM_Create(OSAL_SEM_HANDLE_TYPE* semID, OSAL_SEM_TYPE type, uin
 
   if (*(SemaphoreHandle_t*)semID == NULL)
   {
-    return (OSAL_RESULT)OSAL_RESULT_FALSE;
+    return (OSAL_RESULT)OSAL_RESULT_FAIL;
   }
 
-  return (OSAL_RESULT)OSAL_RESULT_TRUE;
+  return (OSAL_RESULT)OSAL_RESULT_SUCCESS;
 }
 <#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
 #pragma coverity compliance end_block "MISRA C-2012 Rule 16.1"
 #pragma coverity compliance end_block "MISRA C-2012 Rule 16.3"
-</#if> 
+</#if>
 /* MISRAC 2012 deviation block end */
 // *****************************************************************************
 /* Function: OSAL_RESULT OSAL_SEM_Delete(OSAL_SEM_HANDLE_TYPE* semID)
@@ -312,8 +312,8 @@ OSAL_RESULT OSAL_SEM_Create(OSAL_SEM_HANDLE_TYPE* semID, OSAL_SEM_TYPE type, uin
     semID       - Pointer to the semID
 
   Returns:
-    OSAL_RESULT_TRUE    - Semaphore deleted
-    OSAL_RESULT_FALSE   - Semaphore deletion failed
+    OSAL_RESULT_SUCCESS    - Semaphore deleted
+    OSAL_RESULT_FAIL   - Semaphore deletion failed
 
   Example:
     <code>
@@ -327,7 +327,7 @@ OSAL_RESULT OSAL_SEM_Delete(OSAL_SEM_HANDLE_TYPE* semID)
   vSemaphoreDelete(*(SemaphoreHandle_t*)semID);
   *(SemaphoreHandle_t*)semID = NULL;
 
-  return (OSAL_RESULT)OSAL_RESULT_TRUE;
+  return (OSAL_RESULT)OSAL_RESULT_SUCCESS;
 }
 
 // *****************************************************************************
@@ -353,20 +353,20 @@ OSAL_RESULT OSAL_SEM_Delete(OSAL_SEM_HANDLE_TYPE* semID)
                    Other values - timeout delay
 
   Returns:
-    OSAL_RESULT_TRUE    - Semaphore obtained
-    OSAL_RESULT_FALSE   - Semaphore not obtained or timeout occurred
+    OSAL_RESULT_SUCCESS    - Semaphore obtained
+    OSAL_RESULT_FAIL   - Semaphore not obtained or timeout occurred
 
   Example:
     <code>
-    if (OSAL_SEM_Pend(semUARTRX, 50) == OSAL_RESULT_TRUE)
+    if (OSAL_SEM_Pend(semUARTRX, 50) == OSAL_RESULT_SUCCESS)
     {
-        
+
         c = DRV_USART_ReadByte(drvID);
         ...
     }
     else
     {
-       
+
         ...
     }
    </code>
@@ -388,11 +388,11 @@ OSAL_RESULT OSAL_SEM_Pend(OSAL_SEM_HANDLE_TYPE* semID, uint16_t waitMS)
 
   if (xSemaphoreTake(*(SemaphoreHandle_t*)semID, timeout) == (int32_t)pdTRUE)
   {
-    return (OSAL_RESULT)OSAL_RESULT_TRUE;
+    return (OSAL_RESULT)OSAL_RESULT_SUCCESS;
   }
   else
   {
-    return (OSAL_RESULT)OSAL_RESULT_FALSE;
+    return (OSAL_RESULT)OSAL_RESULT_FAIL;
   }
 }
 
@@ -414,8 +414,8 @@ OSAL_RESULT OSAL_SEM_Pend(OSAL_SEM_HANDLE_TYPE* semID, uint16_t waitMS)
      semID       - The semID
 
   Returns:
-    OSAL_RESULT_TRUE    - Semaphore posted
-    OSAL_RESULT_FALSE   - Semaphore not posted
+    OSAL_RESULT_SUCCESS    - Semaphore posted
+    OSAL_RESULT_FAIL   - Semaphore not posted
 
   Example:
     <code>
@@ -428,20 +428,20 @@ OSAL_RESULT OSAL_SEM_Post(OSAL_SEM_HANDLE_TYPE* semID)
 {
   if (xSemaphoreGive(*(SemaphoreHandle_t*)semID) == (int32_t)pdTRUE)
   {
-    return (OSAL_RESULT)OSAL_RESULT_TRUE;
+    return (OSAL_RESULT)OSAL_RESULT_SUCCESS;
   }
 
-  return (OSAL_RESULT)OSAL_RESULT_FALSE;
+  return (OSAL_RESULT)OSAL_RESULT_FAIL;
 }
 
 // *****************************************************************************
-/* MISRA C-2012 Rule 15.6, 14.4,20.7 deviated below. Deviation record ID -  
+/* MISRA C-2012 Rule 15.6, 14.4,20.7 deviated below. Deviation record ID -
    H3_MISRAC_2012_R_14_4_DR_1, H3_MISRAC_2012_R_15_6_DR_1 & H3_MISRAC_2012_R_20_7_DR_1*/
 <#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
 #pragma coverity compliance block \
 (deviate:1 "MISRA C-2012 Rule 14.4" "H3_MISRAC_2012_R_14_4_DR_1" )\
 (deviate:1 "MISRA C-2012 Rule 15.6" "H3_MISRAC_2012_R_15_6_DR_1" )\
-(deviate:1 "MISRA C-2012 Rule 20.7" "H3_MISRAC_2012_R_20_7_DR_1" )   
+(deviate:1 "MISRA C-2012 Rule 20.7" "H3_MISRAC_2012_R_20_7_DR_1" )
 </#if>
 /* Function: OSAL_RESULT OSAL_SEM_PostISR(OSAL_SEM_HANDLE_TYPE* semID)
 
@@ -461,19 +461,19 @@ OSAL_RESULT OSAL_SEM_Post(OSAL_SEM_HANDLE_TYPE* semID)
      semID       - The semID
 
   Returns:
-    OSAL_RESULT_TRUE    - Semaphore posted
-    OSAL_RESULT_FALSE   - Semaphore not posted
+    OSAL_RESULT_SUCCESS    - Semaphore posted
+    OSAL_RESULT_FAIL   - Semaphore not posted
 
   Example:
     <code>
      void __ISR(UART_2_VECTOR) _UART2RXHandler()
      {
         char c;
-        
+
         c = U2RXREG;
-        
+
         IFS1bits.U2IF = 0;
-        
+
         OSAL_SEM_PostISR(semSignal);
      }
     </code>
@@ -492,10 +492,10 @@ OSAL_RESULT OSAL_SEM_PostISR(OSAL_SEM_HANDLE_TYPE* semID)
   if ((xSemaphoreGiveFromISR(*(SemaphoreHandle_t*)semID, &taskWoken)) != 0)
   {
     portEND_SWITCHING_ISR(taskWoken);
-    return (OSAL_RESULT)OSAL_RESULT_TRUE;
+    return (OSAL_RESULT)OSAL_RESULT_SUCCESS;
   }
 
-  return (OSAL_RESULT)OSAL_RESULT_FALSE;
+  return (OSAL_RESULT)OSAL_RESULT_FAIL;
 }
 
 <#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
@@ -504,7 +504,7 @@ OSAL_RESULT OSAL_SEM_PostISR(OSAL_SEM_HANDLE_TYPE* semID)
 #pragma coverity compliance end_block "MISRA C-2012 Rule 20.7"
 <#if core.COMPILER_CHOICE == "XC32">
 #pragma GCC diagnostic pop
-</#if>    
+</#if>
 </#if>
 /* MISRAC 2012 deviation block end */
 // *****************************************************************************
@@ -535,16 +535,16 @@ OSAL_RESULT OSAL_SEM_PostISR(OSAL_SEM_HANDLE_TYPE* semID)
 
      if (semCount > 0)
      {
-       
-         if (OSAL_SEM_Pend(semUART) == OSAL_RESULT_TRUE)
+
+         if (OSAL_SEM_Pend(semUART) == OSAL_RESULT_SUCCESS)
          {
-            
+
             ...
          }
      }
      else
      {
-        
+
         ...
      }
     </code>
@@ -586,9 +586,9 @@ uint8_t OSAL_SEM_GetCount(OSAL_SEM_HANDLE_TYPE* semID)
     mutexID      - Pointer to the mutex handle
 
   Returns:
-    OSAL_RESULT_TRUE    - Mutex successfully created
+    OSAL_RESULT_SUCCESS    - Mutex successfully created
 
-    OSAL_RESULT_FALSE   - Mutex failed to be created.
+    OSAL_RESULT_FAIL   - Mutex failed to be created.
 
   Example:
     <code>
@@ -596,9 +596,9 @@ uint8_t OSAL_SEM_GetCount(OSAL_SEM_HANDLE_TYPE* semID)
 
     OSAL_MUTEX_Create(&mutexData);
     ...
-     if (OSAL_MUTEX_Lock(mutexData, 1000) == OSAL_RESULT_TRUE)
+     if (OSAL_MUTEX_Lock(mutexData, 1000) == OSAL_RESULT_SUCCESS)
      {
-        
+
         ...
      }
     </code>
@@ -611,12 +611,12 @@ OSAL_RESULT OSAL_MUTEX_Create(OSAL_MUTEX_HANDLE_TYPE* mutexID)
   /* mutex may already have been created so test before creating it */
   if (*(SemaphoreHandle_t*)mutexID != NULL)
   {
-    return (OSAL_RESULT)OSAL_RESULT_FALSE;
+    return (OSAL_RESULT)OSAL_RESULT_FAIL;
   }
 
   *(SemaphoreHandle_t*)mutexID = xSemaphoreCreateMutex();
 
-  return (OSAL_RESULT)OSAL_RESULT_TRUE;
+  return (OSAL_RESULT)OSAL_RESULT_SUCCESS;
 }
 
 // *****************************************************************************
@@ -635,9 +635,9 @@ OSAL_RESULT OSAL_MUTEX_Create(OSAL_MUTEX_HANDLE_TYPE* mutexID)
     mutexID      - Pointer to the mutex handle
 
   Returns:
-    OSAL_RESULT_TRUE    - Mutex successfully deleted.
+    OSAL_RESULT_SUCCESS    - Mutex successfully deleted.
 
-    OSAL_RESULT_FALSE   - Mutex failed to be deleted.
+    OSAL_RESULT_FAIL   - Mutex failed to be deleted.
 
   Example:
     <code>
@@ -651,13 +651,13 @@ OSAL_RESULT OSAL_MUTEX_Delete(OSAL_MUTEX_HANDLE_TYPE* mutexID)
 {
   if(*(SemaphoreHandle_t*)mutexID == NULL)
   {
-    return (OSAL_RESULT)OSAL_RESULT_FALSE;
+    return (OSAL_RESULT)OSAL_RESULT_FAIL;
   }
 
   vSemaphoreDelete(*(SemaphoreHandle_t*)mutexID);
   *(SemaphoreHandle_t*)mutexID = NULL;
 
-  return (OSAL_RESULT)OSAL_RESULT_TRUE;
+  return (OSAL_RESULT)OSAL_RESULT_SUCCESS;
 }
 
 // *****************************************************************************
@@ -682,9 +682,9 @@ OSAL_RESULT OSAL_MUTEX_Delete(OSAL_MUTEX_HANDLE_TYPE* mutexID)
                    Other values - Timeout delay
 
   Returns:
-    OSAL_RESULT_TRUE    - Mutex successfully obtained.
+    OSAL_RESULT_SUCCESS    - Mutex successfully obtained.
 
-    OSAL_RESULT_FALSE   - Mutex failed to be obtained or timeout occurred.
+    OSAL_RESULT_FAIL   - Mutex failed to be obtained or timeout occurred.
 
   Example:
     <code>
@@ -692,12 +692,12 @@ OSAL_RESULT OSAL_MUTEX_Delete(OSAL_MUTEX_HANDLE_TYPE* mutexID)
 
     OSAL_MUTEX_Create(&mutexData);
     ...
-     if (OSAL_MUTEX_Lock(mutexData, 1000) == OSAL_RESULT_TRUE)
+     if (OSAL_MUTEX_Lock(mutexData, 1000) == OSAL_RESULT_SUCCESS)
      {
-        
+
         ...
 
-        
+
         OSAL_MUTEX_Unlock(mutexData);
      }
     </code>
@@ -720,11 +720,11 @@ OSAL_RESULT OSAL_MUTEX_Lock(OSAL_MUTEX_HANDLE_TYPE* mutexID, uint16_t waitMS)
 
   if (xSemaphoreTake(*(SemaphoreHandle_t*)mutexID, timeout) == (int32_t)pdTRUE)
   {
-    return (OSAL_RESULT)OSAL_RESULT_TRUE;
+    return (OSAL_RESULT)OSAL_RESULT_SUCCESS;
   }
   else
   {
-    return (OSAL_RESULT)OSAL_RESULT_FALSE;
+    return (OSAL_RESULT)OSAL_RESULT_FAIL;
   }
 }
 
@@ -744,9 +744,9 @@ OSAL_RESULT OSAL_MUTEX_Lock(OSAL_MUTEX_HANDLE_TYPE* mutexID, uint16_t waitMS)
     mutexID      - The mutex handle
 
   Returns:
-    OSAL_RESULT_TRUE    - Mutex released.
+    OSAL_RESULT_SUCCESS    - Mutex released.
 
-    OSAL_RESULT_FALSE   - Mutex failed to be released or error occurred.
+    OSAL_RESULT_FAIL   - Mutex failed to be released or error occurred.
 
   Example:
     <code>
@@ -754,12 +754,12 @@ OSAL_RESULT OSAL_MUTEX_Lock(OSAL_MUTEX_HANDLE_TYPE* mutexID, uint16_t waitMS)
 
     OSAL_MUTEX_Create(&mutexData);
     ...
-     if (OSAL_MUTEX_Lock(mutexData, 1000) == OSAL_RESULT_TRUE)
+     if (OSAL_MUTEX_Lock(mutexData, 1000) == OSAL_RESULT_SUCCESS)
      {
-        
+
         ...
 
-        
+
         OSAL_MUTEX_Unlock(mutexData);
      }
     </code>
@@ -771,10 +771,10 @@ OSAL_RESULT OSAL_MUTEX_Unlock(OSAL_MUTEX_HANDLE_TYPE* mutexID)
 {
   if (xSemaphoreGive(*(SemaphoreHandle_t*)mutexID) == (int32_t)pdTRUE)
   {
-    return (OSAL_RESULT)OSAL_RESULT_TRUE;
+    return (OSAL_RESULT)OSAL_RESULT_SUCCESS;
   }
 
-  return (OSAL_RESULT)OSAL_RESULT_FALSE;
+  return (OSAL_RESULT)OSAL_RESULT_FAIL;
 }
 
 // *****************************************************************************
@@ -805,7 +805,7 @@ OSAL_RESULT OSAL_MUTEX_Unlock(OSAL_MUTEX_HANDLE_TYPE* mutexID)
 
   Example:
     <code>
-    
+
     uint8_t* pData;
 
      pData = OSAL_Malloc(32);
@@ -849,7 +849,7 @@ void* OSAL_Malloc(size_t size)
 
   Example:
     <code>
-    
+
     uint8_t* pData;
 
      pData = OSAL_Malloc(32);
@@ -857,9 +857,9 @@ void* OSAL_Malloc(size_t size)
      {
         ...
 
-        
+
         OSAL_Free(pData);
-       
+
         pData = NULL;
      }
     </code>
@@ -894,7 +894,7 @@ void OSAL_Free(void* pData)
     None.
 
   Returns:
-    OSAL_RESULT_TRUE  - Initialization completed successfully.
+    OSAL_RESULT_SUCCESS  - Initialization completed successfully.
 
   Example:
     <code>
@@ -912,7 +912,7 @@ void OSAL_Free(void* pData)
 OSAL_RESULT OSAL_Initialize(void)
 {
   // nothing required
-  return (OSAL_RESULT)OSAL_RESULT_TRUE;
+  return (OSAL_RESULT)OSAL_RESULT_SUCCESS;
 }
 
 /*******************************************************************************

@@ -251,7 +251,7 @@ static void lDRV_USART_EnableInterrupts(DRV_USART_OBJ* dObj)
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Wunknown-pragmas"
 </#if>
-#pragma coverity compliance block fp:6 "MISRA C-2012 Rule 10.4" "H3_MISRAC_2012_R_10_4_DR_1"    
+#pragma coverity compliance block fp:6 "MISRA C-2012 Rule 10.4" "H3_MISRAC_2012_R_10_4_DR_1"
 </#if>
 
 static bool lDRV_USART_ResourceLock( DRV_USART_OBJ* dObj )
@@ -262,7 +262,7 @@ static bool lDRV_USART_ResourceLock( DRV_USART_OBJ* dObj )
     if(dObj->interruptNestingCount == 0U)
     {
         /* Grab a mutex. This is okay because we are not in an interrupt context */
-        if(OSAL_MUTEX_Lock(&(dObj->mutexTransferObjects), OSAL_WAIT_FOREVER) == OSAL_RESULT_FALSE)
+        if(OSAL_MUTEX_Lock(&(dObj->mutexTransferObjects), OSAL_WAIT_FOREVER) == OSAL_RESULT_FAIL)
         {
             return false;
         }
@@ -906,12 +906,12 @@ static void lDRV_USART_RX_DMA_CallbackHandler(
 // Section: USART Driver Common Interface Implementation
 // *****************************************************************************
 // *****************************************************************************
-/* MISRA C-2012 Rule 11.3, 11.8 deviated below. Deviation record ID -  
+/* MISRA C-2012 Rule 11.3, 11.8 deviated below. Deviation record ID -
   H3_MISRAC_2012_R_11_3_DR_1 & H3_MISRAC_2012_R_11_8_DR_1*/
 <#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
 #pragma coverity compliance block \
 (deviate:1 "MISRA C-2012 Rule 11.3" "H3_MISRAC_2012_R_11_3_DR_1" )\
-(deviate:1 "MISRA C-2012 Rule 11.8" "H3_MISRAC_2012_R_11_8_DR_1" )   
+(deviate:1 "MISRA C-2012 Rule 11.8" "H3_MISRAC_2012_R_11_8_DR_1" )
 </#if>
 SYS_MODULE_OBJ DRV_USART_Initialize(
     const SYS_MODULE_INDEX drvIndex,
@@ -938,12 +938,12 @@ SYS_MODULE_OBJ DRV_USART_Initialize(
 
     /* Create the Mutexes needed for RTOS mode. These calls always passes in the
      * non-RTOS mode */
-    if(OSAL_MUTEX_Create(&dObj->mutexTransferObjects) != OSAL_RESULT_TRUE)
+    if(OSAL_MUTEX_Create(&dObj->mutexTransferObjects) != OSAL_RESULT_SUCCESS)
     {
         return SYS_MODULE_OBJ_INVALID;
     }
 
-    if(OSAL_MUTEX_Create(&dObj->mutexClientObjects) != OSAL_RESULT_TRUE)
+    if(OSAL_MUTEX_Create(&dObj->mutexClientObjects) != OSAL_RESULT_SUCCESS)
     {
         return SYS_MODULE_OBJ_INVALID;
     }
@@ -1029,8 +1029,8 @@ SYS_MODULE_OBJ DRV_USART_Initialize(
 }
 <#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
 #pragma coverity compliance end_block "MISRA C-2012 Rule 11.3"
-#pragma coverity compliance end_block "MISRA C-2012 Rule 11.8"    
-</#if> 
+#pragma coverity compliance end_block "MISRA C-2012 Rule 11.8"
+</#if>
 /* MISRAC 2012 deviation block end */
 
 SYS_STATUS DRV_USART_Status( SYS_MODULE_OBJ object)
@@ -1068,7 +1068,7 @@ DRV_HANDLE DRV_USART_Open(
     }
 
     /* Guard against multiple threads trying to open the driver */
-    if (OSAL_MUTEX_Lock(&dObj->mutexClientObjects , OSAL_WAIT_FOREVER ) == OSAL_RESULT_FALSE)
+    if (OSAL_MUTEX_Lock(&dObj->mutexClientObjects , OSAL_WAIT_FOREVER ) == OSAL_RESULT_FAIL)
     {
         return DRV_HANDLE_INVALID;
     }
@@ -1099,7 +1099,7 @@ DRV_HANDLE DRV_USART_Open(
         {
             /* This means we have a free client object to use */
             clientObj->inUse = true;
-            
+
             if(((uint32_t)ioIntent & (uint32_t)DRV_IO_INTENT_EXCLUSIVE) != 0U)
             {
                 /* Set the driver exclusive flag */
@@ -1151,7 +1151,7 @@ void DRV_USART_Close( DRV_HANDLE handle )
     dObj = (DRV_USART_OBJ* )&gDrvUSARTObj[clientObj->drvIndex];
 
     /* Guard against multiple threads trying to open/close the driver */
-    if (OSAL_MUTEX_Lock(&dObj->mutexClientObjects , OSAL_WAIT_FOREVER ) == OSAL_RESULT_FALSE)
+    if (OSAL_MUTEX_Lock(&dObj->mutexClientObjects , OSAL_WAIT_FOREVER ) == OSAL_RESULT_FAIL)
     {
         return;
     }
@@ -1244,7 +1244,7 @@ bool DRV_USART_SerialSetup(
     dObj = (DRV_USART_OBJ* )&gDrvUSARTObj[clientObj->drvIndex];
 
     /* Grab a mutex */
-    if(OSAL_MUTEX_Lock(&(dObj->mutexTransferObjects), OSAL_WAIT_FOREVER) == OSAL_RESULT_FALSE)
+    if(OSAL_MUTEX_Lock(&(dObj->mutexTransferObjects), OSAL_WAIT_FOREVER) == OSAL_RESULT_FAIL)
     {
         return isSuccess;
     }
@@ -1277,7 +1277,7 @@ bool DRV_USART_SerialSetup(
 #pragma coverity compliance end_block "MISRA C-2012 Rule 10.4"
 <#if core.COMPILER_CHOICE == "XC32">
 #pragma GCC diagnostic pop
-</#if>    
+</#if>
 </#if>
 /* MISRAC 2012 deviation block end */
 

@@ -73,12 +73,12 @@ static OSAL_MUTEX_DECLARE(consolePrintBufferMutex);
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Wunknown-pragmas"
 </#if>
-#pragma coverity compliance block fp:2 "MISRA C-2012 Rule 10.4" "H3_MISRAC_2012_R_10_4_DR_1"    
+#pragma coverity compliance block fp:2 "MISRA C-2012 Rule 10.4" "H3_MISRAC_2012_R_10_4_DR_1"
 </#if>
 
 /* MISRA C-2012 Rule 11.3 deviated:1 Deviation record ID -  H3_MISRAC_2012_R_11_3_DR_1 */
 <#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
-#pragma coverity compliance block deviate:1 "MISRA C-2012 Rule 11.3" "H3_MISRAC_2012_R_11_3_DR_1"    
+#pragma coverity compliance block deviate:1 "MISRA C-2012 Rule 11.3" "H3_MISRAC_2012_R_11_3_DR_1"
 </#if>
 
 SYS_MODULE_OBJ SYS_CONSOLE_Initialize(
@@ -91,7 +91,7 @@ SYS_MODULE_OBJ SYS_CONSOLE_Initialize(
 
     if (isConsoleMutexCreated == false)
     {
-        if(OSAL_MUTEX_Create(&(consolePrintBufferMutex)) != OSAL_RESULT_TRUE)
+        if(OSAL_MUTEX_Create(&(consolePrintBufferMutex)) != OSAL_RESULT_SUCCESS)
         {
             return SYS_MODULE_OBJ_INVALID;
         }
@@ -334,12 +334,12 @@ ssize_t SYS_CONSOLE_WriteCountGet(const SYS_CONSOLE_HANDLE handle)
     }
 }
 
-/* MISRA C-2012 Rule 17.1, 21.6 deviated below. Deviation record ID -  
+/* MISRA C-2012 Rule 17.1, 21.6 deviated below. Deviation record ID -
    H3_MISRAC_2012_R_17_1_DR_1 & H3_MISRAC_2012_R_21_6_DR_1*/
 <#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
 #pragma coverity compliance block \
 (deviate:3 "MISRA C-2012 Rule 17.1" "H3_MISRAC_2012_R_17_1_DR_1" )\
-(deviate:1 "MISRA C-2012 Rule 21.6" "H3_MISRAC_2012_R_21_6_DR_1" )   
+(deviate:1 "MISRA C-2012 Rule 21.6" "H3_MISRAC_2012_R_21_6_DR_1" )
 </#if>
 
 void SYS_CONSOLE_Print(const SYS_CONSOLE_HANDLE handle, const char *format, ...)
@@ -359,7 +359,7 @@ void SYS_CONSOLE_Print(const SYS_CONSOLE_HANDLE handle, const char *format, ...)
     }
 
     /* Must protect the common print buffer from multiple threads */
-    if(OSAL_MUTEX_Lock(&consolePrintBufferMutex, OSAL_WAIT_FOREVER) == OSAL_RESULT_FALSE)
+    if(OSAL_MUTEX_Lock(&consolePrintBufferMutex, OSAL_WAIT_FOREVER) == OSAL_RESULT_FAIL)
     {
         return;
     }
@@ -391,8 +391,8 @@ void SYS_CONSOLE_Print(const SYS_CONSOLE_HANDLE handle, const char *format, ...)
 #pragma coverity compliance end_block "MISRA C-2012 Rule 21.6"
 <#if core.COMPILER_CHOICE == "XC32">
 #pragma GCC diagnostic pop
-</#if>    
-</#if> 
+</#if>
+</#if>
 /* MISRAC 2012 deviation block end */
 
 void SYS_CONSOLE_Message(const SYS_CONSOLE_HANDLE handle, const char *message)

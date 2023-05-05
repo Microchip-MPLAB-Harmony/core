@@ -174,8 +174,8 @@
     initialCount - Starting count value for the semaphore (ignored for a BINARY semaphore)
 
   Returns:
-    - OSAL_RESULT_TRUE    - Semaphore created
-    - OSAL_RESULT_FALSE   - Semaphore creation failed
+    - OSAL_RESULT_SUCCESS    - Semaphore created
+    - OSAL_RESULT_FAIL   - Semaphore creation failed
     - semID               - Updated with valid semaphore handle if call was successful
 
   Example:
@@ -205,8 +205,8 @@
     semID       - Pointer to the Semaphore ID
 
   Returns:
-    - OSAL_RESULT_TRUE    - Semaphore deleted
-    - OSAL_RESULT_FALSE   - Semaphore deletion failed
+    - OSAL_RESULT_SUCCESS    - Semaphore deleted
+    - OSAL_RESULT_FAIL   - Semaphore deletion failed
 
   Example:
     <code>
@@ -243,18 +243,18 @@
                    Other values      - timeout delay
 
   Returns:
-    - OSAL_RESULT_TRUE  - Semaphore obtained
-    - OSAL_RESULT_FALSE - Semaphore not obtained or timeout occurred
+    - OSAL_RESULT_SUCCESS  - Semaphore obtained
+    - OSAL_RESULT_FAIL - Semaphore not obtained or timeout occurred
 
   Example:
     <code>
-    if (OSAL_SEM_Pend(&semUARTRX, 50) == OSAL_RESULT_TRUE)
+    if (OSAL_SEM_Pend(&semUARTRX, 50) == OSAL_RESULT_SUCCESS)
     {
-       c = DRV_USART_ReadByte(drvID);        
+       c = DRV_USART_ReadByte(drvID);
     }
     else
     {
-       
+
     }
     </code>
 
@@ -283,8 +283,8 @@
      semID       - The semID
 
   Returns:
-    - OSAL_RESULT_TRUE    - Semaphore posted
-    - OSAL_RESULT_FALSE   - Semaphore not posted
+    - OSAL_RESULT_SUCCESS    - Semaphore posted
+    - OSAL_RESULT_FAIL   - Semaphore not posted
 
   Example:
     <code>
@@ -318,16 +318,16 @@
     semID -  Pointer to the Semaphore ID
 
   Return:
-    - OSAL_RESULT_TRUE - Semaphore posted
-    - OSAL_RESULT_FALSE - Semaphore not posted
+    - OSAL_RESULT_SUCCESS - Semaphore posted
+    - OSAL_RESULT_FAIL - Semaphore not posted
 
   Example:
     <code>
      void __ISR(UART_2_VECTOR) _UART2RXHandler()
      {
-        char c;        
-        c = U2RXREG;        
-        IFS1bits.U2IF = 0;        
+        char c;
+        c = U2RXREG;
+        IFS1bits.U2IF = 0;
         OSAL_SEM_PostISR(&semSignal);
 
      }
@@ -372,7 +372,7 @@
 
      if (semCount > 0)
      {
-         if (OSAL_SEM_Pend(&semUART) == OSAL_RESULT_TRUE)
+         if (OSAL_SEM_Pend(&semUART) == OSAL_RESULT_SUCCESS)
          {
             ...
          }
@@ -468,7 +468,7 @@
 
   Example:
     <code>
-     OSAL_CRITSECT_DATA_TYPE IntState;     
+     OSAL_CRITSECT_DATA_TYPE IntState;
      intState = OSAL_CRIT_Enter(OSAL_CRIT_TYPE_LOW);
      DRV_USART_Reinitialize( objUSART,  &initData);
      OSAL_CRIT_Leave(OSAL_CRIT_TYPE_LOW, IntState);
@@ -519,8 +519,8 @@
     mutexID      - Pointer to the mutex handle
 
   Returns:
-    - OSAL_RESULT_TRUE    - Mutex successfully created
-    - OSAL_RESULT_FALSE   - Mutex failed to be created
+    - OSAL_RESULT_SUCCESS    - Mutex successfully created
+    - OSAL_RESULT_FAIL   - Mutex failed to be created
 
   Example:
     <code>
@@ -528,7 +528,7 @@
 
     OSAL_MUTEX_Create(&mutexData);
     ...
-     if (OSAL_MUTEX_Lock(&mutexData, 1000) == OSAL_RESULT_TRUE)
+     if (OSAL_MUTEX_Lock(&mutexData, 1000) == OSAL_RESULT_SUCCESS)
      {
         ...
      }
@@ -557,8 +557,8 @@
     mutexID      - Pointer to the mutex handle
 
   Returns:
-    - OSAL_RESULT_TRUE    - Mutex successfully deleted
-    - OSAL_RESULT_FALSE   - Mutex failed to be deleted
+    - OSAL_RESULT_SUCCESS    - Mutex successfully deleted
+    - OSAL_RESULT_FAIL   - Mutex failed to be deleted
 
   Example:
     <code>
@@ -597,14 +597,14 @@
                    Other values, Timeout delay
 
   Returns:
-    - OSAL_RESULT_TRUE    - Mutex successfully obtained
-    - OSAL_RESULT_FALSE   - Mutex failed to be obtained or timeout occurred
+    - OSAL_RESULT_SUCCESS    - Mutex successfully obtained
+    - OSAL_RESULT_FAIL   - Mutex failed to be obtained or timeout occurred
 
   Example:
     <code>
 
     ...
-     if (OSAL_MUTEX_Lock(&mutexData, 1000) == OSAL_RESULT_TRUE)
+     if (OSAL_MUTEX_Lock(&mutexData, 1000) == OSAL_RESULT_SUCCESS)
      {
         ...
 
@@ -635,16 +635,16 @@
     mutexID      - Pointer to the mutex handle
 
   Returns:
-    - OSAL_RESULT_TRUE    - Mutex released
-    - OSAL_RESULT_FALSE   - Mutex failed to be released or error occurred
+    - OSAL_RESULT_SUCCESS    - Mutex released
+    - OSAL_RESULT_FAIL   - Mutex failed to be released or error occurred
 
   Example:
     <code>
 
     ...
-    if (OSAL_MUTEX_Lock(&mutexData, 1000) == OSAL_RESULT_TRUE)
+    if (OSAL_MUTEX_Lock(&mutexData, 1000) == OSAL_RESULT_SUCCESS)
     {
-        
+
         OSAL_MUTEX_Unlock(&mutexData);
     }
     </code>
@@ -722,13 +722,13 @@
     None.
 
   Example:
-    <code>    
+    <code>
     uint8_t* pData;
 
      pData = OSAL_Malloc(32);
      if (pData != NULL)
      {
-        ...        
+        ...
         OSAL_Free(pData);
         pData = NULL;
      }
@@ -762,7 +762,7 @@
     None.
 
   Returns:
-    OSAL_RESULT_TRUE  - Initialization completed successfully.
+    OSAL_RESULT_SUCCESS  - Initialization completed successfully.
 
   Example:
     <code>
@@ -802,7 +802,7 @@
     * const char* -   Name of the underlying RTOS or NULL
 
   Example:
-    <code>    
+    <code>
     const char* sName;
 
     sName = OSAL_Name();

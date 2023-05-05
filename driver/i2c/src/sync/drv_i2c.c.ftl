@@ -141,23 +141,23 @@ static void lDRV_I2C_PLibCallbackHandler( uintptr_t contextHandle )
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Wunknown-pragmas"
 </#if>
-#pragma coverity compliance block fp:7 "MISRA C-2012 Rule 10.4" "H3_MISRAC_2012_R_10_4_DR_1" 
+#pragma coverity compliance block fp:7 "MISRA C-2012 Rule 10.4" "H3_MISRAC_2012_R_10_4_DR_1"
 </#if>
 
-/* MISRA C-2012 Rule 11.3, 11.8 deviated below. 
+/* MISRA C-2012 Rule 11.3, 11.8 deviated below.
    Deviation record ID -  H3_MISRAC_2012_R_11_3_DR_1 & H3_MISRAC_2012_R_11_8_DR_1*/
 <#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
 #pragma coverity compliance block \
 (deviate:1 "MISRA C-2012 Rule 11.3" "H3_MISRAC_2012_R_11_3_DR_1" )\
-(deviate:1 "MISRA C-2012 Rule 11.8" "H3_MISRAC_2012_R_11_8_DR_1" )   
+(deviate:1 "MISRA C-2012 Rule 11.8" "H3_MISRAC_2012_R_11_8_DR_1" )
 </#if>
 
 SYS_MODULE_OBJ DRV_I2C_Initialize( const SYS_MODULE_INDEX drvIndex, const SYS_MODULE_INIT * const init )
 {
-    DRV_I2C_OBJ* dObj     = (DRV_I2C_OBJ*)NULL;    
+    DRV_I2C_OBJ* dObj     = (DRV_I2C_OBJ*)NULL;
 
 
-     DRV_I2C_INIT* i2cInit = (DRV_I2C_INIT*)init;    
+     DRV_I2C_INIT* i2cInit = (DRV_I2C_INIT*)init;
 
 
     /* Validate the request */
@@ -188,20 +188,20 @@ SYS_MODULE_OBJ DRV_I2C_Initialize( const SYS_MODULE_INDEX drvIndex, const SYS_MO
     dObj->initI2CClockSpeed                 = i2cInit->clockSpeed;
     dObj->currentTransferSetup.clockSpeed   = i2cInit->clockSpeed;
 
-    if (OSAL_MUTEX_Create(&dObj->clientMutex) == OSAL_RESULT_FALSE)
+    if (OSAL_MUTEX_Create(&dObj->clientMutex) == OSAL_RESULT_FAIL)
     {
         /*  If the mutex was not created because the memory required to
             hold the mutex could not be allocated then NULL is returned. */
         return SYS_MODULE_OBJ_INVALID;
     }
 
-    if (OSAL_MUTEX_Create(&dObj->transferMutex) == OSAL_RESULT_FALSE)
+    if (OSAL_MUTEX_Create(&dObj->transferMutex) == OSAL_RESULT_FAIL)
     {
         /*  If the mutex was not created because the memory required to
             hold the mutex could not be allocated then NULL is returned. */
         return SYS_MODULE_OBJ_INVALID;
     }
-    if (OSAL_SEM_Create(&dObj->transferDone,OSAL_SEM_TYPE_BINARY, 0, 0) == OSAL_RESULT_FALSE)
+    if (OSAL_SEM_Create(&dObj->transferDone,OSAL_SEM_TYPE_BINARY, 0, 0) == OSAL_RESULT_FAIL)
     {
         /* There was insufficient heap memory available for the semaphore to
         be created successfully. */
@@ -223,7 +223,7 @@ SYS_MODULE_OBJ DRV_I2C_Initialize( const SYS_MODULE_INDEX drvIndex, const SYS_MO
 <#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
 #pragma coverity compliance end_block "MISRA C-2012 Rule 11.3"
 #pragma coverity compliance end_block "MISRA C-2012 Rule 11.8"
-</#if> 
+</#if>
 /* MISRAC 2012 deviation block end */
 
 SYS_STATUS DRV_I2C_Status( const SYS_MODULE_OBJ object)
@@ -301,7 +301,7 @@ DRV_HANDLE DRV_I2C_Open( const SYS_MODULE_INDEX drvIndex, const DRV_IO_INTENT io
     /* Acquire the instance specific mutex to protect the instance specific
      * client pool
      */
-    if (OSAL_MUTEX_Lock(&dObj->clientMutex , OSAL_WAIT_FOREVER ) == OSAL_RESULT_FALSE)
+    if (OSAL_MUTEX_Lock(&dObj->clientMutex , OSAL_WAIT_FOREVER ) == OSAL_RESULT_FAIL)
     {
         return DRV_HANDLE_INVALID;
     }
@@ -388,7 +388,7 @@ void DRV_I2C_Close( const DRV_HANDLE handle )
         /* Acquire the instance specific mutex to protect the instance specific
          * client pool
          */
-        if (OSAL_MUTEX_Lock(&dObj->clientMutex , OSAL_WAIT_FOREVER ) == OSAL_RESULT_TRUE)
+        if (OSAL_MUTEX_Lock(&dObj->clientMutex , OSAL_WAIT_FOREVER ) == OSAL_RESULT_SUCCESS)
         {
             /* Reduce the number of clients */
             dObj->nClients --;
@@ -464,7 +464,7 @@ static bool lDRV_I2C_WriteReadTransfer (
 </#if>
 
     /* Block other threads from accessing the PLIB */
-    if (OSAL_MUTEX_Lock(&hDriver->transferMutex, OSAL_WAIT_FOREVER ) == OSAL_RESULT_TRUE)
+    if (OSAL_MUTEX_Lock(&hDriver->transferMutex, OSAL_WAIT_FOREVER ) == OSAL_RESULT_SUCCESS)
     {
         /* Error is cleared for every new transfer */
         clientObj->errors = DRV_I2C_ERROR_NONE;
@@ -521,7 +521,7 @@ static bool lDRV_I2C_WriteReadTransfer (
         if (isReqAccepted == true)
         {
             /* Wait till transfer completes. This semaphore is released from ISR */
-            if (OSAL_SEM_Pend( &hDriver->transferDone, OSAL_WAIT_FOREVER ) == OSAL_RESULT_TRUE)
+            if (OSAL_SEM_Pend( &hDriver->transferDone, OSAL_WAIT_FOREVER ) == OSAL_RESULT_SUCCESS)
             {
                 if (hDriver->transferStatus == DRV_I2C_TRANSFER_STATUS_COMPLETE)
                 {
@@ -554,7 +554,7 @@ static bool lDRV_I2C_WriteReadTransfer (
 #pragma coverity compliance end_block "MISRA C-2012 Rule 10.4"
 <#if core.COMPILER_CHOICE == "XC32">
 #pragma GCC diagnostic pop
-</#if> 
+</#if>
 </#if>
 /* MISRAC 2012 deviation block end */
 

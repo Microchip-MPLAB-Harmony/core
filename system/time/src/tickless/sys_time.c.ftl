@@ -108,7 +108,7 @@ static bool SYS_TIME_ResourceLock(void)
          * Additionally, disable the interrupt to prevent it from modifying the
          * shared resources asynchronously */
 
-        if(OSAL_MUTEX_Lock(&gSystemCounterObj.timerMutex, OSAL_WAIT_FOREVER) == OSAL_RESULT_TRUE)
+        if(OSAL_MUTEX_Lock(&gSystemCounterObj.timerMutex, OSAL_WAIT_FOREVER) == OSAL_RESULT_SUCCESS)
         {
             gSystemCounterObj.hwTimerIntStatus = SYS_INT_SourceDisable(gSystemCounterObj.hwTimerIntNum);
             return true;
@@ -662,7 +662,7 @@ SYS_MODULE_OBJ SYS_TIME_Initialize( const SYS_MODULE_INDEX index, const SYS_MODU
         return SYS_MODULE_OBJ_INVALID;
     }
     /* Create mutex to guard from multiple contesting threads */
-    if(OSAL_MUTEX_Create(&gSystemCounterObj.timerMutex) != OSAL_RESULT_TRUE)
+    if(OSAL_MUTEX_Create(&gSystemCounterObj.timerMutex) != OSAL_RESULT_SUCCESS)
     {
         return SYS_MODULE_OBJ_INVALID;
     }

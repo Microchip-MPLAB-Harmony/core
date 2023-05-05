@@ -92,7 +92,7 @@ static inline uint32_t  SYS_TIME_MAKE_HANDLE(uint16_t token, uint16_t index)
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Wunknown-pragmas"
 </#if>
-#pragma coverity compliance block deviate:12 "MISRA C-2012 Rule 10.4" "H3_MISRAC_2012_R_10_4_DR_1"    
+#pragma coverity compliance block deviate:12 "MISRA C-2012 Rule 10.4" "H3_MISRAC_2012_R_10_4_DR_1"
 </#if>
 
 static bool SYS_TIME_ResourceLock(void)
@@ -107,7 +107,7 @@ static bool SYS_TIME_ResourceLock(void)
          * Additionally, disable the interrupt to prevent it from modifying the
          * shared resources asynchronously */
 
-        if(OSAL_MUTEX_Lock(&gSystemCounterObj.timerMutex, OSAL_WAIT_FOREVER) == OSAL_RESULT_TRUE)
+        if(OSAL_MUTEX_Lock(&gSystemCounterObj.timerMutex, OSAL_WAIT_FOREVER) == OSAL_RESULT_SUCCESS)
         {
 <#if SYS_TIME_USE_SYSTICK == true>
             gSystemCounterObj.hwTimerIntStatus = gSystemCounterObj.timePlib->timerInterruptDisable();
@@ -395,7 +395,7 @@ static void SYS_TIME_PLIBCallback(uint32_t status, uintptr_t context)
     SYS_TIME_COUNTER_OBJ* counterObj = (SYS_TIME_COUNTER_OBJ *)&gSystemCounterObj;
     SYS_TIME_TIMER_OBJ* tmrActive = counterObj->tmrActive;
 
-    counterObj->swCounter64++; 
+    counterObj->swCounter64++;
 
     if (tmrActive != NULL)
     {
@@ -426,7 +426,7 @@ static SYS_TIME_HANDLE SYS_TIME_TimerObjectCreate(
     }
     if((gSystemCounterObj.status == SYS_STATUS_READY) && (period > 0U) && (period >= count))
     {
-        tmr = timers; 
+        tmr = timers;
         while(tmr < &timers[SYS_TIME_MAX_TIMERS])
         {
             if(tmr->inUse == false)
@@ -461,7 +461,7 @@ static SYS_TIME_HANDLE SYS_TIME_TimerObjectCreate(
 
 /* MISRA C-2012 Rule 11.3 deviated:1 Deviation record ID -  H3_MISRAC_2012_R_11_3_DR_1 */
 <#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
-#pragma coverity compliance block deviate:1 "MISRA C-2012 Rule 11.3" "H3_MISRAC_2012_R_11_3_DR_1"    
+#pragma coverity compliance block deviate:1 "MISRA C-2012 Rule 11.3" "H3_MISRAC_2012_R_11_3_DR_1"
 </#if>
 static void SYS_TIME_CounterInit(const SYS_MODULE_INIT* init)
 {
@@ -501,7 +501,7 @@ SYS_MODULE_OBJ SYS_TIME_Initialize( const SYS_MODULE_INDEX index, const SYS_MODU
         return SYS_MODULE_OBJ_INVALID;
     }
     /* Create mutex to guard from multiple contesting threads */
-    if(OSAL_MUTEX_Create(&gSystemCounterObj.timerMutex) != OSAL_RESULT_TRUE)
+    if(OSAL_MUTEX_Create(&gSystemCounterObj.timerMutex) != OSAL_RESULT_SUCCESS)
     {
         return SYS_MODULE_OBJ_INVALID;
     }
@@ -559,11 +559,11 @@ uint32_t SYS_TIME_FrequencyGet ( void )
 uint64_t SYS_TIME_Counter64Get ( void )
 {
     SYS_TIME_COUNTER_OBJ * counterObj = (SYS_TIME_COUNTER_OBJ *)&gSystemCounterObj;
-    uint64_t counter64 = 0;    
+    uint64_t counter64 = 0;
     bool interruptState;
 
-	interruptState = SYS_INT_Disable();	
-	
+	interruptState = SYS_INT_Disable();
+
     counter64 = counterObj->swCounter64;
 
     SYS_INT_Restore(interruptState);
@@ -593,7 +593,7 @@ void SYS_TIME_CounterSet ( uint32_t count )
 
 /* MISRA C-2012 Rule 10.8 deviated:2 Deviation record ID -  H3_MISRAC_2012_R_10_8_DR_1 */
 <#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
-#pragma coverity compliance block deviate:2 "MISRA C-2012 Rule 10.8" "H3_MISRAC_2012_R_10_8_DR_1"    
+#pragma coverity compliance block deviate:2 "MISRA C-2012 Rule 10.8" "H3_MISRAC_2012_R_10_8_DR_1"
 </#if>
 
 uint32_t  SYS_TIME_CountToUS ( uint32_t count )
@@ -608,7 +608,7 @@ uint32_t  SYS_TIME_CountToMS ( uint32_t count )
 
 /* MISRA C-2012 Rule 10.1 deviated:2 Deviation record ID -  H3_MISRAC_2012_R_10_1_DR_1 */
 <#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
-#pragma coverity compliance block deviate:2 "MISRA C-2012 Rule 10.1" "H3_MISRAC_2012_R_10_1_DR_1"    
+#pragma coverity compliance block deviate:2 "MISRA C-2012 Rule 10.1" "H3_MISRAC_2012_R_10_1_DR_1"
 </#if>
 
 <#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
@@ -650,7 +650,7 @@ uint32_t SYS_TIME_MSToCount ( uint32_t ms )
 #pragma coverity compliance end_block "MISRA C-2012 Rule 10.4"
 <#if core.COMPILER_CHOICE == "XC32">
 #pragma GCC diagnostic pop
-</#if>    
+</#if>
 </#if>
 /* MISRAC 2012 deviation block end */
 
