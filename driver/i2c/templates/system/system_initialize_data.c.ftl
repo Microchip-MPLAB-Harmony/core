@@ -14,7 +14,7 @@ static DRV_I2C_TRANSFER_OBJ drvI2C${INDEX?string}TransferObj[DRV_I2C_QUEUE_SIZE_
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Wunknown-pragmas"
 </#if>
-#pragma coverity compliance block deviate:2 "MISRA C-2012 Rule 11.1" "H3_MISRAC_2012_R_11_1_DR_1"    
+#pragma coverity compliance block deviate:2 "MISRA C-2012 Rule 11.1" "H3_MISRAC_2012_R_11_1_DR_1"
 </#if>
 /* I2C PLib Interface Initialization */
 static const DRV_I2C_PLIB_INTERFACE drvI2C${INDEX?string}PLibAPI = {
@@ -103,9 +103,9 @@ static const DRV_I2C_INTERRUPT_SOURCES drvI2C${INDEX?string}InterruptSources =
 
         <#lt>    /* Peripheral interrupt line */
         <#if .vars["${DRV_I2C_PLIB?lower_case}"].SINGLE_IRQn?has_content>
-            <#lt>    .intSources.i2cInterrupt             = ${.vars["${DRV_I2C_PLIB?lower_case}"].SINGLE_IRQn},
+            <#lt>    .intSources.i2cInterrupt             = (int32_t)${.vars["${DRV_I2C_PLIB?lower_case}"].SINGLE_IRQn},
         <#elseif I2C_PLIB_SINGLE_IRQn?eval??>
-            <#lt>    .intSources.i2cInterrupt             = ${I2C_PLIB_SINGLE_IRQn?eval},
+            <#lt>    .intSources.i2cInterrupt             = (int32_t)${I2C_PLIB_SINGLE_IRQn?eval},
         <#else>
             <#lt>    .intSources.i2cInterrupt             = (int32_t)${DRV_I2C_PLIB}_IRQn,
         </#if>
@@ -144,7 +144,7 @@ static const DRV_I2C_INIT drvI2C${INDEX?string}InitData =
 #pragma coverity compliance end_block "MISRA C-2012 Rule 11.1"
 <#if core.COMPILER_CHOICE == "XC32">
 #pragma GCC diagnostic pop
-</#if>    
+</#if>
 </#if>
 /* MISRAC 2012 deviation block end */
 // </editor-fold>

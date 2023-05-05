@@ -259,13 +259,13 @@ bool DRV_I2C_TransferSetup( const DRV_HANDLE handle, DRV_I2C_TRANSFER_SETUP* set
     return true;
 }
 
-DRV_I2C_ERROR DRV_I2C_ErrorGet( const DRV_HANDLE handle )
+DRV_I2C_ERROR DRV_I2C_ErrorGet( const DRV_I2C_TRANSFER_HANDLE transferHandle )
 {
     DRV_I2C_CLIENT_OBJ* clientObj = NULL;
     DRV_I2C_ERROR errors = DRV_I2C_ERROR_NONE;
 
     /* Validate the handle */
-    clientObj = lDRV_I2C_DriverHandleValidate(handle);
+    clientObj = lDRV_I2C_DriverHandleValidate(transferHandle);
 
     if(clientObj != NULL)
     {
