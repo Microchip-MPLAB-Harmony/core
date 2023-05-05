@@ -969,10 +969,6 @@ static bool lDRV_SDSPI_Read(
     }
     return isSuccess;
 }
-<#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
-#pragma coverity compliance block fp:7 "MISRA C-2012 Rule 10.4" "H3_MISRAC_2012_R_10_4_DR_1"
-</#if>
-/* MISRA C-2012 Rule 10.4 False positive:7 Deviation record ID -  H3_MISRAC_2012_R_10_4_DR_1 */
 
 static bool lDRV_SDSPI_SetupXfer (
     const DRV_HANDLE handle,
@@ -1800,10 +1796,6 @@ void DRV_SDSPI_Close( DRV_HANDLE handle )
         }
     }
 }
-<#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
-#pragma coverity compliance end_block "MISRA C-2012 Rule 10.4"
-</#if>
-/* MISRAC 2012 deviation block end */
 
 bool DRV_SDSPI_SyncRead (
     const DRV_HANDLE handle,

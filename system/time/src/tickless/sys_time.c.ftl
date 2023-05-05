@@ -86,16 +86,6 @@ static inline uint32_t  SYS_TIME_MAKE_HANDLE(uint16_t token, uint16_t index)
     return ((uint32_t)(token) << 16 | (uint32_t)(index));
 }
 
-
-/* MISRA C-2012 Rule 10.4 False positive:2 Deviation record ID -  H3_MISRAC_2012_R_10_4_DR_1 */
-<#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
-<#if core.COMPILER_CHOICE == "XC32">
-#pragma GCC diagnostic push
-#pragma GCC diagnostic ignored "-Wunknown-pragmas"
-</#if>
-#pragma coverity compliance block fp:2 "MISRA C-2012 Rule 10.4" "H3_MISRAC_2012_R_10_4_DR_1"
-</#if>
-
 static bool SYS_TIME_ResourceLock(void)
 {
     /* We will allow requests to be added from the interrupt
@@ -606,6 +596,10 @@ static SYS_TIME_HANDLE SYS_TIME_TimerObjectCreate(
 
 /* MISRA C-2012 Rule 11.3 deviated:1 Deviation record ID -  H3_MISRAC_2012_R_11_3_DR_1 */
 <#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
+<#if core.COMPILER_CHOICE == "XC32">
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wunknown-pragmas"
+</#if>
 #pragma coverity compliance block deviate:1 "MISRA C-2012 Rule 11.3" "H3_MISRAC_2012_R_11_3_DR_1"
 </#if>
 static void SYS_TIME_CounterInit(SYS_MODULE_INIT* init)
@@ -674,10 +668,6 @@ SYS_MODULE_OBJ SYS_TIME_Initialize( const SYS_MODULE_INDEX index, const SYS_MODU
 
     return (SYS_MODULE_OBJ)&gSystemCounterObj;
 }
-<#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
-#pragma coverity compliance end_block "MISRA C-2012 Rule 10.4"
-</#if>
-/* MISRAC 2012 deviation block end */
 
 <#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
 #pragma coverity compliance end_block "MISRA C-2012 Rule 11.8"

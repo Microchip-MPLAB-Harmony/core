@@ -662,10 +662,6 @@ static MEMORY_DEVICE_TRANSFER_STATUS DRV_MEMORY_HandleEraseWrite
 
     return transferStatus;
 }
-<#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
-#pragma coverity compliance block fp:7 "MISRA C-2012 Rule 10.4" "H3_MISRAC_2012_R_10_4_DR_1"
-</#if>
-/* MISRA C-2012 Rule 10.4 deviated below. Deviation record ID -  H3_MISRAC_2012_R_10_4_DR_1 */
 
 static void DRV_MEMORY_SetupXfer
 (
@@ -1286,10 +1282,8 @@ void DRV_MEMORY_Tasks( SYS_MODULE_OBJ object )
 
     (void) OSAL_MUTEX_Unlock(&dObj->transferMutex);
 }
-<#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
-#pragma coverity compliance end_block "MISRA C-2012 Rule 10.4"
-</#if>
-/* MISRAC 2012 deviation block end */
+
+
 void DRV_MEMORY_TransferHandlerSet
 (
     const DRV_HANDLE handle,

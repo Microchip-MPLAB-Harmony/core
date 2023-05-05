@@ -208,18 +208,12 @@ static DRV_USART_CLIENT_OBJ* lDRV_USART_DriverHandleValidate(DRV_HANDLE handle)
 // *****************************************************************************
 // *****************************************************************************
 
-/* MISRA C-2012 Rule 10.4 False Positive:11 Deviation record ID -  H3_MISRAC_2012_R_10_4_DR_1 */
+/* MISRA C-2012 Rule 11.3, 11.8 deviated below. Deviation record IDs - H3_MISRAC_2012_R_11_3_DR_1, H3_MISRAC_2012_R_11_8_DR_1*/
 <#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
 <#if core.COMPILER_CHOICE == "XC32">
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Wunknown-pragmas"
 </#if>
-#pragma coverity compliance block fp:11 "MISRA C-2012 Rule 10.4" "H3_MISRAC_2012_R_10_4_DR_1"
-</#if>
-
-/* MISRA C-2012 Rule 11.3, 11.8 deviated below. Deviation record ID -
-H3_MISRAC_2012_R_11_3_DR_1 & H3_MISRAC_2012_R_11_8_DR_1*/
-<#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
 #pragma coverity compliance block \
 (deviate:1 "MISRA C-2012 Rule 11.3" "H3_MISRAC_2012_R_11_3_DR_1" )\
 (deviate:1 "MISRA C-2012 Rule 11.8" "H3_MISRAC_2012_R_11_8_DR_1" )
@@ -359,6 +353,9 @@ SYS_MODULE_OBJ DRV_USART_Initialize( const SYS_MODULE_INDEX drvIndex, const SYS_
 <#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
 #pragma coverity compliance end_block "MISRA C-2012 Rule 11.3"
 #pragma coverity compliance end_block "MISRA C-2012 Rule 11.8"
+<#if core.COMPILER_CHOICE == "XC32">
+#pragma GCC diagnostic pop
+</#if>
 </#if>
 /* MISRAC 2012 deviation block end */
 
@@ -723,10 +720,3 @@ bool DRV_USART_ReadBuffer
     }
     return isSuccess;
 }
-<#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
-#pragma coverity compliance end_block "MISRA C-2012 Rule 10.4"
-<#if core.COMPILER_CHOICE == "XC32">
-#pragma GCC diagnostic pop
-</#if>
-</#if>
-/* MISRAC 2012 deviation block end */

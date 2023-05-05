@@ -569,11 +569,6 @@ static MEMORY_DEVICE_TRANSFER_STATUS DRV_MEMORY_HandleEraseWrite
 
     return transferStatus;
 }
-/* MISRA C-2012 Rule 10.4 deviated below. False Positive record ID -  H3_MISRAC_2012_R_10_4_DR_1 */
-<#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
-#pragma coverity compliance block fp:9 "MISRA C-2012 Rule 10.4" "H3_MISRAC_2012_R_10_4_DR_1"
-</#if>
-
 <#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
 #pragma coverity compliance end_block "MISRA C-2012 Rule 16.1"
 #pragma coverity compliance end_block "MISRA C-2012 Rule 16.3"
@@ -1194,10 +1189,7 @@ DRV_MEMORY_COMMAND_STATUS DRV_MEMORY_CommandStatusGet
 
     return status;
 }
-<#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
-#pragma coverity compliance end_block "MISRA C-2012 Rule 10.4"
-</#if>
-/* MISRAC 2012 deviation block end */
+
 
 void DRV_MEMORY_TransferHandlerSet
 (

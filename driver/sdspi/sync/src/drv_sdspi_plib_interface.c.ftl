@@ -544,14 +544,6 @@ static bool lDRV_SDSPI_DMA_Read(
 </#if>
 </#if>
 // *****************************************************************************
-/* MISRA C-2012 Rule 10.4 False positive:2 Deviation record ID -  H3_MISRAC_2012_R_10_4_DR_1 */
-<#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
-<#if core.COMPILER_CHOICE == "XC32">
-#pragma GCC diagnostic push
-#pragma GCC diagnostic ignored "-Wunknown-pragmas"
-</#if>
-#pragma coverity compliance block fp:2 "MISRA C-2012 Rule 10.4" "H3_MISRAC_2012_R_10_4_DR_1"
-</#if>
 /* SDSPI Write Block
 
   Summary:
@@ -767,13 +759,7 @@ bool DRV_SDSPI_SPIBlockRead(
     return isSuccess;
 }
 
-<#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
-#pragma coverity compliance end_block "MISRA C-2012 Rule 10.4"
-<#if core.COMPILER_CHOICE == "XC32">
-#pragma GCC diagnostic pop
-</#if>
-</#if>
-/* MISRAC 2012 deviation block end */
+
 // *****************************************************************************
 /* SD Card SPI read
 

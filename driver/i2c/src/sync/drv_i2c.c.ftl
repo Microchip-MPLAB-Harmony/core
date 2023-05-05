@@ -135,18 +135,13 @@ static void lDRV_I2C_PLibCallbackHandler( uintptr_t contextHandle )
     /* Unblock the application thread */
     (void) OSAL_SEM_PostISR( &dObj->transferDone);
 }
-/* MISRA C-2012 Rule 10.4 false postive:7 Deviation record ID -  H3_MISRAC_2012_R_10_4_DR_1 */
+/* MISRA C-2012 Rule 11.3, 11.8 deviated below.
+   Deviation record ID -  H3_MISRAC_2012_R_11_3_DR_1 & H3_MISRAC_2012_R_11_8_DR_1*/
 <#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
 <#if core.COMPILER_CHOICE == "XC32">
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Wunknown-pragmas"
 </#if>
-#pragma coverity compliance block fp:7 "MISRA C-2012 Rule 10.4" "H3_MISRAC_2012_R_10_4_DR_1"
-</#if>
-
-/* MISRA C-2012 Rule 11.3, 11.8 deviated below.
-   Deviation record ID -  H3_MISRAC_2012_R_11_3_DR_1 & H3_MISRAC_2012_R_11_8_DR_1*/
-<#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
 #pragma coverity compliance block \
 (deviate:1 "MISRA C-2012 Rule 11.3" "H3_MISRAC_2012_R_11_3_DR_1" )\
 (deviate:1 "MISRA C-2012 Rule 11.8" "H3_MISRAC_2012_R_11_8_DR_1" )
@@ -223,6 +218,9 @@ SYS_MODULE_OBJ DRV_I2C_Initialize( const SYS_MODULE_INDEX drvIndex, const SYS_MO
 <#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
 #pragma coverity compliance end_block "MISRA C-2012 Rule 11.3"
 #pragma coverity compliance end_block "MISRA C-2012 Rule 11.8"
+<#if core.COMPILER_CHOICE == "XC32">
+#pragma GCC diagnostic pop
+</#if>
 </#if>
 /* MISRAC 2012 deviation block end */
 
@@ -550,13 +548,6 @@ static bool lDRV_I2C_WriteReadTransfer (
 
     return isSuccess;
 }
-<#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
-#pragma coverity compliance end_block "MISRA C-2012 Rule 10.4"
-<#if core.COMPILER_CHOICE == "XC32">
-#pragma GCC diagnostic pop
-</#if>
-</#if>
-/* MISRAC 2012 deviation block end */
 
 bool DRV_I2C_ReadTransfer(
     const DRV_HANDLE handle,

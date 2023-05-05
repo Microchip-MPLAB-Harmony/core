@@ -766,6 +766,9 @@ static bool EMU_EEPROM_IsValidVersionStrExists(void)
 
 <#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
 #pragma coverity compliance end_block "MISRA C-2012 Rule 11.3"
+<#if core.COMPILER_CHOICE == "XC32">
+#pragma GCC diagnostic pop
+</#if>
 </#if>
 /* MISRAC 2012 deviation block end */
 
@@ -789,10 +792,6 @@ static bool EMU_EEPROM_IsValidVersionStrExists(void)
  *                                formatted or is incompatible with this version or scheme of the EEPROM emulator
  */
 
-/* MISRA C-2012 Rule 10.4 False positive:7 Deviation record ID -  H3_MISRAC_2012_R_10_4_DR_1 */
-<#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
-#pragma coverity compliance block fp:7 "MISRA C-2012 Rule 10.4" "H3_MISRAC_2012_R_10_4_DR_1"
-</#if>
 SYS_MODULE_OBJ EMU_EEPROM_Initialize(const SYS_MODULE_INDEX drvIndex, const SYS_MODULE_INIT* const init)
 {
     /* Ensure the device fuses are configured for at least
@@ -1240,10 +1239,3 @@ EMU_EEPROM_STATUS EMU_EEPROM_BufferRead( const uint16_t offset, uint8_t *const d
 
     return error_code;
 }
-<#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
-#pragma coverity compliance end_block "MISRA C-2012 Rule 10.4"
-<#if core.COMPILER_CHOICE == "XC32">
-#pragma GCC diagnostic pop
-</#if>
-</#if>
-/* MISRAC 2012 deviation block end */

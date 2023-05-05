@@ -67,17 +67,12 @@ static OSAL_MUTEX_DECLARE(consolePrintBufferMutex);
 
 #define SYS_CONSOLE_GET_INSTANCE(index)    ((index) >= (SYS_CONSOLE_DEVICE_MAX_INSTANCES))? (NULL) : (&consoleDeviceInstance[index])
 
-/* MISRA C-2012 Rule 10.4 False positive:2 Deviation record ID -  H3_MISRAC_2012_R_10_4_DR_1 */
+/* MISRA C-2012 Rule 11.3 deviated:1 Deviation record ID -  H3_MISRAC_2012_R_11_3_DR_1 */
 <#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
 <#if core.COMPILER_CHOICE == "XC32">
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Wunknown-pragmas"
 </#if>
-#pragma coverity compliance block fp:2 "MISRA C-2012 Rule 10.4" "H3_MISRAC_2012_R_10_4_DR_1"
-</#if>
-
-/* MISRA C-2012 Rule 11.3 deviated:1 Deviation record ID -  H3_MISRAC_2012_R_11_3_DR_1 */
-<#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
 #pragma coverity compliance block deviate:1 "MISRA C-2012 Rule 11.3" "H3_MISRAC_2012_R_11_3_DR_1"
 </#if>
 
@@ -381,10 +376,6 @@ void SYS_CONSOLE_Print(const SYS_CONSOLE_HANDLE handle, const char *format, ...)
     /* Release mutex */
     (void) OSAL_MUTEX_Unlock(&consolePrintBufferMutex);
 }
-<#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
-#pragma coverity compliance end_block "MISRA C-2012 Rule 10.4"
-</#if>
-/* MISRAC 2012 deviation block end */
 
 <#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
 #pragma coverity compliance end_block "MISRA C-2012 Rule 17.1"

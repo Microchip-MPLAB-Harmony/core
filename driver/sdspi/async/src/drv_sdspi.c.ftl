@@ -1654,10 +1654,7 @@ static void lDRV_SDSPI_MediaInitialize ( SYS_MODULE_OBJ object )
             break;
     }
 }
-/* MISRA C-2012 Rule 10.4 False positive:8 Deviation record ID -  H3_MISRAC_2012_R_10_4_DR_1 */
-<#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
-#pragma coverity compliance block fp:8 "MISRA C-2012 Rule 10.4" "H3_MISRAC_2012_R_10_4_DR_1"
-</#if>
+
 
 static void lDRV_SDSPI_AttachDetachTasks
 (
@@ -2815,10 +2812,6 @@ static void DRV_SDSPI_SetupXfer(
 
     (void) OSAL_MUTEX_Unlock(&dObj->transferMutex);
 }
-<#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
-#pragma coverity compliance end_block "MISRA C-2012 Rule 10.4"
-</#if>
-/* MISRAC 2012 deviation block end */
 
 void DRV_SDSPI_AsyncRead
 (

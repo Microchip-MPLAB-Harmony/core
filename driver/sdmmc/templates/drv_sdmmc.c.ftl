@@ -1505,11 +1505,6 @@ static void lDRV_SDMMC_MediaInitialize (
 // *****************************************************************************
 
 <#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
-#pragma coverity compliance block fp:8 "MISRA C-2012 Rule 10.4" "H3_MISRAC_2012_R_10_4_DR_1"
-</#if>
-/* MISRA C-2012 Rule 10.4 deviated:8 Deviation record ID -  H3_MISRAC_2012_R_10_4_DR_1 */
-
-<#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
 #pragma coverity compliance block deviate:2 "MISRA C-2012 Rule 11.8" "H3_MISRAC_2012_R_11_8_DR_1"
 </#if>
 /* MISRA C-2012 Rule 11.8 deviated:2 Deviation record ID -  H3_MISRAC_2012_R_11_8_DR_1 */
@@ -2635,10 +2630,6 @@ void DRV_SDMMC_Tasks( SYS_MODULE_OBJ object )
         SYS_ASSERT(false, "SDMMC Driver: OSAL_MUTEX_Unlock failed");
     }
 }
-<#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
-#pragma coverity compliance end_block "MISRA C-2012 Rule 10.4"
-</#if>
-/* MISRAC 2012 deviation block end */
 
 <#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
 #pragma coverity compliance end_block "MISRA C-2012 Rule 11.3"

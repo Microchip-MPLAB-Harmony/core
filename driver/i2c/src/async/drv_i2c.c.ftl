@@ -115,14 +115,7 @@ static DRV_I2C_CLIENT_OBJ* lDRV_I2C_DriverHandleValidate(DRV_HANDLE handle)
 
     return(clientObj);
 }
- /* MISRA C-2012 Rule 10.4 False positive:5 Deviation record ID -  H3_MISRAC_2012_R_10_4_DR_1 */
-<#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
-<#if core.COMPILER_CHOICE == "XC32">
-#pragma GCC diagnostic push
-#pragma GCC diagnostic ignored "-Wunknown-pragmas"
-</#if>
-#pragma coverity compliance block fp:5 "MISRA C-2012 Rule 10.4" "H3_MISRAC_2012_R_10_4_DR_1"
-</#if>
+
 
 static bool lDRV_I2C_ResourceLock(DRV_I2C_OBJ * dObj)
 {
@@ -496,6 +489,10 @@ SYS_MODULE_OBJ DRV_I2C_Initialize(
     DRV_I2C_OBJ* dObj     = NULL;
 /* MISRA C-2012 Rule 11.3, 11.8 deviated below. Deviation record ID -  H3_MISRAC_2012_R_11_3_DR_1 & H3_MISRAC_2012_R_11_8_DR_1*/
 <#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
+<#if core.COMPILER_CHOICE == "XC32">
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wunknown-pragmas"
+</#if
 #pragma coverity compliance block \
 (deviate "MISRA C-2012 Rule 11.3" "H3_MISRAC_2012_R_11_3_DR_1" )\
 (deviate "MISRA C-2012 Rule 11.8" "H3_MISRAC_2012_R_11_8_DR_1" )
@@ -506,6 +503,9 @@ SYS_MODULE_OBJ DRV_I2C_Initialize(
 <#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
 #pragma coverity compliance end_block "MISRA C-2012 Rule 11.3"
 #pragma coverity compliance end_block "MISRA C-2012 Rule 11.8"
+<#if core.COMPILER_CHOICE == "XC32">
+#pragma GCC diagnostic pop
+</#if>
 </#if>
 /* MISRAC 2012 deviation block end */
 
@@ -714,13 +714,7 @@ void DRV_I2C_Close( const DRV_HANDLE handle )
 
     return;
 }
-<#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
-#pragma coverity compliance end_block "MISRA C-2012 Rule 10.4"
-<#if core.COMPILER_CHOICE == "XC32">
-#pragma GCC diagnostic pop
-</#if>
-</#if>
-/* MISRAC 2012 deviation block end */
+
 
 void DRV_I2C_TransferEventHandlerSet(
     const DRV_HANDLE handle,

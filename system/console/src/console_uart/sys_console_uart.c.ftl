@@ -75,15 +75,6 @@ static CONSOLE_UART_DATA gConsoleUartData[SYS_CONSOLE_UART_MAX_INSTANCES];
 
 #define CONSOLE_UART_GET_INSTANCE(index)    ((index) >= (SYS_CONSOLE_UART_MAX_INSTANCES))? (NULL) : (&gConsoleUartData[index])
 
-/* MISRA C-2012 Rule 10.4 False positive:7 Deviation record ID -  H3_MISRAC_2012_R_10_4_DR_1 */
-<#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
-<#if core.COMPILER_CHOICE == "XC32">
-#pragma GCC diagnostic push
-#pragma GCC diagnostic ignored "-Wunknown-pragmas"
-</#if>
-#pragma coverity compliance block fp:7 "MISRA C-2012 Rule 10.4" "H3_MISRAC_2012_R_10_4_DR_1"
-</#if>
-
 static bool Console_UART_ResourceLock(CONSOLE_UART_DATA* pConsoleUartData)
 {
     if(OSAL_MUTEX_Lock(&(pConsoleUartData->mutexTransferObjects), OSAL_WAIT_FOREVER) == OSAL_RESULT_FAIL)
@@ -122,10 +113,6 @@ void Console_UART_Initialize(uint32_t index, const void* initData)
 
     pConsoleUartData->status = SYS_CONSOLE_STATUS_CONFIGURED;
 }
-<#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
-#pragma coverity compliance end_block "MISRA C-2012 Rule 10.4"
-</#if>
-/* MISRAC 2012 deviation block end */
 
 /* Read out the data from the RX Ring Buffer */
 ssize_t Console_UART_Read(uint32_t index, void* pRdBuffer, size_t count)
@@ -200,6 +187,10 @@ ssize_t Console_UART_ReadFreeBufferCountGet(uint32_t index)
 
 /* MISRA C-2012 Rule 11.8 deviated:1 Deviation record ID -  H3_MISRAC_2012_R_11_8_DR_1 */
 <#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
+<#if core.COMPILER_CHOICE == "XC32">
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wunknown-pragmas"
+</#if>
 #pragma coverity compliance block deviate:1 "MISRA C-2012 Rule 11.8" "H3_MISRAC_2012_R_11_8_DR_1"
 </#if>
 

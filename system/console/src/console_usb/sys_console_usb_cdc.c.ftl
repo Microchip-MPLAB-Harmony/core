@@ -307,15 +307,6 @@ void USBDeviceEventHandler
     }
 }
 
-/* MISRA C-2012 Rule 10.4 False positive:2 Deviation record ID -  H3_MISRAC_2012_R_10_4_DR_1 */
-<#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
-<#if core.COMPILER_CHOICE == "XC32">
-#pragma GCC diagnostic push
-#pragma GCC diagnostic ignored "-Wunknown-pragmas"
-</#if>
-#pragma coverity compliance block fp:2 "MISRA C-2012 Rule 10.4" "H3_MISRAC_2012_R_10_4_DR_1"
-</#if>
-
 static bool Console_USB_CDC_ResourceLock(CONS_USB_CDC_INSTANCE* cdcInstance)
 {
     bool CheckLock = true;
@@ -687,6 +678,10 @@ ssize_t Console_USB_CDC_WriteCountGet(uint32_t index)
 
 /* MISRA C-2012 Rule 11.8 deviated:1 Deviation record ID -  H3_MISRAC_2012_R_11_8_DR_1 */
 <#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
+<#if core.COMPILER_CHOICE == "XC32">
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wunknown-pragmas"
+</#if>
 #pragma coverity compliance block deviate:1 "MISRA C-2012 Rule 11.8" "H3_MISRAC_2012_R_11_8_DR_1"
 </#if>
 ssize_t Console_USB_CDC_Write(uint32_t index, const void* pWrBuffer, size_t size )
@@ -739,6 +734,9 @@ ssize_t Console_USB_CDC_Write(uint32_t index, const void* pWrBuffer, size_t size
 }
 <#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
 #pragma coverity compliance end_block "MISRA C-2012 Rule 11.8"
+<#if core.COMPILER_CHOICE == "XC32">
+#pragma GCC diagnostic pop
+</#if>
 </#if>
 /* MISRAC 2012 deviation block end */
 
@@ -824,14 +822,6 @@ void Console_USB_CDC_Initialize (uint32_t index, const void* initData)
     cdcInstance->rdInIndex              = 0;
     cdcInstance->rdOutIndex             = 0;
 }
-<#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
-#pragma coverity compliance end_block "MISRA C-2012 Rule 10.4"
-<#if core.COMPILER_CHOICE == "XC32">
-#pragma GCC diagnostic pop
-</#if>
-</#if>
-/* MISRAC 2012 deviation block end */
-
 void Console_USB_CDC_Tasks(uint32_t index, SYS_MODULE_OBJ object)
 {
     CONS_USB_CDC_INSTANCE* cdcInstance = CONSOLE_USB_CDC_GET_INSTANCE(index);
