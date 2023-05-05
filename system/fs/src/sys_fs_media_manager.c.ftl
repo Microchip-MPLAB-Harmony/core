@@ -457,7 +457,7 @@ static void SYS_FS_MEDIA_T_MANAGER_PopulateVolume
         volumeObj->fsType = fsType;
 
 <#if SYS_FS_MPFS == true>
-        if ('M' == volumeObj->fsType)
+        if ((uint8_t)'M' == volumeObj->fsType)
         {
             /* MPFS File System */
             volumeObj->numSectors = 0;
@@ -788,7 +788,7 @@ static uint8_t SYS_FS_MEDIA_T_MANAGER_AnalyzeFileSystem
         (*numPartition) = 1;
         /* This is 0x4D which also mean file system Primary QNX POSIX volume on disk */
         /* Need to find an unused value from the partition type*/
-        fsType = 'M';
+        fsType = (uint8_t)'M';
     }
 </#if>
 <#if (SYS_FS_FAT == true || SYS_FS_MPFS == true || SYS_FS_FILEX == true) && SYS_FS_LFS == true>

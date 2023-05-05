@@ -173,7 +173,7 @@ int FATFS_unmount ( uint8_t vol )
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Wunknown-pragmas"
 </#if>
-#pragma coverity compliance block deviate:1 "MISRA C-2012 Rule 2.1" "H3_MISRAC_2012_R_2_1_DR_1"    
+#pragma coverity compliance block deviate:1 "MISRA C-2012 Rule 2.1" "H3_MISRAC_2012_R_2_1_DR_1"
 </#if>
 
 int FATFS_open (
@@ -185,7 +185,7 @@ int FATFS_open (
     FRESULT res = FR_INT_ERR;
     uint32_t index = 0;
     FIL *fp = NULL;
-    SYS_FS_FILE_OPEN_ATTRIBUTES modeCheck = mode;
+    SYS_FS_FILE_OPEN_ATTRIBUTES modeCheck = (SYS_FS_FILE_OPEN_ATTRIBUTES)mode;
 
     /* Convert the SYS_FS file open attributes to FAT FS attributes */
     switch(modeCheck)
@@ -225,7 +225,7 @@ int FATFS_open (
             break;
         }
     }
-    
+
     if (index < SYS_FS_MAX_FILES)
     {
         res = f_open(fp, (const TCHAR *)path, mode);
@@ -246,7 +246,7 @@ int FATFS_open (
 
 /* MISRA C-2012 Rule 11.3 deviated:1 Deviation record ID -  H3_MISRAC_2012_R_11_3_DR_1 */
 <#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
-#pragma coverity compliance block deviate:1 "MISRA C-2012 Rule 11.3" "H3_MISRAC_2012_R_11_3_DR_1"    
+#pragma coverity compliance block deviate:1 "MISRA C-2012 Rule 11.3" "H3_MISRAC_2012_R_11_3_DR_1"
 </#if>
 
 int FATFS_read (
@@ -492,7 +492,7 @@ int FATFS_chdrive (
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Wunknown-pragmas"
 </#if>
-#pragma coverity compliance block deviate:1 "MISRA C-2012 Rule 11.3" "H3_MISRAC_2012_R_11_3_DR_1"    
+#pragma coverity compliance block deviate:1 "MISRA C-2012 Rule 11.3" "H3_MISRAC_2012_R_11_3_DR_1"
 </#if>
 int FATFS_write (
     uintptr_t handle,   /* Pointer to the file object */
@@ -511,7 +511,7 @@ int FATFS_write (
 }
 
 <#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
-#pragma coverity compliance end_block "MISRA C-2012 Rule 11.3"    
+#pragma coverity compliance end_block "MISRA C-2012 Rule 11.3"
 </#if>
 /* MISRAC 2012 deviation block end */
 uint32_t FATFS_tell(uintptr_t handle)
@@ -661,7 +661,7 @@ int FATFS_puts (
 
 /* MISRA C-2012 Rule 17.1 deviated:1 Deviation record ID -  H3_MISRAC_2012_R_17_1_DR_1 */
 <#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
-#pragma coverity compliance block deviate:1 "MISRA C-2012 Rule 17.1" "H3_MISRAC_2012_R_17_1_DR_1"    
+#pragma coverity compliance block deviate:1 "MISRA C-2012 Rule 17.1" "H3_MISRAC_2012_R_17_1_DR_1"
 </#if>
 int FATFS_printf (
     uintptr_t handle,           /* Pointer to the file object */
@@ -679,7 +679,7 @@ int FATFS_printf (
 #pragma coverity compliance end_block "MISRA C-2012 Rule 17.1"
 <#if core.COMPILER_CHOICE == "XC32">
 #pragma GCC diagnostic pop
-</#if>    
+</#if>
 </#if>
 /* MISRAC 2012 deviation block end */
 
