@@ -155,22 +155,22 @@ static const DRV_USART_INTERRUPT_SOURCES drvUSART${INDEX?string}InterruptSources
 
         <#lt>    /* Peripheral interrupt lines */
         <#if USART_PLIB_TX_COMPLETE_INDEX?eval??>
-            <#lt>    .intSources.multi.usartTxCompleteInt   = ${USART_PLIB_TX_COMPLETE_INDEX?eval},
+            <#lt>    .intSources.multi.usartTxCompleteInt   = (int32_t)${USART_PLIB_TX_COMPLETE_INDEX?eval},
         <#else>
             <#lt>    .intSources.multi.usartTxCompleteInt   = -1,
         </#if>
         <#if USART_PLIB_TX_READY_INDEX?eval??>
-            <#lt>    .intSources.multi.usartTxReadyInt      = ${USART_PLIB_TX_READY_INDEX?eval},
+            <#lt>    .intSources.multi.usartTxReadyInt      = (int32_t)${USART_PLIB_TX_READY_INDEX?eval},
         <#else>
             <#lt>    .intSources.multi.usartTxReadyInt      = -1,
         </#if>
         <#if USART_PLIB_RX_INDEX?eval??>
-            <#lt>    .intSources.multi.usartRxCompleteInt   = ${USART_PLIB_RX_INDEX?eval},
+            <#lt>    .intSources.multi.usartRxCompleteInt   = (int32_t)${USART_PLIB_RX_INDEX?eval},
         <#else>
             <#lt>    .intSources.multi.usartTxReadyInt      = -1,
         </#if>
         <#if USART_PLIB_ERROR_INDEX?eval??>
-            <#lt>    .intSources.multi.usartErrorInt        = ${USART_PLIB_ERROR_INDEX?eval},
+            <#lt>    .intSources.multi.usartErrorInt        = (int32_t)${USART_PLIB_ERROR_INDEX?eval},
         <#else>
             <#lt>    .intSources.multi.usartErrorInt        = -1,
         </#if>
@@ -180,9 +180,9 @@ static const DRV_USART_INTERRUPT_SOURCES drvUSART${INDEX?string}InterruptSources
 
         <#lt>    /* Peripheral interrupt line */
         <#if .vars["${DRV_USART_PLIB?lower_case}"].SINGLE_IRQn?has_content>
-            <#lt>    .intSources.usartInterrupt             = ${.vars["${DRV_USART_PLIB?lower_case}"].SINGLE_IRQn},
+            <#lt>    .intSources.usartInterrupt             = (int32_t)${.vars["${DRV_USART_PLIB?lower_case}"].SINGLE_IRQn},
         <#elseif USART_PLIB_SINGLE_IRQn?eval??>
-            <#lt>    .intSources.usartInterrupt             = ${USART_PLIB_SINGLE_IRQn?eval},
+            <#lt>    .intSources.usartInterrupt             = (int32_t)${USART_PLIB_SINGLE_IRQn?eval},
         <#else>
             <#lt>    .intSources.usartInterrupt             = (int32_t)${DRV_USART_PLIB}_IRQn,
         </#if>
@@ -191,16 +191,16 @@ static const DRV_USART_INTERRUPT_SOURCES drvUSART${INDEX?string}InterruptSources
         <#if DMA_PLIB_MULTI_IRQn?eval??>
             <#if DRV_USART_TX_DMA == true>
                 <#lt>    /* DMA Tx interrupt line */
-                <#lt>    .intSources.multi.dmaTxChannelInt      = ${DMA_TX_CHANNEL_INDEX?eval},
+                <#lt>    .intSources.multi.dmaTxChannelInt      = (int32_t)${DMA_TX_CHANNEL_INDEX?eval},
             </#if>
             <#if DRV_USART_RX_DMA == true>
                 <#lt>    /* DMA Rx interrupt line */
-                <#lt>    .intSources.multi.dmaRxChannelInt      = ${DMA_RX_CHANNEL_INDEX?eval},
+                <#lt>    .intSources.multi.dmaRxChannelInt      = (int32_t)${DMA_RX_CHANNEL_INDEX?eval},
             </#if>
         <#else>
             <#if DRV_USART_TX_DMA == true || DRV_USART_RX_DMA == true>
                 <#lt>    /* DMA interrupt line */
-                <#lt>    .intSources.dmaInterrupt               = ${core.DMA_INSTANCE_NAME}_IRQn,
+                <#lt>    .intSources.dmaInterrupt               = (int32_t)${core.DMA_INSTANCE_NAME}_IRQn,
             </#if>
         </#if>
     </#if>
