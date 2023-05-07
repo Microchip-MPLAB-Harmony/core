@@ -148,6 +148,10 @@ static void lDRV_USART_TX_DMA_CallbackHandler(SYS_DMA_TRANSFER_EVENT event, uint
     {
         dObj->txRequestStatus = DRV_USART_REQUEST_STATUS_ERROR;
     }
+    else
+    {
+        /* Nothing to do here */
+    }
 
     (void) OSAL_SEM_PostISR(&dObj->txTransferDone);
 }
@@ -163,6 +167,10 @@ static void lDRV_USART_RX_DMA_CallbackHandler(SYS_DMA_TRANSFER_EVENT event, uint
     else if(event == SYS_DMA_TRANSFER_ERROR)
     {
         dObj->rxRequestStatus = DRV_USART_REQUEST_STATUS_ERROR;
+    }
+    else
+    {
+        /* Nothing to do here */
     }
 
     (void) OSAL_SEM_PostISR(&dObj->rxTransferDone);
@@ -208,13 +216,14 @@ static DRV_USART_CLIENT_OBJ* lDRV_USART_DriverHandleValidate(DRV_HANDLE handle)
 // *****************************************************************************
 // *****************************************************************************
 
-/* MISRA C-2012 Rule 11.3, 11.8 deviated below. Deviation record IDs - H3_MISRAC_2012_R_11_3_DR_1, H3_MISRAC_2012_R_11_8_DR_1*/
+/* MISRA C-2012 Rule 11.1, 11.3, 11.8 deviated below. Deviation record IDs - H3_MISRAC_2012_R_11_1_DR_1, H3_MISRAC_2012_R_11_3_DR_1, H3_MISRAC_2012_R_11_8_DR_1*/
 <#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
 <#if core.COMPILER_CHOICE == "XC32">
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Wunknown-pragmas"
 </#if>
 #pragma coverity compliance block \
+(deviate:2 "MISRA C-2012 Rule 11.1" "H3_MISRAC_2012_R_11_1_DR_1" )\
 (deviate:1 "MISRA C-2012 Rule 11.3" "H3_MISRAC_2012_R_11_3_DR_1" )\
 (deviate:1 "MISRA C-2012 Rule 11.8" "H3_MISRAC_2012_R_11_8_DR_1" )
 </#if>
@@ -351,6 +360,7 @@ SYS_MODULE_OBJ DRV_USART_Initialize( const SYS_MODULE_INDEX drvIndex, const SYS_
     return ( (SYS_MODULE_OBJ)drvIndex );
 }
 <#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
+#pragma coverity compliance end_block "MISRA C-2012 Rule 11.1"
 #pragma coverity compliance end_block "MISRA C-2012 Rule 11.3"
 #pragma coverity compliance end_block "MISRA C-2012 Rule 11.8"
 <#if core.COMPILER_CHOICE == "XC32">
@@ -586,7 +596,7 @@ bool DRV_USART_WriteBuffer
 </#if>
                     SYS_DMA_DataWidthSetup(dObj->txDMAChannel, SYS_DMA_WIDTH_16_BIT);
 
-                    SYS_DMA_ChannelTransfer(
+                    (void)SYS_DMA_ChannelTransfer(
                         dObj->txDMAChannel,
                         (const void *)buffer,
                         (const void *)dObj->txAddress,
@@ -603,7 +613,7 @@ bool DRV_USART_WriteBuffer
 </#if>
                     SYS_DMA_DataWidthSetup(dObj->txDMAChannel, SYS_DMA_WIDTH_8_BIT);
 
-                    SYS_DMA_ChannelTransfer(
+                    (void)SYS_DMA_ChannelTransfer(
                         dObj->txDMAChannel,
                         (const void *)buffer,
                         (const void *)dObj->txAddress,
@@ -673,7 +683,7 @@ bool DRV_USART_ReadBuffer
 </#if>
                     SYS_DMA_DataWidthSetup(dObj->rxDMAChannel, SYS_DMA_WIDTH_16_BIT);
 
-                    SYS_DMA_ChannelTransfer(
+                    (void)SYS_DMA_ChannelTransfer(
                         dObj->rxDMAChannel,
                         (const void *)dObj->rxAddress,
                         (const void *)buffer,
@@ -690,7 +700,7 @@ bool DRV_USART_ReadBuffer
 </#if>
                     SYS_DMA_DataWidthSetup(dObj->rxDMAChannel, SYS_DMA_WIDTH_8_BIT);
 
-                    SYS_DMA_ChannelTransfer(
+                    (void)SYS_DMA_ChannelTransfer(
                         dObj->rxDMAChannel,
                         (const void *)dObj->rxAddress,
                         (const void *)buffer,
