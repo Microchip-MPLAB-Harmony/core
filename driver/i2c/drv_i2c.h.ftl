@@ -187,13 +187,13 @@ typedef enum
         switch(event)
         {
             case DRV_I2C_TRANSFER_EVENT_COMPLETE:
-            {                
+            {
                 break;
             }
 
             case DRV_I2C_TRANSFER_EVENT_ERROR:
             default:
-            {                
+            {
                 break;
             }
         }
@@ -273,7 +273,7 @@ typedef void (*DRV_I2C_TRANSFER_EVENT_HANDLER )( DRV_I2C_TRANSFER_EVENT event, D
     Otherwise, returns SYS_MODULE_OBJ_INVALID.
 
   Example:
-    <code>    
+    <code>
 
     SYS_MODULE_OBJ objectHandle;
 
@@ -302,7 +302,7 @@ typedef void (*DRV_I2C_TRANSFER_EVENT_HANDLER )( DRV_I2C_TRANSFER_EVENT event, D
     objectHandle = DRV_I2C_Initialize(DRV_I2C_INDEX_0, (SYS_MODULE_INIT*)&drvI2C0InitData);
     if (objectHandle == SYS_MODULE_OBJ_INVALID)
     {
-        
+
     }
     </code>
 
@@ -339,14 +339,14 @@ SYS_MODULE_OBJ DRV_I2C_Initialize( const SYS_MODULE_INDEX drvIndex, const SYS_MO
 
   Example:
     <code>
-    SYS_MODULE_OBJ      object;     
+    SYS_MODULE_OBJ      object;
     SYS_STATUS          i2cStatus;
 
     i2cStatus = DRV_I2C_Status(object);
 
     if (i2cStatus == SYS_STATUS_READY)
     {
-        
+
     }
     </code>
 
@@ -417,7 +417,7 @@ SYS_STATUS DRV_I2C_Status( const SYS_MODULE_OBJ object);
 
     if (handle == DRV_HANDLE_INVALID)
     {
-        
+
     }
     </code>
 
@@ -451,7 +451,7 @@ DRV_HANDLE DRV_I2C_Open( const SYS_MODULE_INDEX drvIndex, const DRV_IO_INTENT io
     None.
 
   Example:
-    <code>  
+    <code>
 
     DRV_I2C_Close(handle);
 
@@ -492,7 +492,7 @@ void DRV_I2C_Close( const DRV_HANDLE handle );
     None.
 
   Example:
-    <code>    
+    <code>
         DRV_I2C_TRANSFER_SETUP setup;
 
         setup.clockSpeed = 400000;
@@ -505,6 +505,8 @@ void DRV_I2C_Close( const DRV_HANDLE handle );
 */
 
 bool DRV_I2C_TransferSetup( const DRV_HANDLE handle, DRV_I2C_TRANSFER_SETUP* setup);
+
+<#if DRV_I2C_MODE == "Asynchronous">
 
 // *****************************************************************************
 /* Function:
@@ -528,11 +530,11 @@ bool DRV_I2C_TransferSetup( const DRV_HANDLE handle, DRV_I2C_TRANSFER_SETUP* set
     This function reports I2C errors if occurred.
 
   Example:
-    <code>  
+    <code>
 
     if (DRV_I2C_ErrorGet(bufferHandle) == DRV_I2C_ERROR_NACK)
     {
-       
+
     }
     </code>
 
@@ -541,6 +543,44 @@ bool DRV_I2C_TransferSetup( const DRV_HANDLE handle, DRV_I2C_TRANSFER_SETUP* set
 */
 
 DRV_I2C_ERROR DRV_I2C_ErrorGet( const DRV_I2C_TRANSFER_HANDLE transferHandle );
+<#else>
+
+// *****************************************************************************
+/* Function:
+    DRV_I2C_ERROR DRV_I2C_ErrorGet( const DRV_HANDLE drvHandle )
+
+   Summary:
+    Gets the I2C hardware errors associated with the the transfer request.
+
+   Description:
+    This function returns the errors associated with the given bufferHandle.
+    The call to this function also clears all the associated error flags.
+
+   Precondition:
+    DRV_I2C_Open must have been called to obtain a valid opened device handle.
+
+   Parameters:
+    drvHandle - A valid handle to the driver instance.
+
+   Returns:
+    Errors occurred as listed by DRV_I2C_ERROR.
+    This function reports I2C errors if occurred.
+
+  Example:
+    <code>
+
+    if (DRV_I2C_ErrorGet(drvHandle) == DRV_I2C_ERROR_NACK)
+    {
+
+    }
+    </code>
+
+  Remarks:
+    The driver clears all the errors internally.
+*/
+
+DRV_I2C_ERROR DRV_I2C_ErrorGet( const DRV_HANDLE drvHandle);
+</#if>
 
 // *****************************************************************************
 // *****************************************************************************
@@ -601,15 +641,15 @@ DRV_I2C_ERROR DRV_I2C_ErrorGet( const DRV_I2C_TRANSFER_HANDLE transferHandle );
   Example:
     <code>
     uint8_t myBuffer[MY_BUFFER_SIZE];
-    DRV_I2C_TRANSFER_HANDLE transferHandle;  
+    DRV_I2C_TRANSFER_HANDLE transferHandle;
 
     DRV_I2C_WriteTransferAdd(myI2CHandle, slaveAddress, myBuffer, MY_BUFFER_SIZE, &transferHandle);
 
     if(transferHandle == DRV_I2C_TRANSFER_HANDLE_INVALID)
     {
-       
+
     }
-  
+
     </code>
 
   Remarks:
@@ -626,7 +666,7 @@ DRV_I2C_ERROR DRV_I2C_ErrorGet( const DRV_I2C_TRANSFER_HANDLE transferHandle );
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Wunknown-pragmas"
 </#if>
-#pragma coverity compliance block deviate:6 "MISRA C-2012 Rule 8.6" "H3_MISRAC_2012_R_8_6_DR_1"    
+#pragma coverity compliance block deviate:6 "MISRA C-2012 Rule 8.6" "H3_MISRAC_2012_R_8_6_DR_1"
 </#if>
 
 void DRV_I2C_WriteTransferAdd(
@@ -704,9 +744,9 @@ void DRV_I2C_WriteTransferAdd(
 
     if(transferHandle == DRV_I2C_TRANSFER_HANDLE_INVALID)
     {
-       
+
     }
-   
+
     </code>
 
   Remarks:
@@ -788,15 +828,15 @@ void DRV_I2C_ForcedWriteTransferAdd(
   Example:
     <code>
     uint8_t myBuffer[MY_BUFFER_SIZE];
-    DRV_I2C_TRANSFER_HANDLE transferHandle;  
+    DRV_I2C_TRANSFER_HANDLE transferHandle;
 
     DRV_I2C_ReadTransferAdd(myI2CHandle, slaveAddress, myBuffer, MY_BUFFER_SIZE, &transferHandle);
 
     if(transferHandle == DRV_I2C_TRANSFER_HANDLE_INVALID)
     {
-      
+
     }
-  
+
     </code>
 
   Remarks:
@@ -881,9 +921,9 @@ void DRV_I2C_ReadTransferAdd(
 
     if(transferHandle == DRV_I2C_TRANSFER_HANDLE_INVALID)
     {
-       
+
     }
-   
+
     </code>
 
   Remarks:
@@ -951,16 +991,16 @@ void DRV_I2C_WriteReadTransferAdd (
     None.
 
   Example:
-    <code>  
+    <code>
     MY_APP_OBJ myAppObj;
 
     uint8_t myBuffer[MY_BUFFER_SIZE];
     DRV_I2C_TRANSFER_HANDLE transferHandle;
 
-  
+
 
     void APP_I2CTransferEventHandler(DRV_I2C_TRANSFER_EVENT event, DRV_I2C_TRANSFER_HANDLE handle, uintptr_t context)
-    {        
+    {
         MY_APP_OBJ* pMyAppObj = (MY_APP_OBJ *) context;
 
         switch(event)
@@ -972,7 +1012,7 @@ void DRV_I2C_WriteReadTransferAdd (
 
             case DRV_I2C_TRANSFER_EVENT_ERROR:
             {
-               
+
                 break;
             }
 
@@ -981,7 +1021,7 @@ void DRV_I2C_WriteReadTransferAdd (
                 break;
             }
         }
-    }   
+    }
 
     DRV_I2C_TransferEventHandlerSet( myI2CHandle, APP_I2CTransferEventHandler, (uintptr_t)&myAppObj );
 
@@ -989,7 +1029,7 @@ void DRV_I2C_WriteReadTransferAdd (
 
     if(transferHandle == DRV_I2C_TRANSFER_HANDLE_INVALID)
     {
-        
+
     }
 
     </code>
@@ -1039,14 +1079,14 @@ void DRV_I2C_TransferEventHandlerSet(
   <code>
     uint8_t myBuffer[MY_BUFFER_SIZE];
     DRV_I2C_TRANSFER_HANDLE transferHandle;
-    DRV_I2C_TRANSFER_EVENT event;  
+    DRV_I2C_TRANSFER_EVENT event;
 
     DRV_I2C_ReadTransferAdd(myI2CHandle, slaveAddress, myBuffer, MY_BUFFER_SIZE, &transferHandle);
 
     if(transferHandle == DRV_I2C_TRANSFER_HANDLE_INVALID)
     {
-       
-    }    
+
+    }
 
     event = DRV_I2C_TransferStatusGet(transferHandle);
   </code>
@@ -1101,11 +1141,11 @@ DRV_I2C_TRANSFER_EVENT DRV_I2C_TransferStatusGet( const DRV_I2C_TRANSFER_HANDLE 
 
   Example:
     <code>
-    uint8_t myTxBuffer[MY_TX_BUFFER_SIZE];   
+    uint8_t myTxBuffer[MY_TX_BUFFER_SIZE];
 
     if (DRV_I2C_WriteTransfer(myI2CHandle, slaveAddress, myTxBuffer, MY_TX_BUFFER_SIZE) == false)
     {
-       
+
     }
 
     </code>
@@ -1169,11 +1209,11 @@ bool DRV_I2C_WriteTransfer(
 
   Example:
     <code>
-    uint8_t myTxBuffer[MY_TX_BUFFER_SIZE];  
+    uint8_t myTxBuffer[MY_TX_BUFFER_SIZE];
 
     if (DRV_I2C_ForcedWriteTransfer(myI2CHandle, slaveAddress, myTxBuffer, MY_TX_BUFFER_SIZE) == false)
     {
-      
+
     }
 
     </code>
@@ -1234,11 +1274,11 @@ bool DRV_I2C_ForcedWriteTransfer(
 
   Example:
     <code>
-    uint8_t myRxBuffer[MY_RX_BUFFER_SIZE];  
+    uint8_t myRxBuffer[MY_RX_BUFFER_SIZE];
 
     if (DRV_I2C_ReadTransfer(myI2CHandle, slaveAddress, myRxBuffer, MY_RX_BUFFER_SIZE) == false)
     {
-        
+
     }
 
     </code>
@@ -1306,7 +1346,7 @@ bool DRV_I2C_ReadTransfer(
 
     if (DRV_I2C_WriteReadTransfer(myI2CHandle, slaveAddress, myTxBuffer, MY_TX_BUFFER_SIZE, myRxBuffer, MY_RX_BUFFER_SIZE) == false)
     {
-        
+
     }
 
     </code>
@@ -1369,8 +1409,8 @@ void DRV_I2C_QueuePurge(const DRV_HANDLE handle);
 #pragma coverity compliance end_block "MISRA C-2012 Rule 8.6"
 <#if core.COMPILER_CHOICE == "XC32">
 #pragma GCC diagnostic pop
-</#if> 
-</#if> 
+</#if>
+</#if>
 /* MISRAC 2012 deviation block end */
 
 //DOM-IGNORE-BEGIN

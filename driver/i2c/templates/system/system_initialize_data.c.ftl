@@ -70,22 +70,22 @@ static const DRV_I2C_INTERRUPT_SOURCES drvI2C${INDEX?string}InterruptSources =
 
         <#lt>    /* Peripheral interrupt lines */
         <#if I2C_PLIB_INT_INDEX0?eval??>
-            <#lt>    .intSources.multi.i2cInt0          = ${I2C_PLIB_INT_INDEX0?eval},
+            <#lt>    .intSources.multi.i2cInt0          = (int32_t)${I2C_PLIB_INT_INDEX0?eval},
         <#else>
             <#lt>    .intSources.multi.i2cInt0          = -1,
         </#if>
         <#if I2C_PLIB_INT_INDEX1?eval??>
-            <#lt>    .intSources.multi.i2cInt1          = ${I2C_PLIB_INT_INDEX1?eval},
+            <#lt>    .intSources.multi.i2cInt1          = (int32_t)${I2C_PLIB_INT_INDEX1?eval},
         <#else>
             <#lt>    .intSources.multi.i2cInt1          = -1,
         </#if>
         <#if I2C_PLIB_INT_INDEX2?eval??>
-            <#lt>    .intSources.multi.i2cInt2          = ${I2C_PLIB_INT_INDEX2?eval},
+            <#lt>    .intSources.multi.i2cInt2          = (int32_t)${I2C_PLIB_INT_INDEX2?eval},
         <#else>
             <#lt>    .intSources.multi.i2cInt2          = -1,
         </#if>
         <#if I2C_PLIB_INT_INDEX3?eval??>
-            <#lt>    .intSources.multi.i2cInt3          = ${I2C_PLIB_INT_INDEX3?eval},
+            <#lt>    .intSources.multi.i2cInt3          = (int32_t)${I2C_PLIB_INT_INDEX3?eval},
         <#else>
             <#lt>    .intSources.multi.i2cInt3          = -1,
         </#if>
