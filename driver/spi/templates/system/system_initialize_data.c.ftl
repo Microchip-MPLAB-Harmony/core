@@ -134,17 +134,17 @@ static const DRV_SPI_INTERRUPT_SOURCES drvSPI${INDEX?string}InterruptSources =
 
         <#lt>    /* Peripheral interrupt lines */
         <#if SPI_PLIB_TX_READY_INDEX?eval??>
-            <#lt>    .intSources.multi.spiTxReadyInt      = ${SPI_PLIB_TX_READY_INDEX?eval},
+            <#lt>    .intSources.multi.spiTxReadyInt      = (int32_t)${SPI_PLIB_TX_READY_INDEX?eval},
         <#else>
             <#lt>    .intSources.multi.spiTxReadyInt      = -1,
         </#if>
         <#if SPI_PLIB_TX_COMPLETE_INDEX?eval??>
-            <#lt>    .intSources.multi.spiTxCompleteInt   = ${SPI_PLIB_TX_COMPLETE_INDEX?eval},
+            <#lt>    .intSources.multi.spiTxCompleteInt   = (int32_t)${SPI_PLIB_TX_COMPLETE_INDEX?eval},
         <#else>
             <#lt>    .intSources.multi.spiTxCompleteInt   = -1,
         </#if>
         <#if SPI_PLIB_RX_INDEX?eval??>
-            <#lt>    .intSources.multi.spiRxInt           = ${SPI_PLIB_RX_INDEX?eval},
+            <#lt>    .intSources.multi.spiRxInt           = (int32_t)${SPI_PLIB_RX_INDEX?eval},
         <#else>
             <#lt>    .intSources.multi.spiRxInt           = -1,
         </#if>
@@ -154,7 +154,7 @@ static const DRV_SPI_INTERRUPT_SOURCES drvSPI${INDEX?string}InterruptSources =
 
         <#lt>    /* Peripheral interrupt line */
         <#if SPI_PLIB_SINGLE_IRQn?eval??>
-            <#lt>    .intSources.spiInterrupt             = ${SPI_PLIB_SINGLE_IRQn?eval},
+            <#lt>    .intSources.spiInterrupt             = (int32_t)${SPI_PLIB_SINGLE_IRQn?eval},
         <#else>
             <#lt>    .intSources.spiInterrupt             = (int32_t)${DRV_SPI_PLIB}_IRQn,
         </#if>
@@ -163,9 +163,9 @@ static const DRV_SPI_INTERRUPT_SOURCES drvSPI${INDEX?string}InterruptSources =
         <#if DMA_PLIB_MULTI_IRQn?eval??>
             <#if DRV_SPI_TX_RX_DMA == true>
                 <#lt>    /* DMA Tx interrupt line */
-                <#lt>    .intSources.multi.dmaTxChannelInt      = ${DMA_TX_CHANNEL_INDEX?eval},
+                <#lt>    .intSources.multi.dmaTxChannelInt      = (int32_t)${DMA_TX_CHANNEL_INDEX?eval},
                 <#lt>    /* DMA Rx interrupt line */
-                <#lt>    .intSources.multi.dmaRxChannelInt      = ${DMA_RX_CHANNEL_INDEX?eval},
+                <#lt>    .intSources.multi.dmaRxChannelInt      = (int32_t)${DMA_RX_CHANNEL_INDEX?eval},
             </#if>
         <#else>
             <#if DRV_SPI_TX_RX_DMA == true>

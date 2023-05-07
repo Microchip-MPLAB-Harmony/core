@@ -176,7 +176,7 @@ static bool lDRV_SPI_StartDMATransfer(
         SYS_DMA_DataWidthSetup(dObj->txDMAChannel, SYS_DMA_WIDTH_32_BIT);
     }
 
-    if ((dObj->txPending > 0) && (dObj->rxPending > 0))
+    if ((dObj->txPending > 0U) && (dObj->rxPending > 0U))
     {
         /* Find the lower value among rxPending and txPending*/
         (dObj->txPending >= dObj->rxPending) ?
@@ -188,12 +188,12 @@ static bool lDRV_SPI_StartDMATransfer(
         dObj->nBytesTransferred += size;
 
         /* Always set up the rx channel first */
-        (void) SYS_DMA_ChannelTransfer(dObj->rxDMAChannel, (const void*)dObj->rxAddress, (const void *)pReceiveData, size);
-        (void) SYS_DMA_ChannelTransfer(dObj->txDMAChannel, (const void *)pTransmitData, (const void*)dObj->txAddress, size);
+        (void) SYS_DMA_ChannelTransfer(dObj->rxDMAChannel, dObj->rxAddress, pReceiveData, size);
+        (void) SYS_DMA_ChannelTransfer(dObj->txDMAChannel, pTransmitData, dObj->txAddress, size);
     }
     else
     {
-        if (dObj->rxPending > 0)
+        if (dObj->rxPending > 0U)
         {
             /* txPending is 0. Need to use the dummy data buffer for transmission.
              * Find out the max data that can be received, given the limited size of the dummy data buffer.
@@ -206,8 +206,8 @@ static bool lDRV_SPI_StartDMATransfer(
             dObj->nBytesTransferred += size;
 
             /* Always set up the rx channel first */
-            (void) SYS_DMA_ChannelTransfer(dObj->rxDMAChannel, (const void*)dObj->rxAddress, (const void *)pReceiveData, size);
-            (void) SYS_DMA_ChannelTransfer(dObj->txDMAChannel, (const void *)dObj->dummyDataBuffer, (const void*)dObj->txAddress, size);
+            (void) SYS_DMA_ChannelTransfer(dObj->rxDMAChannel, dObj->rxAddress, pReceiveData, size);
+            (void) SYS_DMA_ChannelTransfer(dObj->txDMAChannel, dObj->dummyDataBuffer, dObj->txAddress, size);
 
         }
         else
@@ -223,8 +223,8 @@ static bool lDRV_SPI_StartDMATransfer(
             dObj->nBytesTransferred += size;
 
             /* Always set up the rx channel first */
-            (void) SYS_DMA_ChannelTransfer(dObj->rxDMAChannel, (const void*)dObj->rxAddress, (const void *)dObj->dummyDataBuffer, size);
-            (void) SYS_DMA_ChannelTransfer(dObj->txDMAChannel, (const void *)pTransmitData, (const void*)dObj->txAddress, size);
+            (void) SYS_DMA_ChannelTransfer(dObj->rxDMAChannel, dObj->rxAddress, dObj->dummyDataBuffer, size);
+            (void) SYS_DMA_ChannelTransfer(dObj->txDMAChannel, pTransmitData, dObj->txAddress, size);
         }
     }
 
@@ -247,15 +247,15 @@ static bool lDRV_SPI_StartDMATransfer(
 
     dObj->txDummyDataSize = 0;
     dObj->rxDummyDataSize = 0;
-    dObj->pNextTransmitData = (uintptr_t)NULL;
+    dObj->pNextTransmitData = 0U;
 
 <#if core.DATA_CACHE_ENABLE?? && core.DATA_CACHE_ENABLE == true >
-    if (txSize != 0)
+    if (txSize != 0U)
     {
         /* Clean cache lines to push the transmit buffer data to the main memory */
         SYS_CACHE_CleanDCache_by_Addr((uint32_t *)pTransmitData, txSize);
     }
-    if (rxSize != 0)
+    if (rxSize != 0U)
     {
         /* Invalidate the receive buffer to force the CPU to read from the main memory */
         SYS_CACHE_InvalidateDCache_by_Addr((uint32_t *)pReceiveData, rxSize);
@@ -289,29 +289,29 @@ static bool lDRV_SPI_StartDMATransfer(
         dObj->rxDummyDataSize = (txSize - rxSize);
     }
 
-    if (rxSize == 0)
+    if (rxSize == 0U)
     {
         /* Configure the RX DMA channel - to receive dummy data */
         SYS_DMA_AddressingModeSetup(dObj->rxDMAChannel, SYS_DMA_SOURCE_ADDRESSING_MODE_FIXED, SYS_DMA_DESTINATION_ADDRESSING_MODE_FIXED);
         size = dObj->rxDummyDataSize;
         dObj->rxDummyDataSize = 0;
-        (void) SYS_DMA_ChannelTransfer(dObj->rxDMAChannel, (const void*)dObj->rxAddress, (const void *)&dObj->rxDummyData, size);
+        (void) SYS_DMA_ChannelTransfer(dObj->rxDMAChannel, dObj->rxAddress, &dObj->rxDummyData, size);
     }
     else
     {
         /* Configure the RX DMA channel - to receive data in receive buffer */
         SYS_DMA_AddressingModeSetup(dObj->rxDMAChannel, SYS_DMA_SOURCE_ADDRESSING_MODE_FIXED, SYS_DMA_DESTINATION_ADDRESSING_MODE_INCREMENTED);
 
-        (void) SYS_DMA_ChannelTransfer(dObj->rxDMAChannel, (const void*)dObj->rxAddress, (const void *)pReceiveData, rxSize);
+        (void) SYS_DMA_ChannelTransfer(dObj->rxDMAChannel, dObj->rxAddress, pReceiveData, rxSize);
     }
 
-    if (txSize == 0)
+    if (txSize == 0U)
     {
         /* Configure the TX DMA channel - to send dummy data */
         SYS_DMA_AddressingModeSetup(dObj->txDMAChannel, SYS_DMA_SOURCE_ADDRESSING_MODE_FIXED, SYS_DMA_DESTINATION_ADDRESSING_MODE_FIXED);
         size = dObj->txDummyDataSize;
         dObj->txDummyDataSize = 0;
-        (void) SYS_DMA_ChannelTransfer(dObj->txDMAChannel, (const void *)txDummyData, (const void*)dObj->txAddress, size);
+        (void) SYS_DMA_ChannelTransfer(dObj->txDMAChannel, txDummyData, dObj->txAddress, size);
     }
     else
     {
@@ -321,7 +321,7 @@ static bool lDRV_SPI_StartDMATransfer(
         /* The DMA transfer is split into two for the case where
          * rxSize > 0 && rxSize < txSize
          */
-        if (dObj->rxDummyDataSize > 0)
+        if (dObj->rxDummyDataSize > 0U)
         {
             size = rxSize;
             dObj->pNextTransmitData = (uintptr_t)&((uint8_t*)pTransmitData)[rxSize];
@@ -331,7 +331,7 @@ static bool lDRV_SPI_StartDMATransfer(
             size = txSize;
         }
 
-        (void) SYS_DMA_ChannelTransfer(dObj->txDMAChannel, (const void *)pTransmitData, (const void*)dObj->txAddress, size);
+        (void) SYS_DMA_ChannelTransfer(dObj->txDMAChannel, pTransmitData, dObj->txAddress, size);
     }
 
     return true;
@@ -431,15 +431,16 @@ static bool DRV_SPI_ExclusiveUse( const DRV_HANDLE handle, bool useExclusive )
 
 <#if core.DMA_ENABLE?has_content && DRV_SPI_SYS_DMA_ENABLE == true>
 <#if core.PRODUCT_FAMILY?matches("PIC32M.*") == true>
-void lDRV_SPI_TX_DMA_CallbackHandler(
+static void lDRV_SPI_TX_DMA_CallbackHandler(
     SYS_DMA_TRANSFER_EVENT event,
     uintptr_t context
 )
 {
-    /* Do nothing */
+    (void)event;
+    (void)context;
 }
 
-void lDRV_SPI_RX_DMA_CallbackHandler(
+static void lDRV_SPI_RX_DMA_CallbackHandler(
     SYS_DMA_TRANSFER_EVENT event,
     uintptr_t context
 )
@@ -464,8 +465,8 @@ void lDRV_SPI_RX_DMA_CallbackHandler(
         dObj->nBytesTransferred += size;
 
         /* Always set up the rx channel first */
-        (void) SYS_DMA_ChannelTransfer(dObj->rxDMAChannel, (const void*)dObj->rxAddress, (const void *)&((uint8_t*)dObj->pReceiveData)[index], size);
-        (void) SYS_DMA_ChannelTransfer(dObj->txDMAChannel, (const void *)dObj->dummyDataBuffer, (const void*)dObj->txAddress, size);
+        (void) SYS_DMA_ChannelTransfer(dObj->rxDMAChannel, dObj->rxAddress, &((uint8_t*)dObj->pReceiveData)[index], size);
+        (void) SYS_DMA_ChannelTransfer(dObj->txDMAChannel, dObj->dummyDataBuffer, dObj->txAddress, size);
 
     }
     else if (dObj->txPending > 0)
@@ -483,8 +484,8 @@ void lDRV_SPI_RX_DMA_CallbackHandler(
         dObj->nBytesTransferred += size;
 
         /* Always set up the rx channel first */
-        (void) SYS_DMA_ChannelTransfer(dObj->rxDMAChannel, (const void*)dObj->rxAddress, (const void *)dObj->dummyDataBuffer, size);
-        (void) SYS_DMA_ChannelTransfer(dObj->txDMAChannel, (const void *)&((uint8_t*)dObj->pTransmitData)[index], (const void*)dObj->txAddress, size);
+        (void) SYS_DMA_ChannelTransfer(dObj->rxDMAChannel, dObj->rxAddress, dObj->dummyDataBuffer, size);
+        (void) SYS_DMA_ChannelTransfer(dObj->txDMAChannel, &((uint8_t*)dObj->pTransmitData)[index], dObj->txAddress, size);
     }
     else
     {
@@ -525,36 +526,36 @@ void lDRV_SPI_RX_DMA_CallbackHandler(
 }
 
 <#else>
-void lDRV_SPI_TX_DMA_CallbackHandler(SYS_DMA_TRANSFER_EVENT event, uintptr_t context)
+static void lDRV_SPI_TX_DMA_CallbackHandler(SYS_DMA_TRANSFER_EVENT event, uintptr_t context)
 {
     DRV_SPI_OBJ* dObj = (DRV_SPI_OBJ *)context;
 
-    if (dObj->txDummyDataSize > 0)
+    if (dObj->txDummyDataSize > 0U)
     {
         /* Configure DMA channel to transmit (dummy data) from the same location
          * (Source address not incremented) */
         SYS_DMA_AddressingModeSetup(dObj->txDMAChannel, SYS_DMA_SOURCE_ADDRESSING_MODE_FIXED, SYS_DMA_DESTINATION_ADDRESSING_MODE_FIXED);
 
         /* Configure the transmit DMA channel */
-        (void) SYS_DMA_ChannelTransfer(dObj->txDMAChannel, (const void *)txDummyData, (const void*)dObj->txAddress, dObj->txDummyDataSize);
+        (void) SYS_DMA_ChannelTransfer(dObj->txDMAChannel, txDummyData, dObj->txAddress, dObj->txDummyDataSize);
 
         dObj->txDummyDataSize = 0;
     }
 }
 
-void lDRV_SPI_RX_DMA_CallbackHandler(SYS_DMA_TRANSFER_EVENT event, uintptr_t context)
+static void lDRV_SPI_RX_DMA_CallbackHandler(SYS_DMA_TRANSFER_EVENT event, uintptr_t context)
 {
     DRV_SPI_OBJ* dObj = (DRV_SPI_OBJ *)context;
     DRV_SPI_CLIENT_OBJ* clientObj = (DRV_SPI_CLIENT_OBJ *)NULL;
 
-    if (dObj->rxDummyDataSize > 0)
+    if (dObj->rxDummyDataSize > 0U)
     {
         /* Configure DMA to receive dummy data */
         SYS_DMA_AddressingModeSetup(dObj->rxDMAChannel, SYS_DMA_SOURCE_ADDRESSING_MODE_FIXED, SYS_DMA_DESTINATION_ADDRESSING_MODE_FIXED);
 
-        (void) SYS_DMA_ChannelTransfer(dObj->rxDMAChannel, (const void*)dObj->rxAddress, (const void *)&dObj->rxDummyData, dObj->rxDummyDataSize);
+        (void) SYS_DMA_ChannelTransfer(dObj->rxDMAChannel, dObj->rxAddress, &dObj->rxDummyData, dObj->rxDummyDataSize);
 
-        (void) SYS_DMA_ChannelTransfer(dObj->txDMAChannel, (const void *)dObj->pNextTransmitData, (const void*)dObj->txAddress, dObj->rxDummyDataSize);
+        (void) SYS_DMA_ChannelTransfer(dObj->txDMAChannel, (uint8_t*)dObj->pNextTransmitData, dObj->txAddress, dObj->rxDummyDataSize);
 
         dObj->rxDummyDataSize = 0;
     }
