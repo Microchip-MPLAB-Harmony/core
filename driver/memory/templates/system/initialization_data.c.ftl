@@ -10,14 +10,6 @@ static DRV_MEMORY_CLIENT_OBJECT gDrvMemory${INDEX?string}ClientObject[DRV_MEMORY
     <#lt>static DRV_MEMORY_BUFFER_OBJECT gDrvMemory${INDEX?string}BufferObject[DRV_MEMORY_BUFFER_QUEUE_SIZE_IDX${INDEX?string}];
 </#if>
 
-/* MISRA C-2012 Rule 11.1 deviated:2 Deviation record ID -  H3_MISRAC_2012_R_11_1_DR_1 */
-<#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
-<#if core.COMPILER_CHOICE == "XC32">
-#pragma GCC diagnostic push
-#pragma GCC diagnostic ignored "-Wunknown-pragmas"
-</#if>
-#pragma coverity compliance block deviate:2 "MISRA C-2012 Rule 11.1" "H3_MISRAC_2012_R_11_1_DR_1"    
-</#if>
 <#if DRV_MEMORY_PLIB?has_content >
     <#lt>static const DRV_MEMORY_DEVICE_INTERFACE drvMemory${INDEX?string}DeviceAPI = {
     <#lt>    .Open               = ${DRV_MEMORY_PLIB}_Open,
@@ -59,13 +51,6 @@ static DRV_MEMORY_CLIENT_OBJECT gDrvMemory${INDEX?string}ClientObject[DRV_MEMORY
     <#lt>    .TransferStatusGet  = (DRV_MEMORY_DEVICE_TRANSFER_STATUS_GET)${DRV_MEMORY_DEVICE}_TransferStatusGet
     <#lt>};
 </#if>
-<#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
-#pragma coverity compliance end_block "MISRA C-2012 Rule 11.1"
-<#if core.COMPILER_CHOICE == "XC32">
-#pragma GCC diagnostic pop
-</#if>    
-</#if>
-/* MISRAC 2012 deviation block end */
 static const DRV_MEMORY_INIT drvMemory${INDEX?string}InitData =
 {
 <#if DRV_MEMORY_PLIB?has_content >

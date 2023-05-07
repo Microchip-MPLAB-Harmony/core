@@ -8,14 +8,6 @@ static DRV_SPI_CLIENT_OBJ drvSPI${INDEX}ClientObjPool[DRV_SPI_CLIENTS_NUMBER_IDX
 static DRV_SPI_TRANSFER_OBJ drvSPI${INDEX?string}TransferObjPool[DRV_SPI_QUEUE_SIZE_IDX${INDEX?string}];
 </#if>
 
-/* MISRA C-2012 Rule 11.1 deviated:2 Deviation record ID -  H3_MISRAC_2012_R_11_1_DR_1 */
-<#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
-<#if core.COMPILER_CHOICE == "XC32">
-#pragma GCC diagnostic push
-#pragma GCC diagnostic ignored "-Wunknown-pragmas"
-</#if>
-#pragma coverity compliance block deviate:2 "MISRA C-2012 Rule 11.1" "H3_MISRAC_2012_R_11_1_DR_1"    
-</#if>
 /* SPI PLIB Interface Initialization */
 static const DRV_SPI_PLIB_INTERFACE drvSPI${INDEX?string}PlibAPI = {
 
@@ -31,13 +23,6 @@ static const DRV_SPI_PLIB_INTERFACE drvSPI${INDEX?string}PlibAPI = {
     /* SPI PLIB Callback Register */
     .callbackRegister = (DRV_SPI_PLIB_CALLBACK_REGISTER)${.vars["${DRV_SPI_PLIB?lower_case}"].SPI_PLIB_API_PREFIX}_CallbackRegister,
 };
-<#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
-#pragma coverity compliance end_block "MISRA C-2012 Rule 11.1"
-<#if core.COMPILER_CHOICE == "XC32">
-#pragma GCC diagnostic pop
-</#if>    
-</#if>
-/* MISRAC 2012 deviation block end */
 
 <@compress single_line=true>
 static const uint32_t drvSPI${INDEX?string}remapDataBits[]=
@@ -95,7 +80,7 @@ static const uint32_t drvSPI${INDEX?string}remapDataBits[]=
     <#else>
         0xFFFFFFFFU,
     </#if>
-	
+
 	<#if .vars["${DRV_SPI_PLIB?lower_case}"].SPI_CHARSIZE_BITS_32_BIT_MASK?has_content>
         ${.vars["${DRV_SPI_PLIB?lower_case}"].SPI_CHARSIZE_BITS_32_BIT_MASK}
     <#else>
@@ -191,14 +176,7 @@ static const DRV_SPI_INTERRUPT_SOURCES drvSPI${INDEX?string}InterruptSources =
     </#if>
 };
 </#if>
-/* MISRA C-2012 Rule 11.8 deviated:2 Deviation record ID -  H3_MISRAC_2012_R_11_8_DR_1 */
-<#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
-<#if core.COMPILER_CHOICE == "XC32">
-#pragma GCC diagnostic push
-#pragma GCC diagnostic ignored "-Wunknown-pragmas"
-</#if>
-#pragma coverity compliance block deviate:2 "MISRA C-2012 Rule 11.8" "H3_MISRAC_2012_R_11_8_DR_1"    
-</#if>
+
 /* SPI Driver Initialization Data */
 static const DRV_SPI_INIT drvSPI${INDEX?string}InitData =
 {
@@ -250,11 +228,4 @@ static const DRV_SPI_INIT drvSPI${INDEX?string}InitData =
     .interruptSources = &drvSPI${INDEX?string}InterruptSources,
 </#if>
 };
-<#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
-#pragma coverity compliance end_block "MISRA C-2012 Rule 11.8"
-<#if core.COMPILER_CHOICE == "XC32">
-#pragma GCC diagnostic pop
-</#if>    
-</#if>
-/* MISRAC 2012 deviation block end */
 // </editor-fold>
