@@ -91,7 +91,7 @@ typedef enum
     SYS_DMA_CHANNEL_${i},
 
 </#list>
-</#if>    
+</#if>
 
     SYS_DMA_CHANNEL_NONE = 0xFFFFFFFFU
 
@@ -141,7 +141,7 @@ typedef enum
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Wunknown-pragmas"
 </#if>
-#pragma coverity compliance block deviate:8 "MISRA C-2012 Rule 5.2" "H3_MISRAC_2012_R_5_2_DR_1"    
+#pragma coverity compliance block deviate:8 "MISRA C-2012 Rule 5.2" "H3_MISRAC_2012_R_5_2_DR_1"
 </#if>
 typedef enum
 {
@@ -277,80 +277,13 @@ typedef void (*SYS_DMA_CHANNEL_CALLBACK) (SYS_DMA_TRANSFER_EVENT event, uintptr_
 // *****************************************************************************
 // *****************************************************************************
 
-//******************************************************************************
-/*
-  Function:
-    void SYS_DMA_ChannelCallbackRegister
-    (
-        SYS_DMA_CHANNEL channel,
-        const SYS_DMA_CHANNEL_CALLBACK eventHandler,
-        const uintptr_t contextHandle
-    )
+/* The following functions make up the methods (set of possible operations) of
+   this interface.
+*/
 
-  Summary:
-    This function allows a DMA client to set an event handler.
+/* Refer to sys_dma_mapping.h header file for all sys_dma functions mapped to plib interfaces */
+#include "sys_dma_mapping.h"
 
-  Description:
-    This function allows a client to set an event handler. The client may want
-    to receive transfer related events in cases when it submits a DMA
-    transfer request. The event handler should be set before the client
-    intends to perform operations that could generate events.
-
-    This function accepts a contextHandle parameter. This parameter could be
-    set by the client to contain (or point to) any client specific data object
-    that should be associated with this DMA channel.
-
-  Precondition:
-    DMA Controller should have been initialized.
-
-  Parameters:
-    channel - A specific DMA channel from which the events are expected.
-
-    eventHandler - Pointer to the event handler function.
-
-    contextHandle - Value identifying the context of the
-    application/driver/middleware that registered the event handling function.
-
-  Returns:
-    None.
-
-  Example:
-    <code>
-    MY_APP_OBJ myAppObj;
-
-    void APP_DMA_TransferEventHandler(SYS_DMA_TRANSFER_EVENT event,
-            uintptr_t contextHandle)
-    {
-        switch(event)
-        {
-            case SYS_DMA_TRANSFER_COMPLETE:                
-                break;
-
-            case SYS_DMA_TRANSFER_ERROR:               
-                break;
-
-            default:
-                break;
-        }
-    }
-
-    SYS_DMA_ChannelCallbackRegister(channel, APP_DMA_TransferEventHandler,
-            (uintptr_t)&myAppObj);
-    </code>
-
-  Remarks:
-    None.
- */
-
-/* MISRA C-2012 Rule 5.5, 8.6 deviated below. Deviation record ID -  
-   H3_MISRAC_2012_R_5_5_DR_1 & H3_MISRAC_2012_R_8_6_DR_1*/
-<#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
-#pragma coverity compliance block \
-(deviate:4 "MISRA C-2012 Rule 5.5" "H3_MISRAC_2012_R_5_5_DR_1" )\
-(deviate:4 "MISRA C-2012 Rule 8.6" "H3_MISRAC_2012_R_8_6_DR_1" )   
-</#if>
-
-void SYS_DMA_ChannelCallbackRegister (SYS_DMA_CHANNEL channel, const SYS_DMA_CHANNEL_CALLBACK eventHandler, const uintptr_t contextHandle);
 
 //******************************************************************************
 /* Function:
@@ -431,91 +364,7 @@ void SYS_DMA_ChannelCallbackRegister (SYS_DMA_CHANNEL channel, const SYS_DMA_CHA
 
 bool SYS_DMA_ChannelTransfer (SYS_DMA_CHANNEL channel, const void *srcAddr, const void *destAddr, size_t blockSize);
 
-//******************************************************************************
-/* Function:
-    bool SYS_DMA_ChannelIsBusy (SYS_DMA_CHANNEL channel)
 
-  Summary:
-    Returns the busy status of a specific DMA Channel.
-
-  Description:
-    This function returns the busy status of the DMA channel.
-    DMA channel will be busy if any transfer is in progress.
-
-    This function can be used to check the status of the channel prior to
-    submitting a transfer request. And this can also be used to check the status
-    of the submitted request if callback mechanism is not preferred.
-
-  Precondition:
-    DMA Controller should have been initialized.
-
-  Parameters:
-    channel - A specific DMA channel
-
-  Returns:
-    Busy status of the specific channel.
-    True - Channel is busy
-    False - Channel is free
-
-  Example:
-    <code>    
-    MY_APP_OBJ myAppObj;
-    uint8_t buf[10] = {0,1,2,3,4,5,6,7,8,9};
-    void *srcAddr = (uint8_t *) buf;
-    void *destAddr = (uin8_t*) &U1TXREG;
-    size_t size = 10;
-
-    if(false == SYS_DMA_ChannelIsBusy(SYS_DMA_CHANNEL_1))
-    {
-        SYS_DMA_ChannelTransfer(SYS_DMA_CHANNEL_1, srcAddr, destAddr, size);
-    }
-    </code>
-
-  Remarks:
-    None.
-*/
-
-bool SYS_DMA_ChannelIsBusy (SYS_DMA_CHANNEL channel);
-
-//******************************************************************************
-/* Function:
-    void SYS_DMA_ChannelDisable (SYS_DMA_CHANNEL channel)
-
-  Summary:
-    Disables the specified channel.
-
-  Description:
-    This function disables the specified channel and resets it.
-    Ongoing transfer will be aborted.
-
-  Precondition:
-    DMA Controller should have been initialized.
-
-  Parameters:
-    channel - A specific DMA channel
-
-  Returns:
-    None.
-
-  Example:
-    <code>
-    SYS_DMA_ChannelDisable(SYS_DMA_CHANNEL_1);
-    </code>
-
-  Remarks:
-    None.
-*/
-
-void SYS_DMA_ChannelDisable (SYS_DMA_CHANNEL channel);
-
-<#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
-#pragma coverity compliance end_block "MISRA C-2012 Rule 5.5"
-#pragma coverity compliance end_block "MISRA C-2012 Rule 8.6"
-<#if core.COMPILER_CHOICE == "XC32">
-#pragma GCC diagnostic pop
-</#if>    
-</#if> 
-/* MISRAC 2012 deviation block end */
 //******************************************************************************
 /* Function:
     void SYS_DMA_AddressingModeSetup(SYS_DMA_CHANNEL channel, SYS_DMA_SOURCE_ADDRESSING_MODE sourceAddrMode, SYS_DMA_DESTINATION_ADDRESSING_MODE destAddrMode);
@@ -582,8 +431,6 @@ void SYS_DMA_AddressingModeSetup(SYS_DMA_CHANNEL channel, SYS_DMA_SOURCE_ADDRESS
     None.
 */
 void SYS_DMA_DataWidthSetup(SYS_DMA_CHANNEL channel, SYS_DMA_WIDTH dataWidth);
-
-#include "sys_dma_mapping.h"
 
 // DOM-IGNORE-BEGIN
 #ifdef __cplusplus  // Provide C++ Compatibility
