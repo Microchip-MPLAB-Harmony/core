@@ -776,10 +776,10 @@ static uint8_t SYS_FS_MEDIA_T_MANAGER_AnalyzeFileSystem
     }
 </#if>
 <#if (SYS_FS_FAT == true || SYS_FS_FILEX == true) && SYS_FS_MPFS == true>
-    else if (0 == memcmp(firstSector, "MPFS", 4))
+    else if (0 == strncmp((char*)firstSector, "MPFS", 4))
 </#if>
 <#if SYS_FS_FAT == false && SYS_FS_FILEX == false && SYS_FS_MPFS == true>
-    if (0 == memcmp(firstSector, "MPFS", 4))
+    if (0 == strncmp((char*)firstSector, "MPFS", 4))
 </#if>
 <#if SYS_FS_MPFS == true>
     {
@@ -1442,10 +1442,10 @@ bool SYS_FS_MEDIA_MANAGER_VolumePropertyGet
                 }
 </#if>
 <#if (SYS_FS_FAT == true || SYS_FS_FILEX == true) && SYS_FS_MPFS == true>
-                else if (volumeObj->fsType == 'M')
+                else if (volumeObj->fsType == (uint8_t)'M')
 </#if>
 <#if SYS_FS_FAT == false && SYS_FS_FILEX == false && SYS_FS_MPFS == true>
-                if (volumeObj->fsType == 'M')
+                if (volumeObj->fsType == (uint8_t)'M')
 </#if>
 <#if SYS_FS_MPFS == true>
                 {
