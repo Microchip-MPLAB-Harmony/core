@@ -60,11 +60,8 @@
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Wunknown-pragmas"
 </#if>
-#pragma coverity compliance block deviate:5 "MISRA C-2012 Rule 11.1" "H3_MISRAC_2012_R_11_1_DR_1"    
+#pragma coverity compliance block deviate:5 "MISRA C-2012 Rule 11.1" "H3_MISRAC_2012_R_11_1_DR_1"
 </#if>
-
-/* FS Function registration table. */
-typedef SYS_FS_MEDIA_COMMAND_STATUS (* CommandStatusGetType)( DRV_HANDLE handle, SYS_FS_MEDIA_BLOCK_COMMAND_HANDLE commandHandle);
 
 static const SYS_FS_MEDIA_FUNCTIONS sdmmcMediaFunctions =
 {
@@ -83,7 +80,7 @@ static const SYS_FS_MEDIA_FUNCTIONS sdmmcMediaFunctions =
 #pragma coverity compliance end_block "MISRA C-2012 Rule 11.1"
 <#if core.COMPILER_CHOICE == "XC32">
 #pragma GCC diagnostic pop
-</#if>    
+</#if>
 </#if>
 /* MISRAC 2012 deviation block end */
 // *****************************************************************************
