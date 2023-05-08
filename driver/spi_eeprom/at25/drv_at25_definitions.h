@@ -101,10 +101,10 @@ typedef struct
     DRV_AT25_PLIB_WRITE_READ                writeRead;
 
     /* AT25 PLIB write API */
-    DRV_AT25_PLIB_WRITE                     write_t;
+    DRV_AT25_PLIB_WRITE                     writeData;
 
     /* AT25 PLIB read API */
-    DRV_AT25_PLIB_READ                      read_t;
+    DRV_AT25_PLIB_READ                      readData;
 
     /* AT25 PLIB Transfer status API */
     DRV_AT25_PLIB_IS_BUSY                   isBusy;

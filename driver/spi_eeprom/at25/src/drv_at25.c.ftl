@@ -71,7 +71,7 @@ static bool lDRV_AT25_ReadData(void* rxData, uint32_t rxDataLength)
     /* Assert Chip Select */
     SYS_PORT_PinClear(gDrvAT25Obj.chipSelectPin);
 
-    if (gDrvAT25Obj.spiPlib->read_t((uint8_t*)rxData, rxDataLength) == true)
+    if (gDrvAT25Obj.spiPlib->readData((uint8_t*)rxData, rxDataLength) == true)
     {
         status = true;
     }
@@ -93,7 +93,7 @@ static bool lDRV_AT25_WriteEnable(void)
     /* Assert Chip Select */
     SYS_PORT_PinClear(gDrvAT25Obj.chipSelectPin);
 
-    if(gDrvAT25Obj.spiPlib->write_t(&gDrvAT25Obj.at25Command[0], 1) == true)
+    if(gDrvAT25Obj.spiPlib->writeData(&gDrvAT25Obj.at25Command[0], 1) == true)
     {
         status = true;
     }
@@ -131,7 +131,7 @@ static bool lDRV_AT25_WriteMemoryAddress(uint8_t command, uint32_t address)
     SYS_PORT_PinClear(gDrvAT25Obj.chipSelectPin);
 
     /* Send page write or read command and memory address */
-    if(gDrvAT25Obj.spiPlib->write_t(gDrvAT25Obj.at25Command, nBytes) == true)
+    if(gDrvAT25Obj.spiPlib->writeData(gDrvAT25Obj.at25Command, nBytes) == true)
     {
         status = true;
     }
@@ -162,7 +162,7 @@ static bool lDRV_AT25_WriteData(void* txData, uint32_t txDataLength, uint32_t ad
     /* Assert Chip Select */
     SYS_PORT_PinClear(gDrvAT25Obj.chipSelectPin);
     /* Send data */
-    if (gDrvAT25Obj.spiPlib->write_t((uint8_t*)txData, nTransferBytes) == true)
+    if (gDrvAT25Obj.spiPlib->writeData((uint8_t*)txData, nTransferBytes) == true)
     {
         status = true;
     }
@@ -218,8 +218,7 @@ static bool lDRV_AT25_ReadStatus(void)
     /* Assert Chip Select */
     SYS_PORT_PinClear(gDrvAT25Obj.chipSelectPin);
 
-    if(gDrvAT25Obj.spiPlib->writeRead(&gDrvAT25Obj.at25Command[0], 1, \
-            &gDrvAT25Obj.at25Command[1], 2 ) == true)
+    if(gDrvAT25Obj.spiPlib->writeRead(&gDrvAT25Obj.at25Command[0], 1, &gDrvAT25Obj.at25Command[1], 2 ) == true)
     {
         status = true;
     }
@@ -240,8 +239,7 @@ static void lDRV_AT25_Handler( void )
             /* De-assert the chip select */
             SYS_PORT_PinSet(gDrvAT25Obj.chipSelectPin);
             /* Send page write command and memory address */
-            if (lDRV_AT25_WriteMemoryAddress((uint8_t)DRV_AT25_CMD_PAGE_PROGRAM, \
-                    gDrvAT25Obj.memoryAddr) == true)
+            if (lDRV_AT25_WriteMemoryAddress((uint8_t)DRV_AT25_CMD_PAGE_PROGRAM, gDrvAT25Obj.memoryAddr) == true)
             {
                 gDrvAT25Obj.state = DRV_AT25_STATE_WRITE_DATA;
             }
@@ -252,8 +250,7 @@ static void lDRV_AT25_Handler( void )
             break;
         case DRV_AT25_STATE_WRITE_DATA:
 
-            if (lDRV_AT25_WriteData(gDrvAT25Obj.bufferAddr, \
-                    gDrvAT25Obj.nPendingBytes, gDrvAT25Obj.memoryAddr) == true)
+            if (lDRV_AT25_WriteData(gDrvAT25Obj.bufferAddr, gDrvAT25Obj.nPendingBytes, gDrvAT25Obj.memoryAddr) == true)
             {
                 gDrvAT25Obj.state = DRV_AT25_STATE_CHECK_WRITE_STATUS;
             }
