@@ -14,16 +14,15 @@
         <#lt>#define DRV_MEMORY_DEVICE_ERASE_SIZE         ${.vars["${DRV_MEMORY_DEVICE?lower_case}"].FLASH_ERASE_SIZE}U
     </#if>
 </#if>
-
 <#if (HarmonyCore.SELECT_RTOS)?? && HarmonyCore.SELECT_RTOS != "BareMetal">
     <#lt>/* Memory Driver Instance ${INDEX?string} RTOS Configurations*/
     <#if (HarmonyCore.SELECT_RTOS)?? && HarmonyCore.SELECT_RTOS == "FreeRTOS">
-        <#lt>#define DRV_MEMORY_STACK_SIZE_IDX${INDEX?string}           ${DRV_MEMORY_RTOS_STACK_SIZE / 4}
+        <#lt>#define DRV_MEMORY_STACK_SIZE_IDX${INDEX?string}               ${DRV_MEMORY_RTOS_STACK_SIZE / 4}
     <#else>
-        <#lt>#define DRV_MEMORY_STACK_SIZE_IDX${INDEX?string}           ${DRV_MEMORY_RTOS_STACK_SIZE}
+        <#lt>#define DRV_MEMORY_STACK_SIZE_IDX${INDEX?string}               ${DRV_MEMORY_RTOS_STACK_SIZE}
     </#if>
-    <#lt>#define DRV_MEMORY_PRIORITY_IDX${INDEX?string}             ${DRV_MEMORY_RTOS_TASK_PRIORITY}
-    <#lt>#define DRV_MEMORY_RTOS_DELAY_IDX${INDEX?string}                         ${DRV_MEMORY_RTOS_DELAY}
+    <#lt>#define DRV_MEMORY_PRIORITY_IDX${INDEX?string}                 ${DRV_MEMORY_RTOS_TASK_PRIORITY}
+    <#lt>#define DRV_MEMORY_RTOS_DELAY_IDX${INDEX?string}               ${DRV_MEMORY_RTOS_DELAY}U
         <#if (HarmonyCore.SELECT_RTOS)?? && HarmonyCore.SELECT_RTOS == "MicriumOSIII">
         <#lt>#define DRV_MEMORY_RTOS_TASK_MSG_QTY_IDX${INDEX?string}                     ${DRV_MEMORY_RTOS_TASK_MSG_QTY}u
         <#lt>#define DRV_MEMORY_RTOS_TASK_TIME_QUANTA_IDX${INDEX?string}                 ${DRV_MEMORY_RTOS_TASK_TIME_QUANTA}u
