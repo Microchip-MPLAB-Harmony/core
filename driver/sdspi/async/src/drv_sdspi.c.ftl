@@ -63,6 +63,20 @@
 #include "driver/sdspi/src/drv_sdspi_file_system.h"
 </#if>
 
+/* MISRA C-2012 Rule 11.3 deviated:5 Deviation record ID -  H3_MISRAC_2012_R_11_3_DR_1 */
+<#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
+<#if core.COMPILER_CHOICE == "XC32">
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wunknown-pragmas"
+</#if>
+#pragma coverity compliance block \
+(deviate:3 "MISRA C-2012 Rule 11.1" "H3_MISRAC_2012_R_11_1_DR_1")\
+(deviate:5 "MISRA C-2012 Rule 11.3" "H3_MISRAC_2012_R_11_3_DR_1")\
+(deviate:1 "MISRA C-2012 Rule 11.8" "H3_MISRAC_2012_R_11_8_DR_1")\
+(deviate:1 "MISRA C-2012 Rule 16.1" "H3_MISRAC_2012_R_16_1_DR_1")\
+(deviate:1 "MISRA C-2012 Rule 16.3" "H3_MISRAC_2012_R_16_3_DR_1")
+</#if>
+
 // *****************************************************************************
 // *****************************************************************************
 // Section: File Scope Variables
@@ -269,14 +283,6 @@ static DRV_SDSPI_BUFFER_OBJ* lDRV_SDSPI_FreeBufferObjectGet(DRV_SDSPI_CLIENT_OBJ
     }
     return NULL;
 }
-/* MISRA C-2012 Rule 11.3 deviated:5 Deviation record ID -  H3_MISRAC_2012_R_11_3_DR_1 */
-<#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
-<#if core.COMPILER_CHOICE == "XC32">
-#pragma GCC diagnostic push
-#pragma GCC diagnostic ignored "-Wunknown-pragmas"
-</#if>
-#pragma coverity compliance block deviate:5 "MISRA C-2012 Rule 11.3" "H3_MISRAC_2012_R_11_3_DR_1"
-</#if>
 
 static bool lDRV_SDSPI_BufferObjectAddToList(
     DRV_SDSPI_OBJ* dObj,
@@ -1781,13 +1787,7 @@ static void lDRV_SDSPI_AttachDetachTasks
     /* Release the Mutex to allow other clients/threads to access the SD Card */
      (void) OSAL_MUTEX_Unlock(&dObj->transferMutex);
 }
-/* MISRA C-2012 Rule 16.1, 16.3 deviated below. Deviation record ID -
-   H3_MISRAC_2012_R_16_1_DR_1 & H3_MISRAC_2012_R_16_3_DR_1*/
-<#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
-#pragma coverity compliance block \
-(deviate:1 "MISRA C-2012 Rule 16.1" "H3_MISRAC_2012_R_16_1_DR_1" )\
-(deviate:1 "MISRA C-2012 Rule 16.3" "H3_MISRAC_2012_R_16_3_DR_1" )
-</#if>
+
 static void lDRV_SDSPI_BufferIOTasks
 (
     SYS_MODULE_OBJ object
@@ -2379,21 +2379,11 @@ static void lDRV_SDSPI_BufferIOTasks
         SYS_ASSERT(false, "SDCard Driver: OSAL_MUTEX_Unlock failed");
     }
 }
-<#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
-#pragma coverity compliance end_block "MISRA C-2012 Rule 16.1"
-#pragma coverity compliance end_block "MISRA C-2012 Rule 16.3"
-</#if>
-/* MISRAC 2012 deviation block end */
-
 // *****************************************************************************
 // *****************************************************************************
 // Section: Driver Interface Function Definitions
 // *****************************************************************************
 // *****************************************************************************
-/* MISRA C-2012 Rule 11.1 deviated:2 Deviation record ID -  H3_MISRAC_2012_R_11_1_DR_1 */
-<#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
-#pragma coverity compliance block deviate:2 "MISRA C-2012 Rule 11.1" "H3_MISRAC_2012_R_11_1_DR_1"
-</#if>
 SYS_MODULE_OBJ DRV_SDSPI_Initialize
 (
     const SYS_MODULE_INDEX drvIndex,
@@ -2577,10 +2567,6 @@ SYS_MODULE_OBJ DRV_SDSPI_Initialize
     /* Return the object structure */
     return ( (SYS_MODULE_OBJ)drvIndex );
 }
-<#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
-#pragma coverity compliance end_block "MISRA C-2012 Rule 11.3"
-</#if>
-/* MISRAC 2012 deviation block end */
 
 SYS_STATUS DRV_SDSPI_Status (
     SYS_MODULE_OBJ object
@@ -2910,13 +2896,7 @@ SYS_MEDIA_GEOMETRY* DRV_SDSPI_GeometryGet (
 
     return mediaGeometryObj;
 }
-/* MISRA C-2012 Rule 11.1, 11.8 deviated below. Deviation record ID -
-   H3_MISRAC_2012_R_11_1_DR_1 & H3_MISRAC_2012_R_11_8_DR_1*/
-<#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
-#pragma coverity compliance block \
-(deviate:1 "MISRA C-2012 Rule 11.1" "H3_MISRAC_2012_R_11_1_DR_1" )\
-(deviate:1 "MISRA C-2012 Rule 11.8" "H3_MISRAC_2012_R_11_8_DR_1" )
-</#if>
+
 void DRV_SDSPI_EventHandlerSet (
     const DRV_HANDLE handle,
     const void* eventHandler,
@@ -2934,15 +2914,6 @@ void DRV_SDSPI_EventHandlerSet (
         clientObj->context = context;
     }
 }
-<#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
-#pragma coverity compliance end_block "MISRA C-2012 Rule 11.1"
-#pragma coverity compliance end_block "MISRA C-2012 Rule 11.8"
-<#if core.COMPILER_CHOICE == "XC32">
-#pragma GCC diagnostic pop
-</#if>
-</#if>
-/* MISRAC 2012 deviation block end */
-
 bool DRV_SDSPI_IsAttached (
     const DRV_HANDLE handle
 )
@@ -2986,3 +2957,15 @@ bool DRV_SDSPI_IsWriteProtected( const DRV_HANDLE handle )
 
     return (bool)dObj->isWriteProtected;
 }
+
+<#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
+#pragma coverity compliance end_block "MISRA C-2012 Rule 11.1"
+#pragma coverity compliance end_block "MISRA C-2012 Rule 11.3"
+#pragma coverity compliance end_block "MISRA C-2012 Rule 11.8"
+#pragma coverity compliance end_block "MISRA C-2012 Rule 16.1"
+#pragma coverity compliance end_block "MISRA C-2012 Rule 16.3"
+<#if core.COMPILER_CHOICE == "XC32">
+#pragma GCC diagnostic pop
+</#if>
+</#if>
+/* MISRAC 2012 deviation block end */

@@ -1509,6 +1509,10 @@ void DRV_SDSPI_Tasks ( SYS_MODULE_OBJ object )
 // Section: Driver Interface Function Definitions
 // *****************************************************************************
 // *****************************************************************************
+/* MISRA C-2012 Rule 11.1 deviated:2 Deviation record ID -  H3_MISRAC_2012_R_11_1_DR_1 */
+<#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
+#pragma coverity compliance block deviate:2 "MISRA C-2012 Rule 11.1" "H3_MISRAC_2012_R_11_1_DR_1"
+</#if>
 SYS_MODULE_OBJ DRV_SDSPI_Initialize(
     const SYS_MODULE_INDEX drvIndex,
     const SYS_MODULE_INIT * const init
