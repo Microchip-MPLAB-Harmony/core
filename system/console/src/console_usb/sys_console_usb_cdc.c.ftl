@@ -81,8 +81,6 @@ static CONS_USB_CDC_DEVICE gConsoleUSBCdcData;
 /* Return the pointer to the USB CDC instance specific data */
 #define CONSOLE_USB_CDC_GET_INSTANCE(index)    ((index) >= (SYS_CONSOLE_USB_CDC_MAX_INSTANCES))? (NULL) : (&gConsoleUSBCdcData.cdcInstance[index])
 
-extern const SYS_CONSOLE_DEV_DESC sysConsoleUSBCdcDevDesc;
-
 /* Expose the USB CDC console layer APIs to the Console System Service */
 const SYS_CONSOLE_DEV_DESC sysConsoleUSBCdcDevDesc =
 {
