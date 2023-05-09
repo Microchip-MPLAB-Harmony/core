@@ -316,7 +316,7 @@ static MEMORY_DEVICE_TRANSFER_STATUS DRV_MEMORY_HandleRead
 
         case DRV_MEMORY_READ_MEM_STATUS:
         {
-            transferStatus = dObj->memoryDevice->TransferStatusGet(dObj->memDevHandle);
+            transferStatus = (MEMORY_DEVICE_TRANSFER_STATUS)dObj->memoryDevice->TransferStatusGet(dObj->memDevHandle);
             break;
         }
     }
@@ -365,7 +365,7 @@ static MEMORY_DEVICE_TRANSFER_STATUS DRV_MEMORY_HandleWrite
 
         case DRV_MEMORY_WRITE_MEM_STATUS:
         {
-            transferStatus = dObj->memoryDevice->TransferStatusGet(dObj->memDevHandle);
+            transferStatus = (MEMORY_DEVICE_TRANSFER_STATUS)dObj->memoryDevice->TransferStatusGet(dObj->memDevHandle);
 
             if (transferStatus == MEMORY_DEVICE_TRANSFER_COMPLETED)
             {
@@ -428,7 +428,7 @@ static MEMORY_DEVICE_TRANSFER_STATUS DRV_MEMORY_HandleErase
 
         case DRV_MEMORY_ERASE_CMD_STATUS:
         {
-            transferStatus = dObj->memoryDevice->TransferStatusGet(dObj->memDevHandle);
+            transferStatus = (MEMORY_DEVICE_TRANSFER_STATUS)dObj->memoryDevice->TransferStatusGet(dObj->memDevHandle);
 
             if (transferStatus == MEMORY_DEVICE_TRANSFER_COMPLETED)
             {
