@@ -55,7 +55,7 @@ extern "C" {
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Wunknown-pragmas"
 </#if>
-#pragma coverity compliance block deviate:2 "MISRA C-2012 Rule 5.4" "H3_MISRAC_2012_R_5_4_DR_1"    
+#pragma coverity compliance block deviate:2 "MISRA C-2012 Rule 5.4" "H3_MISRAC_2012_R_5_4_DR_1"
 </#if>
 #define EEPROM_EMULATOR_ROW_SIZE                                ${EEPROM_EMULATOR_ROW_SIZE}
 #define EEPROM_EMULATOR_PAGES_PER_ROW                           ${EEPROM_EMULATOR_PAGES_PER_ROW}U
@@ -72,7 +72,7 @@ extern "C" {
 #pragma coverity compliance end_block "MISRA C-2012 Rule 5.4"
 <#if core.COMPILER_CHOICE == "XC32">
 #pragma GCC diagnostic pop
-</#if>    
+</#if>
 </#if>
 /* MISRAC 2012 deviation block end */
 
@@ -125,28 +125,28 @@ typedef struct
 {
     /** Initialization state of the EEPROM emulator. */
     bool initialized;
-
 <#if EEPROM_EMULATOR_MAIN_ARRAY_ENABLED?? && EEPROM_EMULATOR_RWWEE_ENABLED??>
-
     <#if EEPROM_EMULATOR_MAIN_ARRAY_ENABLED == true>
-    <#lt>   /** Absolute byte pointer to the first byte of FLASH where the emulated EEPROM is stored. */
-    <#lt>   EEPROM_PAGE* main_array;
-    </#if>
 
+    <#lt>    /** Absolute byte pointer to the first byte of FLASH where the emulated EEPROM is stored. */
+    <#lt>    EEPROM_PAGE* main_array;
+    </#if>
     <#if EEPROM_EMULATOR_RWWEE_ENABLED == true>
-    <#lt>   /** Absolute byte pointer to the first byte of RWWEE memory where the emulated EEPROM is stored. */
-    <#lt>   const EEPROM_PAGE* rwwee;
+
+    <#lt>    /** Absolute byte pointer to the first byte of RWWEE memory where the emulated EEPROM is stored. */
+    <#lt>    EEPROM_PAGE* rwwee;
     </#if>
-
 <#else>
-    /** Absolute byte pointer to the first byte of FLASH where the emulated EEPROM is stored. */
-    const EEPROM_PAGE* main_array;
-</#if>
 
+    /** Absolute byte pointer to the first byte of FLASH where the emulated EEPROM is stored. */
+    EEPROM_PAGE* main_array;
+</#if>
 <#if (EEPROM_EMULATOR_NUM_PHYSICAL_PAGES <= 256) >
+
     /** Mapping array from logical EEPROM pages to physical FLASH pages. */
     uint8_t page_map[EEPROM_EMULATOR_NUM_LOGICAL_PAGES];
 <#else>
+
     /** Mapping array from logical EEPROM pages to physical FLASH pages. */
     uint16_t page_map[EEPROM_EMULATOR_NUM_LOGICAL_PAGES];
 </#if>

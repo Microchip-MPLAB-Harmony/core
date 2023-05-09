@@ -127,35 +127,35 @@ static void EMU_EEPROM_NVMRowErase(const uint16_t row)
         <#lt>   if (physical_page >= EEPROM_EMULATOR_NUM_MAIN_ARRAY_PHY_PAGES)
         <#lt>   {
         <#if EEPROM_EMULATOR_RWWEE_MEM_NAME == "RWWEE">
-            <#lt>   (void) ${EEPROM_EMULATOR_NVM_PLIB}_RWWEEPROM_RowErase((uint32_t)flashAddr);
+            <#lt>   (void)${EEPROM_EMULATOR_NVM_PLIB}_RWWEEPROM_RowErase((uint32_t)flashAddr);
         <#elseif EEPROM_EMULATOR_RWWEE_MEM_NAME == "Data Flash">
-            <#lt>   (void) ${EEPROM_EMULATOR_NVM_PLIB}_DATA_FLASH_RowErase((uint32_t)flashAddr);
+            <#lt>   (void)${EEPROM_EMULATOR_NVM_PLIB}_DATA_FLASH_RowErase((uint32_t)flashAddr);
         </#if>
         <#lt>   }
         <#lt>   else
         <#lt>   {
-        <#lt>       (void) ${EEPROM_EMULATOR_NVM_PLIB}_RowErase((uint32_t)flashAddr);
+        <#lt>       (void)${EEPROM_EMULATOR_NVM_PLIB}_RowErase((uint32_t)flashAddr);
         <#lt>   }
     <#elseif EEPROM_EMULATOR_RWWEE_ENABLED == true && core.CoreArchitecture != "CORTEX-M23">
         <#if EEPROM_EMULATOR_RWWEE_MEM_NAME == "RWWEE">
-            <#lt>   ${EEPROM_EMULATOR_NVM_PLIB}_RWWEEPROM_RowErase((uint32_t)flashAddr);
+            <#lt>   (void)${EEPROM_EMULATOR_NVM_PLIB}_RWWEEPROM_RowErase((uint32_t)flashAddr);
         <#elseif EEPROM_EMULATOR_RWWEE_MEM_NAME == "Data Flash">
-            <#lt>   ${EEPROM_EMULATOR_NVM_PLIB}_DATA_FLASH_RowErase((uint32_t)flashAddr);
+            <#lt>   (void)${EEPROM_EMULATOR_NVM_PLIB}_DATA_FLASH_RowErase((uint32_t)flashAddr);
         </#if>
     <#else>
         <#lt>   (void) ${EEPROM_EMULATOR_NVM_PLIB}_RowErase((uint32_t)flashAddr);
     </#if>
 <#else>
     <#if EEPROM_EMULATOR_NVM_PLIB == "NVMCTRL">
-        <#lt>   ${EEPROM_EMULATOR_NVM_PLIB}_BlockErase((uint32_t)flashAddr);
+        <#lt>   (void)${EEPROM_EMULATOR_NVM_PLIB}_BlockErase((uint32_t)flashAddr);
     <#else>
-        <#lt>   ${EEPROM_EMULATOR_NVM_PLIB}_SectorErase((uint32_t)flashAddr);
+        <#lt>   (void)${EEPROM_EMULATOR_NVM_PLIB}_SectorErase((uint32_t)flashAddr);
     </#if>
 </#if>
 
     while (${EEPROM_EMULATOR_NVM_PLIB}_IsBusy())
     {
-        /* Nothing to do*/
+        /* Wait for operation to complete */
     }
 
 <#if core.DATA_CACHE_ENABLE?? && core.DATA_CACHE_ENABLE == true >
