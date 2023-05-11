@@ -253,12 +253,12 @@ static bool lDRV_SPI_StartDMATransfer(
     if (txSize != 0U)
     {
         /* Clean cache lines to push the transmit buffer data to the main memory */
-        SYS_CACHE_CleanDCache_by_Addr((uint32_t *)pTransmitData, txSize);
+        SYS_CACHE_CleanDCache_by_Addr(pTransmitData, (int32_t)txSize);
     }
     if (rxSize != 0U)
     {
         /* Invalidate the receive buffer to force the CPU to read from the main memory */
-        SYS_CACHE_InvalidateDCache_by_Addr((uint32_t *)pReceiveData, rxSize);
+        SYS_CACHE_InvalidateDCache_by_Addr(pReceiveData, (int32_t)rxSize);
     }
 </#if>
 
@@ -675,7 +675,7 @@ SYS_MODULE_OBJ DRV_SPI_Initialize( const SYS_MODULE_INDEX drvIndex, const SYS_MO
         /* Clean cache lines having source buffer before submitting a transfer
          * request to DMA to load the latest data in the cache to the main
          * memory */
-        SYS_CACHE_CleanDCache_by_Addr((uint32_t *)txDummyData, sizeof(txDummyData));
+        SYS_CACHE_CleanDCache_by_Addr(txDummyData, (int32_t)sizeof(txDummyData));
     }
 </#if>
 </#if>

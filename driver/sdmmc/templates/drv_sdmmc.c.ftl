@@ -1147,7 +1147,7 @@ static void lDRV_SDMMC_MediaInitialize (
             /* Invalidate the cache to force the CPU to read the latest data
              * from the main memory. */
             readBufferLen = DRV_SDMMC_SCR_BUFFER_LEN;
-            SYS_CACHE_InvalidateDCache_by_Addr((uint32_t *)dObj->cardCtxt.scrBuffer, (int32_t)readBufferLen);
+            SYS_CACHE_InvalidateDCache_by_Addr(dObj->cardCtxt.scrBuffer, (int32_t)readBufferLen);
             </#if>
 
             /* Set up the DMA for the data transfer. */
@@ -1211,7 +1211,7 @@ static void lDRV_SDMMC_MediaInitialize (
             <#if core.DATA_CACHE_ENABLE?? && core.DATA_CACHE_ENABLE == true>
               /* Invalidate the cache to force the CPU to read the latest data
                * from the main memory. */
-              SYS_CACHE_InvalidateDCache_by_Addr((uint32_t *)dObj->cardCtxt.extCSDBuffer, DRV_SDMMC_EXT_CSD_RESP_SIZE);
+              SYS_CACHE_InvalidateDCache_by_Addr(dObj->cardCtxt.extCSDBuffer, (int32_t)DRV_SDMMC_EXT_CSD_RESP_SIZE);
             </#if>
 
               dObj->sdmmcPlib->sdhostSetupDma (dObj->cardCtxt.extCSDBuffer,
@@ -1322,7 +1322,7 @@ static void lDRV_SDMMC_MediaInitialize (
             <#if core.DATA_CACHE_ENABLE?? && core.DATA_CACHE_ENABLE == true>
             /* Invalidate the cache to force the CPU to read the latest data
              * from the main memory. */
-            SYS_CACHE_InvalidateDCache_by_Addr((uint32_t *)dObj->cardCtxt.switchStatusBuffer, DRV_SDMMC_SWITCH_STATUS_BUFFER_LEN);
+            SYS_CACHE_InvalidateDCache_by_Addr(dObj->cardCtxt.switchStatusBuffer, (int32_t)DRV_SDMMC_SWITCH_STATUS_BUFFER_LEN);
             </#if>
 
             /* Set up the DMA for the data transfer. */
@@ -2422,14 +2422,14 @@ void DRV_SDMMC_Tasks( SYS_MODULE_OBJ object )
                 /* Clean the cache to push the data to be written, from the cache
                  * memory to the main memory for the DMA */
                 readNblocks = (currentBufObj->nBlocks << 9);
-                SYS_CACHE_CleanDCache_by_Addr((uint32_t *)currentBufObj->buffer, (int32_t)readNblocks);
+                SYS_CACHE_CleanDCache_by_Addr(currentBufObj->buffer, (int32_t)readNblocks);
             }
             else if (currentBufObj->opType == DRV_SDMMC_OPERATION_TYPE_READ)
             {
                 /* Invalidate the cache to force the CPU to read the latest data
                  * from the main memory. */
                 readNblocks = (currentBufObj->nBlocks << 9);
-                SYS_CACHE_InvalidateDCache_by_Addr((uint32_t *)currentBufObj->buffer, (int32_t)readNblocks);
+                SYS_CACHE_InvalidateDCache_by_Addr(currentBufObj->buffer, (int32_t)readNblocks);
             }
             else
             {

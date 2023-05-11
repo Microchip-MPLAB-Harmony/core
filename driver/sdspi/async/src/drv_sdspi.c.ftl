@@ -2510,7 +2510,7 @@ SYS_MODULE_OBJ DRV_SDSPI_Initialize
         /* Ensure txCommonDummyData (0xFF) is pushed to the main memory for the DMA.
          * This operation is needed only once as CPU is not going to modify
          * txCommonDummyData */
-        SYS_CACHE_CleanDCache_by_Addr ((uint32_t*)txCommonDummyData, sizeof(txCommonDummyData));
+        SYS_CACHE_CleanDCache_by_Addr (txCommonDummyData, (int32_t)sizeof(txCommonDummyData));
     }
 </#if>
 </#if>

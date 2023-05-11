@@ -433,7 +433,7 @@ static bool lDRV_SDSPI_DMA_Write(
 {
 <#if core.DATA_CACHE_ENABLE?? && core.DATA_CACHE_ENABLE == true >
     /* Clean cache to flush the data from the cache to the main memory */
-    SYS_CACHE_CleanDCache_by_Addr (pWriteBuffer, nBytes);
+    SYS_CACHE_CleanDCache_by_Addr (pWriteBuffer, (int32_t)nBytes);
 </#if>
 
     /* Setup DMA Receive channel to receive dummy data */
@@ -490,7 +490,7 @@ static bool lDRV_SDSPI_DMA_Read(
 
 <#if core.DATA_CACHE_ENABLE?? && core.DATA_CACHE_ENABLE == true >
     /* Invalidate cache to force CPU to read from the main memory */
-    SYS_CACHE_InvalidateDCache_by_Addr(pReadBuffer, nBytes);
+    SYS_CACHE_InvalidateDCache_by_Addr(pReadBuffer, (int32_t)nBytes);
 </#if>
 
     SYS_DMA_AddressingModeSetup(
@@ -857,7 +857,7 @@ bool DRV_SDSPI_SPISpeedSetup(
     DRV_SDSPI_TRANSFER_SETUP setupRemap;
 
     /* SD Card reads the data on the rising edge of SCK, which means SPI Mode 0
-     * and 3 => CPOL = 0, CPHA = 0 and CPOL = 1, CPHA = 1 are supported */   
+     * and 3 => CPOL = 0, CPHA = 0 and CPOL = 1, CPHA = 1 are supported */
 
     setupRemap.baudRateInHz = clockFrequency;
 

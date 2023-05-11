@@ -145,7 +145,7 @@ void SYS_CACHE_CleanDCache (void)
 </#if>
 }
 
-void SYS_CACHE_InvalidateDCache_by_Addr (uint32_t *addr, int32_t size)
+void SYS_CACHE_InvalidateDCache_by_Addr (void *addr, int32_t size)
 {
 <#if core.CoreArchitecture != "CORTEX-M4">
     <#lt>    if (DATA_CACHE_IS_ENABLED() != 0U) // If Data Cache is enabled
@@ -155,7 +155,7 @@ void SYS_CACHE_InvalidateDCache_by_Addr (uint32_t *addr, int32_t size)
 </#if>
 }
 
-void SYS_CACHE_CleanDCache_by_Addr (uint32_t *addr, int32_t size)
+void SYS_CACHE_CleanDCache_by_Addr (void *addr, int32_t size)
 {
 <#if core.CoreArchitecture != "CORTEX-M4">
     <#lt>    if (DATA_CACHE_IS_ENABLED() != 0U) // If Data Cache is enabled
@@ -184,7 +184,7 @@ void SYS_CACHE_CleanInvalidateDCache (void)
 </#if>
 }
 
-void SYS_CACHE_CleanInvalidateDCache_by_Addr (uint32_t *addr, int32_t size)
+void SYS_CACHE_CleanInvalidateDCache_by_Addr (void *addr, int32_t size)
 {
 <#if core.CoreArchitecture != "CORTEX-M4">
     <#lt>    if (DATA_CACHE_IS_ENABLED() != 0U) // If Data Cache is enabled

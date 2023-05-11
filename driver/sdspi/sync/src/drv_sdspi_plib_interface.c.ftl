@@ -451,7 +451,7 @@ static bool lDRV_SDSPI_DMA_Write(
 {
 <#if core.DATA_CACHE_ENABLE?? && core.DATA_CACHE_ENABLE == true >
     /* Clean cache to flush the data from the cache to the main memory */
-    SYS_CACHE_CleanDCache_by_Addr (pWriteBuffer, nBytes);
+    SYS_CACHE_CleanDCache_by_Addr (pWriteBuffer, (int32_t)nBytes);
 </#if>
 
     /* Setup DMA Receive channel to receive dummy data */
@@ -508,7 +508,7 @@ static bool lDRV_SDSPI_DMA_Read(
 
 <#if core.DATA_CACHE_ENABLE?? && core.DATA_CACHE_ENABLE == true >
     /* Invalidate cache to force CPU to read from the main memory */
-    SYS_CACHE_InvalidateDCache_by_Addr(pReadBuffer, nBytes);
+    SYS_CACHE_InvalidateDCache_by_Addr(pReadBuffer, (int32_t)nBytes);
 </#if>
 
     SYS_DMA_AddressingModeSetup(

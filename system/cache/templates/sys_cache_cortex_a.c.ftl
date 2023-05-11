@@ -139,7 +139,7 @@ void SYS_CACHE_CleanInvalidateDCache (void)
 /*
  * Invalidate Data Cache by address.
  */
-void SYS_CACHE_InvalidateDCache_by_Addr (uint32_t *addr, int32_t size)
+void SYS_CACHE_InvalidateDCache_by_Addr (void *addr, int32_t size)
 {
     DCACHE_INVALIDATE_BY_ADDR(addr,size);
 }
@@ -147,7 +147,7 @@ void SYS_CACHE_InvalidateDCache_by_Addr (uint32_t *addr, int32_t size)
 /*
  * Clean Data Cache by address.
  */
-void SYS_CACHE_CleanDCache_by_Addr (uint32_t *addr, int32_t size)
+void SYS_CACHE_CleanDCache_by_Addr (void *addr, int32_t size)
 {
     DCACHE_CLEAN_BY_ADDR(addr,size);
 }
@@ -158,13 +158,13 @@ void SYS_CACHE_CleanDCache_by_Addr (uint32_t *addr, int32_t size)
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Wunknown-pragmas"
 </#if>
-#pragma coverity compliance block deviate:1 "MISRA C-2012 Rule 5.1" "H3_MISRAC_2012_R_5_1_DR_1"    
+#pragma coverity compliance block deviate:1 "MISRA C-2012 Rule 5.1" "H3_MISRAC_2012_R_5_1_DR_1"
 </#if>
 
 /*
  * Clean and Invalidate Data Cache by address.
  */
-void SYS_CACHE_CleanInvalidateDCache_by_Addr (uint32_t *addr, int32_t size)
+void SYS_CACHE_CleanInvalidateDCache_by_Addr (void *addr, int32_t size)
 {
     DCACHE_CLEAN_INVALIDATE_BY_ADDR(addr,size);
 }
@@ -173,6 +173,6 @@ void SYS_CACHE_CleanInvalidateDCache_by_Addr (uint32_t *addr, int32_t size)
 #pragma coverity compliance end_block "MISRA C-2012 Rule 5.1"
 <#if core.COMPILER_CHOICE == "XC32">
 #pragma GCC diagnostic pop
-</#if>    
+</#if>
 </#if>
 /* MISRAC 2012 deviation block end */

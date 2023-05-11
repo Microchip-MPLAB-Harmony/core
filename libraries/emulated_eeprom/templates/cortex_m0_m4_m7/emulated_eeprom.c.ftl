@@ -84,7 +84,7 @@ static EEPROM_PAGE* EMU_EEPROM_PageToAddrTranslation(uint16_t physical_page)
 
 static uint16_t EMU_EEPROM_PhysicalToLogicalPage(uint16_t physical_page)
 {
-    const EEPROM_PAGE* flashAddr = NULL;
+    EEPROM_PAGE* flashAddr = NULL;
 
 <#if EEPROM_EMULATOR_MAIN_ARRAY_ENABLED?? && EEPROM_EMULATOR_RWWEE_ENABLED??>
     <#if EEPROM_EMULATOR_MAIN_ARRAY_ENABLED == true && EEPROM_EMULATOR_RWWEE_ENABLED == true>
@@ -106,7 +106,7 @@ static uint16_t EMU_EEPROM_PhysicalToLogicalPage(uint16_t physical_page)
 </#if>
 
 <#if core.DATA_CACHE_ENABLE?? && core.DATA_CACHE_ENABLE == true >
-    SYS_CACHE_InvalidateDCache_by_Addr((uint32_t *)flashAddr, EEPROM_EMULATOR_PAGE_SIZE);
+    SYS_CACHE_InvalidateDCache_by_Addr(flashAddr, (int32_t)EEPROM_EMULATOR_PAGE_SIZE);
 </#if>
 
     return flashAddr->header.logical_page;
@@ -159,7 +159,7 @@ static void EMU_EEPROM_NVMRowErase(const uint16_t row)
     }
 
 <#if core.DATA_CACHE_ENABLE?? && core.DATA_CACHE_ENABLE == true >
-    SYS_CACHE_InvalidateDCache_by_Addr((uint32_t *)flashAddr, EEPROM_EMULATOR_ROW_SIZE);
+    SYS_CACHE_InvalidateDCache_by_Addr(flashAddr, (int32_t)EEPROM_EMULATOR_ROW_SIZE);
 </#if>
 }
 
@@ -184,7 +184,7 @@ static void EMU_EEPROM_NVMBufferFill( const uint16_t physical_page, const void* 
    (void) ${EEPROM_EMULATOR_NVM_PLIB}_PageBufferWrite((uint32_t*)data, (uint32_t)flashAddr);
 
 <#if core.DATA_CACHE_ENABLE?? && core.DATA_CACHE_ENABLE == true >
-    SYS_CACHE_CleanDCache_by_Addr((void*)flashAddr, EEPROM_EMULATOR_PAGE_SIZE);
+    SYS_CACHE_CleanDCache_by_Addr(flashAddr, (int32_t)EEPROM_EMULATOR_PAGE_SIZE);
 </#if>
 }
 <#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
@@ -209,7 +209,7 @@ static void EMU_EEPROM_NVMBufferCommit(const uint16_t physical_page)
     }
 
 <#if core.DATA_CACHE_ENABLE?? && core.DATA_CACHE_ENABLE == true >
-    SYS_CACHE_InvalidateDCache_by_Addr((uint32_t *)flashAddr, EEPROM_EMULATOR_PAGE_SIZE);
+    SYS_CACHE_InvalidateDCache_by_Addr(flashAddr, (int32_t)EEPROM_EMULATOR_PAGE_SIZE);
 </#if>
 }
 
@@ -224,7 +224,7 @@ static void EMU_EEPROM_NVMPageRead(const uint16_t physical_page, void* const dat
     EEPROM_PAGE* flashAddr = EMU_EEPROM_PageToAddrTranslation(physical_page);
 
 <#if core.DATA_CACHE_ENABLE?? && core.DATA_CACHE_ENABLE == true >
-    SYS_CACHE_InvalidateDCache_by_Addr((uint32_t *)flashAddr, EEPROM_EMULATOR_PAGE_SIZE);
+    SYS_CACHE_InvalidateDCache_by_Addr(flashAddr, (int32_t)EEPROM_EMULATOR_PAGE_SIZE);
 </#if>
 
     (void) ${EEPROM_EMULATOR_NVM_PLIB}_Read( (uint32_t*)data, EEPROM_EMULATOR_PAGE_SIZE, (uint32_t)flashAddr );

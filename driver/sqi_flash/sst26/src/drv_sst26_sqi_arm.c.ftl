@@ -129,7 +129,7 @@ static uint32_t DRV_SST26_GetFlashSize( uint8_t deviceId )
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Wunknown-pragmas"
 </#if>
-#pragma coverity compliance block deviate:40 "MISRA C-2012 Rule 11.3" "H3_MISRAC_2012_R_11_3_DR_1"    
+#pragma coverity compliance block deviate:40 "MISRA C-2012 Rule 11.3" "H3_MISRAC_2012_R_11_3_DR_1"
 </#if>
 
 static void DRV_SST26_ResetFlash(void)
@@ -150,8 +150,8 @@ static void DRV_SST26_ResetFlash(void)
     sqiCmdDesc[0].bd_nxtptr     = NULL;
 
 <#if core.DATA_CACHE_ENABLE?? && core.DATA_CACHE_ENABLE == true >
-    SYS_CACHE_CleanDCache_by_Addr((uint32_t *)&sqiCmdBuffer[0], 1);
-    SYS_CACHE_CleanDCache_by_Addr((uint32_t *)&sqiCmdDesc[0], (int32_t)sizeof(sqi_dma_desc_t));
+    SYS_CACHE_CleanDCache_by_Addr(&sqiCmdBuffer[0], 1);
+    SYS_CACHE_CleanDCache_by_Addr(&sqiCmdDesc[0], (int32_t)sizeof(sqi_dma_desc_t));
 </#if>
 
     dObj->sst26Plib->DMATransfer((sqi_dma_desc_t *)(&sqiCmdDesc[0]));
@@ -175,8 +175,8 @@ static void DRV_SST26_ResetFlash(void)
     sqiCmdDesc[1].bd_nxtptr     = NULL;
 
 <#if core.DATA_CACHE_ENABLE?? && core.DATA_CACHE_ENABLE == true >
-    SYS_CACHE_CleanDCache_by_Addr((uint32_t *)&sqiCmdBuffer[0], 1);
-    SYS_CACHE_CleanDCache_by_Addr((uint32_t *)&sqiCmdDesc[1], (int32_t)sizeof(sqi_dma_desc_t));
+    SYS_CACHE_CleanDCache_by_Addr(&sqiCmdBuffer[0], 1);
+    SYS_CACHE_CleanDCache_by_Addr(&sqiCmdDesc[1], (int32_t)sizeof(sqi_dma_desc_t));
 </#if>
 
     dObj->sst26Plib->DMATransfer((sqi_dma_desc_t *)(&sqiCmdDesc[1]));
@@ -206,8 +206,8 @@ static void DRV_SST26_ResetFlash(void)
     <#lt>    dObj->curOpType = DRV_SST26_OPERATION_TYPE_CMD;
 
     <#lt>   <#if core.DATA_CACHE_ENABLE?? && core.DATA_CACHE_ENABLE == true >
-    <#lt>   SYS_CACHE_CleanDCache_by_Addr((uint32_t *)&sqiCmdBuffer[0], 1);
-    <#lt>   SYS_CACHE_CleanDCache_by_Addr((uint32_t *)&sqiCmdDesc[0], (int32_t)sizeof(sqi_dma_desc_t));
+    <#lt>   SYS_CACHE_CleanDCache_by_Addr(&sqiCmdBuffer[0], 1);
+    <#lt>   SYS_CACHE_CleanDCache_by_Addr(&sqiCmdDesc[0], (int32_t)sizeof(sqi_dma_desc_t));
     <#lt>   </#if>
 
     <#lt>    dObj->sst26Plib->DMATransfer((sqi_dma_desc_t *)(&sqiCmdDesc[0]));
@@ -215,7 +215,7 @@ static void DRV_SST26_ResetFlash(void)
     <#lt>    while(dObj->isTransferDone == false)
     <#lt>    {
     <#lt>        /* Nothing to do */
-    <#lt>    }         
+    <#lt>    }
     <#lt>}
 </#if>
 
@@ -276,15 +276,15 @@ bool DRV_SST26_UnlockFlash( const DRV_HANDLE handle )
     dObj->curOpType = DRV_SST26_OPERATION_TYPE_CMD;
 
 <#if core.DATA_CACHE_ENABLE?? && core.DATA_CACHE_ENABLE == true >
-    SYS_CACHE_CleanDCache_by_Addr((uint32_t *)&sqiCmdBuffer[0], 5);
-    SYS_CACHE_CleanDCache_by_Addr((uint32_t *)&sqiCmdDesc[0], 2 * (int32_t)sizeof(sqi_dma_desc_t));
+    SYS_CACHE_CleanDCache_by_Addr(&sqiCmdBuffer[0], 5);
+    SYS_CACHE_CleanDCache_by_Addr(&sqiCmdDesc[0], 2 * (int32_t)sizeof(sqi_dma_desc_t));
 </#if>
 
     dObj->sst26Plib->DMATransfer((sqi_dma_desc_t *)(&sqiCmdDesc[0]));
 
     while(dObj->isTransferDone == false)
     {
-         /* Nothing to do */        
+         /* Nothing to do */
     }
 
     return true;
@@ -329,9 +329,9 @@ bool DRV_SST26_ReadJedecId( const DRV_HANDLE handle, void *jedec_id)
     dObj->curOpType = DRV_SST26_OPERATION_TYPE_READ;
 
 <#if core.DATA_CACHE_ENABLE?? && core.DATA_CACHE_ENABLE == true >
-    SYS_CACHE_CleanDCache_by_Addr((uint32_t *)&sqiCmdBuffer[0], 2);
-    SYS_CACHE_CleanDCache_by_Addr((uint32_t *)&sqiCmdDesc[0], (int32_t)sizeof(sqi_dma_desc_t));
-    SYS_CACHE_CleanDCache_by_Addr((uint32_t *)&sqiBufDesc[0], (int32_t)sizeof(sqi_dma_desc_t));
+    SYS_CACHE_CleanDCache_by_Addr(&sqiCmdBuffer[0], 2);
+    SYS_CACHE_CleanDCache_by_Addr(&sqiCmdDesc[0], (int32_t)sizeof(sqi_dma_desc_t));
+    SYS_CACHE_CleanDCache_by_Addr(&sqiBufDesc[0], (int32_t)sizeof(sqi_dma_desc_t));
 </#if>
 
     // Initialize the root buffer descriptor
@@ -357,7 +357,7 @@ bool DRV_SST26_ReadStatus( const DRV_HANDLE handle, void *rx_data, uint32_t rx_d
     dObj->isTransferDone = false;
 
 <#if core.DATA_CACHE_ENABLE?? && core.DATA_CACHE_ENABLE == true >
-    SYS_CACHE_InvalidateDCache_by_Addr((uint32_t *)sqiReadBuffer, (int32_t)sizeof(sqiReadBuffer));
+    SYS_CACHE_InvalidateDCache_by_Addr(sqiReadBuffer, (int32_t)sizeof(sqiReadBuffer));
 </#if>
 
     sqiCmdBuffer[0]             = (uint8_t)SST26_CMD_READ_STATUS_REG;
@@ -389,9 +389,9 @@ bool DRV_SST26_ReadStatus( const DRV_HANDLE handle, void *rx_data, uint32_t rx_d
     dObj->curOpType = DRV_SST26_OPERATION_TYPE_READ;
 
 <#if core.DATA_CACHE_ENABLE?? && core.DATA_CACHE_ENABLE == true >
-    SYS_CACHE_CleanDCache_by_Addr((uint32_t *)&sqiCmdBuffer[0], 2);
-    SYS_CACHE_CleanDCache_by_Addr((uint32_t *)&sqiCmdDesc[0], (int32_t)sizeof(sqi_dma_desc_t));
-    SYS_CACHE_CleanDCache_by_Addr((uint32_t *)&sqiBufDesc[0], (int32_t)sizeof(sqi_dma_desc_t));
+    SYS_CACHE_CleanDCache_by_Addr(&sqiCmdBuffer[0], 2);
+    SYS_CACHE_CleanDCache_by_Addr(&sqiCmdDesc[0], (int32_t)sizeof(sqi_dma_desc_t));
+    SYS_CACHE_CleanDCache_by_Addr(&sqiBufDesc[0], (int32_t)sizeof(sqi_dma_desc_t));
 </#if>
 
     // Initialize the root buffer descriptor
@@ -476,7 +476,7 @@ bool DRV_SST26_Read( const DRV_HANDLE handle, void *rx_data, uint32_t rx_data_le
     sqiCmdDesc[0].bd_nxtptr     = (sqi_dma_desc_t *)(&sqiBufDesc[0]);
 </#if>
 
-    i = 0U; 
+    i = 0U;
     while((i < DRV_SST26_BUFF_DESC_NUMBER) && (pendingBytes > 0U))
     {
         if (pendingBytes > DRV_SST26_PAGE_SIZE)
@@ -510,10 +510,10 @@ bool DRV_SST26_Read( const DRV_HANDLE handle, void *rx_data, uint32_t rx_data_le
     dObj->curOpType = DRV_SST26_OPERATION_TYPE_READ;
 
 <#if core.DATA_CACHE_ENABLE?? && core.DATA_CACHE_ENABLE == true >
-    SYS_CACHE_CleanDCache_by_Addr((uint32_t *)&sqiCmdBuffer[0], 10);
-    SYS_CACHE_CleanDCache_by_Addr((uint32_t *)&sqiCmdDesc[0], 2 * (int32_t)sizeof(sqi_dma_desc_t));
-    SYS_CACHE_CleanDCache_by_Addr((uint32_t *)&sqiBufDesc[0], (int32_t)i * (int32_t)sizeof(sqi_dma_desc_t));
-    SYS_CACHE_InvalidateDCache_by_Addr((uint32_t *)rx_data, (int32_t)rx_data_length);
+    SYS_CACHE_CleanDCache_by_Addr(&sqiCmdBuffer[0], 10);
+    SYS_CACHE_CleanDCache_by_Addr(&sqiCmdDesc[0], 2 * (int32_t)sizeof(sqi_dma_desc_t));
+    SYS_CACHE_CleanDCache_by_Addr(&sqiBufDesc[0], (int32_t)i * (int32_t)sizeof(sqi_dma_desc_t));
+    SYS_CACHE_InvalidateDCache_by_Addr(rx_data, (int32_t)rx_data_length);
 </#if>
 
     // Initialize the root buffer descriptor
@@ -559,10 +559,10 @@ bool DRV_SST26_PageWrite( const DRV_HANDLE handle, void *tx_data, uint32_t addre
     dObj->curOpType = DRV_SST26_OPERATION_TYPE_WRITE;
 
 <#if core.DATA_CACHE_ENABLE?? && core.DATA_CACHE_ENABLE == true >
-    SYS_CACHE_CleanDCache_by_Addr((uint32_t *)&sqiCmdBuffer[0], 8);
-    SYS_CACHE_CleanDCache_by_Addr((uint32_t *)&sqiCmdDesc[0], 2 * (int32_t)sizeof(sqi_dma_desc_t));
-    SYS_CACHE_CleanDCache_by_Addr((uint32_t *)&sqiBufDesc[0], (int32_t)sizeof(sqi_dma_desc_t));
-    SYS_CACHE_CleanDCache_by_Addr((uint32_t *)tx_data, (int32_t)DRV_SST26_PAGE_SIZE);
+    SYS_CACHE_CleanDCache_by_Addr(&sqiCmdBuffer[0], 8);
+    SYS_CACHE_CleanDCache_by_Addr(&sqiCmdDesc[0], 2 * (int32_t)sizeof(sqi_dma_desc_t));
+    SYS_CACHE_CleanDCache_by_Addr(&sqiBufDesc[0], (int32_t)sizeof(sqi_dma_desc_t));
+    SYS_CACHE_CleanDCache_by_Addr(tx_data, (int32_t)DRV_SST26_PAGE_SIZE);
 </#if>
 
     // Initialize the root buffer descriptor
@@ -590,8 +590,8 @@ static bool DRV_SST26_Erase( uint8_t *instruction, uint32_t length )
     dObj->curOpType = DRV_SST26_OPERATION_TYPE_ERASE;
 
 <#if core.DATA_CACHE_ENABLE?? && core.DATA_CACHE_ENABLE == true >
-    SYS_CACHE_CleanDCache_by_Addr((uint32_t *)&sqiCmdBuffer[0], 8);
-    SYS_CACHE_CleanDCache_by_Addr((uint32_t *)&sqiCmdDesc[0], 2 * (int32_t)sizeof(sqi_dma_desc_t));
+    SYS_CACHE_CleanDCache_by_Addr(&sqiCmdBuffer[0], 8);
+    SYS_CACHE_CleanDCache_by_Addr(&sqiCmdDesc[0], 2 * (int32_t)sizeof(sqi_dma_desc_t));
 </#if>
 
     dObj->sst26Plib->DMATransfer((sqi_dma_desc_t *)(&sqiCmdDesc[0]));
@@ -650,7 +650,7 @@ bool DRV_SST26_GeometryGet( const DRV_HANDLE handle, DRV_SST26_GEOMETRY *geometr
     bool status = true;
 
 <#if core.DATA_CACHE_ENABLE?? && core.DATA_CACHE_ENABLE == true >
-    SYS_CACHE_InvalidateDCache_by_Addr((uint32_t *)sqiReadBuffer, 4);
+    SYS_CACHE_InvalidateDCache_by_Addr(sqiReadBuffer, 4);
 </#if>
 
     if (DRV_SST26_ReadJedecId(handle, (void *)sqiReadBuffer) == false)
@@ -664,11 +664,11 @@ bool DRV_SST26_GeometryGet( const DRV_HANDLE handle, DRV_SST26_GEOMETRY *geometr
 
         flash_size = DRV_SST26_GetFlashSize(jedecID[2]);
 
-        if (flash_size == 0U) 
+        if (flash_size == 0U)
         {
             status = false;
-        }        
-        
+        }
+
         if(DRV_SST26_START_ADDRESS >= flash_size)
         {
             status = false;
@@ -755,7 +755,7 @@ void DRV_SST26_Close( const DRV_HANDLE handle )
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Wunknown-pragmas"
 </#if>
-#pragma coverity compliance block deviate:1 "MISRA C-2012 Rule 11.8" "H3_MISRAC_2012_R_11_8_DR_1"    
+#pragma coverity compliance block deviate:1 "MISRA C-2012 Rule 11.8" "H3_MISRAC_2012_R_11_8_DR_1"
 </#if>
 
 SYS_MODULE_OBJ DRV_SST26_Initialize
@@ -796,7 +796,7 @@ SYS_MODULE_OBJ DRV_SST26_Initialize
 #pragma coverity compliance end_block "MISRA C-2012 Rule 11.3"
 <#if core.COMPILER_CHOICE == "XC32">
 #pragma GCC diagnostic pop
-</#if>    
+</#if>
 </#if>
 /* MISRAC 2012 deviation block end */
 
@@ -804,7 +804,7 @@ SYS_MODULE_OBJ DRV_SST26_Initialize
 #pragma coverity compliance end_block "MISRA C-2012 Rule 11.8"
 <#if core.COMPILER_CHOICE == "XC32">
 #pragma GCC diagnostic pop
-</#if>    
+</#if>
 </#if>
 /* MISRAC 2012 deviation block end */
 

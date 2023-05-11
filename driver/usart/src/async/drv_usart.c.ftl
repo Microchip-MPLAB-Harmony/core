@@ -615,7 +615,7 @@ static void lDRV_USART_WriteSubmit( DRV_USART_OBJ* dObj )
 <#if core.PRODUCT_FAMILY?matches("PIC32M.*") == false>
 <#if core.DATA_CACHE_ENABLE?? && core.DATA_CACHE_ENABLE == true >
             // Clean cache to load new data from cache to main memory for DMA
-            SYS_CACHE_CleanDCache_by_Addr((uint32_t *)bufferObj->buffer, (bufferObj->size << 1));
+            SYS_CACHE_CleanDCache_by_Addr(bufferObj->buffer, (int32_t)(bufferObj->size << 1));
 </#if>
 </#if>
             SYS_DMA_DataWidthSetup(dObj->txDMAChannel, SYS_DMA_WIDTH_16_BIT);
@@ -632,7 +632,7 @@ static void lDRV_USART_WriteSubmit( DRV_USART_OBJ* dObj )
 <#if core.PRODUCT_FAMILY?matches("PIC32M.*") == false>
 <#if core.DATA_CACHE_ENABLE?? && core.DATA_CACHE_ENABLE == true >
             // Clean cache to load new data from cache to main memory for DMA
-            SYS_CACHE_CleanDCache_by_Addr((uint32_t *)bufferObj->buffer, bufferObj->size);
+            SYS_CACHE_CleanDCache_by_Addr(bufferObj->buffer, (int32_t)bufferObj->size);
 </#if>
 </#if>
             SYS_DMA_DataWidthSetup(dObj->txDMAChannel, SYS_DMA_WIDTH_8_BIT);
@@ -686,7 +686,7 @@ static void lDRV_USART_ReadSubmit( DRV_USART_OBJ* dObj )
         {
 <#if core.PRODUCT_FAMILY?matches("PIC32M.*") == false>
 <#if core.DMA_ENABLE?has_content && DRV_USART_SYS_DMA_ENABLE == true && core.DATA_CACHE_ENABLE?? && core.DATA_CACHE_ENABLE == true>
-            SYS_CACHE_InvalidateDCache_by_Addr((uint32_t *)bufferObj->buffer, (bufferObj->size << 1));
+            SYS_CACHE_InvalidateDCache_by_Addr(bufferObj->buffer, (int32_t)(bufferObj->size << 1));
 </#if>
 </#if>
             SYS_DMA_DataWidthSetup(dObj->rxDMAChannel, SYS_DMA_WIDTH_16_BIT);
@@ -702,7 +702,7 @@ static void lDRV_USART_ReadSubmit( DRV_USART_OBJ* dObj )
         {
 <#if core.PRODUCT_FAMILY?matches("PIC32M.*") == false>
 <#if core.DMA_ENABLE?has_content && DRV_USART_SYS_DMA_ENABLE == true && core.DATA_CACHE_ENABLE?? && core.DATA_CACHE_ENABLE == true>
-            SYS_CACHE_InvalidateDCache_by_Addr((uint32_t *)bufferObj->buffer, bufferObj->size);
+            SYS_CACHE_InvalidateDCache_by_Addr(bufferObj->buffer, (int32_t)bufferObj->size);
 </#if>
 </#if>
             SYS_DMA_DataWidthSetup(dObj->rxDMAChannel, SYS_DMA_WIDTH_8_BIT);

@@ -207,10 +207,10 @@ static void lDRV_SST26_StartDMATransfer(DRV_SST26_OBJECT* dObj, DRV_SST26_TRANSF
 
 <#if core.DATA_CACHE_ENABLE?? && core.DATA_CACHE_ENABLE == true >
      /* Clean cache to push the data in transmit buffer to the main memory */
-    SYS_CACHE_CleanDCache_by_Addr((uint32_t *)transferObj->pTransmitData, transferObj->txSize);
+    SYS_CACHE_CleanDCache_by_Addr(transferObj->pTransmitData, (int32_t)transferObj->txSize);
 
     /* Invalidate the receive buffer to force the CPU to load from main memory */
-    SYS_CACHE_InvalidateDCache_by_Addr((uint32_t *)transferObj->pReceiveData, transferObj->rxSize);
+    SYS_CACHE_InvalidateDCache_by_Addr(transferObj->pReceiveData, (int32_t)transferObj->rxSize);
 </#if>
 
     if (transferObj->rxSize >= transferObj->txSize)
@@ -369,7 +369,7 @@ void DRV_SST26_InterfaceInit(DRV_SST26_OBJECT* dObj, DRV_SST26_INIT* sst26Init)
     }
 <#if core.DATA_CACHE_ENABLE?? && core.DATA_CACHE_ENABLE == true >
     /* Clean cache lines to push the dummy data to the main memory */
-    SYS_CACHE_CleanDCache_by_Addr((uint32_t *)txDummyData, sizeof(txDummyData));
+    SYS_CACHE_CleanDCache_by_Addr(txDummyData, (int32_t)sizeof(txDummyData));
 </#if>
 </#if>
     SYS_DMA_DataWidthSetup(dObj->rxDMAChannel, SYS_DMA_WIDTH_8_BIT);
