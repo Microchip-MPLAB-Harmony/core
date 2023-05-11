@@ -618,7 +618,7 @@ uint32_t SYS_TIME_USToCount ( uint32_t us )
 
     return (uint32_t) ((uint32_t)count + ((count - (uint32_t)count) > 0));
 <#else>
-    uint32_t count = (((uint64_t)us * gSystemCounterObj.hwTimerTickFreq) / 1000000);
+    uint32_t count = (uint32_t)(((uint64_t)us * gSystemCounterObj.hwTimerTickFreq) / 1000000UL);
 
     return count;
 </#if>
@@ -631,7 +631,7 @@ uint32_t SYS_TIME_MSToCount ( uint32_t ms )
 
     return (uint32_t) ((uint32_t)count + ((count - (uint32_t)count) > 0));
 <#else>
-    uint32_t count = (((uint64_t)ms * gSystemCounterObj.hwTimerTickFreq) / 1000);
+    uint32_t count = (uint32_t)(((uint64_t)ms * gSystemCounterObj.hwTimerTickFreq) / 1000UL);
 
     return count;
 </#if>
