@@ -67,44 +67,44 @@ void SYS_DMA_AddressingModeSetup(SYS_DMA_CHANNEL channel, SYS_DMA_SOURCE_ADDRESS
 	uint32_t config;
 	uint32_t ras_value;
 	uint32_t was_value;
-	
+
 	config = (uint32_t)${core.DMA_INSTANCE_NAME}_ChannelSettingsGet((${core.DMA_NAME}_CHANNEL)channel);
-	
-	ras_value = (config & 0x70) >> 4;
-	was_value = config & 0x07;
-	
+
+	ras_value = (config & 0x70U) >> 4;
+	was_value = config & 0x07U;
+
 	if (sourceAddrMode == SYS_DMA_SOURCE_ADDRESSING_MODE_FIXED)
 	{
-		if (ras_value < 3)
+		if (ras_value < 3U)
 		{
-			ras_value += 3;			
-		}		
+			ras_value += 3U;
+		}
 	}
 	else
 	{
-		if (ras_value >= 3)
+		if (ras_value >= 3U)
 		{
-			ras_value -= 3;			
-		}	
-	}	 
-		
+			ras_value -= 3U;
+		}
+	}
+
 	if (destAddrMode == SYS_DMA_DESTINATION_ADDRESSING_MODE_FIXED)
 	{
-		if (was_value < 3)
+		if (was_value < 3U)
 		{
-			was_value += 3;			
-		}		
+			was_value += 3U;
+		}
 	}
 	else
 	{
-		if (was_value >= 3)
+		if (was_value >= 3U)
 		{
-			was_value -= 3;			
-		}	
-	}	 
-	config = (config & ~0x77) | ( (ras_value << 4) | was_value );
+			was_value -= 3U;
+		}
+	}
+	config = (config & ~0x77U) | ( (ras_value << 4) | was_value );
 	(void) ${core.DMA_INSTANCE_NAME}_ChannelSettingsSet((${core.DMA_NAME}_CHANNEL)channel, (${core.DMA_NAME}_CHANNEL_CONFIG)config);
-	
+
 <#else>
 	uint32_t config;
 
@@ -114,8 +114,8 @@ void SYS_DMA_AddressingModeSetup(SYS_DMA_CHANNEL channel, SYS_DMA_SOURCE_ADDRESS
     config |= (uint32_t)sourceAddrMode | (uint32_t)destAddrMode;
 
     (void) ${core.DMA_INSTANCE_NAME}_ChannelSettingsSet((${core.DMA_NAME}_CHANNEL)channel, (${core.DMA_NAME}_CHANNEL_CONFIG)config);
-</#if>	
-</#if>	
+</#if>
+</#if>
 }
 
 //******************************************************************************
@@ -136,34 +136,34 @@ void SYS_DMA_DataWidthSetup(SYS_DMA_CHANNEL channel, SYS_DMA_WIDTH dataWidth)
 	uint32_t config;
 	uint32_t ras_value;
 	uint32_t was_value;
-	
-	config = (uint32_t)${core.DMA_INSTANCE_NAME}_ChannelSettingsGet((${core.DMA_NAME}_CHANNEL)channel);
-	
-	ras_value = (config & 0x70) >> 4;
-	was_value = config & 0x07;
 
-	if (ras_value < 3)
-	{		
-		ras_value = dataWidth;		
-	}	
-	else
-	{	
-		ras_value = 0x03 + dataWidth;
+	config = (uint32_t)${core.DMA_INSTANCE_NAME}_ChannelSettingsGet((${core.DMA_NAME}_CHANNEL)channel);
+
+	ras_value = (config & 0x70U) >> 4;
+	was_value = config & 0x07U;
+
+	if (ras_value < 3U)
+	{
+		ras_value = (uint32_t)dataWidth;
 	}
-	
-	if (was_value < 3)
-	{		
-		was_value = dataWidth;		
-	}	
 	else
-	{	
-		was_value = 0x03 + dataWidth;
+	{
+		ras_value = 0x03U + (uint32_t)dataWidth;
 	}
-	
-	
-	config = (config & ~0x77) | ( (ras_value << 4) | was_value );
+
+	if (was_value < 3U)
+	{
+		was_value = (uint32_t)dataWidth;
+	}
+	else
+	{
+		was_value = 0x03U + (uint32_t)dataWidth;
+	}
+
+
+	config = (config & ~0x77U) | ( (ras_value << 4) | was_value );
 	(void) ${core.DMA_INSTANCE_NAME}_ChannelSettingsSet((${core.DMA_NAME}_CHANNEL)channel, (${core.DMA_NAME}_CHANNEL_CONFIG)config);
-	    
+
 <#else>
 	uint32_t config;
 
@@ -173,6 +173,6 @@ void SYS_DMA_DataWidthSetup(SYS_DMA_CHANNEL channel, SYS_DMA_WIDTH dataWidth)
     config |= (uint32_t)dataWidth;
 
     (void) ${core.DMA_INSTANCE_NAME}_ChannelSettingsSet((${core.DMA_NAME}_CHANNEL)channel, (${core.DMA_NAME}_CHANNEL_CONFIG)config);
-</#if>	
-</#if>	
+</#if>
+</#if>
 }
