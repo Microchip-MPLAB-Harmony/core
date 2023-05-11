@@ -24,26 +24,34 @@
 
 sys_console_mcc_helpkeyword = "mcc_h3_sys_console_configurations"
 
+global consoleUARTCounter
+consoleUARTCounter = 0
+global consoleUSBCounter
+consoleUSBCounter = 0
+
 ################################################################################
 #### Business Logic ####
 ################################################################################
 
 def handleMessage(messageID, args):
+    global consoleUARTCounter
+    global consoleUSBCounter
+
     result_dict = {}
     if (messageID == "SYS_CONSOLE_UART_CONNECTION_COUNTER_INC"):
-        consoleUARTCounter = Database.getSymbolValue("sys_console", "SYS_CONSOLE_UART_CONNECTION_COUNTER")
-        Database.setSymbolValue("sys_console", "SYS_CONSOLE_UART_CONNECTION_COUNTER", consoleUARTCounter + 1)
+        consoleUARTCounter = consoleUARTCounter + 1
+        Database.setSymbolValue("sys_console", "SYS_CONSOLE_UART_CONNECTION_COUNTER", consoleUARTCounter)
     if (messageID == "SYS_CONSOLE_UART_CONNECTION_COUNTER_DEC"):
-        consoleUARTCounter = Database.getSymbolValue("sys_console", "SYS_CONSOLE_UART_CONNECTION_COUNTER")
-        if (consoleUARTCounter != 0):
-            Database.setSymbolValue("sys_console", "SYS_CONSOLE_UART_CONNECTION_COUNTER", consoleUARTCounter - 1)
+        consoleUARTCounter = consoleUARTCounter - 1
+        if (consoleUARTCounter >= 0):
+            Database.setSymbolValue("sys_console", "SYS_CONSOLE_UART_CONNECTION_COUNTER", consoleUARTCounter)
     if (messageID == "SYS_CONSOLE_USB_CONNECTION_COUNTER_INC"):
-        consoleUSBCounter = Database.getSymbolValue("sys_console", "SYS_CONSOLE_USB_CONNECTION_COUNTER")
-        Database.setSymbolValue("sys_console", "SYS_CONSOLE_USB_CONNECTION_COUNTER", consoleUSBCounter + 1)
+        consoleUSBCounter = consoleUSBCounter + 1
+        Database.setSymbolValue("sys_console", "SYS_CONSOLE_USB_CONNECTION_COUNTER", consoleUSBCounter)
     if (messageID == "SYS_CONSOLE_USB_CONNECTION_COUNTER_DEC"):
-        consoleUSBCounter = Database.getSymbolValue("sys_console", "SYS_CONSOLE_USB_CONNECTION_COUNTER")
-        if (consoleUSBCounter != 0):
-            Database.setSymbolValue("sys_console", "SYS_CONSOLE_USB_CONNECTION_COUNTER", consoleUSBCounter - 1)
+        consoleUSBCounter = consoleUSBCounter - 1
+        if (consoleUSBCounter >= 0):
+            Database.setSymbolValue("sys_console", "SYS_CONSOLE_USB_CONNECTION_COUNTER", consoleUSBCounter)
 
     return result_dict
 
