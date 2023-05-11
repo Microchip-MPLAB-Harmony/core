@@ -54,7 +54,7 @@
 // *****************************************************************************
 // *****************************************************************************
 <#if DRV_MEMORY_INTERRUPT_ENABLE == true>
-    <#lt>DRV_MEMORY_EVENT_HANDLER   ${DRV_MEMORY_DEVICE?lower_case}EventHandler;
+    <#lt>static DRV_MEMORY_EVENT_HANDLER   ${DRV_MEMORY_DEVICE?lower_case}EventHandler;
 </#if>
 
 // *****************************************************************************
