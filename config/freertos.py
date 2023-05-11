@@ -949,6 +949,14 @@ def instantiateComponent(thirdPartyFreeRTOS):
     freeRtosSystemTasksFile.setSourcePath("templates/system/system_rtos_tasks.c.ftl")
     freeRtosSystemTasksFile.setMarkup(True)
 
+    freertosInterruptInclude = thirdPartyFreeRTOS.createFileSymbol("FREERTOS_INTERRUPT_INCLUDE", None)
+    freertosInterruptInclude.setType("STRING")
+    freertosInterruptInclude.setOutputName("core.LIST_SYSTEM_INTERRUPT_C_INCLUDES")
+    freertosInterruptInclude.setSourcePath("templates/freertos_interrupt_include.h.ftl")
+    freertosInterruptInclude.setMarkup(True)
+    freertosInterruptInclude.setEnabled(Database.getSymbolValue("core", "CoreArchitecture") in ["CORTEX-M23", "CORTEX-M33"])
+
+
     # load family specific configuration
     if (coreArch == "MIPS"):
         execfile(Module.getPath() + "config/arch/mips/devices_" + coreFamily[:7].lower() + "/freertos_config.py")
