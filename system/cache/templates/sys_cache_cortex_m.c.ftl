@@ -145,16 +145,6 @@ void SYS_CACHE_CleanDCache (void)
 </#if>
 }
 
-void SYS_CACHE_CleanInvalidateDCache (void)
-{
-<#if core.CoreArchitecture != "CORTEX-M4">
-    <#lt>    if (DATA_CACHE_IS_ENABLED() != 0U) // If Data Cache is enabled
-    <#lt>    {
-    <#lt>        DCACHE_CLEAN_INVALIDATE();
-    <#lt>    }
-</#if>
-}
-
 void SYS_CACHE_InvalidateDCache_by_Addr (uint32_t *addr, int32_t size)
 {
 <#if core.CoreArchitecture != "CORTEX-M4">
@@ -181,8 +171,18 @@ void SYS_CACHE_CleanDCache_by_Addr (uint32_t *addr, int32_t size)
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Wunknown-pragmas"
 </#if>
-#pragma coverity compliance block deviate:1 "MISRA C-2012 Rule 5.1" "H3_MISRAC_2012_R_5_1_DR_1"    
+#pragma coverity compliance block deviate:1 "MISRA C-2012 Rule 5.1" "H3_MISRAC_2012_R_5_1_DR_1"
 </#if>
+
+void SYS_CACHE_CleanInvalidateDCache (void)
+{
+<#if core.CoreArchitecture != "CORTEX-M4">
+    <#lt>    if (DATA_CACHE_IS_ENABLED() != 0U) // If Data Cache is enabled
+    <#lt>    {
+    <#lt>        DCACHE_CLEAN_INVALIDATE();
+    <#lt>    }
+</#if>
+}
 
 void SYS_CACHE_CleanInvalidateDCache_by_Addr (uint32_t *addr, int32_t size)
 {
@@ -198,6 +198,6 @@ void SYS_CACHE_CleanInvalidateDCache_by_Addr (uint32_t *addr, int32_t size)
 #pragma coverity compliance end_block "MISRA C-2012 Rule 5.1"
 <#if core.COMPILER_CHOICE == "XC32">
 #pragma GCC diagnostic pop
-</#if>    
+</#if>
 </#if>
 /* MISRAC 2012 deviation block end */
