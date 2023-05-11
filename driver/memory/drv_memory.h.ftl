@@ -217,7 +217,7 @@ typedef enum
             }
 
             case DRV_MEMORY_EVENT_COMMAND_ERROR:
-            {                
+            {
                 break;
             }
 
@@ -278,7 +278,7 @@ typedef SYS_MEDIA_EVENT_HANDLER   DRV_MEMORY_TRANSFER_HANDLER;
     Otherwise it returns SYS_MODULE_OBJ_INVALID.
 
   Example:
-    <code>    
+    <code>
 
     SYS_MODULE_OBJ  objectHandle;
 
@@ -286,7 +286,7 @@ typedef SYS_MEDIA_EVENT_HANDLER   DRV_MEMORY_TRANSFER_HANDLER;
 
     static DRV_MEMORY_CLIENT_OBJECT gDrvMemory0ClientObject[DRV_MEMORY_CLIENTS_NUMBER_IDX0] = { 0 };
 
-    static DRV_MEMORY_BUFFER_OBJECT gDrvMemory0BufferObject[DRV_MEMORY_BUFFER_QUEUE_SIZE_IDX0] = { 0 };
+    static DRV_MEMORY_BUFFER_OBJECT gDrvMemory0BufferObject[DRV_MEMORY_BUF_Q_SIZE_IDX0] = { 0 };
 
     const DRV_MEMORY_DEVICE_INTERFACE drvMemory0DeviceAPI = {
         .Open               = DRV_SST26_Open,
@@ -309,15 +309,15 @@ typedef SYS_MEDIA_EVENT_HANDLER   DRV_MEMORY_TRANSFER_HANDLER;
         .ewBuffer             = &gDrvMemory0EraseBuffer[0],
         .clientObjPool        = (uintptr_t)&gDrvMemory0ClientObject[0],
         .bufferObj            = (uintptr_t)&gDrvMemory0BufferObject[0],
-        .queueSize            = DRV_MEMORY_BUFFER_QUEUE_SIZE_IDX0,
+        .queueSize            = DRV_MEMORY_BUF_Q_SIZE_IDX0,
         .nClientsMax          = DRV_MEMORY_CLIENTS_NUMBER_IDX0
     };
-   
+
     objectHandle = DRV_MEMORY_Initialize((SYS_MODULE_INDEX)DRV_MEMORY_INDEX_0, (SYS_MODULE_INIT *)&drvMemory0InitData);
 
     if (SYS_MODULE_OBJ_INVALID == objectHandle)
     {
-       
+
     }
     </code>
 
@@ -366,7 +366,7 @@ SYS_MODULE_OBJ DRV_MEMORY_Initialize
 
   Example:
     <code>
-    SYS_MODULE_OBJ      object;    
+    SYS_MODULE_OBJ      object;
     SYS_STATUS          MEMORYStatus;
 
     MEMORYStatus = DRV_MEMORY_Status(object);
@@ -412,11 +412,11 @@ SYS_STATUS DRV_MEMORY_Status( SYS_MODULE_OBJ object );
 
   Example:
     <code>
-    SYS_MODULE_OBJ      object;    
+    SYS_MODULE_OBJ      object;
 
     void SYS_Tasks ( void )
     {
-        DRV_Memory_Tasks (object);       
+        DRV_Memory_Tasks (object);
     }
     </code>
 
@@ -435,7 +435,7 @@ SYS_STATUS DRV_MEMORY_Status( SYS_MODULE_OBJ object );
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Wunknown-pragmas"
 </#if>
-#pragma coverity compliance block deviate:6 "MISRA C-2012 Rule 8.6" "H3_MISRAC_2012_R_8_6_DR_1"    
+#pragma coverity compliance block deviate:6 "MISRA C-2012 Rule 8.6" "H3_MISRAC_2012_R_8_6_DR_1"
 </#if>
 
 void DRV_MEMORY_Tasks( SYS_MODULE_OBJ object );
@@ -501,7 +501,7 @@ void DRV_MEMORY_Tasks( SYS_MODULE_OBJ object );
     handle = DRV_MEMORY_Open(DRV_MEMORY_INDEX_0);
     if (DRV_HANDLE_INVALID == handle)
     {
-        
+
     }
     </code>
 
@@ -546,7 +546,7 @@ DRV_HANDLE DRV_MEMORY_Open
 
   Example:
     <code>
-    DRV_HANDLE handle; 
+    DRV_HANDLE handle;
 
     DRV_MEMORY_Close(handle);
     </code>
@@ -622,11 +622,11 @@ void DRV_MEMORY_Close( const DRV_HANDLE handle );
   Example:
     <code>
 
-   
+
     uint32_t blockStart = 0;
     uint32_t nBlocks = 10;
     bool xfer_done = false;
-    
+
     void appTransferHandler
     (
         DRV_MEMORY_EVENT event,
@@ -643,7 +643,7 @@ void DRV_MEMORY_Close( const DRV_HANDLE handle );
             }
 
             case DRV_MEMORY_EVENT_COMMAND_ERROR:
-            {                
+            {
                 break;
             }
 
@@ -660,9 +660,9 @@ void DRV_MEMORY_Close( const DRV_HANDLE handle );
 
     if(DRV_MEMORY_COMMAND_HANDLE_INVALID == commandHandle)
     {
-       
+
     }
-   
+
     while(!xfer_done);
 
     </code>
@@ -721,13 +721,13 @@ void DRV_MEMORY_AsyncErase
 
   Example:
     <code>
-   
+
     uint32_t blockStart = 0;
-    uint32_t nBlocks = 10;   
+    uint32_t nBlocks = 10;
 
     if(DRV_MEMORY_SyncErase( memoryHandle, blockStart, nBlock ) == false)
     {
-       
+
     }
 
     </code>
@@ -819,11 +819,11 @@ bool DRV_MEMORY_SyncErase
 
     #define BUFFER_SIZE    4096
     uint8_t buffer[BUFFER_SIZE];
-  
+
     uint32_t blockStart = 0x0;
-    uint32_t nBlock = BUFFER_SIZE / block_size; 
+    uint32_t nBlock = BUFFER_SIZE / block_size;
     DRV_MEMORY_COMMAND_HANDLE commandHandle;
-    
+
     void appTransferHandler
     (
         DRV_MEMORY_EVENT event,
@@ -840,7 +840,7 @@ bool DRV_MEMORY_SyncErase
             }
 
             case DRV_MEMORY_EVENT_COMMAND_ERROR:
-            {               
+            {
                 break;
             }
 
@@ -857,9 +857,9 @@ bool DRV_MEMORY_SyncErase
 
     if(DRV_MEMORY_COMMAND_HANDLE_INVALID == commandHandle)
     {
-      
+
     }
-   
+
     while(!xfer_done);
 
     </code>
@@ -916,10 +916,10 @@ void DRV_MEMORY_AsyncEraseWrite
     nBlock        - Total number of blocks to be written.
 
   Returns:
-    true - 
+    true -
         - If the transfer request is successfully completed.
 
-    false - 
+    false -
         - If the sourceBuffer pointer is NULL
         - If the client opened the driver for read only
         - If the number of blocks to be written is either zero or more than the
@@ -933,13 +933,13 @@ void DRV_MEMORY_AsyncEraseWrite
 
     uint8_t buffer[BUFFER_SIZE];
 
-  
+
     uint32_t blockStart = 0x0;
-    uint32_t nBlock = BUFFER_SIZE / block_size; 
+    uint32_t nBlock = BUFFER_SIZE / block_size;
 
     if(DRV_MEMORY_SyncEraseWrite(memoryHandle, &myBuffer, blockStart, nBlock) == false)
     {
-        
+
     }
 
     </code>
@@ -1030,14 +1030,14 @@ bool DRV_MEMORY_SyncEraseWrite
     #define BUFFER_SIZE    4096
     uint8_t writeBuffer[BUFFER_SIZE];
 
-  
+
     uint32_t blockStart = 0x0;
-    uint32_t nBlock = BUFFER_SIZE / block_size; 
+    uint32_t nBlock = BUFFER_SIZE / block_size;
     bool xfer_done = false;
 
-    DRV_MEMORY_COMMAND_HANDLE commandHandle;  
+    DRV_MEMORY_COMMAND_HANDLE commandHandle;
 
-  
+
     void appTransferHandler
     (
         DRV_MEMORY_EVENT event,
@@ -1054,7 +1054,7 @@ bool DRV_MEMORY_SyncEraseWrite
             }
 
             case DRV_MEMORY_EVENT_COMMAND_ERROR:
-            {               
+            {
                 break;
             }
 
@@ -1071,18 +1071,18 @@ bool DRV_MEMORY_SyncEraseWrite
 
     if(DRV_MEMORY_COMMAND_HANDLE_INVALID == commandHandle)
     {
-       
+
     }
-   
+
     while(!xfer_done);
 
     DRV_MEMORY_AsyncWrite(memoryHandle, &commandHandle, &writeBuffer, blockStart, nBlock);
 
     if(DRV_MEMORY_COMMAND_HANDLE_INVALID == commandHandle)
     {
-       
+
     }
-   
+
     while(!xfer_done);
 
     </code>
@@ -1151,19 +1151,19 @@ void DRV_MEMORY_AsyncWrite
 
     #define BUFFER_SIZE    4096
     uint8_t writeBuffer[BUFFER_SIZE];
-  
-    uint32_t blockStart = 0x0;
-    uint32_t nBlock = BUFFER_SIZE / block_size; 
 
-  
+    uint32_t blockStart = 0x0;
+    uint32_t nBlock = BUFFER_SIZE / block_size;
+
+
     if(DRV_MEMORY_SyncErase(memoryHandle, blockStart, nBlock) == false)
     {
-        
+
     }
 
     if(DRV_MEMORY_SyncWrite(memoryHandle, &writeBuffer, blockStart, nBlock) == false)
     {
-       
+
     }
 
     </code>
@@ -1240,12 +1240,12 @@ bool DRV_MEMORY_SyncWrite
     <code>
 
     uint8_t readBuffer[BUFFER_SIZE];
- 
+
     uint32_t blockStart = 0x0;
     uint32_t nBlock = BUFFER_SIZE;
     DRV_MEMORY_COMMAND_HANDLE commandHandle;
     bool xfer_done = false;
-   
+
     void appTransferHandler
     (
         DRV_MEMORY_EVENT event,
@@ -1262,7 +1262,7 @@ bool DRV_MEMORY_SyncWrite
             }
 
             case DRV_MEMORY_EVENT_COMMAND_ERROR:
-            {               
+            {
                 break;
             }
 
@@ -1279,7 +1279,7 @@ bool DRV_MEMORY_SyncWrite
 
     if(DRV_MEMORY_COMMAND_HANDLE_INVALID == commandHandle)
     {
-       
+
     }
 
     while(!xfer_done);
@@ -1349,13 +1349,13 @@ Summary:
     #define BUFFER_SIZE    4096
     uint8_t readBuffer[BUFFER_SIZE];
 
-   
+
     uint32_t blockStart = 0x0;
-    uint32_t nBlock = BUFFER_SIZE / block_size;    
+    uint32_t nBlock = BUFFER_SIZE / block_size;
 
     if(DRV_MEMORY_SyncRead(memoryHandle, &readBuffer, blockStart, nBlock) == false)
     {
-       
+
     }
 
     </code>
@@ -1408,7 +1408,7 @@ bool DRV_MEMORY_SyncRead
 
     if (true != DRV_MEMORY_GeometryGet(&geometry))
     {
-       
+
     }
 
     readBlockSize  = geometry.geometryTable[SYS_MEDIA_GEOMETRY_TABLE_READ_ENTRY].blockSize;
@@ -1471,11 +1471,11 @@ SYS_MEDIA_GEOMETRY * DRV_MEMORY_GeometryGet
   Example:
     <code>
 
-   
+
 
     if (MEMORY_DEVICE_TRANSFER_COMPLETED == DRV_MEMORY_TransferStatusGet(memoryHandle))
     {
-        
+
     }
     </code>
 
@@ -1538,11 +1538,11 @@ MEMORY_DEVICE_TRANSFER_STATUS DRV_MEMORY_TransferStatusGet
         - If the status read request fails
 
   Example:
-    <code>   
+    <code>
 
     if (DRV_MEMORY_COMMAND_COMPLETED == DRV_MEMORY_CommandStatusGet(memoryHandle, commandHandle))
     {
-       
+
     }
 
     </code>
@@ -1606,7 +1606,7 @@ DRV_MEMORY_COMMAND_STATUS DRV_MEMORY_CommandStatusGet
 
   Example:
     <code>
-    DRV_MEMORY_COMMAND_HANDLE commandHandle;  
+    DRV_MEMORY_COMMAND_HANDLE commandHandle;
 
     void appTransferHandler
     (
@@ -1624,7 +1624,7 @@ DRV_MEMORY_COMMAND_STATUS DRV_MEMORY_CommandStatusGet
             }
 
             case DRV_MEMORY_EVENT_COMMAND_ERROR:
-            {               
+            {
                 break;
             }
 
@@ -1985,8 +1985,8 @@ void DRV_MEMORY_Read
 #pragma coverity compliance end_block "MISRA C-2012 Rule 8.6"
 <#if core.COMPILER_CHOICE == "XC32">
 #pragma GCC diagnostic pop
-</#if>    
-</#if> 
+</#if>
+</#if>
 /* MISRAC 2012 deviation block end */
 
 #ifdef __cplusplus
