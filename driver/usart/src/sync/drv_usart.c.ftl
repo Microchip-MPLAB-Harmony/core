@@ -677,8 +677,8 @@ bool DRV_USART_ReadBuffer
                 {
 <#if core.PRODUCT_FAMILY?matches("PIC32M.*") == false>
 <#if core.DATA_CACHE_ENABLE?? && core.DATA_CACHE_ENABLE == true >
-                /* Invalidate the receive buffer to force the CPU to read from the main memory */
-                    SYS_CACHE_InvalidateDCache_by_Addr(buffer, (int32_t)(numbytes << 1));
+                    /* Invalidate the receive buffer to force the CPU to read from the main memory */
+                    SYS_CACHE_InvalidateDCache_by_Addr(buffer, ((int32_t)numbytes * 2));
 </#if>
 </#if>
                     SYS_DMA_DataWidthSetup(dObj->rxDMAChannel, SYS_DMA_WIDTH_16_BIT);
@@ -694,8 +694,8 @@ bool DRV_USART_ReadBuffer
                 {
 <#if core.PRODUCT_FAMILY?matches("PIC32M.*") == false>
 <#if core.DATA_CACHE_ENABLE?? && core.DATA_CACHE_ENABLE == true >
-                /* Invalidate the receive buffer to force the CPU to read from the main memory */
-                    SYS_CACHE_InvalidateDCache_by_Addr(buffer, (int32_t)numbytes);
+                    /* Invalidate the receive buffer to force the CPU to read from the main memory */
+                    SYS_CACHE_InvalidateDCache_by_Addr(buffer, ((int32_t)numbytes * 2));
 </#if>
 </#if>
                     SYS_DMA_DataWidthSetup(dObj->rxDMAChannel, SYS_DMA_WIDTH_8_BIT);
