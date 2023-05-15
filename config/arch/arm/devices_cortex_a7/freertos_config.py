@@ -45,14 +45,14 @@ intCtrlBaseAddress = thirdPartyFreeRTOS.createStringSymbol("FREERTOS_CONFIG_INTE
 intCtrlBaseAddress.setVisible(False)
 intCtrlBaseAddress.setReadOnly(True)
 interruptControllerBaseAddr = int(ATDF.getNode('/avr-tools-device-file/devices/device/parameters/param@[name="GIC_DISTRIBUTOR_BASE"]').getAttribute("value"), 16)
-intCtrlBaseAddress.setDefaultValue(str(hex(interruptControllerBaseAddr)))
+intCtrlBaseAddress.setDefaultValue("0x%08XU"%interruptControllerBaseAddr)
 
 intCtrlCpuInterfaceOffset = thirdPartyFreeRTOS.createStringSymbol("FREERTOS_CONFIG_INTERRUPT_CONTROLLER_CPU_INTERFACE_OFFSET", None)
 intCtrlCpuInterfaceOffset.setVisible(False)
 intCtrlCpuInterfaceOffset.setReadOnly(True)
 interruptCpuInterfaceAddr = int(ATDF.getNode('/avr-tools-device-file/devices/device/parameters/param@[name="GIC_INTERFACE_BASE"]').getAttribute("value"), 16)
 interruptCpuInterfaceOffset = interruptCpuInterfaceAddr - interruptControllerBaseAddr
-intCtrlCpuInterfaceOffset.setDefaultValue(str(hex(interruptCpuInterfaceOffset)))
+intCtrlCpuInterfaceOffset.setDefaultValue("0x%08XU"%interruptCpuInterfaceOffset)
 
 Database.setSymbolValue("core", "RTOS_INTERRUPT_HANDLER", "GENERIC_TIMER_InterruptHandler")
 Database.setSymbolValue("core", "USE_FREERTOS_VECTORS", True)

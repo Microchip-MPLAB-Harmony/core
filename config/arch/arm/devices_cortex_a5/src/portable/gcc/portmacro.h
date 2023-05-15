@@ -75,10 +75,11 @@ not need to be guarded with a critical section. */
 
 /* Task utilities. */
 
+extern uint32_t ulPortYieldRequired;
+
 /* Called at the end of an ISR that can cause a context switch. */
 #define portEND_SWITCHING_ISR( xSwitchRequired )\
 {                                               \
-extern uint32_t ulPortYieldRequired;            \
                                                 \
     if( xSwitchRequired != pdFALSE )            \
     {                                           \

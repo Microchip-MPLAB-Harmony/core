@@ -59,7 +59,7 @@ baseAddr    = int(node.getAttribute("offset"),16);
 node        = ATDF.getNode('/avr-tools-device-file/modules/module@[name="AIC"]/register-group@[name="AIC"]/register@[name="AIC_EOICR"]')
 offset      = int(node.getAttribute("offset"),16)
 address     = baseAddr + offset
-eoiAddress.setDefaultValue(str(hex(address)))
+eoiAddress.setDefaultValue("0x%08XU"%address)
 
 Database.activateComponents(["pit"]);
 Database.setSymbolValue("pit", "RTOS_INTERRUPT_HANDLER", "FreeRTOS_Tick_Handler")

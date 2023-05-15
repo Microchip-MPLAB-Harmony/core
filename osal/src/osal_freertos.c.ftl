@@ -439,6 +439,10 @@ OSAL_RESULT OSAL_SEM_Post(OSAL_SEM_HANDLE_TYPE* semID)
    H3_MISRAC_2012_R_14_4_DR_1, H3_MISRAC_2012_R_15_6_DR_1 & H3_MISRAC_2012_R_20_7_DR_1*/
 <#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
 #pragma coverity compliance block \
+<#if core.CoreArchitecture == "CORTEX-A7">
+(deviate:1 "MISRA C-2012 Rule 8.3" "H3_MISRAC_2012_R_8_3_DR_1" )\
+(deviate:1 "MISRA C-2012 Rule 8.5" "H3_MISRAC_2012_R_8_5_DR_1" )\
+</#if>
 (deviate:1 "MISRA C-2012 Rule 14.4" "H3_MISRAC_2012_R_14_4_DR_1" )\
 (deviate:1 "MISRA C-2012 Rule 15.6" "H3_MISRAC_2012_R_15_6_DR_1" )\
 (deviate:1 "MISRA C-2012 Rule 20.7" "H3_MISRAC_2012_R_20_7_DR_1" )
@@ -499,6 +503,10 @@ OSAL_RESULT OSAL_SEM_PostISR(OSAL_SEM_HANDLE_TYPE* semID)
 }
 
 <#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
+<#if core.CoreArchitecture == "CORTEX-A7">
+#pragma coverity compliance end_block "MISRA C-2012 Rule 8.3"
+#pragma coverity compliance end_block "MISRA C-2012 Rule 8.5"
+</#if>
 #pragma coverity compliance end_block "MISRA C-2012 Rule 14.4"
 #pragma coverity compliance end_block "MISRA C-2012 Rule 15.6"
 #pragma coverity compliance end_block "MISRA C-2012 Rule 20.7"

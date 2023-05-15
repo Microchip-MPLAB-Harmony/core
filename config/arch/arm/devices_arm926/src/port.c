@@ -28,6 +28,7 @@
 
 /* Scheduler includes. */
 #include "FreeRTOS.h"
+#include "portmacro.h"
 #include "task.h"
 
 /* Library includes. */
@@ -91,13 +92,6 @@ void configCLEAR_TICK_INTERRUPT(void);
 layer. */
 void vApplicationIRQHandler( void );
 
-/* Prototypes for the standard FreeRTOS callback/hook functions implemented
-within this file. */
-void vApplicationTickHook( void );
-void vApplicationStackOverflowHook( TaskHandle_t pxTask, char *pcTaskName );
-void vApplicationIdleHook( void );
-void vApplicationMallocFailedHook( void );
-
 /*-----------------------------------------------------------*/
 
 /* A variable is used to keep track of the critical section nesting.  This
@@ -146,7 +140,7 @@ StackType_t *pxPortInitialiseStack( StackType_t *pxTopOfStack, TaskFunction_t px
 	pxTopOfStack--;
 
 	*pxTopOfStack = ( StackType_t ) portTASK_RETURN_ADDRESS;	/* R14 */
-	pxTopOfStack--;	
+	pxTopOfStack--;
 	*pxTopOfStack = ( StackType_t ) pxOriginalTOS; /* Stack used when task starts goes in R13. */
 	pxTopOfStack--;
 	*pxTopOfStack = ( StackType_t ) 0x12121212;	/* R12 */
