@@ -25,10 +25,10 @@
 // <editor-fold defaultstate="collapsed" desc="DRV_SDMMC Instance ${INDEX?string} Initialization Data">
 
 /* SDMMC Client Objects Pool */
-static DRV_SDMMC_CLIENT_OBJ drvSDMMC${INDEX?string}ClientObjPool[DRV_SDMMC_CLIENTS_NUMBER_IDX${INDEX?string}];
+static DRV_SDMMC_CLIENT_OBJ drvSDMMC${INDEX?string}ClientObjPool[DRV_SDMMC_IDX${INDEX?string}_CLIENTS_NUMBER];
 
 /* SDMMC Transfer Objects Pool */
-static DRV_SDMMC_BUFFER_OBJ drvSDMMC${INDEX?string}BufferObjPool[DRV_SDMMC_QUEUE_SIZE_IDX${INDEX?string}];
+static DRV_SDMMC_BUFFER_OBJ drvSDMMC${INDEX?string}BufferObjPool[DRV_SDMMC_IDX${INDEX?string}_QUEUE_SIZE];
 
 static const DRV_SDMMC_PLIB_API drvSDMMC${INDEX?string}PlibAPI = {
     .sdhostCallbackRegister = (DRV_SDMMC_PLIB_CALLBACK_REGISTER)${DRV_SDMMC_PLIB}_CallbackRegister,
@@ -69,19 +69,19 @@ static const DRV_SDMMC_INIT drvSDMMC${INDEX?string}InitData =
 {
     .sdmmcPlib                      = &drvSDMMC${INDEX?string}PlibAPI,
     .bufferObjPool                  = (uintptr_t)&drvSDMMC${INDEX?string}BufferObjPool[0],
-    .bufferObjPoolSize              = DRV_SDMMC_QUEUE_SIZE_IDX${INDEX?string},
+    .bufferObjPoolSize              = DRV_SDMMC_IDX${INDEX?string}_QUEUE_SIZE,
     .clientObjPool                  = (uintptr_t)&drvSDMMC${INDEX?string}ClientObjPool[0],
-    .numClients                     = DRV_SDMMC_CLIENTS_NUMBER_IDX${INDEX?string},
-    .protocol                       = DRV_SDMMC_PROTOCOL_SUPPORT_IDX${INDEX?string},
-    .cardDetectionMethod            = DRV_SDMMC_CARD_DETECTION_METHOD_IDX${INDEX?string},
+    .numClients                     = DRV_SDMMC_IDX${INDEX?string}_CLIENTS_NUMBER,
+    .protocol                       = DRV_SDMMC_IDX${INDEX?string}_PROTOCOL_SUPPORT,
+    .cardDetectionMethod            = DRV_SDMMC_IDX${INDEX?string}_CARD_DETECTION_METHOD,
 <#if DRV_SDMMC_CARD_DETECTION_METHOD == "Use Polling">
     .cardDetectionPollingIntervalMs = ${DRV_SDMMC_POLLING_INTERVAL},
 <#else>
     .cardDetectionPollingIntervalMs = 0,
 </#if>
     .isWriteProtectCheckEnabled     = ${DRV_SDMMC_WP_CHECK_ENABLE?c},
-    .speedMode                      = DRV_SDMMC_CONFIG_SPEED_MODE_IDX${INDEX?string},
-    .busWidth                       = DRV_SDMMC_CONFIG_BUS_WIDTH_IDX${INDEX?string},
+    .speedMode                      = DRV_SDMMC_IDX${INDEX?string}_CONFIG_SPEED_MODE,
+    .busWidth                       = DRV_SDMMC_IDX${INDEX?string}_CONFIG_BUS_WIDTH,
 	.sleepWhenIdle 					= ${DRV_SDMMC_SLEEP_WHEN_IDLE?c},
 <#if DRV_SDMMC_FS_ENABLE == true>
     <#lt>    .isFsEnabled                    = true,
