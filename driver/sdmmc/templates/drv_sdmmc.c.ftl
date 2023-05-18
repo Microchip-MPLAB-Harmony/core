@@ -332,16 +332,15 @@ static void lDRV_SDMMC_UpdateGeometry( DRV_SDMMC_OBJ* dObj )
 <#if core.PRODUCT_FAMILY?contains("PIC32MZ")>
 static void lDRV_SDMMC_SetClock (
     DRV_SDMMC_OBJ* dObj,
-    uint32_t clock
+    uint32_t clockFrequency
 )
 {
     switch (dObj->clockState)
     {
         case DRV_SDMMC_CLOCK_SET_COMPLETE:
         case DRV_SDMMC_CLOCK_SET_DIVIDER:
-        default:
 
-            dObj->sdmmcPlib->sdhostSetClock(clock);
+            (void)dObj->sdmmcPlib->sdhostSetClock(clockFrequency);
             dObj->tmrHandle = SYS_TIME_HANDLE_INVALID;
             if (SYS_TIME_DelayMS(5, &(dObj->tmrHandle)) == SYS_TIME_SUCCESS)
             {
@@ -382,6 +381,10 @@ static void lDRV_SDMMC_SetClock (
                 /* Delay has elapsed. */
                 dObj->clockState = DRV_SDMMC_CLOCK_SET_COMPLETE;
             }
+            break;
+
+        default:
+            /* No action to take */
             break;
     }
 }
