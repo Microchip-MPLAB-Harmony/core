@@ -112,13 +112,6 @@ void SYS_CACHE_CleanDCache (void)
     }
 }
 
-void SYS_CACHE_CleanInvalidateDCache (void)
-{
-    if (CACHE_CacheCoherencyGet() != CACHE_DISABLE)
-    {
-        DCACHE_INVALIDATE();
-    }
-}
 
 void SYS_CACHE_InvalidateICache (void)
 {
@@ -151,14 +144,23 @@ void SYS_CACHE_CleanDCache_by_Addr (void *addr, int32_t size)
         DCACHE_CLEAN_BY_ADDR((uint32_t)(uint8_t*)addr, (size_t)size);
     }
 }
-/* MISRA C-2012 Rule 5.1 deviated:1 Deviation record ID -  H3_MISRAC_2012_R_5_2_DR_1 */
+/* MISRA C-2012 Rule 5.1 deviated:1 Deviation record ID -  H3_MISRAC_2012_R_5_1_DR_1 */
 <#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
 <#if core.COMPILER_CHOICE == "XC32">
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Wunknown-pragmas"
 </#if>
-#pragma coverity compliance block deviate:1 "MISRA C-2012 Rule 5.2" "H3_MISRAC_2012_R_5_2_DR_1"
+#pragma coverity compliance block deviate:1 "MISRA C-2012 Rule 5.1" "H3_MISRAC_2012_R_5_1_DR_1"
 </#if>
+
+void SYS_CACHE_CleanInvalidateDCache (void)
+{
+    if (CACHE_CacheCoherencyGet() != CACHE_DISABLE)
+    {
+        DCACHE_INVALIDATE();
+    }
+}
+
 
 void SYS_CACHE_CleanInvalidateDCache_by_Addr (void *addr, int32_t size)
 {
@@ -169,7 +171,7 @@ void SYS_CACHE_CleanInvalidateDCache_by_Addr (void *addr, int32_t size)
 }
 
 <#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
-#pragma coverity compliance end_block "MISRA C-2012 Rule 5.2"
+#pragma coverity compliance end_block "MISRA C-2012 Rule 5.1"
 <#if core.COMPILER_CHOICE == "XC32">
 #pragma GCC diagnostic pop
 </#if>
