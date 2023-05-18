@@ -501,7 +501,7 @@ static void lDRV_SPI_StartDMATransfer(DRV_SPI_TRANSFER_OBJ* transferObj)
     dObj = (DRV_SPI_OBJ*)&gDrvSPIObj[clientObj->drvIndex];
 
     /* Initialize the dummy data buffer with 0xFF */
-    memset(dObj->dummyDataBuffer, 0xFF, sizeof(dObj->dummyDataBuffer));
+    (void)memset(dObj->dummyDataBuffer, 0xFF, sizeof(dObj->dummyDataBuffer));
 
     transferObj->nBytesTransferred = 0;
 

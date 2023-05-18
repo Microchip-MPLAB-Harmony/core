@@ -155,7 +155,7 @@ static bool lDRV_SPI_StartDMATransfer(
     dObj->rxPending = rxSize;
 
     /* Initialize the dummy data buffer with 0xFF */
-    memset(dObj->dummyDataBuffer, 0xFF, sizeof(dObj->dummyDataBuffer));
+    (void)memset(dObj->dummyDataBuffer, 0xFF, sizeof(dObj->dummyDataBuffer));
 
     SYS_DMA_AddressingModeSetup(dObj->rxDMAChannel, SYS_DMA_SOURCE_ADDRESSING_MODE_FIXED, SYS_DMA_DESTINATION_ADDRESSING_MODE_INCREMENTED);
     SYS_DMA_AddressingModeSetup(dObj->txDMAChannel, SYS_DMA_SOURCE_ADDRESSING_MODE_INCREMENTED, SYS_DMA_DESTINATION_ADDRESSING_MODE_FIXED);
