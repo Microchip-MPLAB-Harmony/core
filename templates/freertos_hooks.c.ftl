@@ -42,6 +42,16 @@
 void vApplicationIdleHook( void );
 void vApplicationTickHook( void );
 void vAssertCalled( const char * pcFile, unsigned long ulLine );
+
+<#if core.CoreArchitecture == "MIPS">
+<#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
+<#if core.COMPILER_CHOICE == "XC32">
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wunknown-pragmas"
+</#if>
+#pragma coverity compliance block deviate:1 "MISRA C-2012 Rule 12.2" "H3_MISRAC_2012_R_12_2_DR_1"
+</#if>
+</#if>
 /*
 *********************************************************************************************************
 *                                          vApplicationStackOverflowHook()
@@ -100,7 +110,6 @@ void vApplicationStackOverflowHook( TaskHandle_t xTask, char *pcTaskName )
 * Note(s)     : none.
 *********************************************************************************************************
 */
-
 void vApplicationMallocFailedHook( void )
 {
    /* vApplicationMallocFailedHook() will only be called if
@@ -120,7 +129,14 @@ void vApplicationMallocFailedHook( void )
        /* Do Nothing */
    }
 }
-
+<#if core.CoreArchitecture == "MIPS">
+<#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
+#pragma coverity compliance end_block "MISRA C-2012 Rule 12.2"
+<#if core.COMPILER_CHOICE == "XC32">
+#pragma GCC diagnostic pop
+</#if>
+</#if>
+</#if>
 /*-----------------------------------------------------------*/
 
 void vApplicationIdleHook( void )

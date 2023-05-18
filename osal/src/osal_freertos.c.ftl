@@ -383,7 +383,7 @@ OSAL_RESULT OSAL_SEM_Pend(OSAL_SEM_HANDLE_TYPE* semID, uint16_t waitMS)
   }
   else
   {
-    timeout = (TickType_t)(waitMS / portTICK_PERIOD_MS);
+    timeout = ((TickType_t)waitMS / portTICK_PERIOD_MS);
   }
 
   if (xSemaphoreTake(*(SemaphoreHandle_t*)semID, timeout) == (int32_t)pdTRUE)
@@ -442,6 +442,9 @@ OSAL_RESULT OSAL_SEM_Post(OSAL_SEM_HANDLE_TYPE* semID)
 <#if core.CoreArchitecture == "CORTEX-A7">
 (deviate:1 "MISRA C-2012 Rule 8.3" "H3_MISRAC_2012_R_8_3_DR_1" )\
 (deviate:1 "MISRA C-2012 Rule 8.5" "H3_MISRAC_2012_R_8_5_DR_1" )\
+</#if>
+<#if core.CoreArchitecture == "MIPS">
+(deviate:1 "MISRA C-2012 Rule 12.2" "H3_MISRAC_2012_R_12_2_DR_1" )\
 </#if>
 (deviate:1 "MISRA C-2012 Rule 14.4" "H3_MISRAC_2012_R_14_4_DR_1" )\
 (deviate:1 "MISRA C-2012 Rule 15.6" "H3_MISRAC_2012_R_15_6_DR_1" )\
@@ -506,6 +509,9 @@ OSAL_RESULT OSAL_SEM_PostISR(OSAL_SEM_HANDLE_TYPE* semID)
 <#if core.CoreArchitecture == "CORTEX-A7">
 #pragma coverity compliance end_block "MISRA C-2012 Rule 8.3"
 #pragma coverity compliance end_block "MISRA C-2012 Rule 8.5"
+</#if>
+<#if core.CoreArchitecture == "MIPS">
+#pragma coverity compliance end_block "MISRA C-2012 Rule 12.2"
 </#if>
 #pragma coverity compliance end_block "MISRA C-2012 Rule 14.4"
 #pragma coverity compliance end_block "MISRA C-2012 Rule 15.6"
@@ -723,7 +729,7 @@ OSAL_RESULT OSAL_MUTEX_Lock(OSAL_MUTEX_HANDLE_TYPE* mutexID, uint16_t waitMS)
   }
   else
   {
-    timeout = (TickType_t)(waitMS / portTICK_PERIOD_MS);
+    timeout = ((TickType_t)waitMS / portTICK_PERIOD_MS);
   }
 
   if (xSemaphoreTake(*(SemaphoreHandle_t*)mutexID, timeout) == (int32_t)pdTRUE)
