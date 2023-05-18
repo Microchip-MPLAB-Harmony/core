@@ -280,7 +280,7 @@ static bool lDRV_SDSPI_DMA_Write(
     dObj->nBytesTransferred = 0;
 
     /* Initialize the dummy data buffer with 0xFF */
-    memset(dObj->dummyDataBuffer, 0xFF, sizeof(dObj->dummyDataBuffer));
+    (void)memset(dObj->dummyDataBuffer, 0xFF, sizeof(dObj->dummyDataBuffer));
 
     /* Need to use the dummy data buffer for reception.
      * Find out the max data that can be transmitted, given the limited size of the dummy data buffer.
@@ -338,7 +338,7 @@ static bool lDRV_SDSPI_DMA_Read(
     dObj->nBytesTransferred = 0;
 
     /* Initialize the dummy data buffer with 0xFF */
-    memset(dObj->dummyDataBuffer, 0xFF, sizeof(dObj->dummyDataBuffer));
+    (void)memset(dObj->dummyDataBuffer, 0xFF, sizeof(dObj->dummyDataBuffer));
 
     /* Need to use the dummy data buffer for transmission.
      * Find out the max data that can be received, given the limited size of the dummy data buffer.
