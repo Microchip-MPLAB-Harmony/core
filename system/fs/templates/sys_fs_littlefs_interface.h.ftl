@@ -35,9 +35,9 @@ extern "C" {
 #include <stdbool.h>
 #include <stddef.h>
 #include <stdarg.h>
-    
+
 #define FILE_NAME_LEN   255
-    
+
     /* File status structure (FILINFO) */
 typedef struct {
 <#if SYS_FS_FAT == true && SYS_FS_FAT_EXFAT_ENABLE == true>
@@ -57,6 +57,8 @@ typedef struct {
     uint32_t    lfsize;
 </#if>
 } LITTLEFS_STATUS;
+
+extern const char* szLicense;
 
 typedef enum lfs_error LITTLEFS_ERR;
 
