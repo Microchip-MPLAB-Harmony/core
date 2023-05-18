@@ -994,7 +994,7 @@ SYS_FS_MEDIA_BLOCK_COMMAND_HANDLE SYS_FS_MEDIA_MANAGER_SectorRead
     /* Perform Cache Invalidate on the client buffer if it is in cacheable address space */
     if (IS_KVA0(dataBuffer) == true)
     {
-        SYS_CACHE_InvalidateDCache_by_Addr((uint32_t *)dataBuffer, (numSectors * mediaReadBlockSize));
+        SYS_CACHE_InvalidateDCache_by_Addr(dataBuffer, ((int32_t)numSectors * (int32_t)mediaReadBlockSize));
     }
 </#if>
 
@@ -1059,7 +1059,7 @@ SYS_FS_MEDIA_BLOCK_COMMAND_HANDLE SYS_FS_MEDIA_MANAGER_Read
     /* Perform Cache Invalidate on the client buffer if it is in cacheable address space */
     if (IS_KVA0(destination) == true)
     {
-        SYS_CACHE_InvalidateDCache_by_Addr((uint32_t *)destination, nBytes);
+        SYS_CACHE_InvalidateDCache_by_Addr(destination, (int32_t)nBytes);
     }
 </#if>
 
@@ -1146,7 +1146,7 @@ SYS_FS_MEDIA_BLOCK_COMMAND_HANDLE SYS_FS_MEDIA_MANAGER_SectorWrite
         /* Perform Cache Clean on the client buffer if it is in cacheable address space */
         if (IS_KVA0(dataBuffer) == true)
         {
-            SYS_CACHE_CleanDCache_by_Addr((uint32_t *)dataBuffer, (numSectors * mediaWriteBlockSize));
+            SYS_CACHE_CleanDCache_by_Addr(dataBuffer, ((int32_t)numSectors * (int32_t)mediaWriteBlockSize));
         }
 </#if>
         mediaObj->commandStatus = SYS_FS_MEDIA_COMMAND_IN_PROGRESS;
@@ -1216,7 +1216,7 @@ SYS_FS_MEDIA_BLOCK_COMMAND_HANDLE SYS_FS_MEDIA_MANAGER_SectorWrite
                 /* Perform Cache Clean on the client buffer if it is in cacheable address space */
                 if (IS_KVA0(dataBuffer) == true)
                 {
-                    SYS_CACHE_CleanDCache_by_Addr((uint32_t *)dataBuffer, mediaWriteBlockSize);
+                    SYS_CACHE_CleanDCache_by_Addr(dataBuffer, (int32_t)mediaWriteBlockSize);
                 }
 </#if>
             }
