@@ -22,11 +22,12 @@
  *******************************************************************************/
 
 
-#ifndef _SYS_FS_FILEX_INTERFACE_H
-#define _SYS_FS_FILEX_INTERFACE_H
+#ifndef SYS_FS_FILEX_INTERFACE_H
+#define SYS_FS_FILEX_INTERFACE_H
 
 #include "filex_io_drv.h"
 #include "fx_api.h"
+#include "system/fs/sys_fs.h"
 
 #ifdef __cplusplus
 extern "C" {
@@ -74,7 +75,7 @@ int FILEX_close (uintptr_t handle);
 
 int FILEX_lseek (uintptr_t handle, uint32_t ofs);
 
-int FILEX_stat (const char* path, uintptr_t ptr);
+int FILEX_stat (const char* path, uintptr_t fileInfo);
 
 int FILEX_getlabel (const char* path, char* label, uint32_t* vsn);
 
@@ -82,7 +83,7 @@ int FILEX_getcwd (char* buff, uint32_t len);
 
 int FILEX_opendir (uintptr_t handle, const char* path);
 
-int FILEX_readdir (uintptr_t handle, uintptr_t fno);
+int FILEX_readdir (uintptr_t handle, uintptr_t fileInfo);
 
 int FILEX_closedir (uintptr_t handle);
 
@@ -109,13 +110,13 @@ int FILEX_chdrive (uint8_t drv);
 
     <#lt>int FILEX_chmod (const char* path, uint8_t attr, uint8_t mask);
 
-    <#lt>int FILEX_utime (const char* path, const uintptr_t fno);
+    <#lt>int FILEX_utime (const char* path, uintptr_t ptr);
 
     <#lt>int FILEX_rename (const char* path_old, const char* path_new);
 
     <#lt>int FILEX_sync (uintptr_t handle);
 
-    <#lt>int FILEX_mkfs (uint8_t vol, void* opt, void* work, uint32_t len);
+    <#lt>int FILEX_mkfs (uint8_t vol, const SYS_FS_FORMAT_PARAM*  f_opt, void* work, uint32_t len);
 
     <#lt>int FILEX_getclusters (const char *path, uint32_t *tot_sec, uint32_t *free_sec);
 
@@ -125,4 +126,4 @@ int FILEX_chdrive (uint8_t drv);
 }
 #endif
 
-#endif /* _SYS_FS_FILEX_INTERFACE_H */
+#endif /* SYS_FS_FILEX_INTERFACE_H */
