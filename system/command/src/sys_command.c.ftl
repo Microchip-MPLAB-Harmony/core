@@ -170,7 +170,7 @@ static void lkeyHomeProcess(SYS_CMD_IO_DCPT* pCmdIO, const KEY_SEQ_DCPT* pSeqDcp
 static void lkeyEndProcess(SYS_CMD_IO_DCPT* pCmdIO, const KEY_SEQ_DCPT* pSeqDcpt);
 
 
-/* MISRA C-2012 Rule 4.1, 17.1 and 21.6 deviated below. Deviation record ID -  
+/* MISRA C-2012 Rule 4.1, 17.1 and 21.6 deviated below. Deviation record ID -
    H3_MISRAC_2012_R_4_1_DR_1, H3_MISRAC_2012_R_17_1_DR_1 and H3_MISRAC_2012_R_21_6_DR_1 */
 <#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
 <#if core.COMPILER_CHOICE == "XC32">
@@ -181,7 +181,7 @@ static void lkeyEndProcess(SYS_CMD_IO_DCPT* pCmdIO, const KEY_SEQ_DCPT* pSeqDcpt
 (deviate:1 "MISRA C-2012 Rule 4.1" "H3_MISRAC_2012_R_4_1_DR_1" )\
 (deviate:1 "MISRA C-2012 Rule 17.1" "H3_MISRAC_2012_R_17_1_DR_1" )\
 (deviate:1 "MISRA C-2012 Rule 21.3" "H3_MISRAC_2012_R_21_3_DR_1" )\
-(deviate:1 "MISRA C-2012 Rule 21.6" "H3_MISRAC_2012_R_21_6_DR_1" )   
+(deviate:1 "MISRA C-2012 Rule 21.6" "H3_MISRAC_2012_R_21_6_DR_1" )
 </#if>
 // dummy table holding the escape sequences + expected sequence size
 // detection of a sequence is done using only the first 3 characters
@@ -205,7 +205,7 @@ static void     CommandReset(SYS_CMD_DEVICE_NODE* pCmdIO, int argc, char** argv)
 static void     CommandQuit(SYS_CMD_DEVICE_NODE* pCmdIO, int argc, char** argv);              // command quit
 static void     CommandHelp(SYS_CMD_DEVICE_NODE* pCmdIO, int argc, char** argv);              // help
 
-static int      StringToArgs(char *str, char *argv[], size_t argvSize); 
+static int      StringToArgs(char *str, char *argv[], size_t argvSize);
 static void     ParseCmdBuffer(SYS_CMD_IO_DCPT* pCmdIO);      // parse the command buffer
 
 static void     DisplayNodeMsg(SYS_CMD_IO_DCPT* pCmdIO, histCmdNode* pNext);
@@ -246,12 +246,12 @@ static const SYS_CMD_DESCRIPTOR    builtinCmdTbl[]=
 // *****************************************************************************
 
 // *****************************************************************************
-/* MISRA C-2012 Rule 11.3 deviated : 2, 11.8 deviated :2. Deviation record ID -  
+/* MISRA C-2012 Rule 11.3 deviated : 2, 11.8 deviated :2. Deviation record ID -
    H3_MISRAC_2012_R_11_3_DR_1 & H3_MISRAC_2012_R_11_8_DR_1*/
 <#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
 #pragma coverity compliance block \
 (deviate:2 "MISRA C-2012 Rule 11.3" "H3_MISRAC_2012_R_11_3_DR_1" )\
-(deviate:2 "MISRA C-2012 Rule 11.8" "H3_MISRAC_2012_R_11_8_DR_1" )   
+(deviate:2 "MISRA C-2012 Rule 11.8" "H3_MISRAC_2012_R_11_8_DR_1" )
 </#if>
 /* Function:
     bool SYS_CMD_Initialize( const SYS_MODULE_INIT * const init  )
@@ -417,8 +417,8 @@ static void RunCmdTask(SYS_CMD_IO_DCPT* pCmdIO)
             pCmdIO->seqBuff[pCmdIO->seqChars] = '\0';
             pKeyDcpt = keySeqTbl;
             pFoundSeq = NULL;
-            
-            ix = 0; 
+
+            ix = 0;
             while(ix < (sizeof(keySeqTbl) / sizeof(*keySeqTbl)))
             {
                 if(strncmp(pCmdIO->seqBuff, pKeyDcpt->keyCode, VT100_DETECT_SEQ_SIZE) == 0)
@@ -426,7 +426,7 @@ static void RunCmdTask(SYS_CMD_IO_DCPT* pCmdIO)
                     pFoundSeq = pKeyDcpt;
                     break;
                 }
-                ix++; 
+                ix++;
                 pKeyDcpt++;
             }
 
@@ -670,7 +670,7 @@ SYS_CMD_DEVICE_NODE* SYS_CMDIO_ADD(const SYS_CMD_API* opApi, const void* cmdIoPa
     {
         return NULL;
     }
-	(void) memset(pNewIo, 0, sizeof(*pNewIo));
+    (void) memset(pNewIo, 0, sizeof(*pNewIo));
     pNewIo->devNode.pCmdApi = opApi;
     pNewIo->devNode.cmdIoParam = cmdIoParam;
     pNewIo->cmdPnt = pNewIo->cmdBuff;
@@ -757,8 +757,8 @@ SYS_CMD_HANDLE  SYS_CMD_CallbackRegister(const SYS_CMD_DESCRIPTOR* pCmdTbl, SYS_
     {
         int ix;
         SYS_CMD_DESCRIPTOR_TABLE* pTbl = usrCmdTbl;
-        
-        ix = 0; 
+
+        ix = 0;
         while (ix < MAX_CMD_GROUP)
         {
             if(pTbl->pCmd == pCmdTbl)
@@ -772,7 +772,7 @@ SYS_CMD_HANDLE  SYS_CMD_CallbackRegister(const SYS_CMD_DESCRIPTOR* pCmdTbl, SYS_
                 }
                 OSAL_CRIT_Leave(OSAL_CRIT_TYPE_LOW, critSect);
             }
-            ix++; 
+            ix++;
             pTbl++;
         }
     }
@@ -785,7 +785,7 @@ bool SYS_CMD_CallbackDeregister(SYS_CMD_HANDLE handle)
     bool res = false;
 
     SYS_CMD_DESCRIPTOR_TABLE* xTbl = (SYS_CMD_DESCRIPTOR_TABLE*)handle;
-    
+
     int nIx = xTbl - usrCmdTbl;
 
     if( (0 <= nIx) && ((uint32_t)nIx < sizeof(usrCmdTbl) / sizeof(*usrCmdTbl)))
@@ -806,11 +806,11 @@ bool SYS_CMD_CallbackDeregister(SYS_CMD_HANDLE handle)
 
     return res;
 }
-    
+
 <#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
 #pragma coverity compliance end_block "MISRA C-2012 Rule 11.3"
-#pragma coverity compliance end_block "MISRA C-2012 Rule 11.8" 
-</#if> 
+#pragma coverity compliance end_block "MISRA C-2012 Rule 11.8"
+</#if>
 /* MISRAC 2012 deviation block end */
 // ignore the console handle for now, we support a single system console
 static void SendCommandMessage(const void* cmdIoParam, const char* message)
@@ -934,16 +934,16 @@ static void CommandHelp(SYS_CMD_DEVICE_NODE* pCmdIO, int argc, char** argv)
 
         // display the basic commands
         (*pCmdIO->pCmdApi->msg)(cmdIoParam, LINE_TERM "---------- Built in commands ----------");
-        
-        ix = 0; 
-        pDcpt = builtinCmdTbl; 
-        while(ix < (sizeof(builtinCmdTbl)/sizeof(*builtinCmdTbl))) 
+
+        ix = 0;
+        pDcpt = builtinCmdTbl;
+        while(ix < (sizeof(builtinCmdTbl)/sizeof(*builtinCmdTbl)))
         {
             (*pCmdIO->pCmdApi->msg)(cmdIoParam, LINE_TERM " *** ");
             (*pCmdIO->pCmdApi->msg)(cmdIoParam, pDcpt->cmdStr);
             (*pCmdIO->pCmdApi->msg)(cmdIoParam, pDcpt->cmdDescr);
             (*pCmdIO->pCmdApi->msg)(cmdIoParam, " ***");
-            ix++; 
+            ix++;
             pDcpt++;
         }
 
@@ -968,15 +968,15 @@ static void CommandHelp(SYS_CMD_DEVICE_NODE* pCmdIO, int argc, char** argv)
 
         if(pDTbl != NULL)
         {
-            ix = 0; 
-            pDcpt = pDTbl->pCmd; 
-            while(ix < (uint32_t)pDTbl->nCmds) 
+            ix = 0;
+            pDcpt = pDTbl->pCmd;
+            while(ix < (uint32_t)pDTbl->nCmds)
             {
                 (*pCmdIO->pCmdApi->msg)(cmdIoParam, LINE_TERM " *** ");
                 (*pCmdIO->pCmdApi->msg)(cmdIoParam, pDcpt->cmdStr);
                 (*pCmdIO->pCmdApi->msg)(cmdIoParam, pDcpt->cmdDescr);
                 (*pCmdIO->pCmdApi->msg)(cmdIoParam, " ***");
-                ix++; 
+                ix++;
                 pDcpt++;
             }
 
@@ -1022,9 +1022,9 @@ static void ParseCmdBuffer(SYS_CMD_IO_DCPT* pCmdIO)
             pCmdIO->currHistN = NULL;
 
             // try built-in commands first
-            ix = 0; 
-            pDcpt = builtinCmdTbl; 
-            while(ix < (sizeof(builtinCmdTbl)/sizeof(*builtinCmdTbl))) 
+            ix = 0;
+            pDcpt = builtinCmdTbl;
+            while(ix < (sizeof(builtinCmdTbl)/sizeof(*builtinCmdTbl)))
             {
                 if(strcmp(argv[0], pDcpt->cmdStr) == 0)
                 {   // command found
@@ -1038,49 +1038,48 @@ static void ParseCmdBuffer(SYS_CMD_IO_DCPT* pCmdIO)
                     }
                     return;
                 }
-                ix++; 
+                ix++;
                 pDcpt++;
             }
 
             // search user commands
             SYS_CMD_DESCRIPTOR_TABLE* pTbl = usrCmdTbl;
-            grp_ix = 0; 
-            while(grp_ix < MAX_CMD_GROUP) 
+            grp_ix = 0;
+            while(grp_ix < MAX_CMD_GROUP)
             {
-                if (pTbl->pCmd == NULL)
+                if (pTbl->pCmd != NULL)
                 {
-                    continue;
-                }
-
-                if (pTbl->usrCallback != NULL)
-                {   // external parser; give it a fresh copy of the command
-                    (void) strncpy(usrSaveCmd, pCmdIO->cmdBuff, sizeof(usrSaveCmd));
-                    if(pTbl->usrCallback(pTbl->pCmd, &pCmdIO->devNode, usrSaveCmd, sizeof(usrSaveCmd), pTbl->usrParam))
-                    {   // command processed externally
-                        return;
-                    }
-                    // reparse the user modified command
-                    argc = StringToArgs(usrSaveCmd, argv, MAX_CMD_ARGS);
-                }
-
-                if(argc > MAX_CMD_ARGS)
-                {
-                    (*pCmdIO->devNode.pCmdApi->print)(cmdIoParam, "\n\r Too many arguments. Maximum args supported: %d!\r\n", MAX_CMD_ARGS);
-                    return;
-                }
-
-                ix = 0; 
-                pDcpt = usrCmdTbl[grp_ix].pCmd; 
-                while(ix < (uint32_t)usrCmdTbl[grp_ix].nCmds) 
-                {
-                    if(strcmp(argv[0], pDcpt->cmdStr) == 0)
+                    if (pTbl->usrCallback != NULL)
                     {
-                        // command found
-                        pDcpt->cmdFnc(&pCmdIO->devNode, argc, argv);
+                        // external parser; give it a fresh copy of the command
+                        (void) strncpy(usrSaveCmd, pCmdIO->cmdBuff, sizeof(usrSaveCmd));
+                        if(pTbl->usrCallback(pTbl->pCmd, &pCmdIO->devNode, usrSaveCmd, sizeof(usrSaveCmd), pTbl->usrParam))
+                        {   // command processed externally
+                            return;
+                        }
+                        // reparse the user modified command
+                        argc = StringToArgs(usrSaveCmd, argv, MAX_CMD_ARGS);
+                    }
+
+                    if(argc > MAX_CMD_ARGS)
+                    {
+                        (*pCmdIO->devNode.pCmdApi->print)(cmdIoParam, "\n\r Too many arguments. Maximum args supported: %d!\r\n", MAX_CMD_ARGS);
                         return;
                     }
-                    ix++; 
-                    pDcpt++;
+
+                    ix = 0;
+                    pDcpt = usrCmdTbl[grp_ix].pCmd;
+                    while(ix < (uint32_t)usrCmdTbl[grp_ix].nCmds)
+                    {
+                        if(strcmp(argv[0], pDcpt->cmdStr) == 0)
+                        {
+                            // command found
+                            pDcpt->cmdFnc(&pCmdIO->devNode, argc, argv);
+                            return;
+                        }
+                        ix++;
+                        pDcpt++;
+                    }
                 }
                 grp_ix++;
                 pTbl++;
@@ -1099,12 +1098,12 @@ static void ParseCmdBuffer(SYS_CMD_IO_DCPT* pCmdIO)
   return number of parsed tokens
   < 0 if error
 */
-static int StringToArgs(char *str, char *argv[], size_t argvSize) 
+static int StringToArgs(char *str, char *argv[], size_t argvSize)
 {
     char* pTkn;
-    char* qStart, *qEnd;   // special char '"' starting position;  
+    char* qStart, *qEnd;   // special char '"' starting position;
     int nArgs = 0;
-    
+
     while(str != NULL)
     {
         qStart = strchr(str, (int32_t)'"');
@@ -1247,8 +1246,8 @@ static void lkeyEndProcess(SYS_CMD_IO_DCPT* pCmdIO, const KEY_SEQ_DCPT* pSeqDcpt
 #pragma coverity compliance end_block "MISRA C-2012 Rule 21.6"
 <#if core.COMPILER_CHOICE == "XC32">
 #pragma GCC diagnostic pop
-</#if>    
-</#if> 
+</#if>
+</#if>
 /* MISRAC 2012 deviation block end */
 
 static void DisplayNodeMsg(SYS_CMD_IO_DCPT* pCmdIO, histCmdNode* pNext)
