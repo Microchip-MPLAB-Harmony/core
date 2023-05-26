@@ -76,7 +76,7 @@ void vApplicationStackOverflowHook( TaskHandle_t xTask, char *pcTaskName )
    configCHECK_FOR_STACK_OVERFLOW is defined to 1 or 2.  This hook  function is
    called if a task stack overflow is detected.  Note the system/interrupt
    stack is not checked. */
-   ${(core.CoreArchitecture?matches("CORTEX-(M23|M33|A7)"))?string("(void)", "")}taskDISABLE_INTERRUPTS();
+   ${(core.CoreArchitecture?matches("CORTEX-(M33|A7)"))?string("(void)", "")}taskDISABLE_INTERRUPTS();
    for( ;; )
    {
        /* Do Nothing */
@@ -123,7 +123,7 @@ void vApplicationMallocFailedHook( void )
       to query the size of free heap space that remains (although it does not
       provide information on how the remaining heap might be fragmented). */
 
-   ${(core.CoreArchitecture?matches("CORTEX-(M23|M33|A7)"))?string("(void)", "")}taskDISABLE_INTERRUPTS();
+   ${(core.CoreArchitecture?matches("CORTEX-(M33|A7)"))?string("(void)", "")}taskDISABLE_INTERRUPTS();
    for( ;; )
    {
        /* Do Nothing */
