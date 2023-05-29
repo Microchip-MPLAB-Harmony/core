@@ -35,16 +35,16 @@
     <#lt>    );
 <#elseif (HarmonyCore.SELECT_RTOS)?? && HarmonyCore.SELECT_RTOS == "ThreadX">
     <#lt>    tx_byte_allocate(&byte_pool_0,
-    <#lt>        (VOID **) &_SYS_FS_Task_Stk_Ptr,
+    <#lt>        (VOID **) &lSYS_FS_Task_Stk_Ptr,
     <#lt>        SYS_FS_STACK_SIZE,
     <#lt>        TX_NO_WAIT
     <#lt>    );
 
-    <#lt>    tx_thread_create(&_SYS_FS_Task_TCB,
+    <#lt>    tx_thread_create(&lSYS_FS_Task_TCB,
     <#lt>        "SYS_FS_TASKS",
-    <#lt>        _SYS_FS_Tasks,
+    <#lt>        lSYS_FS_Tasks,
     <#lt>        0,
-    <#lt>        _SYS_FS_Task_Stk_Ptr,
+    <#lt>        lSYS_FS_Task_Stk_Ptr,
     <#lt>        SYS_FS_STACK_SIZE,
     <#lt>        SYS_FS_PRIORITY,
     <#lt>        SYS_FS_PRIORITY,

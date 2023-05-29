@@ -26,7 +26,7 @@
 <#if HarmonyCore.SELECT_RTOS == "BareMetal">
     <#lt>SYS_CMD_Tasks();
 <#elseif HarmonyCore.SELECT_RTOS == "FreeRTOS">
-    <#lt>    (void) xTaskCreate( _SYS_CMD_Tasks,
+    <#lt>    (void) xTaskCreate( lSYS_CMD_Tasks,
     <#lt>        "SYS_CMD_TASKS",
     <#lt>        SYS_CMD_RTOS_STACK_SIZE,
     <#lt>        (void*)NULL,
@@ -35,16 +35,16 @@
     <#lt>    );
 <#elseif (HarmonyCore.SELECT_RTOS)?? && HarmonyCore.SELECT_RTOS == "ThreadX">
     <#lt>    tx_byte_allocate(&byte_pool_0,
-    <#lt>        (VOID **) &_SYS_CMD_Task_Stk_Ptr,
+    <#lt>        (VOID **) &lSYS_CMD_Task_Stk_Ptr,
     <#lt>        SYS_CMD_RTOS_STACK_SIZE,
     <#lt>        TX_NO_WAIT
     <#lt>    );
 
-    <#lt>    tx_thread_create(&_SYS_CMD_Task_TCB,
+    <#lt>    tx_thread_create(&lSYS_CMD_Task_TCB,
     <#lt>        "SYS_CMD_TASKS",
-    <#lt>        _SYS_CMD_Tasks,
+    <#lt>        lSYS_CMD_Tasks,
     <#lt>        0,
-    <#lt>        _SYS_CMD_Task_Stk_Ptr,
+    <#lt>        lSYS_CMD_Task_Stk_Ptr,
     <#lt>        SYS_CMD_RTOS_STACK_SIZE,
     <#lt>        SYS_CMD_RTOS_TASK_PRIORITY,
     <#lt>        SYS_CMD_RTOS_TASK_PRIORITY,

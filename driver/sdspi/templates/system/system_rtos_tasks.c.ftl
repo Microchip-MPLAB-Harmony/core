@@ -10,8 +10,8 @@
     <#lt>    }
     <#lt>}
 <#elseif (HarmonyCore.SELECT_RTOS)?? && HarmonyCore.SELECT_RTOS == "ThreadX">
-    <#lt>TX_THREAD      _DRV_SDSPI_${INDEX?string}_Task_TCB;
-    <#lt>uint8_t*       _DRV_SDSPI_${INDEX?string}_Task_Stk_Ptr;
+    <#lt>TX_THREAD      lDRV_SDSPI_${INDEX?string}_Task_TCB;
+    <#lt>uint8_t*       lDRV_SDSPI_${INDEX?string}_Task_Stk_Ptr;
 
     <#lt>static void lDRV_SDSPI_${INDEX?string}_Tasks( ULONG thread_input )
     <#lt>{

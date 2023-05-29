@@ -24,7 +24,7 @@
 -->
 <#if SYS_CONSOLE_DEVICE_SET == "USB_CDC">
 <#if (HarmonyCore.SELECT_RTOS)?? && HarmonyCore.SELECT_RTOS == "FreeRTOS">
-    <#lt>void _SYS_CONSOLE_${INDEX?string}_Tasks(  void *pvParameters  )
+    <#lt>void lSYS_CONSOLE_${INDEX?string}_Tasks(  void *pvParameters  )
     <#lt>{
     <#lt>    while(1)
     <#lt>    {
@@ -35,10 +35,10 @@
     <#lt>    }
     <#lt>}
 <#elseif (HarmonyCore.SELECT_RTOS)?? && HarmonyCore.SELECT_RTOS == "ThreadX">
-    <#lt>TX_THREAD      _SYS_CONSOLE_${INDEX?string}_Task_TCB;
-    <#lt>uint8_t*       _SYS_CONSOLE_${INDEX?string}_Task_Stk_Ptr;
+    <#lt>TX_THREAD      lSYS_CONSOLE_${INDEX?string}_Task_TCB;
+    <#lt>uint8_t*       lSYS_CONSOLE_${INDEX?string}_Task_Stk_Ptr;
 
-    <#lt>static void _SYS_CONSOLE_${INDEX?string}_Tasks( ULONG thread_input )
+    <#lt>static void lSYS_CONSOLE_${INDEX?string}_Tasks( ULONG thread_input )
     <#lt>{
     <#lt>    while(1)
     <#lt>    {

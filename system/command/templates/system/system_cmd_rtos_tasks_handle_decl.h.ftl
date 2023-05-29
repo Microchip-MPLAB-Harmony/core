@@ -28,8 +28,8 @@
     <#lt>extern TaskHandle_t xSYS_CMD_Tasks;
 <#elseif (HarmonyCore.SELECT_RTOS)?? && HarmonyCore.SELECT_RTOS == "ThreadX">
     <#lt>/* Declaration of SYS_COMMAND task handle  and stack ptr */
-    <#lt>extern TX_THREAD      _SYS_CMD_Task_TCB;
-    <#lt>extern uint8_t*       _SYS_CMD_Task_Stk_Ptr;
+    <#lt>extern TX_THREAD      lSYS_CMD_Task_TCB;
+    <#lt>extern uint8_t*       lSYS_CMD_Task_Stk_Ptr;
 <#elseif (HarmonyCore.SELECT_RTOS)?? && HarmonyCore.SELECT_RTOS == "MicriumOSIII">
     <#lt>/* Declaration of SYS_COMMAND task handle and stack */
     <#lt>extern OS_TCB  _SYS_CMD_Tasks_TCB;

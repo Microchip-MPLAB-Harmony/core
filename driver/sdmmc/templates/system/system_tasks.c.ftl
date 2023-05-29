@@ -34,16 +34,16 @@
     <#lt>    );
 <#elseif (HarmonyCore.SELECT_RTOS)?? && HarmonyCore.SELECT_RTOS == "ThreadX">
     <#lt>    tx_byte_allocate(&byte_pool_0,
-    <#lt>       (VOID **) &_DRV_SDMMC_${INDEX?string}_Task_Stk_Ptr,
+    <#lt>       (VOID **) &lDRV_SDMMC_${INDEX?string}_Task_Stk_Ptr,
     <#lt>        DRV_SDMMC_STACK_SIZE_IDX${INDEX?string},
     <#lt>        TX_NO_WAIT
     <#lt>    );
 
-    <#lt>    tx_thread_create(&_DRV_SDMMC_${INDEX?string}_Task_TCB,
+    <#lt>    tx_thread_create(&lDRV_SDMMC_${INDEX?string}_Task_TCB,
     <#lt>        "DRV_SDMMC${INDEX?string}_TASKS",
-    <#lt>        _DRV_SDMMC_${INDEX?string}_Tasks,
+    <#lt>        lDRV_SDMMC_${INDEX?string}_Tasks,
     <#lt>        ${INDEX?string},
-    <#lt>        _DRV_SDMMC_${INDEX?string}_Task_Stk_Ptr,
+    <#lt>        lDRV_SDMMC_${INDEX?string}_Task_Stk_Ptr,
     <#lt>        DRV_SDMMC_STACK_SIZE_IDX${INDEX?string},
     <#lt>        DRV_SDMMC_PRIORITY_IDX${INDEX?string},
     <#lt>        DRV_SDMMC_PRIORITY_IDX${INDEX?string},

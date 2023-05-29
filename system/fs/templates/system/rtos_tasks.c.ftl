@@ -35,8 +35,8 @@
     <#lt>    }
     <#lt>}
 <#elseif (HarmonyCore.SELECT_RTOS)?? && HarmonyCore.SELECT_RTOS == "ThreadX">
-    <#lt>TX_THREAD      _SYS_FS_Task_TCB;
-    <#lt>uint8_t*       _SYS_FS_Task_Stk_Ptr;
+    <#lt>TX_THREAD      lSYS_FS_Task_TCB;
+    <#lt>uint8_t*       lSYS_FS_Task_Stk_Ptr;
 
     <#lt>static void lSYS_FS_Tasks( ULONG thread_input )
     <#lt>{
