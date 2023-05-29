@@ -983,12 +983,12 @@ SYS_MODULE_OBJ DRV_USART_Initialize(
 
         SYS_DMA_DataWidthSetup(dObj->txDMAChannel, SYS_DMA_WIDTH_8_BIT);
 </#if>
-        SYS_DMA_ChannelCallbackRegister(dObj->txDMAChannel, _DRV_USART_TX_DMA_CallbackHandler, (uintptr_t)dObj);
+        SYS_DMA_ChannelCallbackRegister(dObj->txDMAChannel, lDRV_USART_TX_DMA_CallbackHandler, (uintptr_t)dObj);
     }
     else
     {
         dObj->usartPlib->writeCallbackRegister(lDRV_USART_TX_PLIB_CallbackHandler, (uintptr_t)dObj);
-        (void)_DRV_USART_TX_DMA_CallbackHandler;
+        (void)lDRV_USART_TX_DMA_CallbackHandler;
     }
 <#else>
     dObj->usartPlib->writeCallbackRegister(lDRV_USART_TX_PLIB_CallbackHandler, (uintptr_t)dObj);
@@ -1006,12 +1006,12 @@ SYS_MODULE_OBJ DRV_USART_Initialize(
 
         SYS_DMA_DataWidthSetup(dObj->rxDMAChannel, SYS_DMA_WIDTH_8_BIT);
 </#if>
-        SYS_DMA_ChannelCallbackRegister(dObj->rxDMAChannel, _DRV_USART_RX_DMA_CallbackHandler, (uintptr_t)dObj);
+        SYS_DMA_ChannelCallbackRegister(dObj->rxDMAChannel, lDRV_USART_RX_DMA_CallbackHandler, (uintptr_t)dObj);
     }
     else
     {
         dObj->usartPlib->readCallbackRegister(lDRV_USART_RX_PLIB_CallbackHandler, (uintptr_t)dObj);
-        (void)_DRV_USART_RX_DMA_CallbackHandler;
+        (void)lDRV_USART_RX_DMA_CallbackHandler;
     }
 <#else>
     dObj->usartPlib->readCallbackRegister(lDRV_USART_RX_PLIB_CallbackHandler, (uintptr_t)dObj);
