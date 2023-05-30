@@ -516,6 +516,9 @@ table.table .vertical-left span, table.table .vertical-center span, table.table 
   writing-mode: tb;
   transform: rotate(180deg);
 }
+.entry.rotate {
+  writing-mode: initial;
+}
 table.table .vertical-left {
   vertical-align: bottom;
   text-align: left;
@@ -713,4 +716,23 @@ kbd {
 
 .keyword.option {
   font-style: italic;
+}
+
+/* Styling for custom list */
+.custom_list li > p:nth-child(2) {
+    margin-left: 2.5em;
+    color: #555 !important;
+}
+
+/* Styling for noboldlist */
+
+dl.noboldlist dt {
+  float: left;
+  clear: left;
+  /* width: 100px; */
+  font-weight: normal;
+}
+dl.noboldlist dd {
+  margin: 0 0 0 100px;
+  padding: 0 0 0.5em 0;
 }
