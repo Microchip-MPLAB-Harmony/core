@@ -3,6 +3,43 @@
 
 # Microchip MPLAB® Harmony 3 Release Notes
 
+## Core Release v3.13.0
+
+### New Features
+
+- **New Features and Enhancements**
+  - MISRA-C 2012 mandatory and required rules compliance for all Drivers and System Services
+  - Azure FileX support
+  - Updated FatFS to R0.15
+  - Updated CMSIS-FreeRTOS to v10.5.1
+  - FreeRTOS support for Cortex-M33 devices
+  - Other bug fixes and enhancements
+
+- **Applications**
+  - MPLAB Harmony provides large number of application examples to accelerate learning and reduce the development cycles for your embedded systems with reusable software components. The application examples are available in the respective [product family specific repository](apps/readme.md).
+
+### Known Issues
+
+The current known issues are as follows:
+- The following product families specifically requires the below mentioned DFP versions to be [installed](https://microchipdeveloper.com/mplabx:projects-packs)  with MPLABX v6.05. It is always recommended to use the latest version of DFPs for all products provided by Microchip.
+     -  **SAMA7G5 Family**: SAMA7G5 DFP v1.2.176 or higher
+     -  **PIC32CZ-CA80 Family**: PIC32CZ-CA80 DFP v1.2.150 or higher
+     -  **PIC32CZ-CA90 Family**: PIC32CZ-CA80 DFP v1.3.150 or higher
+     -  **PIC32CK-GC Family**: PIC32CK-GC DFP v1.0.131 or higher
+     -  **PIC32CK-SG Family**: PIC32CK-SG DFP v1.0.141 or higher
+
+### Development Tools
+
+- [MPLAB® X IDE v6.05](https://www.microchip.com/mplab/mplab-x-ide)
+- [MPLAB® XC32 C/C++ Compiler v4.21](https://www.microchip.com/mplab/compilers)
+- [KEIL MDK v5.37](https://www2.keil.com/mdk5)
+- MPLAB® X IDE plug-ins:
+  - MPLAB® Code Configurator 5.3.0 or higher
+
+### Notes
+
+-  None
+
 ## Core Release v3.12.0
 
 ### New Features
