@@ -30,15 +30,14 @@ The current known issues are as follows:
 
 ### Development Tools
 
-- [MPLAB® X IDE v6.05](https://www.microchip.com/mplab/mplab-x-ide)
+- [MPLAB® X IDE v6.05](https://www.microchip.com/mplab/mplab-x-ide) or higher
 - [MPLAB® XC32 C/C++ Compiler v4.21](https://www.microchip.com/mplab/compilers)
-- [KEIL MDK v5.37](https://www2.keil.com/mdk5)
 - MPLAB® X IDE plug-ins:
   - MPLAB® Code Configurator 5.3.0 or higher
 
 ### Notes
 
--  None
+- MPLAB® Harmony 3 SYS_FS File System service has dependency on FileX hence [FileX](https://github.com/azure-rtos/filex) need to be downloaded using content manager by following these [instructions](https://github.com/Microchip-MPLAB-Harmony/contentmanager/wiki)
 
 ## Core Release v3.12.0
 
