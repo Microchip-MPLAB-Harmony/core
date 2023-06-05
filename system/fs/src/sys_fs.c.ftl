@@ -660,7 +660,6 @@ SYS_FS_RESULT SYS_FS_Mount
     if (disk->fsFunctions->chdrive != NULL)
     {
         (void) disk->fsFunctions->chdrive(disk->diskNumber);
-        fileStatus = (int)SYS_FS_ERROR_OK;
     }
     else
     {
