@@ -518,9 +518,6 @@ static MEMORY_DEVICE_TRANSFER_STATUS DRV_MEMORY_HandleEraseWrite
                 (void)memcpy((void *)&dObj->ewBuffer[dObj->blockOffsetInSector], (const void *)bufferObj->buffer, dObj->nBlocksToWrite * dObj->writeBlockSize);
 
                 dObj->ewState = DRV_MEMORY_EW_ERASE_SECTOR;
-
-                transferStatus = MEMORY_DEVICE_TRANSFER_BUSY;
-
                 /* Fall through for Erase operation. */
             }
             else
