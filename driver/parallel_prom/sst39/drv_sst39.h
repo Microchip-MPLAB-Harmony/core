@@ -91,6 +91,37 @@ typedef enum
 } DRV_SST39_TRANSFER_STATUS;
 
 // *****************************************************************************
+/* DRV_SST39 Geometry data
+
+ Summary:
+    Defines the data type for SST39 PROM Geometry details.
+
+ Description:
+    This will be used to get the geometry details of the attached SST39 PROM
+    device.
+
+ Remarks:
+    None.
+*/
+
+typedef struct
+{
+    uint32_t read_blockSize;
+    uint32_t read_numBlocks;
+    uint32_t numReadRegions;
+
+    uint32_t write_blockSize;
+    uint32_t write_numBlocks;
+    uint32_t numWriteRegions;
+
+    uint32_t erase_blockSize;
+    uint32_t erase_numBlocks;
+    uint32_t numEraseRegions;
+
+    uint32_t blockStartAddress;
+} DRV_SST39_GEOMETRY;
+
+// *****************************************************************************
 // *****************************************************************************
 // Section: SST39Driver Module Interface Routines
 // *****************************************************************************
@@ -572,6 +603,96 @@ bool DRV_SST39_Read( const DRV_HANDLE handle, void *rx_data, uint32_t rx_data_le
 bool DRV_SST39_PageWrite( const DRV_HANDLE handle, void *tx_data, uint32_t address );
 
 
+// *****************************************************************************
+/* Function:
+    bool DRV_SST39_GeometryGet(const DRV_HANDLE handle, DRV_SST39_GEOMETRY *geometry)
+
+  Summary:
+    Returns the geometry of the device.
+
+  Description:
+    This API gives the following geometrical details of the DRV_SST39 PROM:
+    - Number of Read/Write/Erase Blocks and their size in each region of the device
+
+  Precondition:
+    DRV_SST39_Open must have been called to obtain a valid opened device handle.
+
+  Parameters:
+    handle      - A valid open-instance handle, returned from the driver's
+                   open routine
+    geometry    - Pointer to flash device geometry table instance
+
+  Returns:
+    true - if able to get the geometry details of the flash
+
+    false - if handle is invalid
+
+  Example:
+    <code>
+
+    DRV_SST39_GEOMETRY flashGeometry;
+    uint32_t readBlockSize, writeBlockSize, eraseBlockSize;
+    uint32_t nReadBlocks, nReadRegions, totalFlashSize;
+
+    DRV_SST39_GeometryGet(myHandle, &flashGeometry);
+
+    readBlockSize  = flashGeometry.readBlockSize;
+    nReadBlocks = flashGeometry.readNumBlocks;
+    nReadRegions = flashGeometry.readNumRegions;
+
+    writeBlockSize  = flashGeometry.writeBlockSize;
+    eraseBlockSize  = flashGeometry.eraseBlockSize;
+
+    totalFlashSize = readBlockSize * nReadBlocks * nReadRegions;
+
+    </code>
+
+  Remarks:
+    None.
+*/
+
+bool DRV_SST39_GeometryGet(const DRV_HANDLE handle, DRV_SST39_GEOMETRY *geometry);
+
+// *****************************************************************************
+/* Function:
+    DRV_SST39_TRANSFER_STATUS DRV_SST39_TransferStatusGet(const DRV_HANDLE handle);
+
+  Summary:
+    Gets the current status of the transfer request.
+
+  Description:
+    This routine gets the current status of the transfer request.
+
+  Preconditions:
+    The DRV_SST39_Open() routine must have been called for the
+    specified SST39 driver instance.
+
+  Parameters:
+    handle          - A valid open-instance handle, returned from the driver's
+                      open routine
+
+  Returns:
+    DRV_SST39_TRANSFER_ERROR_UNKNOWN - If the handle is invalid.
+
+    DRV_SST39_TRANSFER_BUSY - If the current transfer request is still being processed
+
+    DRV_SST39_TRANSFER_COMPLETED - If the transfer request is completed
+
+  Example:
+    <code>
+
+    DRV_HANDLE handle;
+
+    if (DRV_SST39_TransferStatusGet(handle) == DRV_SST39_TRANSFER_COMPLETED)
+    {
+    }
+    </code>
+
+  Remarks:
+    None.
+*/
+
+DRV_SST39_TRANSFER_STATUS DRV_SST39_TransferStatusGet(const DRV_HANDLE handle);
 #ifdef __cplusplus
 }
 #endif

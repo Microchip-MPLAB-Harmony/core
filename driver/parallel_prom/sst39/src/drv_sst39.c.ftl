@@ -75,6 +75,8 @@ bool DRV_SST39_ReadProductId( const DRV_HANDLE handle, uint8_t* manufacturer, ui
     {
         return status;
     }
+    
+    dObj->transferStatus = DRV_SST39_TRANSFER_BUSY;
 
     /* Disable ECC for PROM commands write if enabled */
     isEccEnabled = dObj->sst39Plib->eccDisable((uint8_t)DRV_SST39_CHIP_SELECT);
@@ -119,6 +121,8 @@ bool DRV_SST39_ReadProductId( const DRV_HANDLE handle, uint8_t* manufacturer, ui
 
     status = true;
  
+    dObj->transferStatus = DRV_SST39_TRANSFER_COMPLETED;
+ 
     return status;
 }
 
@@ -132,6 +136,8 @@ bool DRV_SST39_Read( const DRV_HANDLE handle, void *rx_data, uint32_t rx_data_le
     {
         return status;
     }
+    
+    dObj->transferStatus = DRV_SST39_TRANSFER_BUSY;
 
     for (i=0; i<rx_data_length; i++)
     {
@@ -139,6 +145,8 @@ bool DRV_SST39_Read( const DRV_HANDLE handle, void *rx_data, uint32_t rx_data_le
     }
 
     status = true;
+
+    dObj->transferStatus = DRV_SST39_TRANSFER_COMPLETED;
 
     return status;
 }
@@ -157,6 +165,8 @@ bool DRV_SST39_PageWrite( const DRV_HANDLE handle, void *tx_data, uint32_t addre
         return status;
     }
 
+    dObj->transferStatus = DRV_SST39_TRANSFER_BUSY;
+    
     /* Disable ECC for PROM commands write if enabled */
     isEccEnabled = dObj->sst39Plib->eccDisable((uint8_t)DRV_SST39_CHIP_SELECT);
 
@@ -202,6 +212,7 @@ bool DRV_SST39_PageWrite( const DRV_HANDLE handle, void *tx_data, uint32_t addre
 
     status = true;
 
+    dObj->transferStatus = DRV_SST39_TRANSFER_COMPLETED;
     return status;
 }
 
@@ -215,6 +226,8 @@ bool DRV_SST39_SectorErase( const DRV_HANDLE handle, uint32_t address )
     {
         return false;
     }
+    
+    dObj->transferStatus = DRV_SST39_TRANSFER_BUSY;
 
     /* Disable ECC for PROM commands write if enabled */
     isEccEnabled = dObj->sst39Plib->eccDisable((uint8_t)DRV_SST39_CHIP_SELECT);
@@ -262,6 +275,7 @@ bool DRV_SST39_SectorErase( const DRV_HANDLE handle, uint32_t address )
         (void) dObj->sst39Plib->eccEnable((uint8_t)DRV_SST39_CHIP_SELECT);
     }
 
+    dObj->transferStatus = DRV_SST39_TRANSFER_COMPLETED;
     return true;
 }
 
@@ -275,6 +289,8 @@ bool DRV_SST39_ChipErase( const DRV_HANDLE handle )
     {
         return false;
     }
+
+    dObj->transferStatus = DRV_SST39_TRANSFER_BUSY;
 
     /* Disable ECC for PROM commands write if enabled */
     isEccEnabled = dObj->sst39Plib->eccDisable((uint8_t)DRV_SST39_CHIP_SELECT);
@@ -322,6 +338,7 @@ bool DRV_SST39_ChipErase( const DRV_HANDLE handle )
         (void) dObj->sst39Plib->eccEnable((uint8_t)DRV_SST39_CHIP_SELECT);
     }
 
+    dObj->transferStatus = DRV_SST39_TRANSFER_COMPLETED;
     return true;
 }
 
@@ -390,6 +407,7 @@ SYS_MODULE_OBJ DRV_SST39_Initialize
 
     /* Initialize the attached memory device functions */
     dObj->sst39Plib = sst39Init->sst39Plib;
+    dObj->transferStatus = DRV_SST39_TRANSFER_COMPLETED;
 
     dObj->status    = SYS_STATUS_READY;
 
@@ -410,4 +428,52 @@ SYS_STATUS DRV_SST39_Status( const SYS_MODULE_INDEX drvIndex )
 {
     /* Return the driver status */
     return (gDrvSST39Obj.status);
+}
+
+bool DRV_SST39_GeometryGet(const DRV_HANDLE handle, DRV_SST39_GEOMETRY *geometry)
+{
+    uint32_t flash_size = 0;
+
+    if((handle == DRV_HANDLE_INVALID) || (handle > 0U))
+    {
+        return false;
+    }
+
+    flash_size = DRV_SST39_MEMORY_SIZE;
+
+    /* Flash size should be at-least of a Write Block size */
+    if (flash_size < DRV_SST39_PAGE_SIZE)
+    {
+        return false;
+    }
+
+    /* Read block size and number of blocks */
+    geometry->read_blockSize = 1;
+    geometry->read_numBlocks = flash_size;
+
+    /* Write block size and number of blocks */
+    geometry->write_blockSize = DRV_SST39_PAGE_SIZE;
+    geometry->write_numBlocks = (flash_size / DRV_SST39_PAGE_SIZE);
+
+    /* Erase block size and number of blocks */
+    geometry->erase_blockSize = DRV_SST39_ERASE_BUFFER_SIZE;
+    geometry->erase_numBlocks = (flash_size / DRV_SST39_ERASE_BUFFER_SIZE);
+
+    geometry->numReadRegions = 1;
+    geometry->numWriteRegions = 1;
+    geometry->numEraseRegions = 1;
+
+    geometry->blockStartAddress = DRV_SST39_START_ADDRESS;
+
+    return true;
+}
+
+DRV_SST39_TRANSFER_STATUS DRV_SST39_TransferStatusGet(const DRV_HANDLE handle)
+{
+    if (handle == DRV_HANDLE_INVALID)
+    {
+        return DRV_SST39_TRANSFER_ERROR_UNKNOWN;
+    }
+
+    return dObj->transferStatus;
 }
