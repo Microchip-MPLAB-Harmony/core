@@ -386,6 +386,7 @@ def instantiateComponent(sysFSComponent):
     sysFSLFS.setHelp(sys_fs_mcc_helpkeyword)
     sysFSLFS.setDefaultValue(False)
     sysFSLFS.setDependencies(sysFsLFSEnabled, ["SYS_FS_LFS"])
+    sysFSLFS.setVisible(os.path.exists(os.path.join(Module.getPath(), "..", "littlefs")))
 
     sysFSLFSReadonly = sysFSComponent.createBooleanSymbol("SYS_FS_LFS_READONLY", sysFSLFS)
     sysFSLFSReadonly.setLabel("Make LittleFS File System Read-only")
