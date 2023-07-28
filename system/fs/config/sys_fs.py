@@ -417,10 +417,13 @@ def instantiateComponent(sysFSComponent):
     preProcMacrosLFS.setEnabled(sysFSLFSReadonly.getValue())
     preProcMacrosLFS.setDependencies(sysFsFileGen, ["SYS_FS_LFS_READONLY"])
 
+    filexSourcePath = os.path.join("..", "filex")
+    isFileXExist = os.path.exists(os.path.join(Module.getPath(), filexSourcePath))
     sysFSFILEX = sysFSComponent.createBooleanSymbol("SYS_FS_FILEX", sysFSMenu)
     sysFSFILEX.setHelp(sys_fs_mcc_helpkeyword)
     sysFSFILEX.setLabel("FileX File System")
     sysFSFILEX.setDefaultValue(False)
+    sysFSFILEX.setVisible(isFileXExist)
 
     sysFSFILEXReadonly = sysFSComponent.createBooleanSymbol("SYS_FS_FILEX_READONLY", sysFSFILEX)
     sysFSFILEXReadonly.setHelp(sys_fs_mcc_helpkeyword)
@@ -1057,11 +1060,11 @@ def instantiateComponent(sysFSComponent):
     sysFSLFSIncludePath.setEnabled(sysFSLFS.getValue())
     sysFSLFSIncludePath.setDependencies(sysFsFileGen, ["SYS_FS_LFS"])
 
-    filexSourcePath = "../filex"
     filexDestPath = "../../third_party/azure_rtos/filex"
-    AddFileXFiles(sysFSComponent, filexSourcePath + "/common/src/", filexDestPath + "/common/src/")
-    AddFileXFiles(sysFSComponent, filexSourcePath + "/common/inc/", filexDestPath + "/common/inc/")
-    AddFileXFiles(sysFSComponent, filexSourcePath + "/ports/generic/inc/", filexDestPath + "/ports/generic/inc/")
+    if isFileXExist == True:
+        AddFileXFiles(sysFSComponent, filexSourcePath + "/common/src/", filexDestPath + "/common/src/")
+        AddFileXFiles(sysFSComponent, filexSourcePath + "/common/inc/", filexDestPath + "/common/inc/")
+        AddFileXFiles(sysFSComponent, filexSourcePath + "/ports/generic/inc/", filexDestPath + "/ports/generic/inc/")
 
     filexUserHeaderFile = sysFSComponent.createFileSymbol("FILEX_FX_USER_H", None)
     filexUserHeaderFile.setSourcePath("/system/fs/filex/fx_user.h.ftl")
