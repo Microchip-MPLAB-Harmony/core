@@ -3,6 +3,20 @@
 
 # Microchip MPLAB® Harmony 3 Release Notes
 
+## Core Release v3.13.1
+
+### New Features
+- N/A
+
+### Bug fixes
+- Fixed issue where SYS_FS component will not be launched if FileX repository is not present
+
+### Known Issues
+- Same as v3.13.0
+
+### Development Tools
+- Same as v3.13.0
+
 ## Core Release v3.13.0
 
 ### New Features
