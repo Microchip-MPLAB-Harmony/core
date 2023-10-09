@@ -2,6 +2,9 @@
 #define DRV_NAND_FLASH_INDEX                          (0)
 #define DRV_NAND_FLASH_CLIENTS_NUMBER                 (${DRV_NAND_FLASH_NUM_CLIENTS}U)
 #define DRV_NAND_FLASH_CS                             (${DRV_NAND_FLASH_CHIP_SELECT})
+#define DRV_NAND_FLASH_START_ADDRESS                  (0x${START_ADDRESS}U)
+#define DRV_NAND_FLASH_PAGE_SIZE                      (${NAND_FLASH_PAGE_SIZE}U)
+#define DRV_NAND_FLASH_ERASE_BUFFER_SIZE              (${ERASE_BUFFER_SIZE}U)
 #define DRV_NAND_FLASH_ENABLE_PMECC                   (<#if DRV_NAND_FLASH_PMECC_ENABLE == true>1<#else>0</#if>)
 <#if DRV_NAND_FLASH_PMECC_ENABLE == true>
   <#lt>#define DRV_NAND_FLASH_PMECC_ECC_SPARE_SIZE           (${.vars["${DRV_NAND_FLASH_PLIB?lower_case}"].PMECC_SAREA_SPARESIZE})
