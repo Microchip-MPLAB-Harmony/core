@@ -181,10 +181,10 @@ typedef struct
 
     /* Indicates the number of clients that have opened this driver */
     size_t nClients;
-    
-    SYS_DMA_CHANNEL txrxDMAChannel;
 
 <#if core.DMA_ENABLE?has_content && DRV_NAND_FLASH_TX_RX_DMA?? && DRV_NAND_FLASH_TX_RX_DMA == true>
+    SYS_DMA_CHANNEL txrxDMAChannel;
+
     /* NAND Flash transfer status. Used for DMA operation only */
     volatile DRV_NAND_FLASH_TRANSFER_STATUS transferStatus;
 
