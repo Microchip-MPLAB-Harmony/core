@@ -74,6 +74,7 @@
 #define DRV_SDMMC_COMMAND_STATUS_ERROR           (0x01)
 #define DRV_SDMMC_COMMAND_STATUS_TIMEOUT_ERROR   (0x02U)
 #define DRV_SDMMC_COMMAND_STATUS_CRC_ERROR       (0x03)
+#define DRV_SDMMC_COMMAND_STATUS_IN_PROGRESS     (0x04)
 
 #define DRV_SDMMC_COMMAND_TIMEOUT_ERROR          (0x0001U)
 #define DRV_SDMMC_COMMAND_CRC_ERROR              (0x0002U)
@@ -163,7 +164,7 @@
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Wunknown-pragmas"
 </#if>
-#pragma coverity compliance block deviate:2 "MISRA C-2012 Rule 5.4" "H3_MISRAC_2012_R_5_4_DR_1"    
+#pragma coverity compliance block deviate:2 "MISRA C-2012 Rule 5.4" "H3_MISRAC_2012_R_5_4_DR_1"
 </#if>
 
 
@@ -224,12 +225,103 @@
 #define DRV_SDMMC_CLOCK_FREQ_HS_52_MHZ         (52000000)
 
 
+#define DRV_SDMMC_R4_MP_MSK                    (0x01 << 27)
+#define DRV_SDMMC_R4_MP_POS                    (27)
+#define DRV_SDMMC_R4_NF_MSK                    (0x03 << 28)
+#define DRV_SDMMC_R4_NF_POS                    (28)
+#define DRV_SDMMC_R4_OCR_MSK                   (0xFFFFFF << 0)
+#define DRV_SDMMC_R4_C_MSK                     (0x01 << 31)
+
+#define DRV_SDMMC_FN0                           0
+#define DRV_SDMMC_FN1                           1
+#define DRV_SDMMC_FN2                           2
+#define DRV_SDMMC_FN3                           3
+#define DRV_SDMMC_FN4                           4
+#define DRV_SDMMC_FN5                           5
+#define DRV_SDMMC_FN6                           6
+#define DRV_SDMMC_FN7                           7
+
+#define DRV_SDMMC_FBR_OFFSET(fn)                (256 * fn)
+
+#define DRV_SDMMC_SDIO_CMD52_CRC_ERR_MSK            (0x1 << 7)
+#define DRV_SDMMC_SDIO_CMD52_ILLEGAL_CMD_MSK        (0x1 << 6)
+#define DRV_SDMMC_SDIO_CMD52_IO_STATE_MSK           (0x3 << 4)
+#define DRV_SDMMC_SDIO_CMD52_ERR_MSK                (0x1 << 3)
+#define DRV_SDMMC_SDIO_CMD52_INVALID_FN_MSK         (0x1 << 1)
+#define DRV_SDMMC_SDIO_CMD52_INVALID_ARG_MSK        (0x1 << 0)
+
+/* Tuple related macros */
+#define DRV_SDMMC_SDIO_CODE_CISPTL_NULL             0x00
+#define DRV_SDMMC_SDIO_CODE_CISPTL_CHKSUM           0x10
+#define DRV_SDMMC_SDIO_CODE_CISPTL_VERS1            0x15
+#define DRV_SDMMC_SDIO_CODE_CISPTL_ALTSTR           0x16
+#define DRV_SDMMC_SDIO_CODE_CISPTL_MANFID           0x20
+#define DRV_SDMMC_SDIO_CODE_CISPTL_FUNCID           0x21
+#define DRV_SDMMC_SDIO_CODE_CISPTL_FUNCE            0x22
+#define DRV_SDMMC_SDIO_CODE_CISPTL_SDIO_STD         0x91
+#define DRV_SDMMC_SDIO_CODE_CISPTL_SDIO_EXT         0x92
+#define DRV_SDMMC_SDIO_CODE_CISPTL_END              0xFF
+
+
+#define DRV_SDMMC_SDIO_CMD52_RESP_ERR_MSK           (DRV_SDMMC_SDIO_CMD52_CRC_ERR_MSK | \
+                                                     DRV_SDMMC_SDIO_CMD52_ILLEGAL_CMD_MSK | \
+                                                     DRV_SDMMC_SDIO_CMD52_ERR_MSK | \
+                                                     DRV_SDMMC_SDIO_CMD52_INVALID_FN_MSK | \
+                                                     DRV_SDMMC_SDIO_CMD52_INVALID_ARG_MSK)
+
+#define DRV_SDMMC_SDIO_CMD52_RESP_FLAGS_GET(resp)       ((resp & 0x0000FF00U) >> 8)
+#define DRV_SDMMC_SDIO_CMD52_RESP_DATA_GET(resp)        ((resp & 0x000000FFU))
+
+
+#define DRV_SDMMC_CCCR_ADDR_SDIO_REV                        0x0
+#define DRV_SDMMC_CCCR_ADDR_SD_SPEC_REV                     0x1
+#define DRV_SDMMC_CCCR_ADDR_IO_EN                           0x2
+#define DRV_SDMMC_CCCR_ADDR_IO_RDY                          0x3
+#define DRV_SDMMC_CCCR_ADDR_INT_EN                          0x4
+#define DRV_SDMMC_CCCR_ADDR_INT_PEND                        0x5
+#define DRV_SDMMC_CCCR_ADDR_IO_ABORT                        0x6
+#define DRV_SDMMC_CCCR_ADDR_BIC                             0x7
+#define DRV_SDMMC_CCCR_ADDR_CARD_CAP                        0x8
+#define DRV_SDMMC_CCCR_ADDR_CSIP                            0x9
+#define DRV_SDMMC_CCCR_ADDR_BUS_SUSPEND                     0xc
+#define DRV_SDMMC_CCCR_ADDR_FN_SEL                          0xd
+#define DRV_SDMMC_CCCR_ADDR_EXEC_FLAGS                      0xe
+#define DRV_SDMMC_CCCR_ADDR_RDY_FLAGS                       0xf
+#define DRV_SDMMC_CCCR_ADDR_FN0_BLK_SZ                      0x10
+#define DRV_SDMMC_CCCR_ADDR_PWR_CTRL                        0x12
+#define DRV_SDMMC_CCCR_ADDR_BUS_SPD_SEL                     0x13
+
+
+#define CARD_TYPE_SD_MEM                                    (1<<0)
+#define CARD_TYPE_SD_IO                                     (1<<1)
+#define CARD_TYPE_SDIO_COMBO                                (CARD_TYPE_SD_MEM | CARD_TYPE_SD_IO)
+
+
+#define DRV_SDMMC_CCCR_LSC_MSK                              (1 << 6)
+#define DRV_SDMMC_CCCR_SMB_MSK                              (1 << 1)
+#define DRV_SDMMC_CCCR_4BLS_MSK                             (1 << 7)
+#define DRV_SDMMC_CCCR_BUS_WIDTH_MSK                        (0x83)
+#define DRV_SDMMC_CCCR_BUS_WIDTH_1B                         (0)
+#define DRV_SDMMC_CCCR_BUS_WIDTH_4B                         (0x82)
+#define DRV_SDMMC_CCCR_BUS_WIDTH_8B                         (0x83)
+#define DRV_SDMMC_CCCR_SHS_MSK                              (1 << 0)
+#define DRV_SDMMC_CCCR_EHS_MSK                              (1 << 1)
+#define DRV_SDMMC_CCCR_IO_ABORT_RES                         (1 << 3)
+
+#define DRV_SDMMC_CMD52_RD_DATA(fn, addr)               ((fn << 28) | (addr << 9))
+#define DRV_SDMMC_CMD52_WR_DATA(fn, addr, data, raw)    ((1 << 31) | (fn << 28) | (raw << 27) | (addr << 9) | data)
+
+#define DRV_SDMMC_CMD53_RD_DATA(fn, addr, blkMode, count, addrIncr)    ((fn << 28) | (blkMode << 27) | (addrIncr << 26) | (addr << 9) | (count))
+#define DRV_SDMMC_CMD53_WR_DATA(fn, addr, blkMode, count, addrIncr)    ((1 << 31) | (fn << 28) | (blkMode << 27) | (addrIncr << 26) | (addr << 9) | (count))
+
+#define DRV_SDMMC_DATA_XFER_DIR_WR                          0
+#define DRV_SDMMC_DATA_XFER_DIR_RD                          1
 
 <#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
 #pragma coverity compliance end_block "MISRA C-2012 Rule 5.4"
 <#if core.COMPILER_CHOICE == "XC32">
 #pragma GCC diagnostic pop
-</#if>    
+</#if>
 </#if>
 /* MISRAC 2012 deviation block end */
 
@@ -261,7 +353,9 @@ typedef enum
     DRV_SDMMC_CARD_TYPE_STANDARD,
 
     /* SDMMC type Card */
-    DRV_SDMMC_CARD_TYPE_HC
+    DRV_SDMMC_CARD_TYPE_HC,
+
+    DRV_SDMMC_CARD_TYPE_UNKNOWN,
 
 }DRV_SDMMC_CARD_TYPE;
 
@@ -281,40 +375,40 @@ typedef enum
 
 typedef enum
 {
-    DRV_SDMMC_INIT_SET_INIT_SPEED = 0,
-    DRV_SDMMC_INIT_START_POLLING_TIMEOUT,
+    DRV_SDMMC_INIT_SET_INIT_SPEED,
     DRV_SDMMC_INIT_WAIT_POLLING_TIMEOUT,
-    DRV_SDMMC_INIT_RESET_CARD,
-    DRV_SDMMC_INIT_RESET_DELAY,
+    DRV_SDMMC_INIT_RESET_IO_CARD,
+    DRV_SDMMC_INIT_RESET_MEM_CARD,
     DRV_SDMMC_INIT_CHK_IFACE_CONDITION,
-    DRV_SDMMC_INIT_SEND_APP_CMD,
+    DRV_SDMMC_INIT_SDIO_CMD5,
     DRV_SDMMC_INIT_SEND_ACMD41,
+    DRV_SDMMC_INIT_SEND_OP_COND,
     DRV_SDMMC_INIT_ALL_SEND_CID,
-    DRV_SDMMC_INIT_PUBLISH_RCA,
+    DRV_SDMMC_INIT_GET_RCA,
+    DRV_SDMMC_INIT_SET_RELATIVE_ADDR,
     DRV_SDMMC_INIT_READ_CSD,
-    DRV_SDMMC_INIT_READ_EXT_CSD_SETUP,
     DRV_SDMMC_INIT_READ_EXT_CSD,
-    DRV_SDMMC_INIT_WAIT_EXT_CSD,
-    DRV_SDMMC_INIT_CHANGE_CLK_FREQ,
     DRV_SDMMC_INIT_SELECT_CARD,
-    DRV_SDMMC_INIT_CHK_CARD_STATE,
-    DRV_SDMMC_INIT_PRE_SCR_STATE,
-    DRV_SDMMC_INIT_SEND_SCR,
-    DRV_SDMMC_INIT_PARSE_SCR_DATA,
-    DRV_SDMMC_INIT_SET_BUS_WIDTH,
-    DRV_SDMMC_INIT_CARD_VER_CHECK,
-    DRV_SDMMC_INIT_PRE_SWITCH_CMD,
-    DRV_SDMMC_INIT_SWITCH_CMD,
-    DRV_SDMMC_INIT_SWITCH_STATUS,
-    DRV_SDMMC_INIT_SET_EMMC_HS_FREQ,
-    DRV_SDMMC_INIT_SET_HS_FREQ,
-    DRV_SDMMC_INIT_SET_BLOCK_LENGTH,
+    DRV_SDMMC_INIT_SDIO_READ_SDIO_CCCR_REV,
+    DRV_SDMMC_INIT_RD_CARD_CAP_SDIO,
+    DRV_SDMMC_INIT_SCR_READ,
+    DRV_SDMMC_INIT_DECIDE_BUS_WIDTH,
+    DRV_SDMMC_INIT_SET_BUS_WIDTH_SDIO,
+    DRV_SDMMC_INIT_SET_BUS_WIDTH_SDMEM,
+    DRV_SDMMC_INIT_SET_BUS_WIDTH_HOST,
+    DRV_SDMMC_INIT_SET_DEFAULT_SPEED_HOST,
+    DRV_SDMMC_INIT_CHK_HS_SPEED_SUP_SDIO,
+    DRV_SDMMC_INIT_CHK_HS_SPEED_SUP_SDMEM,
+    DRV_SDMMC_INIT_SET_HS_SPEED_SDIO,
+    DRV_SDMMC_INIT_SET_HS_SPEED_SDMEM,
+    DRV_SDMMC_INIT_SET_HS_SPEED_HOST,
+    DRV_SDMMC_INIT_RD_MAX_BLK_SIZE_SDIO,
+    DRV_SDMMC_INIT_SET_BLK_LEN_SDIO,
+    DRV_SDMMC_INIT_FN_EN_SDIO,
+    DRV_SDMMC_INIT_SET_BLK_LEN_SDMEM,
     DRV_SDMMC_INIT_DESELECT_CARD,
     DRV_SDMMC_INIT_DONE,
     DRV_SDMMC_INIT_ERROR,
-    DRV_SDMMC_INIT_SEND_OP_COND,
-    DRV_SDMMC_INIT_OP_COND_BUSY_RETRY,
-    DRV_SDMMC_INIT_SET_RELATIVE_ADDR
 } DRV_SDMMC_INIT_STATES;
 
 typedef enum
@@ -325,10 +419,13 @@ typedef enum
     DRV_SDMMC_TASK_MEDIA_INIT,
     DRV_SDMMC_TASK_PROCESS_QUEUE,
     DRV_SDMMC_TASK_SLEEP_WAKE_CARD,
+    DRV_SDMMC_TASK_CHECK_CARD_DETACH_SDIO_SEL,
+    DRV_SDMMC_TASK_CHECK_CARD_DETACH_SDIO_DESEL,
     DRV_SDMMC_TASK_CHECK_CARD_DETACH,
     DRV_SDMMC_TASK_SELECT_CARD,
     DRV_SDMMC_TASK_SETUP_XFER,
     DRV_SDMMC_TASK_XFER_COMMAND,
+    DRV_SDMMC_TASK_WAIT_DATA_XFER_COMPLETE,
     DRV_SDMMC_TASK_XFER_STATUS,
     DRV_SDMMC_TASK_SEND_STOP_TRANS_CMD,
     DRV_SDMMC_TASK_CHECK_CARD_STATUS,
@@ -358,6 +455,9 @@ typedef enum
 
     /* Command to eMMC device to enter in and out of sleep mode */
     DRV_SDMMC_CMD_SLEEP_WAKE = 5,
+
+    /* Command to SDIO device to send its OCR */
+    DRV_SDMMC_CMD_SDIO_SEND_OP_COND = 5,
 
     /* ACMD6 sets the card's bus width between 1-bit and 4-bit, only available when the card is unlocked */
     DRV_SDMMC_CMD_SWITCH_FUNCTION = 6,
@@ -426,6 +526,12 @@ typedef enum
 
     /* Command code to get the SCR register information from the card */
     DRV_SDMMC_CMD_READ_SCR            = 51,
+
+    /* Single byte read/write command for SDIO cards */
+    DRV_SDMMC_CMD_IO_RW_DIR           = 52,
+
+    /* Multi byte read/write command for SDIO cards */
+    DRV_SDMMC_CMD_IO_RW_EXT           = 53,
 
     /* Command code to begin application specific command inputs */
     DRV_SDMMC_CMD_APP_CMD             = 55,
@@ -504,6 +610,12 @@ typedef struct
     uint16_t                        errorFlag;
     uint32_t                        currentSpeed;
     uint32_t                        defaultSpeed;
+    uint8_t                         nf;
+    uint8_t                         mp;
+    uint8_t                         sdioCardCapability;
+    uint8_t                         currentFn;
+    uint8_t                         sdioCCCRRev;
+    uint32_t                        blockSize;
 } DRV_SDHOST_CARD_CTXT;
 
 // *****************************************************************************
@@ -574,6 +686,14 @@ typedef struct DRV_SDMMC_BUFFER_OBJ
 
     /* Pointer to the next buffer in the queue */
     struct DRV_SDMMC_BUFFER_OBJ*        next;
+
+    uint8_t                             fn;
+
+    bool                                isAddrInc;
+
+    uint32_t                            arg;
+
+    uint8_t                             respType;
 
 } DRV_SDMMC_BUFFER_OBJ;
 
@@ -703,6 +823,9 @@ typedef struct
 
     /* Mutex to protect access to the client objects */
     OSAL_MUTEX_DECLARE(mutexClientObjects);
+
+    /* Bit-0 => SD Mem. Bit-1 => SD IO */
+    uint8_t                         sdCardType;
 
 } DRV_SDMMC_OBJ;
 
