@@ -586,6 +586,17 @@ void SYS_TIME_CounterSet ( uint32_t count )
     SYS_INT_Restore(interruptState);
 }
 
+void SYS_TIME_CounterSet64 ( uint64_t count )
+{
+    bool interruptState;
+
+    interruptState = SYS_INT_Disable();
+
+    gSystemCounterObj.swCounter64 = count;
+
+    SYS_INT_Restore(interruptState);
+}
+
 /* MISRA C-2012 Rule 10.8 deviated:2 Deviation record ID -  H3_MISRAC_2012_R_10_8_DR_1 */
 <#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
 #pragma coverity compliance block deviate:2 "MISRA C-2012 Rule 10.8" "H3_MISRAC_2012_R_10_8_DR_1"

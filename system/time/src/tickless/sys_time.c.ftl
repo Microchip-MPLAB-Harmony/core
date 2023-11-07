@@ -757,6 +757,17 @@ void SYS_TIME_CounterSet ( uint32_t count )
     SYS_INT_Restore(interruptState);
 }
 
+void SYS_TIME_CounterSet64 ( uint64_t count )
+{
+    bool interruptState;
+
+    interruptState = SYS_INT_Disable();
+
+    gSystemCounterObj.swCounter64 = count;
+
+    SYS_INT_Restore(interruptState);
+}
+
 uint32_t  SYS_TIME_CountToUS ( uint32_t count )
 {
     return (uint32_t) (((uint64_t)count * 1000000U) / gSystemCounterObj.hwTimerFrequency);
