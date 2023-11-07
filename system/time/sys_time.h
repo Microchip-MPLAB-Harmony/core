@@ -855,7 +855,7 @@ void SYS_TIME_CounterSet ( uint32_t count );
 
 // *****************************************************************************
 /* Function:
-    void SYS_TIME_CounterSet64 ( uint64_t count )
+    void SYS_TIME_Counter64Set ( uint64_t count )
 
   Summary:
     Sets the common 64-bit system counter value.
@@ -880,7 +880,7 @@ void SYS_TIME_CounterSet ( uint32_t count );
     None.
 */
 
-void SYS_TIME_CounterSet64 ( uint64_t count );
+void SYS_TIME_Counter64Set ( uint64_t count );
 
 
 // *****************************************************************************

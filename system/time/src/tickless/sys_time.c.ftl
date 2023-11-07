@@ -757,7 +757,7 @@ void SYS_TIME_CounterSet ( uint32_t count )
     SYS_INT_Restore(interruptState);
 }
 
-void SYS_TIME_CounterSet64 ( uint64_t count )
+void SYS_TIME_Counter64Set ( uint64_t count )
 {
     bool interruptState;
 
