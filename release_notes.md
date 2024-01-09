@@ -3,6 +3,16 @@
 
 # Microchip MPLAB® Harmony 3 Release Notes
 
+## Core Release v3.13.2
+
+### New Features
+- N/A
+
+### Bug fixes
+- Fixed MISRA-C violations in driver and system services
+- Fixed hard-coded path names in FreeRTOS port files
+- Fixed build error in memory driver
+
 ## Core Release v3.13.1
 
 ### New Features
