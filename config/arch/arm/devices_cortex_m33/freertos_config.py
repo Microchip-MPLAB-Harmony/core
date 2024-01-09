@@ -21,6 +21,7 @@
 * ANY WAY RELATED TO THIS SOFTWARE WILL NOT EXCEED THE AMOUNT OF FEES, IF ANY,
 * THAT YOU HAVE PAID DIRECTLY TO MICROCHIP FOR THIS SOFTWARE.
 *****************************************************************************"""
+from os import path
 
 ############################################################################
 #### Cortex-M33 Architecture specific configuration                     ####
@@ -94,10 +95,13 @@ if Variables.get("__TRUSTZONE_ENABLED") != None and Variables.get("__TRUSTZONE_E
 ############################################################################
 
 configName  = Variables.get("__CONFIGURATION_NAME")
-
 if Variables.get("__TRUSTZONE_ENABLED") != None and Variables.get("__TRUSTZONE_ENABLED") == "true":
     freeRtosDir = "ARM_CM33"
-    freeRtosSecureInc = "../../../Secure/firmware/src/third_party/rtos/FreeRTOS/Source/portable/GCC/ARM_CM33/secure;"
+    secure_src_path = Variables.get("__SECURE_PROJECT_SRC_PATH")
+    non_secure_prj_path = path.join(Variables.get("__NON_SECURE_PROJECT_FIRMWARE_PATH"),
+                                    Variables.get("__NON_SECURE_PROJECT_FOLDER_NAME"))
+    secure_src_rel_path = path.relpath(secure_src_path, non_secure_prj_path).replace("\\", "/")
+    freeRtosSecureInc = secure_src_rel_path + "/third_party/rtos/FreeRTOS/Source/portable/GCC/ARM_CM33/secure;"
 else:
     freeRtosDir = "ARM_CM33_NTZ"
     freeRtosSecureInc = ""
