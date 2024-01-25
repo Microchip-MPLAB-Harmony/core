@@ -3,6 +3,14 @@
 
 # Microchip MPLAB® Harmony 3 Release Notes
 
+## Core Release v3.13.3
+
+### New Features
+- N/A
+
+### Bug fixes
+-  Removed dependencies on FileX and LittleFs packages
+
 ## Core Release v3.13.2
 
 ### New Features
