@@ -4,7 +4,5 @@
         <Dependency name="bsp" version="v3.17.0"/>
         <Dependency name="csp" version="v3.18.2"/>
         <Dependency name="CMSIS-FreeRTOS" version="v10.5.1"/>
-        <Dependency name="littlefs" version="v2.5.1"/>
-        <Dependency name="filex" version="v6.2.1_rel"/>
     </Dependencies>
 </Package>
