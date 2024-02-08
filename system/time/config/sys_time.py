@@ -53,7 +53,7 @@ def handleMessage(messageID, args):
 
     if sysTimeUseSystick.getValue() == True:
         sysTimeRemoteComponentId.setValue("core")
-        
+
     if messageID == "SYS_TIME_PLIB_CAPABILITY":
         if args["plib_mode"] == "PERIOD_MODE":
             sysTimeOperatingMode.setValue("TICK BASED")
@@ -186,7 +186,7 @@ def onSysTimeUseSystickChange(symbol, event):
     elif event["id"] == "SYSTICK_BUSY":
         if event["value"] == False:
             localComponent.getSymbolByID("SYS_TIME_USE_SYSTICK").setVisible(True)
-        if event["value"] == True:
+        elif event["value"] == True:
             if (localComponent.getSymbolByID("SYS_TIME_USE_SYSTICK").getValue() == True):
                 localComponent.getSymbolByID("SYS_TIME_USE_SYSTICK").setVisible(True)
             elif (localComponent.getSymbolByID("SYS_TIME_USE_SYSTICK").getValue() == False):
@@ -201,6 +201,7 @@ def onSysTimeUseSystickChange(symbol, event):
                 symbol.setValue(False)
                 symbol.setReadOnly(False)
             symbol.setVisible(False)
+
 
 
 ################################################################################
