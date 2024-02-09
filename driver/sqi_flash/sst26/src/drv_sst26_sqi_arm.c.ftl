@@ -105,6 +105,20 @@ static void DRV_SST26_EventHandler(uintptr_t context)
     DRV_SST26_OBJECT *obj = (DRV_SST26_OBJECT *)context;
 
     obj->isTransferDone = true;
+	
+	if (obj->curOpType == DRV_SST26_OPERATION_TYPE_WRITE || obj->curOpType == DRV_SST26_OPERATION_TYPE_ERASE)
+	{
+		DRV_SST26_InitiateReadStatus();
+	}
+	else if (obj->curOpType == DRV_SST26_OPERATION_TYPE_READ_STATUS && (sqiReadBuffer[0] & 0x81) == 0)
+	{
+		obj->internal_write_complete_flag = true;
+		return;
+	}
+	else
+	{
+    DRV_SST26_InitiateReadStatus();
+	}
 }
 
 /* This function returns the flash size in bytes for the specified deviceId. A
@@ -345,15 +359,8 @@ bool DRV_SST26_ReadJedecId( const DRV_HANDLE handle, void *jedec_id)
     return true;
 }
 
-bool DRV_SST26_ReadStatus( const DRV_HANDLE handle, void *rx_data, uint32_t rx_data_length )
+bool DRV_SST26_InitiateReadStatus(void)
 {
-    uint8_t* status = (uint8_t *)rx_data;
-
-    if(DRV_SST26_ValidateHandleAndCheckBusy(handle) == true)
-    {
-        return false;
-    }
-
     dObj->isTransferDone = false;
 
 <#if core.DATA_CACHE_ENABLE?? && core.DATA_CACHE_ENABLE == true >
@@ -376,7 +383,7 @@ bool DRV_SST26_ReadStatus( const DRV_HANDLE handle, void *rx_data, uint32_t rx_d
     sqiCmdDesc[0].bd_stat       = 0;
     sqiCmdDesc[0].bd_nxtptr     = (sqi_dma_desc_t *)(&sqiBufDesc[0]);
 
-    sqiBufDesc[0].bd_ctrl       = ( SQI_BDCTRL_BD_BUFLEN(rx_data_length) | SQI_BDCTRL_PKT_INT_EN_Msk |
+    sqiBufDesc[0].bd_ctrl       = ( SQI_BDCTRL_BD_BUFLEN(1) | SQI_BDCTRL_PKT_INT_EN_Msk |
                                     SQI_BDCTRL_LIFM_Msk | SQI_BDCTRL_LAST_BD_Msk |
                                     SQI_LANE_MODE_M | SQI_BDCTRL_DIR_Msk |
                                     SQI_CHIP_SELECT | SQI_BDCTRL_CS_ASSERT_Msk |
@@ -386,7 +393,7 @@ bool DRV_SST26_ReadStatus( const DRV_HANDLE handle, void *rx_data, uint32_t rx_d
     sqiBufDesc[0].bd_stat       = 0;
     sqiBufDesc[0].bd_nxtptr     = NULL;
 
-    dObj->curOpType = DRV_SST26_OPERATION_TYPE_READ;
+    dObj->curOpType = DRV_SST26_OPERATION_TYPE_READ_STATUS;
 
 <#if core.DATA_CACHE_ENABLE?? && core.DATA_CACHE_ENABLE == true >
     SYS_CACHE_CleanDCache_by_Addr(&sqiCmdBuffer[0], 2);
@@ -396,13 +403,27 @@ bool DRV_SST26_ReadStatus( const DRV_HANDLE handle, void *rx_data, uint32_t rx_d
 
     // Initialize the root buffer descriptor
     dObj->sst26Plib->DMATransfer((sqi_dma_desc_t *)(&sqiCmdDesc[0]));
+	
+	return true;
+}
+
+bool DRV_SST26_ReadStatus( const DRV_HANDLE handle, uint8_t *rx_data, uint32_t rx_data_length )
+{
+    (void)rx_data_length;
+
+    if(DRV_SST26_ValidateHandleAndCheckBusy(handle) == true)
+    {
+        return false;
+    }
+
+    DRV_SST26_InitiateReadStatus();
 
     while(dObj->isTransferDone == false)
     {
         /* Nothing to do */
     }
 
-    *status = sqiReadBuffer[0];
+    *rx_data = sqiReadBuffer[0];
 
     return true;
 }
@@ -416,13 +437,31 @@ DRV_SST26_TRANSFER_STATUS DRV_SST26_TransferStatusGet( const DRV_HANDLE handle )
         return status;
     }
 
-    if (dObj->isTransferDone == true)
+   if(dObj->curOpType == DRV_SST26_OPERATION_TYPE_READ)
     {
-        status = DRV_SST26_TRANSFER_COMPLETED;
+        if (dObj->isTransferDone == true )
+        {
+            status = DRV_SST26_TRANSFER_COMPLETED;
+        }
+        else
+        {
+            status = DRV_SST26_TRANSFER_BUSY;
+        }   
     }
-    else
+    else if (dObj->curOpType == DRV_SST26_OPERATION_TYPE_WRITE ||
+            dObj->curOpType == DRV_SST26_OPERATION_TYPE_ERASE || 
+            dObj->curOpType == DRV_SST26_OPERATION_TYPE_READ_STATUS
+    )
     {
-        status = DRV_SST26_TRANSFER_BUSY;
+        if(dObj->isTransferDone == true && dObj->internal_write_complete_flag == true)
+        {
+            dObj->internal_write_complete_flag = false;
+            status = DRV_SST26_TRANSFER_COMPLETED;
+        }
+        else
+        {
+            status = DRV_SST26_TRANSFER_BUSY;
+        }
     }
 
     return status;
@@ -561,7 +600,8 @@ bool DRV_SST26_PageWrite( const DRV_HANDLE handle, void *tx_data, uint32_t addre
     sqiBufDesc[0].bd_nxtptr     = NULL;
 
     dObj->curOpType = DRV_SST26_OPERATION_TYPE_WRITE;
-
+	
+	dObj->internal_write_complete_flag = false;
 <#if core.DATA_CACHE_ENABLE?? && core.DATA_CACHE_ENABLE == true >
     SYS_CACHE_CleanDCache_by_Addr(&sqiCmdBuffer[0], 8);
     SYS_CACHE_CleanDCache_by_Addr(&sqiCmdDesc[0], 2 * (int32_t)sizeof(sqi_dma_desc_t));
@@ -592,7 +632,8 @@ static bool DRV_SST26_Erase( uint8_t *instruction, uint32_t length )
     sqiCmdDesc[1].bd_nxtptr     = NULL;
 
     dObj->curOpType = DRV_SST26_OPERATION_TYPE_ERASE;
-
+	
+	dObj->internal_write_complete_flag = false;
 <#if core.DATA_CACHE_ENABLE?? && core.DATA_CACHE_ENABLE == true >
     SYS_CACHE_CleanDCache_by_Addr(&sqiCmdBuffer[0], 8);
     SYS_CACHE_CleanDCache_by_Addr(&sqiCmdDesc[0], 2 * (int32_t)sizeof(sqi_dma_desc_t));

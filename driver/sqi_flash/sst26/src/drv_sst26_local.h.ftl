@@ -140,6 +140,9 @@ typedef enum
 
     <#lt>    /* Request is read operation. */
     <#lt>    DRV_SST26_OPERATION_TYPE_READ,
+	
+	<#lt>    /* Request is read operation status. */
+    <#lt>    DRV_SST26_OPERATION_TYPE_READ_STATUS,
 
     <#lt>    /* Request is write operation. */
     <#lt>    DRV_SST26_OPERATION_TYPE_WRITE,
@@ -156,6 +159,9 @@ typedef enum
     <#lt>{
     <#lt>    /* Flag to indicate in use  */
     <#lt>    bool inUse;
+	
+	<#lt>	/* Flag to indication read operation status*/
+    <#lt>	volatile bool internal_write_complete_flag;
 
     <#lt>    /* Flag to indicate status of transfer */
     <#lt>    volatile bool isTransferDone;
