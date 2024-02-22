@@ -62,8 +62,11 @@ address     = baseAddr + offset
 eoiAddress.setDefaultValue("0x%08XU"%address)
 
 Database.activateComponents(["pit"]);
-Database.setSymbolValue("core", "USE_FREERTOS_VECTORS", True)
-Database.setSymbolValue("pit", "ENABLE_COUNTER", False)
+Database.clearSymbolValue("core", "USE_FREERTOS_VECTORS")
+Database.clearSymbolValue("pit", "ENABLE_COUNTER")
+
+Database.sendMessage("core", "FREERTOS_CONFIG", {"USE_FREERTOS_VECTORS": {"setValue":True}})
+Database.sendMessage("pit", "PIT_TIMER_CONFIG", {"isPitEn": True})
 
 ############################################################################
 #### Code Generation ####

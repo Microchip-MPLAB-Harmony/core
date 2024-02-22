@@ -26,6 +26,19 @@
 ############### Cortex-M7 Architecture specific configuration ##############
 ############################################################################
 
+global clearFreeRTOSSymbols
+
+global coreSymbolsCfgDict
+coreSymbolsCfgDict = {}
+
+def clearFreeRTOSSymbols():
+    global coreSymbolsCfgDict
+
+    for key in coreSymbolsCfgDict.keys():
+        coreSymbolsCfgDict[key] = {"clearValue":None}
+
+    Database.sendMessage("core", "FREERTOS_CONFIG", coreSymbolsCfgDict)
+
 #CPU Clock Frequency
 cpuclk = Database.getSymbolValue("core", "CPU_CLOCK_FREQUENCY")
 cpuclk = int(cpuclk)
@@ -54,16 +67,20 @@ SysTickInterruptPriority     = "NVIC_"+ str(SysTickInterruptIndex) +"_0_PRIORITY
 SysTickInterruptPriorityLock = "NVIC_" + str(SysTickInterruptIndex) +"_0_PRIORITY_LOCK"
 
 Database.clearSymbolValue("core", SysTickInterruptPriority)
-Database.setSymbolValue("core", SysTickInterruptPriority, "7")
 Database.clearSymbolValue("core", SysTickInterruptPriorityLock)
-Database.setSymbolValue("core", SysTickInterruptPriorityLock, True)
 
 #Set SVCall Priority and Lock the Priority
 SVCallInterruptIndex        = Interrupt.getInterruptIndex("SVCall")
 SVCallInterruptPriorityLock = "NVIC_" + str(SVCallInterruptIndex) +"_0_PRIORITY_LOCK"
 
 Database.clearSymbolValue("core", SVCallInterruptPriorityLock)
-Database.setSymbolValue("core", SVCallInterruptPriorityLock, True)
+
+coreSymbolsCfgDict[SysTickInterruptPriority] = {"setValue":"7"}
+coreSymbolsCfgDict[SysTickInterruptPriorityLock] = {"setValue":True}
+coreSymbolsCfgDict[SVCallInterruptPriorityLock] = {"setValue":True}
+
+Database.sendMessage("core", "FREERTOS_CONFIG", coreSymbolsCfgDict)
+
 
 ############################################################################
 #### Code Generation ####

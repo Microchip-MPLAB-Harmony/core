@@ -25,6 +25,19 @@
 ############### Cortex-A7 Architecture specific configuration ##############
 ############################################################################
 
+global clearFreeRTOSSymbols
+
+global coreSymbolsCfgDict
+coreSymbolsCfgDict = {}
+
+def clearFreeRTOSSymbols():
+    global coreSymbolsCfgDict
+
+    for key in coreSymbolsCfgDict.keys():
+        coreSymbolsCfgDict[key] = {"clearValue":None}
+
+    Database.sendMessage("core", "FREERTOS_CONFIG", coreSymbolsCfgDict)
+
 #CPU Clock Frequency
 cpuclk = Database.getSymbolValue("core", "CPU_CLOCK_FREQUENCY")
 cpuclk = int(cpuclk)
@@ -54,10 +67,17 @@ interruptCpuInterfaceAddr = int(ATDF.getNode('/avr-tools-device-file/devices/dev
 interruptCpuInterfaceOffset = interruptCpuInterfaceAddr - interruptControllerBaseAddr
 intCtrlCpuInterfaceOffset.setDefaultValue("0x%08XU"%interruptCpuInterfaceOffset)
 
-Database.setSymbolValue("core", "RTOS_INTERRUPT_HANDLER", "GENERIC_TIMER_InterruptHandler")
-Database.setSymbolValue("core", "USE_FREERTOS_VECTORS", True)
-Database.setSymbolValue("core", "GENERIC_TIMER_ENABLE", True)
-Database.setSymbolValue("core", "GENERIC_TIMER_INTERRUPT", True)
+Database.clearSymbolValue("core", "RTOS_INTERRUPT_HANDLER")
+Database.clearSymbolValue("core", "USE_FREERTOS_VECTORS")
+Database.clearSymbolValue("core", "GENERIC_TIMER_ENABLE")
+Database.clearSymbolValue("core", "GENERIC_TIMER_INTERRUPT")
+
+coreSymbolsCfgDict["RTOS_INTERRUPT_HANDLER"] = {"setValue":"GENERIC_TIMER_InterruptHandler"}
+coreSymbolsCfgDict["USE_FREERTOS_VECTORS"] = {"setValue":True}
+coreSymbolsCfgDict["GENERIC_TIMER_ENABLE"] = {"setValue":True}
+coreSymbolsCfgDict["GENERIC_TIMER_INTERRUPT"] = {"setValue":True}
+
+Database.sendMessage("core", "FREERTOS_CONFIG", coreSymbolsCfgDict)
 
 ############################################################################
 #### Code Generation ####

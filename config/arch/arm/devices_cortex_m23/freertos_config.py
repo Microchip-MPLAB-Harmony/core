@@ -26,6 +26,18 @@ from os import path
 ############################################################################
 #### Cortex-M23-NTZ (No Trust Zone) Architecture specific configuration ####
 ############################################################################
+global clearFreeRTOSSymbols
+
+global coreSymbolsCfgDict
+coreSymbolsCfgDict = {}
+
+def clearFreeRTOSSymbols():
+    global coreSymbolsCfgDict
+
+    for key in coreSymbolsCfgDict.keys():
+        coreSymbolsCfgDict[key] = {"clearValue":None}
+
+    Database.sendMessage("core", "FREERTOS_CONFIG", coreSymbolsCfgDict)
 
 #CPU Clock Frequency
 cpuclk = Database.getSymbolValue("core", "CPU_CLOCK_FREQUENCY")
@@ -73,23 +85,31 @@ SysTickInterruptPriority     = "NVIC_"+ str(SysTickInterruptIndex) +"_0_PRIORITY
 SysTickInterruptPriorityLock = "NVIC_" + str(SysTickInterruptIndex) +"_0_PRIORITY_LOCK"
 
 Database.clearSymbolValue("core", SysTickInterruptPriority)
-Database.setSymbolValue("core", SysTickInterruptPriority, "3")
 Database.clearSymbolValue("core", SysTickInterruptPriorityLock)
-Database.setSymbolValue("core", SysTickInterruptPriorityLock, True)
 
 #Set SVCall Priority and Lock the Priority
 SVCallInterruptIndex        = Interrupt.getInterruptIndex("SVCall")
 SVCallInterruptPriorityLock = "NVIC_" + str(SVCallInterruptIndex) +"_0_PRIORITY_LOCK"
 
 Database.clearSymbolValue("core", SVCallInterruptPriorityLock)
-Database.setSymbolValue("core", SVCallInterruptPriorityLock, True)
+
+coreSymbolsCfgDict[SysTickInterruptPriority] = {"setValue":"3"}
+coreSymbolsCfgDict[SysTickInterruptPriorityLock] = {"setValue":True}
+coreSymbolsCfgDict[SVCallInterruptPriorityLock] = {"setValue":True}
+
 if Variables.get("__TRUSTZONE_ENABLED") != None and Variables.get("__TRUSTZONE_ENABLED") == "true":
-    #Set SysTick interrupt security mode as non-secure
-    Database.setSymbolValue("core", "NVIC_" + str(SysTickInterruptIndex) + "_0_SECURITY_TYPE", 1)
-    #Set SVCall interrupt security mode as non-secure
-    Database.setSymbolValue("core", "NVIC_" + str(SVCallInterruptIndex) + "_0_SECURITY_TYPE", 1)
-    #Set PendSV interrupt security mode as non-secure
-    Database.setSymbolValue("core", "NVIC_" + str(Interrupt.getInterruptIndex("PendSV")) + "_0_SECURITY_TYPE", 1)
+    Database.clearSymbolValue("core", "NVIC_" + str(SysTickInterruptIndex) + "_0_SECURITY_TYPE")
+    Database.clearSymbolValue("core", "NVIC_" + str(SVCallInterruptIndex) + "_0_SECURITY_TYPE")
+    Database.clearSymbolValue("core", "NVIC_" + str(Interrupt.getInterruptIndex("PendSV")) + "_0_SECURITY_TYPE")
+    
+#Set SysTick interrupt security mode as non-secure
+coreSymbolsCfgDict["NVIC_" + str(SysTickInterruptIndex) + "_0_SECURITY_TYPE"] = {"setValue": 1}
+#Set SVCall interrupt security mode as non-secure
+coreSymbolsCfgDict["NVIC_" + str(SVCallInterruptIndex) + "_0_SECURITY_TYPE"] = {"setValue":1}
+#Set PendSV interrupt security mode as non-secure
+coreSymbolsCfgDict["NVIC_" + str(Interrupt.getInterruptIndex("PendSV")) + "_0_SECURITY_TYPE"] = {"setValue":1}
+
+Database.sendMessage("core", "FREERTOS_CONFIG", coreSymbolsCfgDict)
 
 ############################################################################
 #### Code Generation ####

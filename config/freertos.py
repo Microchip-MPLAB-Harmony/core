@@ -248,6 +248,8 @@ def freeRtosIntConfig():
             Database.sendMessage("core", SVCallInterruptHandlerLock, {"isEnabled":True})
 
 def destroyComponent(thirdPartyFreeRTOS):
+    global clearFreeRTOSSymbols
+    
     if coreArch == "MIPS":
         Database.sendMessage("core", "TIMER_1_INTERRUPT_ENABLE", {"isEnabled":False})
         Database.sendMessage("core", "TMR1_CLOCK_ENABLE", {"isEnabled":False})
@@ -258,6 +260,16 @@ def destroyComponent(thirdPartyFreeRTOS):
         Database.sendMessage("core", "SysTick_INTERRUPT_HANDLER_LOCK", {"isEnabled":False})
         Database.sendMessage("core", "PendSV_INTERRUPT_HANDLER", {"intHandler":"PendSV_Handler"})
         Database.sendMessage("core", "SVCall_INTERRUPT_HANDLER", {"intHandler":"SVCall_Handler"})
+        if "ARM926" in coreArch:
+            Database.sendMessage("core", "FREERTOS_CONFIG", {"USE_FREERTOS_VECTORS": {"clearValue":None}})
+            Database.sendMessage("pit", "PIT_TIMER_CONFIG", {"isPitEn": False})
+            Database.deactivateComponents(["pit"])
+        elif "CORTEX-A5" in coreArch:
+            Database.sendMessage("pit", "PIT_TIMER_CONFIG", {"isPitEn": False, "rtosInterruptHandler": ""})
+            Database.sendMessage("core", "FREERTOS_CONFIG", {"USE_FREERTOS_VECTORS": {"clearValue":None}})
+            Database.deactivateComponents(["pit"])
+        else:
+            clearFreeRTOSSymbols()
 
 # Instatntiate FreeRTOS Component
 def instantiateComponent(thirdPartyFreeRTOS):
