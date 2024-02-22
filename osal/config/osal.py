@@ -50,6 +50,67 @@ def enableOSAL(symbol, event):
     else:
         symbol.setValue(False)
 
+def enableOSALTimeoutVis(symbol, event):
+    selected_rtos = event["source"].getSymbolByID("SELECT_RTOS").getValue()
+    osal_enabled = event["source"].getSymbolByID("ENABLE_OSAL").getValue()
+
+    if selected_rtos == "BareMetal":
+        symbol.setVisible(osal_enabled)
+    else:
+        symbol.setReadOnly(True)
+        symbol.setValue(False)
+        symbol.setVisible(False)
+        symbol.setReadOnly(False)
+
+def enableOSALTimeout(symbol, event):
+    coreArch = Database.getSymbolValue("core", "CoreArchitecture")
+    selected_rtos = event["source"].getSymbolByID("SELECT_RTOS").getValue()
+    if event["value"] == True:
+        if coreArch == "MIPS":
+            Database.activateComponents(["core_timer"])
+            Database.sendMessage("core_timer", "CORE_TIMER_CONFIG", {"isCoreTmrIntEn": True, "isCoreTmrPeriodicIntEn": True, "isCoreTmrAutoStart": True})
+        elif coreArch == "CORTEX-A7":
+            Database.sendMessage("core", "GENERIC_TIMER_CONFIG", {"isGenTmrEn": True, "isGenTmrIntEn": True, "isGenTmrAutoStart": True})
+        elif coreArch == "CORTEX-A5" or "ARM9" in coreArch:
+            Database.activateComponents(["pit"])
+            Database.sendMessage("pit", "PIT_TIMER_CONFIG", {"isPitEn": True, "isPitIntEn": True})
+        else:
+            Database.sendMessage("core", "SYSTICK_CONFIG", {"isSystickEn": True, "isSystickIntEn": True})
+    else:
+        # Reset the configuration only if selected_rtos is still Bare metal. If selected_rtos is something else, then there is a risk of
+        # overriding the configuration done by the rtos.
+
+        if coreArch == "MIPS":      #FreeRTOS does not use Core timer, so its okay to deactivate it.
+                Database.deactivateComponents(["core_timer"])
+                
+        if selected_rtos == "BareMetal":
+            if coreArch == "CORTEX-A7":
+                Database.sendMessage("core", "GENERIC_TIMER_CONFIG", {"isGenTmrEn": False, "isGenTmrIntEn": False, "isGenTmrAutoStart": False})
+            elif coreArch == "CORTEX-A5" or "ARM9" in coreArch:
+                Database.deactivateComponents(["pit"])
+            else:
+                Database.sendMessage("core", "SYSTICK_CONFIG", {"isSystickEn": False, "isSystickIntEn": False})
+
+def osalTimeoutPeripheralUsed(symbol, event):
+    if event["value"] == True:
+        coreArch = Database.getSymbolValue("core", "CoreArchitecture")
+        if coreArch == "MIPS":
+            symbol.setValue("CORETIMER")
+        elif coreArch == "CORTEX-A7":
+            symbol.setValue("GENERIC_TIMER")
+        elif coreArch == "CORTEX-A5" or "ARM9" in coreArch:
+            symbol.setValue("PIT")
+        else:
+            symbol.setValue("SYSTICK")
+
+        toutFeatureCmntSym = event["source"].getSymbolByID("OSAL_TIMEOUT_FEATURE_COMMENT")
+        toutFeatureCmntSym.setLabel("OSAL will use {0} timer for timeouts".format(symbol.getValue().lower()))
+        toutFeatureCmntSym.setVisible(True)
+    else:
+        symbol.setValue("")
+        toutFeatureCmntSym = event["source"].getSymbolByID("OSAL_TIMEOUT_FEATURE_COMMENT")
+        toutFeatureCmntSym.setVisible(False)
+
 def genOsalFiles(symbol, event):
     global osalSelectRTOS
     global osalHeaderFile
@@ -101,6 +162,29 @@ osal.setHelp(harmony_core_mcc_helpkeyword)
 osal.setDefaultValue(False)
 osal.setDependencies(enableOSAL, ["ENABLE_DRV_COMMON", "ENABLE_SYS_COMMON"])
 
+osalTimeout = harmonyCoreComponent.createBooleanSymbol("ENABLE_OSAL_TIMEOUT_FEATURE", osal)
+osalTimeout.setLabel("Use OSAL Timeout?")
+osalTimeout.setHelp(harmony_core_mcc_helpkeyword)
+osalTimeout.setDefaultValue(False)
+osalTimeout.setVisible(False)
+osalTimeout.setDependencies(enableOSALTimeoutVis, ["ENABLE_OSAL", "SELECT_RTOS"])
+
+#Dummy symbol to configure peripheral timer
+osalCfgTmr = harmonyCoreComponent.createBooleanSymbol("OSAL_CONFIG_TIMER", osal)
+osalCfgTmr.setHelp(harmony_core_mcc_helpkeyword)
+osalCfgTmr.setDefaultValue(False)
+osalCfgTmr.setVisible(False)
+osalCfgTmr.setDependencies(enableOSALTimeout, ["ENABLE_OSAL_TIMEOUT_FEATURE"])
+
+osalTimeoutPeripheral = harmonyCoreComponent.createStringSymbol("OSAL_TIMEOUT_PERIPHERAL", osal)
+osalTimeoutPeripheral.setLabel("OSAL Timeout Peripheral")
+osalTimeoutPeripheral.setDefaultValue("")
+osalTimeoutPeripheral.setVisible(False)
+osalTimeoutPeripheral.setDependencies(osalTimeoutPeripheralUsed, ["ENABLE_OSAL_TIMEOUT_FEATURE"])
+
+osalTimeoutComment = harmonyCoreComponent.createCommentSymbol("OSAL_TIMEOUT_FEATURE_COMMENT", osal)
+osalTimeoutComment.setLabel("")
+osalTimeoutComment.setVisible(False)
 
 osalSelectRTOS = harmonyCoreComponent.createComboSymbol("SELECT_RTOS", None, ["BareMetal", "FreeRTOS", "MicriumOSIII", "ThreadX", "MbedOS"])
 osalSelectRTOS.setLabel("Select any RTOS or Bare-metal")
