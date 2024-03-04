@@ -58,6 +58,23 @@ appSourceFile               = []
 appHeaderFile               = []
 genAppTaskEnable            = []
 genAppRtosTaskUseFPUContext = []
+genAppTaskUseStaticAlloc    = []
+genAppTaskCreateRestrictedTask = []
+genAppTaskFreeRTOSMPUConfig = []
+genAppTaskMPUReg = []
+genAppTaskMPURegBaseAddr = []
+genAppTaskMPURegLength = []
+genAppTaskMPURegAttr = []
+
+FreeRTOS_MPU_REGION_ATTR = [
+    "portMPU_REGION_READ_WRITE",
+    "portMPU_REGION_PRIVILEGED_READ_ONLY",
+    "portMPU_REGION_READ_ONLY",
+    "portMPU_REGION_PRIVILEGED_READ_WRITE",
+    "portMPU_REGION_PRIVILEGED_READ_WRITE_UNPRIV_READ_ONLY",
+    "portMPU_REGION_CACHEABLE_BUFFERABLE",
+    "portMPU_REGION_EXECUTE_NEVER",
+]
 
 ################################################################################
 #### Business Logic ####
@@ -175,6 +192,18 @@ def genRtosFreeRTOSAppTaskVisible(symbol, event):
     else:
         symbol.setVisible(False)
 
+def genAppTaskUseStaticAllocVisible(symbol, event):
+    symbol.setVisible(event["value"])
+
+def mpuRegVisibility(symbol, event):
+    symbol.setVisible(event["value"])
+
+def mpuRestrictedTaskUpdate(symbol, event):
+    symbol.setVisible(event["value"])
+    if event["value"] == False:
+        symbol.setReadOnly(True)    #override user value
+        symbol.setValue(False)
+        symbol.setReadOnly(False)
 ############################################################################
 enableRTOS  = osalSelectRTOS.getValue()
 coreArch  = Database.getSymbolValue("core", "CoreArchitecture");
@@ -320,6 +349,73 @@ for count in range(0, genAppTaskMaxCount):
     genAppRtosTaskDelay[count].setDefaultValue(50)
     genAppRtosTaskDelay[count].setVisible(False)
     genAppRtosTaskDelay[count].setDependencies(genAppRtosTaskOptionsVisible, ["GEN_APP_RTOS_TASK_" + str(count) + "_USE_DELAY"])
+
+    genAppTaskUseStaticAlloc.append(count)
+    genAppTaskUseStaticAlloc[count] = harmonyCoreComponent.createBooleanSymbol("GEN_APP_TASK_USE_STATIC_ALLOCATION_" + str(count), genAppTaskConfMenu[count])
+    genAppTaskUseStaticAlloc[count].setLabel("Use Static Allocation?")
+    genAppTaskUseStaticAlloc[count].setDescription("RTOS Task memory is provided by the application")
+    genAppTaskUseStaticAlloc[count].setDefaultValue(False)
+    genAppTaskUseStaticAlloc[count].setVisible(False)
+    genAppTaskUseStaticAlloc[count].setDependencies(genAppTaskUseStaticAllocVisible, ["FreeRTOS.FREERTOS_STATIC_ALLOC"])
+
+    genAppTaskCreateRestrictedTask.append(count)
+    genAppTaskCreateRestrictedTask[count] = harmonyCoreComponent.createBooleanSymbol("GEN_APP_TASK_CREATE_RESTRICTED_TASK_" + str(count), genAppTaskConfMenu[count])
+    genAppTaskCreateRestrictedTask[count].setLabel("Create Restricted Task?")
+    genAppTaskCreateRestrictedTask[count].setDescription("Create task with restricted execution privileges and restricted memory access rights")
+    genAppTaskCreateRestrictedTask[count].setDefaultValue(False)
+    genAppTaskCreateRestrictedTask[count].setVisible(False)
+    genAppTaskCreateRestrictedTask[count].setDependencies(mpuRestrictedTaskUpdate, ["FreeRTOS.FREERTOS_MPU_PORT_ENABLE"])
+
+    genAppTaskFreeRTOSMPUConfig.append(count)
+    genAppTaskFreeRTOSMPUConfig[count] = harmonyCoreComponent.createMenuSymbol("GEN_APP_TASK_MPU_CONFIG_" + str(count) + "_MENU", genAppTaskCreateRestrictedTask[count])
+    genAppTaskFreeRTOSMPUConfig[count].setLabel("MPU Regions Configuration")
+    genAppTaskFreeRTOSMPUConfig[count].setDescription("Configure Tasks MPU Regions")
+    genAppTaskFreeRTOSMPUConfig[count].setVisible(False)
+    genAppTaskFreeRTOSMPUConfig[count].setDependencies(mpuRegVisibility, ["GEN_APP_TASK_CREATE_RESTRICTED_TASK_" + str(count)])
+
+    genAppTaskMPUReg.append(count)
+    genAppTaskMPUReg[count] = [None] * 3
+
+    genAppTaskMPURegBaseAddr.append(count)
+    genAppTaskMPURegBaseAddr[count] = [None] * 3
+
+    genAppTaskMPURegLength.append(count)
+    genAppTaskMPURegLength[count] = [None] * 3
+
+    genAppTaskMPURegAttr.append(count)
+    genAppTaskMPURegAttr[count] = [None] * 3
+
+    for mpu_reg in range (0,3):
+
+        genAppTaskMPUReg[count][mpu_reg] = harmonyCoreComponent.createBooleanSymbol("GEN_APP_TASK_" + str(count) + "_MPU_REG_CFG_" + str(mpu_reg), genAppTaskFreeRTOSMPUConfig[count])
+        genAppTaskMPUReg[count][mpu_reg].setLabel("MPU Region " + str(mpu_reg))
+        genAppTaskMPUReg[count][mpu_reg].setDescription("Configure Tasks MPU Regions")
+        genAppTaskMPUReg[count][mpu_reg].setVisible(False)
+        genAppTaskMPUReg[count][mpu_reg].setDefaultValue(False)
+        genAppTaskMPUReg[count][mpu_reg].setDependencies(mpuRegVisibility, ["GEN_APP_TASK_CREATE_RESTRICTED_TASK_" + str(count)])
+
+        genAppTaskMPURegBaseAddr[count][mpu_reg] = harmonyCoreComponent.createStringSymbol("GEN_APP_TASK_" + str(count) + "_MPU_REG_BADDR_" + str(mpu_reg), genAppTaskMPUReg[count][mpu_reg])
+        genAppTaskMPURegBaseAddr[count][mpu_reg].setLabel("Base Address (Hex string/Valid C language identifier)")
+        genAppTaskMPURegBaseAddr[count][mpu_reg].setDescription("MPU Region Base Address")
+        genAppTaskMPURegBaseAddr[count][mpu_reg].setVisible(False)
+        genAppTaskMPURegBaseAddr[count][mpu_reg].setDefaultValue("0x0")
+        genAppTaskMPURegBaseAddr[count][mpu_reg].setDependencies(mpuRegVisibility, ["GEN_APP_TASK_" + str(count) + "_MPU_REG_CFG_" + str(mpu_reg)])
+
+        genAppTaskMPURegLength[count][mpu_reg] = harmonyCoreComponent.createHexSymbol("GEN_APP_TASK_" + str(count) + "_MPU_REG_LEN_" + str(mpu_reg), genAppTaskMPUReg[count][mpu_reg])
+        genAppTaskMPURegLength[count][mpu_reg].setLabel("Length")
+        genAppTaskMPURegLength[count][mpu_reg].setDescription("MPU Region Length")
+        genAppTaskMPURegLength[count][mpu_reg].setVisible(False)
+        genAppTaskMPURegLength[count][mpu_reg].setDefaultValue(1024)
+        genAppTaskMPURegLength[count][mpu_reg].setDependencies(mpuRegVisibility, ["GEN_APP_TASK_" + str(count) + "_MPU_REG_CFG_" + str(mpu_reg)])
+
+        genAppTaskMPURegAttr[count][mpu_reg] = harmonyCoreComponent.createComboSymbol("GEN_APP_TASK_" + str(count) + "_MPU_REG_ATTR_" + str(mpu_reg), genAppTaskMPUReg[count][mpu_reg], FreeRTOS_MPU_REGION_ATTR)
+        genAppTaskMPURegAttr[count][mpu_reg].setLabel("Attributes")
+        genAppTaskMPURegAttr[count][mpu_reg].setDescription("MPU Region Attributes")
+        genAppTaskMPURegAttr[count][mpu_reg].setDefaultValue("portMPU_REGION_READ_WRITE")
+        genAppTaskMPURegAttr[count][mpu_reg].setVisible(False)
+        genAppTaskMPURegAttr[count][mpu_reg].setDependencies(mpuRegVisibility, ["GEN_APP_TASK_" + str(count) + "_MPU_REG_CFG_" + str(mpu_reg)])
+
+
 
     if (coreArch == "CORTEX-A5" or
     ("PIC32MZEF" == Database.getSymbolValue("core", "PRODUCT_FAMILY")) or

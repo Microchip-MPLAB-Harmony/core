@@ -42,12 +42,28 @@ ComboVal_Tick_Mode          = ["Tickless_Idle", "Tick_Interrupt"]
 ComboVal_Mem_Mgmt_Type      = ["Heap_1", "Heap_2", "Heap_3", "Heap_4", "Heap_5"]
 ComboVal_Stack_Overflow     = ["No_Check", "Method_1", "Method_2"]
 
+def freeRTOSMPUOptionsVisibility(symbol, event):
+    if symbol.getID() == "FREERTOS_ERRATA_837070_WORKAROUND":
+        symbol.setVisible(event["value"] and coreArch == "CORTEX-M7")
+    else:
+        symbol.setVisible(event["value"])
 
 def activateCompilerSymbol(symbol, event):
     global compilerList
-    currentCompiler = compilerList[event["value"]]
+    currentCompiler = Database.getComponentByID("core").getSymbolByID("COMPILER_CHOICE").getSelectedKey()
     symbolCompiler = symbol.getID().split("_")[1].replace("CPP", "")
-    symbol.setEnabled(currentCompiler == symbolCompiler)
+    symId = symbol.getID()
+
+    if coreArch == "CORTEX-M4" or coreArch == "CORTEX-M7":
+        mpu_port_en = symbol.getComponent().getSymbolByID("FREERTOS_MPU_PORT_ENABLE").getValue()
+        if symId == "FREERTOS_XC32_SAM_PORT_C" or symId == "FREERTOS_XC32_SAM_PORTMACRO_H" or symId == "FREERTOS_XC32_INCLUDE_DIRS":
+            symbol.setEnabled(currentCompiler == symbolCompiler and mpu_port_en == False)
+        elif symId == "FREERTOS_XC32_SAM_MPU_PORT_C" or symId == "FREERTOS_XC32_SAM_MPU_PORTMACRO_H" or symId == "FREERTOS_XC32_SAM_MPU_WRAPPERS_C" or symId == "FREERTOS_XC32_MPU_PORT_INCLUDE_DIRS":
+            symbol.setEnabled(currentCompiler == symbolCompiler and mpu_port_en == True)
+        else:
+            symbol.setEnabled(currentCompiler == symbolCompiler)
+    else:
+        symbol.setEnabled(currentCompiler == symbolCompiler)
 
 def freeRtosExpIdleTimeVisibility(symbol, event):
     id = symbol.getID()[-1]
@@ -249,7 +265,7 @@ def freeRtosIntConfig():
 
 def destroyComponent(thirdPartyFreeRTOS):
     global clearFreeRTOSSymbols
-    
+
     if coreArch == "MIPS":
         Database.sendMessage("core", "TIMER_1_INTERRUPT_ENABLE", {"isEnabled":False})
         Database.sendMessage("core", "TMR1_CLOCK_ENABLE", {"isEnabled":False})
@@ -331,7 +347,7 @@ def instantiateComponent(thirdPartyFreeRTOS):
     freeRtosSym_TickRate.setLabel("Tick Rate (Hz)")
     freeRtosSym_TickRate.setDescription("FreeRTOS - Tick rate (Hz)")
     freeRtosSym_TickRate.setMin(1)
-    freeRtosSym_TickRate.setMax(1000)
+    freeRtosSym_TickRate.setMax(10000)
     freeRtosSym_TickRate.setDefaultValue(1000)
 
     freeRtosSym_MaxPrio = thirdPartyFreeRTOS.createIntegerSymbol("FREERTOS_MAX_PRIORITIES", freeRtosSymMenu)
@@ -617,6 +633,103 @@ def instantiateComponent(thirdPartyFreeRTOS):
         freeRtosSym_ConfigMaxApiCallInterruptPriority.setDefaultValue(((freeRtosSym_ConfigUniqueInterruptPriority.getValue() / 2) + 1))
         freeRtosSym_ConfigMaxApiCallInterruptPriority.setMin(1)
         freeRtosSym_ConfigMaxApiCallInterruptPriority.setMax((freeRtosSym_ConfigUniqueInterruptPriority.getMax() - 2))
+
+    #------------------
+    mpu_present = ATDF.getNode("/avr-tools-device-file/devices/device/parameters/param@[name=\"__MPU_PRESENT\"]").getAttribute("value")
+    mpu_options_visibility = (mpu_present == "1" and (coreArch == "CORTEX-M4" or coreArch == "CORTEX-M7"))
+
+    mpuRegions = 8
+
+    freeRtosSymMenu_MPUPortOptions = thirdPartyFreeRTOS.createBooleanSymbol("FREERTOS_MPU_PORT_ENABLE", freeRtosSymMenu)
+    freeRtosSymMenu_MPUPortOptions.setLabel("Enable FreeRTOS MPU Port")
+    freeRtosSymMenu_MPUPortOptions.setDefaultValue(False)
+    freeRtosSymMenu_MPUPortOptions.setVisible(mpu_options_visibility)
+
+    freeRtosSym_APPLICATION_DEFINED_PRIVILEGED_FUNCTIONS = thirdPartyFreeRTOS.createBooleanSymbol("FREERTOS_APPLICATION_DEFINED_PRIVILEGED_FUNCTIONS", freeRtosSymMenu_MPUPortOptions)
+    freeRtosSym_APPLICATION_DEFINED_PRIVILEGED_FUNCTIONS.setLabel("Application Defined Privileged Functions")
+    freeRtosSym_APPLICATION_DEFINED_PRIVILEGED_FUNCTIONS.setDescription(
+    "application writer must provide a header file called \"application_defined_privileged_functions.h\", in which functions the application writer needs to execute in privileged mode can be implemented")
+    freeRtosSym_APPLICATION_DEFINED_PRIVILEGED_FUNCTIONS.setDefaultValue(False)
+    freeRtosSym_APPLICATION_DEFINED_PRIVILEGED_FUNCTIONS.setVisible(False)
+    freeRtosSym_APPLICATION_DEFINED_PRIVILEGED_FUNCTIONS.setDependencies(freeRTOSMPUOptionsVisibility, ["FREERTOS_MPU_PORT_ENABLE"])
+
+    freeRtosSym_TotalMPURegions = thirdPartyFreeRTOS.createIntegerSymbol("FREERTOS_TOTAL_MPU_REGIONS", freeRtosSymMenu_MPUPortOptions)
+    freeRtosSym_TotalMPURegions.setLabel("Total MPU Regions")
+    freeRtosSym_TotalMPURegions.setDescription("Total number of available MPU Regions")
+    freeRtosSym_TotalMPURegions.setDefaultValue(mpuRegions)
+    freeRtosSym_TotalMPURegions.setReadOnly(True)
+    freeRtosSym_TotalMPURegions.setVisible(False)
+    freeRtosSym_TotalMPURegions.setDependencies(freeRTOSMPUOptionsVisibility, ["FREERTOS_MPU_PORT_ENABLE"])
+
+    freeRtosSym_TEX_S_C_B_FLASH = thirdPartyFreeRTOS.createHexSymbol("FREERTOS_TEX_S_C_B_FLASH", freeRtosSymMenu_MPUPortOptions)
+    freeRtosSym_TEX_S_C_B_FLASH.setLabel("TEX S C B for Flash")
+    freeRtosSym_TEX_S_C_B_FLASH.setDescription("TEX (Type extension), S (Shareable), B (Bufferable), and C (Cacheable) fields")
+    freeRtosSym_TEX_S_C_B_FLASH.setDefaultValue(0x07)
+    freeRtosSym_TEX_S_C_B_FLASH.setVisible(False)
+    freeRtosSym_TEX_S_C_B_FLASH.setDependencies(freeRTOSMPUOptionsVisibility, ["FREERTOS_MPU_PORT_ENABLE"])
+
+    freeRtosSym_TEX_S_C_B_SRAM = thirdPartyFreeRTOS.createHexSymbol("FREERTOS_TEX_S_C_B_SRAM", freeRtosSymMenu_MPUPortOptions)
+    freeRtosSym_TEX_S_C_B_SRAM.setLabel("TEX S C B for SRAM")
+    freeRtosSym_TEX_S_C_B_SRAM.setDescription("TEX (Type extension), S (Shareable), B (Bufferable), and C (Cacheable) fields")
+    freeRtosSym_TEX_S_C_B_SRAM.setDefaultValue(0x07)
+    freeRtosSym_TEX_S_C_B_SRAM.setVisible(False)
+    freeRtosSym_TEX_S_C_B_SRAM.setDependencies(freeRTOSMPUOptionsVisibility, ["FREERTOS_MPU_PORT_ENABLE"])
+
+    freeRtosSym_ENFORCE_SYSTEM_CALLS_FROM_KERNEL_ONLY = thirdPartyFreeRTOS.createBooleanSymbol("FREERTOS_ENFORCE_SYSTEM_CALLS_FROM_KERNEL_ONLY", freeRtosSymMenu_MPUPortOptions)
+    freeRtosSym_ENFORCE_SYSTEM_CALLS_FROM_KERNEL_ONLY.setLabel("Enforce System Calls from Kernel Only")
+    freeRtosSym_ENFORCE_SYSTEM_CALLS_FROM_KERNEL_ONLY.setDescription("Enforce System Calls from Kernel Only")
+    freeRtosSym_ENFORCE_SYSTEM_CALLS_FROM_KERNEL_ONLY.setDefaultValue(True)
+    freeRtosSym_ENFORCE_SYSTEM_CALLS_FROM_KERNEL_ONLY.setVisible(False)
+    freeRtosSym_ENFORCE_SYSTEM_CALLS_FROM_KERNEL_ONLY.setDependencies(freeRTOSMPUOptionsVisibility, ["FREERTOS_MPU_PORT_ENABLE"])
+
+    freeRtosSym_ALLOW_UNPRIVILEGED_CRITICAL_SECTIONS = thirdPartyFreeRTOS.createBooleanSymbol("FREERTOS_ALLOW_UNPRIVILEGED_CRITICAL_SECTIONS", freeRtosSymMenu_MPUPortOptions)
+    freeRtosSym_ALLOW_UNPRIVILEGED_CRITICAL_SECTIONS.setLabel("Allow Unprivileged Critical Sections")
+    freeRtosSym_ALLOW_UNPRIVILEGED_CRITICAL_SECTIONS.setDescription("Allow Unprivileged Critical Sections")
+    freeRtosSym_ALLOW_UNPRIVILEGED_CRITICAL_SECTIONS.setDefaultValue(False)
+    freeRtosSym_ALLOW_UNPRIVILEGED_CRITICAL_SECTIONS.setVisible(False)
+    freeRtosSym_ALLOW_UNPRIVILEGED_CRITICAL_SECTIONS.setDependencies(freeRTOSMPUOptionsVisibility, ["FREERTOS_MPU_PORT_ENABLE"])
+
+    freeRtosSym_ERRATA_837070_WORKAROUND = thirdPartyFreeRTOS.createBooleanSymbol("FREERTOS_ERRATA_837070_WORKAROUND", freeRtosSymMenu_MPUPortOptions)
+    freeRtosSym_ERRATA_837070_WORKAROUND.setLabel("Enable Errata 837070 Workaround")
+    freeRtosSym_ERRATA_837070_WORKAROUND.setDescription("Enable Errata 837070 Workaround")
+    freeRtosSym_ERRATA_837070_WORKAROUND.setDefaultValue(coreArch == "CORTEX-M7")
+    freeRtosSym_ERRATA_837070_WORKAROUND.setVisible(False)
+    freeRtosSym_ERRATA_837070_WORKAROUND.setReadOnly(True)
+    freeRtosSym_ERRATA_837070_WORKAROUND.setDependencies(freeRTOSMPUOptionsVisibility, ["FREERTOS_MPU_PORT_ENABLE"])
+
+    # Applicable for FreeRTOS V10.6.0 onwards
+    freeRtosSym_USE_MPU_WRAPPERS_V1 = thirdPartyFreeRTOS.createBooleanSymbol("FREERTOS_USE_MPU_WRAPPERS_V1", freeRtosSymMenu_MPUPortOptions)
+    freeRtosSym_USE_MPU_WRAPPERS_V1.setLabel("Use MPU Wrappers V1")
+    freeRtosSym_USE_MPU_WRAPPERS_V1.setDescription("Use MPU Wrappers V1")
+    freeRtosSym_USE_MPU_WRAPPERS_V1.setDefaultValue(False)
+    freeRtosSym_USE_MPU_WRAPPERS_V1.setVisible(False)
+    #freeRtosSym_USE_MPU_WRAPPERS_V1.setDependencies(freeRTOSMPUOptionsVisibility, ["FREERTOS_MPU_PORT_ENABLE"])
+
+    # Applicable for FreeRTOS V10.6.0 onwards
+    freeRtosSym_PROTECTED_KERNEL_OBJECT_POOL_SIZE = thirdPartyFreeRTOS.createIntegerSymbol("FREERTOS_PROTECTED_KERNEL_OBJECT_POOL_SIZE", freeRtosSymMenu_MPUPortOptions)
+    freeRtosSym_PROTECTED_KERNEL_OBJECT_POOL_SIZE.setLabel("Protected Kernel Object Pool Size")
+    freeRtosSym_PROTECTED_KERNEL_OBJECT_POOL_SIZE.setDescription("Protected Kernel Object Pool Size")
+    freeRtosSym_PROTECTED_KERNEL_OBJECT_POOL_SIZE.setDefaultValue(10 if freeRtosSym_USE_MPU_WRAPPERS_V1.getValue() == False else 0)
+    freeRtosSym_PROTECTED_KERNEL_OBJECT_POOL_SIZE.setVisible(False)
+    #freeRtosSym_PROTECTED_KERNEL_OBJECT_POOL_SIZE.setDependencies(freeRTOSMPUOptionsVisibility, ["FREERTOS_MPU_PORT_ENABLE"])
+
+    # Applicable for FreeRTOS V10.6.0 onwards
+    freeRtosSym_SYSTEM_CALL_STACK_SIZE = thirdPartyFreeRTOS.createIntegerSymbol("FREERTOS_SYSTEM_CALL_STACK_SIZE", freeRtosSymMenu_MPUPortOptions)
+    freeRtosSym_SYSTEM_CALL_STACK_SIZE.setLabel("System Call Stack Size")
+    freeRtosSym_SYSTEM_CALL_STACK_SIZE.setDescription("Each task has a statically allocated memory buffer of this size which is used as the stack to execute system calls")
+    freeRtosSym_SYSTEM_CALL_STACK_SIZE.setDefaultValue(128 if freeRtosSym_USE_MPU_WRAPPERS_V1.getValue() == False else 0)
+    freeRtosSym_SYSTEM_CALL_STACK_SIZE.setVisible(False)
+    #freeRtosSym_SYSTEM_CALL_STACK_SIZE.setDependencies(freeRTOSMPUOptionsVisibility, ["FREERTOS_MPU_PORT_ENABLE"])
+
+    # Applicable for FreeRTOS V10.6.0 onwards
+    freeRtosSym_ENABLE_ACCESS_CONTROL_LIST = thirdPartyFreeRTOS.createIntegerSymbol("FREERTOS_ENABLE_ACCESS_CONTROL_LIST", freeRtosSymMenu_MPUPortOptions)
+    freeRtosSym_ENABLE_ACCESS_CONTROL_LIST.setLabel("Enable Access Control List")
+    freeRtosSym_ENABLE_ACCESS_CONTROL_LIST.setDescription("When ACL is enabled, by default an unprivileged task does not have access to any kernel object other than itself")
+    freeRtosSym_ENABLE_ACCESS_CONTROL_LIST.setDefaultValue(False)
+    freeRtosSym_ENABLE_ACCESS_CONTROL_LIST.setVisible(False)
+    #freeRtosSym_ENABLE_ACCESS_CONTROL_LIST.setDependencies(freeRTOSMPUOptionsVisibility, ["FREERTOS_MPU_PORT_ENABLE"])
+
+    #------------------
 
     freeRtosSymMenu_IncludeComponents = thirdPartyFreeRTOS.createMenuSymbol("FREERTOS_INCLUDE_COMPONENTS", freeRtosSymMenu)
     freeRtosSymMenu_IncludeComponents.setLabel("Include components")

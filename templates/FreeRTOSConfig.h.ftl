@@ -2,7 +2,7 @@
 #ifndef FREERTOS_CONFIG_H
 #define FREERTOS_CONFIG_H
 
-/* MISRA C-2012 Rule 3.1, 5.4 deviated below. Deviation record ID -  
+/* MISRA C-2012 Rule 3.1, 5.4 deviated below. Deviation record ID -
    H3_MISRAC_2012_R_3_1_DR_1 & H3_MISRAC_2012_R_5_4_DR_1*/
 <#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
 <#if core.COMPILER_CHOICE == "XC32">
@@ -11,7 +11,7 @@
 </#if>
 #pragma coverity compliance block \
 (deviate:2 "MISRA C-2012 Rule 3.1" "H3_MISRAC_2012_R_3_1_DR_1" )\
-(deviate:2 "MISRA C-2012 Rule 5.4" "H3_MISRAC_2012_R_5_4_DR_1" )   
+(deviate:2 "MISRA C-2012 Rule 5.4" "H3_MISRAC_2012_R_5_4_DR_1" )
 </#if>
 /*
  * FreeRTOS Kernel V10.4.0
@@ -39,7 +39,7 @@
  *
  * 1 tab == 4 spaces!
  */
- 
+
 /*-----------------------------------------------------------
  * Application specific definitions.
  *
@@ -165,6 +165,18 @@
     <#lt>#define configMAX_API_CALL_INTERRUPT_PRIORITY           ${FREERTOS_CONFIG_MAX_API_CALL_INTERRUPT_PRIORITY}
 </#if>
 
+
+<#if FREERTOS_MPU_PORT_ENABLE == true>
+/* FreeRTOS MPU specific definitions. */
+#define configINCLUDE_APPLICATION_DEFINED_PRIVILEGED_FUNCTIONS <#if FREERTOS_APPLICATION_DEFINED_PRIVILEGED_FUNCTIONS == true>1<#else>0</#if>
+#define configTOTAL_MPU_REGIONS                                ${FREERTOS_TOTAL_MPU_REGIONS}
+#define configTEX_S_C_B_FLASH                                  ${FREERTOS_TEX_S_C_B_FLASH}UL /* Default value. */
+#define configTEX_S_C_B_SRAM                                   ${FREERTOS_TEX_S_C_B_SRAM}UL /* Default value. */
+#define configENFORCE_SYSTEM_CALLS_FROM_KERNEL_ONLY            <#if FREERTOS_ENFORCE_SYSTEM_CALLS_FROM_KERNEL_ONLY == true>1<#else>0</#if>
+#define configALLOW_UNPRIVILEGED_CRITICAL_SECTIONS             <#if FREERTOS_ALLOW_UNPRIVILEGED_CRITICAL_SECTIONS == true>1<#else>0</#if>
+#define configENABLE_ERRATA_837070_WORKAROUND                  <#if FREERTOS_ERRATA_837070_WORKAROUND == true>1<#else>0</#if>
+</#if>
+
 /* Optional functions - most linkers will remove unused functions anyway. */
 #define INCLUDE_vTaskPrioritySet                <#if FREERTOS_INCLUDE_VTASKPRIORITYSET == true>1<#else>0</#if>
 #define INCLUDE_uxTaskPriorityGet               <#if FREERTOS_INCLUDE_UXTASKPRIORITYGET == true>1<#else>0</#if>
@@ -234,7 +246,7 @@ void ${FREERTOS_TRACE_FREE_FNC}(void *pAddr, size_t size);
 #pragma coverity compliance end_block "MISRA C-2012 Rule 5.4"
 <#if core.COMPILER_CHOICE == "XC32">
 #pragma GCC diagnostic pop
-</#if>    
-</#if> 
+</#if>
+</#if>
 /* MISRAC 2012 deviation block end */
 #endif /* FREERTOS_CONFIG_H */
