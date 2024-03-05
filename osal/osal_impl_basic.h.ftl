@@ -200,22 +200,27 @@ static void OSAL_CRIT_Leave(OSAL_CRIT_TYPE severity, OSAL_CRITSECT_DATA_TYPE sta
 static OSAL_RESULT __attribute__((always_inline)) OSAL_SEM_Create(OSAL_SEM_HANDLE_TYPE* semID, OSAL_SEM_TYPE type,
                                 OSAL_SEM_COUNT_TYPE maxCount, OSAL_SEM_COUNT_TYPE initialCount)
 {
-  OSAL_CRITSECT_DATA_TYPE IntState;
+    OSAL_CRITSECT_DATA_TYPE IntState;
 
-  IntState = OSAL_CRIT_Enter(OSAL_CRIT_TYPE_HIGH);
+    if (semID == NULL)
+    {
+        return OSAL_RESULT_FAIL;
+    }
 
-  if (type == OSAL_SEM_TYPE_COUNTING)
-  {
-    *semID = initialCount;
-  }
-  else
-  {
-    *semID = (initialCount == 0U)? 0U : 1U;
-  }
+    IntState = OSAL_CRIT_Enter(OSAL_CRIT_TYPE_HIGH);
 
-  OSAL_CRIT_Leave(OSAL_CRIT_TYPE_HIGH,IntState);
+    if (type == OSAL_SEM_TYPE_COUNTING)
+    {
+        *semID = initialCount;
+    }
+    else
+    {
+        *semID = (initialCount == 0U)? 0U : 1U;
+    }
 
-  return OSAL_RESULT_SUCCESS;
+    OSAL_CRIT_Leave(OSAL_CRIT_TYPE_HIGH,IntState);
+
+    return OSAL_RESULT_SUCCESS;
 }
 
 // *****************************************************************************
@@ -233,6 +238,11 @@ static  OSAL_RESULT __attribute__((always_inline)) OSAL_SEM_Pend(OSAL_SEM_HANDLE
 {
     volatile OSAL_SEM_HANDLE_TYPE* sem = semID;
     OSAL_CRITSECT_DATA_TYPE IntState;
+
+    if (sem == NULL)
+    {
+        return OSAL_RESULT_FAIL;
+    }
 
     if (waitMS == OSAL_WAIT_FOREVER)
     {
@@ -271,11 +281,16 @@ static OSAL_RESULT __attribute__((always_inline)) OSAL_SEM_Post(OSAL_SEM_HANDLE_
 {
   OSAL_CRITSECT_DATA_TYPE IntState;
 
-  IntState = OSAL_CRIT_Enter(OSAL_CRIT_TYPE_HIGH);
-  (*semID)++;
-  OSAL_CRIT_Leave(OSAL_CRIT_TYPE_HIGH,IntState);
+    if (semID == NULL)
+    {
+        return OSAL_RESULT_FAIL;
+    }
 
-  return OSAL_RESULT_SUCCESS;
+    IntState = OSAL_CRIT_Enter(OSAL_CRIT_TYPE_HIGH);
+    (*semID)++;
+    OSAL_CRIT_Leave(OSAL_CRIT_TYPE_HIGH,IntState);
+
+    return OSAL_RESULT_SUCCESS;
 }
 
 // *****************************************************************************
@@ -283,8 +298,12 @@ static OSAL_RESULT __attribute__((always_inline)) OSAL_SEM_Post(OSAL_SEM_HANDLE_
  */
 static OSAL_RESULT __attribute__((always_inline)) OSAL_SEM_PostISR(OSAL_SEM_HANDLE_TYPE* semID)
 {
-  (*semID)++;
-  return OSAL_RESULT_SUCCESS;
+    if (semID == NULL)
+    {
+        return OSAL_RESULT_FAIL;
+    }
+    (*semID)++;
+    return OSAL_RESULT_SUCCESS;
 }
 
 // *****************************************************************************
@@ -292,7 +311,7 @@ static OSAL_RESULT __attribute__((always_inline)) OSAL_SEM_PostISR(OSAL_SEM_HAND
  */
 static OSAL_SEM_COUNT_TYPE __attribute__((always_inline)) OSAL_SEM_GetCount(OSAL_SEM_HANDLE_TYPE* semID)
 {
-  return *semID;
+    return *semID;
 }
 
 // *****************************************************************************
@@ -300,8 +319,12 @@ static OSAL_SEM_COUNT_TYPE __attribute__((always_inline)) OSAL_SEM_GetCount(OSAL
  */
 static OSAL_RESULT __attribute__((always_inline)) OSAL_MUTEX_Create(OSAL_MUTEX_HANDLE_TYPE* mutexID)
 {
-  *mutexID = 1;
-  return OSAL_RESULT_SUCCESS;
+    if (mutexID == NULL)
+    {
+        return OSAL_RESULT_FAIL;
+    }
+    *mutexID = 1;
+    return OSAL_RESULT_SUCCESS;
 }
 
 // *****************************************************************************
@@ -316,6 +339,10 @@ static OSAL_RESULT __attribute__((always_inline)) OSAL_MUTEX_Delete(OSAL_MUTEX_H
  */
 static OSAL_RESULT __attribute__((always_inline)) OSAL_MUTEX_Lock(OSAL_MUTEX_HANDLE_TYPE* mutexID, uint32_t waitMS)
 {
+    if (mutexID == NULL)
+    {
+        return OSAL_RESULT_FAIL;
+    }
     if (waitMS == OSAL_WAIT_FOREVER)
     {
         while (*mutexID == 0U){}
@@ -349,8 +376,12 @@ static OSAL_RESULT __attribute__((always_inline)) OSAL_MUTEX_Lock(OSAL_MUTEX_HAN
  */
 static OSAL_RESULT __attribute__((always_inline)) OSAL_MUTEX_Unlock(OSAL_MUTEX_HANDLE_TYPE* mutexID)
 {
-  *mutexID = 1;
-  return OSAL_RESULT_SUCCESS;
+    if (mutexID == NULL)
+    {
+        return OSAL_RESULT_FAIL;
+    }
+    *mutexID = 1;
+    return OSAL_RESULT_SUCCESS;
 }
 
 <#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
