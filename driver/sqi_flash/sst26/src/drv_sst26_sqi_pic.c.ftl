@@ -87,7 +87,9 @@ static uint8_t CACHE_ALIGN statusRegVal;
 static uint8_t CACHE_ALIGN jedecID[4];
 
 static uint8_t CACHE_ALIGN sqi_cmd_jedec[2];
+<#if LANE_MODE == "QUAD" >
 static uint8_t CACHE_ALIGN sqi_cmd_eqio;
+</#if>
 static uint8_t CACHE_ALIGN sqi_cmd_rsten;
 static uint8_t CACHE_ALIGN sqi_cmd_rst;
 static uint8_t CACHE_ALIGN sqi_cmd_wren;
@@ -98,7 +100,9 @@ static uint8_t CACHE_ALIGN sqi_cmd_be[4];
 static uint8_t CACHE_ALIGN sqi_cmd_pp[4];
 static uint8_t CACHE_ALIGN sqi_cmd_hsr[7];
 static uint8_t CACHE_ALIGN sqi_cmd_ULBPR;
+<#if LANE_MODE == "QUAD" >
 static uint8_t CACHE_ALIGN sqi_cmd_dummy[6];
+</#if>
 
 
 // *****************************************************************************
