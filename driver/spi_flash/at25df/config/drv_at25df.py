@@ -83,6 +83,8 @@ def instantiateComponent(at25dfComponent):
     at25dfSymNumClients.setHelp(drv_at25df_mcc_helpkeyword)
     at25dfSymNumClients.setReadOnly(True)
     at25dfSymNumClients.setDefaultValue(1)
+    at25dfSymNumClients.setMin(1)
+    at25dfSymNumClients.setMax(1)
 
     at25dfFLASHPageSize = at25dfComponent.createIntegerSymbol("PAGE_SIZE", None)
     at25dfFLASHPageSize.setLabel("Page Size")
