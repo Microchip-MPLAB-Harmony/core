@@ -378,6 +378,8 @@ def instantiateComponent(thirdPartyFreeRTOS):
     freeRtosSym_StackSize.setLabel("Minimal Stack Size")
     freeRtosSym_StackSize.setDescription("FreeRTOS - Minimal stack size. The size of the stack (in words) used by the idle task.")
     freeRtosSym_StackSize.setDefaultValue(128)
+    freeRtosSym_StackSize.setMin(1)
+    freeRtosSym_StackSize.setMax(2147483647)
 
     if Variables.get("__TRUSTZONE_ENABLED") != None and Variables.get("__TRUSTZONE_ENABLED") == "true":
         freeRtosSym_MaxSecureContexts = thirdPartyFreeRTOS.createIntegerSymbol("FREERTOS_MAX_SECURE_CONTEXTS", freeRtosSymMenu)
@@ -424,6 +426,8 @@ def instantiateComponent(thirdPartyFreeRTOS):
     freeRtosSym_TotalHeapSize.setLabel("Total heap size")
     freeRtosSym_TotalHeapSize.setDescription("FreeRTOS - Total heap size")
     freeRtosSym_TotalHeapSize.setDependencies(freeRtosTotalHeapSizeVisibility, ["FREERTOS_MEMORY_MANAGEMENT_CHOICE"])
+    freeRtosSym_TotalHeapSize.setMin(1)
+    freeRtosSym_TotalHeapSize.setMax(2147483647)
 
     freeRtosSym_AppAllocatedHeap = thirdPartyFreeRTOS.createBooleanSymbol("FREERTOS_APPLICATION_ALLOCATED_HEAP", freeRtosSymMenu)
     freeRtosSym_AppAllocatedHeap.setLabel("Enable application allocated heap")
@@ -496,6 +500,8 @@ def instantiateComponent(thirdPartyFreeRTOS):
     freeRtosSym_QueueRegSize.setLabel("Queue Registry Size")
     freeRtosSym_QueueRegSize.setDescription("FreeRTOS - Queue Registry Size")
     freeRtosSym_QueueRegSize.setDefaultValue(0)
+    freeRtosSym_QueueRegSize.setMin(0)
+    freeRtosSym_QueueRegSize.setMax(2147483647)
 
     freeRtosSym_QueueSets = thirdPartyFreeRTOS.createBooleanSymbol("FREERTOS_USE_QUEUE_SETS", freeRtosSymMenu)
     freeRtosSym_QueueSets.setLabel("Use Queue Sets")
@@ -714,8 +720,8 @@ def instantiateComponent(thirdPartyFreeRTOS):
     freeRtosSym_KernelIntrPrio = thirdPartyFreeRTOS.createIntegerSymbol("FREERTOS_KERNEL_INTERRUPT_PRIORITY", freeRtosSymMenu)
     freeRtosSym_KernelIntrPrio.setLabel("Kernel interrupt priority")
     freeRtosSym_KernelIntrPrio.setDescription("FreeRTOS - Kernel interrupt priority")
-    #freeRtosSym_KernelIntrPrio.setMin(1)
-    #freeRtosSym_KernelIntrPrio.setMax(999999999)
+    freeRtosSym_KernelIntrPrio.setMin(0)
+    freeRtosSym_KernelIntrPrio.setMax(999999999)
 
     freeRtosSym_MaxSysCalIntrPrio = thirdPartyFreeRTOS.createIntegerSymbol("FREERTOS_MAX_SYSCALL_INTERRUPT_PRIORITY", freeRtosSymMenu)
     freeRtosSym_MaxSysCalIntrPrio.setLabel("Maximum system call interrupt priority")
