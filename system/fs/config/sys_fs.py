@@ -100,6 +100,8 @@ def instantiateComponent(sysFSComponent):
     sysFSRTOSStackSize.setLabel("Stack Size (in bytes)")
     sysFSRTOSStackSize.setHelp(sys_fs_mcc_helpkeyword)
     sysFSRTOSStackSize.setDefaultValue(4096)
+    sysFSRTOSStackSize.setMin(1)
+    sysFSRTOSStackSize.setMax(2147483647)
 
     sysFSRTOSMsgQSize = sysFSComponent.createIntegerSymbol("SYS_FS_RTOS_TASK_MSG_QTY", sysFSRTOSMenu)
     sysFSRTOSMsgQSize.setLabel("Maximum Message Queue Size")
@@ -121,6 +123,8 @@ def instantiateComponent(sysFSComponent):
     sysFSRTOSTaskPriority.setLabel("Task Priority")
     sysFSRTOSTaskPriority.setHelp(sys_fs_mcc_helpkeyword)
     sysFSRTOSTaskPriority.setDefaultValue(1)
+    sysFSRTOSTaskPriority.setMin(0)
+    sysFSRTOSTaskPriority.setMax(2147483647)
 
     sysFSRTOSTaskDelay = sysFSComponent.createBooleanSymbol("SYS_FS_RTOS_USE_DELAY", sysFSRTOSMenu)
     sysFSRTOSTaskDelay.setLabel("Use Task Delay?")
@@ -132,6 +136,8 @@ def instantiateComponent(sysFSComponent):
     sysFSRTOSTaskDelayVal.setHelp(sys_fs_mcc_helpkeyword)
     sysFSRTOSTaskDelayVal.setDefaultValue(10)
     sysFSRTOSTaskDelayVal.setDependencies(showRTOSTaskDel, ["SYS_FS_RTOS_USE_DELAY"])
+    sysFSRTOSTaskDelayVal.setMin(0)
+    sysFSRTOSTaskDelayVal.setMax(2147483647)
 
     sysFSRTOSTaskSpecificOpt = sysFSComponent.createBooleanSymbol("SYS_FS_RTOS_TASK_OPT_NONE", sysFSRTOSMenu)
     sysFSRTOSTaskSpecificOpt.setLabel("Task Specific Options")
@@ -173,17 +179,23 @@ def instantiateComponent(sysFSComponent):
     sysFSMaxFiles.setLabel("Maximum Simultaneous File Access")
     sysFSMaxFiles.setHelp(sys_fs_mcc_helpkeyword)
     sysFSMaxFiles.setDefaultValue(1)
+    sysFSMaxFiles.setMin(1)
+    sysFSMaxFiles.setMax(2147483647)
 
     sysFSBlockSize = sysFSComponent.createIntegerSymbol("SYS_FS_MEDIA_MAX_BLOCK_SIZE", sysFSMenu)
     sysFSBlockSize.setLabel("Size Of Block")
     sysFSBlockSize.setHelp(sys_fs_mcc_helpkeyword)
     sysFSBlockSize.setDefaultValue(512)
     sysFSBlockSize.setReadOnly(True)
+    sysFSBlockSize.setMin(512)
+    sysFSBlockSize.setMax(4096)
 
     sysFSBufferSize = sysFSComponent.createIntegerSymbol("SYS_FS_MEDIA_MANAGER_BUFFER_SIZE", sysFSMenu)
     sysFSBufferSize.setLabel("Size Of Media Manager Buffer")
     sysFSBufferSize.setHelp(sys_fs_mcc_helpkeyword)
     sysFSBufferSize.setDefaultValue(2048)
+    sysFSBufferSize.setMin(512)
+    sysFSBufferSize.setMax(2147483647)
 
     sysFSAutoMount = sysFSComponent.createBooleanSymbol("SYS_FS_AUTO_MOUNT", sysFSMenu)
     sysFSAutoMount.setLabel("Use File System Auto Mount Feature?")
@@ -194,12 +206,15 @@ def instantiateComponent(sysFSComponent):
     sysFSMedia.setLabel("Total Number Of Media")
     sysFSMedia.setHelp(sys_fs_mcc_helpkeyword)
     sysFSMedia.setDefaultValue(1)
+    sysFSMedia.setMin(1)
     sysFSMedia.setMax(4)
 
     sysFSVol = sysFSComponent.createIntegerSymbol("SYS_FS_VOLUME_NUMBER", sysFSMenu)
     sysFSVol.setLabel("Total Number Of Volumes")
     sysFSVol.setHelp(sys_fs_mcc_helpkeyword)
     sysFSVol.setDefaultValue(1)
+    sysFSVol.setMin(1)
+    sysFSVol.setMax(10)
     sysFSVol.setDependencies(showFSVol, ["SYS_FS_AUTO_MOUNT"])
 
     sysFSTotalVol = sysFSComponent.createIntegerSymbol("SYS_FS_TOTAL_VOLUMES", sysFSMenu)
@@ -316,6 +331,7 @@ def instantiateComponent(sysFSComponent):
     sysFSFileType.setLabel("File System Types")
     sysFSFileType.setHelp(sys_fs_mcc_helpkeyword)
     sysFSFileType.setDefaultValue(1)
+    sysFSFileType.setMin(1)
     sysFSFileType.setMax(4)
 
     sysFSFat = sysFSComponent.createBooleanSymbol("SYS_FS_FAT", sysFSMenu)
