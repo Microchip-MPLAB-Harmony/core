@@ -711,7 +711,7 @@ static bool DRV_MEMORY_SetupXfer
         return isSuccess;
     }
 
-    if ((nBlock == 0U) || ((blockStart + nBlock) > dObj->mediaGeometryTable[geometry_type].numBlocks))
+    if ((nBlock == 0U) || (((uint64_t)blockStart + nBlock) > dObj->mediaGeometryTable[geometry_type].numBlocks))
     {
         SYS_DEBUG_MESSAGE(SYS_ERROR_INFO, "Memory Driver Invalid Block parameters.\n");
         return isSuccess;
