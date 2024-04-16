@@ -1765,7 +1765,7 @@ static void DRV_SDMMC_SetupXfer(
         {
             return;
         }
-        if (((blockStart + nBlocks) > dObj->mediaGeometryTable[GEOMETRY_TABLE_READ_ENTRY].numBlocks))
+        if ((((uint64_t)blockStart + nBlocks) > dObj->mediaGeometryTable[GEOMETRY_TABLE_READ_ENTRY].numBlocks))
         {
             return;
         }
@@ -1776,7 +1776,7 @@ static void DRV_SDMMC_SetupXfer(
         {
             return;
         }
-        if (((blockStart + nBlocks) > dObj->mediaGeometryTable[GEOMETRY_TABLE_WRITE_ENTRY].numBlocks))
+        if ((((uint64_t)blockStart + nBlocks) > dObj->mediaGeometryTable[GEOMETRY_TABLE_WRITE_ENTRY].numBlocks))
         {
             return;
         }
