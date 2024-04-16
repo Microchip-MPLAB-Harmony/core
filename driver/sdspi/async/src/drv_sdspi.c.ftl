@@ -2750,7 +2750,7 @@ static void DRV_SDSPI_SetupXfer(
         {
             return;
         }
-        if (((blockStart + nBlocks) > dObj->mediaGeometryTable[SYS_MEDIA_GEOMETRY_TABLE_READ_ENTRY].numBlocks))
+        if ((((uint64_t)blockStart + nBlocks) > dObj->mediaGeometryTable[SYS_MEDIA_GEOMETRY_TABLE_READ_ENTRY].numBlocks))
         {
             return;
         }
@@ -2761,7 +2761,7 @@ static void DRV_SDSPI_SetupXfer(
         {
             return;
         }
-        if (((blockStart + nBlocks) > dObj->mediaGeometryTable[SYS_MEDIA_GEOMETRY_TABLE_WRITE_ENTRY].numBlocks))
+        if ((((uint64_t)blockStart + nBlocks) > dObj->mediaGeometryTable[SYS_MEDIA_GEOMETRY_TABLE_WRITE_ENTRY].numBlocks))
         {
             return;
         }

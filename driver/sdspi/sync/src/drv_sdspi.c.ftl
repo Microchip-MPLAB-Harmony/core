@@ -1032,14 +1032,14 @@ static bool lDRV_SDSPI_SetupXfer (
 
     if (opType == DRV_SDSPI_OPERATION_TYPE_READ)
     {
-        if (((blockStart + nBlock) > dObj->mediaGeometryTable[SYS_MEDIA_GEOMETRY_TABLE_READ_ENTRY].numBlocks))
+        if ((((uint64_t)blockStart + nBlock) > dObj->mediaGeometryTable[SYS_MEDIA_GEOMETRY_TABLE_READ_ENTRY].numBlocks))
         {
             return isSuccess;
         }
     }
     else
     {
-        if (((blockStart + nBlock) > dObj->mediaGeometryTable[SYS_MEDIA_GEOMETRY_TABLE_WRITE_ENTRY].numBlocks))
+        if ((((uint64_t)blockStart + nBlock) > dObj->mediaGeometryTable[SYS_MEDIA_GEOMETRY_TABLE_WRITE_ENTRY].numBlocks))
         {
             return isSuccess;
         }
