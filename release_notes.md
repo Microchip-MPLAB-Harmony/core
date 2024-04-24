@@ -3,6 +3,15 @@
 
 # Microchip MPLAB® Harmony 3 Release Notes
 
+## Core Release v3.13.4
+
+### New Features
+- N/A
+
+### Bug fixes
+- Fixed variable overflow issue in SDMMC, SD-SPI and Memory Drivers
+- Fixed build issue in SYS_COMMAND service
+
 ## Core Release v3.13.3
 
 ### New Features
