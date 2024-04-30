@@ -183,6 +183,14 @@ def onSysTimeUseSystickChange(symbol, event):
             sysTimeTickRateMs.setVisible(False)
             sysTimeAchievableTickRateMsComment.setVisible(False)
             sysTimePLIBErrorComment.setVisible(False)
+    elif event["id"] == "SYSTICK_BUSY":
+        if event["value"] == False:
+            localComponent.getSymbolByID("SYS_TIME_USE_SYSTICK").setVisible(True)
+        if event["value"] == True:
+            if (localComponent.getSymbolByID("SYS_TIME_USE_SYSTICK").getValue() == True):
+                localComponent.getSymbolByID("SYS_TIME_USE_SYSTICK").setVisible(True)
+            elif (localComponent.getSymbolByID("SYS_TIME_USE_SYSTICK").getValue() == False):
+                localComponent.getSymbolByID("SYS_TIME_USE_SYSTICK").setVisible(False)
     else:
         if event["value"] == "BareMetal":
             symbol.setVisible(True)
@@ -223,7 +231,7 @@ def instantiateComponent(sysTimeComponent):
     sysTimeUseSystick.setHelp(sys_time_mcc_helpkeyword)
     sysTimeUseSystick.setDefaultValue(False)
     sysTimeUseSystick.setVisible(systickNode != None and Database.getSymbolValue("HarmonyCore", "SELECT_RTOS") == "BareMetal")
-    sysTimeUseSystick.setDependencies(onSysTimeUseSystickChange, ["SYS_TIME_USE_SYSTICK", "HarmonyCore.SELECT_RTOS"])
+    sysTimeUseSystick.setDependencies(onSysTimeUseSystickChange, ["SYS_TIME_USE_SYSTICK", "HarmonyCore.SELECT_RTOS", "core.SYSTICK_BUSY"])
 
     sysTimePLIB = sysTimeComponent.createStringSymbol("SYS_TIME_PLIB", None)
     sysTimePLIB.setLabel("PLIB Used")
