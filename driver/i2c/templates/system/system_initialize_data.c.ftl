@@ -64,42 +64,53 @@ static const DRV_I2C_PLIB_INTERFACE drvI2C${INDEX?string}PLibAPI = {
 
 static const DRV_I2C_INTERRUPT_SOURCES drvI2C${INDEX?string}InterruptSources =
 {
-    <#if I2C_PLIB_MULTI_IRQn?eval??>
+    <#if .vars["${DRV_I2C_PLIB?lower_case}"].MULTI_IRQn?has_content>
         <#lt>    /* Peripheral has more than one interrupt vector */
         <#lt>    .isSingleIntSrc                        = false,
 
         <#lt>    /* Peripheral interrupt lines */
-        <#if I2C_PLIB_INT_INDEX0?eval??>
-            <#lt>    .intSources.multi.i2cInt0          = (int32_t)${I2C_PLIB_INT_INDEX0?eval},
-        <#else>
-            <#lt>    .intSources.multi.i2cInt0          = -1,
-        </#if>
-        <#if I2C_PLIB_INT_INDEX1?eval??>
-            <#lt>    .intSources.multi.i2cInt1          = (int32_t)${I2C_PLIB_INT_INDEX1?eval},
-        <#else>
-            <#lt>    .intSources.multi.i2cInt1          = -1,
-        </#if>
-        <#if I2C_PLIB_INT_INDEX2?eval??>
-            <#lt>    .intSources.multi.i2cInt2          = (int32_t)${I2C_PLIB_INT_INDEX2?eval},
-        <#else>
-            <#lt>    .intSources.multi.i2cInt2          = -1,
-        </#if>
-        <#if I2C_PLIB_INT_INDEX3?eval??>
-            <#lt>    .intSources.multi.i2cInt3          = (int32_t)${I2C_PLIB_INT_INDEX3?eval},
-        <#else>
-            <#lt>    .intSources.multi.i2cInt3          = -1,
-        </#if>
+        <#lt>   .intSources.multi.i2cInt0   = (int32_t)${.vars["${DRV_I2C_PLIB?lower_case}"].I2C_0_INT_SRC},
+        <#lt>   .intSources.multi.i2cInt1   = (int32_t)${.vars["${DRV_I2C_PLIB?lower_case}"].I2C_1_INT_SRC},
+        <#lt>   .intSources.multi.i2cInt2   = (int32_t)${.vars["${DRV_I2C_PLIB?lower_case}"].I2C_2_INT_SRC},
+        <#lt>   .intSources.multi.i2cInt3   = (int32_t)${.vars["${DRV_I2C_PLIB?lower_case}"].I2C_3_INT_SRC},
     <#else>
-        <#lt>    /* Peripheral has single interrupt vector */
-        <#lt>    .isSingleIntSrc                        = true,
+        <#if I2C_PLIB_MULTI_IRQn?eval??>
+            <#lt>    /* Peripheral has more than one interrupt vector */
+            <#lt>    .isSingleIntSrc                        = false,
 
-        <#lt>    /* Peripheral interrupt line */
-        <#if .vars["${DRV_I2C_PLIB?lower_case}"].SINGLE_IRQn?has_content>
-            <#lt>    .intSources.i2cInterrupt             = (int32_t)${.vars["${DRV_I2C_PLIB?lower_case}"].SINGLE_IRQn},
-        <#elseif I2C_PLIB_SINGLE_IRQn?eval??>
-            <#lt>    .intSources.i2cInterrupt             = (int32_t)${I2C_PLIB_SINGLE_IRQn?eval},
+            <#lt>    /* Peripheral interrupt lines */
+            <#if I2C_PLIB_INT_INDEX0?eval??>
+                <#lt>    .intSources.multi.i2cInt0          = (int32_t)${I2C_PLIB_INT_INDEX0?eval},
+            <#else>
+                <#lt>    .intSources.multi.i2cInt0          = -1,
+            </#if>
+            <#if I2C_PLIB_INT_INDEX1?eval??>
+                <#lt>    .intSources.multi.i2cInt1          = (int32_t)${I2C_PLIB_INT_INDEX1?eval},
+            <#else>
+                <#lt>    .intSources.multi.i2cInt1          = -1,
+            </#if>
+            <#if I2C_PLIB_INT_INDEX2?eval??>
+                <#lt>    .intSources.multi.i2cInt2          = (int32_t)${I2C_PLIB_INT_INDEX2?eval},
+            <#else>
+                <#lt>    .intSources.multi.i2cInt2          = -1,
+            </#if>
+            <#if I2C_PLIB_INT_INDEX3?eval??>
+                <#lt>    .intSources.multi.i2cInt3          = (int32_t)${I2C_PLIB_INT_INDEX3?eval},
+            <#else>
+                <#lt>    .intSources.multi.i2cInt3          = -1,
+            </#if>
         <#else>
-            <#lt>    .intSources.i2cInterrupt             = (int32_t)${DRV_I2C_PLIB}_IRQn,
+            <#lt>    /* Peripheral has single interrupt vector */
+            <#lt>    .isSingleIntSrc                        = true,
+
+            <#lt>    /* Peripheral interrupt line */
+            <#if .vars["${DRV_I2C_PLIB?lower_case}"].SINGLE_IRQn?has_content>
+                <#lt>    .intSources.i2cInterrupt             = (int32_t)${.vars["${DRV_I2C_PLIB?lower_case}"].SINGLE_IRQn},
+            <#elseif I2C_PLIB_SINGLE_IRQn?eval??>
+                <#lt>    .intSources.i2cInterrupt             = (int32_t)${I2C_PLIB_SINGLE_IRQn?eval},
+            <#else>
+                <#lt>    .intSources.i2cInterrupt             = (int32_t)${DRV_I2C_PLIB}_IRQn,
+            </#if>
         </#if>
     </#if>
 };
