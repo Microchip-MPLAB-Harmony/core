@@ -149,42 +149,53 @@ static const uint32_t drvUsart${INDEX?string}remapError[] = {
 
 static const DRV_USART_INTERRUPT_SOURCES drvUSART${INDEX?string}InterruptSources =
 {
-    <#if USART_PLIB_MULTI_IRQn?eval??>
+    <#if .vars["${DRV_USART_PLIB?lower_case}"].MULTI_IRQn?has_content>
         <#lt>    /* Peripheral has more than one interrupt vector */
         <#lt>    .isSingleIntSrc                        = false,
 
         <#lt>    /* Peripheral interrupt lines */
-        <#if USART_PLIB_TX_COMPLETE_INDEX?eval??>
-            <#lt>    .intSources.multi.usartTxCompleteInt   = (int32_t)${USART_PLIB_TX_COMPLETE_INDEX?eval},
-        <#else>
-            <#lt>    .intSources.multi.usartTxCompleteInt   = -1,
-        </#if>
-        <#if USART_PLIB_TX_READY_INDEX?eval??>
-            <#lt>    .intSources.multi.usartTxReadyInt      = (int32_t)${USART_PLIB_TX_READY_INDEX?eval},
-        <#else>
-            <#lt>    .intSources.multi.usartTxReadyInt      = -1,
-        </#if>
-        <#if USART_PLIB_RX_INDEX?eval??>
-            <#lt>    .intSources.multi.usartRxCompleteInt   = (int32_t)${USART_PLIB_RX_INDEX?eval},
-        <#else>
-            <#lt>    .intSources.multi.usartTxReadyInt      = -1,
-        </#if>
-        <#if USART_PLIB_ERROR_INDEX?eval??>
-            <#lt>    .intSources.multi.usartErrorInt        = (int32_t)${USART_PLIB_ERROR_INDEX?eval},
-        <#else>
-            <#lt>    .intSources.multi.usartErrorInt        = -1,
-        </#if>
+        <#lt>   .intSources.multi.usartTxCompleteInt   = (int32_t)${.vars["${DRV_USART_PLIB?lower_case}"].USART_TX_COMPLETE_INT_SRC},
+        <#lt>   .intSources.multi.usartTxReadyInt      = (int32_t)${.vars["${DRV_USART_PLIB?lower_case}"].USART_TX_READY_INT_SRC},
+        <#lt>   .intSources.multi.usartRxCompleteInt   = (int32_t)${.vars["${DRV_USART_PLIB?lower_case}"].USART_RX_INT_SRC},
+        <#lt>   .intSources.multi.usartErrorInt        = (int32_t)${.vars["${DRV_USART_PLIB?lower_case}"].USART_ERROR_INT_SRC},        
     <#else>
-        <#lt>    /* Peripheral has single interrupt vector */
-        <#lt>    .isSingleIntSrc                        = true,
+        <#if USART_PLIB_MULTI_IRQn?eval??>
+            <#lt>    /* Peripheral has more than one interrupt vector */
+            <#lt>    .isSingleIntSrc                        = false,
 
-        <#lt>    /* Peripheral interrupt line */
-        <#if .vars["${DRV_USART_PLIB?lower_case}"].SINGLE_IRQn?has_content>
-            <#lt>    .intSources.usartInterrupt             = (int32_t)${.vars["${DRV_USART_PLIB?lower_case}"].SINGLE_IRQn},
-        <#elseif USART_PLIB_SINGLE_IRQn?eval??>
-            <#lt>    .intSources.usartInterrupt             = (int32_t)${USART_PLIB_SINGLE_IRQn?eval},
+            <#lt>    /* Peripheral interrupt lines */
+            <#if USART_PLIB_TX_COMPLETE_INDEX?eval??>
+                <#lt>    .intSources.multi.usartTxCompleteInt   = (int32_t)${USART_PLIB_TX_COMPLETE_INDEX?eval},
+            <#else>
+                <#lt>    .intSources.multi.usartTxCompleteInt   = -1,
+            </#if>
+            <#if USART_PLIB_TX_READY_INDEX?eval??>
+                <#lt>    .intSources.multi.usartTxReadyInt      = (int32_t)${USART_PLIB_TX_READY_INDEX?eval},
+            <#else>
+                <#lt>    .intSources.multi.usartTxReadyInt      = -1,
+            </#if>
+            <#if USART_PLIB_RX_INDEX?eval??>
+                <#lt>    .intSources.multi.usartRxCompleteInt   = (int32_t)${USART_PLIB_RX_INDEX?eval},
+            <#else>
+                <#lt>    .intSources.multi.usartTxReadyInt      = -1,
+            </#if>
+            <#if USART_PLIB_ERROR_INDEX?eval??>
+                <#lt>    .intSources.multi.usartErrorInt        = (int32_t)${USART_PLIB_ERROR_INDEX?eval},
+            <#else>
+                <#lt>    .intSources.multi.usartErrorInt        = -1,
+            </#if>
         <#else>
-            <#lt>    .intSources.usartInterrupt             = (int32_t)${DRV_USART_PLIB}_IRQn,
+            <#lt>    /* Peripheral has single interrupt vector */
+            <#lt>    .isSingleIntSrc                        = true,
+
+            <#lt>    /* Peripheral interrupt line */
+            <#if .vars["${DRV_USART_PLIB?lower_case}"].SINGLE_IRQn?has_content>
+                <#lt>    .intSources.usartInterrupt             = (int32_t)${.vars["${DRV_USART_PLIB?lower_case}"].SINGLE_IRQn},
+            <#elseif USART_PLIB_SINGLE_IRQn?eval??>
+                <#lt>    .intSources.usartInterrupt             = (int32_t)${USART_PLIB_SINGLE_IRQn?eval},
+            <#else>
+                <#lt>    .intSources.usartInterrupt             = (int32_t)${DRV_USART_PLIB}_IRQn,
+            </#if>
         </#if>
     </#if>
     <#if core.DMA_ENABLE?has_content && drv_usart.DRV_USART_SYS_DMA_ENABLE == true>
