@@ -441,12 +441,6 @@ bool DRV_SST39_GeometryGet(const DRV_HANDLE handle, DRV_SST39_GEOMETRY *geometry
 
     flash_size = DRV_SST39_MEMORY_SIZE;
 
-    /* Flash size should be at-least of a Write Block size */
-    if (flash_size < DRV_SST39_PAGE_SIZE)
-    {
-        return false;
-    }
-
     /* Read block size and number of blocks */
     geometry->read_blockSize = 1;
     geometry->read_numBlocks = flash_size;
