@@ -165,7 +165,7 @@ freeRtosPortAsmHeader.setType("HEADER")
 freeRtosPortAsmHeader.setMarkup(False)
 
 freeRtosPortHeader = thirdPartyFreeRTOS.createFileSymbol("FREERTOS_SAM_PORTMACRO_H", None)
-freeRtosPortHeader.setSourcePath("../CMSIS-FreeRTOS/Source/portable/GCC/" + freeRtosDir + "/non_secure/portmacro.h")
+freeRtosPortHeader.setSourcePath("../FreeRTOS-Kernel/portable/GCC/" + freeRtosDir + "/non_secure/portmacro.h")
 freeRtosPortHeader.setOutputName("portmacro.h")
 freeRtosPortHeader.setDestPath("../../third_party/rtos/FreeRTOS/Source/portable/GCC/" + freeRtosDir + "/non_secure")
 freeRtosPortHeader.setProjectPath("FreeRTOS/Source/portable/GCC/" + freeRtosDir + "/non_secure")
@@ -173,7 +173,7 @@ freeRtosPortHeader.setType("HEADER")
 freeRtosPortHeader.setMarkup(False)
 
 freeRtosPortCommonHeader = thirdPartyFreeRTOS.createFileSymbol("FREERTOS_SAM_PORTMACRO_COMMON_H", None)
-freeRtosPortCommonHeader.setSourcePath("../CMSIS-FreeRTOS/Source/portable/GCC/" + freeRtosDir + "/non_secure/portmacrocommon.h")
+freeRtosPortCommonHeader.setSourcePath("../FreeRTOS-Kernel/portable/GCC/" + freeRtosDir + "/non_secure/portmacrocommon.h")
 freeRtosPortCommonHeader.setOutputName("portmacrocommon.h")
 freeRtosPortCommonHeader.setDestPath("../../third_party/rtos/FreeRTOS/Source/portable/GCC/" + freeRtosDir + "/non_secure")
 freeRtosPortCommonHeader.setProjectPath("FreeRTOS/Source/portable/GCC/" + freeRtosDir + "/non_secure")
@@ -197,7 +197,7 @@ if Variables.get("__TRUSTZONE_ENABLED") != None and Variables.get("__TRUSTZONE_E
     freeRtosSecureIncludeDirXc32cppSym.setSecurity("SECURE")
 
     freeRtosSecureContextSource = thirdPartyFreeRTOS.createFileSymbol("FREERTOS_SECURE_CONTEXT_C", None)
-    freeRtosSecureContextSource.setSourcePath("../CMSIS-FreeRTOS/Source/portable/GCC/ARM_CM33/secure/secure_context.c")
+    freeRtosSecureContextSource.setSourcePath("../FreeRTOS-Kernel/portable/GCC/ARM_CM33/secure/secure_context.c")
     freeRtosSecureContextSource.setOutputName("secure_context.c")
     freeRtosSecureContextSource.setDestPath("../../third_party/rtos/FreeRTOS/Source/portable/GCC/ARM_CM33/secure")
     freeRtosSecureContextSource.setProjectPath("FreeRTOS/Source/portable/GCC/ARM_CM33/secure")
@@ -206,7 +206,7 @@ if Variables.get("__TRUSTZONE_ENABLED") != None and Variables.get("__TRUSTZONE_E
     freeRtosSecureContextSource.setSecurity("SECURE")
 
     freeRtosSecureContextPortSource = thirdPartyFreeRTOS.createFileSymbol("FREERTOS_SECURE_CONTEXT_PORT_C", None)
-    freeRtosSecureContextPortSource.setSourcePath("../CMSIS-FreeRTOS/Source/portable/GCC/ARM_CM33/secure/secure_context_port.c")
+    freeRtosSecureContextPortSource.setSourcePath("../FreeRTOS-Kernel/portable/GCC/ARM_CM33/secure/secure_context_port.c")
     freeRtosSecureContextPortSource.setOutputName("secure_context_port.c")
     freeRtosSecureContextPortSource.setDestPath("../../third_party/rtos/FreeRTOS/Source/portable/GCC/ARM_CM33/secure")
     freeRtosSecureContextPortSource.setProjectPath("FreeRTOS/Source/portable/GCC/ARM_CM33/secure")
@@ -224,7 +224,7 @@ if Variables.get("__TRUSTZONE_ENABLED") != None and Variables.get("__TRUSTZONE_E
     freeRtosSecureHeapSource.setSecurity("SECURE")
 
     freeRtosSecureInitSource = thirdPartyFreeRTOS.createFileSymbol("FREERTOS_SECURE_INIT_C", None)
-    freeRtosSecureInitSource.setSourcePath("../CMSIS-FreeRTOS/Source/portable/GCC/ARM_CM33/secure/secure_init.c")
+    freeRtosSecureInitSource.setSourcePath("../FreeRTOS-Kernel/portable/GCC/ARM_CM33/secure/secure_init.c")
     freeRtosSecureInitSource.setOutputName("secure_init.c")
     freeRtosSecureInitSource.setDestPath("../../third_party/rtos/FreeRTOS/Source/portable/GCC/ARM_CM33/secure")
     freeRtosSecureInitSource.setProjectPath("FreeRTOS/Source/portable/GCC/ARM_CM33/secure")
@@ -233,7 +233,7 @@ if Variables.get("__TRUSTZONE_ENABLED") != None and Variables.get("__TRUSTZONE_E
     freeRtosSecureInitSource.setSecurity("SECURE")
 
     freeRtosSecureContextHeader = thirdPartyFreeRTOS.createFileSymbol("FREERTOS_SECURE_CONTEXT_H", None)
-    freeRtosSecureContextHeader.setSourcePath("../CMSIS-FreeRTOS/Source/portable/GCC/ARM_CM33/secure/secure_context.h")
+    freeRtosSecureContextHeader.setSourcePath("../FreeRTOS-Kernel/portable/GCC/ARM_CM33/secure/secure_context.h")
     freeRtosSecureContextHeader.setOutputName("secure_context.h")
     freeRtosSecureContextHeader.setDestPath("../../third_party/rtos/FreeRTOS/Source/portable/GCC/ARM_CM33/secure")
     freeRtosSecureContextHeader.setProjectPath("FreeRTOS/Source/portable/GCC/ARM_CM33/secure")
@@ -242,7 +242,7 @@ if Variables.get("__TRUSTZONE_ENABLED") != None and Variables.get("__TRUSTZONE_E
     freeRtosSecureContextHeader.setSecurity("SECURE")
 
     freeRtosSecurePortMacrosHeader = thirdPartyFreeRTOS.createFileSymbol("FREERTOS_SECURE_PORT_MACROS_H", None)
-    freeRtosSecurePortMacrosHeader.setSourcePath("../CMSIS-FreeRTOS/Source/portable/GCC/ARM_CM33/secure/secure_port_macros.h")
+    freeRtosSecurePortMacrosHeader.setSourcePath("../FreeRTOS-Kernel/portable/GCC/ARM_CM33/secure/secure_port_macros.h")
     freeRtosSecurePortMacrosHeader.setOutputName("secure_port_macros.h")
     freeRtosSecurePortMacrosHeader.setDestPath("../../third_party/rtos/FreeRTOS/Source/portable/GCC/ARM_CM33/secure")
     freeRtosSecurePortMacrosHeader.setProjectPath("FreeRTOS/Source/portable/GCC/ARM_CM33/secure")
@@ -251,7 +251,7 @@ if Variables.get("__TRUSTZONE_ENABLED") != None and Variables.get("__TRUSTZONE_E
     freeRtosSecurePortMacrosHeader.setSecurity("SECURE")
 
     freeRtosSecureHeapHeader = thirdPartyFreeRTOS.createFileSymbol("FREERTOS_SECURE_HEAP_H", None)
-    freeRtosSecureHeapHeader.setSourcePath("../CMSIS-FreeRTOS/Source/portable/GCC/ARM_CM33/secure/secure_heap.h")
+    freeRtosSecureHeapHeader.setSourcePath("../FreeRTOS-Kernel/portable/GCC/ARM_CM33/secure/secure_heap.h")
     freeRtosSecureHeapHeader.setOutputName("secure_heap.h")
     freeRtosSecureHeapHeader.setDestPath("../../third_party/rtos/FreeRTOS/Source/portable/GCC/ARM_CM33/secure")
     freeRtosSecureHeapHeader.setProjectPath("FreeRTOS/Source/portable/GCC/ARM_CM33/secure")
@@ -260,7 +260,7 @@ if Variables.get("__TRUSTZONE_ENABLED") != None and Variables.get("__TRUSTZONE_E
     freeRtosSecureHeapHeader.setSecurity("SECURE")
 
     freeRtosSecureInitHeader = thirdPartyFreeRTOS.createFileSymbol("FREERTOS_SECURE_INIT_H", None)
-    freeRtosSecureInitHeader.setSourcePath("../CMSIS-FreeRTOS/Source/portable/GCC/ARM_CM33/secure/secure_init.h")
+    freeRtosSecureInitHeader.setSourcePath("../FreeRTOS-Kernel/portable/GCC/ARM_CM33/secure/secure_init.h")
     freeRtosSecureInitHeader.setOutputName("secure_init.h")
     freeRtosSecureInitHeader.setDestPath("../../third_party/rtos/FreeRTOS/Source/portable/GCC/ARM_CM33/secure")
     freeRtosSecureInitHeader.setProjectPath("FreeRTOS/Source/portable/GCC/ARM_CM33/secure")

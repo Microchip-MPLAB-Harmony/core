@@ -118,7 +118,7 @@ freeRtosdefSymXc32cpp.setDependencies(activateCompilerSymbol, ['core.COMPILER_CH
 freeRtosdefSymXc32cpp.setEnabled(selectedCompiler == "XC32")
 
 freeRtosPortSourceXc32 = thirdPartyFreeRTOS.createFileSymbol("FREERTOS_XC32_SAM_PORT_C", None)
-freeRtosPortSourceXc32.setSourcePath("../CMSIS-FreeRTOS/Source/portable/GCC/ARM_CM7/r0p1/port.c")
+freeRtosPortSourceXc32.setSourcePath("../FreeRTOS-Kernel/portable/GCC/ARM_CM7/r0p1/port.c")
 freeRtosPortSourceXc32.setOutputName("port.c")
 freeRtosPortSourceXc32.setDestPath("../../third_party/rtos/FreeRTOS/Source/portable/GCC/SAM/CM7")
 freeRtosPortSourceXc32.setProjectPath("FreeRTOS/Source/portable/GCC/SAM/CM7")
@@ -138,7 +138,7 @@ freeRtosPortSourceXc32MPU.setDependencies(activateCompilerSymbol, ['core.COMPILE
 freeRtosPortSourceXc32MPU.setEnabled(selectedCompiler == "XC32" and freeRtosSymMenu_MPUPortOptions.getValue() == True)
 
 freeRtosPortHeaderXc32 = thirdPartyFreeRTOS.createFileSymbol("FREERTOS_XC32_SAM_PORTMACRO_H", None)
-freeRtosPortHeaderXc32.setSourcePath("../CMSIS-FreeRTOS/Source/portable/GCC/ARM_CM7/r0p1/portmacro.h")
+freeRtosPortHeaderXc32.setSourcePath("../FreeRTOS-Kernel/portable/GCC/ARM_CM7/r0p1/portmacro.h")
 freeRtosPortHeaderXc32.setOutputName("portmacro.h")
 freeRtosPortHeaderXc32.setDestPath("../../third_party/rtos/FreeRTOS/Source/portable/GCC/SAM/CM7")
 freeRtosPortHeaderXc32.setProjectPath("FreeRTOS/Source/portable/GCC/SAM/CM7")
@@ -185,7 +185,7 @@ freeRtosAsmdefSymIar.setDependencies(activateCompilerSymbol, ['core.COMPILER_CHO
 freeRtosAsmdefSymIar.setEnabled(selectedCompiler == "IAR")
 
 freeRtosPortSourceIar = thirdPartyFreeRTOS.createFileSymbol("FREERTOS_IAR_SAM_PORT_C", None)
-freeRtosPortSourceIar.setSourcePath("../CMSIS-FreeRTOS/Source/portable/IAR/ARM_CM7/r0p1/port.c")
+freeRtosPortSourceIar.setSourcePath("../FreeRTOS-Kernel/portable/IAR/ARM_CM7/r0p1/port.c")
 freeRtosPortSourceIar.setOutputName("port.c")
 freeRtosPortSourceIar.setDestPath("../../third_party/rtos/FreeRTOS/Source/portable/IAR/SAM/CM7")
 freeRtosPortSourceIar.setProjectPath("FreeRTOS/Source/portable/IAR/SAM/CM7")
@@ -195,7 +195,7 @@ freeRtosPortSourceIar.setDependencies(activateCompilerSymbol, ['core.COMPILER_CH
 freeRtosPortSourceIar.setEnabled(selectedCompiler == "IAR")
 
 freeRtosPortAsmIar = thirdPartyFreeRTOS.createFileSymbol("FREERTOS_IAR_SAM_PORTASM_S", None)
-freeRtosPortAsmIar.setSourcePath("../CMSIS-FreeRTOS/Source/portable/IAR/ARM_CM7/r0p1/portasm.s")
+freeRtosPortAsmIar.setSourcePath("../FreeRTOS-Kernel/portable/IAR/ARM_CM7/r0p1/portasm.s")
 freeRtosPortAsmIar.setOutputName("portasm.s")
 freeRtosPortAsmIar.setDestPath("../../third_party/rtos/FreeRTOS/Source/portable/IAR/SAM/CM7")
 freeRtosPortAsmIar.setProjectPath("FreeRTOS/Source/portable/IAR/SAM/CM7")
@@ -205,7 +205,7 @@ freeRtosPortAsmIar.setDependencies(activateCompilerSymbol, ['core.COMPILER_CHOIC
 freeRtosPortAsmIar.setEnabled(selectedCompiler == "IAR")
 
 freeRtosPortHeaderIar = thirdPartyFreeRTOS.createFileSymbol("FREERTOS_IAR_SAM_PORTMACRO_H", None)
-freeRtosPortHeaderIar.setSourcePath("../CMSIS-FreeRTOS/Source/portable/IAR/ARM_CM7/r0p1/portmacro.h")
+freeRtosPortHeaderIar.setSourcePath("../FreeRTOS-Kernel/portable/IAR/ARM_CM7/r0p1/portmacro.h")
 freeRtosPortHeaderIar.setOutputName("portmacro.h")
 freeRtosPortHeaderIar.setDestPath("../../third_party/rtos/FreeRTOS/Source/portable/IAR/SAM/CM7")
 freeRtosPortHeaderIar.setProjectPath("FreeRTOS/Source/portable/IAR/SAM/CM7")
@@ -224,7 +224,7 @@ freeRtosdefSymKeil.setDependencies(activateCompilerSymbol, ['core.COMPILER_CHOIC
 freeRtosdefSymKeil.setEnabled(selectedCompiler == "KEIL")
 
 freeRtosPortSourceKeil = thirdPartyFreeRTOS.createFileSymbol("FREERTOS_KEIL_PORT_C", None)
-freeRtosPortSourceKeil.setSourcePath("../CMSIS-FreeRTOS/Source/portable/GCC/ARM_CM7/r0p1/port.c")
+freeRtosPortSourceKeil.setSourcePath("../FreeRTOS-Kernel/portable/GCC/ARM_CM7/r0p1/port.c")
 freeRtosPortSourceKeil.setOutputName("port.c")
 freeRtosPortSourceKeil.setDestPath("../../third_party/rtos/FreeRTOS/Source/portable/KEIL/CM7")
 freeRtosPortSourceKeil.setProjectPath("FreeRTOS/Source/portable/KEIL/CM7")
@@ -234,7 +234,7 @@ freeRtosPortSourceKeil.setDependencies(activateCompilerSymbol, ['core.COMPILER_C
 freeRtosPortSourceKeil.setEnabled(selectedCompiler == "KEIL")
 
 freeRtosPortHeaderKeil = thirdPartyFreeRTOS.createFileSymbol("FREERTOS_SAM_PORTMACRO_H", None)
-freeRtosPortHeaderKeil.setSourcePath("../CMSIS-FreeRTOS/Source/portable/GCC/ARM_CM7/r0p1/portmacro.h")
+freeRtosPortHeaderKeil.setSourcePath("../FreeRTOS-Kernel/portable/GCC/ARM_CM7/r0p1/portmacro.h")
 freeRtosPortHeaderKeil.setOutputName("portmacro.h")
 freeRtosPortHeaderKeil.setDestPath("../../third_party/rtos/FreeRTOS/Source/portable/KEIL/CM7")
 freeRtosPortHeaderKeil.setProjectPath("FreeRTOS/Source/portable/KEIL/CM7")
