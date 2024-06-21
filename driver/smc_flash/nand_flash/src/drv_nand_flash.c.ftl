@@ -700,7 +700,7 @@ static bool DRV_NAND_FLASH_PageWriteWithPMECC(const DRV_HANDLE handle, uint16_t 
     {
 <#if core.DATA_CACHE_ENABLE?? && core.DATA_CACHE_ENABLE == true >
         /* Clean the data buffer to push the data to the main memory */
-        SYS_CACHE_CleanDCache_by_Addr(gDrvNandFlashData.spareBuffer, DRV_NAND_FLASH_PMECC_ECC_SPARE_SIZE);
+        SYS_CACHE_CleanDCache_by_Addr(gDrvNandFlashData.spareBuffer, (int32_t)DRV_NAND_FLASH_PMECC_ECC_SPARE_SIZE);
 </#if>
         gDrvNandFlashObj.transferStatus = DRV_NAND_FLASH_TRANSFER_BUSY;
 
