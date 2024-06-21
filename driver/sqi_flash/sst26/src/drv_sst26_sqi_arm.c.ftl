@@ -477,9 +477,9 @@ bool DRV_SST26_Read( const DRV_HANDLE handle, void *rx_data, uint32_t rx_data_le
 </#if>
 
     i = 0U;
-    while((i < DRV_SST26_BUFF_DESC_NUMBER) && (pendingBytes > 0U))
+    while(i < DRV_SST26_BUFF_DESC_NUMBER)
     {
-        if (pendingBytes > DRV_SST26_PAGE_SIZE)
+        if (pendingBytes >= DRV_SST26_PAGE_SIZE)
         {
             numBytes = DRV_SST26_PAGE_SIZE;
         }
@@ -499,6 +499,10 @@ bool DRV_SST26_Read( const DRV_HANDLE handle, void *rx_data, uint32_t rx_data_le
         pendingBytes    -= numBytes;
         readBuffer      += numBytes;
         i++;
+        if (pendingBytes == 0U)
+        {
+            break;
+        }
     }
 
     /* The last descriptor must indicate the end of the descriptor list */

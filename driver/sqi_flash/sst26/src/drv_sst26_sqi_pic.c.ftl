@@ -402,7 +402,7 @@ bool DRV_SST26_Read( const DRV_HANDLE handle, void *rx_data, uint32_t rx_data_le
         return false;
     }
 
-    if (rx_data_length > (DRV_SST26_PAGE_SIZE * DRV_SST26_BUFF_DESC_NUMBER))
+    if ((rx_data_length == 0U) || (rx_data_length > (DRV_SST26_PAGE_SIZE * DRV_SST26_BUFF_DESC_NUMBER)))
     {
         return false;
     }
@@ -437,9 +437,9 @@ bool DRV_SST26_Read( const DRV_HANDLE handle, void *rx_data, uint32_t rx_data_le
     sqiCmdDesc[0].bd_nxtptr     = (sqi_dma_desc_t *)KVA_TO_PA(&sqiBufDesc[0]);
 </#if>
 
-    while ((i < DRV_SST26_BUFF_DESC_NUMBER) && (pendingBytes > 0))
+    while (i < DRV_SST26_BUFF_DESC_NUMBER)
     {
-        if (pendingBytes > DRV_SST26_PAGE_SIZE)
+        if (pendingBytes >= DRV_SST26_PAGE_SIZE)
         {
             numBytes = DRV_SST26_PAGE_SIZE;
         }
@@ -459,6 +459,10 @@ bool DRV_SST26_Read( const DRV_HANDLE handle, void *rx_data, uint32_t rx_data_le
         pendingBytes    -= numBytes;
         readBuffer      += numBytes;
         i++;
+        if (pendingBytes == 0U)
+        {
+            break;
+        }
     }
 
     /* The last descriptor must indicate the end of the descriptor list */
