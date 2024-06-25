@@ -3,6 +3,15 @@
 
 # Microchip MPLAB® Harmony 3 Release Notes
 
+## Core Release v3.13.5
+
+### New Features
+- N/A
+
+### Bug fixes
+- Fixed MISRA-C violations in SST26, SST38, SST39 and NAND Flash Drivers
+- Updated System Time Service for DVRT support
+
 ## Core Release v3.13.4
 
 ### New Features
