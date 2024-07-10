@@ -95,12 +95,16 @@ def instantiateComponent(at24Component):
     at24EEPROMPageSize.setHelp(drv_at24_mcc_helpkeyword)
     at24EEPROMPageSize.setVisible(True)
     at24EEPROMPageSize.setDefaultValue(16)
+    at24EEPROMPageSize.setMin(1)
+    at24EEPROMPageSize.setMax(2147483647)
 
     at24EEPROMFlashSize = at24Component.createIntegerSymbol("EEPROM_FLASH_SIZE", None)
     at24EEPROMFlashSize.setLabel("EEPROM Flash Size")
     at24EEPROMFlashSize.setHelp(drv_at24_mcc_helpkeyword)
     at24EEPROMFlashSize.setVisible(True)
     at24EEPROMFlashSize.setDefaultValue(256)
+    at24EEPROMFlashSize.setMin(1)
+    at24EEPROMFlashSize.setMax(2147483647)
 
     at24EEPROMAddressLen = at24Component.createIntegerSymbol("EEPROM_ADDR_LEN", None)
     at24EEPROMAddressLen.setLabel("EEPROM Address Len")
@@ -113,6 +117,8 @@ def instantiateComponent(at24Component):
     at24EEPROMAddress.setHelp(drv_at24_mcc_helpkeyword)
     at24EEPROMAddress.setVisible(True)
     at24EEPROMAddress.setDefaultValue(0x57)
+    at24EEPROMAddress.setMin(0x0)
+    at24EEPROMAddress.setMax(0x7f)
 
     ##### Do not modify below symbol names as they are used by Memory Driver #####
 
@@ -137,6 +143,8 @@ def instantiateComponent(at24Component):
     at24MemoryStartAddr.setHelp(drv_at24_mcc_helpkeyword)
     at24MemoryStartAddr.setVisible(True)
     at24MemoryStartAddr.setDefaultValue(0x0000000)
+    at24MemoryStartAddr.setMin(0x0)
+    at24MemoryStartAddr.setMax(0x7f)
 
     ############################################################################
     #### Code Generation ####
