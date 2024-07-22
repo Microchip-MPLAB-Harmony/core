@@ -861,13 +861,14 @@ def instantiateComponent(sysFSComponent):
     sysFSFILEXIntHeaderFile.setDependencies(sysFsFileGen, ["SYS_FS_FILEX"])
 
     sysFSFILEXIODRVHeaderFile = sysFSComponent.createFileSymbol("SYS_FS_FILEX_IO_DRV_HEADER", None)
-    sysFSFILEXIODRVHeaderFile.setSourcePath("/system/fs/filex/hardware_access/filex_io_drv.h")
+    sysFSFILEXIODRVHeaderFile.setSourcePath("/system/fs/filex/hardware_access/filex_io_drv.h.ftl")
     sysFSFILEXIODRVHeaderFile.setOutputName("filex_io_drv.h")
     sysFSFILEXIODRVHeaderFile.setDestPath("/system/fs/filex/")
     sysFSFILEXIODRVHeaderFile.setProjectPath("config/" + configName + "/system/fs/filex/")
     sysFSFILEXIODRVHeaderFile.setEnabled(sysFSFILEX.getValue())
     sysFSFILEXIODRVHeaderFile.setType("HEADER")
     sysFSFILEXIODRVHeaderFile.setDependencies(sysFsFileGen, ["SYS_FS_FILEX"])
+    sysFSFILEXIODRVHeaderFile.setMarkup(True)
 
     sysFSFILEXLicenseFile = sysFSComponent.createFileSymbol("SYS_FS_FILEX_LICENSE", None)
     sysFSFILEXLicenseFile.setSourcePath("../filex/LICENSE.txt")
