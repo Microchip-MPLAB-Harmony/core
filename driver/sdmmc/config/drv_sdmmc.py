@@ -276,6 +276,7 @@ def instantiateComponent(sdmmcComponent, index):
     sdmmcPollingInterval.setHelp(drv_sdmmc_mcc_helpkeyword)
     sdmmcPollingInterval.setVisible(False)
     sdmmcPollingInterval.setMin(1)
+    sdmmcPollingInterval.setMax(10000000)
     sdmmcPollingInterval.setDefaultValue(100)
     sdmmcPollingInterval.setDependencies(setVisiblePollingInterval, ["DRV_SDMMC_CARD_DETECTION_METHOD"])
 
@@ -323,6 +324,8 @@ def instantiateComponent(sdmmcComponent, index):
     sdmmcRTOSTaskSize = sdmmcComponent.createIntegerSymbol("DRV_SDMMC_RTOS_STACK_SIZE", sdmmcRTOSMenu)
     sdmmcRTOSTaskSize.setLabel("Stack Size (in bytes)")
     sdmmcRTOSTaskSize.setHelp(drv_sdmmc_mcc_helpkeyword)
+    sdmmcRTOSTaskSize.setMin(1)
+    sdmmcRTOSTaskSize.setMax(32768)
     sdmmcRTOSTaskSize.setDefaultValue(4096)
 
     sdmmcRTOSMsgQSize = sdmmcComponent.createIntegerSymbol("DRV_SDMMC_RTOS_TASK_MSG_QTY", sdmmcRTOSMenu)
@@ -344,6 +347,8 @@ def instantiateComponent(sdmmcComponent, index):
     sdmmcRTOSTaskPriority = sdmmcComponent.createIntegerSymbol("DRV_SDMMC_RTOS_TASK_PRIORITY", sdmmcRTOSMenu)
     sdmmcRTOSTaskPriority.setLabel("Task Priority")
     sdmmcRTOSTaskPriority.setHelp(drv_sdmmc_mcc_helpkeyword)
+    sdmmcRTOSTaskPriority.setMin(1)
+    sdmmcRTOSTaskPriority.setMax(100)
     sdmmcRTOSTaskPriority.setDefaultValue(1)
 
     sdmmcRTOSTaskDelay = sdmmcComponent.createBooleanSymbol("DRV_SDMMC_RTOS_USE_DELAY", sdmmcRTOSMenu)
@@ -354,6 +359,8 @@ def instantiateComponent(sdmmcComponent, index):
     sdmmcRTOSTaskDelayVal = sdmmcComponent.createIntegerSymbol("DRV_SDMMC_RTOS_DELAY", sdmmcRTOSMenu)
     sdmmcRTOSTaskDelayVal.setLabel("Task Delay")
     sdmmcRTOSTaskDelayVal.setHelp(drv_sdmmc_mcc_helpkeyword)
+    sdmmcRTOSTaskDelayVal.setMin(1)
+    sdmmcRTOSTaskDelayVal.setMax(10000000)
     sdmmcRTOSTaskDelayVal.setDefaultValue(10)
     sdmmcRTOSTaskDelayVal.setVisible(sdmmcRTOSTaskDelay.getValue())
     sdmmcRTOSTaskDelayVal.setDependencies(setVisible, ["DRV_SDMMC_RTOS_USE_DELAY"])
