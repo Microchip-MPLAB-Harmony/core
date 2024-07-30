@@ -318,7 +318,7 @@ def instantiateComponent(thirdPartyFreeRTOS):
     freeRtosSym_TickRate = thirdPartyFreeRTOS.createIntegerSymbol("FREERTOS_TICK_RATE_HZ", freeRtosSymMenu)
     freeRtosSym_TickRate.setLabel("Tick Rate (Hz)")
     freeRtosSym_TickRate.setDescription("FreeRTOS - Tick rate (Hz)")
-    freeRtosSym_TickRate.setMin(250)
+    freeRtosSym_TickRate.setMin(1)
     freeRtosSym_TickRate.setMax(1000)
     freeRtosSym_TickRate.setDefaultValue(1000)
 
