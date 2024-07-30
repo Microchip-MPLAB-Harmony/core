@@ -213,6 +213,10 @@ def instantiateComponent(emulated_eeprom):
     eep_emu_RemoteComponentID.setValue("")
     eep_emu_RemoteComponentID.setVisible(False)
 
+    eep_emu_Comment = emulated_eeprom.createCommentSymbol("EEPROM_EMULATOR_COMMENT", None)
+    eep_emu_Comment.setLabel("***Only internal flash memory is supported***")
+    eep_emu_Comment.setVisible(False)
+    
     eep_emu_FlashRowSize = emulated_eeprom.createIntegerSymbol("EEPROM_EMULATOR_ROW_SIZE", None)
     eep_emu_FlashRowSize.setLabel("Flash Row Size")
     eep_emu_FlashRowSize.setDefaultValue(8192)
@@ -324,21 +328,32 @@ def onAttachmentConnected(source, target):
             page_size = Database.getSymbolValue(remoteID, "FLASH_PROGRAM_SIZE")
             main_array_start_addr = Database.getSymbolValue(remoteID, "FLASH_START_ADDRESS")
             main_array_size = Database.getSymbolValue(remoteID, "FLASH_SIZE")
-        else:
+            total_eeprom_size = localComponent.getSymbolValue("EEPROM_EMULATOR_EEPROM_SIZE")
+            localComponent.setSymbolValue("EEPROM_EMULATOR_NVM_PLIB", remoteID.upper())
+            localComponent.setSymbolValue("EEPROM_EMULATOR_ROW_SIZE", row_size)
+            localComponent.setSymbolValue("EEPROM_EMULATOR_PAGE_SIZE", page_size)
+            localComponent.setSymbolValue("EEPROM_EMULATOR_PAGES_PER_ROW", (row_size/page_size))
+            localComponent.setSymbolValue("EEPROM_EMULATOR_FLASH_START_ADDR", main_array_start_addr)
+            localComponent.setSymbolValue("EEPROM_EMULATOR_FLASH_SIZE", main_array_size)
+            localComponent.setSymbolValue("EEPROM_EMULATOR_IS_DEPENDENCY_SATISFIED", True)
+            localComponent.getSymbolByID("EEPROM_EMULATOR_COMMENT").setVisible(False)
+        elif remoteID.upper() == "EFC":
             row_size = int(Database.getSymbolValue(remoteID, "FLASH_ERASE_SIZE"))
             page_size = int(Database.getSymbolValue(remoteID, "FLASH_PROGRAM_SIZE"))
             main_array_start_addr = int(Database.getSymbolValue(remoteID, "FLASH_START_ADDRESS")[2:], 16)
             main_array_size = int(Database.getSymbolValue(remoteID, "FLASH_SIZE")[2:], 16)
-
-        total_eeprom_size = localComponent.getSymbolValue("EEPROM_EMULATOR_EEPROM_SIZE")
-        localComponent.setSymbolValue("EEPROM_EMULATOR_NVM_PLIB", remoteID.upper())
-        localComponent.setSymbolValue("EEPROM_EMULATOR_ROW_SIZE", row_size)
-        localComponent.setSymbolValue("EEPROM_EMULATOR_PAGE_SIZE", page_size)
-        localComponent.setSymbolValue("EEPROM_EMULATOR_PAGES_PER_ROW", (row_size/page_size))
-        localComponent.setSymbolValue("EEPROM_EMULATOR_FLASH_START_ADDR", main_array_start_addr)
-        localComponent.setSymbolValue("EEPROM_EMULATOR_FLASH_SIZE", main_array_size)
-        localComponent.setSymbolValue("EEPROM_EMULATOR_IS_DEPENDENCY_SATISFIED", True)
-
+            total_eeprom_size = localComponent.getSymbolValue("EEPROM_EMULATOR_EEPROM_SIZE")
+            localComponent.setSymbolValue("EEPROM_EMULATOR_NVM_PLIB", remoteID.upper())
+            localComponent.setSymbolValue("EEPROM_EMULATOR_ROW_SIZE", row_size)
+            localComponent.setSymbolValue("EEPROM_EMULATOR_PAGE_SIZE", page_size)
+            localComponent.setSymbolValue("EEPROM_EMULATOR_PAGES_PER_ROW", (row_size/page_size))
+            localComponent.setSymbolValue("EEPROM_EMULATOR_FLASH_START_ADDR", main_array_start_addr)
+            localComponent.setSymbolValue("EEPROM_EMULATOR_FLASH_SIZE", main_array_size)
+            localComponent.setSymbolValue("EEPROM_EMULATOR_IS_DEPENDENCY_SATISFIED", True)
+            localComponent.getSymbolByID("EEPROM_EMULATOR_COMMENT").setVisible(False)
+        else:
+            localComponent.getSymbolByID("EEPROM_EMULATOR_COMMENT").setVisible(True)
+        
     Database.sendMessage("HarmonyCore", "ENABLE_SYS_COMMON", {"isEnabled":True})
 
 def onAttachmentDisconnected(source, target):
@@ -346,6 +361,7 @@ def onAttachmentDisconnected(source, target):
     localComponentID = source["id"]
 
     if localComponentID == "lib_emulated_eeprom_MEMORY_dependency":
+        localComponent.getSymbolByID("EEPROM_EMULATOR_COMMENT").setVisible(False)
         localComponent.setSymbolValue("EEPROM_EMULATOR_IS_DEPENDENCY_SATISFIED", False)
 
     Database.sendMessage("HarmonyCore", "ENABLE_SYS_COMMON", {"isEnabled":False})
