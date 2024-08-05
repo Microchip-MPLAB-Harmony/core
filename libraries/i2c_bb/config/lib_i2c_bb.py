@@ -21,14 +21,14 @@
 * ANY WAY RELATED TO THIS SOFTWARE WILL NOT EXCEED THE AMOUNT OF FEES, IF ANY,
 * THAT YOU HAVE PAID DIRECTLY TO MICROCHIP FOR THIS SOFTWARE.
 *****************************************************************************"""
-
 global sort_alphanumeric
 
 i2c_bb_mcc_helpkeyword = "mcc_h3_i2c_bb_configurations"
 
 def onAttachmentConnected(source, target):
     global i2cbbTimerDep
-
+    global i2cbbTimerClockFreq
+    
     localComponent = source["component"]
     remoteComponent = target["component"]
     remoteID = remoteComponent.getID()
@@ -37,8 +37,10 @@ def onAttachmentConnected(source, target):
         
     if localComponent.getID() == "i2c_bb" and connectID == "TMR":
         i2cbbTimerDep.setValue(remoteID.upper())
-
-
+        return_dict = dict()
+        return_dict = Database.sendMessage(remoteID, "TIMER_FREQ_GET", {"ID": "i2c_bb","timer_ch": "0"})
+        timer_freq = return_dict["TIMER_FREQ"]
+        i2cbbTimerClockFreq.setValue(timer_freq)
 
 def onAttachmentDisconnected(source, target):
     global i2cbbTimerDep
@@ -58,6 +60,15 @@ def sort_alphanumeric(l):
     convert = lambda text: int(text) if text.isdigit() else text.lower()
     alphanum_key = lambda key: [ convert(c) for c in re.split('([0-9]+)', key) ]
     return sorted(l, key = alphanum_key)
+    
+def handleMessage(messageID, args):
+    global i2cbbTimerClockFreq
+    if (messageID == "TIMER_FREQUENCY"):
+        if 'CHANNEL_ID' in args:
+            if((args["CHANNEL_ID"] == 0)):
+                i2cbbTimerClockFreq.setValue(args["frequency"])
+        else:
+            i2cbbTimerClockFreq.setValue(args["frequency"])
 
 global i2cbbInstanceName
 
@@ -65,6 +76,7 @@ def instantiateComponent(i2cbbComponent):
 
     global i2cbbInstanceName
     global i2cbbTimerDep
+    global i2cbbTimerClockFreq
 
     i2cbbInstanceName = i2cbbComponent.createStringSymbol("I2CBB_INSTANCE_NAME", None)
     i2cbbInstanceName.setVisible(False)
@@ -101,6 +113,10 @@ def instantiateComponent(i2cbbComponent):
     i2cbbTimerDep.setVisible(False)
     i2cbbTimerDep.setDefaultValue("None")
 
+    i2cbbTimerClockFreq = i2cbbComponent.createIntegerSymbol("I2CBB_CONNECTED_TIMER_FRQUENCY", None)
+    i2cbbTimerClockFreq.setVisible(False)
+    i2cbbTimerClockFreq.setDefaultValue(0)
+    
 
     i2cbbSymDataPin = i2cbbComponent.createKeyValueSetSymbol("I2CBB_SDA_PIN", None)
     i2cbbSymDataPin.setLabel("I2CBB Data Pin")
@@ -115,6 +131,7 @@ def instantiateComponent(i2cbbComponent):
     i2cbbSymClockPin.setDefaultValue(0)
     i2cbbSymClockPin.setOutputMode("Key")
     i2cbbSymClockPin.setDisplayMode("Description")
+    
 
     #I2C Forced Write API Inclusion
     i2cbbSymForcedWriteAPIGen = i2cbbComponent.createBooleanSymbol("I2C_INCLUDE_FORCED_WRITE_API", None)
