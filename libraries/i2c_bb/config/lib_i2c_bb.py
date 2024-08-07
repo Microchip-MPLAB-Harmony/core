@@ -82,9 +82,6 @@ def instantiateComponent(i2cbbComponent):
     i2cbbInstanceName.setVisible(False)
     i2cbbInstanceName.setDefaultValue(i2cbbComponent.getID().upper())
 
-    availablePinDictionary = {}
-
-    availablePinDictionary = Database.sendMessage("core", "I2C_BB", availablePinDictionary)
 
     print("Running " + i2cbbInstanceName.getValue())
 
