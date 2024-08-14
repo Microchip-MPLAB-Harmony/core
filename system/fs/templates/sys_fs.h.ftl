@@ -552,15 +552,27 @@ typedef struct
     int (*close) (uintptr_t fp);
     /* Function pointer of native file system for moving the file pointer by a
      * desired offset */
+<#if SYS_FS_FAT_EXFAT_ENABLE == true>
+    int (*seek) (uintptr_t handle, uint64_t offset);
+<#else>
     int (*seek) (uintptr_t handle, uint32_t offset);
+</#if>
     /* Function pointer of native file system for finding the position of the
      * file pointer */
+<#if SYS_FS_FAT_EXFAT_ENABLE == true>
+    uint64_t (*tell) (uintptr_t handle);
+<#else>
     uint32_t (*tell) (uintptr_t handle);
+</#if>
     /* Function pointer of native file system to check if the end of file is
      * reached */
     bool (*eof) (uintptr_t handle);
     /* Function pointer of native file system to know the size of file */
+<#if SYS_FS_FAT_EXFAT_ENABLE == true>
+    uint64_t (*size) (uintptr_t handle);
+<#else>
     uint32_t (*size) (uintptr_t handle);
+</#if>
     /* Function pointer of native file system to know the status of file */
     int (*fstat) (const char* path, uintptr_t fno);
     /* Function pointer of native file system to create a directory */

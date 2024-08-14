@@ -1197,9 +1197,17 @@ int32_t SYS_FS_FileSeek
 {
     int fileStatus = -1;
     SYS_FS_OBJ *obj = (SYS_FS_OBJ *)handle;
-    long tell = 0;
+<#if SYS_FS_FAT_EXFAT_ENABLE == true>
+    uint64_t tell = 0;
+    uint64_t size = 0;
+    uint64_t temp = 0;
+    uint64_t offset1 = (uint64_t)offset;
+<#else>
+    uint32_t tell = 0;
     uint32_t size = 0;
-    int temp = 0;
+    uint32_t temp = 0;
+    uint32_t offset1 = (uint32_t)offset;
+</#if>
     OSAL_RESULT osalResult = OSAL_RESULT_FAIL;
 
     /* Check if the handle is valid. */
@@ -1239,17 +1247,17 @@ int32_t SYS_FS_FileSeek
     if (osalResult == OSAL_RESULT_SUCCESS)
     {
         /* SYS_FS_SEEK_SET case. */
-        temp = offset;
+        temp = offset1;
 
         if (whence == SYS_FS_SEEK_CUR)
         {
-            tell = (long)obj->mountPoint->fsFunctions->tell(obj->nativeFSFileObj);
-            temp = (offset + tell);
+            tell = obj->mountPoint->fsFunctions->tell(obj->nativeFSFileObj);
+            temp = (offset1 + tell);
         }
         else if (whence == SYS_FS_SEEK_END)
         {
             size = obj->mountPoint->fsFunctions->size(obj->nativeFSFileObj);
-            temp = (offset + (int)size);
+            temp = (offset1 + size);
         }
         else
         {

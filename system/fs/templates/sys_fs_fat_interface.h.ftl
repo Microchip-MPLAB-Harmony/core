@@ -46,7 +46,7 @@ int FATFS_read (uintptr_t handle, void* buff, uint32_t btr, uint32_t* br);
 
 int FATFS_close (uintptr_t handle);
 
-int FATFS_lseek (uintptr_t handle, uint32_t ofs);
+int FATFS_lseek (uintptr_t handle, FSIZE_t ofs);
 
 int FATFS_stat (const char* path, uintptr_t fileInfo);
 
@@ -71,11 +71,11 @@ int FATFS_chdrive (uint8_t drv);
 
     <#lt>int FATFS_getfree (const char* path, uint32_t* nclst, FATFS** fatfs);
 
-    <#lt>uint32_t FATFS_tell(uintptr_t handle);
+    <#lt>FSIZE_t FATFS_tell(uintptr_t handle);
 
     <#lt>bool FATFS_eof(uintptr_t handle);
 
-    <#lt>uint32_t FATFS_size(uintptr_t handle);
+    <#lt>FSIZE_t FATFS_size(uintptr_t handle);
 
     <#lt>int FATFS_mkdir (const char* path);
 
