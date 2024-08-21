@@ -165,13 +165,13 @@
     <#lt>    .mount             = LITTLEFS_mount,
     <#lt>    .unmount           = LITTLEFS_unmount,
     <#lt>    .open              = LITTLEFS_open,
-    <#lt>    .read_t              = LITTLEFS_read,
+    <#lt>    .read_t            = LITTLEFS_read,
     <#lt>    .close             = LITTLEFS_close,
     <#lt>    .seek              = LITTLEFS_lseek,
     <#lt>    .fstat             = LITTLEFS_stat,
     <#lt>    .getlabel          = NULL,
     <#lt>    .currWD            = NULL,
-    <#lt>    .getstrn           = NULL,
+    <#lt>    .getstrn           = LITTLEFS_gets,
     <#lt>    .openDir           = LITTLEFS_opendir,
     <#lt>    .readDir           = LITTLEFS_readdir,
     <#lt>    .closeDir          = LITTLEFS_closedir,
@@ -201,11 +201,11 @@
     <#lt>    .chmode            = NULL,
     <#lt>    .chtime            = NULL,
     <#lt>    .putchr            = NULL,
-    <#lt>    .putstrn           = NULL,
+    <#lt>    .putstrn           = LITTLEFS_puts,
     <#lt>    .formattedprint    = NULL,
     <#lt>    .testerror         = NULL,
     <#lt>    .partitionDisk     = NULL,
-    <#lt>    .getCluster        = NULL
+    <#lt>    .getCluster        = LITTLEFS_getclusters
     <#lt>};
 </#if>
 

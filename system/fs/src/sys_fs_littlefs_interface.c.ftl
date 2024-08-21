@@ -74,13 +74,13 @@ static LITTLEFS_FILE_OBJECT CACHE_ALIGN LFSFileObject[SYS_FS_MAX_FILES];
 static LITTLEFS_DIR_OBJECT CACHE_ALIGN LFSDirObject[SYS_FS_MAX_FILES];
 static uint8_t startupflag = 0;
 
-#define     LFS_READ_SIZE   2048
-#define     LFS_PROG_SIZE   2048
-#define     LFS_BLOCK_SIZE   2048
-#define     LFS_BLOCK_COUNT   (${SYS_FS_LFS_SIZE}*1024/2048)
-#define     LFS_BLOCK_CYCLES   16
-#define     LFS_CACHE_SIZE   2048
-#define     LFS_LOOKAHEAD_SIZE   64
+#define LFS_READ_SIZE      SYS_FS_LFS_ALIGNED_BUFFER_LEN
+#define LFS_PROG_SIZE      SYS_FS_LFS_ALIGNED_BUFFER_LEN
+#define LFS_BLOCK_SIZE     SYS_FS_LFS_ALIGNED_BUFFER_LEN
+#define LFS_BLOCK_COUNT    ((${SYS_FS_LFS_SIZE}U * 1024U) / SYS_FS_LFS_ALIGNED_BUFFER_LEN)
+#define LFS_BLOCK_CYCLES   16
+#define LFS_CACHE_SIZE     SYS_FS_LFS_ALIGNED_BUFFER_LEN
+#define LFS_LOOKAHEAD_SIZE 64
 
 static uint8_t ReadBuf[LFS_CACHE_SIZE] = {0};
 static uint8_t ProgBuf[LFS_CACHE_SIZE] = {0};
@@ -311,22 +311,22 @@ int LITTLEFS_open (
             break;
 <#if SYS_FS_LFS_READONLY == false>
         case SYS_FS_FILE_OPEN_WRITE:
-            temp  = (uint32_t)LFS_O_WRONLY | (uint32_t)LFS_O_CREAT;
+            temp  = (uint32_t)LFS_O_WRONLY | (uint32_t)LFS_O_CREAT | (uint32_t)LFS_O_TRUNC;
             flags = (int)temp;
             break;
         case SYS_FS_FILE_OPEN_APPEND:
-            temp  = (uint32_t)LFS_O_WRONLY | (uint32_t)LFS_O_APPEND;
+            temp  = (uint32_t)LFS_O_WRONLY | (uint32_t)LFS_O_CREAT | (uint32_t)LFS_O_APPEND;
             flags = (int)temp;
             break;
         case SYS_FS_FILE_OPEN_READ_PLUS:
             flags = (int)LFS_O_RDWR;
             break;
         case SYS_FS_FILE_OPEN_WRITE_PLUS:
-            temp  =  (uint32_t)LFS_O_RDWR | (uint32_t)LFS_O_CREAT;
+            temp  = (uint32_t)LFS_O_RDWR | (uint32_t)LFS_O_CREAT | (uint32_t)LFS_O_TRUNC;
             flags = (int)temp;
             break;
         case SYS_FS_FILE_OPEN_APPEND_PLUS:
-            temp  = (uint32_t)LFS_O_RDWR | (uint32_t)LFS_O_APPEND;
+            temp  = (uint32_t)LFS_O_RDWR | (uint32_t)LFS_O_CREAT | (uint32_t)LFS_O_APPEND;
             flags = (int)temp;
             break;
 </#if>
@@ -896,3 +896,106 @@ int LITTLEFS_mkfs (
 }
 </#if>
 
+int LITTLEFS_getclusters (
+    const char *path,
+    uint32_t *totalSectors,
+    uint32_t *freeSectors
+)
+{
+    lfs_t *fs = NULL;
+
+    fs = &LITTLEFSVolume[0].volObj;
+
+    int32_t used = lfs_fs_size(fs);
+    if (used < 0)
+    {
+        return ((int)LFS_Err_To_SYSFS_Err((enum lfs_error)used));
+    }
+
+    *freeSectors = LFS_BLOCK_COUNT - (uint32_t)used;
+    *totalSectors = LFS_BLOCK_COUNT;
+
+    return ((int)LFS_Err_To_SYSFS_Err(LFS_ERR_OK));
+}
+
+char *LITTLEFS_gets (char *buff, int len, uintptr_t handle)
+{
+    lfs_t *fs = NULL;
+    int32_t res = 0;
+    LITTLEFS_FILE_OBJECT *ptr = (LITTLEFS_FILE_OBJECT *)handle;
+    lfs_file_t *fp = &ptr->fileObj;
+    char c;
+    int chars_read = 0;
+    char *pBuff = buff;
+
+    if (len < 1)
+    {
+        return NULL;
+    }
+
+    fs = &LITTLEFSVolume[0].volObj;
+
+    len -= 1;  // Make a room for the termination
+    while (chars_read < len)
+    {
+        res = lfs_file_read( fs, fp, &c, 1 );
+        if (res != 1)
+        {
+            break;      // eof?
+        }
+        if (c == '\r')
+        {
+            continue;    // skip over cr
+        }
+
+        *pBuff++ = c;
+        chars_read++;
+        if (c == '\n')
+        {
+            break;       // end read at lf
+        }
+    }
+
+    *pBuff = '\0';     // terminate string
+
+    if ((res < 0) || (chars_read == 0))
+    {
+        return NULL;
+    }
+
+    return buff;
+}
+
+int LITTLEFS_puts (
+    const char *buff,   /* Pointer to the data to be written */
+    uintptr_t handle    /* Pointer to the file object */
+)
+{
+    lfs_t *fs = NULL;
+    enum lfs_error res = LFS_ERR_OK;
+    LITTLEFS_FILE_OBJECT *ptr = (LITTLEFS_FILE_OBJECT *)handle;
+    lfs_file_t *fp = &ptr->fileObj;
+    int32_t lfs_ret = 0;
+    const char strNewLine[2] = "\n";
+
+    fs = &LITTLEFSVolume[0].volObj;
+
+    lfs_size_t btw = strlen(buff);
+    lfs_ret = lfs_file_write(fs, fp, buff, btw);
+
+    if (lfs_ret < 0)
+    {
+        res = (enum lfs_error)lfs_ret;
+    }
+    else
+    {
+        lfs_ret = lfs_file_write(fs, fp, strNewLine, 1);
+
+        if (lfs_ret < 0)
+        {
+            res = (enum lfs_error)lfs_ret;
+        }
+    }
+
+    return ((int)LFS_Err_To_SYSFS_Err(res));
+}

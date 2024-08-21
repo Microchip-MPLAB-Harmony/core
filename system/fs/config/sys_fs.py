@@ -418,6 +418,14 @@ def instantiateComponent(sysFSComponent):
     sysFSLFSSize.setVisible(sysFSLFS.getValue())
     sysFSLFSSize.setDependencies(sysFsSymbolShow, ["SYS_FS_LFS"])
 
+    sysFSLFSBlockSize = sysFSComponent.createIntegerSymbol("SYS_FS_LFS_BLOCK_SIZE", sysFSLFS)
+    sysFSLFSBlockSize.setLabel("LFS Block Size")
+    sysFSLFSBlockSize.setHelp(sys_fs_mcc_helpkeyword)
+    sysFSLFSBlockSize.setDefaultValue(2048)
+    sysFSLFSBlockSize.setMin(512)
+    sysFSLFSBlockSize.setVisible(sysFSLFS.getValue())
+    sysFSLFSBlockSize.setDependencies(sysFsSymbolShow, ["SYS_FS_LFS"])
+
     symOptionsLFS = sysFSComponent.createSettingSymbol("SYM_OPTIONS_LFS", None)
     symOptionsLFS.setCategory("C32")
     symOptionsLFS.setKey("appendMe")
@@ -697,15 +705,15 @@ def instantiateComponent(sysFSComponent):
         sysFSAlignedBufferEnable.setDefaultValue(True)
         sysFSAlignedBufferEnable.setDescription(sysFSFatAlignedBufferEnableDesc)
         sysFSAlignedBufferEnable.setVisible(True)
-        sysFSAlignedBufferEnable.setDependencies(sysFsAlignedBufferShow, ["SYS_FS_FAT", "SYS_FS_MPFS"])
+        sysFSAlignedBufferEnable.setDependencies(sysFsAlignedBufferShow, ["SYS_FS_FAT", "SYS_FS_MPFS", "SYS_FS_LFS", "SYS_FS_FILEX"])
 
         sysFSAlignedBufferLen = sysFSComponent.createIntegerSymbol("SYS_FS_ALIGNED_BUFFER_LEN", sysFSAlignedBufferEnable)
         sysFSAlignedBufferLen.setLabel("Aligned Buffer Length in Multiple of 512 Bytes")
         sysFSAlignedBufferLen.setHelp(sys_fs_mcc_helpkeyword)
         sysFSAlignedBufferLen.setDefaultValue(512)
         sysFSAlignedBufferLen.setMin(512)
-        sysFSAlignedBufferLen.setVisible((sysFSAlignedBufferEnable.getValue() == True) and (sysFSFat.getValue() == True))
-        sysFSAlignedBufferLen.setDependencies(sysFsAlignedBufferLenSymbolShow, ["SYS_FS_ALIGNED_BUFFER_ENABLE", "SYS_FS_FAT"])
+        sysFSAlignedBufferLen.setVisible((sysFSAlignedBufferEnable.getValue() == True) and ((sysFSFat.getValue() == True) or (sysFSFILEX.getValue() == True)))
+        sysFSAlignedBufferLen.setDependencies(sysFsAlignedBufferLenSymbolShow, ["SYS_FS_ALIGNED_BUFFER_ENABLE", "SYS_FS_FAT", "SYS_FS_FILEX"])
 
 ############################################Generate Files#################################################
 
@@ -1134,17 +1142,21 @@ def sysFsAlignedBufferLenSymbolShow(symbol, event):
     component = symbol.getComponent()
 
     fatEnabled = component.getSymbolValue("SYS_FS_FAT")
+    filexEnabled = component.getSymbolValue("SYS_FS_FILEX")
+
     alignedBufferEnabled = component.getSymbolValue("SYS_FS_ALIGNED_BUFFER_ENABLE")
 
-    symbol.setVisible((fatEnabled == True) and (alignedBufferEnabled == True))
+    symbol.setVisible(((fatEnabled == True) or (filexEnabled == True)) and (alignedBufferEnabled == True))
 
 def sysFsAlignedBufferShow(symbol, event):
     component = symbol.getComponent()
 
     fatEnabled = component.getSymbolValue("SYS_FS_FAT")
     mpfsEnabled = component.getSymbolValue("SYS_FS_MPFS")
+    lfsEnabled = component.getSymbolValue("SYS_FS_LFS")
+    filexEnabled = component.getSymbolValue("SYS_FS_FILEX")
 
-    if ((fatEnabled == True) or (mpfsEnabled == True)):
+    if ((fatEnabled == True) or (mpfsEnabled == True) or (lfsEnabled == True) or (filexEnabled == True)):
         symbol.setVisible(True)
 
 def sysFSLFNSet(symbol, event):
