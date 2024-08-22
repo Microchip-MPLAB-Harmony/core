@@ -402,7 +402,13 @@ def instantiateComponent(sysFSComponent):
     sysFSLFS.setHelp(sys_fs_mcc_helpkeyword)
     sysFSLFS.setDefaultValue(False)
     sysFSLFS.setDependencies(sysFsLFSEnabled, ["SYS_FS_LFS"])
-    sysFSLFS.setVisible(os.path.exists(os.path.join(Module.getPath(), "..", "littlefs")))
+
+    global isLFSExist
+    isLFSExist = os.path.exists(os.path.join(Module.getPath(), "..", "littlefs"))
+    sysFSLFSComment = sysFSComponent.createCommentSymbol("SYS_FS_LFS_COMMENT", sysFSLFS)
+    sysFSLFSComment.setVisible((isLFSExist == False) and sysFSLFS.getValue())
+    sysFSLFSComment.setLabel("*** Warning!!! littlefs is not present, need to download littlefs repository using MCC content manager ***")
+    sysFSLFSComment.setDependencies(sysFsLFSCommentShow, ["SYS_FS_LFS"])
 
     sysFSLFSReadonly = sysFSComponent.createBooleanSymbol("SYS_FS_LFS_READONLY", sysFSLFS)
     sysFSLFSReadonly.setLabel("Make LittleFS File System Read-only")
@@ -442,13 +448,18 @@ def instantiateComponent(sysFSComponent):
     preProcMacrosLFS.setEnabled(sysFSLFSReadonly.getValue())
     preProcMacrosLFS.setDependencies(sysFsFileGen, ["SYS_FS_LFS_READONLY"])
 
+    global isFileXExist
     filexSourcePath = os.path.join("..", "filex")
     isFileXExist = os.path.exists(os.path.join(Module.getPath(), filexSourcePath))
     sysFSFILEX = sysFSComponent.createBooleanSymbol("SYS_FS_FILEX", sysFSMenu)
     sysFSFILEX.setHelp(sys_fs_mcc_helpkeyword)
     sysFSFILEX.setLabel("FileX File System")
     sysFSFILEX.setDefaultValue(False)
-    sysFSFILEX.setVisible(isFileXExist)
+
+    sysFSFILEXComment = sysFSComponent.createCommentSymbol("SYS_FS_FILEX_COMMENT", sysFSFILEX)
+    sysFSFILEXComment.setVisible((isFileXExist == False) and sysFSFILEX.getValue())
+    sysFSFILEXComment.setLabel("*** Warning!!! filex is not present, need to download filex repository using MCC content manager ***")
+    sysFSFILEXComment.setDependencies(sysFsFileXCommentShow, ["SYS_FS_FILEX"])
 
     sysFSFILEXReadonly = sysFSComponent.createBooleanSymbol("SYS_FS_FILEX_READONLY", sysFSFILEX)
     sysFSFILEXReadonly.setHelp(sys_fs_mcc_helpkeyword)
@@ -1132,6 +1143,14 @@ def sysFsFileGen(symbol, event):
 
 def sysFsSymbolShow(symbol, event):
     symbol.setVisible(event["value"])
+
+def sysFsFileXCommentShow(symbol, event):
+    global isFileXExist
+    symbol.setVisible((isFileXExist == False) and event["value"])
+
+def sysFsLFSCommentShow(symbol, event):
+    global isLFSExist
+    symbol.setVisible((isLFSExist == False) and event["value"])
 
 def updateFileXmode(symbol, event):
     component = symbol.getComponent()
