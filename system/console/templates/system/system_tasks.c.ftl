@@ -30,7 +30,7 @@
     <#lt>        "SYS_CONSOLE_${INDEX?string}_TASKS",
     <#lt>        SYS_CONSOLE_RTOS_STACK_SIZE_IDX${INDEX?string},
     <#lt>        (void*)NULL,
-    <#lt>        SYS_CONSOLE_RTOS_TASK_PRIORITY_IDX${INDEX?string},
+    <#lt>        SYS_CONSOLE_RTOS_TASK_PRIORITY_IDX${INDEX?string} <#if FreeRTOS.FREERTOS_MPU_PORT_ENABLE == true> | portPRIVILEGE_BIT </#if>,
     <#lt>        (TaskHandle_t*)NULL
     <#lt>    );
 <#elseif (HarmonyCore.SELECT_RTOS)?? && HarmonyCore.SELECT_RTOS == "ThreadX">

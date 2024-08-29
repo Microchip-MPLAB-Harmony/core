@@ -48,6 +48,11 @@ def freeRTOSMPUOptionsVisibility(symbol, event):
     else:
         symbol.setVisible(event["value"])
 
+def freeRTOSMPUWrapperV2OptVisibility(symbol, event):
+    mpu_port_en = symbol.getComponent().getSymbolByID("FREERTOS_MPU_PORT_ENABLE").getValue()
+    mpu_wrapper_v1_en = symbol.getComponent().getSymbolByID("FREERTOS_USE_MPU_WRAPPERS_V1").getValue()
+    symbol.setVisible(mpu_port_en == True and mpu_wrapper_v1_en == False)
+
 def activateCompilerSymbol(symbol, event):
     global compilerList
     currentCompiler = Database.getComponentByID("core").getSymbolByID("COMPILER_CHOICE").getSelectedKey()
@@ -58,8 +63,14 @@ def activateCompilerSymbol(symbol, event):
         mpu_port_en = symbol.getComponent().getSymbolByID("FREERTOS_MPU_PORT_ENABLE").getValue()
         if symId == "FREERTOS_XC32_SAM_PORT_C" or symId == "FREERTOS_XC32_SAM_PORTMACRO_H" or symId == "FREERTOS_XC32_INCLUDE_DIRS":
             symbol.setEnabled(currentCompiler == symbolCompiler and mpu_port_en == False)
-        elif symId == "FREERTOS_XC32_SAM_MPU_PORT_C" or symId == "FREERTOS_XC32_SAM_MPU_PORTMACRO_H" or symId == "FREERTOS_XC32_SAM_MPU_WRAPPERS_C" or symId == "FREERTOS_XC32_MPU_PORT_INCLUDE_DIRS":
+        elif symId == "FREERTOS_XC32_SAM_MPU_PORT_C" or symId == "FREERTOS_XC32_SAM_MPU_PORTMACRO_H" or symId == "FREERTOS_XC32_MPU_PORT_INCLUDE_DIRS":
             symbol.setEnabled(currentCompiler == symbolCompiler and mpu_port_en == True)
+        elif symId == "FREERTOS_XC32_SAM_MPU_WRAPPERS_V1_C":
+            mpu_wrapper_v1 = symbol.getComponent().getSymbolByID("FREERTOS_USE_MPU_WRAPPERS_V1").getValue()
+            symbol.setEnabled(currentCompiler == symbolCompiler and mpu_port_en == True and mpu_wrapper_v1 == True)
+        elif symId == "FREERTOS_XC32_SAM_MPU_WRAPPERS_V2_ASM_C" or symId == "FREERTOS_XC32_SAM_MPU_WRAPPERS_V2_C":
+            mpu_wrapper_v1 = symbol.getComponent().getSymbolByID("FREERTOS_USE_MPU_WRAPPERS_V1").getValue()
+            symbol.setEnabled(currentCompiler == symbolCompiler and mpu_port_en == True and mpu_wrapper_v1 == False)
         else:
             symbol.setEnabled(currentCompiler == symbolCompiler)
     else:
@@ -733,10 +744,15 @@ def instantiateComponent(thirdPartyFreeRTOS):
         freeRtosSym_ConfigMaxApiCallInterruptPriority.setMax((freeRtosSym_ConfigUniqueInterruptPriority.getMax() - 2))
 
     #------------------
-    mpu_present = ATDF.getNode("/avr-tools-device-file/devices/device/parameters/param@[name=\"__MPU_PRESENT\"]").getAttribute("value")
+    mpu_present = False
+    mpu_present_node = ATDF.getNode("/avr-tools-device-file/devices/device/parameters/param@[name=\"__MPU_PRESENT\"]")
+    if mpu_present_node != None:
+        mpu_present = mpu_present_node.getAttribute("value")
     mpu_options_visibility = (mpu_present == "1" and (coreArch == "CORTEX-M4" or coreArch == "CORTEX-M7"))
 
     mpuRegions = 8
+    if mpu_options_visibility == True:
+        mpuRegions = Database.getSymbolValue("core", "MPU_NUMBER_REGIONS")
 
     freeRtosSymMenu_MPUPortOptions = thirdPartyFreeRTOS.createBooleanSymbol("FREERTOS_MPU_PORT_ENABLE", freeRtosSymMenu)
     freeRtosSymMenu_MPUPortOptions.setLabel("Enable FreeRTOS MPU Port")
@@ -755,7 +771,7 @@ def instantiateComponent(thirdPartyFreeRTOS):
     freeRtosSym_TotalMPURegions.setLabel("Total MPU Regions")
     freeRtosSym_TotalMPURegions.setDescription("Total number of available MPU Regions")
     freeRtosSym_TotalMPURegions.setDefaultValue(mpuRegions)
-    freeRtosSym_TotalMPURegions.setReadOnly(True)
+    freeRtosSym_TotalMPURegions.setReadOnly(False)
     freeRtosSym_TotalMPURegions.setVisible(False)
     freeRtosSym_TotalMPURegions.setDependencies(freeRTOSMPUOptionsVisibility, ["FREERTOS_MPU_PORT_ENABLE"])
 
@@ -801,7 +817,7 @@ def instantiateComponent(thirdPartyFreeRTOS):
     freeRtosSym_USE_MPU_WRAPPERS_V1.setDescription("Use MPU Wrappers V1")
     freeRtosSym_USE_MPU_WRAPPERS_V1.setDefaultValue(False)
     freeRtosSym_USE_MPU_WRAPPERS_V1.setVisible(False)
-    #freeRtosSym_USE_MPU_WRAPPERS_V1.setDependencies(freeRTOSMPUOptionsVisibility, ["FREERTOS_MPU_PORT_ENABLE"])
+    freeRtosSym_USE_MPU_WRAPPERS_V1.setDependencies(freeRTOSMPUOptionsVisibility, ["FREERTOS_MPU_PORT_ENABLE"])
 
     # Applicable for FreeRTOS V10.6.0 onwards
     freeRtosSym_PROTECTED_KERNEL_OBJECT_POOL_SIZE = thirdPartyFreeRTOS.createIntegerSymbol("FREERTOS_PROTECTED_KERNEL_OBJECT_POOL_SIZE", freeRtosSymMenu_MPUPortOptions)
@@ -809,7 +825,7 @@ def instantiateComponent(thirdPartyFreeRTOS):
     freeRtosSym_PROTECTED_KERNEL_OBJECT_POOL_SIZE.setDescription("Protected Kernel Object Pool Size")
     freeRtosSym_PROTECTED_KERNEL_OBJECT_POOL_SIZE.setDefaultValue(10 if freeRtosSym_USE_MPU_WRAPPERS_V1.getValue() == False else 0)
     freeRtosSym_PROTECTED_KERNEL_OBJECT_POOL_SIZE.setVisible(False)
-    #freeRtosSym_PROTECTED_KERNEL_OBJECT_POOL_SIZE.setDependencies(freeRTOSMPUOptionsVisibility, ["FREERTOS_MPU_PORT_ENABLE"])
+    freeRtosSym_PROTECTED_KERNEL_OBJECT_POOL_SIZE.setDependencies(freeRTOSMPUWrapperV2OptVisibility, ["FREERTOS_MPU_PORT_ENABLE", "FREERTOS_USE_MPU_WRAPPERS_V1"])
 
     # Applicable for FreeRTOS V10.6.0 onwards
     freeRtosSym_SYSTEM_CALL_STACK_SIZE = thirdPartyFreeRTOS.createIntegerSymbol("FREERTOS_SYSTEM_CALL_STACK_SIZE", freeRtosSymMenu_MPUPortOptions)
@@ -817,7 +833,7 @@ def instantiateComponent(thirdPartyFreeRTOS):
     freeRtosSym_SYSTEM_CALL_STACK_SIZE.setDescription("Each task has a statically allocated memory buffer of this size which is used as the stack to execute system calls")
     freeRtosSym_SYSTEM_CALL_STACK_SIZE.setDefaultValue(128 if freeRtosSym_USE_MPU_WRAPPERS_V1.getValue() == False else 0)
     freeRtosSym_SYSTEM_CALL_STACK_SIZE.setVisible(False)
-    #freeRtosSym_SYSTEM_CALL_STACK_SIZE.setDependencies(freeRTOSMPUOptionsVisibility, ["FREERTOS_MPU_PORT_ENABLE"])
+    freeRtosSym_SYSTEM_CALL_STACK_SIZE.setDependencies(freeRTOSMPUWrapperV2OptVisibility, ["FREERTOS_MPU_PORT_ENABLE", "FREERTOS_USE_MPU_WRAPPERS_V1"])
 
     # Applicable for FreeRTOS V10.6.0 onwards
     freeRtosSym_ENABLE_ACCESS_CONTROL_LIST = thirdPartyFreeRTOS.createIntegerSymbol("FREERTOS_ENABLE_ACCESS_CONTROL_LIST", freeRtosSymMenu_MPUPortOptions)
@@ -826,6 +842,11 @@ def instantiateComponent(thirdPartyFreeRTOS):
     freeRtosSym_ENABLE_ACCESS_CONTROL_LIST.setDefaultValue(False)
     freeRtosSym_ENABLE_ACCESS_CONTROL_LIST.setVisible(False)
     #freeRtosSym_ENABLE_ACCESS_CONTROL_LIST.setDependencies(freeRTOSMPUOptionsVisibility, ["FREERTOS_MPU_PORT_ENABLE"])
+    
+    freeRtosSym_MPUConfigOverwriteComment = thirdPartyFreeRTOS.createCommentSymbol("MPU_CONFIG_OVERWRITE", freeRtosSymMenu_MPUPortOptions)
+    freeRtosSym_MPUConfigOverwriteComment.setLabel("***Note: Enabling MPU in FreeRTOS will result in FreeRTOS kernel overwriting any MPU configurations done via MPU Configurator***")
+    freeRtosSym_MPUConfigOverwriteComment.setVisible(False)
+    freeRtosSym_MPUConfigOverwriteComment.setDependencies(freeRTOSMPUOptionsVisibility, ["FREERTOS_MPU_PORT_ENABLE"])
 
     #------------------
 

@@ -93,8 +93,8 @@ MEMORY
 }
 
 /* Variables used by FreeRTOS-MPU. */
-_Privileged_Functions_Region_Size = 16384;
-_Privileged_Data_Region_Size = 512;
+_Privileged_Functions_Region_Size = 32768;
+_Privileged_Data_Region_Size = 4096;
 
 __FLASH_segment_start__ = ORIGIN( rom );
 __FLASH_segment_end__ = __FLASH_segment_start__ + ROM_LENGTH;

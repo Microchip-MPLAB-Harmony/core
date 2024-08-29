@@ -538,6 +538,7 @@
 </#if>
 
 <#if FREERTOS_MPU_PORT_ENABLE == true>
+#define configUSE_MPU_WRAPPERS_V1                               <#if FREERTOS_USE_MPU_WRAPPERS_V1 == true>1<#else>0</#if>
 /* FreeRTOS MPU specific definitions. */
 #define configINCLUDE_APPLICATION_DEFINED_PRIVILEGED_FUNCTIONS <#if FREERTOS_APPLICATION_DEFINED_PRIVILEGED_FUNCTIONS == true>1<#else>0</#if>
 #define configTOTAL_MPU_REGIONS                                ${FREERTOS_TOTAL_MPU_REGIONS}
@@ -546,6 +547,23 @@
 #define configENFORCE_SYSTEM_CALLS_FROM_KERNEL_ONLY            <#if FREERTOS_ENFORCE_SYSTEM_CALLS_FROM_KERNEL_ONLY == true>1<#else>0</#if>
 #define configALLOW_UNPRIVILEGED_CRITICAL_SECTIONS             <#if FREERTOS_ALLOW_UNPRIVILEGED_CRITICAL_SECTIONS == true>1<#else>0</#if>
 #define configENABLE_ERRATA_837070_WORKAROUND                  <#if FREERTOS_ERRATA_837070_WORKAROUND == true>1<#else>0</#if>
+<#if FREERTOS_USE_MPU_WRAPPERS_V1 == false>
+/* When using the v2 MPU wrapper, set configSYSTEM_CALL_STACK_SIZE to the size
+ * of the system call stack in words. Each task has a statically allocated
+ * memory buffer of this size which is used as the stack to execute system
+ * calls. For example, if configSYSTEM_CALL_STACK_SIZE is defined as 128 and
+ * there are 10 tasks in the application, the total amount of memory used for
+ * system call stacks is 128 * 10 = 1280 words. */
+#define configSYSTEM_CALL_STACK_SIZE                              ${FREERTOS_SYSTEM_CALL_STACK_SIZE}
+
+/* When using the v2 MPU wrapper, set configPROTECTED_KERNEL_OBJECT_POOL_SIZE to
+ * the total number of kernel objects, which includes tasks, queues, semaphores,
+ * mutexes, event groups, timers, stream buffers and message buffers, in your
+ * application. The application will not be able to have more than
+ * configPROTECTED_KERNEL_OBJECT_POOL_SIZE kernel objects at any point of
+ * time. */
+#define configPROTECTED_KERNEL_OBJECT_POOL_SIZE                   ${FREERTOS_PROTECTED_KERNEL_OBJECT_POOL_SIZE}
+</#if>
 </#if>
 
 /* Set the following INCLUDE_* constants to 1 to incldue the named API function,

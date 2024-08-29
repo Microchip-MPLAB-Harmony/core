@@ -59,12 +59,14 @@ appHeaderFile               = []
 genAppTaskEnable            = []
 genAppRtosTaskUseFPUContext = []
 genAppTaskUseStaticAlloc    = []
+genAppTaskPrivilegedTask    = []
 genAppTaskCreateRestrictedTask = []
 genAppTaskFreeRTOSMPUConfig = []
 genAppTaskMPUReg = []
 genAppTaskMPURegBaseAddr = []
 genAppTaskMPURegLength = []
 genAppTaskMPURegAttr = []
+genAppTaskMPURegXN = []
 
 FreeRTOS_MPU_REGION_ATTR = [
     "portMPU_REGION_READ_WRITE",
@@ -72,8 +74,6 @@ FreeRTOS_MPU_REGION_ATTR = [
     "portMPU_REGION_READ_ONLY",
     "portMPU_REGION_PRIVILEGED_READ_WRITE",
     "portMPU_REGION_PRIVILEGED_READ_WRITE_UNPRIV_READ_ONLY",
-    "portMPU_REGION_CACHEABLE_BUFFERABLE",
-    "portMPU_REGION_EXECUTE_NEVER",
 ]
 
 ################################################################################
@@ -193,14 +193,21 @@ def genRtosFreeRTOSAppTaskVisible(symbol, event):
         symbol.setVisible(False)
 
 def genAppTaskUseStaticAllocVisible(symbol, event):
-    symbol.setVisible(event["value"])
+    component = symbol.getComponent()
+    selectRTOS  = component.getSymbolValue("SELECT_RTOS")
+    staticAlloc = Database.getSymbolValue("FreeRTOS", "FREERTOS_STATIC_ALLOC")
+    symbol.setVisible(selectRTOS == "FreeRTOS" and staticAlloc == True)    
 
 def mpuRegVisibility(symbol, event):
     symbol.setVisible(event["value"])
 
 def mpuRestrictedTaskUpdate(symbol, event):
-    symbol.setVisible(event["value"])
-    if event["value"] == False:
+    component = symbol.getComponent()
+    selectRTOS  = component.getSymbolValue("SELECT_RTOS")
+    mpuPortEn   = Database.getSymbolValue("FreeRTOS", "FREERTOS_MPU_PORT_ENABLE")
+    
+    symbol.setVisible(selectRTOS == "FreeRTOS" and mpuPortEn == True)
+    if selectRTOS != "FreeRTOS" or mpuPortEn == False:
         symbol.setReadOnly(True)    #override user value
         symbol.setValue(False)
         symbol.setReadOnly(False)
@@ -356,15 +363,26 @@ for count in range(0, genAppTaskMaxCount):
     genAppTaskUseStaticAlloc[count].setDescription("RTOS Task memory is provided by the application")
     genAppTaskUseStaticAlloc[count].setDefaultValue(False)
     genAppTaskUseStaticAlloc[count].setVisible(False)
-    genAppTaskUseStaticAlloc[count].setDependencies(genAppTaskUseStaticAllocVisible, ["FreeRTOS.FREERTOS_STATIC_ALLOC"])
+    genAppTaskUseStaticAlloc[count].setDependencies(genAppTaskUseStaticAllocVisible, ["SELECT_RTOS", "FreeRTOS.FREERTOS_STATIC_ALLOC"])
 
     genAppTaskCreateRestrictedTask.append(count)
     genAppTaskCreateRestrictedTask[count] = harmonyCoreComponent.createBooleanSymbol("GEN_APP_TASK_CREATE_RESTRICTED_TASK_" + str(count), genAppTaskConfMenu[count])
     genAppTaskCreateRestrictedTask[count].setLabel("Create Restricted Task?")
     genAppTaskCreateRestrictedTask[count].setDescription("Create task with restricted execution privileges and restricted memory access rights")
     genAppTaskCreateRestrictedTask[count].setDefaultValue(False)
-    genAppTaskCreateRestrictedTask[count].setVisible(False)
-    genAppTaskCreateRestrictedTask[count].setDependencies(mpuRestrictedTaskUpdate, ["FreeRTOS.FREERTOS_MPU_PORT_ENABLE"])
+    if Database.getSymbolValue("FreeRTOS", "FREERTOS_MPU_PORT_ENABLE") != None:
+        genAppTaskCreateRestrictedTask[count].setVisible(Database.getSymbolValue("FreeRTOS", "FREERTOS_MPU_PORT_ENABLE"))
+    else:
+        genAppTaskCreateRestrictedTask[count].setVisible(False)
+    genAppTaskCreateRestrictedTask[count].setDependencies(mpuRestrictedTaskUpdate, ["SELECT_RTOS", "FreeRTOS.FREERTOS_MPU_PORT_ENABLE"])
+
+    genAppTaskPrivilegedTask.append(count)
+    genAppTaskPrivilegedTask[count] = harmonyCoreComponent.createBooleanSymbol("GEN_APP_TASK_CREATE_PRIVILEGED_TASK_" + str(count), genAppTaskCreateRestrictedTask[count])
+    genAppTaskPrivilegedTask[count].setLabel("Create Privileged Task?")
+    genAppTaskPrivilegedTask[count].setDescription("Create task with Privileged access")
+    genAppTaskPrivilegedTask[count].setDefaultValue(False)
+    genAppTaskPrivilegedTask[count].setVisible(False)
+    genAppTaskPrivilegedTask[count].setDependencies(mpuRegVisibility, ["GEN_APP_TASK_CREATE_RESTRICTED_TASK_" + str(count)])
 
     genAppTaskFreeRTOSMPUConfig.append(count)
     genAppTaskFreeRTOSMPUConfig[count] = harmonyCoreComponent.createMenuSymbol("GEN_APP_TASK_MPU_CONFIG_" + str(count) + "_MENU", genAppTaskCreateRestrictedTask[count])
@@ -384,6 +402,9 @@ for count in range(0, genAppTaskMaxCount):
 
     genAppTaskMPURegAttr.append(count)
     genAppTaskMPURegAttr[count] = [None] * 3
+    
+    genAppTaskMPURegXN.append(count)
+    genAppTaskMPURegXN[count] = [None] * 3
 
     for mpu_reg in range (0,3):
 
@@ -414,6 +435,13 @@ for count in range(0, genAppTaskMaxCount):
         genAppTaskMPURegAttr[count][mpu_reg].setDefaultValue("portMPU_REGION_READ_WRITE")
         genAppTaskMPURegAttr[count][mpu_reg].setVisible(False)
         genAppTaskMPURegAttr[count][mpu_reg].setDependencies(mpuRegVisibility, ["GEN_APP_TASK_" + str(count) + "_MPU_REG_CFG_" + str(mpu_reg)])
+        
+        genAppTaskMPURegXN[count][mpu_reg] = harmonyCoreComponent.createBooleanSymbol("GEN_APP_TASK_" + str(count) + "_MPU_REG_ATTR_XN_" + str(mpu_reg), genAppTaskMPUReg[count][mpu_reg])
+        genAppTaskMPURegXN[count][mpu_reg].setLabel("Execute Never")
+        genAppTaskMPURegXN[count][mpu_reg].setDescription("Execute Never")
+        genAppTaskMPURegXN[count][mpu_reg].setVisible(False)
+        genAppTaskMPURegXN[count][mpu_reg].setDefaultValue(False)
+        genAppTaskMPURegXN[count][mpu_reg].setDependencies(mpuRegVisibility, ["GEN_APP_TASK_" + str(count) + "_MPU_REG_CFG_" + str(mpu_reg)])
 
 
 

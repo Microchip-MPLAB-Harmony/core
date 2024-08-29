@@ -107,7 +107,7 @@ for key, val in linker_symbols_map.items():
 
 linker_device_name = thirdPartyFreeRTOS.createStringSymbol("LINKER_DEVICE_NAME", None)
 linker_device_name.setDefaultValue(device_name)
-linker_device_name.setVisible(True)
+linker_device_name.setVisible(False)
     
 if "ROM" in MPULinkerSymbolMap[template_linker]:
     if any(x in device_name for x in ["BZ3", "WBZ35"]):
@@ -118,56 +118,56 @@ if "ROM" in MPULinkerSymbolMap[template_linker]:
 
     linker_rom_origin = thirdPartyFreeRTOS.createStringSymbol("LINKER_ROM_ORIGIN", None)
     linker_rom_origin.setDefaultValue(rom_start)
-    linker_rom_origin.setVisible(True)
+    linker_rom_origin.setVisible(False)
     
     linker_rom_len = thirdPartyFreeRTOS.createStringSymbol("LINKER_ROM_LENGTH", None)
     linker_rom_len.setDefaultValue(rom_size)
-    linker_rom_len.setVisible(True)
+    linker_rom_len.setVisible(False)
     
 if "RAM" in MPULinkerSymbolMap[template_linker]:
     linker_ram_origin = thirdPartyFreeRTOS.createStringSymbol("LINKER_RAM_ORIGIN", None)
     linker_ram_origin.setDefaultValue(ram_start)
-    linker_ram_origin.setVisible(True)
+    linker_ram_origin.setVisible(False)
     
     linker_ram_len = thirdPartyFreeRTOS.createStringSymbol("LINKER_RAM_LENGTH", None)
     linker_ram_len.setDefaultValue(ram_size)
-    linker_ram_len.setVisible(True)
+    linker_ram_len.setVisible(False)
 
 if "BACKUPRAM" in MPULinkerSymbolMap[template_linker]:
     linker_bkupram_origin = thirdPartyFreeRTOS.createStringSymbol("LINKER_BACKUPRAM_ORIGIN", None)
     linker_bkupram_origin.setDefaultValue(backupram_start)
-    linker_bkupram_origin.setVisible(True)
+    linker_bkupram_origin.setVisible(False)
     
     linker_bkupram_len = thirdPartyFreeRTOS.createStringSymbol("LINKER_BACKUPRAM_LENGTH", None)
     linker_bkupram_len.setDefaultValue(backupram_size)
-    linker_bkupram_len.setVisible(True)
+    linker_bkupram_len.setVisible(False)
   
 if "BOOTROM" in MPULinkerSymbolMap[template_linker]:
     linker_bootrom_origin = thirdPartyFreeRTOS.createStringSymbol("LINKER_BOOTROM_ORIGIN", None)
     linker_bootrom_origin.setDefaultValue(bootrom_start)
-    linker_bootrom_origin.setVisible(True)
+    linker_bootrom_origin.setVisible(False)
     
     linker_bootrom_len = thirdPartyFreeRTOS.createStringSymbol("LINKER_BOOTROM_LENGTH", None)
     linker_bootrom_len.setDefaultValue(bootrom_size)
-    linker_bootrom_len.setVisible(True)
+    linker_bootrom_len.setVisible(False)
     
 if "ITCM" in MPULinkerSymbolMap[template_linker]:
     linker_itcm_origin = thirdPartyFreeRTOS.createStringSymbol("LINKER_ITCM_ORIGIN", None)
     linker_itcm_origin.setDefaultValue(itcm_start)
-    linker_itcm_origin.setVisible(True)
+    linker_itcm_origin.setVisible(False)
     
     linker_itcm_len = thirdPartyFreeRTOS.createStringSymbol("LINKER_ITCM_LENGTH", None)
     linker_itcm_len.setDefaultValue(itcm_size)
-    linker_itcm_len.setVisible(True)
+    linker_itcm_len.setVisible(False)
 
 if "DTCM" in MPULinkerSymbolMap[template_linker]:
     linker_dtcm_origin = thirdPartyFreeRTOS.createStringSymbol("LINKER_DTCM_ORIGIN", None)
     linker_dtcm_origin.setDefaultValue(dtcm_start)
-    linker_dtcm_origin.setVisible(True)
+    linker_dtcm_origin.setVisible(False)
     
     linker_dtcm_len = thirdPartyFreeRTOS.createStringSymbol("LINKER_DTCM_LENGTH", None)
     linker_dtcm_len.setDefaultValue(dtcm_size)
-    linker_dtcm_len.setVisible(True)
+    linker_dtcm_len.setVisible(False)
     
 freertosMPULinker = thirdPartyFreeRTOS.createFileSymbol("FREERTOS_MPU_LINKER_FILE", None)
 freertosMPULinker.setSourcePath("config/arch/arm/freertos_mpu_support/mpu_linkers/" + template_linker + ".ld.ftl")

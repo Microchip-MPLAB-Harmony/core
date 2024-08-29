@@ -12,12 +12,12 @@
         <#lt>/* Handle for the ${.vars[GEN_APP_TASK_NAME]?upper_case}_Tasks. */
         <#lt>TaskHandle_t x${.vars[GEN_APP_TASK_NAME]?upper_case}_Tasks;
 
-        <#if .vars[GEN_APP_TASK_STATIC] == true>
+        <#if .vars[GEN_APP_TASK_STATIC] == true && FreeRTOS.FREERTOS_STATIC_ALLOC == true>
             <#lt>/* Structure that will hold the TCB of the task being created. */
-            <#lt>StaticTask_t xTask${i}Buffer;
+            <#lt>StaticTask_t xTask${i}TCBBuffer;
         </#if>
 
-        <#if .vars[GEN_APP_TASK_RESTRICTED_EN] == true || .vars[GEN_APP_TASK_STATIC] == true>
+        <#if .vars[GEN_APP_TASK_RESTRICTED_EN] == true || (.vars[GEN_APP_TASK_STATIC] == true && FreeRTOS.FREERTOS_STATIC_ALLOC == true)>
             <#if .vars[GEN_APP_TASK_RESTRICTED_EN] == true>
                 <#assign STACK_BUFFER_ALIGNMENT = "__attribute__((aligned(" + .vars[GEN_APP_RTOS_TASK_SIZE_BYTES] + ")))">
             <#else>
