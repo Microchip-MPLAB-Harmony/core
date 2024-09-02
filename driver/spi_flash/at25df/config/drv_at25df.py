@@ -32,6 +32,8 @@ global sort_alphanumeric
 
 drv_at25df_mcc_helpkeyword = "mcc_h3_drv_at25df_configurations"
 
+global at25dfSymChipSelectPin
+
 def handleMessage(messageID, args):
 
     result_dict = {}
@@ -41,6 +43,37 @@ def handleMessage(messageID, args):
             result_dict = Database.sendMessage(args["localComponentID"], "SPI_MASTER_MODE", {"isReadOnly":True, "isEnabled":True})
             result_dict = Database.sendMessage(args["localComponentID"], "SPI_MASTER_INTERRUPT_MODE", {"isReadOnly":True, "isEnabled":True})
             result_dict = Database.sendMessage(args["localComponentID"], "SPI_MASTER_HARDWARE_CS", {"isReadOnly":True, "isEnabled":False})
+
+    elif (messageID == "AT25DF_CONFIG_HW_IO"):
+        global at25dfSymChipSelectPin
+        
+        pinFn, pinId, enable = args['config']
+        component = "drv_at25df"
+
+        configurePin = False
+        if pinFn == "CS":
+            symbolInstance = at25dfSymChipSelectPin
+            symbolId = "DRV_AT25_CHIP_SELECT_PIN"
+            configurePin = True
+        else:
+            result_dict = {"Result": "Fail - AT25DF pin is not detected {}".format(pinFn)}
+
+        if configurePin == True:
+            res = False
+            if enable == True:
+                keyCount = symbolInstance.getKeyCount()
+                for index in range(0, keyCount):
+                    symbolKey = symbolInstance.getKey(index)
+                    if pinId.upper() == symbolKey.split("_")[-1].upper():
+                        res = symbolInstance.setValue(index)
+                        break
+            else:
+                res = Database.clearSymbolValue(component, symbolId)
+            
+            if res == True:
+                result_dict = {"Result": "Success"}
+            else:
+                result_dict = {"Result": "Fail"}
 
     return result_dict
 
@@ -96,6 +129,7 @@ def instantiateComponent(at25dfComponent):
     at25dfFLASHFlashSize.setHelp(drv_at25df_mcc_helpkeyword)
     at25dfFLASHFlashSize.setDefaultValue(4194304)
 
+    global at25dfSymChipSelectPin
     at25dfSymChipSelectPin = at25dfComponent.createKeyValueSetSymbol("DRV_AT25DF_CHIP_SELECT_PIN", None)
     at25dfSymChipSelectPin.setLabel("Chip Select Pin")
     at25dfSymChipSelectPin.setHelp(drv_at25df_mcc_helpkeyword)

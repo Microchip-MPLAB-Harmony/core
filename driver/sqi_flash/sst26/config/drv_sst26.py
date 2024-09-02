@@ -35,7 +35,27 @@ global sort_alphanumeric
 
 def handleMessage(messageID, args):
     result_dict = {}
+    component = 'drv_sst26'
+    # print("DRV_SST26 handleMessage: {} args: {}".format(messageID, args))
+    result_dict= {"Result": "DRV_SST26 UnImplemented Command"}
+    
+    if (messageID == "SST26_CONFIG_HW_IO"):
+        protocol, cs, enable = args['config']
+        if protocol == 'SQI':
+            if cs >= len(ChipSelect):
+                result_dict = {"Result": "Fail - SQI_CS{} out of range".format(cs)}
+            else:
+                symbolId = "CHIP_SELECT"
+                if enable == True:
+                    res = Database.setSymbolValue(component, symbolId, ChipSelect[cs])
+                else:
+                    res = Database.clearSymbolValue(component, symbolId)
 
+                if res == True:
+                    result_dict = {"Result": "Success"}
+                else:
+                    result_dict = {"Result": "Fail"}
+    
     return result_dict
 
 def sort_alphanumeric(l):

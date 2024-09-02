@@ -60,9 +60,20 @@ def sort_alphanumeric(l):
     convert = lambda text: int(text) if text.isdigit() else text.lower()
     alphanum_key = lambda key: [ convert(c) for c in re.split('([0-9]+)', key) ]
     return sorted(l, key = alphanum_key)
-    
+
+global i2cbbInstanceName
+global i2cbbSymDataPin
+global i2cbbSymClockPin
+
 def handleMessage(messageID, args):
     global i2cbbTimerClockFreq
+    global i2cbbInstanceName
+    global i2cbbSymDataPin
+    global i2cbbSymClockPin
+
+    retDict = {}
+    # print("I2C_BB handleMessage: {} args: {}".format(messageID, args))
+    
     if (messageID == "TIMER_FREQUENCY"):
         if 'CHANNEL_ID' in args:
             if((args["CHANNEL_ID"] == 0)):
@@ -70,7 +81,40 @@ def handleMessage(messageID, args):
         else:
             i2cbbTimerClockFreq.setValue(args["frequency"])
 
-global i2cbbInstanceName
+    elif (messageID == "I2CBB_CONFIG_HW_IO"):
+        component = i2cbbInstanceName.getValue().lower()
+        signalId, pinId, enable = args['config']
+
+        configurePin = False
+        if signalId.lower() == "sda":
+            symbolInstance = i2cbbSymDataPin
+            symbolId = "I2CBB_SDA_PIN"
+            configurePin = True
+        elif signalId.lower() == "scl":
+            symbolInstance = i2cbbSymClockPin
+            symbolId = "I2CBB_SCL_PIN"
+            configurePin = True
+        else:
+            retDict = {"Result": "Fail"}
+
+        if configurePin == True:
+            res = False
+            if enable == True:
+                keyCount = symbolInstance.getKeyCount()
+                for index in range(0, keyCount):
+                    symbolKey = symbolInstance.getKey(index)
+                    if pinId.upper() == symbolKey.upper():
+                        res = symbolInstance.setValue(index)
+                        break
+            else:
+                res = Database.clearSymbolValue(component, symbolId)
+            
+            if res == True:
+                retDict = {"Result": "Success"}
+            else:
+                retDict = {"Result": "Fail"}
+
+    return retDict
 
 def instantiateComponent(i2cbbComponent):
 
@@ -113,8 +157,8 @@ def instantiateComponent(i2cbbComponent):
     i2cbbTimerClockFreq = i2cbbComponent.createIntegerSymbol("I2CBB_CONNECTED_TIMER_FRQUENCY", None)
     i2cbbTimerClockFreq.setVisible(False)
     i2cbbTimerClockFreq.setDefaultValue(0)
-    
 
+    global i2cbbSymDataPin
     i2cbbSymDataPin = i2cbbComponent.createKeyValueSetSymbol("I2CBB_SDA_PIN", None)
     i2cbbSymDataPin.setLabel("I2CBB Data Pin")
     i2cbbSymDataPin.setHelp(i2c_bb_mcc_helpkeyword)
@@ -122,13 +166,13 @@ def instantiateComponent(i2cbbComponent):
     i2cbbSymDataPin.setOutputMode("Key")
     i2cbbSymDataPin.setDisplayMode("Description")
 
+    global i2cbbSymClockPin
     i2cbbSymClockPin = i2cbbComponent.createKeyValueSetSymbol("I2CBB_SCL_PIN", None)
     i2cbbSymClockPin.setLabel("I2CBB Clock Pin")
     i2cbbSymClockPin.setHelp(i2c_bb_mcc_helpkeyword)
     i2cbbSymClockPin.setDefaultValue(0)
     i2cbbSymClockPin.setOutputMode("Key")
     i2cbbSymClockPin.setDisplayMode("Description")
-    
 
     #I2C Forced Write API Inclusion
     i2cbbSymForcedWriteAPIGen = i2cbbComponent.createBooleanSymbol("I2C_INCLUDE_FORCED_WRITE_API", None)
