@@ -954,6 +954,10 @@ def instantiateComponent(thirdPartyFreeRTOS):
     freeRtosSym_xTaskResumeFromISR.setDescription("FreeRTOS - Include xTaskResumeFromISR")
     freeRtosSym_xTaskResumeFromISR.setDefaultValue(False)
 
+    freeRtosHooksIncludeList = thirdPartyFreeRTOS.createListSymbol("LIST_FREERTOS_HOOKS_C_INCLUDES", None)
+    freeRtosHooksCallAppIdleTaskList = thirdPartyFreeRTOS.createListSymbol("LIST_FREERTOS_HOOKS_C_CALL_APP_IDLE_TASKS", None)
+    freeRtosHooksCallAppTickTaskList = thirdPartyFreeRTOS.createListSymbol("LIST_FREERTOS_HOOKS_C_CALL_APP_TICK_TASKS", None)
+
 ############################################################################
 #### Code Generation ####
 ############################################################################
