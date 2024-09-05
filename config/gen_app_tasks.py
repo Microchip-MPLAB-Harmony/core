@@ -38,7 +38,7 @@ global genAppRtosTaskUseFPUContext
 # Get the default selected OSAL
 global osalSelectRTOS
 
-genAppTaskMaxCount          = 20
+genAppTaskMaxCount          = 30
 genAppRtosTaskConfMenu      = []
 genAppTaskConfMenu          = []
 genAppTaskName              = []
