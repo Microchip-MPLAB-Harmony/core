@@ -104,7 +104,7 @@ const SYS_CONSOLE_DEV_DESC sysConsoleUSBCdcDevDesc =
 // *****************************************************************************
 // *****************************************************************************
 
-USB_DEVICE_CDC_EVENT_RESPONSE USBDeviceCDCEventHandler
+static USB_DEVICE_CDC_EVENT_RESPONSE USBDeviceCDCEventHandler
 (
     USB_DEVICE_CDC_INDEX index,
     USB_DEVICE_CDC_EVENT event,
@@ -220,7 +220,7 @@ USB_DEVICE_CDC_EVENT_RESPONSE USBDeviceCDCEventHandler
 // *****************************************************************************
 // *****************************************************************************
 
-void USBDeviceEventHandler
+static void USBDeviceEventHandler
 (
     USB_DEVICE_EVENT event,
     void* eventData,

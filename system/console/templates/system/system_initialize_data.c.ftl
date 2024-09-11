@@ -35,7 +35,7 @@ static uint8_t CACHE_ALIGN sysConsole${INDEX?string}USBCdcWrBuffer[SYS_CONSOLE_U
 static uint8_t sysConsole${INDEX?string}USBCdcRdRingBuffer[SYS_CONSOLE_USB_CDC_RD_BUFFER_SIZE_IDX${INDEX?string}];
 static uint8_t sysConsole${INDEX?string}USBCdcWrRingBuffer[SYS_CONSOLE_USB_CDC_WR_BUFFER_SIZE_IDX${INDEX?string}];
 
-const SYS_CONSOLE_USB_CDC_INIT_DATA sysConsole${INDEX?string}USBCdcInitData =
+static const SYS_CONSOLE_USB_CDC_INIT_DATA sysConsole${INDEX?string}USBCdcInitData =
 {
     .cdcInstanceIndex           = ${SYS_CONSOLE_DEVICE_INDEX},
     .cdcReadBuffer              = sysConsole${INDEX?string}USBCdcRdBuffer,
@@ -46,7 +46,7 @@ const SYS_CONSOLE_USB_CDC_INIT_DATA sysConsole${INDEX?string}USBCdcInitData =
     .consoleWriteBufferSize     = SYS_CONSOLE_USB_CDC_WR_BUFFER_SIZE_IDX${INDEX?string},
 };
 
-const SYS_CONSOLE_INIT sysConsole${INDEX?string}Init =
+static const SYS_CONSOLE_INIT sysConsole${INDEX?string}Init =
 {
     .deviceInitData = (const void*)&sysConsole${INDEX?string}USBCdcInitData,
     .consDevDesc = &sysConsoleUSBCdcDevDesc,
