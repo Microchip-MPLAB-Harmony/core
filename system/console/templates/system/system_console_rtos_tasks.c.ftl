@@ -24,13 +24,13 @@
 -->
 <#if SYS_CONSOLE_DEVICE_SET == "USB_CDC">
 <#if (HarmonyCore.SELECT_RTOS)?? && HarmonyCore.SELECT_RTOS == "FreeRTOS">
-    <#lt>void lSYS_CONSOLE_${INDEX?string}_Tasks(  void *pvParameters  )
+    <#lt>static void lSYS_CONSOLE_${INDEX?string}_Tasks(  void *pvParameters  )
     <#lt>{
-    <#lt>    while(1)
+    <#lt>    while(true)
     <#lt>    {
     <#lt>        SYS_CONSOLE_Tasks(SYS_CONSOLE_INDEX_${INDEX?string});
              <#if SYS_CONSOLE_RTOS_USE_DELAY == true >
-    <#lt>        vTaskDelay(${SYS_CONSOLE_RTOS_DELAY} / portTICK_PERIOD_MS);
+    <#lt>        vTaskDelay(${SYS_CONSOLE_RTOS_DELAY}U / portTICK_PERIOD_MS);
              </#if>
     <#lt>    }
     <#lt>}
@@ -40,11 +40,11 @@
 
     <#lt>static void lSYS_CONSOLE_${INDEX?string}_Tasks( ULONG thread_input )
     <#lt>{
-    <#lt>    while(1)
+    <#lt>    while(true)
     <#lt>    {
     <#lt>        SYS_CONSOLE_Tasks(SYS_CONSOLE_INDEX_${INDEX?string});
              <#if SYS_CONSOLE_RTOS_USE_DELAY == true >
-    <#lt>        tx_thread_sleep((ULONG)(${SYS_CONSOLE_RTOS_DELAY} / (TX_TICK_PERIOD_MS)));
+    <#lt>        tx_thread_sleep((ULONG)(${SYS_CONSOLE_RTOS_DELAY}U / (TX_TICK_PERIOD_MS)));
              </#if>
     <#lt>    }
     <#lt>}
@@ -52,27 +52,27 @@
     <#lt>OS_TCB  _SYS_CONSOLE_${INDEX?string}_Task_TCB;
     <#lt>CPU_STK _SYS_CONSOLE_${INDEX?string}_TasksStk[SYS_CONSOLE_RTOS_STACK_SIZE_IDX${INDEX?string}];
 
-    <#lt>void _SYS_CONSOLE_${INDEX?string}_Tasks(  void *pvParameters  )
+    <#lt>static void _SYS_CONSOLE_${INDEX?string}_Tasks(  void *pvParameters  )
     <#lt>{
     <#if SYS_CONSOLE_RTOS_USE_DELAY == true>
     <#lt>    OS_ERR os_err;
     </#if>
-    <#lt>    while(1)
+    <#lt>    while(true)
     <#lt>    {
     <#lt>        SYS_CONSOLE_Tasks(SYS_CONSOLE_INDEX_${INDEX?string});
     <#if SYS_CONSOLE_RTOS_USE_DELAY == true>
-    <#lt>        OSTimeDly(${SYS_CONSOLE_RTOS_DELAY} , OS_OPT_TIME_DLY, &os_err);
+    <#lt>        OSTimeDly(${SYS_CONSOLE_RTOS_DELAY}U , OS_OPT_TIME_DLY, &os_err);
     </#if>
     <#lt>    }
     <#lt>}
 <#elseif (HarmonyCore.SELECT_RTOS)?? && HarmonyCore.SELECT_RTOS == "MbedOS">
-    <#lt>void _SYS_CONSOLE_${INDEX?string}_Tasks( void *pvParameters )
+    <#lt>static void _SYS_CONSOLE_${INDEX?string}_Tasks( void *pvParameters )
     <#lt>{
-    <#lt>    while(1)
+    <#lt>    while(true)
     <#lt>    {
     <#lt>        SYS_CONSOLE_Tasks(SYS_CONSOLE_INDEX_${INDEX?string});
              <#if SYS_CONSOLE_RTOS_USE_DELAY == true >
-    <#lt>        thread_sleep_for((uint32_t)(${SYS_CONSOLE_RTOS_DELAY} / MBED_OS_TICK_PERIOD_MS));
+    <#lt>        thread_sleep_for((uint32_t)(${SYS_CONSOLE_RTOS_DELAY}U / MBED_OS_TICK_PERIOD_MS));
              </#if>
     <#lt>    }
     <#lt>}
