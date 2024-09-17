@@ -911,7 +911,7 @@ static void CommandQuit(SYS_CMD_DEVICE_NODE* pCmdIO, int argc, char** argv)
     {
         if(cmdIODevList.head == cmdIODevList.tail)
         {
-            cmdIODevList.head = cmdIODevList.tail = 0;
+            cmdIODevList.head = cmdIODevList.tail = NULL;
         }
         else
         {

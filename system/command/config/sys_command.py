@@ -245,12 +245,18 @@ def instantiateComponent(commandComponent):
     commandSourceFile.setMarkup(True)
     commandSourceFile.setOverwrite(True)
 
+    commandSystemDefObjFile = commandComponent.createFileSymbol("SYS_CONSOLE_SYS_DEF_OBJ", None)
+    commandSystemDefObjFile.setType("STRING")
+    commandSystemDefObjFile.setOutputName("core.LIST_SYSTEM_DEFINITIONS_H_OBJECTS")
+    commandSystemDefObjFile.setSourcePath("system/command/templates/system/system_definitions_objects.h.ftl")
+    commandSystemDefObjFile.setMarkup(True)
+    
     commandSystemDefFile = commandComponent.createFileSymbol("SYS_CONSOLE_SYS_DEF", None)
     commandSystemDefFile.setType("STRING")
     commandSystemDefFile.setOutputName("core.LIST_SYSTEM_DEFINITIONS_H_INCLUDES")
     commandSystemDefFile.setSourcePath("system/command/templates/system/system_definitions.h.ftl")
     commandSystemDefFile.setMarkup(True)
-
+    
     commandSystemConfigFile = commandComponent.createFileSymbol("SYS_CONSOLE_SYS_CONFIG", None)
     commandSystemConfigFile.setType("STRING")
     commandSystemConfigFile.setOutputName("core.LIST_SYSTEM_CONFIG_H_SYSTEM_SERVICE_CONFIGURATION")
