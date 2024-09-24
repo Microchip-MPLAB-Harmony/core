@@ -854,17 +854,6 @@ SYS_FS_MEDIA_HANDLE SYS_FS_MEDIA_MANAGER_Register
     SYS_FS_MEDIA *mediaObj = NULL;
 
     mediaObj = &gSYSFSMediaManagerObj.mediaObj[0];
-    for (mediaIndex = 0; mediaIndex < SYS_FS_MEDIA_NUMBER; mediaIndex++)
-    {
-         if ((mediaObj->inUse) && (mediaType == mediaObj->mediaType))
-         {
-             /* For every type of media, increment the mediaID as a, b, c... */
-             mediaId++;
-         }
-         mediaObj++;
-    }
-
-    mediaObj = &gSYSFSMediaManagerObj.mediaObj[0];
     /* Start with 0th disk and find a disk which is free */
     for (mediaIndex = 0; mediaIndex < SYS_FS_MEDIA_NUMBER; mediaIndex++)
     {
@@ -891,6 +880,7 @@ SYS_FS_MEDIA_HANDLE SYS_FS_MEDIA_MANAGER_Register
         }
 
         mediaObj++;
+        mediaId++;
     }
 
     return SYS_FS_MEDIA_HANDLE_INVALID;
