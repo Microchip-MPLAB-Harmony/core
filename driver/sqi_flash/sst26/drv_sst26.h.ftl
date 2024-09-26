@@ -996,8 +996,6 @@ void DRV_SST26_EventHandlerSet(
     const uintptr_t context
 );
 
-bool DRV_SST26_InitiateReadStatus(void);
-
 bool DRV_SST26_ReadStatus( const DRV_HANDLE handle, uint8_t *rx_data, uint32_t rx_data_length );
 
 <#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
