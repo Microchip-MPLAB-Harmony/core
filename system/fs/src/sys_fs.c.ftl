@@ -562,7 +562,7 @@ SYS_FS_RESULT SYS_FS_Mount
         return SYS_FS_RES_FAILURE;
     }
 
-    /* Clear the error value when mount is sucessful */
+    /* Clear the error value when mount is successful */
     errorValue = SYS_FS_ERROR_OK;
 
     /* Verify if the requested file system is supported by SYS_FS */
@@ -2037,9 +2037,9 @@ SYS_FS_RESULT SYS_FS_DirSearch
 
         /* Firstly, match the file attribute with the requested attribute */
 <#if SYS_FS_LFS == true >
-		if ((disk->fsType == LITTLEFS) || ((stat->fattrib & (uint8_t)attr) != 0U) ||
+        if ((disk->fsType == LITTLEFS) || ((stat->fattrib & (uint8_t)attr) != 0U) ||
 <#else>
-		if (((stat->fattrib & (uint8_t)attr) != 0U) ||
+        if (((stat->fattrib & (uint8_t)attr) != 0U) ||
 </#if>
             (attr == SYS_FS_ATTR_FILE))
         {
@@ -3628,7 +3628,11 @@ SYS_FS_RESULT SYS_FS_DrivePartition
     osalResult = OSAL_MUTEX_Lock(&(disk->mutexDiskVolume), OSAL_WAIT_FOREVER);
     if (osalResult == OSAL_RESULT_SUCCESS)
     {
+<#if SYS_FS_FAT == true>
+        fileStatus = disk->fsFunctions->partitionDisk((uint8_t)VolToPart[disk->diskNumber].pd, partition, work);
+<#else>
         fileStatus = disk->fsFunctions->partitionDisk((uint8_t)disk->diskNumber, partition, work);
+</#if>
         (void) OSAL_MUTEX_Unlock(&(disk->mutexDiskVolume));
 
         errorValue = (SYS_FS_ERROR)fileStatus;

@@ -879,8 +879,11 @@ SYS_FS_MEDIA_HANDLE SYS_FS_MEDIA_MANAGER_Register
             return (SYS_FS_MEDIA_HANDLE)mediaObj;
         }
 
+        if (mediaType == mediaObj->mediaType)
+        {
+            mediaId++;
+        }
         mediaObj++;
-        mediaId++;
     }
 
     return SYS_FS_MEDIA_HANDLE_INVALID;
