@@ -74,7 +74,7 @@ typedef uint32_t                        OSAL_CRITSECT_DATA_TYPE;
 typedef uint32_t                        OSAL_TICK_TYPE;
 typedef uint32_t                        OSAL_SEM_COUNT_TYPE;
 
-#define OSAL_WAIT_FOREVER               (OSAL_TICK_TYPE)~0U
+#define OSAL_WAIT_FOREVER               (OSAL_TICK_TYPE)~0UL
 #define OSAL_NO_WAIT                    (OSAL_TICK_TYPE)0
 
 #define OSAL_SEM_DECLARE(semID)         OSAL_SEM_HANDLE_TYPE        semID
@@ -337,7 +337,7 @@ static OSAL_RESULT __attribute__((always_inline)) OSAL_MUTEX_Delete(OSAL_MUTEX_H
 // *****************************************************************************
 /* Function: OSAL_RESULT OSAL_MUTEX_Lock(OSAL_MUTEX_HANDLE_TYPE mutexID, OSAL_TICK_TYPE waitMS)
  */
-static OSAL_RESULT __attribute__((always_inline)) OSAL_MUTEX_Lock(OSAL_MUTEX_HANDLE_TYPE* mutexID, uint32_t waitMS)
+static OSAL_RESULT __attribute__((always_inline)) OSAL_MUTEX_Lock(OSAL_MUTEX_HANDLE_TYPE* mutexID, OSAL_TICK_TYPE waitMS)
 {
     if (mutexID == NULL)
     {
