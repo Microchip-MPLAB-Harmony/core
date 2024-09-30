@@ -102,6 +102,8 @@ static uint8_t jedecID[4];
 
 static bool DRV_SST26_InitiateReadStatus(void)
 {
+    void *ptr = NULL;
+    
     dObj->isTransferDone = false;
 
 <#if core.DATA_CACHE_ENABLE?? && core.DATA_CACHE_ENABLE == true >
@@ -119,18 +121,19 @@ static bool DRV_SST26_InitiateReadStatus(void)
     sqiCmdDesc[0].bd_ctrl       = ( SQI_BDCTRL_BD_BUFLEN(1) | SQI_LANE_MODE_M |
                                     SQI_CHIP_SELECT | SQI_BDCTRL_DESC_EN_Msk);
 </#if>
-
-    sqiCmdDesc[0].bd_bufaddr    = (uint32_t *)(&sqiCmdBuffer[0]);
+    ptr                         = &sqiCmdBuffer[0];
+    sqiCmdDesc[0].bd_bufaddr    = (uint32_t *)(ptr);
     sqiCmdDesc[0].bd_stat       = 0;
-    sqiCmdDesc[0].bd_nxtptr     = (sqi_dma_desc_t *)(&sqiBufDesc[0]);
+    ptr                         = &sqiBufDesc[0];
+    sqiCmdDesc[0].bd_nxtptr     = (sqi_dma_desc_t *)(ptr);
 
     sqiBufDesc[0].bd_ctrl       = ( SQI_BDCTRL_BD_BUFLEN(1) | SQI_BDCTRL_PKT_INT_EN_Msk |
                                     SQI_BDCTRL_LIFM_Msk | SQI_BDCTRL_LAST_BD_Msk |
                                     SQI_LANE_MODE_M | SQI_BDCTRL_DIR_Msk |
                                     SQI_CHIP_SELECT | SQI_BDCTRL_CS_ASSERT_Msk |
                                     SQI_BDCTRL_DESC_EN_Msk);
-
-    sqiBufDesc[0].bd_bufaddr    = (uint32_t *)(sqiReadBuffer);
+    ptr                         = sqiReadBuffer;
+    sqiBufDesc[0].bd_bufaddr    = (uint32_t *)(ptr);
     sqiBufDesc[0].bd_stat       = 0;
     sqiBufDesc[0].bd_nxtptr     = NULL;
 
@@ -156,15 +159,15 @@ static void DRV_SST26_EventHandler(uintptr_t context)
 	
 	if (obj->curOpType == DRV_SST26_OPERATION_TYPE_WRITE || obj->curOpType == DRV_SST26_OPERATION_TYPE_ERASE)
 	{
-		DRV_SST26_InitiateReadStatus();
+		(void)DRV_SST26_InitiateReadStatus();
 	}
-	else if (obj->curOpType == DRV_SST26_OPERATION_TYPE_READ_STATUS && (sqiReadBuffer[0] & 0x81) == 0)
+	else if (obj->curOpType == DRV_SST26_OPERATION_TYPE_READ_STATUS && (sqiReadBuffer[0] & 0x81U) == 0U)
 	{
 		obj->internal_write_complete_flag = true;
 	}
 	else
 	{
-    DRV_SST26_InitiateReadStatus();
+        (void)DRV_SST26_InitiateReadStatus();
 	}
 }
 
@@ -422,8 +425,7 @@ bool DRV_SST26_ReadStatus( const DRV_HANDLE handle, void* rx_data, uint32_t rx_d
         return false;
     }
 
-
-    DRV_SST26_InitiateReadStatus();
+    (void)DRV_SST26_InitiateReadStatus();
 
     while(dObj->isTransferDone == false)
     {
@@ -470,7 +472,10 @@ DRV_SST26_TRANSFER_STATUS DRV_SST26_TransferStatusGet( const DRV_HANDLE handle )
             status = DRV_SST26_TRANSFER_BUSY;
         }
     }
-
+    else
+    {
+        //Do nothing
+    }
     return status;
 }
 
@@ -574,6 +579,7 @@ bool DRV_SST26_Read( const DRV_HANDLE handle, void *rx_data, uint32_t rx_data_le
 
 bool DRV_SST26_PageWrite( const DRV_HANDLE handle, void *tx_data, uint32_t address )
 {
+    void *ptr = NULL;
     if(DRV_SST26_ValidateHandleAndCheckBusy(handle) == true)
     {
         return false;
@@ -592,7 +598,8 @@ bool DRV_SST26_PageWrite( const DRV_HANDLE handle, void *tx_data, uint32_t addre
     sqiCmdDesc[1].bd_ctrl       = ( SQI_BDCTRL_BD_BUFLEN(4) | SQI_LANE_MODE_M |
                                     SQI_CHIP_SELECT | SQI_BDCTRL_DESC_EN_Msk);
 
-    sqiCmdDesc[1].bd_bufaddr    = (uint32_t *)(&sqiCmdBuffer[4]);
+    ptr                         = &sqiCmdBuffer[4]; 
+    sqiCmdDesc[1].bd_bufaddr    = (uint32_t *)(ptr);
     sqiCmdDesc[1].bd_stat       = 0;
     sqiCmdDesc[1].bd_nxtptr     = (sqi_dma_desc_t *)(&sqiBufDesc[0]);
 
