@@ -67,6 +67,7 @@ genAppTaskMPURegBaseAddr = []
 genAppTaskMPURegLength = []
 genAppTaskMPURegAttr = []
 genAppTaskMPURegXN = []
+genAppTaskMPURegBaseAddrVar = []
 
 FreeRTOS_MPU_REGION_ATTR = [
     "portMPU_REGION_READ_WRITE",
@@ -196,7 +197,7 @@ def genAppTaskUseStaticAllocVisible(symbol, event):
     component = symbol.getComponent()
     selectRTOS  = component.getSymbolValue("SELECT_RTOS")
     staticAlloc = Database.getSymbolValue("FreeRTOS", "FREERTOS_STATIC_ALLOC")
-    symbol.setVisible(selectRTOS == "FreeRTOS" and staticAlloc == True)    
+    symbol.setVisible(selectRTOS == "FreeRTOS" and staticAlloc == True)
 
 def mpuRegVisibility(symbol, event):
     symbol.setVisible(event["value"])
@@ -205,12 +206,17 @@ def mpuRestrictedTaskUpdate(symbol, event):
     component = symbol.getComponent()
     selectRTOS  = component.getSymbolValue("SELECT_RTOS")
     mpuPortEn   = Database.getSymbolValue("FreeRTOS", "FREERTOS_MPU_PORT_ENABLE")
-    
+
     symbol.setVisible(selectRTOS == "FreeRTOS" and mpuPortEn == True)
     if selectRTOS != "FreeRTOS" or mpuPortEn == False:
         symbol.setReadOnly(True)    #override user value
         symbol.setValue(False)
         symbol.setReadOnly(False)
+
+def mpuRegAddrVar(symbol, event):
+    regAddr = event["value"]
+    symbol.setValue(regAddr[0].isdigit() == False)
+
 ############################################################################
 enableRTOS  = osalSelectRTOS.getValue()
 coreArch  = Database.getSymbolValue("core", "CoreArchitecture");
@@ -396,13 +402,16 @@ for count in range(0, genAppTaskMaxCount):
 
     genAppTaskMPURegBaseAddr.append(count)
     genAppTaskMPURegBaseAddr[count] = [None] * 3
+    
+    genAppTaskMPURegBaseAddrVar.append(count)
+    genAppTaskMPURegBaseAddrVar[count] = [None] * 3
 
     genAppTaskMPURegLength.append(count)
     genAppTaskMPURegLength[count] = [None] * 3
 
     genAppTaskMPURegAttr.append(count)
     genAppTaskMPURegAttr[count] = [None] * 3
-    
+
     genAppTaskMPURegXN.append(count)
     genAppTaskMPURegXN[count] = [None] * 3
 
@@ -422,7 +431,12 @@ for count in range(0, genAppTaskMaxCount):
         genAppTaskMPURegBaseAddr[count][mpu_reg].setDefaultValue("0x0")
         genAppTaskMPURegBaseAddr[count][mpu_reg].setDependencies(mpuRegVisibility, ["GEN_APP_TASK_" + str(count) + "_MPU_REG_CFG_" + str(mpu_reg)])
 
-        genAppTaskMPURegLength[count][mpu_reg] = harmonyCoreComponent.createHexSymbol("GEN_APP_TASK_" + str(count) + "_MPU_REG_LEN_" + str(mpu_reg), genAppTaskMPUReg[count][mpu_reg])
+        genAppTaskMPURegBaseAddrVar[count][mpu_reg] = harmonyCoreComponent.createBooleanSymbol("GEN_APP_TASK_" + str(count) + "_MPU_REG_BADDR_" + str(mpu_reg) + "_VAR", genAppTaskMPUReg[count][mpu_reg])
+        genAppTaskMPURegBaseAddrVar[count][mpu_reg].setVisible(False)
+        genAppTaskMPURegBaseAddrVar[count][mpu_reg].setDefaultValue(False)
+        genAppTaskMPURegBaseAddrVar[count][mpu_reg].setDependencies(mpuRegAddrVar, ["GEN_APP_TASK_" + str(count) + "_MPU_REG_BADDR_" + str(mpu_reg)])
+
+        genAppTaskMPURegLength[count][mpu_reg] = harmonyCoreComponent.createIntegerSymbol("GEN_APP_TASK_" + str(count) + "_MPU_REG_LEN_" + str(mpu_reg), genAppTaskMPUReg[count][mpu_reg])
         genAppTaskMPURegLength[count][mpu_reg].setLabel("Length")
         genAppTaskMPURegLength[count][mpu_reg].setDescription("MPU Region Length")
         genAppTaskMPURegLength[count][mpu_reg].setVisible(False)
@@ -435,7 +449,7 @@ for count in range(0, genAppTaskMaxCount):
         genAppTaskMPURegAttr[count][mpu_reg].setDefaultValue("portMPU_REGION_READ_WRITE")
         genAppTaskMPURegAttr[count][mpu_reg].setVisible(False)
         genAppTaskMPURegAttr[count][mpu_reg].setDependencies(mpuRegVisibility, ["GEN_APP_TASK_" + str(count) + "_MPU_REG_CFG_" + str(mpu_reg)])
-        
+
         genAppTaskMPURegXN[count][mpu_reg] = harmonyCoreComponent.createBooleanSymbol("GEN_APP_TASK_" + str(count) + "_MPU_REG_ATTR_XN_" + str(mpu_reg), genAppTaskMPUReg[count][mpu_reg])
         genAppTaskMPURegXN[count][mpu_reg].setLabel("Execute Never")
         genAppTaskMPURegXN[count][mpu_reg].setDescription("Execute Never")

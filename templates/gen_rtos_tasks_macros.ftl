@@ -25,11 +25,11 @@
                         <#assign MPU_REGION_ATTR_XN_MACRO = " | portMPU_REGION_EXECUTE_NEVER">
                     </#if>
                     <#if j == 0>
-                        <#assign MPU_REG0_CFG = "(void*)" + .vars[MPU_REGION_BASE_ADDR] + " , " + "0x" + .vars[MPU_REGION_LEN] + " , " + .vars[MPU_REGION_ATTR] + MPU_REGION_ATTR_XN_MACRO>
+                        <#assign MPU_REG0_CFG = "(void*)" + .vars[MPU_REGION_BASE_ADDR] + " , " + .vars[MPU_REGION_LEN] + " , " + .vars[MPU_REGION_ATTR] + MPU_REGION_ATTR_XN_MACRO>
                     <#elseif j == 1>
-                        <#assign MPU_REG1_CFG = "(void*)" + .vars[MPU_REGION_BASE_ADDR] + " , " + "0x" + .vars[MPU_REGION_LEN] + " , " + .vars[MPU_REGION_ATTR] + MPU_REGION_ATTR_XN_MACRO>
+                        <#assign MPU_REG1_CFG = "(void*)" + .vars[MPU_REGION_BASE_ADDR] + " , " + .vars[MPU_REGION_LEN] + " , " + .vars[MPU_REGION_ATTR] + MPU_REGION_ATTR_XN_MACRO>
                     <#else>
-                        <#assign MPU_REG2_CFG = "(void*)" + .vars[MPU_REGION_BASE_ADDR] + " , " + "0x" + .vars[MPU_REGION_LEN] + " , " + .vars[MPU_REGION_ATTR] + MPU_REGION_ATTR_XN_MACRO>
+                        <#assign MPU_REG2_CFG = "(void*)" + .vars[MPU_REGION_BASE_ADDR] + " , " + .vars[MPU_REGION_LEN] + " , " + .vars[MPU_REGION_ATTR] + MPU_REGION_ATTR_XN_MACRO>
                     </#if>
                 </#if>
             </#list>

@@ -1,3 +1,4 @@
+<#assign GEN_APP_MAX_MPU_REG_CFG = 3>
 <#list 0..(GEN_APP_TASK_COUNT - 1) as i>
     <#assign GEN_APP_TASK_NAME = "GEN_APP_TASK_NAME_" + i>
     <#assign GEN_APP_RTOS_TASK_USE_DELAY = "GEN_APP_RTOS_TASK_" + i + "_USE_DELAY">
@@ -28,6 +29,42 @@
             <#lt>an array of StackType_t variables.  The size of StackType_t is dependent on
             <#lt>the RTOS port. */
             <#lt>StackType_t xTask${i}Stack[ ${.vars[GEN_APP_RTOS_TASK_SIZE_BYTES]} / sizeof(StackType_t) ] ${STACK_BUFFER_ALIGNMENT};
+            <#list 0..(GEN_APP_MAX_MPU_REG_CFG-1) as j>
+                <#assign MPU_REGION_EN = "GEN_APP_TASK_" + i + "_MPU_REG_CFG_" + j>
+                <#if .vars[MPU_REGION_EN] == true>
+                    <#assign MPU_REGION_BASE_ADDR_VAR = "GEN_APP_TASK_" + i + "_MPU_REG_BADDR_" + j + "_VAR">
+                    <#if .vars[MPU_REGION_BASE_ADDR_VAR] == true>
+                        <#assign MPU_REGION_BASE_ADDR = "GEN_APP_TASK_" + i + "_MPU_REG_BADDR_" + j>
+                        <#assign MPU_REGION_BASE_ADDR_VAR_UNIQUE = true>
+                        <#-- The below logic is to make sure a unique MPU region variable definition is generated if the variable is shared betweeen multiple task's MPU regions -->
+                        <#if i gte 1>
+                            <#list 0..(i-1) as m>
+                                <#assign GEN_APP_TASK_RESTRICTED_EN = "GEN_APP_TASK_CREATE_RESTRICTED_TASK_" + m>
+                                <#if .vars[GEN_APP_TASK_RESTRICTED_EN] == true>
+                                    <#list 0..(GEN_APP_MAX_MPU_REG_CFG-1) as n>
+                                        <#assign MPU_REGION_EN = "GEN_APP_TASK_" + m + "_MPU_REG_CFG_" + n>
+                                        <#if .vars[MPU_REGION_EN] == true>
+                                            <#assign MPU_REGION_BASE_ADDR_VARx = "GEN_APP_TASK_" + m + "_MPU_REG_BADDR_" + n + "_VAR">
+                                            <#if .vars[MPU_REGION_BASE_ADDR_VARx] == true>
+                                                <#assign MPU_REGION_BASE_ADDRx = "GEN_APP_TASK_" + m + "_MPU_REG_BADDR_" + n>
+                                                <#if .vars[MPU_REGION_BASE_ADDR] == .vars[MPU_REGION_BASE_ADDRx]>
+                                                    <#assign MPU_REGION_BASE_ADDR_VAR_UNIQUE = false>
+                                                    <#break>
+                                                </#if>
+                                            </#if>
+                                        </#if>
+                                    </#list>
+                                </#if>
+                            </#list>
+                        </#if>
+                        <#-- Logic Ends -->
+                        <#if MPU_REGION_BASE_ADDR_VAR_UNIQUE == true>
+                            <#assign MPU_REGION_LEN = "GEN_APP_TASK_" + i + "_MPU_REG_LEN_" + j>
+                            <#lt>volatile uint8_t ${.vars[MPU_REGION_BASE_ADDR]}[${.vars[MPU_REGION_LEN]}] __attribute__((aligned(${.vars[MPU_REGION_LEN]})));
+                        </#if>
+                    </#if>
+                </#if>
+            </#list>
         </#if>
 
         <#lt>static void l${.vars[GEN_APP_TASK_NAME]?upper_case}_Tasks(  void *pvParameters  )
