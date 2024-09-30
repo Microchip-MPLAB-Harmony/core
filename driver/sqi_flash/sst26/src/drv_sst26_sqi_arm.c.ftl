@@ -406,14 +406,22 @@ bool DRV_SST26_ReadJedecId( const DRV_HANDLE handle, void *jedec_id)
     return true;
 }
 
-bool DRV_SST26_ReadStatus( const DRV_HANDLE handle, uint8_t *rx_data, uint32_t rx_data_length )
+bool DRV_SST26_ReadStatus( const DRV_HANDLE handle, void* rx_data, uint32_t rx_data_length )
 {
     (void)rx_data_length;
+    
+    uint8_t *status = (uint8_t *)rx_data;
+    
+    if (status == NULL)
+    {
+        return false;
+    }
 
     if(DRV_SST26_ValidateHandleAndCheckBusy(handle) == true)
     {
         return false;
     }
+
 
     DRV_SST26_InitiateReadStatus();
 
@@ -422,7 +430,7 @@ bool DRV_SST26_ReadStatus( const DRV_HANDLE handle, uint8_t *rx_data, uint32_t r
         /* Nothing to do */
     }
 
-    *rx_data = sqiReadBuffer[0];
+    *status = sqiReadBuffer[0];
 
     return true;
 }
