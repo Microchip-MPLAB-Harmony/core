@@ -1120,13 +1120,13 @@ bool DRV_SDMMC_IsWriteProtected
         {
             case DRV_SDMMC_EVENT_COMMAND_COMPLETE:
             {
-                // Insert code to handle transfer complete event
+                
                 break;
             }
 
             case DRV_SDMMC_EVENT_COMMAND_ERROR:
             {
-                // Insert code to handle transfer error event
+                
                 break;
             }
 
@@ -1243,13 +1243,13 @@ void DRV_SDMMC_Async_SDIO_ExtBlockWrite (
         {
             case DRV_SDMMC_EVENT_COMMAND_COMPLETE:
             {
-                // Insert code to handle transfer complete event
+                
                 break;
             }
 
             case DRV_SDMMC_EVENT_COMMAND_ERROR:
             {
-                // Insert code to handle transfer error event
+                
                 break;
             }
 
@@ -1365,13 +1365,13 @@ void DRV_SDMMC_Async_SDIO_ExtBlockRead (
         {
             case DRV_SDMMC_EVENT_COMMAND_COMPLETE:
             {
-                // Insert code to handle transfer complete event
+                
                 break;
             }
 
             case DRV_SDMMC_EVENT_COMMAND_ERROR:
             {
-                // Insert code to handle transfer error event
+                
                 break;
             }
 
@@ -1487,13 +1487,13 @@ void DRV_SDMMC_Async_SDIO_ExtBytesWrite (
         {
             case DRV_SDMMC_EVENT_COMMAND_COMPLETE:
             {
-                // Insert code to handle transfer complete event
+                
                 break;
             }
 
             case DRV_SDMMC_EVENT_COMMAND_ERROR:
             {
-                // Insert code to handle transfer error event
+                
                 break;
             }
 
@@ -1604,13 +1604,13 @@ void DRV_SDMMC_Async_SDIO_ExtBytesRead (
         {
             case DRV_SDMMC_EVENT_COMMAND_COMPLETE:
             {
-                // Insert code to handle transfer complete event
+                
                 break;
             }
 
             case DRV_SDMMC_EVENT_COMMAND_ERROR:
             {
-                // Insert code to handle transfer error event
+                
                 break;
             }
 
@@ -1718,13 +1718,13 @@ void DRV_SDMMC_Async_SDIO_DirByteWrite (
         {
             case DRV_SDMMC_EVENT_COMMAND_COMPLETE:
             {
-                // Insert code to handle transfer complete event
+                
                 break;
             }
 
             case DRV_SDMMC_EVENT_COMMAND_ERROR:
             {
-                // Insert code to handle transfer error event
+                
                 break;
             }
 
@@ -1839,13 +1839,13 @@ void DRV_SDMMC_Async_SDIO_DirByteRead (
         {
             case DRV_SDMMC_EVENT_COMMAND_COMPLETE:
             {
-                // Insert code to handle transfer complete event
+                
                 break;
             }
 
             case DRV_SDMMC_EVENT_COMMAND_ERROR:
             {
-                // Insert code to handle transfer error event
+                
                 break;
             }
 
@@ -1962,13 +1962,13 @@ void DRV_SDMMC_Async_SDIO_Read (
         {
             case DRV_SDMMC_EVENT_COMMAND_COMPLETE:
             {
-                // Insert code to handle transfer complete event
+                
                 break;
             }
 
             case DRV_SDMMC_EVENT_COMMAND_ERROR:
             {
-                // Insert code to handle transfer error event
+                
                 break;
             }
 
