@@ -4324,7 +4324,7 @@ void DRV_SDMMC_Tasks( SYS_MODULE_OBJ object )
                 currentBufObj->respType = (uint8_t)DRV_SDMMC_CMD_RESP_R5;
 
                 <#if core.DATA_CACHE_ENABLE?? && core.DATA_CACHE_ENABLE == true>
-                SYS_CACHE_CleanDCache_by_Addr(currentBufObj->buffer, (int32_t)(currentBufObj->nBlocks << 9));
+                SYS_CACHE_CleanDCache_by_Addr(currentBufObj->buffer, (int32_t)(uint32_t)(currentBufObj->nBlocks << 9));
                 </#if>
 
                 dObj->sdmmcPlib->sdhostSetupDma (currentBufObj->buffer, (currentBufObj->nBlocks << 9), DRV_SDMMC_DATA_XFER_DIR_WR);
@@ -4346,7 +4346,7 @@ void DRV_SDMMC_Tasks( SYS_MODULE_OBJ object )
                 currentBufObj->respType = (uint8_t)DRV_SDMMC_CMD_RESP_R5;
 
                 <#if core.DATA_CACHE_ENABLE?? && core.DATA_CACHE_ENABLE == true>
-                SYS_CACHE_CleanDCache_by_Addr(currentBufObj->buffer, currentBufObj->nBlocks);
+                SYS_CACHE_CleanDCache_by_Addr(currentBufObj->buffer, (int32_t)currentBufObj->nBlocks);
                 </#if>
 
                 dObj->sdmmcPlib->sdhostSetupDma (currentBufObj->buffer, currentBufObj->nBlocks, DRV_SDMMC_DATA_XFER_DIR_WR);
@@ -4365,7 +4365,7 @@ void DRV_SDMMC_Tasks( SYS_MODULE_OBJ object )
                 currentBufObj->respType = (uint8_t)DRV_SDMMC_CMD_RESP_R5;
 
                 <#if core.DATA_CACHE_ENABLE?? && core.DATA_CACHE_ENABLE == true>
-                SYS_CACHE_InvalidateDCache_by_Addr(currentBufObj->buffer, (int32_t)(currentBufObj->nBlocks << 9));
+                SYS_CACHE_InvalidateDCache_by_Addr(currentBufObj->buffer, (int32_t)(uint32_t)(currentBufObj->nBlocks << 9));
                 </#if>
 
                 dObj->sdmmcPlib->sdhostSetupDma (currentBufObj->buffer, (currentBufObj->nBlocks << 9), DRV_SDMMC_DATA_XFER_DIR_RD);
@@ -4416,7 +4416,7 @@ void DRV_SDMMC_Tasks( SYS_MODULE_OBJ object )
                 dObj->sdmmcPlib->sdhostSetBlockSize(512);
 
                 <#if core.DATA_CACHE_ENABLE?? && core.DATA_CACHE_ENABLE == true>
-                SYS_CACHE_InvalidateDCache_by_Addr(currentBufObj->buffer, (int32_t)(currentBufObj->nBlocks << 9));
+                SYS_CACHE_InvalidateDCache_by_Addr(currentBufObj->buffer, (int32_t)(uint32_t)(currentBufObj->nBlocks << 9));
                 </#if>
 
                 dObj->sdmmcPlib->sdhostSetupDma (currentBufObj->buffer, (currentBufObj->nBlocks << 9), DRV_SDMMC_DATA_XFER_DIR_RD);
@@ -4445,7 +4445,7 @@ void DRV_SDMMC_Tasks( SYS_MODULE_OBJ object )
                 dObj->sdmmcPlib->sdhostSetBlockSize(512);
 
                 <#if core.DATA_CACHE_ENABLE?? && core.DATA_CACHE_ENABLE == true>
-                SYS_CACHE_CleanDCache_by_Addr(currentBufObj->buffer, (int32_t)(currentBufObj->nBlocks << 9));
+                SYS_CACHE_CleanDCache_by_Addr(currentBufObj->buffer, (int32_t)(uint32_t)(currentBufObj->nBlocks << 9));
                 </#if>
 
                 dObj->sdmmcPlib->sdhostSetupDma (currentBufObj->buffer, (currentBufObj->nBlocks << 9), DRV_SDMMC_DATA_XFER_DIR_WR);
