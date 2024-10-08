@@ -214,6 +214,9 @@ def updateTickTypeWidthInBits(symbol, event):
     else:
         symbol.setValue("32_BITS")
 
+def updateOnStaticMemEn(symbol, event):
+    symbol.setVisible(event["value"])
+
 def deactivateActiveRtos():
     activeComponents = Database.getActiveComponentIDs()
 
@@ -416,6 +419,11 @@ def instantiateComponent(thirdPartyFreeRTOS):
     freeRtosSym_StaMemAloc.setLabel("Enable Static memory allocation")
     freeRtosSym_StaMemAloc.setDescription("FreeRTOS - Static memory allocation")
     freeRtosSym_StaMemAloc.setDefaultValue(False)
+
+    freeRtosSym_StaMemAlocComment = thirdPartyFreeRTOS.createCommentSymbol("FREERTOS_STATIC_ALLOC_COMMENT", freeRtosSymMenu)
+    freeRtosSym_StaMemAlocComment.setLabel("***Note: Allows application tasks to use static memory allocation. OSAL APIs used by Harmony modules will continue to use FreeRTOS objects created using dynamically allocated RAM. ***")
+    freeRtosSym_StaMemAlocComment.setVisible(False)
+    freeRtosSym_StaMemAlocComment.setDependencies(updateOnStaticMemEn, ["FREERTOS_STATIC_ALLOC"])
 
     freeRtosSym_MemMgmtType = thirdPartyFreeRTOS.createComboSymbol("FREERTOS_MEMORY_MANAGEMENT_CHOICE", freeRtosSymMenu, ComboVal_Mem_Mgmt_Type)
     freeRtosSym_MemMgmtType.setLabel("Memory Management Type")
@@ -848,7 +856,7 @@ def instantiateComponent(thirdPartyFreeRTOS):
     freeRtosSym_ENABLE_ACCESS_CONTROL_LIST.setDefaultValue(False)
     freeRtosSym_ENABLE_ACCESS_CONTROL_LIST.setVisible(False)
     #freeRtosSym_ENABLE_ACCESS_CONTROL_LIST.setDependencies(freeRTOSMPUOptionsVisibility, ["FREERTOS_MPU_PORT_ENABLE"])
-    
+
     freeRtosSym_MPUConfigOverwriteComment = thirdPartyFreeRTOS.createCommentSymbol("MPU_CONFIG_OVERWRITE", freeRtosSymMenu_MPUPortOptions)
     freeRtosSym_MPUConfigOverwriteComment.setLabel("***Note: Enabling MPU in FreeRTOS will result in FreeRTOS kernel overwriting any MPU configurations done via MPU Configurator***")
     freeRtosSym_MPUConfigOverwriteComment.setVisible(False)
