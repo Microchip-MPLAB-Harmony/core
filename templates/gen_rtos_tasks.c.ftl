@@ -28,7 +28,7 @@
             <#lt>/* Buffer that the task being created will use as its stack.  Note this is
             <#lt>an array of StackType_t variables.  The size of StackType_t is dependent on
             <#lt>the RTOS port. */
-            <#lt>StackType_t xTask${i}Stack[ ${.vars[GEN_APP_RTOS_TASK_SIZE_BYTES]} / sizeof(StackType_t) ] ${STACK_BUFFER_ALIGNMENT};
+            <#lt>static StackType_t xTask${i}Stack[ ${.vars[GEN_APP_RTOS_TASK_SIZE_BYTES]} / sizeof(StackType_t) ] ${STACK_BUFFER_ALIGNMENT};
             <#list 0..(GEN_APP_MAX_MPU_REG_CFG-1) as j>
                 <#assign MPU_REGION_EN = "GEN_APP_TASK_" + i + "_MPU_REG_CFG_" + j>
                 <#if .vars[MPU_REGION_EN] == true>
@@ -60,7 +60,7 @@
                         <#-- Logic Ends -->
                         <#if MPU_REGION_BASE_ADDR_VAR_UNIQUE == true>
                             <#assign MPU_REGION_LEN = "GEN_APP_TASK_" + i + "_MPU_REG_LEN_" + j>
-                            <#lt>volatile uint8_t ${.vars[MPU_REGION_BASE_ADDR]}[${.vars[MPU_REGION_LEN]}] __attribute__((aligned(${.vars[MPU_REGION_LEN]})));
+                            <#lt>uint8_t ${.vars[MPU_REGION_BASE_ADDR]}[${.vars[MPU_REGION_LEN]}] __attribute__((aligned(${.vars[MPU_REGION_LEN]})));
                         </#if>
                     </#if>
                 </#if>

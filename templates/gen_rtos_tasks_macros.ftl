@@ -37,9 +37,9 @@
                 <#lt>   {
                 <#lt>       (TaskFunction_t) l${.vars[GEN_APP_TASK_NAME]?upper_case}_Tasks, /* pvTaskCode - the function that implements the task. */
                 <#lt>       "${.vars[GEN_APP_TASK_NAME]?upper_case}_Tasks", /* pcName */
-                <#lt>       ${.vars[GEN_APP_RTOS_TASK_SIZE_BYTES]} / sizeof(StackType_t), /* usStackDepth - defined in words, not bytes. */
+                <#lt>       ${.vars[GEN_APP_RTOS_TASK_SIZE_BYTES]}U / sizeof(StackType_t), /* usStackDepth - defined in words, not bytes. */
                 <#lt>       NULL, /* pvParameters - not being used in this case. */
-                <#lt>       ${.vars[GEN_APP_RTOS_TASK_PRIO]} <#if .vars[GEN_APP_TASK_PRIVILEGED_EN] == true> | portPRIVILEGE_BIT</#if>, /* uxPriority*/
+                <#lt>       ${.vars[GEN_APP_RTOS_TASK_PRIO]}U <#if .vars[GEN_APP_TASK_PRIVILEGED_EN] == true> | portPRIVILEGE_BIT</#if>, /* uxPriority*/
                 <#lt>       xTask${i}Stack, /* puxStackBuffer - the array to use as the task stack. */
                 <#lt>       /* xRegions - MPU regions*/
                 <#lt>       {
@@ -70,7 +70,7 @@
                 <#lt>       "${.vars[GEN_APP_TASK_NAME]?upper_case}_Tasks",
                 <#lt>       ${.vars[GEN_APP_RTOS_TASK_SIZE_BYTES]} / sizeof(StackType_t),
                 <#lt>       NULL,
-                <#lt>       ${.vars[GEN_APP_RTOS_TASK_PRIO]} <#if FreeRTOS.FREERTOS_MPU_PORT_ENABLE == true> | portPRIVILEGE_BIT </#if>,
+                <#lt>       ${.vars[GEN_APP_RTOS_TASK_PRIO]}U <#if FreeRTOS.FREERTOS_MPU_PORT_ENABLE == true> | portPRIVILEGE_BIT </#if>,
                 <#lt>       xTask${i}Stack,
                 <#lt>       &xTask${i}TCBBuffer );
             <#else>
@@ -80,7 +80,7 @@
                 <#lt>           "${.vars[GEN_APP_TASK_NAME]?upper_case}_Tasks",
                 <#lt>           ${.vars[GEN_APP_RTOS_TASK_SIZE_BYTES] / 4},
                 <#lt>           NULL,
-                <#lt>           ${.vars[GEN_APP_RTOS_TASK_PRIO]} <#if FreeRTOS.FREERTOS_MPU_PORT_ENABLE == true> | portPRIVILEGE_BIT </#if>,
+                <#lt>           ${.vars[GEN_APP_RTOS_TASK_PRIO]}U <#if FreeRTOS.FREERTOS_MPU_PORT_ENABLE == true> | portPRIVILEGE_BIT </#if>,
                 <#lt>           &x${.vars[GEN_APP_TASK_NAME]?upper_case}_Tasks);
             </#if>
         </#if>
