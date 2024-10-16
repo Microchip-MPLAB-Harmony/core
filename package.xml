@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <Package name="core">
     <Dependencies>
-        <Dependency name="bsp" version="v3.20.1"/>
-        <Dependency name="csp" version="v3.19.1"/>
+        <Dependency name="bsp" version="v3.21.0-E1"/>
+        <Dependency name="csp" version="v3.20.0-E1"/>
         <Dependency name="CMSIS-FreeRTOS" version="v10.5.1"/>
     </Dependencies>
 </Package>

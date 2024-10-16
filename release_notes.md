@@ -3,6 +3,14 @@
 
 # Microchip MPLAB® Harmony 3 Release Notes
 
+## Core Release v3.14.0-E1
+
+### New Features
+- Updated package.yml to support the Engineering release of PIC32CX-BZ6 family of devices.
+
+### Bug fixes
+- None
+
 ## Core Release v3.13.5
 
 ### New Features
