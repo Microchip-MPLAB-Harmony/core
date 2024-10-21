@@ -54,6 +54,10 @@ def AddFileXFiles(component, dirPath, destPath):
             fxFile.setDependencies(lambda symbol, event: symbol.setEnabled(Database.getSymbolValue(component.getID().lower(), "SYS_FS_FILEX")), ["SYS_FS_FILEX"])
             fxFile.setEnabled(Database.getSymbolValue(component.getID().lower(), "SYS_FS_FILEX"))
 
+def updateLBA64Symbol(symbol, event):
+    symbol.setVisible(event["value"])
+    symbol.setValue(event["value"])
+
 def instantiateComponent(sysFSComponent):
     fsTypes = ["FAT","MPFS2","FILEX"]
     mediaTypes =  ["SYS_FS_MEDIA_TYPE_NVM",
@@ -391,6 +395,13 @@ def instantiateComponent(sysFSComponent):
     sysFSFatExFAT.setDefaultValue(False)
     sysFSFatExFAT.setVisible(sysFSFat.getValue())
     sysFSFatExFAT.setDependencies(sysFsSymbolShow, ["SYS_FS_FAT"])
+
+    sysFSFatLBA64 = sysFSComponent.createBooleanSymbol("SYS_FS_FAT_LBA64_ENABLE", sysFSFatExFAT)
+    sysFSFatLBA64.setLabel("Enable 64-bit LBA Support")
+    sysFSFatLBA64.setHelp(sys_fs_mcc_helpkeyword)
+    sysFSFatLBA64.setDefaultValue(False)
+    sysFSFatLBA64.setVisible(sysFSFatExFAT.getValue())
+    sysFSFatLBA64.setDependencies(updateLBA64Symbol, ["SYS_FS_FAT_EXFAT_ENABLE"])
 
     sysFSMpfs = sysFSComponent.createBooleanSymbol("SYS_FS_MPFS", sysFSMenu)
     sysFSMpfs.setLabel("Microchip File System")
