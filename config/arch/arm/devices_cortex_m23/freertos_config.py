@@ -101,13 +101,13 @@ if Variables.get("__TRUSTZONE_ENABLED") != None and Variables.get("__TRUSTZONE_E
     Database.clearSymbolValue("core", "NVIC_" + str(SysTickInterruptIndex) + "_0_SECURITY_TYPE")
     Database.clearSymbolValue("core", "NVIC_" + str(SVCallInterruptIndex) + "_0_SECURITY_TYPE")
     Database.clearSymbolValue("core", "NVIC_" + str(Interrupt.getInterruptIndex("PendSV")) + "_0_SECURITY_TYPE")
-    
-#Set SysTick interrupt security mode as non-secure
-coreSymbolsCfgDict["NVIC_" + str(SysTickInterruptIndex) + "_0_SECURITY_TYPE"] = {"setValue": 1}
-#Set SVCall interrupt security mode as non-secure
-coreSymbolsCfgDict["NVIC_" + str(SVCallInterruptIndex) + "_0_SECURITY_TYPE"] = {"setValue":1}
-#Set PendSV interrupt security mode as non-secure
-coreSymbolsCfgDict["NVIC_" + str(Interrupt.getInterruptIndex("PendSV")) + "_0_SECURITY_TYPE"] = {"setValue":1}
+
+    #Set SysTick interrupt security mode as non-secure
+    coreSymbolsCfgDict["NVIC_" + str(SysTickInterruptIndex) + "_0_SECURITY_TYPE"] = {"setValue": 1}
+    #Set SVCall interrupt security mode as non-secure
+    coreSymbolsCfgDict["NVIC_" + str(SVCallInterruptIndex) + "_0_SECURITY_TYPE"] = {"setValue":1}
+    #Set PendSV interrupt security mode as non-secure
+    coreSymbolsCfgDict["NVIC_" + str(Interrupt.getInterruptIndex("PendSV")) + "_0_SECURITY_TYPE"] = {"setValue":1}
 
 Database.sendMessage("core", "FREERTOS_CONFIG", coreSymbolsCfgDict)
 
