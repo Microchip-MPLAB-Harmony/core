@@ -50,7 +50,7 @@ MPULinkerSymbolMap = {
     "PIC32CX_MT"    : {"filter": ["MTC", "MTG", "MTSH"],"ROM": "IFLASH0",  "RAM": "IRAM0", "ITCM": "ITCM", "DTCM": "DTCM"},
     "PIC32CX_SG"    : {"filter": ["SG41", "SG60", "SG61"],"ROM": "FLASH",  "RAM": "HSRAM", "BACKUPRAM": "BKUPRAM"},
     "LAN9255"       : {"filter": ["LAN9255"],   "ROM": "FLASH",  "RAM": "HSRAM", "BACKUPRAM": "BKUPRAM"},
-    "ATSAM_E7X_S7X_V7X" : {"filter": ["ATSAME7", "ATSAMS7", "ATSAMV7"],   "ROM": "IFLASH",  "RAM": "IRAM", "ITCM": "ITCM", "DTCM": "DTCM"},
+    "ATSAM_E7X_S7X_V7X" : {"filter": ["ATSAME7", "ATSAMS7", "ATSAMV7", "CA70", "MC70"],   "ROM": "IFLASH",  "RAM": "IRAM", "ITCM": "ITCM", "DTCM": "DTCM"},
     "PIC32CZ_CA80_CA90" : {"filter": ["CA80", "CA90"],   "ROM": "FCR_PFM",  "BOOTROM" : "FCR_BFM", "RAM": "FLEXRAM", "ITCM": "ITCM", "DTCM": "DTCM"},
     "ATSAMRH70"     : {"filter": ["ATSAMRH70"],   "ROM": "IFLASH",  "RAM": "FlexRAM", "ITCM": "ITCM", "DTCM": "DTCM"},
     "ATSAMRH71"     : {"filter": ["ATSAMRH71"],   "ROM": "IFLASH",  "RAM": "FlexRAM", "ITCM": "ITCM", "DTCM": "DTCM"},
