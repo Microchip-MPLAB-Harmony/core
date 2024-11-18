@@ -262,4 +262,5 @@ freeRtosPortHeaderKeil.setMarkup(False)
 freeRtosPortHeaderKeil.setDependencies(activateCompilerSymbol, ['core.COMPILER_CHOICE'])
 freeRtosPortHeaderKeil.setEnabled(selectedCompiler == "KEIL")
 
-execfile(Module.getPath() + "config/arch/arm/freertos_mpu_support/freertos_mpu_linker.py")
+if mpu_options_visibility == True:
+    execfile(Module.getPath() + "config/arch/arm/freertos_mpu_support/freertos_mpu_linker.py")
