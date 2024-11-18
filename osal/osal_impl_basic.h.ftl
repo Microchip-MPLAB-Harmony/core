@@ -339,27 +339,8 @@ static OSAL_RESULT __attribute__((always_inline)) OSAL_MUTEX_Delete(OSAL_MUTEX_H
  */
 static OSAL_RESULT __attribute__((always_inline)) OSAL_MUTEX_Lock(OSAL_MUTEX_HANDLE_TYPE* mutexID, OSAL_TICK_TYPE waitMS)
 {
-    if (mutexID == NULL)
-    {
-        return OSAL_RESULT_FAIL;
-    }
-    if (waitMS == OSAL_WAIT_FOREVER)
-    {
-        while (*mutexID == 0U){}
-    }
-    <#if ENABLE_OSAL_TIMEOUT_FEATURE == true>
-    else
-    {
-        if (waitMS != OSAL_NO_WAIT)
-        {
-            ${OSAL_TIMEOUT_PERIPHERAL}_TIMEOUT timeout;
+    (void) waitMS;
 
-            ${OSAL_TIMEOUT_PERIPHERAL}_StartTimeOut(&timeout, waitMS);
-
-            while ((${OSAL_TIMEOUT_PERIPHERAL}_IsTimeoutReached(&timeout) == false) && (*mutexID == 0U)){}
-        }
-    }
-    </#if>
     if (*mutexID == 1U)
     {
         *mutexID = 0;
