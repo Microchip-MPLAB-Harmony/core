@@ -47,6 +47,7 @@ MPULinkerSymbolMap = {
     "CEC17X"        : {"filter": ["CEC17"],             "ROM": "CODE_SRAM", "RAM": "DATA_SRAM"},
     "PIC32CX_BZ2"   : {"filter": ["BZ24", "BZ25", "WBZ45"],      "ROM": "FLASH", "RAM": "HSRAM", "BACKUPRAM": "BKUPRAM", "BOOTROM": "BOOT_FLASH"},
     "PIC32CX_BZ3"   : {"filter": ["BZ3", "WBZ35"],      "ROM": "FCR_PFM", "RAM": "RAM_SYSTEM_RAM"},
+    "PIC32CX_BZ6"   : {"filter": ["BZ6", "WBZ65"],      "ROM": "FCR_PFM", "RAM": "RAM_SYSTEM_RAM"},
     "PIC32CX_MT"    : {"filter": ["MTC", "MTG", "MTSH"],"ROM": "IFLASH0",  "RAM": "IRAM0", "ITCM": "ITCM", "DTCM": "DTCM"},
     "PIC32CX_SG"    : {"filter": ["SG41", "SG60", "SG61"],"ROM": "FLASH",  "RAM": "HSRAM", "BACKUPRAM": "BKUPRAM"},
     "LAN9255"       : {"filter": ["LAN9255"],   "ROM": "FLASH",  "RAM": "HSRAM", "BACKUPRAM": "BKUPRAM"},
@@ -110,7 +111,7 @@ linker_device_name.setDefaultValue(device_name)
 linker_device_name.setVisible(False)
     
 if "ROM" in MPULinkerSymbolMap[template_linker]:
-    if any(x in device_name for x in ["BZ3", "WBZ35"]):
+    if any(x in device_name for x in ["BZ3", "WBZ35", "BZ6", "WBZ65"]):
         rom_start = int (rom_start, 0) + 0x200
         rom_start = str(hex(rom_start))
         rom_size  = int (rom_size, 0) - 0x200
