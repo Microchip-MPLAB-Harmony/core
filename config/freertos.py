@@ -1242,7 +1242,7 @@ def instantiateComponent(thirdPartyFreeRTOS):
     freertosInterruptInclude.setOutputName("core.LIST_SYSTEM_INTERRUPT_C_INCLUDES")
     freertosInterruptInclude.setSourcePath("templates/freertos_interrupt_include.h.ftl")
     freertosInterruptInclude.setMarkup(True)
-    freertosInterruptInclude.setEnabled(Database.getSymbolValue("core", "CoreArchitecture") in ["CORTEX-M23", "CORTEX-M33", "CORTEX-A5"])
+    freertosInterruptInclude.setEnabled(Database.getSymbolValue("core", "CoreArchitecture") in ["CORTEX-M0PLUS", "CORTEX-M23", "CORTEX-M33", "CORTEX-A5"])
 
 
     # load family specific configuration
