@@ -338,7 +338,7 @@ static bool EMU_EEPROM_IsFullRow(uint16_t phy_page)
     for (c = 0; c < EEPROM_EMULATOR_NUM_LOGICAL_PAGES_PER_ROW; c++)
     {
         if ((flashAddr[c].header.logical_page == flashAddr[EEPROM_EMULATOR_NUM_LOGICAL_PAGES_PER_ROW].header.logical_page) ||
-            (flashAddr[c].header.logical_page == flashAddr[EEPROM_EMULATOR_NUM_LOGICAL_PAGES_PER_ROW + 1].header.logical_page))
+            (flashAddr[c].header.logical_page == flashAddr[EEPROM_EMULATOR_NUM_LOGICAL_PAGES_PER_ROW + 1U].header.logical_page))
         {
             return true;
         }
