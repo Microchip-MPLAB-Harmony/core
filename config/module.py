@@ -51,7 +51,8 @@ def loadModule():
     i2c_bbComponent.setDisplayType("I2C BIT BANG")
     i2c_bbComponent.addCapability("I2C", "I2C", False)
     i2c_bbComponent.addDependency("TMR", "TMR", False, True)
-
+    i2c_bbComponent.setHelpKeyword("MH3_CORE_i2c_bb")
+    
     #define drivers and system services
     coreComponents = [
         {"name":"time", "label": "TIME", "type":"system", "display_path":"", "actual_path":"", "capability":["SYS_TIME"], "capability_type":"generic", "dependency":[  "TMR"], "condition": "True"},

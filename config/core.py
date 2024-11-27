@@ -28,6 +28,7 @@ print("Load Module: Harmony Drivers & System Services")
 thirdPartyFreeRTOS = Module.CreateComponent("FreeRTOS", "FreeRTOS", "/Third Party Libraries/RTOS/", "config/freertos.py")
 thirdPartyFreeRTOS.setDisplayType("Third Party Library")
 thirdPartyFreeRTOS.addCapability("FreeRTOS", "RTOS", True)
+thirdPartyFreeRTOS.setHelpKeyword("MH3_CORE_FreeRTOS")
 
 harmonySystemService = Module.CreateSharedComponent("HarmonyCore", "Core", "/Core/", "config/harmonycore.py")
 harmonySystemService.setDisplayType("Harmony Core Service")
@@ -94,6 +95,7 @@ for coreComponent in coreComponents:
                 Component = Module.CreateGeneratorComponent("drv_" + Name, Label, displayPath, actualPath + Name + "/config/drv_" + Name + "_common.py", actualPath + Name + "/config/drv_" + Name + ".py")
             elif coreComponent['instance'] == "single":
                 Component = Module.CreateComponent("drv_" + Name, Label, displayPath, actualPath + Name + "/config/drv_" + Name + ".py")
+                Component.setHelpKeyword("MH3_CORE_drv_" + Name.lower())
 
             if "capability" in coreComponent:
                 for capability in coreComponent['capability']:
@@ -138,6 +140,7 @@ for coreComponent in coreComponents:
                 Component = Module.CreateGeneratorComponent("lib_" + Name, Label, displayPath, actualPath + Name + "/config/lib_" + Name + "_common.py", actualPath + Name + "/config/lib_" + Name + ".py")
             elif coreComponent['instance'] == "single":
                 Component = Module.CreateComponent("lib_" + Name, Label, displayPath, actualPath + Name + "/config/lib_" + Name + ".py")
+                Component.setHelpKeyword("MH3_CORE_" + Name.lower())
 
             if "capability" in coreComponent:
                 for capability in coreComponent['capability']:
