@@ -32,7 +32,7 @@
 
 ### Notes
 
-- None
+- With core v3.14.0, FreeRTOS source dependency is changed from [CMSIS-FreeRTOS](https://github.com/ARM-software/CMSIS-FreeRTOS) to [FreeRTOS-Kernel](https://github.com/FreeRTOS/FreeRTOS-Kernel) repository.
 
 ## Core Release v3.14.0-E1
 
