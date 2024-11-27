@@ -3,6 +3,37 @@
 
 # Microchip MPLAB® Harmony 3 Release Notes
 
+## Core Release v3.14.0
+
+### New Features
+
+- **New Features and Enhancements**
+  - Added Drivers, System services and FreeRTOS support for PIC32CM-GC/SG, PIC32CX-BZ6 and PIC32CZ-CA70 family of devices
+  - FreeRTOS support updated to the latest V11.1.0 with FreeRTOS-Kernel repository
+  - Updated LittleFS support to the latest version v2.9.3
+  - Added SDIO protocol support in SDMMC driver
+  - Added MPU mode support in FreeRTOS for Cortex-M4 devices, It allows application tasks to create restricted tasks
+  - Added support for creation of application tasks using static memory in FreeRTOS
+  - Other bug fixes and enhancements
+
+- **Applications**
+  - MPLAB Harmony provides large number of application examples to accelerate learning and reduce the development cycles for your embedded systems with reusable software components. The application examples are available in the respective [product family specific repository](apps/readme.md).
+
+### Known Issues
+
+-  None
+
+### Development Tools
+
+- [MPLAB® X IDE v6.20](https://www.microchip.com/mplab/mplab-x-ide) or higher
+- [MPLAB® XC32 C/C++ Compiler v4.45](https://www.microchip.com/mplab/compilers)
+- MPLAB® X IDE plug-ins:
+    - MPLAB® Code Configurator 5.5.1 or higher
+
+### Notes
+
+- None
+
 ## Core Release v3.14.0-E1
 
 ### New Features

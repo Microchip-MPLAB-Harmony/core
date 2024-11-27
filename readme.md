@@ -23,7 +23,7 @@ the following links for release notes, training materials, and interface
 reference information.
 
 - [Release Notes](./release_notes.md)
-- [MPLAB® Harmony License](mplab_harmony_license.md)
+- [Microchip SLA](Microchip_SLA001.md)
 - [MPLAB® Harmony 3 Core Wiki](https://github.com/Microchip-MPLAB-Harmony/core/wiki)
 - [MPLAB® Harmony 3 Core API Help](https://microchip-mplab-harmony.github.io/core)
 
@@ -33,13 +33,20 @@ reference information.
 |-----------|------------------------------------------------------------|
 | apps      | Example applications for core library components           |
 | config    | Core module configuration scripts                          |
-| docs      | Core module library help documentation                     |
 | driver    | Core module peripheral device drivers                      |
 | libraries | Library modules                                            |
 | osal      | MPLAB Harmony Operating System Abstraction Layer           |
 | system    | MPLAB Harmony system services                              |
 | templates | Application and system file templates                      |
 
+## Documentation
+
+Click [here](https://onlinedocs.microchip.com/v2/keyword-lookup?keyword=MH3_CORE&redirect=true) to view the online documentation of core repository.
+
+To view the documentation offline, follow these steps:
+ - Download the publication as a zip file from [here](https://onlinedocs.microchip.com/download/GUID-EDFB1AB8-CD6B-446F-8E25-F2167287A1AF?type=webhelp).
+ - Extract the zip file into a folder.
+ - Navigate to the folder and open **index.html** in a web browser of your choice.
 
 ____
 

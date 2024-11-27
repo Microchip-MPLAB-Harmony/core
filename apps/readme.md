@@ -7,10 +7,13 @@ Microchip MPLAB Harmony provides several application examples for most supported
 | [core_apps_pic32cm_jh00_jh01](https://github.com/Microchip-MPLAB-Harmony/core_apps_pic32cm_jh00_jh01) | Application examples for PIC32CM JH01 family |
 | [core_apps_pic32cm_le_ls](https://github.com/Microchip-MPLAB-Harmony/core_apps_pic32cm_le_ls) | Application examples for PIC32CM LE/LS family |
 | [core_apps_pic32cm_mc00](https://github.com/Microchip-MPLAB-Harmony/core_apps_pic32cm_mc00) | Application examples for PIC32CM MC00 family |
+| [core_apps_pic32cm_sg_gc](https://github.com/Microchip-MPLAB-Harmony/core_apps_pic32cm_sg_gc) | Application examples for PIC32CM-SG/GC family |
 | [core_apps_pic32cx_mt](https://github.com/Microchip-MPLAB-Harmony/core_apps_pic32cx_mt) | Application examples for PIC32CX MT family |
 | [core_apps_pic32cxbz2_wbz45](https://github.com/Microchip-MPLAB-Harmony/core_apps_pic32cxbz2_wbz45) | Application examples for PIC32CX-BZ2 family of wireless microcontrollers (MCUs) and WBZ451 modules |
 | [core_apps_pic32cxbz3_wbz3](https://github.com/Microchip-MPLAB-Harmony/core_apps_pic32cxbz3_wbz3) | Application examples for PIC32CX-BZ3 SoC Family of wireless microcontrollers (MCUs) and WBZ35x Modules |
-| [core_apps_pic32cz_ca](https://github.com/Microchip-MPLAB-Harmony/core_apps_pic32cz_ca) | Application examples for PIC32CZ-CA family |
+| [core_apps_pic32cxbz6_wbz6](https://github.com/Microchip-MPLAB-Harmony/core_apps_pic32cxbz6_wbz6) | Application examples for PIC32CX-BZ6 SoC Family of wireless microcontrollers (MCUs) and WBZ65x Modules |
+| [core_apps_pic32cz_ca70](https://github.com/Microchip-MPLAB-Harmony/core_apps_pic32cz_ca70) | Application examples for PIC32CZ-CA70 family |
+| [core_apps_pic32cz_ca8x_ca9x](https://github.com/Microchip-MPLAB-Harmony/core_apps_pic32cz_ca8x_ca9x) | Application examples for PIC32CZ-CA80/CA90 family |
 | [core_apps_pic32mk](https://github.com/Microchip-MPLAB-Harmony/core_apps_pic32mk) | Application examples for: <br> PIC32MK GENERAL PURPOSE AND MOTOR CONTROL (GP/MC) family <br> PIC32MK GENERAL PURPOSE AND MOTOR CONTROL (GPG/MCJ) WITH CAN FD family <br> PIC32MK GENERAL PURPOSE AND MOTOR CONTROL (GPK/MCM) WITH CAN FD family |
 | [core_apps_pic32mm](https://github.com/Microchip-MPLAB-Harmony/core_apps_pic32mm) | Application examples for PIC32MM family |
 | [core_apps_pic32mx](https://github.com/Microchip-MPLAB-Harmony/core_apps_pic32mx) | Application examples for: <br> PIC32MX330/350/370/430/450/470 family <br> PIC32MX1XX/2XX/5XX 64/100-PIN family <br> PIC32MX1XX/2XX 28/36/44-PIN family <br> PIC32MX1XX/2XX 28/44-PIN XLP family <br> PIC32MX5XX/6XX/7XX  family |
