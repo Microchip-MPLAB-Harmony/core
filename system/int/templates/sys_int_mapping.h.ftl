@@ -56,17 +56,24 @@
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Wunknown-pragmas"
 </#if>
-#pragma coverity compliance block deviate:6 "MISRA C-2012 Rule 5.8" "H3_MISRAC_2012_R_5_8_DR_1"    
+#pragma coverity compliance block deviate:6 "MISRA C-2012 Rule 5.8" "H3_MISRAC_2012_R_5_8_DR_1"
 </#if>
 
 <#if __PROCESSOR?matches("ATSAMA5.*") ||  __PROCESSOR?matches("SAM9X.*") >
 <#elseif __PROCESSOR?matches("SAMA7.*") >
-	<#lt>#define SYS_INT_IsEnabled()                 ((CPSR_I_Msk & __get_CPSR()) == 0)
-	<#lt>#define SYS_INT_SourceEnable( source )      GIC_EnableIRQ( source )
-	<#lt>#define SYS_INT_SourceIsEnabled( source )   GIC_GetEnableIRQ( source )
-	<#lt>#define SYS_INT_SourceStatusGet( source )   GIC_GetPendingIRQ( source )
-	<#lt>#define SYS_INT_SourceStatusSet( source )   GIC_SetPendingIRQ( source )
-	<#lt>#define SYS_INT_SourceStatusClear( source ) GIC_ClearPendingIRQ( source )
+    <#lt>#define SYS_INT_IsEnabled()                 ((CPSR_I_Msk & __get_CPSR()) == 0)
+    <#lt>#define SYS_INT_SourceEnable( source )      GIC_EnableIRQ( source )
+    <#lt>#define SYS_INT_SourceIsEnabled( source )   GIC_GetEnableIRQ( source )
+    <#lt>#define SYS_INT_SourceStatusGet( source )   GIC_GetPendingIRQ( source )
+    <#lt>#define SYS_INT_SourceStatusSet( source )   GIC_SetPendingIRQ( source )
+    <#lt>#define SYS_INT_SourceStatusClear( source ) GIC_ClearPendingIRQ( source )
+<#elseif (core.CoreArchitecture == "PIC32A") || (core.CoreArchitecture == "dsPIC33A")>
+        <#lt>#define SYS_INT_IsEnabled()                 ((bool)(SRbits.IPL != 7U))
+        <#lt>#define SYS_INT_SourceEnable( source )      INTC_SourceEnable( source )
+        <#lt>#define SYS_INT_SourceIsEnabled( source )   INTC_SourceIsEnabled( source )
+        <#lt>#define SYS_INT_SourceStatusGet( source )   INTC_SourceStatusGet( source )
+        <#lt>#define SYS_INT_SourceStatusSet( source )   INTC_SourceStatusSet( source )
+        <#lt>#define SYS_INT_SourceStatusClear( source ) INTC_SourceStatusClear( source )
 <#else>
     <#if core.PRODUCT_FAMILY?matches("PIC32M.*") == false>
         <#lt>#define SYS_INT_IsEnabled()                 ( __get_PRIMASK() == 0 )
@@ -89,7 +96,7 @@
 #pragma coverity compliance end_block "MISRA C-2012 Rule 5.8"
 <#if core.COMPILER_CHOICE == "XC32">
 #pragma GCC diagnostic pop
-</#if>    
+</#if>
 </#if>
 /* MISRAC 2012 deviation block end */
 

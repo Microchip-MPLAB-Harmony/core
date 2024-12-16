@@ -62,6 +62,9 @@ elif "SAMA7" in processor:
 elif "PIC32M" in Database.getSymbolValue("core", "PRODUCT_FAMILY"):
     sysIntCFileStem = "sys_int_pic32"
     sysIntHeaderFile = "sys_int_pic32"
+elif ("PIC32A" in Database.getSymbolValue("core", "CoreArchitecture")) or ("dsPIC33A" in Database.getSymbolValue("core", "CoreArchitecture")):
+    sysIntCFileStem = "sys_int_intc"
+    sysIntHeaderFile = "sys_int_intc"
 
 intHeaderFile = harmonyCoreComponent.createFileSymbol("INT_HEADER", None)
 intHeaderFile.setSourcePath("system/int/" + sysIntHeaderFile + ".h.ftl")
