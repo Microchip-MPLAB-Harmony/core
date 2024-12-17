@@ -3,6 +3,18 @@
 
 # Microchip MPLAB® Harmony 3 Release Notes
 
+## Core Release v3.14.1
+
+### New Features
+- N/A
+
+### Bug fixes
+- Added messages that allows SHD to configure SST26 driver
+
+### Known Issues
+
+-  None
+
 ## Core Release v3.14.0
 
 ### New Features
