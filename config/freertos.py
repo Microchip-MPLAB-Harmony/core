@@ -32,7 +32,7 @@ selectedCompiler = compilerList[Database.getSymbolValue("core", "COMPILER_CHOICE
 ###############################################################################
 ########################## FreeRTOS Configurations ############################
 ###############################################################################
-if (coreArch == "CORTEX-M0PLUS" or coreArch == "CORTEX-M23" or coreArch == "CORTEX-M33"):
+if (coreArch == "CORTEX-M0PLUS" or coreArch == "CORTEX-M23" or coreArch == "CORTEX-M33" or coreArch == "PIC32A" or coreArch == "dsPIC33A"):
     ComboVal_Task_Selection = ["Generic"]
 else:
     ComboVal_Task_Selection = ["Port_Optimized", "Generic"]
@@ -41,6 +41,9 @@ ComboVal_Scheduler_Type     = ["Preemptive", "Co_Operative"]
 ComboVal_Tick_Mode          = ["Tickless_Idle", "Tick_Interrupt"]
 ComboVal_Mem_Mgmt_Type      = ["Heap_1", "Heap_2", "Heap_3", "Heap_4", "Heap_5"]
 ComboVal_Stack_Overflow     = ["No_Check", "Method_1", "Method_2"]
+
+if (coreArch == "PIC32A" or coreArch == "dsPIC33A"):
+    timer1VectorIndex = ATDF.getNode('/avr-tools-device-file/devices/device/interrupts/interrupt@[name="T1Interrupt"]').getAttribute("index")
 
 def freeRTOSMPUOptionsVisibility(symbol, event):
     if symbol.getID() == "FREERTOS_ERRATA_837070_WORKAROUND":
@@ -243,6 +246,18 @@ def freeRtosIntConfig():
         if (Database.getSymbolValue("core", SWI0InterruptEnable) == False):
             Database.sendMessage("core", SWI0InterruptEnable, {"isEnabled":True})
 
+    elif (coreArch == "PIC32A" or coreArch == "dsPIC33A"):
+        global timer1VectorIndex
+        Timer1InterruptEnable   = "INTC_" + timer1VectorIndex + "_ENABLE"
+
+        if (Database.getSymbolValue("core", Timer1InterruptEnable) == False):
+            Database.sendMessage("core", Timer1InterruptEnable, {"isEnabled":True})
+
+        Timer1InterruptHandlerLock = "INTC_" + timer1VectorIndex + "_HANDLER_LOCK"
+
+        if (Database.getSymbolValue("core", Timer1InterruptHandlerLock) == False):
+            Database.sendMessage("core", Timer1InterruptHandlerLock, {"isEnabled":True})
+
     else:
         SysTickInterruptEnable      = "SysTick_INTERRUPT_ENABLE"
         SysTickInterruptHandler     = "SysTick_INTERRUPT_HANDLER"
@@ -290,6 +305,10 @@ def destroyComponent(thirdPartyFreeRTOS):
         Database.sendMessage("core", "TIMER_1_INTERRUPT_ENABLE", {"isEnabled":False})
         Database.sendMessage("core", "TMR1_CLOCK_ENABLE", {"isEnabled":False})
         Database.sendMessage("core", "CORE_SOFTWARE_0_INTERRUPT_ENABLE", {"isEnabled":False})
+    elif (coreArch == "PIC32A" or coreArch == "dsPIC33A"):
+        global timer1VectorIndex
+        Database.sendMessage("core", "INTC_" + timer1VectorIndex + "_ENABLE", {"isEnabled":False})
+        Database.sendMessage("core", "INTC_" + timer1VectorIndex + "_HANDLER_LOCK", {"isEnabled":False})
     else:
         Database.sendMessage("core", "SysTick_INTERRUPT_ENABLE", {"isEnabled":False})
         Database.sendMessage("core", "SysTick_INTERRUPT_HANDLER", {"intHandler":"SysTick_Handler"})
@@ -317,7 +336,7 @@ def instantiateComponent(thirdPartyFreeRTOS):
     #FreeRTOS Interrupt Handlers configurations
     freeRtosIntConfig()
 
-    if (coreArch == "MIPS"):
+    if (coreArch == "MIPS" or coreArch == "PIC32A" or coreArch == "dsPIC33A"):
         rtosSet = thirdPartyFreeRTOS.createStringSymbol("SET_RTOS", None)
         rtosSet.setVisible(False)
         rtosSet.setValue("FreeRTOS")
@@ -335,7 +354,7 @@ def instantiateComponent(thirdPartyFreeRTOS):
     freeRtosSym_TaskSelection = thirdPartyFreeRTOS.createComboSymbol("FREERTOS_TASK_SELECTION", freeRtosSymMenu, ComboVal_Task_Selection)
     freeRtosSym_TaskSelection.setLabel("Task Selection")
     freeRtosSym_TaskSelection.setDescription("Select either the Port specific or the Generic method of selecting the next task to execute.")
-    if (coreArch == "CORTEX-M0PLUS" or coreArch == "CORTEX-M23" or coreArch == "CORTEX-M33"):
+    if (coreArch == "CORTEX-M0PLUS" or coreArch == "CORTEX-M23" or coreArch == "CORTEX-M33" or coreArch == "PIC32A" or coreArch == "dsPIC33A"):
         freeRtosSym_TaskSelection.setDefaultValue("Generic_Task_Selection")
     else:
         freeRtosSym_TaskSelection.setDefaultValue("Port_Optimized")
@@ -353,7 +372,7 @@ def instantiateComponent(thirdPartyFreeRTOS):
     freeRtosSym_ExpectedIdleTime.setVisible(False)
     freeRtosSym_ExpectedIdleTime.setDependencies(freeRtosExpIdleTimeVisibility, ["FREERTOS_TICKLESS_IDLE_CHOICE"])
 
-    if (coreArch != "MIPS"):
+    if (coreArch != "MIPS" and coreArch != "PIC32A" and coreArch != "dsPIC33A"):
         freeRtosSym_CpuClockHz = thirdPartyFreeRTOS.createIntegerSymbol("FREERTOS_CPU_CLOCK_HZ", freeRtosSymMenu)
         freeRtosSym_CpuClockHz.setLabel("CPU Clock Speed (Hz)")
         freeRtosSym_CpuClockHz.setDescription("This is the CPU clock speed obtained from the Clock System Service configuration.")
@@ -375,7 +394,10 @@ def instantiateComponent(thirdPartyFreeRTOS):
     freeRtosSym_MaxPrio.setDescription("FreeRTOS - Maximum number of priorities")
     freeRtosSym_MaxPrio.setMin(1)
     freeRtosSym_MaxPrio.setMax(999999999)
-    freeRtosSym_MaxPrio.setDefaultValue(5)
+    if (coreArch == "PIC32A" or coreArch == "dsPIC33A"):
+        freeRtosSym_MaxPrio.setDefaultValue(4)
+    else:
+        freeRtosSym_MaxPrio.setDefaultValue(5)
 
     freeRtosSym_StackSize = thirdPartyFreeRTOS.createIntegerSymbol("FREERTOS_MINIMAL_STACK_SIZE", freeRtosSymMenu)
     freeRtosSym_StackSize.setLabel("Minimal Stack Size")
@@ -719,7 +741,7 @@ def instantiateComponent(thirdPartyFreeRTOS):
     freeRtosSym_ConfAssertMacro.setDescription("FreeRTOS - Use the configAssert macro")
     freeRtosSym_ConfAssertMacro.setDefaultValue(False)
 
-    if (coreArch != "MIPS") and (coreArch != "CORTEX-A5") and ("ARM926" not in coreArch) and (coreArch != "CORTEX-A7"):
+    if (coreArch != "MIPS") and (coreArch != "CORTEX-A5") and ("ARM926" not in coreArch) and (coreArch != "CORTEX-A7") and (coreArch != "PIC32A") and (coreArch != "dsPIC33A"):
         freeRtosSym_CheckHandlerInstallation = thirdPartyFreeRTOS.createBooleanSymbol("FREERTOS_CHECK_HANDLER_INSTALLATION", freeRtosSymMenu)
         freeRtosSym_CheckHandlerInstallation.setLabel("Check handler installation")
         freeRtosSym_CheckHandlerInstallation.setDescription("FreeRTOS - Enable additional asserts to verify that the application has correctly installed FreeRTOS interrupt handlers")
@@ -737,7 +759,7 @@ def instantiateComponent(thirdPartyFreeRTOS):
     freeRtosSym_MaxSysCalIntrPrio.setMin(0)
     freeRtosSym_MaxSysCalIntrPrio.setMax(7)
 
-    if (coreArch != "MIPS") and (coreArch != "CORTEX-A5") and ("ARM926" not in coreArch) and (coreArch != "CORTEX-A7"):
+    if (coreArch != "MIPS") and (coreArch != "CORTEX-A5") and ("ARM926" not in coreArch) and (coreArch != "CORTEX-A7") and (coreArch != "PIC32A") and (coreArch != "dsPIC33A"):
         freeRtosSym_ConfigPriorityBits = thirdPartyFreeRTOS.createIntegerSymbol("FREERTOS_CONFIG_PRIORITY_BITS", freeRtosSymMenu)
         freeRtosSym_ConfigPriorityBits.setLabel("Number of Bits used for Priority Levels")
         freeRtosSym_ConfigPriorityBits.setMin(2)
@@ -1250,5 +1272,7 @@ def instantiateComponent(thirdPartyFreeRTOS):
         execfile(Module.getPath() + "config/arch/mips/devices_" + coreFamily[:7].lower() + "/freertos_config.py")
     elif ("ARM926" in coreArch):
         execfile(Module.getPath() + "config/arch/arm/devices_arm926/freertos_config.py")
+    elif (coreArch == "PIC32A" or coreArch == "dsPIC33A"):
+        execfile(Module.getPath() + "config/arch/pic32a/devices_pic32a/freertos_config.py")
     else:
         execfile(Module.getPath() + "config/arch/arm/devices_" + coreArch.replace("-", "_").replace("PLUS", "").lower() + "/freertos_config.py")

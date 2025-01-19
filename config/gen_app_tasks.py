@@ -323,7 +323,7 @@ for count in range(0, genAppTaskMaxCount):
     genAppRtosTaskSize[count] = harmonyCoreComponent.createIntegerSymbol("GEN_APP_RTOS_TASK_" + str(count) + "_SIZE", genAppRtosTaskConfMenu[count])
     genAppRtosTaskSize[count].setLabel("Stack Size (in bytes)")
     genAppRtosTaskSize[count].setDescription("Stack Size (in bytes)")
-    if (coreArch == "CORTEX-M0PLUS" or coreArch == "CORTEX-M23"):
+    if (coreArch == "CORTEX-M0PLUS" or coreArch == "CORTEX-M23" or coreArch == "dsPIC33A" or coreArch == "PIC32A"):
         genAppRtosTaskSize[count].setDefaultValue(512)
     else:
         genAppRtosTaskSize[count].setDefaultValue(4096)
@@ -402,7 +402,7 @@ for count in range(0, genAppTaskMaxCount):
 
     genAppTaskMPURegBaseAddr.append(count)
     genAppTaskMPURegBaseAddr[count] = [None] * 3
-    
+
     genAppTaskMPURegBaseAddrVar.append(count)
     genAppTaskMPURegBaseAddrVar[count] = [None] * 3
 
@@ -460,6 +460,8 @@ for count in range(0, genAppTaskMaxCount):
 
 
     if (coreArch == "CORTEX-A5" or
+    (coreArch == "dsPIC33A") or
+    (coreArch == "PIC32A") or
     ("PIC32MZEF" == Database.getSymbolValue("core", "PRODUCT_FAMILY")) or
     ("PIC32MZDA" == Database.getSymbolValue("core", "PRODUCT_FAMILY")) or
     ("PIC32MK" in Database.getSymbolValue("core", "PRODUCT_FAMILY"))):

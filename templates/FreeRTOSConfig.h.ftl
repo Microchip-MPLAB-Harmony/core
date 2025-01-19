@@ -55,7 +55,7 @@
  * generic file, if one is available.
  ******************************************************************************/
 
-<#if core.CoreArchitecture != "MIPS">
+<#if core.CoreArchitecture != "MIPS" && core.CoreArchitecture != "PIC32A" && core.CoreArchitecture != "dsPIC33A">
 /******************************************************************************/
 /* Hardware description related definitions. **********************************/
 /******************************************************************************/
@@ -308,7 +308,7 @@
 /* Interrupt nesting behaviour configuration. *********************************/
 /******************************************************************************/
 
-<#if core.CoreArchitecture != "MIPS">
+<#if core.CoreArchitecture != "MIPS" && core.CoreArchitecture != "PIC32A" && core.CoreArchitecture != "dsPIC33A">
   <#if core.CoreArchitecture != "CORTEX-A5" && (core.CoreArchitecture?matches("ARM926.*") == false) && core.CoreArchitecture != "CORTEX-A7">
     <#lt>/* configKERNEL_INTERRUPT_PRIORITY sets the priority of the tick and context
     <#lt> * switch performing interrupts.  Not supported by all FreeRTOS ports.  See
@@ -326,7 +326,9 @@
   </#if>
 <#else>
     <#lt>#define configPERIPHERAL_CLOCK_HZ               ( ${FREERTOS_PERIPHERAL_CLOCK_HZ?number?c}UL )
-    <#lt>#define configISR_STACK_SIZE                    ( ${FREERTOS_ISR_STACK_SIZE} )
+	<#if core.CoreArchitecture != "PIC32A" && core.CoreArchitecture != "dsPIC33A">
+        <#lt>#define configISR_STACK_SIZE                    ( ${FREERTOS_ISR_STACK_SIZE} )
+	</#if>
     <#lt>/* configKERNEL_INTERRUPT_PRIORITY sets the priority of the tick and context
     <#lt> * switch performing interrupts.  Not supported by all FreeRTOS ports.  See
     <#lt> * https://www.freertos.org/RTOS-Cortex-M3-M4.html for information specific to
@@ -498,7 +500,7 @@
  * to leave the Memory Protection Unit disabled. */
 #define configENABLE_MPU                        <#if FREERTOS_ENABLE_MPU == true>1<#else>0</#if>
 </#if>
-<#if core.CoreArchitecture != "MIPS" && core.CoreArchitecture != "CORTEX-A5" && (core.CoreArchitecture?matches("ARM926.*") == false) && core.CoreArchitecture != "CORTEX-A7">
+<#if core.CoreArchitecture != "MIPS" && core.CoreArchitecture != "CORTEX-A5" && (core.CoreArchitecture?matches("ARM926.*") == false) && core.CoreArchitecture != "CORTEX-A7" && core.CoreArchitecture != "PIC32A" && core.CoreArchitecture != "dsPIC33A">
 
 /******************************************************************************/
 /* ARMv7-M and ARMv8-M port Specific Configuration definitions. ***************/
@@ -594,6 +596,9 @@
 #define INCLUDE_uxTaskGetStackHighWaterMark2    <#if FREERTOS_INCLUDE_UXTASKGETSTACKHIGHWATERMARK2 == true>1<#else>0</#if>
 #define INCLUDE_xTaskResumeFromISR              <#if FREERTOS_INCLUDE_XTASKRESUMEFROMISR == true>1<#else>0</#if>
 
+<#if core.CoreArchitecture == "PIC32A" || core.CoreArchitecture == "dsPIC33A">
+#define taskYIELD()    portYIELD_WITHIN_API()
+</#if>
 <#if FREERTOS_CONFIG_INTERRUPT_CONTROLLER_BASE_ADDRESS??>
     <#lt>#define configINTERRUPT_CONTROLLER_BASE_ADDRESS         ${FREERTOS_CONFIG_INTERRUPT_CONTROLLER_BASE_ADDRESS}
 </#if>
