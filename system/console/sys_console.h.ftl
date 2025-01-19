@@ -53,6 +53,9 @@
 #include <stdint.h>
 #include <stdlib.h>
 #include <stdbool.h>
+<#if (core.CoreArchitecture == "PIC32A") || (core.CoreArchitecture == "dsPIC33A")>
+#include <stdio.h>
+</#if>
 
 #include "configuration.h"
 #include "system/system.h"

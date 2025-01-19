@@ -60,6 +60,14 @@ void __attribute__((noreturn)) SYS_RESET_SoftwareReset(void)
 
     /* Prevent any unwanted code execution until reset occurs */
     while(1);
+<#elseif core.CoreArchitecture?contains("PIC32A") || core.CoreArchitecture?contains("dsPIC33A")>
+    /* Trigger software reset */
+    __asm__ volatile ("reset");
+
+    while(1)
+    {
+        /* Prevent any unwanted code execution until reset occurs */
+    }
 <#elseif core.CoreArchitecture?contains("ARM") || core.CoreArchitecture?contains("CORTEX-A")>
     /* Issue reset command */
     RSTC_REGS->RSTC_CR = RSTC_CR_KEY_PASSWD | RSTC_CR_PROCRST_Msk;
