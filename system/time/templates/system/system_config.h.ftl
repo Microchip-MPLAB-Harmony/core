@@ -28,7 +28,7 @@
     <#lt>#define SYS_TIME_COMPARE_UPDATE_EXECUTION_CYCLES    (460)
 </#if>
 <#if core.CoreArchitecture?matches("ARM926.*")>
-    <#lt>#define SYS_TIME_COMPARE_UPDATE_EXECUTION_CYCLES    (470)
+    <#lt>#define SYS_TIME_COMPARE_UPDATE_EXECUTION_CYCLES    (1210)
 </#if>
 <#if core.CoreArchitecture == "CORTEX-A7">
     <#lt>#define SYS_TIME_COMPARE_UPDATE_EXECUTION_CYCLES    (936)
