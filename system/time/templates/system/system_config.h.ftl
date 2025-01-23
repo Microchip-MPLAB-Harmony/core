@@ -5,7 +5,11 @@
 <#if SYS_TIME_OPERATING_MODE == "TICKLESS">
 #define SYS_TIME_HW_COUNTER_PERIOD                  (${.vars["${SYS_TIME_PLIB?lower_case}"].TIMER_PERIOD_MAX}U)
 #define SYS_TIME_HW_COUNTER_HALF_PERIOD             (SYS_TIME_HW_COUNTER_PERIOD>>1)
+<#if core.CoreArchitecture == "PIC32A" || core.CoreArchitecture == "dsPIC33A">
+#define SYS_TIME_CPU_CLOCK_FREQUENCY                (${core.clkGen1OutFrequency})
+<#else>
 #define SYS_TIME_CPU_CLOCK_FREQUENCY                (${core.CPU_CLOCK_FREQUENCY})
+</#if>
 <#if core.CoreArchitecture == "CORTEX-M7">
     <#lt>#define SYS_TIME_COMPARE_UPDATE_EXECUTION_CYCLES    (900)
 </#if>
