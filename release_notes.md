@@ -3,6 +3,20 @@
 
 # Microchip MPLAB® Harmony 3 Release Notes
 
+## Core Release v3.14.2
+
+- Updated the version of BSP package dependency
+
+### New Features
+- N/A
+
+### Bug fixes
+- Fixed SYS TIME service bug for SAM9X60 family of microcontrollers
+
+### Known Issues
+
+-  None
+
 ## Core Release v3.14.1
 
 ### New Features
