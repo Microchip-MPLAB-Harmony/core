@@ -63,7 +63,11 @@ static qspi_register_xfer_t qspi_register_xfer = { 0 };
 static qspi_memory_xfer_t qspi_memory_xfer = { 0 };
 
 /* Table mapping the Flash ID's to their sizes. */
-static uint32_t gSstFlashIdSizeTable [5][2] = {
+static uint32_t gSstFlashIdSizeTable [9][2] = {
+    {0x12, 0x40000},  /* 2 MBit */
+    {0x54, 0x80000},  /* 4 MBit */
+    {0x18, 0x100000}, /* 8 MBit */
+    {0x58, 0x100000}, /* 8 MBit */
     {0x01, 0x200000}, /* 16 MBit */
     {0x41, 0x200000}, /* 16 MBit */
     {0x02, 0x400000}, /* 32 MBit */
@@ -83,7 +87,7 @@ static uint32_t DRV_SST26_GetFlashSize( uint8_t deviceId )
 {
     uint8_t i = 0;
 
-    for (i = 0U; i < 5U; i++)
+    for (i = 0U; i < 9U; i++)
     {
         if (deviceId == gSstFlashIdSizeTable[i][0])
         {
@@ -153,23 +157,56 @@ static bool DRV_SST26_WriteEnable(void)
 bool DRV_SST26_UnlockFlash( const DRV_HANDLE handle )
 {
     bool status = false;
+    bool blockWriteProtection = false;
+    uint8_t jedecID[3] = { 0 };
 
     if(handle == DRV_HANDLE_INVALID)
     {
         return status;
     }
 
-    if (DRV_SST26_WriteEnable() == false)
+    if (DRV_SST26_ReadJedecId(handle, (void *)&jedecID) == false)
     {
-        return status;
+        status = false;
     }
+    else
+    {
+        /* Unblock block write protection using write status register command */
+        if (jedecID[2] == 0x12U || jedecID[2] == 0x18U)
+        {
+            blockWriteProtection = true;
+        }
+        else
+        {
+            blockWriteProtection = false;
+        }
 
-    (void) memset((void *)&qspi_command_xfer, 0, sizeof(qspi_command_xfer_t));
+        if (DRV_SST26_WriteEnable() == false)
+        {
+            return status;
+        }
 
-    qspi_command_xfer.instruction = (uint8_t)SST26_CMD_UNPROTECT_GLOBAL;
-    qspi_command_xfer.width = QUAD_CMD;
+        if (blockWriteProtection == true)
+        {
+            uint32_t statusRegister = 0;
 
-    status  = dObj->sst26Plib->CommandWrite(&qspi_command_xfer, 0);
+            (void) memset((void *)&qspi_register_xfer, 0, sizeof(qspi_register_xfer_t));
+
+            qspi_register_xfer.instruction = (uint8_t)SST26_CMD_WRITE_STATUS_REG;
+            qspi_register_xfer.width = QUAD_CMD;
+
+            status  = dObj->sst26Plib->RegisterWrite(&qspi_register_xfer, &statusRegister, 1);
+        }
+        else
+        {
+            (void) memset((void *)&qspi_command_xfer, 0, sizeof(qspi_command_xfer_t));
+
+            qspi_command_xfer.instruction = (uint8_t)SST26_CMD_UNPROTECT_GLOBAL;
+            qspi_command_xfer.width = QUAD_CMD;
+
+            status  = dObj->sst26Plib->CommandWrite(&qspi_command_xfer, 0);
+        }
+    }
 
     return status;
 }
@@ -363,11 +400,11 @@ bool DRV_SST26_GeometryGet( const DRV_HANDLE handle, DRV_SST26_GEOMETRY *geometr
 
         flash_size = DRV_SST26_GetFlashSize(jedec_id[2]);
 
-        if (flash_size == 0U) 
+        if (flash_size == 0U)
         {
             status = false;
         }
-        
+
         if(DRV_SST26_START_ADDRESS >= flash_size)
         {
             status = false;
@@ -453,7 +490,7 @@ void DRV_SST26_Close( const DRV_HANDLE handle )
         dObj->nClients--;
     }
 }
-/* MISRA C-2012 Rule 11.3, 11.8 deviated below. Deviation record ID -  
+/* MISRA C-2012 Rule 11.3, 11.8 deviated below. Deviation record ID -
    H3_MISRAC_2012_R_11_3_DR_1 & H3_MISRAC_2012_R_11_8_DR_1*/
 <#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
 <#if core.COMPILER_CHOICE == "XC32">
@@ -462,7 +499,7 @@ void DRV_SST26_Close( const DRV_HANDLE handle )
 </#if>
 #pragma coverity compliance block \
 (deviate:1 "MISRA C-2012 Rule 11.3" "H3_MISRAC_2012_R_11_3_DR_1" )\
-(deviate:1 "MISRA C-2012 Rule 11.8" "H3_MISRAC_2012_R_11_8_DR_1" )   
+(deviate:1 "MISRA C-2012 Rule 11.8" "H3_MISRAC_2012_R_11_8_DR_1" )
 </#if>
 SYS_MODULE_OBJ DRV_SST26_Initialize
 (
@@ -500,9 +537,9 @@ SYS_MODULE_OBJ DRV_SST26_Initialize
 #pragma coverity compliance end_block "MISRA C-2012 Rule 11.8"
 <#if core.COMPILER_CHOICE == "XC32">
 #pragma GCC diagnostic pop
-</#if>    
 </#if>
-/* MISRAC 2012 deviation block end */ 
+</#if>
+/* MISRAC 2012 deviation block end */
 
 SYS_STATUS DRV_SST26_Status( const SYS_MODULE_INDEX drvIndex )
 {

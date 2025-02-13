@@ -115,7 +115,10 @@ typedef enum
     SST26_CMD_CHIP_ERASE         = 0xC7,
 
     /* Command to unlock the flash device. */
-    SST26_CMD_UNPROTECT_GLOBAL   = 0x98
+    SST26_CMD_UNPROTECT_GLOBAL   = 0x98,
+
+    /* Command to write the Flash status register. */
+    SST26_CMD_WRITE_STATUS_REG    = 0x01
 
 } SST26_CMD;
 
