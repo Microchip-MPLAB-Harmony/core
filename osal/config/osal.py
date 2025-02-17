@@ -74,6 +74,9 @@ def enableOSALTimeout(symbol, event):
         elif coreArch == "CORTEX-A5" or "ARM9" in coreArch:
             Database.activateComponents(["pit"])
             Database.sendMessage("pit", "PIT_TIMER_CONFIG", {"isPitEn": True, "isPitIntEn": True})
+        elif (coreArch == "PIC32A" or coreArch == "dsPIC33A"):
+            Database.activateComponents(["timer1"])
+            Database.sendMessage("timer1", "TMR1_TIMER_CONFIG", {"isTmrIntEn": True, "isTmrAutoStart": True})
         else:
             Database.sendMessage("core", "SYSTICK_CONFIG", {"isSystickEn": True, "isSystickIntEn": True})
     else:
@@ -82,12 +85,14 @@ def enableOSALTimeout(symbol, event):
 
         if coreArch == "MIPS":      #FreeRTOS does not use Core timer, so its okay to deactivate it.
                 Database.deactivateComponents(["core_timer"])
-                
+
         if selected_rtos == "BareMetal":
             if coreArch == "CORTEX-A7":
                 Database.sendMessage("core", "GENERIC_TIMER_CONFIG", {"isGenTmrEn": False, "isGenTmrIntEn": False, "isGenTmrAutoStart": False})
             elif coreArch == "CORTEX-A5" or "ARM9" in coreArch:
                 Database.deactivateComponents(["pit"])
+            elif (coreArch == "PIC32A" or coreArch == "dsPIC33A"):
+                Database.deactivateComponents(["timer1"])
             else:
                 Database.sendMessage("core", "SYSTICK_CONFIG", {"isSystickEn": False, "isSystickIntEn": False})
 
@@ -100,6 +105,8 @@ def osalTimeoutPeripheralUsed(symbol, event):
             symbol.setValue("GENERIC_TIMER")
         elif coreArch == "CORTEX-A5" or "ARM9" in coreArch:
             symbol.setValue("PIT")
+        elif (coreArch == "PIC32A" or coreArch == "dsPIC33A"):
+            symbol.setValue("TMR1")
         else:
             symbol.setValue("SYSTICK")
 

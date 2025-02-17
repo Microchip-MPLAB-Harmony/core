@@ -64,7 +64,7 @@ extern "C" {
 #include "system/int/sys_int.h"
 #include "device.h"
 <#if ENABLE_OSAL_TIMEOUT_FEATURE == true>
-#include "peripheral/${OSAL_TIMEOUT_PERIPHERAL?lower_case}/plib_${OSAL_TIMEOUT_PERIPHERAL?lower_case}.h"
+#include "peripheral/${OSAL_TIMEOUT_PERIPHERAL?lower_case?replace("1", "")}/plib_${OSAL_TIMEOUT_PERIPHERAL?lower_case}.h"
 </#if>
 
 
@@ -253,7 +253,7 @@ static  OSAL_RESULT __attribute__((always_inline)) OSAL_SEM_Pend(OSAL_SEM_HANDLE
     {
         if (waitMS != OSAL_NO_WAIT)
         {
-            ${OSAL_TIMEOUT_PERIPHERAL}_TIMEOUT timeout;
+            ${OSAL_TIMEOUT_PERIPHERAL?replace("1", "")}_TIMEOUT timeout;
 
             ${OSAL_TIMEOUT_PERIPHERAL}_StartTimeOut(&timeout, waitMS);
 
