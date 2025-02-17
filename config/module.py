@@ -63,7 +63,7 @@ def loadModule():
 
         {"name":"debug", "label": "DEBUG", "type":"system", "display_path":"", "actual_path":"", "capability":["SYS_DEBUG"], "capability_type":"generic", "dependency":["SYS_CONSOLE"], "condition":"True"},
 
-        {"name":"fs", "label": "FILE SYSTEM", "type":"system", "display_path":"", "actual_path":"", "capability":["SYS_FS"], "capability_type":"generic", "dependency":["DRV_MEDIA"], "dependency_type":"multi", "condition":"True"},
+        {"name":"fs", "label": "FILE SYSTEM", "type":"system", "display_path":"", "actual_path":"", "capability":["SYS_FS"], "capability_type":"generic", "dependency":["DRV_MEDIA"], "dependency_type":"multi", "condition":'not any(x in Variables.get("__PROCESSOR") for x in ["PIC32AK", "dsPIC33AK"])'},
 
         {"name":"usart", "label": "USART", "type":"driver", "display_path":"", "actual_path":"", "instance":"multi", "capability":["DRV_USART"], "dependency":["UART"], "condition":"True"},
 
