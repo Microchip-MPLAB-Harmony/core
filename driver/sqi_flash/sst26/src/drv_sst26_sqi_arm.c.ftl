@@ -323,8 +323,10 @@ bool DRV_SST26_UnlockFlash( const DRV_HANDLE handle )
 {
     bool status = true;
     bool blockWriteProtection = false;
-    uint8_t bdctrlBufLen = 0U;
+    uint32_t bdctrlBufLen = 0U;
+    <#if core.DATA_CACHE_ENABLE?? && core.DATA_CACHE_ENABLE == true >
     uint8_t bufLen = 0U;
+    </#if>
 
     if(DRV_SST26_ValidateHandleAndCheckBusy(handle) == true)
     {
@@ -364,13 +366,17 @@ bool DRV_SST26_UnlockFlash( const DRV_HANDLE handle )
                 sqiCmdBuffer[4]               = (uint8_t)SST26_CMD_WRITE_STATUS_REG;
                 sqiCmdBuffer[5]               = 0U;
                 bdctrlBufLen                  = 2U;
+                <#if core.DATA_CACHE_ENABLE?? && core.DATA_CACHE_ENABLE == true >
                 bufLen                        = 6U;
+                </#if>
             }
             else
             {
                 sqiCmdBuffer[4]               = (uint8_t)SST26_CMD_UNPROTECT_GLOBAL;
                 bdctrlBufLen                  = 1U;
+                <#if core.DATA_CACHE_ENABLE?? && core.DATA_CACHE_ENABLE == true >
                 bufLen                        = 5U;
+                </#if>
             }
 
             sqiCmdDesc[1].bd_ctrl       = ( SQI_BDCTRL_BD_BUFLEN(bdctrlBufLen) | SQI_BDCTRL_PKT_INT_EN_Msk |
@@ -385,7 +391,7 @@ bool DRV_SST26_UnlockFlash( const DRV_HANDLE handle )
             dObj->curOpType = DRV_SST26_OPERATION_TYPE_CMD;
 
             <#if core.DATA_CACHE_ENABLE?? && core.DATA_CACHE_ENABLE == true >
-            SYS_CACHE_CleanDCache_by_Addr(&sqiCmdBuffer[0], bufLen);
+            SYS_CACHE_CleanDCache_by_Addr(&sqiCmdBuffer[0], (int32_t)bufLen);
             SYS_CACHE_CleanDCache_by_Addr(&sqiCmdDesc[0], 2 * (int32_t)sizeof(sqi_dma_desc_t));
             </#if>
 

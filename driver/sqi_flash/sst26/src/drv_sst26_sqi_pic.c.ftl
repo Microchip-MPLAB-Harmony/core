@@ -247,7 +247,7 @@ bool DRV_SST26_UnlockFlash( const DRV_HANDLE handle )
 {
     bool status = true;
     bool blockWriteProtection = false;
-    uint8_t bdctrlBufLen = 0U;
+    uint32_t bdctrlBufLen = 0U;
 
     if(DRV_SST26_ValidateHandleAndCheckBusy(handle) == true)
     {
