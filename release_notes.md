@@ -3,6 +3,35 @@
 
 # Microchip MPLAB® Harmony 3 Release Notes
 
+## Core Release v3.15.0
+
+### New Features
+
+- **New Features and Enhancements**
+  - Added Drivers, System services and FreeRTOS support for PIC32AK-GC family of devices
+  
+- **Applications**
+  - MPLAB Harmony provides large number of application examples to accelerate learning and reduce the development cycles for your embedded systems with reusable software components. The application examples are available in the respective [product family specific repository](apps/readme.md).
+
+### Known Issues
+
+-  None
+
+### Development Tools
+
+For PIC32AK-GC family of devices:
+- [MPLAB® X IDE v6.25](https://www.microchip.com/mplab/mplab-x-ide) or higher
+- [MPLAB® XC32 C/C++ Compiler v4.60](https://www.microchip.com/mplab/compilers) or higher
+- MPLAB® X IDE plug-ins:
+    - MPLAB® Code Configurator 5.5.2 or higher
+
+For all other parts:
+ - Same as v3.14.0
+
+### Notes
+
+-  None
+
 ## Core Release v3.14.2
 
 - Updated the version of BSP package dependency

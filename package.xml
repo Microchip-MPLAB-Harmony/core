@@ -2,7 +2,7 @@
 <Package name="core">
     <Dependencies>
         <Dependency name="bsp" version="v3.22.0"/>
-        <Dependency name="csp" version="v3.21.0"/>
+        <Dependency name="csp" version="v3.22.0"/>
         <Dependency name="FreeRTOS-Kernel" version="V11.1.0"/>
     </Dependencies>
 </Package>
