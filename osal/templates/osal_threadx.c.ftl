@@ -1,5 +1,5 @@
 /*******************************************************************************
-  Azure RTOS ThreadX OSAL compatibility layer
+  Eclipse ThreadX OSAL compatibility layer
 
   Company:
     Microchip Technology Inc.
@@ -8,16 +8,16 @@
     osal_threadx.c
 
   Summary:
-    Provide OSAL mappings for the Azure RTOS ThreadX Real-time operating system
+    Provide OSAL mappings for the Eclipse ThreadX Real-time operating system
 
   Description:
-    This file contains functional implementations of the OSAL for Azure RTOS ThreadX.
+    This file contains functional implementations of the OSAL for Eclipse ThreadX.
 
 *******************************************************************************/
 
 // DOM-IGNORE-BEGIN
 /*******************************************************************************
-* Copyright (C) 2019 Microchip Technology Inc. and its subsidiaries.
+* Copyright (C) 2025 Microchip Technology Inc. and its subsidiaries.
 *
 * Subject to your compliance with these terms, you may use Microchip software
 * and any derivatives exclusively with Microchip products. It is your
@@ -86,9 +86,8 @@
 
   Example:
     <code>
-     // prevent other tasks pre-empting this sequence of code
      OSAL_CRIT_Enter(OSAL_CRIT_TYPE_LOW);
-     // modify the peripheral
+
      DRV_USART_Reinitialize( objUSART,  &initData);
      OSAL_CRIT_Leave(OSAL_CRIT_TYPE_LOW);
     </code>
@@ -99,8 +98,8 @@
     perform task locking or completely disable all interrupts.
 
    NOTE -
-    In Azure RTOS ThreadX only interrupts below configMAX_SYSCALL_INTERRUPT_PRIORITY are
-    disabled. Azure RTOS ThreadX will handle nesting of this function is scheduler is
+    In Eclipse ThreadX only interrupts below configMAX_SYSCALL_INTERRUPT_PRIORITY are
+    disabled. Eclipse ThreadX will handle nesting of this function is scheduler is
     running.
  */
 <#if core.CoreArchitecture == "MIPS" >
@@ -109,25 +108,29 @@ OSAL_CRITSECT_DATA_TYPE __attribute__((nomips16,nomicromips)) OSAL_CRIT_Enter(OS
 OSAL_CRITSECT_DATA_TYPE OSAL_CRIT_Enter(OSAL_CRIT_TYPE severity)
 </#if>
 {
-  TX_INTERRUPT_SAVE_AREA;
+    TX_INTERRUPT_SAVE_AREA;
 
-  /* This is the name of the variable created from TX_INTERRUPT_SAVE_AREA macro above */
-  interrupt_save = 0;
+    /* This is the name of the variable created from TX_INTERRUPT_SAVE_AREA macro above */
+    interrupt_save = 0;
 
-  switch (severity)
-  {
-    case OSAL_CRIT_TYPE_LOW:
-      /*global variable Azure RTOS ThreadX uses to disable pre-emption, equivalent to disabling scheduler*/
-      _tx_thread_preempt_disable++;
-    break;
+    switch (severity)
+    {
+        case OSAL_CRIT_TYPE_LOW:
+        /*global variable Eclipse ThreadX uses to disable pre-emption, equivalent to disabling scheduler*/
+        _tx_thread_preempt_disable++;
+        break;
 
-    case OSAL_CRIT_TYPE_HIGH:
-      /* HIGH priority critical sections disable interrupts */
-      TX_DISABLE;
-    break;
-  }
+        case OSAL_CRIT_TYPE_HIGH:
+        /* HIGH priority critical sections disable interrupts */
+        TX_DISABLE;
+        break;
 
-  return(interrupt_save);
+        default:
+            /* Nothing to do */
+        break;
+    }
+
+    return interrupt_save;
 }
 
 // *****************************************************************************
@@ -159,9 +162,9 @@ OSAL_CRITSECT_DATA_TYPE OSAL_CRIT_Enter(OSAL_CRIT_TYPE severity)
   Example:
     <code>
      OSAL_CRITSECT_DATA_TYPE intStatus;
-     // prevent other tasks pre-empting this sequence of code
+
      intStatus = OSAL_CRIT_Enter(OSAL_CRIT_TYPE_LOW);
-     // modify the peripheral
+
      DRV_USART_Reinitialize( objUSART,  &initData);
      OSAL_CRIT_Leave(OSAL_CRIT_TYPE_LOW, intStatus);
     </code>
@@ -178,26 +181,30 @@ void __attribute__((nomips16,nomicromips)) OSAL_CRIT_Leave(OSAL_CRIT_TYPE severi
 void OSAL_CRIT_Leave(OSAL_CRIT_TYPE severity, OSAL_CRITSECT_DATA_TYPE status)
 </#if>
 {
-  TX_INTERRUPT_SAVE_AREA;
-  switch (severity)
-  {
-    case OSAL_CRIT_TYPE_LOW:
-      /* decrement pre-emption flag for Azure RTOS ThreadX, effectively resumes scheduler, if 0 */
-      _tx_thread_preempt_disable--;
-    break;
+    TX_INTERRUPT_SAVE_AREA;
+    switch (severity)
+    {
+        case OSAL_CRIT_TYPE_LOW:
+        /* decrement pre-emption flag for Eclipse ThreadX, effectively resumes scheduler, if 0 */
+        _tx_thread_preempt_disable--;
+        break;
 
-    case OSAL_CRIT_TYPE_HIGH:
-      /* HIGH priority renables interrupts */
-      interrupt_save = status;
-      TX_RESTORE;
-    break;
-  }
+        case OSAL_CRIT_TYPE_HIGH:
+        /* HIGH priority renables interrupts */
+        interrupt_save = status;
+        TX_RESTORE;
+        break;
+
+        default:
+            /* Nothing to do */
+        break;
+    }
 }
 
 // Semaphore group
 // *****************************************************************************
 /* Function: OSAL_RESULT OSAL_SEM_Create(OSAL_SEM_HANDLE_TYPE* semID, OSAL_SEM_TYPE type,
-                                uint8_t maxCount, uint8_t initialCount)
+                                OSAL_SEM_COUNT_TYPE maxCount, OSAL_SEM_COUNT_TYPE initialCount)
   Summary:
     Create an OSAL Semaphore
 
@@ -235,46 +242,62 @@ void OSAL_CRIT_Leave(OSAL_CRIT_TYPE severity, OSAL_CRITSECT_DATA_TYPE status)
 
   Remarks:
  */
-OSAL_RESULT OSAL_SEM_Create(OSAL_SEM_HANDLE_TYPE* semID, OSAL_SEM_TYPE type, uint8_t maxCount, uint8_t initialCount)
+/* MISRA C-2012 Rule 16.1, 16.3 deviated below. Deviation record ID -
+   H3_MISRAC_2012_R_16_1_DR_1 & H3_MISRAC_2012_R_16_3_DR_1*/
+<#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
+<#if core.COMPILER_CHOICE == "XC32">
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wunknown-pragmas"
+</#if>
+#pragma coverity compliance block \
+(deviate:1 "MISRA C-2012 Rule 16.1" "H3_MISRAC_2012_R_16_1_DR_1" )\
+(deviate:1 "MISRA C-2012 Rule 16.3" "H3_MISRAC_2012_R_16_3_DR_1" )
+</#if>
+
+OSAL_RESULT OSAL_SEM_Create(OSAL_SEM_HANDLE_TYPE* semID, OSAL_SEM_TYPE type, OSAL_SEM_COUNT_TYPE maxCount, OSAL_SEM_COUNT_TYPE initialCount)
 {
-  uint32_t result = 0;
+    uint32_t result = 0;
 
-  switch (type) {
-    case OSAL_SEM_TYPE_BINARY:
-      if ( initialCount <= 1)
-      {
-        if (initialCount == 1)
+    switch (type)
+    {
+        case OSAL_SEM_TYPE_BINARY:
+        if ( initialCount <= 1U)
         {
-          result = tx_semaphore_create((TX_SEMAPHORE*)semID, NULL, 1);
+            if (initialCount == 1U)
+            {
+                result = tx_semaphore_create((TX_SEMAPHORE*)semID, NULL, 1);
+            }
+            else // initialCount = 0
+            {
+                result = tx_semaphore_create((TX_SEMAPHORE*)semID, NULL, 0);
+            }
         }
-        else // initialCount = 0
+        else // Binary Semaphore initialCount must be either "0" or "1"
         {
-          result = tx_semaphore_create((TX_SEMAPHORE*)semID, NULL, 0);
+            return OSAL_RESULT_FAIL;
         }
-      }
-      else // Binary Semaphore initialCount must be either "0" or "1"
-      {
+        break;
+
+        case OSAL_SEM_TYPE_COUNTING:
+        result = tx_semaphore_create((TX_SEMAPHORE*)semID, NULL, initialCount);
+        break;
+
+        default:
+        return OSAL_RESULT_NOT_IMPLEMENTED;
+    }
+
+    if (result != TX_SUCCESS)
+    {
         return OSAL_RESULT_FAIL;
-      }
-    break;
+    }
 
-    case OSAL_SEM_TYPE_COUNTING:
-      result = tx_semaphore_create((TX_SEMAPHORE*)semID, NULL, initialCount);
-    break;
-
-    default:
-      return OSAL_RESULT_NOT_IMPLEMENTED;
-    break;
-  }
-
-  if (result != TX_SUCCESS)
-  {
-    return OSAL_RESULT_FAIL;
-  }
-
-  return OSAL_RESULT_SUCCESS;
+    return OSAL_RESULT_SUCCESS;
 }
-
+<#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
+#pragma coverity compliance end_block "MISRA C-2012 Rule 16.1"
+#pragma coverity compliance end_block "MISRA C-2012 Rule 16.3"
+</#if>
+/* MISRAC 2012 deviation block end */
 // *****************************************************************************
 /* Function: OSAL_RESULT OSAL_SEM_Delete(OSAL_SEM_HANDLE_TYPE* semID)
 
@@ -303,14 +326,18 @@ OSAL_RESULT OSAL_SEM_Create(OSAL_SEM_HANDLE_TYPE* semID, OSAL_SEM_TYPE type, uin
  */
 OSAL_RESULT OSAL_SEM_Delete(OSAL_SEM_HANDLE_TYPE* semID)
 {
-  if (tx_semaphore_delete((TX_SEMAPHORE*)semID) == TX_SUCCESS)
-    return OSAL_RESULT_SUCCESS;
-  else
-    return OSAL_RESULT_FAIL;
+    if (tx_semaphore_delete((TX_SEMAPHORE*)semID) == TX_SUCCESS)
+    {
+        return OSAL_RESULT_SUCCESS;
+    }
+    else
+    {
+        return OSAL_RESULT_FAIL;
+    }
 }
 
 // *****************************************************************************
-/* Function: OSAL_RESULT OSAL_SEM_Pend(OSAL_SEM_HANDLE_TYPE* semID, uint16_t waitMS)
+/* Function: OSAL_RESULT OSAL_SEM_Pend(OSAL_SEM_HANDLE_TYPE* semID, OSAL_TICK_TYPE waitMS)
 
   Summary:
      Pend on a semaphore. Returns true if semaphore obtained within time limit.
@@ -339,35 +366,45 @@ OSAL_RESULT OSAL_SEM_Delete(OSAL_SEM_HANDLE_TYPE* semID)
     <code>
     if (OSAL_SEM_Pend(semUARTRX, 50) == OSAL_RESULT_SUCCESS)
     {
-        // character available
+
         c = DRV_USART_ReadByte(drvID);
         ...
     }
     else
     {
-        // character not available, resend prompt
+
         ...
     }
    </code>
 
   Remarks:
  */
-OSAL_RESULT OSAL_SEM_Pend(OSAL_SEM_HANDLE_TYPE* semID, uint16_t waitMS)
+OSAL_RESULT OSAL_SEM_Pend(OSAL_SEM_HANDLE_TYPE* semID, OSAL_TICK_TYPE waitMS)
 {
-  ULONG rtos_wait_option;
+    ULONG rtos_wait_option;
 
-  /* Translate OSAL defines to applicable Azure RTOS ThreadX defines */
-  if(waitMS == OSAL_WAIT_FOREVER)
-    rtos_wait_option = TX_WAIT_FOREVER;
-  else if(waitMS == 0)
-    rtos_wait_option = TX_NO_WAIT;
-  else
-    rtos_wait_option = (ULONG)waitMS;
+    /* Translate OSAL defines to applicable Eclipse ThreadX defines */
+    if (waitMS == OSAL_WAIT_FOREVER)
+    {
+        rtos_wait_option = TX_WAIT_FOREVER;
+    }
+    else if(waitMS == 0U)
+    {
+        rtos_wait_option = TX_NO_WAIT;
+    }
+    else
+    {
+        rtos_wait_option = (ULONG)waitMS;
+    }
 
-  if (tx_semaphore_get((TX_SEMAPHORE*)semID, rtos_wait_option) == TX_SUCCESS)
-    return OSAL_RESULT_SUCCESS;
-  else
-    return OSAL_RESULT_FAIL;
+    if (tx_semaphore_get((TX_SEMAPHORE*)semID, rtos_wait_option) == TX_SUCCESS)
+    {
+        return OSAL_RESULT_SUCCESS;
+    }
+    else
+    {
+        return OSAL_RESULT_FAIL;
+    }
 }
 
 // *****************************************************************************
@@ -400,11 +437,12 @@ OSAL_RESULT OSAL_SEM_Pend(OSAL_SEM_HANDLE_TYPE* semID, uint16_t waitMS)
  */
 OSAL_RESULT OSAL_SEM_Post(OSAL_SEM_HANDLE_TYPE* semID)
 {
-  if(tx_semaphore_put((TX_SEMAPHORE*)semID) == TX_SUCCESS)
-  {
-    return OSAL_RESULT_SUCCESS;
-  }
-  return OSAL_RESULT_FAIL;
+    if (tx_semaphore_put((TX_SEMAPHORE*)semID) == TX_SUCCESS)
+    {
+        return OSAL_RESULT_SUCCESS;
+    }
+
+    return OSAL_RESULT_FAIL;
 }
 
 // *****************************************************************************
@@ -434,11 +472,11 @@ OSAL_RESULT OSAL_SEM_Post(OSAL_SEM_HANDLE_TYPE* semID)
      void __ISR(UART_2_VECTOR) _UART2RXHandler()
      {
         char c;
-        // read the character
+
         c = U2RXREG;
-        // clear the interrupt flag
+
         IFS1bits.U2IF = 0;
-        // post a semaphore indicating a character has been received
+
         OSAL_SEM_PostISR(semSignal);
      }
     </code>
@@ -452,15 +490,16 @@ OSAL_RESULT OSAL_SEM_Post(OSAL_SEM_HANDLE_TYPE* semID)
  */
 OSAL_RESULT OSAL_SEM_PostISR(OSAL_SEM_HANDLE_TYPE* semID)
 {
-  if(tx_semaphore_put((TX_SEMAPHORE*)semID) == TX_SUCCESS)
-  {
-    return OSAL_RESULT_SUCCESS;
-  }
-  return OSAL_RESULT_FAIL;
+    if (tx_semaphore_put((TX_SEMAPHORE*)semID) == TX_SUCCESS)
+    {
+        return OSAL_RESULT_SUCCESS;
+    }
+
+    return OSAL_RESULT_FAIL;
 }
 
 // *****************************************************************************
-/* Function: uint8_t OSAL_SEM_GetCount(OSAL_SEM_HANDLE_TYPE* semID)
+/* Function: OSAL_SEM_COUNT_TYPE OSAL_SEM_GetCount(OSAL_SEM_HANDLE_TYPE* semID)
 
   Summary:
     Return the current value of a counting semaphore.
@@ -481,22 +520,22 @@ OSAL_RESULT OSAL_SEM_PostISR(OSAL_SEM_HANDLE_TYPE* semID)
 
   Example:
     <code>
-     uint8_t semCount;
+     OSAL_SEM_COUNT_TYPE semCount;
 
      semCount = OSAL_SEM_GetCount(semUART);
 
      if (semCount > 0)
      {
-        // obtain the semaphore
+
          if (OSAL_SEM_Pend(semUART) == OSAL_RESULT_SUCCESS)
          {
-            // perform processing on the comm channel
+
             ...
          }
      }
      else
      {
-        // no comm channels available
+
         ...
      }
     </code>
@@ -508,12 +547,13 @@ OSAL_RESULT OSAL_SEM_PostISR(OSAL_SEM_HANDLE_TYPE* semID)
      a critical section. The exact requirements will depend upon the particular
      RTOS being used.
  */
-uint8_t OSAL_SEM_GetCount(OSAL_SEM_HANDLE_TYPE* semID)
+OSAL_SEM_COUNT_TYPE OSAL_SEM_GetCount(OSAL_SEM_HANDLE_TYPE* semID)
 {
-  ULONG rtos_current_sem_count = 0;
-  tx_semaphore_info_get(semID, NULL, &rtos_current_sem_count,NULL,NULL,NULL);
+    ULONG rtos_current_sem_count = 0;
 
-  return((uint8_t)rtos_current_sem_count);
+    (void)tx_semaphore_info_get(semID, NULL, &rtos_current_sem_count,NULL,NULL,NULL);
+
+    return((uint8_t)rtos_current_sem_count);
 }
 
 // *****************************************************************************
@@ -545,7 +585,7 @@ uint8_t OSAL_SEM_GetCount(OSAL_SEM_HANDLE_TYPE* semID)
     ...
      if (OSAL_MUTEX_Lock(mutexData, 1000) == OSAL_RESULT_SUCCESS)
      {
-        // manipulate the shared data
+
         ...
      }
     </code>
@@ -555,9 +595,11 @@ uint8_t OSAL_SEM_GetCount(OSAL_SEM_HANDLE_TYPE* semID)
  */
 OSAL_RESULT OSAL_MUTEX_Create(OSAL_MUTEX_HANDLE_TYPE* mutexID)
 {
-  if(tx_mutex_create((TX_MUTEX*)mutexID, NULL, TX_INHERIT) != TX_SUCCESS)
-    return(OSAL_RESULT_FAIL);
-  else
+    if (tx_mutex_create((TX_MUTEX*)mutexID, NULL, TX_INHERIT) != TX_SUCCESS)
+    {
+        return OSAL_RESULT_FAIL;
+    }
+
     return OSAL_RESULT_SUCCESS;
 }
 
@@ -591,13 +633,13 @@ OSAL_RESULT OSAL_MUTEX_Create(OSAL_MUTEX_HANDLE_TYPE* mutexID)
  */
 OSAL_RESULT OSAL_MUTEX_Delete(OSAL_MUTEX_HANDLE_TYPE* mutexID)
 {
-  tx_mutex_delete((TX_MUTEX*)mutexID);
+    (void)tx_mutex_delete((TX_MUTEX*)mutexID);
 
-  return OSAL_RESULT_SUCCESS;
+    return OSAL_RESULT_SUCCESS;
 }
 
 // *****************************************************************************
-/* Function: OSAL_RESULT OSAL_MUTEX_Lock(OSAL_MUTEX_HANDLE_TYPE* mutexID, uint16_t waitMS)
+/* Function: OSAL_RESULT OSAL_MUTEX_Lock(OSAL_MUTEX_HANDLE_TYPE* mutexID, OSAL_TICK_TYPE waitMS)
 
   Summary:
     Lock a mutex.
@@ -630,10 +672,10 @@ OSAL_RESULT OSAL_MUTEX_Delete(OSAL_MUTEX_HANDLE_TYPE* mutexID)
     ...
      if (OSAL_MUTEX_Lock(mutexData, 1000) == OSAL_RESULT_SUCCESS)
      {
-        // manipulate the shared data
+
         ...
 
-        // unlock the mutex
+
         OSAL_MUTEX_Unlock(mutexData);
      }
     </code>
@@ -641,21 +683,31 @@ OSAL_RESULT OSAL_MUTEX_Delete(OSAL_MUTEX_HANDLE_TYPE* mutexID)
   Remarks:
 
  */
-OSAL_RESULT OSAL_MUTEX_Lock(OSAL_MUTEX_HANDLE_TYPE* mutexID, uint16_t waitMS)
+OSAL_RESULT OSAL_MUTEX_Lock(OSAL_MUTEX_HANDLE_TYPE* mutexID, OSAL_TICK_TYPE waitMS)
 {
-  ULONG rtos_wait_option;
+    ULONG rtos_wait_option;
 
-  if(waitMS == OSAL_WAIT_FOREVER)
-    rtos_wait_option = TX_WAIT_FOREVER;
-  else if(waitMS == 0)
-    rtos_wait_option = TX_NO_WAIT;
-  else
-    rtos_wait_option = (ULONG)waitMS;
+    if (waitMS == OSAL_WAIT_FOREVER)
+    {
+        rtos_wait_option = TX_WAIT_FOREVER;
+    }
+    else if(waitMS == 0U)
+    {
+        rtos_wait_option = TX_NO_WAIT;
+    }
+    else
+    {
+        rtos_wait_option = (ULONG)waitMS;
+    }
 
-  if (tx_mutex_get((TX_MUTEX*)mutexID, rtos_wait_option) == TX_SUCCESS)
-    return OSAL_RESULT_SUCCESS;
-  else
-    return OSAL_RESULT_FAIL;
+    if (tx_mutex_get((TX_MUTEX*)mutexID, rtos_wait_option) == TX_SUCCESS)
+    {
+        return OSAL_RESULT_SUCCESS;
+    }
+    else
+    {
+        return OSAL_RESULT_FAIL;
+    }
 }
 
 // *****************************************************************************
@@ -686,10 +738,10 @@ OSAL_RESULT OSAL_MUTEX_Lock(OSAL_MUTEX_HANDLE_TYPE* mutexID, uint16_t waitMS)
     ...
      if (OSAL_MUTEX_Lock(mutexData, 1000) == OSAL_RESULT_SUCCESS)
      {
-        // manipulate the shared data
+
         ...
 
-        // unlock the mutex
+
         OSAL_MUTEX_Unlock(mutexData);
      }
     </code>
@@ -699,12 +751,12 @@ OSAL_RESULT OSAL_MUTEX_Lock(OSAL_MUTEX_HANDLE_TYPE* mutexID, uint16_t waitMS)
  */
 OSAL_RESULT OSAL_MUTEX_Unlock(OSAL_MUTEX_HANDLE_TYPE* mutexID)
 {
-  if (tx_mutex_put((TX_MUTEX*)mutexID) == TX_SUCCESS)
-  {
-    return OSAL_RESULT_SUCCESS;
-  }
+    if (tx_mutex_put((TX_MUTEX*)mutexID) == TX_SUCCESS)
+    {
+        return OSAL_RESULT_SUCCESS;
+    }
 
-  return OSAL_RESULT_FAIL;
+    return OSAL_RESULT_FAIL;
 }
 
 // *****************************************************************************
@@ -735,7 +787,7 @@ OSAL_RESULT OSAL_MUTEX_Unlock(OSAL_MUTEX_HANDLE_TYPE* mutexID)
 
   Example:
     <code>
-    // create a working array
+
     uint8_t* pData;
 
      pData = OSAL_Malloc(32);
@@ -786,7 +838,7 @@ void* OSAL_Malloc(size_t size)
 
   Example:
     <code>
-    // create a working array
+
     uint8_t* pData;
 
      pData = OSAL_Malloc(32);
@@ -794,9 +846,9 @@ void* OSAL_Malloc(size_t size)
      {
         ...
 
-        // deallocate the memory
+
         OSAL_Free(pData);
-        // and prevent it accidentally being used again
+
         pData = NULL;
      }
     </code>
@@ -807,11 +859,11 @@ void* OSAL_Malloc(size_t size)
  */
 void OSAL_Free(void* pData)
 {
-    tx_byte_release(pData);
+    (void)tx_byte_release(pData);
 }
 
 // *****************************************************************************
-/* Function: OSAL_RESULT OSAL_Initialize()
+/* Function: OSAL_RESULT OSAL_Initialize(void)
 
   Summary:
     Perform OSAL initialization.
@@ -848,8 +900,8 @@ void OSAL_Free(void* pData)
  */
 OSAL_RESULT OSAL_Initialize(void)
 {
-  // nothing required
-  return OSAL_RESULT_SUCCESS;
+    // nothing required
+    return OSAL_RESULT_SUCCESS;
 }
 
 /*******************************************************************************
