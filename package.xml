@@ -2,8 +2,8 @@
 <Package name="core">
     <Dependencies>
         <Dependency name="bsp" version="v3.22.0"/>
-        <Dependency name="shd" version="v1.0.0"/>
-        <Dependency name="csp" version="v3.22.0"/>
+        <Dependency name="shd" version="v1.1.0"/>
+        <Dependency name="csp" version="v3.22.1"/>
         <Dependency name="FreeRTOS-Kernel" version="V11.1.0"/>
     </Dependencies>
 </Package>

@@ -4,7 +4,7 @@ package:
   type: "api"
   status: "production"
   required: false
-  version: "v3.15.0"
+  version: "v3.15.1"
 
   dependencies:
     - name: "bsp"
@@ -12,10 +12,10 @@ package:
       version: "v3.22.0"
     - name: "shd"
       type: "package"
-      version: "v1.0.0"
+      version: "v1.1.0"
     - name: "csp"
       type: "package"
-      version: "v3.22.0"
+      version: "v3.22.1"
     - name: "FreeRTOS-Kernel"
       type: "package"
       version: "V11.1.0"

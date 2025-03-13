@@ -3,6 +3,18 @@
 
 # Microchip MPLAB® Harmony 3 Release Notes
 
+## Core Release v3.15.1
+
+### New Features
+- None
+
+### Bug fixes
+- Fixed MISRA-C required rule violations in the OSAL ThreadX
+
+### Known Issues
+
+-  None
+
 ## Core Release v3.15.0
 
 ### New Features
