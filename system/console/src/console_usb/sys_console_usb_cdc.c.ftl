@@ -403,7 +403,7 @@ static bool Console_USB_CDC_ReadCompleteEventHandler(uint32_t index, uint32_t nB
 
         result = USB_DEVICE_CDC_Read (cdcInstance->cdcInstanceIndex,
                 &cdcInstance->readTransferHandle, cdcInstance->cdcReadBuffer,
-                SYS_CONSOLE_USB_CDC_READ_WRITE_BUFFER_SIZE);
+                gConsoleUSBCdcData.endpointMaxPktSize);
 
         if ((result != USB_DEVICE_CDC_RESULT_OK) || (cdcInstance->readTransferHandle == USB_DEVICE_CDC_TRANSFER_HANDLE_INVALID))
         {
@@ -867,12 +867,21 @@ void Console_USB_CDC_Tasks(uint32_t index, SYS_MODULE_OBJ object)
             /* Check if the device was configured */
             if(gConsoleUSBCdcData.isConfigured)
             {
+                if (USB_DEVICE_ActiveSpeedGet(gConsoleUSBCdcData.deviceHandle) == USB_SPEED_FULL)
+                {
+                    gConsoleUSBCdcData.endpointMaxPktSize = 64;
+                }
+                else if (USB_DEVICE_ActiveSpeedGet(gConsoleUSBCdcData.deviceHandle) == USB_SPEED_HIGH)
+                {
+                    gConsoleUSBCdcData.endpointMaxPktSize = 512;
+                }
+
                 /* Device is configured. Start reading. */
                 cdcInstance->isReadComplete = false;
 
                 result = USB_DEVICE_CDC_Read (cdcInstance->cdcInstanceIndex,
                     &cdcInstance->readTransferHandle, cdcInstance->cdcReadBuffer,
-                    SYS_CONSOLE_USB_CDC_READ_WRITE_BUFFER_SIZE);
+                    gConsoleUSBCdcData.endpointMaxPktSize);
 
                 if ((result == USB_DEVICE_CDC_RESULT_OK) && (cdcInstance->readTransferHandle !=     USB_DEVICE_CDC_TRANSFER_HANDLE_INVALID))
                 {
