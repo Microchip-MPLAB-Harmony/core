@@ -807,8 +807,25 @@ SYS_FS_RESULT SYS_FS_Unmount
         disk->mountNameLength = 0;
 
         /* Reset the current mount point if it is set to the current disk. */
-        if ((gSYSFSCurrentMountPoint.inUse == true) && (gSYSFSCurrentMountPoint.currentDisk == disk))
+        if ((gSYSFSCurrentMountPoint.inUse == true) &&
+            (gSYSFSCurrentMountPoint.currentDisk == disk))
         {
+            /* Find another valid mount point */
+            for (index = 0; index < SYS_FS_VOLUME_NUMBER; index++)
+            {
+                if (gSYSFSMountPoint[index].inUse == true && &gSYSFSMountPoint[index] != disk)
+                {
+                    /* Switch to the next valid mount point */
+                    gSYSFSCurrentMountPoint.currentDisk = &gSYSFSMountPoint[index];
+
+                    /* Release the acquired mutex. */
+                    (void) OSAL_MUTEX_Unlock (&gSysFsMutex);
+
+                    return (fileStatus == 0) ? SYS_FS_RES_SUCCESS : SYS_FS_RES_FAILURE;
+                }
+            }
+
+            /* If no other mount points are valid, invalidate the current mount point */
             gSYSFSCurrentMountPoint.inUse = false;
         }
     }
