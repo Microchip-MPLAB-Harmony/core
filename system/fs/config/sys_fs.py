@@ -751,10 +751,12 @@ def instantiateComponent(sysFSComponent):
     sysFSHeaderFile.setType("HEADER")
 
     sysFSLocalHeaderFile = sysFSComponent.createFileSymbol("SYS_FS_LOCAL_HEADER", None)
-    sysFSLocalHeaderFile.setSourcePath("/system/fs/src/sys_fs_local.h")
+    sysFSLocalHeaderFile.setSourcePath("/system/fs/src/sys_fs_local.h.ftl")
     sysFSLocalHeaderFile.setOutputName("sys_fs_local.h")
     sysFSLocalHeaderFile.setDestPath("/system/fs/src/")
     sysFSLocalHeaderFile.setProjectPath("config/" + configName + "/system/fs/")
+    sysFSLocalHeaderFile.setMarkup(True)
+    sysFSLocalHeaderFile.setOverwrite(True)
     sysFSLocalHeaderFile.setType("HEADER")
 
     sysFSMedManHeaderFile = sysFSComponent.createFileSymbol("SYS_FS_MEDIA_MANAGER_HEADER", None)
@@ -784,11 +786,13 @@ def instantiateComponent(sysFSComponent):
     sysFSffIntHeaderFile.setDependencies(sysFsFileGen, ["SYS_FS_FAT"])
 
     sysFSffHeaderFile = sysFSComponent.createFileSymbol("SYS_FS_FAT_HEADER", None)
-    sysFSffHeaderFile.setSourcePath("/system/fs/fat_fs/file_system/ff.h")
+    sysFSffHeaderFile.setSourcePath("/system/fs/fat_fs/file_system/ff.h.ftl")
     sysFSffHeaderFile.setOutputName("ff.h")
     sysFSffHeaderFile.setDestPath("/system/fs/fat_fs/file_system")
     sysFSffHeaderFile.setProjectPath("config/" + configName + "/system/fs/fat_fs/file_system")
     sysFSffHeaderFile.setType("HEADER")
+    sysFSffHeaderFile.setMarkup(True)
+    sysFSffHeaderFile.setOverwrite(True)
     sysFSffHeaderFile.setEnabled(sysFSFat.getValue())
     sysFSffHeaderFile.setDependencies(sysFsFileGen, ["SYS_FS_FAT"])
 

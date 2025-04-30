@@ -112,9 +112,13 @@ typedef struct
     
     /* File specific error value */
     SYS_FS_ERROR errorValue;
-    
+
     /* Name of file is stored in a buffer for future use */
+<#if core.PRODUCT_FAMILY?contains("PIC32MZ")>
+    uint8_t fileName[SYS_FS_FILE_NAME_LEN + 1];
+<#else>
     uint8_t fileName[SYS_FS_FILE_NAME_LEN + 1] CACHE_ALIGN;
+</#if>
 
 }SYS_FS_OBJ;
 

@@ -173,7 +173,12 @@ typedef struct {
 	LBA_t	bitbase;		/* Allocation bitmap base sector */
 #endif
 	LBA_t	winsect;		/* Current sector appearing in the win[] */
+<#if core.PRODUCT_FAMILY?contains("PIC32MZ")>
+	BYTE	win[FF_MAX_SS];	/* Disk access window for Directory, FAT (and file data at tiny cfg) */
+<#else>
 	BYTE	CACHE_ALIGN win[FF_MAX_SS];	/* Disk access window for Directory, FAT (and file data at tiny cfg) */
+</#if>
+
 } FATFS;
 
 
@@ -218,7 +223,12 @@ typedef struct {
 	DWORD*	cltbl;			/* Pointer to the cluster link map table (nulled on open, set by application) */
 #endif
 #if !FF_FS_TINY
+<#if core.PRODUCT_FAMILY?contains("PIC32MZ")>
+	BYTE	buf[FF_MAX_SS];	/* File private data read/write window */
+<#else>
 	BYTE	CACHE_ALIGN buf[FF_MAX_SS];	/* File private data read/write window */
+</#if>
+
 #endif
 } FIL;
 
