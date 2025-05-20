@@ -3,6 +3,18 @@
 
 # Microchip MPLAB® Harmony 3 Release Notes
 
+## Core Release v3.15.2
+
+### New Features
+- None
+
+### Bug fixes
+- Updated System Console Service for HS USB driver
+
+### Known Issues
+
+-  None
+
 ## Core Release v3.15.1
 
 ### New Features
