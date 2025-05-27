@@ -27,17 +27,27 @@ drv_usart_mcc_helpkeyword = "mcc_h3_drv_usart_configurations"
 def handleMessage(messageID, args):
     global usartSymSYSDMACodeEnable
     global usartSymSYSDMAEnableCntr
+    global usartMode
+    global usartModeLock
 
     result_dict = {}
 
     if (messageID == "DRV_USART_DMA_ENABLED"):
         usartSymSYSDMAEnableCntr.setValue(usartSymSYSDMAEnableCntr.getValue() + 1)
         usartSymSYSDMACodeEnable.setValue(True)
-    if (messageID == "DRV_USART_DMA_DISABLED"):
+    elif (messageID == "DRV_USART_DMA_DISABLED"):
         if usartSymSYSDMAEnableCntr.getValue() > 0:
             usartSymSYSDMAEnableCntr.setValue(usartSymSYSDMAEnableCntr.getValue() - 1)
         if usartSymSYSDMAEnableCntr.getValue() == 0:
             usartSymSYSDMACodeEnable.setValue(False)
+
+    elif (messageID == "DRV_USART_OPERATING_MODE_CONFIG"):
+        if args.get("mode") != None:
+            usartMode.setValue(args["mode"])
+        if args.get("isReadOnly") != None:
+            usartMode.setReadOnly(args["isReadOnly"])
+        if args.get("isLocked") != None:
+            usartModeLock.setValue(args["isLocked"])
 
     return result_dict
 
@@ -55,9 +65,11 @@ def asyncFileGen(symbol, event):
        symbol.setEnabled(False)
 
 def setCommonMode(symbol, event):
+    global usartModeLock
+
     rtos_mode = event["value"]
 
-    if rtos_mode != None:
+    if rtos_mode != None and usartModeLock.getValue() == False:
         if rtos_mode == "BareMetal":
             symbol.setValue("Asynchronous")
         else:
@@ -75,6 +87,9 @@ def sysDMAEnabled(symbol, event):
 def instantiateComponent(usartComponentCommon):
     global usartSymSYSDMACodeEnable
     global usartSymSYSDMAEnableCntr
+    global usartMode
+    global usartModeLock
+
     res = Database.activateComponents(["HarmonyCore"])
 
     # Enable "Generate Harmony Driver Common Files" option in MHC
@@ -115,6 +130,10 @@ def instantiateComponent(usartComponentCommon):
     usartSymSYSDMAEnable.setDefaultValue(False)
     usartSymSYSDMAEnable.setVisible(False)
     usartSymSYSDMAEnable.setDependencies(sysDMAEnabled, ["DRV_USART_SYS_DMA_CODE_ENABLE"])
+
+    usartModeLock = usartComponentCommon.createBooleanSymbol("DRV_USART_COMMON_MODE_LOCK", None)
+    usartModeLock.setDefaultValue(False)
+    usartModeLock.setVisible(False)
 
     ############################################################################
     #### Code Generation ####

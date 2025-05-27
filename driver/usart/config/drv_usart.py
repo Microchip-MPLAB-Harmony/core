@@ -43,6 +43,12 @@ def handleMessage(messageID, args):
 
             result_dict = Database.sendMessage(args["localComponentID"], "UART_NON_BLOCKING_DMA_TX_RX_MODE", {"isEnabled":True, "isReadOnly":True})
 
+    elif (messageID == "DRV_USART_CONFIG_PARAMS"):
+        if args.get("operatingMode") != None:
+            operatingModeAttrDict = args["operatingMode"]
+            Database.sendMessage("drv_usart", "DRV_USART_OPERATING_MODE_CONFIG", operatingModeAttrDict)
+
+
     return result_dict
 
 def updateDMAEnableCntr(symbol, event):
