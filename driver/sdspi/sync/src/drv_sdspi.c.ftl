@@ -360,7 +360,7 @@ static bool lDRV_SDSPI_CommandSend(
                     </#if>
                     return isSuccess;
                 }
-            } while ((dObj->cmdRespTmrExpired == false) && (dObj->cmdRespBuffer[0] != 0x00U));
+            } while ((dObj->cmdRespTmrExpired == false) && (dObj->cmdRespBuffer[0] == 0x00U));
 
             (void) DRV_SDSPI_CmdResponseTimerStop(dObj);
 
