@@ -853,6 +853,35 @@ uint64_t SYS_TIME_Counter64Get ( void );
 
 void SYS_TIME_CounterSet ( uint32_t count );
 
+// *****************************************************************************
+/* Function:
+    void SYS_TIME_Counter64Set ( uint64_t count )
+
+  Summary:
+    Sets the common 64-bit system counter value.
+
+  Description:
+    Sets the current "live" value of the common 64-bit system counter.
+
+  Precondition:
+    The SYS_TIME_Initialize function should have been called before calling this
+    function.
+
+  Parameters:
+    count  - The 64-bit counter value to write to the common system counter.
+
+  Returns:
+    None
+
+  Example:
+    SYS_TIME_CounterSet(1000);
+
+  Remarks:
+    None.
+*/
+
+void SYS_TIME_Counter64Set ( uint64_t count );
+
 
 // *****************************************************************************
 /* Function:
