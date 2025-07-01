@@ -52,7 +52,27 @@ def loadModule():
     i2c_bbComponent.addCapability("I2C", "I2C", False)
     i2c_bbComponent.addDependency("TMR", "TMR", False, True)
     i2c_bbComponent.setHelpKeyword("MH3_CORE_i2c_bb")
-    
+
+    dvfs_Component = Module.CreateComponent("dvfs", "DVFS", "/Libraries/", "/libraries/dvfs/config/lib_dvfs.py")
+    dvfs_Component.setDisplayType("Core Library")
+    dvfs_Component.setHelpKeyword("MH3_CORE_dvfs")
+
+    temp_sensor_Component = Module.CreateComponent("Temp_Sensor", "TEMP SENSOR", "/Drivers/", "/driver/temp_sensor/config/drv_temp_sensor.py")
+    temp_sensor_Component.setDisplayType("Core Driver")
+    temp_sensor_Component.setHelpKeyword("MH3_CORE_temp_sensor")
+
+    pac193x_Component = Module.CreateComponent("pac193x", "PAC193X", "/Drivers/", "/driver/pac193x/config/drv_pac193x.py")
+    pac193x_Component.setDisplayType('Core Driver')
+    pac193x_Component.addDependency("PAC193X_DRV_I2C_DEPENDENCY", "DRV_I2C", False)
+
+    mcp16502_Component = Module.CreateComponent("mcp16502", "MCP16502", "/Drivers/", "/driver/mcp16502/config/drv_mcp16502.py")
+    mcp16502_Component.setDisplayType('Core Driver')
+    mcp16502_Component.addDependency("MCP16502_DRV_I2C_DEPENDENCY", "DRV_I2C", False)
+
+    pmu_a7_Component = Module.CreateComponent("pmu", "PMU", "/Drivers/", "/driver/pmu/config/drv_pmu.py")
+    pmu_a7_Component.setDisplayType("Core Driver")
+    pmu_a7_Component.setHelpKeyword("MH3_CORE_mpu_cortex_a7")
+
     #define drivers and system services
     coreComponents = [
         {"name":"time", "label": "TIME", "type":"system", "display_path":"", "actual_path":"", "capability":["SYS_TIME"], "capability_type":"generic", "dependency":[  "TMR"], "condition": "True"},
@@ -96,7 +116,6 @@ def loadModule():
         {"name":"sst39", "label": "SST39", "type":"driver", "display_path":"Parallel PROM", "actual_path":"parallel_prom", "instance":"single", "capability":["MEMORY"], "dependency":["HEMC_CS"], "condition":"True"},
 
         {"name":"sst38", "label": "SST38", "type":"driver", "display_path":"Parallel PROM", "actual_path":"parallel_prom", "instance":"single", "capability":["MEMORY"], "dependency":["HEMC_CS"], "condition":"True"},
-
         ]
 
     #load drivers and system services defined above
