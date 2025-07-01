@@ -3,6 +3,19 @@
 
 # Microchip MPLAB® Harmony 3 Release Notes
 
+## Core Release v3.15.3
+
+### New Features
+- None
+
+### Bug fixes
+- Bug fix in file system service
+
+### Known Issues
+
+-  None
+
+
 ## Core Release v3.15.2
 
 ### New Features
@@ -33,7 +46,7 @@
 
 - **New Features and Enhancements**
   - Added Drivers, System services and FreeRTOS support for PIC32AK-GC family of devices
-  
+
 - **Applications**
   - MPLAB Harmony provides large number of application examples to accelerate learning and reduce the development cycles for your embedded systems with reusable software components. The application examples are available in the respective [product family specific repository](apps/readme.md).
 
@@ -234,7 +247,7 @@ For CEC173x family of devices:
 For all other parts:
 
   - Same as v3.12.0-E1
-  
+
 ### Notes
 
 -  None
@@ -344,7 +357,7 @@ The current known issues are as follows:
 ## Core Release v3.9.2
 
 ### New Features
-- Added MHC UI option to configure maximum command groups and command arguments in Command System Service 
+- Added MHC UI option to configure maximum command groups and command arguments in Command System Service
 
 ### Bug fixes
 - N/A
@@ -448,7 +461,7 @@ The current known issues are as follows:
   -  The following product family requires newer DFP version to be downloaded from packs server and to be used in the MPLAB project to build with MPLAB X IDE v5.4.
      -  **SAM L21 Family**: SAML21_DFP v3.4.80
      -  **SAM L22 Family**: SAML22_DFP v3.4.59
-     -  **SAM L10/L11 Family**: SAML10_DFP v3.3.82, SAML11_DFP v4.0.114     
+     -  **SAM L10/L11 Family**: SAML10_DFP v3.3.82, SAML11_DFP v4.0.114
      -  **PIC32MK MCM/GPK Family**: PIC32MK-GP_DFP v1.4.117, PIC32MK-MC_DFP v1.5.115
 
 
@@ -556,8 +569,8 @@ The current known issues are as follows:
   - SYS_FS_FileStat
   - SYS_FS_DirRead
   - SYS_FS_DirSearch
-  
-- Updating File System based applications created with Harmony Core v3.6.x for PIC32MZ devices to Harmony Core v3.7.x will require removing and adding the File System component in the MHC Project Graph 
+
+- Updating File System based applications created with Harmony Core v3.6.x for PIC32MZ devices to Harmony Core v3.7.x will require removing and adding the File System component in the MHC Project Graph
 
 ### **Development Tools**
 
