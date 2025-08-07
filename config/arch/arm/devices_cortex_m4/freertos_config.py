@@ -47,7 +47,10 @@ freeRtosSym_CpuClockHz.setDependencies(freeRtosCpuClockHz, ["core.CPU_CLOCK_FREQ
 freeRtosSym_CpuClockHz.setDefaultValue(cpuclk)
 
 #Default Heap size
-freeRtosSym_TotalHeapSize.setDefaultValue(40960)
+if ("PIC32CXBZ6" in Database.getSymbolValue("core", "CoreSeries")) or ("PIC32WM_BZ6" in Database.getSymbolValue("core", "CoreSeries")):
+    freeRtosSym_TotalHeapSize.setDefaultValue(61440)
+else:
+    freeRtosSym_TotalHeapSize.setDefaultValue(40960)
 
 #Number of Bits used for Priority Levels
 priorityBits = int(ATDF.getNode("/avr-tools-device-file/devices/device/parameters/param@[name=\"__NVIC_PRIO_BITS\"]").getAttribute("value"))
