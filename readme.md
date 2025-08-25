@@ -23,7 +23,7 @@ the following links for release notes, training materials, and interface
 reference information.
 
 - [Release Notes](release_notes.md)
-- [Microchip SLA](Microchip_SLA001.md)
+- [License](License.md)
 
 # Contents Summary
 
@@ -48,7 +48,7 @@ To view the documentation offline, follow these steps:
 
 ____
 
-[![License](https://img.shields.io/badge/license-Harmony%20license-orange.svg)](https://github.com/Microchip-MPLAB-Harmony/core/blob/master/mplab_harmony_license.md)
+[![License](https://img.shields.io/badge/license-Harmony%20license-orange.svg)](https://github.com/Microchip-MPLAB-Harmony/core/blob/master/License.md)
 [![Latest release](https://img.shields.io/github/release/Microchip-MPLAB-Harmony/core.svg)](https://github.com/Microchip-MPLAB-Harmony/core/releases/latest)
 [![Latest release date](https://img.shields.io/github/release-date/Microchip-MPLAB-Harmony/core.svg)](https://github.com/Microchip-MPLAB-Harmony/core/releases/latest)
 [![Commit activity](https://img.shields.io/github/commit-activity/y/Microchip-MPLAB-Harmony/core.svg)](https://github.com/Microchip-MPLAB-Harmony/core/graphs/commit-activity)

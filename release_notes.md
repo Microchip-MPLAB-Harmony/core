@@ -3,6 +3,19 @@
 
 # Microchip MPLAB® Harmony 3 Release Notes
 
+## Core Release v3.15.4
+
+### New Features
+- None
+
+### Bug fixes
+- Fixed the data type in the FreeRTOS hook function vApplicationGetTimerTaskMemory
+- Updated the default FreeRTOS heap size for PIC32CX-BZ6 and PIC32WM-BZ6 devices
+
+### Known Issues
+
+-  None
+
 ## Core Release v3.15.3
 
 ### New Features
