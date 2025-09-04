@@ -3,6 +3,19 @@
 
 # Microchip MPLAB® Harmony 3 Release Notes
 
+## Core Release v3.15.5
+
+### New Features
+- None
+
+### Bug fixes
+- Fixed issue in the FreeRTOS python script for PIC32WM-BW1 device
+- Updated handle message to allow configuration of UART driver operating mode by other modules
+
+### Known Issues
+
+-  None
+
 ## Core Release v3.15.4
 
 ### New Features

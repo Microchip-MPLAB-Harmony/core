@@ -37,3 +37,4 @@ Microchip MPLAB Harmony provides several application examples for most supported
 | [core_apps_sam_rh71](https://github.com/Microchip-MPLAB-Harmony/core_apps_sam_rh71) | Application examples for SAMRH71 family |
 | [core_apps_sam_rh707](https://github.com/Microchip-MPLAB-Harmony/core_apps_sam_rh707) | Application examples for SAMRH707 family |
 | [core_apps_pic32ak_gc](https://github.com/Microchip-MPLAB-Harmony/core_apps_pic32ak_gc) | Application examples for PIC32AK GC family |
+| [core_apps_pic32wm_bw1](https://github.com/Microchip-MPLAB-Harmony/core_apps_pic32wm_bw1) | Application examples for PIC32WM-BW1 family |
