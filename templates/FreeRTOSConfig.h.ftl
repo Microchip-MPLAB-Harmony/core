@@ -438,7 +438,7 @@
     <#lt>/* Prevent C specific syntax being included in assembly files. */
     <#lt>#ifndef __LANGUAGE_ASSEMBLY
     <#lt>    void vAssertCalled( const char *pcFileName, unsigned long ulLine );
-    <#lt>    #define configASSERT( x ) if( ( x ) == 0 ) vAssertCalled( __FILE__, __LINE__ )
+    <#lt>    #define configASSERT( x ) if( ( x ) == 0 ){ vAssertCalled( __FILE__, __LINE__ ); } else{ } 
     <#lt>#endif
 </#if>
 
