@@ -3,6 +3,33 @@
 
 # Microchip MPLAB® Harmony 3 Release Notes
 
+## Core Release v3.16.0
+
+### New Features
+
+- **New Features and Enhancements**
+  - Added following drivers and libraries for thermal management on MPU devices:
+      - Added PMIC (Power Management IC) driver
+      - Added PAC1934 driver
+      - Added PMU (Performance Monitor Unit) driver
+      - Added Temperature Sensor driver
+      - Added Thermal management driver - DVFS
+
+- **Applications**
+  - MPLAB Harmony provides large number of application examples to accelerate learning and reduce the development cycles for your embedded systems with reusable software components. The application examples are available in the respective [product family specific repository](apps/readme.md).
+
+### Known Issues
+
+-  None
+
+### Development Tools
+
+-   Same as v3.15.0
+
+### Notes
+
+-  None
+
 ## Core Release v3.15.5
 
 ### New Features
