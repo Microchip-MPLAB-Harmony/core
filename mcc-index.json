@@ -1,0 +1,12 @@
+{
+    "header": {
+        "api": "1.0.0"
+    },
+    "body": {
+        "name": "core",
+        "version": "v0.0.1-core.dev",
+        "extractStatus": "SUCCEEDED",
+        "cleanStatus": "UNKNOWN",
+        "dev": false
+    }
+}

@@ -11,7 +11,7 @@
     SST38 Driver Interface Definition
 
   Description:
-    The SST38 Driver provides a interface to access the SST38 memory. 
+    The SST38 Driver provides a interface to access the SST38 memory.
     This file should be included in the project if SST38 driver
     functionality is needed.
 *******************************************************************************/
@@ -97,7 +97,7 @@ bool DRV_SST38_ReadProductId( const DRV_HANDLE handle, uint16_t* manufacturer, u
     __ISB();
 
     /* Read ID */
-    
+
     *manufacturer = dObj->sst38Plib->read_t(DRV_SST38_START_ADDRESS);
     *device = dObj->sst38Plib->read_t(DRV_SST38_START_ADDRESS+2U);
 
@@ -122,7 +122,7 @@ bool DRV_SST38_ReadProductId( const DRV_HANDLE handle, uint16_t* manufacturer, u
     status = true;
 
     dObj->transferStatus = DRV_SST38_TRANSFER_COMPLETED;
- 
+
     return status;
 }
 
@@ -195,7 +195,7 @@ bool DRV_SST38_PageWrite( const DRV_HANDLE handle, void *tx_data, uint32_t addre
          dObj->sst38Plib->write_t(address+index, (uint16_t)pBuffer[(index/2U)]);
         __DSB();
         __ISB();
-    
+
         /* Wait Program Byte by polling bit DQ7 */
         do
         {
@@ -237,7 +237,7 @@ bool DRV_SST38_SectorErase( const DRV_HANDLE handle, uint32_t address )
 
     /* Disable ECC for PROM commands write_t if enabled */
     isEccEnabled = dObj->sst38Plib->eccDisable((uint8_t)DRV_SST38_CHIP_SELECT);
- 
+
     if (isCacheEnabled)
     {
         DCACHE_DISABLE();
@@ -262,7 +262,7 @@ bool DRV_SST38_SectorErase( const DRV_HANDLE handle, uint32_t address )
     dObj->sst38Plib->write_t(address, 0x50U);
     __DSB();
     __ISB();
-    
+
     /* Wait Erase by polling bit DQ7 */
     do
     {
@@ -353,7 +353,7 @@ bool DRV_SST38_ChipErase( const DRV_HANDLE handle )
 DRV_HANDLE DRV_SST38_Open( const SYS_MODULE_INDEX drvIndex, const DRV_IO_INTENT ioIntent )
 {
     uint32_t status;
-    
+
     if ((dObj->status != SYS_STATUS_READY) ||
         (dObj->nClients >= DRV_SST38_CLIENTS_NUMBER))
     {
@@ -379,16 +379,16 @@ void DRV_SST38_Close( const DRV_HANDLE handle )
     }
 }
 
-/* MISRA C-2012 Rule 11.3, 11.8 deviated below. Deviation record ID -  
-   H3_MISRAC_2012_R_11_3_DR_1 & H3_MISRAC_2012_R_11_8_DR_1*/
+/* MISRA C-2023 Rule 11.3, 11.8 deviated below. Deviation record ID -
+   H3_MISRAC_2023_R_11_3_DR_1 & H3_MISRAC_2023_R_11_8_DR_1*/
 <#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
 <#if core.COMPILER_CHOICE == "XC32">
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Wunknown-pragmas"
 </#if>
 #pragma coverity compliance block \
-(deviate:1 "MISRA C-2012 Rule 11.3" "H3_MISRAC_2012_R_11_3_DR_1" )\
-(deviate:1 "MISRA C-2012 Rule 11.8" "H3_MISRAC_2012_R_11_8_DR_1" )   
+(deviate:1 "MISRA C-2023 Rule 11.3" "H3_MISRAC_2023_R_11_3_DR_1" )\
+(deviate:1 "MISRA C-2023 Rule 11.8" "H3_MISRAC_2023_R_11_8_DR_1" )
 </#if>
 SYS_MODULE_OBJ DRV_SST38_Initialize
 (
@@ -424,12 +424,12 @@ SYS_MODULE_OBJ DRV_SST38_Initialize
     return ( (SYS_MODULE_OBJ)drvIndex );
 }
 <#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
-#pragma coverity compliance end_block "MISRA C-2012 Rule 11.3"
-#pragma coverity compliance end_block "MISRA C-2012 Rule 11.8"
+#pragma coverity compliance end_block "MISRA C-2023 Rule 11.3"
+#pragma coverity compliance end_block "MISRA C-2023 Rule 11.8"
 <#if core.COMPILER_CHOICE == "XC32">
 #pragma GCC diagnostic pop
-</#if>    
-</#if> 
+</#if>
+</#if>
 /* MISRAC 2012 deviation block end */
 
 SYS_STATUS DRV_SST38_Status( const SYS_MODULE_INDEX drvIndex )

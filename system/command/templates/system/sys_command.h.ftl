@@ -473,7 +473,7 @@ typedef const void* SYS_CMD_HANDLE;
     hParam      - a user parameter that's passed to the SYS_CMD_CallbackRegister() to be
                   used in the callback
                   Not used by the SYS_CMD.
-         
+
 
   Returns:
     - true  - if the command has been completely processed by the external handler.
@@ -492,7 +492,7 @@ typedef const void* SYS_CMD_HANDLE;
   Currently only one callback is supported for a SYS_CMD command group.
     The call will fail if a handler is already registered.
     Use SYS_CMD_CallbackDeregister first
-    
+
 */
 typedef bool (*SYS_CMD_Callback) (const SYS_CMD_DESCRIPTOR* pCmdTbl, SYS_CMD_DEVICE_NODE* pCmdIO, char* cmdBuff, size_t bufSize, void* hParam);
 
@@ -610,13 +610,13 @@ bool    SYS_CMD_READY_TO_READ( void );
 #endif
 
 // *****************************************************************************
-/* MISRA C-2012 Rule 8.6 deviated:1 Deviation record ID -  H3_MISRAC_2012_R_8_6_DR_1 */
+/* MISRA C-2023 Rule 8.6 deviated:1 Deviation record ID -  H3_MISRAC_2023_R_8_6_DR_1 */
 <#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
 <#if core.COMPILER_CHOICE == "XC32">
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Wunknown-pragmas"
 </#if>
-#pragma coverity compliance block deviate:1 "MISRA C-2012 Rule 8.6" "H3_MISRAC_2012_R_8_6_DR_1"    
+#pragma coverity compliance block deviate:1 "MISRA C-2023 Rule 8.6" "H3_MISRAC_2023_R_8_6_DR_1"
 </#if>
 /* Function:
     bool SYS_CMD_READY_TO_WRITE( void )
@@ -647,10 +647,10 @@ bool    SYS_CMD_READY_TO_WRITE( void );
 #endif
 
 <#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
-#pragma coverity compliance end_block "MISRA C-2012 Rule 8.6"
+#pragma coverity compliance end_block "MISRA C-2023 Rule 8.6"
 <#if core.COMPILER_CHOICE == "XC32">
 #pragma GCC diagnostic pop
-</#if>    
+</#if>
 </#if>
 /* MISRAC 2012 deviation block end */
 // *****************************************************************************
@@ -850,7 +850,7 @@ bool SYS_CMD_DELETE(SYS_CMD_DEVICE_NODE* pDeviceNode);
     <code>
 
     bool myCmdHandler(const SYS_CMD_DESCRIPTOR* pCmdTbl, SYS_CMD_DEVICE_NODE* pCmdIO, char* cmdBuff, size_t bufSize, void* hParam)
-    {        
+    {
         return false;
     }
 
@@ -890,7 +890,7 @@ SYS_CMD_HANDLE  SYS_CMD_CallbackRegister(const SYS_CMD_DESCRIPTOR* pCmdTbl, SYS_
 
   Example:
     <code>
-    SYS_CMD_HANDLE myHandle = SYS_CMD_CallbackRegister(myCmdGroup, myCmdCallback, myParam );   
+    SYS_CMD_HANDLE myHandle = SYS_CMD_CallbackRegister(myCmdGroup, myCmdCallback, myParam );
     SYS_CMD_CallbackDeregister(myHandle);
     </code>
 

@@ -156,13 +156,13 @@ static DRV_SDMMC_BUFFER_OBJ* lDRV_SDMMC_FreeBufferObjectGet(DRV_SDMMC_CLIENT_OBJ
     }
     return NULL;
 }
-/* MISRA C-2012 Rule 11.3 deviated:12 Deviation record ID -  H3_MISRAC_2012_R_11_3_DR_1 */
+/* MISRA C-2023 Rule 11.3 deviated:12 Deviation record ID -  H3_MISRAC_2023_R_11_3_DR_1 */
 <#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
 <#if core.COMPILER_CHOICE == "XC32">
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Wunknown-pragmas"
 </#if>
-#pragma coverity compliance block deviate:12 "MISRA C-2012 Rule 11.3" "H3_MISRAC_2012_R_11_3_DR_1"
+#pragma coverity compliance block deviate:12 "MISRA C-2023 Rule 11.3" "H3_MISRAC_2023_R_11_3_DR_1"
 </#if>
 
 static bool lDRV_SDMMC_BufferObjectAddToList(
@@ -423,13 +423,13 @@ static void lDRV_SDMMC_TimerCallback (
     *timeoutFlag = true;
 }
 
-/* MISRA C-2012 Rule 14.3 deviated:2 Deviation record ID -  H3_MISRAC_2012_R_14_3_DR_1 */
+/* MISRA C-2023 Rule 14.3 deviated:2 Deviation record ID -  H3_MISRAC_2023_R_14_3_DR_1 */
 <#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
 <#if core.COMPILER_CHOICE == "XC32">
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Wunknown-pragmas"
 </#if>
-#pragma coverity compliance block deviate:2 "MISRA C-2012 Rule 14.3" "H3_MISRAC_2012_R_14_3_DR_1"
+#pragma coverity compliance block deviate:2 "MISRA C-2023 Rule 14.3" "H3_MISRAC_2023_R_14_3_DR_1"
 </#if>
 static void lDRV_SDMMC_InitCardContext ( uint32_t drvIndex, DRV_SDHOST_CARD_CTXT* cardCtxt )
 {
@@ -551,13 +551,13 @@ static void lDRV_SDMMC_ParseCSD (
         cardCtxt->discCapacity = ((cSizeVal + 1U) * (1UL << (cSizeMult + 2U)) * (1UL << readBlockLength)) / 512U;
     }
 }
-/* MISRA C-2012 Rule 16.1, 16.3 and 16.5 deviated below.
-  Deviation record ID -  H3_MISRAC_2012_R_16_1_DR_1, H3_MISRAC_2012_R_16_3_DR_1 & H3_MISRAC_2012_R_16_5_DR_1 */
+/* MISRA C-2023 Rule 16.1, 16.3 and 16.5 deviated below.
+  Deviation record ID -  H3_MISRAC_2023_R_16_1_DR_1, H3_MISRAC_2023_R_16_3_DR_1 & H3_MISRAC_2023_R_16_5_DR_1 */
 <#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
 #pragma coverity compliance block \
-(deviate:3 "MISRA C-2012 Rule 16.1" "H3_MISRAC_2012_R_16_1_DR_1" )\
-(deviate:4 "MISRA C-2012 Rule 16.3" "H3_MISRAC_2012_R_16_3_DR_1" )\
-(deviate:1 "MISRA C-2012 Rule 16.5" "H3_MISRAC_2012_R_16_1_DR_5" )
+(deviate:3 "MISRA C-2023 Rule 16.1" "H3_MISRAC_2023_R_16_1_DR_1" )\
+(deviate:4 "MISRA C-2023 Rule 16.3" "H3_MISRAC_2023_R_16_3_DR_1" )\
+(deviate:1 "MISRA C-2023 Rule 16.5" "H3_MISRAC_2023_R_16_1_DR_5" )
 </#if>
 
 
@@ -923,10 +923,10 @@ static uint8_t lDRV_SDMMC_SDIO_CIS_Tuple_Rd(
                     }
 
                 break;
-                
+
                 default:
                     //Do nothing
-                
+
                 break;
             }
         }
@@ -1991,7 +1991,7 @@ static uint8_t lDRV_SDMMC_SendSCR_ACMD51(DRV_SDMMC_OBJ* dObj, uint8_t* scrBuffer
                 }
             }
             break;
-            
+
         default:
             //Do Nothing
             break;
@@ -3074,7 +3074,7 @@ static void lDRV_SDMMC_MediaInitialize (
 }
 
 <#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
-#pragma coverity compliance end_block "MISRA C-2012 Rule 14.3"
+#pragma coverity compliance end_block "MISRA C-2023 Rule 14.3"
 <#if core.COMPILER_CHOICE == "XC32">
 #pragma GCC diagnostic pop
 </#if>
@@ -3087,9 +3087,9 @@ static void lDRV_SDMMC_MediaInitialize (
 // *****************************************************************************
 
 <#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
-#pragma coverity compliance block deviate:2 "MISRA C-2012 Rule 11.8" "H3_MISRAC_2012_R_11_8_DR_1"
+#pragma coverity compliance block deviate:2 "MISRA C-2023 Rule 11.8" "H3_MISRAC_2023_R_11_8_DR_1"
 </#if>
-/* MISRA C-2012 Rule 11.8 deviated:2 Deviation record ID -  H3_MISRAC_2012_R_11_8_DR_1 */
+/* MISRA C-2023 Rule 11.8 deviated:2 Deviation record ID -  H3_MISRAC_2023_R_11_8_DR_1 */
 
 SYS_MODULE_OBJ DRV_SDMMC_Initialize (
     const SYS_MODULE_INDEX drvIndex,
@@ -3661,7 +3661,7 @@ void DRV_SDMMC_Async_SDIO_Read (
             opType = DRV_SDMMC_OP_TYP_SDIO_RD_BYTES;
         }
     }
-    
+
     if (err == true)
     {
         if (commandHandle != NULL)
@@ -3823,9 +3823,9 @@ SYS_MEDIA_GEOMETRY* DRV_SDMMC_GeometryGet (
     return mediaGeometryObj;
 }
 <#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
-#pragma coverity compliance block deviate:1 "MISRA C-2012 Rule 11.1" "H3_MISRAC_2012_R_11_1_DR_1"
+#pragma coverity compliance block deviate:1 "MISRA C-2023 Rule 11.1" "H3_MISRAC_2023_R_11_1_DR_1"
 </#if>
-/* MISRA C-2012 Rule 11.1 deviated:1 Deviation record ID -  H3_MISRAC_2012_R_11_1_DR_1 */
+/* MISRA C-2023 Rule 11.1 deviated:1 Deviation record ID -  H3_MISRAC_2023_R_11_1_DR_1 */
 
 void DRV_SDMMC_EventHandlerSet (
     const DRV_HANDLE handle,
@@ -3852,12 +3852,12 @@ void DRV_SDMMC_EventHandlerSet (
     }
 }
 <#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
-#pragma coverity compliance end_block "MISRA C-2012 Rule 11.1"
+#pragma coverity compliance end_block "MISRA C-2023 Rule 11.1"
 </#if>
 /* MISRAC 2012 deviation block end */
 
 <#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
-#pragma coverity compliance end_block "MISRA C-2012 Rule 11.8"
+#pragma coverity compliance end_block "MISRA C-2023 Rule 11.8"
 </#if>
 /* MISRAC 2012 deviation block end */
 
@@ -3911,7 +3911,7 @@ void DRV_SDMMC_Tasks( SYS_MODULE_OBJ object )
     DRV_SDMMC_CLIENT_OBJ* clientObj = NULL;
     DRV_SDMMC_BUFFER_OBJ* currentBufObj = NULL;
     DRV_SDMMC_EVENT evtStatus = DRV_SDMMC_EVENT_COMMAND_COMPLETE;
-    uint32_t response = 0;    
+    uint32_t response = 0;
     static bool cardAttached = true;
 
     dObj = &gDrvSDMMCObj[object];
@@ -4520,7 +4520,7 @@ void DRV_SDMMC_Tasks( SYS_MODULE_OBJ object )
                         else
                         {
                             //Do noting
-                        }        
+                        }
                     }
 
                     if (dObj->dataTransferFlags.isDataPresent == true)
@@ -4716,14 +4716,14 @@ void DRV_SDMMC_Tasks( SYS_MODULE_OBJ object )
 }
 
 <#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
-#pragma coverity compliance end_block "MISRA C-2012 Rule 11.3"
+#pragma coverity compliance end_block "MISRA C-2023 Rule 11.3"
 </#if>
 /* MISRAC 2012 deviation block end */
 
 <#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
-#pragma coverity compliance end_block "MISRA C-2012 Rule 16.1"
-#pragma coverity compliance end_block "MISRA C-2012 Rule 16.3"
-#pragma coverity compliance end_block "MISRA C-2012 Rule 16.5"
+#pragma coverity compliance end_block "MISRA C-2023 Rule 16.1"
+#pragma coverity compliance end_block "MISRA C-2023 Rule 16.3"
+#pragma coverity compliance end_block "MISRA C-2023 Rule 16.5"
 <#if core.COMPILER_CHOICE == "XC32">
 #pragma GCC diagnostic pop
 </#if>

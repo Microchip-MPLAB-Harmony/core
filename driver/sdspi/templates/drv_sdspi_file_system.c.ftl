@@ -55,13 +55,13 @@
 // Section: Global objects
 // *****************************************************************************
 // *****************************************************************************
-/* MISRA C-2012 Rule 11.1 deviated:6 Deviation record ID -  H3_MISRAC_2012_R_11_1_DR_1 */
+/* MISRA C-2023 Rule 11.1 deviated:6 Deviation record ID -  H3_MISRAC_2023_R_11_1_DR_1 */
 <#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
 <#if core.COMPILER_CHOICE == "XC32">
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Wunknown-pragmas"
 </#if>
-#pragma coverity compliance block deviate:6 "MISRA C-2012 Rule 11.1" "H3_MISRAC_2012_R_11_1_DR_1"
+#pragma coverity compliance block deviate:6 "MISRA C-2023 Rule 11.1" "H3_MISRAC_2023_R_11_1_DR_1"
 </#if>
 
 <#if DRV_SDSPI_COMMON_MODE == "Asynchronous" >
@@ -99,7 +99,7 @@
 </#if>
 
 <#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
-#pragma coverity compliance end_block "MISRA C-2012 Rule 11.1"
+#pragma coverity compliance end_block "MISRA C-2023 Rule 11.1"
 <#if core.COMPILER_CHOICE == "XC32">
 #pragma GCC diagnostic pop
 </#if>

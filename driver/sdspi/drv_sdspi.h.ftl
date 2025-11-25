@@ -219,7 +219,7 @@ typedef SYS_MEDIA_BLOCK_COMMAND_HANDLE  DRV_SDSPI_COMMAND_HANDLE;
         DRV_SDSPI_COMMAND_HANDLE commandHandle,
         uintptr_t contextHandle
     )
-    { 
+    {
 
         switch(event)
         {
@@ -286,48 +286,48 @@ typedef SYS_MEDIA_EVENT_HANDLER     DRV_SDSPI_EVENT_HANDLER;
     SYS_MODULE_OBJ      objectHandle;
 
     DRV_SDSPI_PLIB_INTERFACE drvSDSPI0PlibAPI = {
-       
+
         .writeRead = (DRV_SDSPI_WRITEREAD)SPI0_WriteRead,
-        
+
         .write = (DRV_SDSPI_WRITE)SPI0_Write,
-        
+
         .read = (DRV_SDSPI_READ)SPI0_Read,
-        
+
         .isBusy = (DRV_SDSPI_IS_BUSY)SPI0_IsBusy,
-        
+
         .transferSetup = (DRV_SDSPI_SETUP)SPI0_TransferSetup,
-        
+
         .callbackRegister = (DRV_SDSPI_CALLBACK_REGISTER)SPI0_CallbackRegister,
     };
 
     DRV_SDSPI_INIT drvSDSPI0InitData = {
-       
+
         .spiPlib            = &drvSDSPI0PlibAPI,
         .remapDataBits = drvSDSPI0remapDataBits,
         .remapClockPolarity = drvSDSPI0remapClockPolarity,
         .remapClockPhase = drvSDSPI0remapClockPhase,
-        
+
         .numClients         = DRV_SDSPI_CLIENTS_NUMBER_IDX0,
-        
+
         .clientObjPool      = (uintptr_t)&drvSDSPI0ClientObjPool[0],
         .chipSelectPin      = DRV_SDSPI_CHIP_SELECT_PIN_IDX0,
         .SDSPISpeedHz      = DRV_SDSPI_SPEED_HZ_IDX0,
         .writeProtectPin    = SYS_PORT_PIN_NONE,
         .isFsEnabled   = DRV_SDSPI_REGISTER_WITH_FS_IDX0,
-       
+
         .txDMAChannel = DRV_SDSPI_XMIT_DMA_CH_IDX0,
-       
+
         .rxDMAChannel  = DRV_SDSPI_RCV_DMA_CH_IDX0,
-       
+
         .txAddress = (void *)&(SPI0_REGS->SPI_TDR),
-       
+
         .rxAddress  = (void *)&(SPI0_REGS->SPI_RDR),
     };
 
     objectHandle = DRV_SDSPI_Initialize(DRV_SDSPI_INDEX_0, (SYS_MODULE_INIT *)&drvSDSPI0InitData);
     if (objectHandle == SYS_MODULE_OBJ_INVALID)
     {
-        
+
     }
     </code>
 
@@ -376,14 +376,14 @@ SYS_MODULE_OBJ DRV_SDSPI_Initialize(
 
   Example:
     <code>
-    SYS_MODULE_OBJ      object;     
+    SYS_MODULE_OBJ      object;
     SYS_STATUS          status;
 
     status = DRV_SDSPI_Status(object);
 
     if (status == SYS_STATUS_READY)
     {
-        
+
     }
     </code>
 
@@ -433,7 +433,7 @@ SYS_STATUS DRV_SDSPI_Status( SYS_MODULE_OBJ object );
 
     if (handle == DRV_HANDLE_INVALID)
     {
-        
+
     }
     </code>
 
@@ -473,7 +473,7 @@ DRV_HANDLE DRV_SDSPI_Open(const SYS_MODULE_INDEX drvIndex, const DRV_IO_INTENT i
 
   Example:
     <code>
-    DRV_HANDLE handle;  
+    DRV_HANDLE handle;
 
     DRV_SDSPI_Close (handle);
     </code>
@@ -518,12 +518,12 @@ void DRV_SDSPI_Close(DRV_HANDLE handle);
 
   Example:
     <code>
-    
+
     while(1)
     {
         DRV_SDSPI_Tasks(sysObj.drvSDSPI0);
 
-        
+
         vTaskDelay(100 / portTICK_PERIOD_MS);
     }
     </code>
@@ -584,17 +584,17 @@ void DRV_SDSPI_Tasks ( SYS_MODULE_OBJ object );
     #define MY_BUFFER_SIZE 1024
     uint8_t CACHE_ALIGN myBuffer[MY_BUFFER_SIZE];
 
-    
+
     uint32_t blockStart = 0x00;
-    uint32_t nBlock = 2;    
+    uint32_t nBlock = 2;
 
     if (DRV_SDSPI_SyncRead(mySDSPIHandle, myBuffer, blockStart, nBlock) == true)
     {
-        
+
     }
     else
     {
-        
+
     }
 
     </code>
@@ -603,13 +603,13 @@ void DRV_SDSPI_Tasks ( SYS_MODULE_OBJ object );
     None.
 */
 
-/* MISRA C-2012 Rule 8.6 deviated:5 Deviation record ID -  H3_MISRAC_2012_R_8_6_DR_1 */
+/* MISRA C-2023 Rule 8.6 deviated:5 Deviation record ID -  H3_MISRAC_2023_R_8_6_DR_1 */
 <#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
 <#if core.COMPILER_CHOICE == "XC32">
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Wunknown-pragmas"
 </#if>
-#pragma coverity compliance block deviate:5 "MISRA C-2012 Rule 8.6" "H3_MISRAC_2012_R_8_6_DR_1"    
+#pragma coverity compliance block deviate:5 "MISRA C-2023 Rule 8.6" "H3_MISRAC_2023_R_8_6_DR_1"
 </#if>
 
 bool DRV_SDSPI_SyncRead (
@@ -674,19 +674,19 @@ bool DRV_SDSPI_SyncRead (
     <code>
     uint8_t CACHE_ALIGN myBuffer[MY_BUFFER_SIZE];
 
-   
+
     uint32_t blockStart = 0x00;
     uint32_t nBlock = 2;
     DRV_SDSPI_COMMAND_HANDLE commandHandle;
-    MY_APP_OBJ myAppObj;   
-   
+    MY_APP_OBJ myAppObj;
+
 
     void APP_SDSPIEventHandler(
         DRV_SDSPI_EVENT event,
         DRV_SDSPI_COMMAND_HANDLE commandHandle,
         uintptr_t contextHandle
     )
-    {      
+    {
 
         switch(event)
         {
@@ -706,18 +706,18 @@ bool DRV_SDSPI_SyncRead (
             }
         }
     }
-    
+
     DRV_SDSPI_EventHandlerSet(mySDSPIHandle, APP_SDSPIEventHandler, (uintptr_t)&myAppObj);
 
     DRV_SDSPI_AsyncRead(mySDSPIHandle, &commandHandle, &myBuffer[0], blockStart, nBlock);
 
     if(commandHandle == DRV_SDMMC_COMMAND_HANDLE_INVALID)
     {
-        
+
     }
     else
     {
-        
+
     }
     </code>
 
@@ -784,19 +784,19 @@ void DRV_SDSPI_AsyncRead
 
     #define MY_BUFFER_SIZE          1024
     uint8_t CACHE_ALIGN myBuffer[MY_BUFFER_SIZE];
-   
+
     uint32_t blockStart = 0x00;
     uint32_t nBlock = 2;
 
-    
+
 
     if (DRV_SDSPI_SyncWrite(mySDSPIHandle, myBuffer, blockStart, nBlock) == true)
     {
-       
+
     }
     else
     {
-        
+
     }
     </code>
 
@@ -872,28 +872,28 @@ bool DRV_SDSPI_SyncWrite(
     <code>
 
     uint8_t CACHE_ALIGN myBuffer[MY_BUFFER_SIZE];
-    
+
     uint32_t blockStart = 0x00;
     uint32_t nBlock = 2;
     DRV_SDSPI_COMMAND_HANDLE commandHandle;
-    MY_APP_OBJ myAppObj;    
+    MY_APP_OBJ myAppObj;
 
     void APP_SDSPIEventHandler(
         DRV_SDSPI_EVENT event,
         DRV_SDSPI_COMMAND_HANDLE commandHandle,
         uintptr_t contextHandle
     )
-    {   
+    {
 
         switch(event)
         {
             case DRV_SDSPI_EVENT_COMMAND_COMPLETE:
-            {               
+            {
                 break;
             }
 
             case DRV_SDSPI_EVENT_COMMAND_ERROR:
-            {               
+            {
                 break;
             }
 
@@ -903,14 +903,14 @@ bool DRV_SDSPI_SyncWrite(
             }
         }
     }
-    
+
     DRV_SDSPI_EventHandlerSet(mySDSPIHandle, APP_SDSPIEventHandler, (uintptr_t)&myAppObj);
 
     DRV_SDSPI_AsyncWrite(mySDSPIHandle, &commandHandle, &myBuffer[0], blockStart, nBlock);
 
     if(commandHandle == DRV_SDSPI_COMMAND_HANDLE_INVALID)
     {
-       
+
     }
     </code>
 
@@ -959,12 +959,12 @@ void DRV_SDSPI_AsyncWrite
     <code>
 
     bool isSDSPIAttached;
-    
+
     isSDSPIAttached = DRV_SDSPI_IsAttached(mySDSPIHandle);
 
     if (isSDSPIAttached == true)
     {
-        
+
     }
 
     </code>
@@ -1012,12 +1012,12 @@ bool DRV_SDSPI_IsAttached(const DRV_HANDLE handle);
   Example:
     <code>
 
-    bool isWriteProtected;   
+    bool isWriteProtected;
     isWriteProtected = DRV_SDSPI_IsWriteProtected(mySDSPIHandle);
 
     if (isWriteProtected == true)
     {
-        
+
     }
 
     </code>
@@ -1064,7 +1064,7 @@ bool DRV_SDSPI_IsWriteProtected( const DRV_HANDLE handle );
     SYS_MEDIA_GEOMETRY * SDSPIGeometry;
     uint32_t readBlockSize, writeBlockSize, eraseBlockSize;
     uint32_t nReadBlocks, nReadRegions, totalSize;
-   
+
     SDSPIGeometry = DRV_SDSPI_GeometryGet(mySDSPIHandle);
 
     readBlockSize  = SDSPIGeometry->geometryTable->blockSize;
@@ -1133,26 +1133,26 @@ SYS_MEDIA_GEOMETRY * DRV_SDSPI_GeometryGet ( const DRV_HANDLE handle );
     None.
 
   Example:
-    <code>    
+    <code>
 
     void APP_SDSPIEventHandler(
         DRV_SDSPI_EVENT event,
         DRV_SDSPI_COMMAND_HANDLE commandHandle,
         uintptr_t contextHandle
     )
-    {       
+    {
 
         switch(event)
         {
             case DRV_SDSPI_EVENT_COMMAND_COMPLETE:
             {
-                
+
                 break;
             }
 
             case DRV_SDSPI_EVENT_COMMAND_ERROR:
             {
-               
+
                 break;
             }
 
@@ -1162,7 +1162,7 @@ SYS_MEDIA_GEOMETRY * DRV_SDSPI_GeometryGet ( const DRV_HANDLE handle );
             }
         }
     }
-    
+
     DRV_SDSPI_EventHandlerSet(mySDSPIHandle, APP_SDSPIEventHandler, (uintptr_t)&myAppObj);
     </code>
 
@@ -1340,10 +1340,10 @@ void DRV_SDSPI_Write(
     uint32_t nBlock
 );
 <#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
-#pragma coverity compliance end_block "MISRA C-2012 Rule 8.6"
+#pragma coverity compliance end_block "MISRA C-2023 Rule 8.6"
 <#if core.COMPILER_CHOICE == "XC32">
 #pragma GCC diagnostic pop
-</#if>    
+</#if>
 </#if>
 /* MISRAC 2012 deviation block end */
 

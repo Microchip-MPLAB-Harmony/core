@@ -50,7 +50,7 @@ void vAssertCalled( const char * pcFile, unsigned long ulLine );
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Wunknown-pragmas"
 </#if>
-#pragma coverity compliance block deviate:1 "MISRA C-2012 Rule 12.2" "H3_MISRAC_2012_R_12_2_DR_1"
+#pragma coverity compliance block deviate:1 "MISRA C-2023 Rule 12.2" "H3_MISRAC_2023_R_12_2_DR_1"
 </#if>
 </#if>
 /*
@@ -132,7 +132,7 @@ void vApplicationMallocFailedHook( void )
 }
 <#if core.CoreArchitecture == "MIPS">
 <#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
-#pragma coverity compliance end_block "MISRA C-2012 Rule 12.2"
+#pragma coverity compliance end_block "MISRA C-2023 Rule 12.2"
 <#if core.COMPILER_CHOICE == "XC32">
 #pragma GCC diagnostic pop
 </#if>

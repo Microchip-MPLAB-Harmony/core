@@ -161,14 +161,14 @@ typedef struct
         {
             case DRV_SST26_TRANSFER_COMPLETED:
             {
-               
+
                 break;
             }
 
             case DRV_SST26_TRANSFER_ERROR_UNKNOWN:
             default:
             {
-                
+
                 break;
             }
         }
@@ -224,7 +224,7 @@ typedef void (*DRV_SST26_EVENT_HANDLER) ( DRV_SST26_TRANSFER_STATUS event, uintp
     Otherwise it returns SYS_MODULE_OBJ_INVALID.
 
   Example:
-    <code>    
+    <code>
 
     SYS_MODULE_OBJ  objectHandle;
 
@@ -245,7 +245,7 @@ typedef void (*DRV_SST26_EVENT_HANDLER) ( DRV_SST26_TRANSFER_STATUS event, uintp
 
     if (SYS_MODULE_OBJ_INVALID == objectHandle)
     {
-       
+
     }
     </code>
 
@@ -308,7 +308,7 @@ SYS_MODULE_OBJ DRV_SST26_Initialize
     handle = DRV_SST26_Open(DRV_SST26_INDEX);
     if (DRV_HANDLE_INVALID == handle)
     {
-      
+
     }
     </code>
 
@@ -343,7 +343,7 @@ DRV_HANDLE DRV_SST26_Open( const SYS_MODULE_INDEX drvIndex, const DRV_IO_INTENT 
 
   Example:
     <code>
-    DRV_HANDLE handle; 
+    DRV_HANDLE handle;
 
     DRV_SST26_Close(handle);
     </code>
@@ -392,7 +392,7 @@ void DRV_SST26_Close( const DRV_HANDLE handle );
 
     if (status == SYS_STATUS_READY)
     {
-        
+
     }
     </code>
 
@@ -426,16 +426,16 @@ SYS_STATUS DRV_SST26_Status( const SYS_MODULE_INDEX drvIndex );
         - if the unlock is successfully completed
 
     false
-        - if Write enable fails before sending unlock command to flash and 
+        - if Write enable fails before sending unlock command to flash and
         - if Unlock flash command itself fails
 
   Example:
     <code>
-    DRV_HANDLE handle;  
+    DRV_HANDLE handle;
 
     if(DRV_SST26_UnlockFlash(handle) == false)
     {
-        
+
     }
 
     </code>
@@ -473,12 +473,12 @@ bool DRV_SST26_UnlockFlash( const DRV_HANDLE handle );
   Example:
     <code>
 
-    DRV_HANDLE handle;  
+    DRV_HANDLE handle;
     uint32_t jedec_id = 0;
 
     if(DRV_SST26_ReadJedecId(handle, &jedec_id) == false)
     {
-        
+
     }
 
     </code>
@@ -524,14 +524,14 @@ bool DRV_SST26_ReadJedecId( const DRV_HANDLE handle, void *jedec_id );
   Example:
     <code>
 
-    DRV_HANDLE handle;  
+    DRV_HANDLE handle;
     uint32_t sectorStart = 0;
 
     if(DRV_SST26_SectorErase(handle, sectorStart) == false)
     {
-        
+
     }
-   
+
     while(DRV_SST26_TRANSFER_BUSY == DRV_SST26_TransferStatusGet(handle));
 
     </code>
@@ -577,14 +577,14 @@ bool DRV_SST26_SectorErase( const DRV_HANDLE handle, uint32_t address );
   Example:
     <code>
 
-    DRV_HANDLE handle;  
+    DRV_HANDLE handle;
     uint32_t blockStart = 0;
 
     if(DRV_SST26_SectorErase(handle, blockStart) == false)
     {
-        
+
     }
-   
+
     while(DRV_SST26_TransferStatusGet(handle) == DRV_SST26_TRANSFER_BUSY);
 
     </code>
@@ -627,13 +627,13 @@ bool DRV_SST26_BulkErase( const DRV_HANDLE handle, uint32_t address );
   Example:
     <code>
 
-    DRV_HANDLE handle; 
+    DRV_HANDLE handle;
 
     if(DRV_SST26_ChipErase(handle) == flase)
     {
-        
+
     }
-   
+
     while(DRV_SST26_TransferStatusGet(handle) == DRV_SST26_TRANSFER_BUSY);
 
     </code>
@@ -682,14 +682,14 @@ bool DRV_SST26_ChipErase( const DRV_HANDLE handle );
     #define BUFFER_SIZE  1024
     #define MEM_ADDRESS  0x0
 
-    DRV_HANDLE handle;  
+    DRV_HANDLE handle;
     uint8_t CACHE_ALIGN readBuffer[BUFFER_SIZE];
 
     if (DRV_SST26_Read(handle, (void *)&readBuffer, BUFFER_SIZE, MEM_ADDRESS) == false)
     {
-        
+
     }
-   
+
     while(DRV_SST26_TransferStatusGet(handle) == DRV_SST26_TRANSFER_BUSY);
 
     </code>
@@ -751,15 +751,15 @@ bool DRV_SST26_Read( const DRV_HANDLE handle, void *rx_data, uint32_t rx_data_le
     #define BUFFER_SIZE  1024
     #define MEM_ADDRESS  0x0
 
-    DRV_HANDLE handle;  
+    DRV_HANDLE handle;
     uint8_t CACHE_ALIGN writeBuffer[BUFFER_SIZE];
     bool status = false;
 
     if(false == DRV_SST26_SectorErase(handle))
     {
-        
+
     }
-   
+
     while(DRV_SST26_TransferStatusGet(handle) == DRV_SST26_TRANSFER_BUSY);
 
     for (uint32_t j = 0; j < BUFFER_SIZE; j += PAGE_SIZE)
@@ -770,14 +770,14 @@ bool DRV_SST26_Read( const DRV_HANDLE handle, void *rx_data, uint32_t rx_data_le
             break;
         }
 
-        
+
         while(DRV_SST26_TransferStatusGet(handle) == DRV_SST26_TRANSFER_BUSY);
         status = true;
     }
 
     if(status == false)
     {
-        
+
     }
 
     </code>
@@ -818,11 +818,11 @@ bool DRV_SST26_PageWrite( const DRV_HANDLE handle, void *tx_data, uint32_t addre
   Example:
     <code>
 
-    DRV_HANDLE handle; 
+    DRV_HANDLE handle;
 
     if (DRV_SST26_TransferStatusGet(handle) == DRV_SST26_TRANSFER_COMPLETED)
     {
-       
+
     }
     </code>
 
@@ -862,7 +862,7 @@ DRV_SST26_TRANSFER_STATUS DRV_SST26_TransferStatusGet( const DRV_HANDLE handle )
   Example:
     <code>
 
-    DRV_HANDLE handle;  
+    DRV_HANDLE handle;
 
     DRV_SST26_GEOMETRY sst26FlashGeometry;
 
@@ -936,28 +936,28 @@ bool DRV_SST26_GeometryGet( const DRV_HANDLE handle, DRV_SST26_GEOMETRY *geometr
     #define BUFFER_SIZE  256
     #define MEM_ADDRESS  0x00
 
-    
+
     MY_APP_OBJ myAppObj;
 
     uint8_t CACHE_ALIGN myBuffer[BUFFER_SIZE];
 
-    
+
     void APP_SST26TransferEventHandler(DRV_SST26_TRANSFER_STATUS event, uintptr_t context)
     {
-       
+
         MY_APP_OBJ* pMyAppObj = (MY_APP_OBJ *) context;
 
         switch(event)
         {
             case DRV_SST26_TRANSFER_COMPLETED:
             {
-             
+
                 break;
             }
 
             case DRV_SST26_TRANSFER_ERROR:
             {
-              
+
                 break;
             }
 
@@ -966,13 +966,13 @@ bool DRV_SST26_GeometryGet( const DRV_HANDLE handle, DRV_SST26_GEOMETRY *geometr
                 break;
             }
         }
-    }   
+    }
 
     DRV_SST26_EventHandlerSet( myHandle, APP_SST26TransferEventHandler, (uintptr_t)&myAppObj );
 
     if (DRV_SST26_Read(myHandle, myBuffer, BUFFER_SIZE, MEM_ADDRESS) == false)
     {
-       
+
     }
 
     </code>
@@ -981,13 +981,13 @@ bool DRV_SST26_GeometryGet( const DRV_HANDLE handle, DRV_SST26_GEOMETRY *geometr
     If the client does not want to be notified when the queued buffer transfer
     has completed, it does not need to register a callback.
 */
-/* MISRA C-2012 Rule 8.6 deviated:2 Deviation record ID -  H3_MISRAC_2012_R_8_6_DR_1 */
+/* MISRA C-2023 Rule 8.6 deviated:2 Deviation record ID -  H3_MISRAC_2023_R_8_6_DR_1 */
 <#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
 <#if core.COMPILER_CHOICE == "XC32">
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Wunknown-pragmas"
 </#if>
-#pragma coverity compliance block deviate:2 "MISRA C-2012 Rule 8.6" "H3_MISRAC_2012_R_8_6_DR_1"    
+#pragma coverity compliance block deviate:2 "MISRA C-2023 Rule 8.6" "H3_MISRAC_2023_R_8_6_DR_1"
 </#if>
 
 void DRV_SST26_EventHandlerSet(
@@ -999,10 +999,10 @@ void DRV_SST26_EventHandlerSet(
 bool DRV_SST26_ReadStatus( const DRV_HANDLE handle, void *rx_data, uint32_t rx_data_length );
 
 <#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
-#pragma coverity compliance end_block "MISRA C-2012 Rule 8.6"
+#pragma coverity compliance end_block "MISRA C-2023 Rule 8.6"
 <#if core.COMPILER_CHOICE == "XC32">
 #pragma GCC diagnostic pop
-</#if>    
+</#if>
 </#if>
 /* MISRAC 2012 deviation block end */
 

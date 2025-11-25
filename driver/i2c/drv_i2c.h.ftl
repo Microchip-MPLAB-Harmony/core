@@ -660,13 +660,13 @@ DRV_I2C_ERROR DRV_I2C_ErrorGet( const DRV_HANDLE drvHandle);
     This function is available only in the asynchronous mode.
 
 */
- /* MISRA C-2012 Rule 8.6 deviated:6 Deviation record ID -  H3_MISRAC_2012_R_8_6_DR_1 */
+ /* MISRA C-2023 Rule 8.6 deviated:6 Deviation record ID -  H3_MISRAC_2023_R_8_6_DR_1 */
 <#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
 <#if core.COMPILER_CHOICE == "XC32">
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Wunknown-pragmas"
 </#if>
-#pragma coverity compliance block deviate:6 "MISRA C-2012 Rule 8.6" "H3_MISRAC_2012_R_8_6_DR_1"
+#pragma coverity compliance block deviate:6 "MISRA C-2023 Rule 8.6" "H3_MISRAC_2023_R_8_6_DR_1"
 </#if>
 
 void DRV_I2C_WriteTransferAdd(
@@ -1406,7 +1406,7 @@ bool DRV_I2C_WriteReadTransfer (
 void DRV_I2C_QueuePurge(const DRV_HANDLE handle);
 
 <#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
-#pragma coverity compliance end_block "MISRA C-2012 Rule 8.6"
+#pragma coverity compliance end_block "MISRA C-2023 Rule 8.6"
 <#if core.COMPILER_CHOICE == "XC32">
 #pragma GCC diagnostic pop
 </#if>

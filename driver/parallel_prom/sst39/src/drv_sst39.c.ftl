@@ -11,7 +11,7 @@
     SST39 Driver Interface Definition
 
   Description:
-    The SST39 Driver provides a interface to access the SST39 memory. 
+    The SST39 Driver provides a interface to access the SST39 memory.
     This file should be included in the project if SST39 driver
     functionality is needed.
 *******************************************************************************/
@@ -75,7 +75,7 @@ bool DRV_SST39_ReadProductId( const DRV_HANDLE handle, uint8_t* manufacturer, ui
     {
         return status;
     }
-    
+
     dObj->transferStatus = DRV_SST39_TRANSFER_BUSY;
 
     /* Disable ECC for PROM commands write if enabled */
@@ -97,7 +97,7 @@ bool DRV_SST39_ReadProductId( const DRV_HANDLE handle, uint8_t* manufacturer, ui
     __ISB();
 
     /* Read ID */
-    
+
     *manufacturer = dObj->sst39Plib->read_t(DRV_SST39_START_ADDRESS);
     *device = dObj->sst39Plib->read_t(DRV_SST39_START_ADDRESS+1U);
 
@@ -120,9 +120,9 @@ bool DRV_SST39_ReadProductId( const DRV_HANDLE handle, uint8_t* manufacturer, ui
     }
 
     status = true;
- 
+
     dObj->transferStatus = DRV_SST39_TRANSFER_COMPLETED;
- 
+
     return status;
 }
 
@@ -136,7 +136,7 @@ bool DRV_SST39_Read( const DRV_HANDLE handle, void *rx_data, uint32_t rx_data_le
     {
         return status;
     }
-    
+
     dObj->transferStatus = DRV_SST39_TRANSFER_BUSY;
 
     for (i=0; i<rx_data_length; i++)
@@ -166,7 +166,7 @@ bool DRV_SST39_PageWrite( const DRV_HANDLE handle, void *tx_data, uint32_t addre
     }
 
     dObj->transferStatus = DRV_SST39_TRANSFER_BUSY;
-    
+
     /* Disable ECC for PROM commands write if enabled */
     isEccEnabled = dObj->sst39Plib->eccDisable((uint8_t)DRV_SST39_CHIP_SELECT);
 
@@ -190,7 +190,7 @@ bool DRV_SST39_PageWrite( const DRV_HANDLE handle, void *tx_data, uint32_t addre
          dObj->sst39Plib->write_t(address+index, pBuffer[index]);
         __DSB();
         __ISB();
-    
+
         /* Wait Program Byte by polling bit DQ7 */
         do
         {
@@ -226,12 +226,12 @@ bool DRV_SST39_SectorErase( const DRV_HANDLE handle, uint32_t address )
     {
         return false;
     }
-    
+
     dObj->transferStatus = DRV_SST39_TRANSFER_BUSY;
 
     /* Disable ECC for PROM commands write if enabled */
     isEccEnabled = dObj->sst39Plib->eccDisable((uint8_t)DRV_SST39_CHIP_SELECT);
- 
+
     if (isCacheEnabled)
     {
         DCACHE_DISABLE();
@@ -256,7 +256,7 @@ bool DRV_SST39_SectorErase( const DRV_HANDLE handle, uint32_t address )
     dObj->sst39Plib->write_t(address, 0x30U);
     __DSB();
     __ISB();
-    
+
     /* Wait Erase by polling bit DQ7 */
     do
     {
@@ -355,7 +355,7 @@ DRV_HANDLE DRV_SST39_Open( const SYS_MODULE_INDEX drvIndex, const DRV_IO_INTENT 
         dObj->nClients++;
 
         dObj->ioIntent = ioIntent;
-        
+
         status = ((DRV_HANDLE)drvIndex);
     }
 
@@ -371,16 +371,16 @@ void DRV_SST39_Close( const DRV_HANDLE handle )
     }
 }
 
-/* MISRA C-2012 Rule 11.3, 11.8 deviated below. Deviation record ID -  
-   H3_MISRAC_2012_R_11_3_DR_1 & H3_MISRAC_2012_R_11_8_DR_1*/
+/* MISRA C-2023 Rule 11.3, 11.8 deviated below. Deviation record ID -
+   H3_MISRAC_2023_R_11_3_DR_1 & H3_MISRAC_2023_R_11_8_DR_1*/
 <#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
 <#if core.COMPILER_CHOICE == "XC32">
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Wunknown-pragmas"
 </#if>
 #pragma coverity compliance block \
-(deviate:1 "MISRA C-2012 Rule 11.3" "H3_MISRAC_2012_R_11_3_DR_1" )\
-(deviate:1 "MISRA C-2012 Rule 11.8" "H3_MISRAC_2012_R_11_8_DR_1" )   
+(deviate:1 "MISRA C-2023 Rule 11.3" "H3_MISRAC_2023_R_11_3_DR_1" )\
+(deviate:1 "MISRA C-2023 Rule 11.8" "H3_MISRAC_2023_R_11_8_DR_1" )
 </#if>
 SYS_MODULE_OBJ DRV_SST39_Initialize
 (
@@ -416,12 +416,12 @@ SYS_MODULE_OBJ DRV_SST39_Initialize
 }
 
 <#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
-#pragma coverity compliance end_block "MISRA C-2012 Rule 11.3"
-#pragma coverity compliance end_block "MISRA C-2012 Rule 11.8"
+#pragma coverity compliance end_block "MISRA C-2023 Rule 11.3"
+#pragma coverity compliance end_block "MISRA C-2023 Rule 11.8"
 <#if core.COMPILER_CHOICE == "XC32">
 #pragma GCC diagnostic pop
-</#if>    
-</#if> 
+</#if>
+</#if>
 /* MISRAC 2012 deviation block end */
 
 SYS_STATUS DRV_SST39_Status( const SYS_MODULE_INDEX drvIndex )

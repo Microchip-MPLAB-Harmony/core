@@ -186,13 +186,13 @@ static void OSAL_CRIT_Leave(OSAL_CRIT_TYPE severity, OSAL_CRITSECT_DATA_TYPE sta
 }
 
 // *****************************************************************************
-/* MISRA C-2012 Rule 10.3 False positive:11 Deviation record ID -  H3_MISRAC_2012_R_10_3_DR_1 */
+/* MISRA C-2023 Rule 10.3 False positive:11 Deviation record ID -  H3_MISRAC_2023_R_10_3_DR_1 */
 <#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
 <#if core.COMPILER_CHOICE == "XC32">
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Wunknown-pragmas"
 </#if>
-#pragma coverity compliance block fp:11 "MISRA C-2012 Rule 10.3" "H3_MISRAC_2012_R_10_3_DR_1"
+#pragma coverity compliance block fp:11 "MISRA C-2023 Rule 10.3" "H3_MISRAC_2023_R_10_3_DR_1"
 </#if>
 /* Function: OSAL_RESULT OSAL_SEM_Create(OSAL_SEM_HANDLE_TYPE semID, OSAL_SEM_TYPE type,
                                 OSAL_SEM_COUNT_TYPE maxCount, OSAL_SEM_COUNT_TYPE initialCount)
@@ -366,16 +366,16 @@ static OSAL_RESULT __attribute__((always_inline)) OSAL_MUTEX_Unlock(OSAL_MUTEX_H
 }
 
 <#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
-#pragma coverity compliance end_block "MISRA C-2012 Rule 10.3"
+#pragma coverity compliance end_block "MISRA C-2023 Rule 10.3"
 </#if>
 /* MISRAC 2012 deviation block end */
 // *****************************************************************************
-/* MISRA C-2012 Rule 4.12 devaited:1, 21.3 deviated:2 Deviation record ID -
-   H3_MISRAC_2012_R_4_12_DR_1 & H3_MISRAC_2012_R_21_3_DR_1*/
+/* MISRA C-2023 Rule 4.12 devaited:1, 21.3 deviated:2 Deviation record ID -
+   H3_MISRAC_2023_R_4_12_DR_1 & H3_MISRAC_2023_R_21_3_DR_1*/
 <#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
 #pragma coverity compliance block \
-(deviate:1 "MISRA C-2012 Directive 4.12" "H3_MISRAC_2012_D_4_12_DR_1" )\
-(deviate:2 "MISRA C-2012 Rule 21.3" "H3_MISRAC_2012_R_21_3_DR_1" )
+(deviate:1 "MISRA C-2023 Directive 4.12" "H3_MISRAC_2023_D_4_12_DR_1" )\
+(deviate:2 "MISRA C-2023 Rule 21.3" "H3_MISRAC_2023_R_21_3_DR_1" )
 </#if>
 
 /* Function: void* OSAL_Malloc(size_t size)
@@ -394,8 +394,8 @@ static void __attribute__((always_inline)) OSAL_Free(void* pData)
 }
 
 <#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
-#pragma coverity compliance end_block "MISRA C-2012 Directive 4.12"
-#pragma coverity compliance end_block "MISRA C-2012 Rule 21.3"
+#pragma coverity compliance end_block "MISRA C-2023 Directive 4.12"
+#pragma coverity compliance end_block "MISRA C-2023 Rule 21.3"
 <#if core.COMPILER_CHOICE == "XC32">
 #pragma GCC diagnostic pop
 </#if>
