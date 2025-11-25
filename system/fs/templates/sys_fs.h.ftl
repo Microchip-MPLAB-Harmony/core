@@ -53,7 +53,16 @@ File System Service Library Interface Declarations and Types
 #include <stdint.h>
 #include <stdbool.h>
 #include <stddef.h>
+/* MISRAC-2023 Rule 17.1 deviation taken for using stdarg.h header file */
+<#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wunknown-pragmas"
+#pragma coverity compliance deviate "MISRA C-2023 Rule 17.1" "H3_MISRAC_2023_R_17_1_DR_1"
+</#if>
 #include <stdarg.h>
+<#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
+#pragma GCC diagnostic pop
+</#if>
 
 #include "configuration.h"
 
