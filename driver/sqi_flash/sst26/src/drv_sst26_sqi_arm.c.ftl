@@ -165,9 +165,12 @@ static void DRV_SST26_EventHandler(uintptr_t context)
     {
         (void)DRV_SST26_InitiateReadStatus();
     }
-    else if (obj->curOpType == DRV_SST26_OPERATION_TYPE_READ_STATUS && (sqiReadBuffer[0] & 0x81U) == 0U)
+    else if (obj->curOpType == DRV_SST26_OPERATION_TYPE_READ_STATUS)
     {
-        obj->internal_write_complete_flag = true;
+		if((sqiReadBuffer[0] & 0x81U) == 0U)
+		{
+			obj->internal_write_complete_flag = true;
+		}
     }
     else
     {
