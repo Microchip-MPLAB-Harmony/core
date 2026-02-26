@@ -3,6 +3,18 @@
 
 # Microchip MPLAB® Harmony 3 Release Notes
 
+## Core Release v3.16.1
+
+### New Features
+- None
+
+### Bug fixes
+- Updated MISRA-C deviations from 2012 ruleset to 2023 ruleset
+
+### Known Issues
+
+-  None
+
 ## Core Release v3.16.0
 
 ### New Features
