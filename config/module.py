@@ -25,7 +25,7 @@
 USBNamesList        = ["USB", "USBHS", "UDP"]
 SDHCNamesList       = ["HSMCI", "SDHC", "SDMMC"]
 SQINamesList        = ["QSPI", "SQI"]
-EMUEEPMemList       = ["NVMCTRL", "EFC"]
+EMUEEPMemList       = ["NVM","NVMCTRL", "EFC"]
 
 def hasPeripheral(peripheralList):
     periphNode          = ATDF.getNode("/avr-tools-device-file/devices/device/peripherals")
@@ -40,7 +40,7 @@ def hasPeripheral(peripheralList):
 
 def emulated_eeprom_condition():
     arch = ATDF.getNode( "/avr-tools-device-file/devices/device" ).getAttribute( "architecture" )
-    if arch == "CORTEX-M0PLUS" or arch == "CORTEX-M4" or arch == "CORTEX-M7" or arch == "CORTEX-M23" or arch == "CORTEX-M33":
+    if arch == "CORTEX-M0PLUS" or arch == "CORTEX-M4" or arch == "CORTEX-M7" or arch == "CORTEX-M23" or arch == "CORTEX-M33" or arch == "MIPS":
         return hasPeripheral(EMUEEPMemList)
     else:
         return False
