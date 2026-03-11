@@ -101,7 +101,7 @@ extern "C" {
  * \internal
  * \brief Structure describing emulated pages of EEPROM data.
  */
-typedef struct
+typedef struct __attribute__((packed, aligned(4)))
 {
     /** Header information of the EEPROM page. */
     struct
@@ -110,7 +110,9 @@ typedef struct
 
         /* The final version string is of 4 bytes.
          * 2 bytes are stored in page 0 header and remaining 2 bytes in page 1 header of each row. */
-        uint16_t version_str;
+        uint8_t version;
+        
+        uint8_t checksum;
     } header;
 
     /** Data content of the EEPROM page. */
@@ -166,7 +168,7 @@ typedef struct
     /* Mutex to synchronize multiple simultaneous access */
     OSAL_MUTEX_DECLARE (EmulatedEEPROMAccessLock);
 
-}EEPROM_MODULE;
+}EEPROM_MODULE CACHE_ALIGN;
 
 
 /** @} */
