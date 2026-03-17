@@ -72,17 +72,11 @@ def updateEEPROMStartAddr(symbol, event):
 
     if event["id"] == "EEPROM_EMULATOR_EEPROM_SIZE":
         total_eeprom_size = event["value"]
-        Log.writeInfoMessage("total_eeprom_size : " + str(total_eeprom_size))
-        Log.writeInfoMessage("flash_start_addr : ")
         flash_start_addr = localComponent.getSymbolValue("EEPROM_EMULATOR_FLASH_START_ADDR")
         flash_start_addr = int(flash_start_addr[:-1],16)
-        Log.writeInfoMessage("flash_start_addr : " + str(flash_start_addr))
         flash_size = localComponent.getSymbolValue("EEPROM_EMULATOR_FLASH_SIZE")
-        Log.writeInfoMessage("flash_size : " + str(flash_size))
         eeprom_start_addr = (flash_start_addr + flash_size) - total_eeprom_size
-        Log.writeInfoMessage("eeprom_start_addr : " + str(eeprom_start_addr))
         symbol.setValue(int(eeprom_start_addr))
-        Log.writeInfoMessage("eeprom_start_addr : " + str(eeprom_start_addr))
     else:
         symbol.setVisible(event["value"])
 
@@ -334,7 +328,6 @@ def onAttachmentConnected(source, target):
             row_size = Database.getSymbolValue(remoteID, "FLASH_ERASE_SIZE")
             page_size = Database.getSymbolValue(remoteID, "FLASH_PROGRAM_SIZE")
             main_array_start_addr = Database.getSymbolValue(remoteID, "FLASH_START_ADDRESS")
-            Log.writeInfoMessage("*************main_array_start_addr :: NVMCTRL***************")
             main_array_size = Database.getSymbolValue(remoteID, "FLASH_SIZE")
             total_eeprom_size = localComponent.getSymbolValue("EEPROM_EMULATOR_EEPROM_SIZE")
             localComponent.setSymbolValue("EEPROM_EMULATOR_NVM_PLIB", remoteID.upper())
@@ -349,7 +342,6 @@ def onAttachmentConnected(source, target):
             row_size = int(Database.getSymbolValue(remoteID, "FLASH_ERASE_SIZE"))
             page_size = int(Database.getSymbolValue(remoteID, "FLASH_PROGRAM_SIZE"))
             main_array_start_addr = int(Database.getSymbolValue(remoteID, "FLASH_START_ADDRESS")[2:], 16)
-            Log.writeInfoMessage("*************main_array_start_addr :: EFC***************")
             main_array_size = int(Database.getSymbolValue(remoteID, "FLASH_SIZE")[2:], 16)
             total_eeprom_size = localComponent.getSymbolValue("EEPROM_EMULATOR_EEPROM_SIZE")
             localComponent.setSymbolValue("EEPROM_EMULATOR_NVM_PLIB", remoteID.upper())
@@ -361,63 +353,36 @@ def onAttachmentConnected(source, target):
             localComponent.setSymbolValue("EEPROM_EMULATOR_IS_DEPENDENCY_SATISFIED", True)
             localComponent.getSymbolByID("EEPROM_EMULATOR_COMMENT").setVisible(False)
         elif remoteID.upper() == "NVM":
-            Log.writeInfoMessage("*************main_array_start_addr :: NVM***************" + "456")
             row_size = int(Database.getSymbolValue(remoteID, "FLASH_ERASE_SIZE"))
-            Log.writeInfoMessage(str(row_size))
             page_size = int(Database.getSymbolValue(remoteID, "FLASH_PROGRAM_SIZE"))
-            Log.writeInfoMessage(str(page_size))
             main_array_start_addr = int(Database.getSymbolValue(remoteID, "FLASH_START_ADDRESS"),16)
-            #main_array_start_addr = Database.getSymbolValue(remoteID, "FLASH_START_ADDRESS")
-            Log.writeInfoMessage(str(main_array_start_addr))
-            Log.writeInfoMessage("*************main_array_start_addr :: NVM***************" + "456")
             main_array_size = int(Database.getSymbolValue(remoteID, "FLASH_SIZE")[2:],16)
-            Log.writeInfoMessage(str(main_array_size))
             total_eeprom_size = localComponent.getSymbolValue("EEPROM_EMULATOR_EEPROM_SIZE")
             localComponent.setSymbolValue("EEPROM_EMULATOR_NVM_PLIB", remoteID.upper())
             localComponent.setSymbolValue("EEPROM_EMULATOR_ROW_SIZE", row_size)
             localComponent.setSymbolValue("EEPROM_EMULATOR_PAGE_SIZE", page_size)
             localComponent.setSymbolValue("EEPROM_EMULATOR_PAGES_PER_ROW", (row_size/page_size))
             localComponent.setSymbolValue("EEPROM_EMULATOR_FLASH_START_ADDR", hex(main_array_start_addr))
-            #localComponent.setSymbolValue("EEPROM_EMULATOR_EEPROM_START_ADDRESS", hex(4))
             localComponent.setSymbolValue("EEPROM_EMULATOR_FLASH_SIZE", main_array_size)
             localComponent.setSymbolValue("EEPROM_EMULATOR_IS_DEPENDENCY_SATISFIED", True)
             localComponent.getSymbolByID("EEPROM_EMULATOR_COMMENT").setVisible(False)
-        #     # Log.writeInfoMessage("*************main_array_start_addr :: NVM***************" + "456")
-        #     # row_size = int(Database.getSymbolValue(remoteID, "FLASH_ERASE_SIZE"))
-        #     # Log.writeInfoMessage(str(row_size))
-        #     # page_size = int(Database.getSymbolValue(remoteID, "FLASH_PROGRAM_SIZE"))
-        #     # Log.writeInfoMessage(str(page_size))
-        #     # main_array_start_addr = int(Database.getSymbolValue(remoteID, "FLASH_START_ADDRESS"),16)
-        #     # Log.writeInfoMessage(str(main_array_start_addr))
-        #     # Log.writeInfoMessage("*************main_array_start_addr :: NVM***************" + "456")
-        #     # main_array_size = int(Database.getSymbolValue(remoteID, "FLASH_SIZE"))
-        #     # total_eeprom_size = localComponent.getSymbolValue("EEPROM_EMULATOR_EEPROM_SIZE") 
-
-        #     localComponent.setSymbolValue("EEPROM_EMULATOR_NVM_PLIB", remoteID.upper())
-        #     localComponent.setSymbolValue("EEPROM_EMULATOR_ROW_SIZE", row_size)
-        #     localComponent.setSymbolValue("EEPROM_EMULATOR_PAGE_SIZE", page_size)
-        #     localComponent.setSymbolValue("EEPROM_EMULATOR_PAGES_PER_ROW", (row_size/page_size))
-        #     localComponent.setSymbolValue("EEPROM_EMULATOR_FLASH_START_ADDR", main_array_start_addr)
-        #     localComponent.setSymbolValue("EEPROM_EMULATOR_FLASH_SIZE", main_array_size)
-        #     localComponent.setSymbolValue("EEPROM_EMULATOR_IS_DEPENDENCY_SATISFIED", True)
-        #     localComponent.getSymbolByID("EEPROM_EMULATOR_COMMENT").setVisible(False)
         else:
             localComponent.getSymbolByID("EEPROM_EMULATOR_COMMENT").setVisible(True)
         
     Database.sendMessage("HarmonyCore", "ENABLE_SYS_COMMON", {"isEnabled":True})
 
-# def onAttachmentDisconnected(source, target):
-#     localComponent = source["component"]
-#     localComponentID = source["id"]
+def onAttachmentDisconnected(source, target):
+    localComponent = source["component"]
+    localComponentID = source["id"]
 
-#     if localComponentID == "lib_emulated_eeprom_MEMORY_dependency":
-#         localComponent.getSymbolByID("EEPROM_EMULATOR_COMMENT").setVisible(False)
-#         localComponent.setSymbolValue("EEPROM_EMULATOR_IS_DEPENDENCY_SATISFIED", False)
+    if localComponentID == "lib_emulated_eeprom_MEMORY_dependency":
+        localComponent.getSymbolByID("EEPROM_EMULATOR_COMMENT").setVisible(False)
+        localComponent.setSymbolValue("EEPROM_EMULATOR_IS_DEPENDENCY_SATISFIED", False)
 
-#     Database.sendMessage("HarmonyCore", "ENABLE_SYS_COMMON", {"isEnabled":False})
+    Database.sendMessage("HarmonyCore", "ENABLE_SYS_COMMON", {"isEnabled":False})
 
-# def destroyComponent(emulated_eeprom):
-#     Database.sendMessage("HarmonyCore", "ENABLE_SYS_COMMON", {"isEnabled":False})
+def destroyComponent(emulated_eeprom):
+    Database.sendMessage("HarmonyCore", "ENABLE_SYS_COMMON", {"isEnabled":False})
 
 def finalizeComponent(emulated_eeprom):
     activateAndConnectDependencies(emulated_eeprom.getID())
