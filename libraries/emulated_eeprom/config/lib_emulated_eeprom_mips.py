@@ -1,6 +1,6 @@
 # coding: utf-8
 """*****************************************************************************
-* Copyright (C) 2021 Microchip Technology Inc. and its subsidiaries.
+* Copyright (C) 2026 Microchip Technology Inc. and its subsidiaries.
 *
 * Subject to your compliance with these terms, you may use Microchip software
 * and any derivatives exclusively with Microchip products. It is your
@@ -240,14 +240,14 @@ def instantiateComponent(emulated_eeprom):
     eep_emu_FlashStartAddr.setLabel("Flash Start Addr")
     eep_emu_FlashStartAddr.setDefaultValue("")
     eep_emu_FlashStartAddr.setReadOnly(True)
-    eep_emu_FlashStartAddr.setVisible(True)
+    eep_emu_FlashStartAddr.setVisible(False)
 
     #Flash Size
     eep_emu_FlashSize = emulated_eeprom.createIntegerSymbol("EEPROM_EMULATOR_FLASH_SIZE", None)
     eep_emu_FlashSize.setLabel("Flash Size")
     eep_emu_FlashSize.setDefaultValue(0)
     eep_emu_FlashSize.setReadOnly(True)
-    eep_emu_FlashSize.setVisible(True)
+    eep_emu_FlashSize.setVisible(False)
 
     #--<UI>--Size of EEPROM Emulator memory in units of erase blocks (must be atleast 2 erase blocks)
     eep_emu_EEPROMSize = emulated_eeprom.createIntegerSymbol("EEPROM_EMULATOR_EEPROM_SIZE_IN_BLOCKS", None)
@@ -357,7 +357,6 @@ def onAttachmentConnected(source, target):
             page_size = int(Database.getSymbolValue(remoteID, "FLASH_PROGRAM_SIZE"))
             main_array_start_addr = int(Database.getSymbolValue(remoteID, "FLASH_START_ADDRESS"),16)
             main_array_size = int(Database.getSymbolValue(remoteID, "FLASH_SIZE")[2:],16)
-            total_eeprom_size = localComponent.getSymbolValue("EEPROM_EMULATOR_EEPROM_SIZE")
             localComponent.setSymbolValue("EEPROM_EMULATOR_NVM_PLIB", remoteID.upper())
             localComponent.setSymbolValue("EEPROM_EMULATOR_ROW_SIZE", row_size)
             localComponent.setSymbolValue("EEPROM_EMULATOR_PAGE_SIZE", page_size)
