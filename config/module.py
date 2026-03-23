@@ -116,6 +116,8 @@ def loadModule():
         {"name":"sst39", "label": "SST39", "type":"driver", "display_path":"Parallel PROM", "actual_path":"parallel_prom", "instance":"single", "capability":["MEMORY"], "dependency":["HEMC_CS"], "condition":"True"},
 
         {"name":"sst38", "label": "SST38", "type":"driver", "display_path":"Parallel PROM", "actual_path":"parallel_prom", "instance":"single", "capability":["MEMORY"], "dependency":["HEMC_CS"], "condition":"True"},
+
+        {"name":"sfdp", "label": "SFDP", "type":"driver", "display_path":"SFDP Flash", "actual_path":"", "instance":"single", "capability":["MEMORY"], "dependency":["SQI", "SPI", "DRV_SPI"] if hasPeripheral(SQINamesList) else ["SPI", "DRV_SPI"], "condition":"True"}
         ]
 
     #load drivers and system services defined above
