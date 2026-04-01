@@ -101,7 +101,7 @@ extern "C" {
  * \internal
  * \brief Structure describing emulated pages of EEPROM data.
  */
-typedef struct __attribute__((packed, aligned(4)))
+typedef struct
 {
     /** Header information of the EEPROM page. */
     struct
@@ -168,7 +168,7 @@ typedef struct
     /* Mutex to synchronize multiple simultaneous access */
     OSAL_MUTEX_DECLARE (EmulatedEEPROMAccessLock);
 
-}EEPROM_MODULE CACHE_ALIGN;
+}EEPROM_MODULE;
 
 
 /** @} */
