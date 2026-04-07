@@ -159,9 +159,6 @@ typedef struct
     /** Buffer to hold the currently cached page. */
     EEPROM_PAGE cache;
 
-    /** Indicates if the cache contains valid data. */
-    bool cache_active;
-
     /** Indicates library status */
     EMU_EEPROM_STATUS status;
 

@@ -150,7 +150,7 @@ def fileGeneration(emulated_eeprom):
     eep_emu_sourceFile.setType("SOURCE")
 
     eep_emu_headerFile = emulated_eeprom.createFileSymbol("EEPROM_EMULATOR_HEADER", None)
-    eep_emu_headerFile.setSourcePath("libraries/emulated_eeprom/templates/emulated_eeprom.h")
+    eep_emu_headerFile.setSourcePath("libraries/emulated_eeprom/templates/emulated_eeprom_mips.h")
     eep_emu_headerFile.setOutputName("emulated_eeprom.h")
     eep_emu_headerFile.setMarkup(False)
     eep_emu_headerFile.setOverwrite(True)

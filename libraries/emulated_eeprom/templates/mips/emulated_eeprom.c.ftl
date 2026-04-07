@@ -48,7 +48,9 @@
 #include "definitions.h"
 
 #define EEPROM_EMULATOR_VERSION             0x02
+#define CRC8_POLY  0x07  // Polynomial: x^8 + x^2 + x^1 + 1 (0x07)
 
+uint8_t buffer_write[EEPROM_EMULATOR_PAGE_DATA_SIZE] CACHE_ALIGN;
 /**
  * \internal
  * \brief Internal EEPROM emulator instance.
@@ -113,8 +115,6 @@ static uint16_t EMU_EEPROM_PhysicalToLogicalPage(uint16_t physical_page)
 
     return flashAddr->header.logical_page;
 }
-
-#define CRC8_POLY  0x07  // Polynomial: x^8 + x^2 + x^1 + 1 (0x07)
 
 /** \internal
  *  \brief Calculates the CRC-8 checksum for a given data buffer.
@@ -302,34 +302,6 @@ static void EMU_EEPROM_NVMPageRead(const uint16_t physical_page, void* const dat
 </#if>
 
     (void) ${EEPROM_EMULATOR_NVM_PLIB}_Read( (uint32_t*)data, EEPROM_EMULATOR_PAGE_SIZE, (uint32_t)flashAddr );
-}
-
-/**
- * \brief Commits any cached data to physical non-volatile memory.
- *
- * Commits the internal SRAM caches to physical non-volatile memory, to ensure
- * that any outstanding cached data is preserved. This function should be called
- * prior to a system reset or shutdown to prevent data loss.
- *
- * \note This should be the first function executed in a BOD33 Early Warning
- *       callback to ensure that any outstanding cache data is fully written to
- *       prevent data loss.
- *
- *
- * \note This function should also be called before using the NVM controller
- *       directly in the user-application for any other purposes to prevent
- *       data loss.
- *
- * \return Status code indicating the status of the operation.
- */
-static void EMU_EEPROM_CachedDataCommit(void)
-{
-    
-    /* If cache is inactive, no need to commit anything to physical memory */
-    if (eeprom_instance.cache_active != false)
-    {
-       eeprom_instance.cache_active = false;
-    }
 }
 
 /* Make a buffer to hold the initialized EEPROM page */
@@ -809,9 +781,6 @@ static void EMU_EEPROM_MoveDataToSpare( const uint16_t row_number, const uint16_
         /* Find the physical page index for the new spare row pages */
         new_page = (((uint32_t)eeprom_instance.spare_row * (uint32_t)EEPROM_EMULATOR_PAGES_PER_ROW) + (uint32_t)c);
 
-        /* Commit any cached data to physical non-volatile memory */
-        EMU_EEPROM_CachedDataCommit();
-
         /* Check if we we are looking at the page the calling function wishes
          * to change during the move operation */
         if (logical_page == page_trans[c].logical_page)
@@ -842,11 +811,8 @@ static void EMU_EEPROM_MoveDataToSpare( const uint16_t row_number, const uint16_
          * the cache now holds new data */
 
         eeprom_instance.page_map[page_trans[c].logical_page] = (uint8_t)new_page;
-        eeprom_instance.cache_active = true;
-    }
 
-    /* Commit any cached data to physical non-volatile memory */
-    EMU_EEPROM_CachedDataCommit();
+    }
 
     /* Erase the row that was moved and set it as the new spare row */
     EMU_EEPROM_NVMRowErase(row_number);
@@ -874,7 +840,7 @@ static EMU_EEPROM_STATUS EMU_EEPROM_PageDataRead( const uint16_t logical_page, u
 
     /* Check if the page to read is currently cached (and potentially out of
      * sync/newer than the physical memory) */
-    if ((eeprom_instance.cache_active == true) && (eeprom_instance.cache.header.logical_page == logical_page))
+    if ((eeprom_instance.cache.header.logical_page == logical_page))
     {
         /* Copy the potentially newer cached data into the user buffer */
         (void) memcpy(data, eeprom_instance.cache.data, EEPROM_EMULATOR_PAGE_DATA_SIZE);
@@ -906,15 +872,6 @@ static EMU_EEPROM_STATUS EMU_EEPROM_PageDataWrite( const uint16_t logical_page, 
     if (logical_page >= EEPROM_EMULATOR_NUM_LOGICAL_PAGES)
     {
         return EMU_EEPROM_STATUS_ERR_BAD_ADDRESS;
-    }
-
-    /* Check if the cache is active and the currently cached page is not the
-     * page that is being written (if not, we need to commit and cache the new
-     * page) */
-    if ((eeprom_instance.cache_active == true) && (eeprom_instance.cache.header.logical_page != logical_page))
-    {
-        /* Commit the currently cached data buffer to non-volatile memory */
-        EMU_EEPROM_CachedDataCommit();
     }
 
     /* Check if we have space in the current page location's physical row for
@@ -957,8 +914,6 @@ static EMU_EEPROM_STATUS EMU_EEPROM_PageDataWrite( const uint16_t logical_page, 
 
     /* Update the cache parameters and mark the cache as active */
     eeprom_instance.page_map[logical_page] = (uint8_t)new_page;
-
-    eeprom_instance.cache_active           = true;
 
     return EMU_EEPROM_STATUS_OK;
 }
@@ -1046,8 +1001,6 @@ SYS_MODULE_OBJ EMU_EEPROM_Initialize(const SYS_MODULE_INDEX drvIndex, const SYS_
     eeprom_instance.main_array = (EEPROM_PAGE*)EEPROM_EMULATOR_EEPROM_START_ADDRESS;
 </#if>
 
-    /* Clear EEPROM page write cache on initialization */
-    eeprom_instance.cache_active = false;
 
     EMU_EEPROM_SanitizeLogicalPages();
 
@@ -1115,42 +1068,6 @@ EMU_EEPROM_STATUS EMU_EEPROM_ParametersGet( EMU_EEPROM_PARAMETERS *const paramet
 }
 
 /**
- * \brief Commits any cached data to physical non-volatile memory.
- *
- * Commits the internal SRAM caches to physical non-volatile memory, to ensure
- * that any outstanding cached data is preserved. This function should be called
- * prior to a system reset or shutdown to prevent data loss.
- *
- * \note This should be the first function executed in a BOD33 Early Warning
- *       callback to ensure that any outstanding cache data is fully written to
- *       prevent data loss.
- *
- *
- * \note This function should also be called before using the NVM controller
- *       directly in the user-application for any other purposes to prevent
- *       data loss.
- *
- * \return Status code indicating the status of the operation.
- */
-EMU_EEPROM_STATUS EMU_EEPROM_PageBufferCommit(void)
-{
-    EMU_EEPROM_STATUS error_code = EMU_EEPROM_STATUS_OK;
-
-    /* Guard against multiple threads trying access the EEPROM memory */
-    if(OSAL_MUTEX_Lock(&eeprom_instance.EmulatedEEPROMAccessLock, OSAL_WAIT_FOREVER) == OSAL_RESULT_FAIL)
-    {
-        return EMU_EEPROM_STATUS_ERR_NOT_INITIALIZED;
-    }
-
-    EMU_EEPROM_CachedDataCommit();
-
-    /* Release the mutex */
-    (void) OSAL_MUTEX_Unlock(&eeprom_instance.EmulatedEEPROMAccessLock);
-
-    return error_code;
-}
-
-/**
  * \brief Erases the entire emulated EEPROM memory space.
  *
  * Erases and re-initializes the emulated EEPROM memory space, destroying any
@@ -1173,8 +1090,6 @@ bool EMU_EEPROM_FormatMemory(void)
     /* Create new EEPROM memory block in EEPROM emulation section */
     EMU_EEPROM_MemFormat();
 
-    /* Clear EEPROM page write cache on initialization */
-    eeprom_instance.cache_active = false;
 
     /* Scan physical memory and re-create logical to physical page mapping
      * table to locate logical pages of EEPROM data in physical FLASH */
@@ -1213,9 +1128,6 @@ bool EMU_EEPROM_FormatMemory(void)
  *
  * Writes an emulated EEPROM page of data to the emulated EEPROM memory space.
  *
- * \note Data stored in pages may be cached in volatile RAM memory; to commit
- *       any cached data to physical non-volatile memory, the
- *       \ref EMU_EEPROM_CachedDataCommit() function should be called.
  *
  * \param[in] logical_page  Logical EEPROM page number to write to
  * \param[in] data          Pointer to the data buffer containing source data to
@@ -1286,9 +1198,6 @@ EMU_EEPROM_STATUS EMU_EEPROM_PageRead( const uint16_t logical_page, uint8_t *con
  * source buffer may be of any size, and the destination may lie outside of an
  * emulated EEPROM page boundary.
  *
- * \note Data stored in pages may be cached in volatile RAM memory; to commit
- *       any cached data to physical non-volatile memory, the
- *       \ref EMU_EEPROM_CachedDataCommit() function should be called.
  *
  * \param[in] offset  Starting byte offset to write to, in emulated EEPROM
  *                    memory space
@@ -1303,7 +1212,6 @@ EMU_EEPROM_STATUS EMU_EEPROM_PageRead( const uint16_t logical_page, uint8_t *con
  *                                      EEPROM memory space was supplied
  */
 
-uint8_t buffer_write[EEPROM_EMULATOR_PAGE_DATA_SIZE] CACHE_ALIGN;
 EMU_EEPROM_STATUS EMU_EEPROM_BufferWrite( const uint16_t offset, const uint8_t *const data, const uint16_t length)
 {
     EMU_EEPROM_STATUS error_code = EMU_EEPROM_STATUS_OK;
