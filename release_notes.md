@@ -3,6 +3,18 @@
 
 # Microchip MPLAB® Harmony 3 Release Notes
 
+## Core Release v3.16.2
+
+### New Features
+- None
+
+### Bug fixes
+- Removed package index file from the repository root
+
+### Known Issues
+
+-  None
+
 ## Core Release v3.16.1
 
 ### New Features
