@@ -26,13 +26,13 @@
   <#lt>#define DRV_NAND_FLASH_PMECC_ECC_START_ADDR           (${(ECC_START_ADDR)?eval}U)
   <#lt>#define DRV_NAND_FLASH_PMECC_ECC_END_ADDR             (${(ECC_END_ADDR)?eval}U)
   <#assign NUM_OF_SECTORS = 8>
-  <#if (ECC_PAGE_SIZE)?eval == "0x0">
+  <#if (ECC_PAGE_SIZE)?eval == "0x0" || (ECC_PAGE_SIZE)?eval == "0">
     <#assign NUM_OF_SECTORS = 1>
-  <#elseif (ECC_PAGE_SIZE)?eval == "0x1">
+  <#elseif (ECC_PAGE_SIZE)?eval == "0x1" || (ECC_PAGE_SIZE)?eval == "1">
     <#assign NUM_OF_SECTORS = 2>
-  <#elseif (ECC_PAGE_SIZE)?eval == "0x2">
+  <#elseif (ECC_PAGE_SIZE)?eval == "0x2" || (ECC_PAGE_SIZE)?eval == "2">
     <#assign NUM_OF_SECTORS = 4>
-  <#elseif (ECC_PAGE_SIZE)?eval == "0x3">
+  <#elseif (ECC_PAGE_SIZE)?eval == "0x3" || (ECC_PAGE_SIZE)?eval == "3">
     <#assign NUM_OF_SECTORS = 8>
   </#if>
   <#lt>#define DRV_NAND_FLASH_PMECC_NUMBER_OF_SECTORS        (${NUM_OF_SECTORS}U)
@@ -44,15 +44,15 @@
   </#if>
   <#lt>#define DRV_NAND_FLASH_PMECC_SECTOR_SIZE              (${SECTOR_SIZE}U)
     <#assign ECC_ERR_CAPABILITY = 4>
-  <#if (ECC_BCH_ERR)?eval == "0x0">
+  <#if (ECC_BCH_ERR)?eval == "0x0" || (ECC_BCH_ERR)?eval == "0">
     <#assign ECC_ERR_CAPABILITY = 2>
-  <#elseif (ECC_BCH_ERR)?eval == "0x1">
+  <#elseif (ECC_BCH_ERR)?eval == "0x1" || (ECC_BCH_ERR)?eval == "1">
     <#assign ECC_ERR_CAPABILITY = 4>
-  <#elseif (ECC_BCH_ERR)?eval == "0x2">
+  <#elseif (ECC_BCH_ERR)?eval == "0x2" || (ECC_BCH_ERR)?eval == "2">
     <#assign ECC_ERR_CAPABILITY = 8>
-  <#elseif (ECC_BCH_ERR)?eval == "0x3">
+  <#elseif (ECC_BCH_ERR)?eval == "0x3" || (ECC_BCH_ERR)?eval == "3">
     <#assign ECC_ERR_CAPABILITY = 12>
-  <#elseif (ECC_BCH_ERR)?eval == "0x4">
+  <#elseif (ECC_BCH_ERR)?eval == "0x4" || (ECC_BCH_ERR)?eval == "4">
     <#assign ECC_ERR_CAPABILITY = 24>
   </#if>
   <#lt>#define DRV_NAND_FLASH_PMECC_ECC_ERR_CAPABILITY       ${ECC_ERR_CAPABILITY}U
