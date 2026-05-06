@@ -3,6 +3,28 @@
 
 # Microchip MPLAB® Harmony 3 Release Notes
 
+## Core Release v3.16.3
+
+### New Features
+- None
+
+### Bug fixes
+- Fixed file system mount point issue when multiple file systems are available
+- Fixed NAND Flash driver error correction configuration in FTL template
+- Fixed SST26 Flash driver status read handling
+- Fixed SD card SPI driver busy signal handling for R1B response
+
+### Known Issues
+
+-  None
+
+### Development Tools
+
+- [MPLAB® X IDE v6.30](https://www.microchip.com/mplab/mplab-x-ide)
+- [MPLAB® XC32 C/C++ Compiler v5.10](https://www.microchip.com/mplab/compilers)
+- MPLAB® X IDE plug-ins:
+    - MPLAB® Code Configurator (MCC) 5.6.4
+
 ## Core Release v3.16.2
 
 ### New Features
