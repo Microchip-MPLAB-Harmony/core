@@ -821,7 +821,7 @@ SYS_FS_RESULT SYS_FS_Unmount
                     /* Release the acquired mutex. */
                     (void) OSAL_MUTEX_Unlock (&gSysFsMutex);
 
-                    return (fileStatus == 0) ? SYS_FS_RES_SUCCESS : SYS_FS_RES_FAILURE;
+                    return SYS_FS_RES_SUCCESS;
                 }
             }
 
