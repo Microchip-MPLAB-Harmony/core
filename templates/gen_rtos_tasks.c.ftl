@@ -60,7 +60,22 @@
                         <#-- Logic Ends -->
                         <#if MPU_REGION_BASE_ADDR_VAR_UNIQUE == true>
                             <#assign MPU_REGION_LEN = "GEN_APP_TASK_" + i + "_MPU_REG_LEN_" + j>
+                            
+                            <#lt>/* MISRA C-2023 Rule 8.15 deviated:1 Deviation record ID - H3_MISRAC_2023_R_8_15_DR_1 */
+<#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
+<#if core.COMPILER_CHOICE == "XC32">
+                            <#lt>#pragma GCC diagnostic push
+                            <#lt>#pragma GCC diagnostic ignored "-Wunknown-pragmas"
+</#if>
+                            <#lt>#pragma coverity compliance block deviate:1 "MISRA C-2023 Rule 8.15" "H3_MISRAC_2023_R_8_15_DR_1"
+</#if>
                             <#lt>uint8_t ${.vars[MPU_REGION_BASE_ADDR]}[${.vars[MPU_REGION_LEN]}] __attribute__((aligned(${.vars[MPU_REGION_LEN]})));
+<#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
+                            <#lt>#pragma coverity compliance end_block "MISRA C-2023 Rule 8.15"
+<#if core.COMPILER_CHOICE == "XC32">
+                            <#lt>#pragma GCC diagnostic pop
+</#if>
+</#if>
                         </#if>
                     </#if>
                 </#if>
