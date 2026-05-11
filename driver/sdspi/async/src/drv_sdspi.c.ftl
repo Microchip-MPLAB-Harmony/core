@@ -658,7 +658,7 @@ static void lDRV_SDSPI_CommandSend
 
                         /* We already received the first byte, just make sure it is in the
                            correct location in the structure. */
-                        dObj->cmdResponse.response2.byte1 = dObj->cmdResponse.response1.byte;
+                        dObj->cmdResponse.response2.bytes.byte1 = dObj->cmdResponse.response1.byte;
 
                         /* Fetch the second byte of the response. */
                         if (DRV_SDSPI_SPIRead(dObj, dObj->pCmdResp, 1) == true)
@@ -792,7 +792,7 @@ static void lDRV_SDSPI_CommandSend
 
             if (dObj->spiTransferStatus == DRV_SDSPI_SPI_TRANSFER_STATUS_COMPLETE)
             {
-                dObj->cmdResponse.response2.byte1 = dObj->pCmdResp[0];
+                dObj->cmdResponse.response2.bytes.byte1 = dObj->pCmdResp[0];
                 /* Device requires at least 8 clock pulses after the response
                    has been sent, before if can process the next command.
                    CS may be high or low */
