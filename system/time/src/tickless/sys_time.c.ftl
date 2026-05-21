@@ -748,11 +748,18 @@ uint32_t SYS_TIME_CounterGet ( void )
 
 void SYS_TIME_CounterSet ( uint32_t count )
 {
+    SYS_TIME_Counter64Set((uint64_t) count);
+}
+
+void SYS_TIME_Counter64Set ( uint64_t count )
+{
+    SYS_TIME_COUNTER_OBJ * counterObj = (SYS_TIME_COUNTER_OBJ *)&gSystemCounterObj;
     bool interruptState;
 
     interruptState = SYS_INT_Disable();
 
-    gSystemCounterObj.swCounter64 = count;
+    counterObj->swCounter64 = count;
+    counterObj->hwTimerPreviousValue = counterObj->timePlib->timerCounterGet();
 
     SYS_INT_Restore(interruptState);
 }
