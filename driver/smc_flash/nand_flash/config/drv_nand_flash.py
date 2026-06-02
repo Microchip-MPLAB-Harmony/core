@@ -32,8 +32,7 @@ def nandFlashFileSymbolEnable(symbol, event):
     symbol.setEnabled(event["value"])
 
 def UpdateDependentPmeccSym(symbol, event):
-    global nandFlashPLIB
-    Database.sendMessage(nandFlashPLIB.getValue().lower(), "PMECC_CTRL_ENABLE", {"isEnabled":event["value"], "isReadOnly":True})
+    Database.sendMessage(event["source"].getSymbolByID("DRV_NAND_FLASH_PLIB").getValue().lower(), "PMECC_CTRL_ENABLE", {"isEnabled":event["value"], "isReadOnly":True})
 
 def enableSysDMA(symbol, event):
     Database.sendMessage("HarmonyCore", "ENABLE_SYS_DMA", {"isEnabled":event["value"]})
@@ -57,18 +56,13 @@ def requestAndAssignDMAChannel(symbol, event):
         symbol.setValue(channel)
 
 def requestDMAComment(symbol, event):
-    global nandTXRXDMA
-
-    if ((event["value"] == -2) and (nandTXRXDMA.getValue() == True)):
+    if ((event["value"] == -2) and (event["source"].getSymbolByID("DRV_NAND_FLASH_TX_RX_DMA").getValue() == True)):
         symbol.setVisible(True)
         event["symbol"].setVisible(False)
     else:
         symbol.setVisible(False)
 
 def instantiateComponent(nandFlashComponent):
-    global nandFlashPLIB
-    global nandTXRXDMA
-
     res = Database.activateComponents(["HarmonyCore"])
 
     # Enable "Generate Harmony Driver Common Files" option in MHC
@@ -122,6 +116,23 @@ def instantiateComponent(nandFlashComponent):
         nandTXRXDMAChannelComment.setLabel("Warning!!! Couldn't Allocate DMA Channel for Transmit and Receive. Check DMA manager. !!!")
         nandTXRXDMAChannelComment.setVisible(False)
         nandTXRXDMAChannelComment.setDependencies(requestDMAComment, ["DRV_NAND_FLASH_TX_RX_DMA_CHANNEL"])
+
+    nandFlashPLIB = nandFlashComponent.createHexSymbol("START_ADDRESS", None)
+    nandFlashPLIB.setLabel("NAND Flash Start Address")
+    nandFlashPLIB.setHelp(drv_nand_flash_mcc_helpkeyword)
+    nandFlashPLIB.setVisible(True)
+    nandFlashPLIB.setDefaultValue(0x00000000)
+
+    nandFlashPLIB = nandFlashComponent.createIntegerSymbol("NAND_FLASH_PAGE_SIZE", None)
+    nandFlashPLIB.setLabel("NAND Flash Page Size")
+    nandFlashPLIB.setHelp(drv_nand_flash_mcc_helpkeyword)
+    nandFlashPLIB.setDefaultValue(4096)
+
+    nandFlashPLIB = nandFlashComponent.createIntegerSymbol("ERASE_BUFFER_SIZE", None)
+    nandFlashPLIB.setLabel("NAND Flash Erase Buffer Size")
+    nandFlashPLIB.setHelp(drv_nand_flash_mcc_helpkeyword)
+    nandFlashPLIB.setVisible(False)
+    nandFlashPLIB.setDefaultValue(262144)
 
     ############################################################################
     #### Code Generation ####

@@ -65,8 +65,8 @@ typedef struct
     /* Flag to indicate in use  */
     bool inUse;
 
-    /* Flag to indicate status of transfer */
-    volatile bool isTransferDone;
+    /* Status of transfer */
+    DRV_SST39_TRANSFER_STATUS transferStatus;
 
     /* The status of the driver */
     SYS_STATUS status;

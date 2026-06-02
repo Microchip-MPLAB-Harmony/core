@@ -454,7 +454,7 @@ SYS_MODULE_INDEX SYS_DEBUG_ConsoleInstanceGet(void);
 */
 #ifdef SYS_DEBUG_USE_CONSOLE
 #ifndef SYS_DEBUG_MESSAGE
-    #define SYS_DEBUG_MESSAGE(level, message)  do { if((level) <= SYS_DEBUG_ErrorLevelGet()) SYS_CONSOLE_Message(SYS_DEBUG_ConsoleInstanceGet(), message); }while(0)
+    #define SYS_DEBUG_MESSAGE(level, message)  do { if((uint32_t)(level) <= (uint32_t)SYS_DEBUG_ErrorLevelGet()) { SYS_CONSOLE_Message(SYS_DEBUG_ConsoleInstanceGet(), message); } }while(false)
 #endif
 #endif
 
@@ -506,7 +506,7 @@ SYS_MODULE_INDEX SYS_DEBUG_ConsoleInstanceGet(void);
 */
 #ifdef SYS_DEBUG_USE_CONSOLE
 #ifndef SYS_DEBUG_PRINT
-    #define SYS_DEBUG_PRINT(level, format, ...)    do { if((level) <= SYS_DEBUG_ErrorLevelGet()) SYS_CONSOLE_Print(SYS_DEBUG_ConsoleInstanceGet(), format, ##__VA_ARGS__); } while (0)
+    #define SYS_DEBUG_PRINT(level, format, ...)    do { if((uint32_t)(level) <= (uint32_t)SYS_DEBUG_ErrorLevelGet()) { SYS_CONSOLE_Print(SYS_DEBUG_ConsoleInstanceGet(), format, ##__VA_ARGS__);} } while (false)
 #endif
 #endif
 

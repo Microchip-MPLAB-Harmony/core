@@ -151,6 +151,8 @@ static SYS_CMD_INIT cmdInitData;       // data the command processor has been in
 
 static SYS_CMD_DESCRIPTOR_TABLE   usrCmdTbl[MAX_CMD_GROUP] = { {0} };    // current command table
 
+static int stopRequested = 0;       // request to stop the command processor 
+
 // function processing the VT100 escape sequence
 typedef void (*keySeqProcess)(SYS_CMD_IO_DCPT* pCmdIO, const struct KEY_SEQ_DCPT_T* pSeqDcpt);
 
@@ -296,6 +298,8 @@ bool SYS_CMD_Initialize(const SYS_MODULE_INIT * const init )
 
     cmdInitData.consoleIndex = initConfig->consoleIndex;
 
+    stopRequested = 0;
+
     return true;
 }
 
@@ -367,6 +371,11 @@ bool SYS_CMD_Tasks(void)
 {
     SYS_CMD_IO_DCPT* pCmdIO;
     static bool error_reported = false;
+
+    if(stopRequested != 0)
+    {
+        return true;
+    }
 
     if (cmdIODevList.head == NULL)
     {
@@ -897,10 +906,23 @@ static void CommandQuit(SYS_CMD_DEVICE_NODE* pCmdIO, int argc, char** argv)
 
     (void) memset(usrCmdTbl, 0x0, sizeof(usrCmdTbl));
 
+    // delete all the nodes in cmdIODevList
     while((pCmdIoNode = cmdIODevList.head) != NULL)
     {
+        if(cmdIODevList.head == cmdIODevList.tail)
+        {
+            cmdIODevList.head = cmdIODevList.tail = 0;
+        }
+        else
+        {
+            cmdIODevList.head = cmdIODevList.head->next;
+        }
+
         free(pCmdIoNode);
     }
+
+    // no longer run the SYS_CMD_Tasks
+    stopRequested = 1;
 }
 
 static void CommandHelp(SYS_CMD_DEVICE_NODE* pCmdIO, int argc, char** argv)

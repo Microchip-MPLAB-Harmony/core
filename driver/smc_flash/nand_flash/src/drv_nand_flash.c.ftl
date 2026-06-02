@@ -58,7 +58,11 @@
 // *****************************************************************************
 // *****************************************************************************
 
+<#if core.DMA_ENABLE?has_content && DRV_NAND_FLASH_TX_RX_DMA?? && DRV_NAND_FLASH_TX_RX_DMA == true>
 static DRV_NAND_FLASH_OBJECT gDrvNandFlashObj = { .txrxDMAChannel = DRV_NAND_FLASH_TX_RX_DMA_CH_IDX };
+<#else>
+static DRV_NAND_FLASH_OBJECT gDrvNandFlashObj;
+</#if>
 static DRV_NAND_FLASH_DATA gDrvNandFlashData;
 
 // *****************************************************************************
@@ -463,7 +467,9 @@ static bool DRV_NAND_FLASH_PageReadPmecc(const DRV_HANDLE handle, uint16_t block
     uint32_t columnAddress = 0;
     uint32_t rowAddress = 0;
     DRV_NAND_FLASH_TRANSFER_STATUS transferStatus = DRV_NAND_FLASH_TRANSFER_BUSY;
+<#if core.DATA_CACHE_ENABLE?? && core.DATA_CACHE_ENABLE == true >
     uint32_t temp;
+</#if>
 
     if (handle == DRV_HANDLE_INVALID)
     {
