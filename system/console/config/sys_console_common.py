@@ -72,7 +72,8 @@ def updateConsoleConnectionCounter(symbol, event):
             if Database.getSymbolValue(consoleInstance, "SYS_CONSOLE_USB_DEVICE_SPEED") == "High Speed":
                 Database.setSymbolValue("sys_console", "SYS_CONSOLE_USB_READ_WRITE_BUFFER_SIZE", 512)
             else:
-                Database.setSymbolValue("sys_console", "SYS_CONSOLE_USB_READ_WRITE_BUFFER_SIZE", 64)
+                # Workaround to hard code it to 512 bytes, as sometimes the MCC reports "full speed " even when "high speed" USB driver is connected.
+                Database.setSymbolValue("sys_console", "SYS_CONSOLE_USB_READ_WRITE_BUFFER_SIZE", 512)
 
 ################################################################################
 #### Component ####

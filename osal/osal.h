@@ -75,7 +75,6 @@
  * dependent upon the OS being used. This conditional block allows the
  * default set of types to be used or the RTOS specific type
 */
-#include "configuration.h"
 
 #include "osal/osal_definitions.h"
 

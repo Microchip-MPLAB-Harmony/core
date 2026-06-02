@@ -34,8 +34,33 @@ protocolUsed    = ["SQI", "SPI"]
 global sort_alphanumeric
 
 def handleMessage(messageID, args):
+    global sst26spiChipSelectPin
     result_dict = {}
+    component = 'drv_sst26'
+    # print("DRV_SST26 handleMessage: {} args: {}".format(messageID, args))
+    result_dict= {"Result": "DRV_SST26 UnImplemented Command"}
+    
+    if (messageID == "SST26_CONFIG_HW_IO"):
+        pinId, protocol, cs, enable = args['config']
+        if protocol == 'SQI':
+            if cs >= len(ChipSelect):
+                result_dict = {"Result": "Fail - SQI_CS{} out of range".format(cs)}
+            else:
+                symbolId = "CHIP_SELECT"
+                if enable == True:
+                    res = Database.setSymbolValue(component, symbolId, ChipSelect[cs])
+                else:
+                    res = Database.clearSymbolValue(component, symbolId)
 
+                if res == True:
+                    result_dict = {"Result": "Success"}
+                else:
+                    result_dict = {"Result": "Fail"}
+
+        elif protocol == 'SPI':
+            key = "SYS_PORT_PIN_{}".format(pinId)
+            sst26spiChipSelectPin.setSelectedKey(key)
+    
     return result_dict
 
 def sort_alphanumeric(l):
@@ -231,6 +256,7 @@ def instantiateComponent(sst26Component):
     sst26ChipSelectComment.setVisible(False)
     sst26ChipSelectComment.setLabel("*** Configure Chip Select in SQI PLIB Configurations ***")
 
+    global sst26spiChipSelectPin
     sst26spiChipSelectPin = sst26Component.createKeyValueSetSymbol("SPI_CHIP_SELECT_PIN", None)
     sst26spiChipSelectPin.setLabel("Chip Select Pin")
     sst26spiChipSelectPin.setHelp(drv_sst26_mcc_helpkeyword)

@@ -54,6 +54,10 @@ def AddFileXFiles(component, dirPath, destPath):
             fxFile.setDependencies(lambda symbol, event: symbol.setEnabled(Database.getSymbolValue(component.getID().lower(), "SYS_FS_FILEX")), ["SYS_FS_FILEX"])
             fxFile.setEnabled(Database.getSymbolValue(component.getID().lower(), "SYS_FS_FILEX"))
 
+def updateLBA64Symbol(symbol, event):
+    symbol.setVisible(event["value"])
+    symbol.setValue(event["value"])
+
 def instantiateComponent(sysFSComponent):
     fsTypes = ["FAT","MPFS2","FILEX"]
     mediaTypes =  ["SYS_FS_MEDIA_TYPE_NVM",
@@ -100,6 +104,8 @@ def instantiateComponent(sysFSComponent):
     sysFSRTOSStackSize.setLabel("Stack Size (in bytes)")
     sysFSRTOSStackSize.setHelp(sys_fs_mcc_helpkeyword)
     sysFSRTOSStackSize.setDefaultValue(4096)
+    sysFSRTOSStackSize.setMin(1)
+    sysFSRTOSStackSize.setMax(2147483647)
 
     sysFSRTOSMsgQSize = sysFSComponent.createIntegerSymbol("SYS_FS_RTOS_TASK_MSG_QTY", sysFSRTOSMenu)
     sysFSRTOSMsgQSize.setLabel("Maximum Message Queue Size")
@@ -121,6 +127,8 @@ def instantiateComponent(sysFSComponent):
     sysFSRTOSTaskPriority.setLabel("Task Priority")
     sysFSRTOSTaskPriority.setHelp(sys_fs_mcc_helpkeyword)
     sysFSRTOSTaskPriority.setDefaultValue(1)
+    sysFSRTOSTaskPriority.setMin(0)
+    sysFSRTOSTaskPriority.setMax(2147483647)
 
     sysFSRTOSTaskDelay = sysFSComponent.createBooleanSymbol("SYS_FS_RTOS_USE_DELAY", sysFSRTOSMenu)
     sysFSRTOSTaskDelay.setLabel("Use Task Delay?")
@@ -132,6 +140,8 @@ def instantiateComponent(sysFSComponent):
     sysFSRTOSTaskDelayVal.setHelp(sys_fs_mcc_helpkeyword)
     sysFSRTOSTaskDelayVal.setDefaultValue(10)
     sysFSRTOSTaskDelayVal.setDependencies(showRTOSTaskDel, ["SYS_FS_RTOS_USE_DELAY"])
+    sysFSRTOSTaskDelayVal.setMin(0)
+    sysFSRTOSTaskDelayVal.setMax(2147483647)
 
     sysFSRTOSTaskSpecificOpt = sysFSComponent.createBooleanSymbol("SYS_FS_RTOS_TASK_OPT_NONE", sysFSRTOSMenu)
     sysFSRTOSTaskSpecificOpt.setLabel("Task Specific Options")
@@ -173,17 +183,23 @@ def instantiateComponent(sysFSComponent):
     sysFSMaxFiles.setLabel("Maximum Simultaneous File Access")
     sysFSMaxFiles.setHelp(sys_fs_mcc_helpkeyword)
     sysFSMaxFiles.setDefaultValue(1)
+    sysFSMaxFiles.setMin(1)
+    sysFSMaxFiles.setMax(2147483647)
 
     sysFSBlockSize = sysFSComponent.createIntegerSymbol("SYS_FS_MEDIA_MAX_BLOCK_SIZE", sysFSMenu)
     sysFSBlockSize.setLabel("Size Of Block")
     sysFSBlockSize.setHelp(sys_fs_mcc_helpkeyword)
     sysFSBlockSize.setDefaultValue(512)
     sysFSBlockSize.setReadOnly(True)
+    sysFSBlockSize.setMin(512)
+    sysFSBlockSize.setMax(4096)
 
     sysFSBufferSize = sysFSComponent.createIntegerSymbol("SYS_FS_MEDIA_MANAGER_BUFFER_SIZE", sysFSMenu)
     sysFSBufferSize.setLabel("Size Of Media Manager Buffer")
     sysFSBufferSize.setHelp(sys_fs_mcc_helpkeyword)
     sysFSBufferSize.setDefaultValue(2048)
+    sysFSBufferSize.setMin(512)
+    sysFSBufferSize.setMax(2147483647)
 
     sysFSAutoMount = sysFSComponent.createBooleanSymbol("SYS_FS_AUTO_MOUNT", sysFSMenu)
     sysFSAutoMount.setLabel("Use File System Auto Mount Feature?")
@@ -194,12 +210,15 @@ def instantiateComponent(sysFSComponent):
     sysFSMedia.setLabel("Total Number Of Media")
     sysFSMedia.setHelp(sys_fs_mcc_helpkeyword)
     sysFSMedia.setDefaultValue(1)
+    sysFSMedia.setMin(1)
     sysFSMedia.setMax(4)
 
     sysFSVol = sysFSComponent.createIntegerSymbol("SYS_FS_VOLUME_NUMBER", sysFSMenu)
     sysFSVol.setLabel("Total Number Of Volumes")
     sysFSVol.setHelp(sys_fs_mcc_helpkeyword)
     sysFSVol.setDefaultValue(1)
+    sysFSVol.setMin(1)
+    sysFSVol.setMax(10)
     sysFSVol.setDependencies(showFSVol, ["SYS_FS_AUTO_MOUNT"])
 
     sysFSTotalVol = sysFSComponent.createIntegerSymbol("SYS_FS_TOTAL_VOLUMES", sysFSMenu)
@@ -316,6 +335,7 @@ def instantiateComponent(sysFSComponent):
     sysFSFileType.setLabel("File System Types")
     sysFSFileType.setHelp(sys_fs_mcc_helpkeyword)
     sysFSFileType.setDefaultValue(1)
+    sysFSFileType.setMin(1)
     sysFSFileType.setMax(4)
 
     sysFSFat = sysFSComponent.createBooleanSymbol("SYS_FS_FAT", sysFSMenu)
@@ -376,6 +396,13 @@ def instantiateComponent(sysFSComponent):
     sysFSFatExFAT.setVisible(sysFSFat.getValue())
     sysFSFatExFAT.setDependencies(sysFsSymbolShow, ["SYS_FS_FAT"])
 
+    sysFSFatLBA64 = sysFSComponent.createBooleanSymbol("SYS_FS_FAT_LBA64_ENABLE", sysFSFatExFAT)
+    sysFSFatLBA64.setLabel("Enable 64-bit LBA Support")
+    sysFSFatLBA64.setHelp(sys_fs_mcc_helpkeyword)
+    sysFSFatLBA64.setDefaultValue(False)
+    sysFSFatLBA64.setVisible(sysFSFatExFAT.getValue())
+    sysFSFatLBA64.setDependencies(updateLBA64Symbol, ["SYS_FS_FAT_EXFAT_ENABLE"])
+
     sysFSMpfs = sysFSComponent.createBooleanSymbol("SYS_FS_MPFS", sysFSMenu)
     sysFSMpfs.setLabel("Microchip File System")
     sysFSMpfs.setHelp(sys_fs_mcc_helpkeyword)
@@ -386,7 +413,13 @@ def instantiateComponent(sysFSComponent):
     sysFSLFS.setHelp(sys_fs_mcc_helpkeyword)
     sysFSLFS.setDefaultValue(False)
     sysFSLFS.setDependencies(sysFsLFSEnabled, ["SYS_FS_LFS"])
-    sysFSLFS.setVisible(os.path.exists(os.path.join(Module.getPath(), "..", "littlefs")))
+
+    global isLFSExist
+    isLFSExist = os.path.exists(os.path.join(Module.getPath(), "..", "littlefs"))
+    sysFSLFSComment = sysFSComponent.createCommentSymbol("SYS_FS_LFS_COMMENT", sysFSLFS)
+    sysFSLFSComment.setVisible((isLFSExist == False) and sysFSLFS.getValue())
+    sysFSLFSComment.setLabel("*** Warning!!! littlefs is not present, need to download littlefs repository using MCC content manager ***")
+    sysFSLFSComment.setDependencies(sysFsLFSCommentShow, ["SYS_FS_LFS"])
 
     sysFSLFSReadonly = sysFSComponent.createBooleanSymbol("SYS_FS_LFS_READONLY", sysFSLFS)
     sysFSLFSReadonly.setLabel("Make LittleFS File System Read-only")
@@ -401,6 +434,14 @@ def instantiateComponent(sysFSComponent):
     sysFSLFSSize.setDefaultValue(64)
     sysFSLFSSize.setVisible(sysFSLFS.getValue())
     sysFSLFSSize.setDependencies(sysFsSymbolShow, ["SYS_FS_LFS"])
+
+    sysFSLFSBlockSize = sysFSComponent.createIntegerSymbol("SYS_FS_LFS_BLOCK_SIZE", sysFSLFS)
+    sysFSLFSBlockSize.setLabel("LFS Block Size")
+    sysFSLFSBlockSize.setHelp(sys_fs_mcc_helpkeyword)
+    sysFSLFSBlockSize.setDefaultValue(2048)
+    sysFSLFSBlockSize.setMin(512)
+    sysFSLFSBlockSize.setVisible(sysFSLFS.getValue())
+    sysFSLFSBlockSize.setDependencies(sysFsSymbolShow, ["SYS_FS_LFS"])
 
     symOptionsLFS = sysFSComponent.createSettingSymbol("SYM_OPTIONS_LFS", None)
     symOptionsLFS.setCategory("C32")
@@ -418,13 +459,18 @@ def instantiateComponent(sysFSComponent):
     preProcMacrosLFS.setEnabled(sysFSLFSReadonly.getValue())
     preProcMacrosLFS.setDependencies(sysFsFileGen, ["SYS_FS_LFS_READONLY"])
 
+    global isFileXExist
     filexSourcePath = os.path.join("..", "filex")
     isFileXExist = os.path.exists(os.path.join(Module.getPath(), filexSourcePath))
     sysFSFILEX = sysFSComponent.createBooleanSymbol("SYS_FS_FILEX", sysFSMenu)
     sysFSFILEX.setHelp(sys_fs_mcc_helpkeyword)
     sysFSFILEX.setLabel("FileX File System")
     sysFSFILEX.setDefaultValue(False)
-    sysFSFILEX.setVisible(isFileXExist)
+
+    sysFSFILEXComment = sysFSComponent.createCommentSymbol("SYS_FS_FILEX_COMMENT", sysFSFILEX)
+    sysFSFILEXComment.setVisible((isFileXExist == False) and sysFSFILEX.getValue())
+    sysFSFILEXComment.setLabel("*** Warning!!! filex is not present, need to download filex repository using MCC content manager ***")
+    sysFSFILEXComment.setDependencies(sysFsFileXCommentShow, ["SYS_FS_FILEX"])
 
     sysFSFILEXReadonly = sysFSComponent.createBooleanSymbol("SYS_FS_FILEX_READONLY", sysFSFILEX)
     sysFSFILEXReadonly.setHelp(sys_fs_mcc_helpkeyword)
@@ -681,15 +727,15 @@ def instantiateComponent(sysFSComponent):
         sysFSAlignedBufferEnable.setDefaultValue(True)
         sysFSAlignedBufferEnable.setDescription(sysFSFatAlignedBufferEnableDesc)
         sysFSAlignedBufferEnable.setVisible(True)
-        sysFSAlignedBufferEnable.setDependencies(sysFsAlignedBufferShow, ["SYS_FS_FAT", "SYS_FS_MPFS"])
+        sysFSAlignedBufferEnable.setDependencies(sysFsAlignedBufferShow, ["SYS_FS_FAT", "SYS_FS_MPFS", "SYS_FS_LFS", "SYS_FS_FILEX"])
 
         sysFSAlignedBufferLen = sysFSComponent.createIntegerSymbol("SYS_FS_ALIGNED_BUFFER_LEN", sysFSAlignedBufferEnable)
         sysFSAlignedBufferLen.setLabel("Aligned Buffer Length in Multiple of 512 Bytes")
         sysFSAlignedBufferLen.setHelp(sys_fs_mcc_helpkeyword)
         sysFSAlignedBufferLen.setDefaultValue(512)
         sysFSAlignedBufferLen.setMin(512)
-        sysFSAlignedBufferLen.setVisible((sysFSAlignedBufferEnable.getValue() == True) and (sysFSFat.getValue() == True))
-        sysFSAlignedBufferLen.setDependencies(sysFsAlignedBufferLenSymbolShow, ["SYS_FS_ALIGNED_BUFFER_ENABLE", "SYS_FS_FAT"])
+        sysFSAlignedBufferLen.setVisible((sysFSAlignedBufferEnable.getValue() == True) and ((sysFSFat.getValue() == True) or (sysFSFILEX.getValue() == True)))
+        sysFSAlignedBufferLen.setDependencies(sysFsAlignedBufferLenSymbolShow, ["SYS_FS_ALIGNED_BUFFER_ENABLE", "SYS_FS_FAT", "SYS_FS_FILEX"])
 
 ############################################Generate Files#################################################
 
@@ -705,10 +751,12 @@ def instantiateComponent(sysFSComponent):
     sysFSHeaderFile.setType("HEADER")
 
     sysFSLocalHeaderFile = sysFSComponent.createFileSymbol("SYS_FS_LOCAL_HEADER", None)
-    sysFSLocalHeaderFile.setSourcePath("/system/fs/src/sys_fs_local.h")
+    sysFSLocalHeaderFile.setSourcePath("/system/fs/src/sys_fs_local.h.ftl")
     sysFSLocalHeaderFile.setOutputName("sys_fs_local.h")
     sysFSLocalHeaderFile.setDestPath("/system/fs/src/")
     sysFSLocalHeaderFile.setProjectPath("config/" + configName + "/system/fs/")
+    sysFSLocalHeaderFile.setMarkup(True)
+    sysFSLocalHeaderFile.setOverwrite(True)
     sysFSLocalHeaderFile.setType("HEADER")
 
     sysFSMedManHeaderFile = sysFSComponent.createFileSymbol("SYS_FS_MEDIA_MANAGER_HEADER", None)
@@ -738,11 +786,13 @@ def instantiateComponent(sysFSComponent):
     sysFSffIntHeaderFile.setDependencies(sysFsFileGen, ["SYS_FS_FAT"])
 
     sysFSffHeaderFile = sysFSComponent.createFileSymbol("SYS_FS_FAT_HEADER", None)
-    sysFSffHeaderFile.setSourcePath("/system/fs/fat_fs/file_system/ff.h")
+    sysFSffHeaderFile.setSourcePath("/system/fs/fat_fs/file_system/ff.h.ftl")
     sysFSffHeaderFile.setOutputName("ff.h")
     sysFSffHeaderFile.setDestPath("/system/fs/fat_fs/file_system")
     sysFSffHeaderFile.setProjectPath("config/" + configName + "/system/fs/fat_fs/file_system")
     sysFSffHeaderFile.setType("HEADER")
+    sysFSffHeaderFile.setMarkup(True)
+    sysFSffHeaderFile.setOverwrite(True)
     sysFSffHeaderFile.setEnabled(sysFSFat.getValue())
     sysFSffHeaderFile.setDependencies(sysFsFileGen, ["SYS_FS_FAT"])
 
@@ -845,13 +895,14 @@ def instantiateComponent(sysFSComponent):
     sysFSFILEXIntHeaderFile.setDependencies(sysFsFileGen, ["SYS_FS_FILEX"])
 
     sysFSFILEXIODRVHeaderFile = sysFSComponent.createFileSymbol("SYS_FS_FILEX_IO_DRV_HEADER", None)
-    sysFSFILEXIODRVHeaderFile.setSourcePath("/system/fs/filex/hardware_access/filex_io_drv.h")
+    sysFSFILEXIODRVHeaderFile.setSourcePath("/system/fs/filex/hardware_access/filex_io_drv.h.ftl")
     sysFSFILEXIODRVHeaderFile.setOutputName("filex_io_drv.h")
     sysFSFILEXIODRVHeaderFile.setDestPath("/system/fs/filex/")
     sysFSFILEXIODRVHeaderFile.setProjectPath("config/" + configName + "/system/fs/filex/")
     sysFSFILEXIODRVHeaderFile.setEnabled(sysFSFILEX.getValue())
     sysFSFILEXIODRVHeaderFile.setType("HEADER")
     sysFSFILEXIODRVHeaderFile.setDependencies(sysFsFileGen, ["SYS_FS_FILEX"])
+    sysFSFILEXIODRVHeaderFile.setMarkup(True)
 
     sysFSFILEXLicenseFile = sysFSComponent.createFileSymbol("SYS_FS_FILEX_LICENSE", None)
     sysFSFILEXLicenseFile.setSourcePath("../filex/LICENSE.txt")
@@ -1108,6 +1159,14 @@ def sysFsFileGen(symbol, event):
 def sysFsSymbolShow(symbol, event):
     symbol.setVisible(event["value"])
 
+def sysFsFileXCommentShow(symbol, event):
+    global isFileXExist
+    symbol.setVisible((isFileXExist == False) and event["value"])
+
+def sysFsLFSCommentShow(symbol, event):
+    global isLFSExist
+    symbol.setVisible((isLFSExist == False) and event["value"])
+
 def updateFileXmode(symbol, event):
     component = symbol.getComponent()
     symbol.setVisible(component.getSymbolValue("SYS_FS_FILEX"))
@@ -1117,17 +1176,21 @@ def sysFsAlignedBufferLenSymbolShow(symbol, event):
     component = symbol.getComponent()
 
     fatEnabled = component.getSymbolValue("SYS_FS_FAT")
+    filexEnabled = component.getSymbolValue("SYS_FS_FILEX")
+
     alignedBufferEnabled = component.getSymbolValue("SYS_FS_ALIGNED_BUFFER_ENABLE")
 
-    symbol.setVisible((fatEnabled == True) and (alignedBufferEnabled == True))
+    symbol.setVisible(((fatEnabled == True) or (filexEnabled == True)) and (alignedBufferEnabled == True))
 
 def sysFsAlignedBufferShow(symbol, event):
     component = symbol.getComponent()
 
     fatEnabled = component.getSymbolValue("SYS_FS_FAT")
     mpfsEnabled = component.getSymbolValue("SYS_FS_MPFS")
+    lfsEnabled = component.getSymbolValue("SYS_FS_LFS")
+    filexEnabled = component.getSymbolValue("SYS_FS_FILEX")
 
-    if ((fatEnabled == True) or (mpfsEnabled == True)):
+    if ((fatEnabled == True) or (mpfsEnabled == True) or (lfsEnabled == True) or (filexEnabled == True)):
         symbol.setVisible(True)
 
 def sysFSLFNSet(symbol, event):

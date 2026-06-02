@@ -355,18 +355,18 @@ static bool DRV_MEMORY_UpdateGeometry( DRV_MEMORY_OBJECT *dObj )
 
     return true;
 }
-/* MISRA C-2012 Rule 16.1, 16.3, 16.5, 16.6 deviated below.Deviation record ID -
-  H3_MISRAC_2012_R_16_1_DR_1, H3_MISRAC_2012_R_16_3_DR_1, H3_MISRAC_2012_R_16_5_DR_1 & H3_MISRAC_2012_R_16_6_DR_1*/
+/* MISRA C-2023 Rule 16.1, 16.3, 16.5, 16.6 deviated below.Deviation record ID -
+  H3_MISRAC_2023_R_16_1_DR_1, H3_MISRAC_2023_R_16_3_DR_1, H3_MISRAC_2023_R_16_5_DR_1 & H3_MISRAC_2023_R_16_6_DR_1*/
 <#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
 <#if core.COMPILER_CHOICE == "XC32">
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Wunknown-pragmas"
 </#if>
 #pragma coverity compliance block \
-(deviate:5 "MISRA C-2012 Rule 16.1" "H3_MISRAC_2012_R_16_1_DR_1" )\
-(deviate:9 "MISRA C-2012 Rule 16.3" "H3_MISRAC_2012_R_16_3_DR_1" )\
-(deviate:4 "MISRA C-2012 Rule 16.5" "H3_MISRAC_2012_R_16_5_DR_1" )\
-(deviate:3 "MISRA C-2012 Rule 16.6" "H3_MISRAC_2012_R_16_6_DR_1" )
+(deviate:5 "MISRA C-2023 Rule 16.1" "H3_MISRAC_2023_R_16_1_DR_1" )\
+(deviate:9 "MISRA C-2023 Rule 16.3" "H3_MISRAC_2023_R_16_3_DR_1" )\
+(deviate:4 "MISRA C-2023 Rule 16.5" "H3_MISRAC_2023_R_16_5_DR_1" )\
+(deviate:3 "MISRA C-2023 Rule 16.6" "H3_MISRAC_2023_R_16_6_DR_1" )
 </#if>
 
 static MEMORY_DEVICE_TRANSFER_STATUS DRV_MEMORY_HandleRead
@@ -705,7 +705,7 @@ static void DRV_MEMORY_SetupXfer
         return;
     }
 
-    if ((nBlock == 0U) || ((blockStart + nBlock) > dObj->mediaGeometryTable[geometry_type].numBlocks))
+    if ((nBlock == 0U) || (((uint64_t)blockStart + nBlock) > dObj->mediaGeometryTable[geometry_type].numBlocks))
     {
         SYS_DEBUG_MESSAGE(SYS_ERROR_INFO, "Memory Driver Invalid Block parameters.\n");
         return;
@@ -744,13 +744,13 @@ static void DRV_MEMORY_SetupXfer
 // *****************************************************************************
 // *****************************************************************************
 
-/* MISRA C-2012 Rule 11.1, 11.3 and 11.8 deviated below.
-Deviation record ID -  H3_MISRAC_2012_R_11_1_DR_1, H3_MISRAC_2012_R_11_3_DR_1 & H3_MISRAC_2012_R_11_8_DR_1 */
+/* MISRA C-2023 Rule 11.1, 11.3 and 11.8 deviated below.
+Deviation record ID -  H3_MISRAC_2023_R_11_1_DR_1, H3_MISRAC_2023_R_11_3_DR_1 & H3_MISRAC_2023_R_11_8_DR_1 */
 <#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
 #pragma coverity compliance block \
-(deviate:1 "MISRA C-2012 Rule 11.1" "H3_MISRAC_2012_R_11_1_DR_1" )\
-(deviate:1 "MISRA C-2012 Rule 11.3" "H3_MISRAC_2012_R_11_3_DR_1" )\
-(deviate:2 "MISRA C-2012 Rule 11.8" "H3_MISRAC_2012_R_11_8_DR_1" )
+(deviate:1 "MISRA C-2023 Rule 11.1" "H3_MISRAC_2023_R_11_1_DR_1" )\
+(deviate:1 "MISRA C-2023 Rule 11.3" "H3_MISRAC_2023_R_11_3_DR_1" )\
+(deviate:2 "MISRA C-2023 Rule 11.8" "H3_MISRAC_2023_R_11_8_DR_1" )
 </#if>
 SYS_MODULE_OBJ DRV_MEMORY_Initialize
 (
@@ -1305,17 +1305,17 @@ void DRV_MEMORY_TransferHandlerSet
     clientObj->context = context;
 }
 <#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
-#pragma coverity compliance end_block "MISRA C-2012 Rule 11.1"
-#pragma coverity compliance end_block "MISRA C-2012 Rule 11.3"
-#pragma coverity compliance end_block "MISRA C-2012 Rule 11.8"
+#pragma coverity compliance end_block "MISRA C-2023 Rule 11.1"
+#pragma coverity compliance end_block "MISRA C-2023 Rule 11.3"
+#pragma coverity compliance end_block "MISRA C-2023 Rule 11.8"
 </#if>
 /* MISRAC 2012 deviation block end */
 
 <#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
-#pragma coverity compliance end_block "MISRA C-2012 Rule 16.1"
-#pragma coverity compliance end_block "MISRA C-2012 Rule 16.3"
-#pragma coverity compliance end_block "MISRA C-2012 Rule 16.5"
-#pragma coverity compliance end_block "MISRA C-2012 Rule 16.6"
+#pragma coverity compliance end_block "MISRA C-2023 Rule 16.1"
+#pragma coverity compliance end_block "MISRA C-2023 Rule 16.3"
+#pragma coverity compliance end_block "MISRA C-2023 Rule 16.5"
+#pragma coverity compliance end_block "MISRA C-2023 Rule 16.6"
 <#if core.COMPILER_CHOICE == "XC32">
 #pragma GCC diagnostic pop
 </#if>

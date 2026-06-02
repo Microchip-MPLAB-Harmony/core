@@ -1,0 +1,10 @@
+{
+    "name": "@mchp-harmony/core",
+    "version": "0.0.1-git",
+    "originalVersion": "git",
+    "license": "SEE LICENSE IN mplab_harmony_license.md",
+    "dependencies": {},
+    "devDependencies": {},
+    "peerDependencies": {},
+    "spaViews": []
+  }

@@ -62,9 +62,12 @@ address     = baseAddr + offset
 eoiAddress.setDefaultValue("0x%08XU"%address)
 
 Database.activateComponents(["pit"]);
-Database.setSymbolValue("pit", "RTOS_INTERRUPT_HANDLER", "FreeRTOS_Tick_Handler")
-Database.setSymbolValue("core", "USE_FREERTOS_VECTORS", True)
-Database.setSymbolValue("pit", "ENABLE_COUNTER", False)
+Database.clearSymbolValue("pit", "RTOS_INTERRUPT_HANDLER")
+Database.clearSymbolValue("core", "USE_FREERTOS_VECTORS")
+Database.clearSymbolValue("pit", "ENABLE_COUNTER")
+
+Database.sendMessage("pit", "PIT_TIMER_CONFIG", {"isPitEn": False, "rtosInterruptHandler": "FreeRTOS_Tick_Handler"})
+Database.sendMessage("core", "FREERTOS_CONFIG", {"USE_FREERTOS_VECTORS": {"setValue":True}})
 
 ############################################################################
 #### Code Generation ####
@@ -90,7 +93,7 @@ freeRtosAsmIncSym_iar.setDependencies(lambda symbol, event: symbol.setEnabled(Da
 freeRtosAsmIncSym_iar.setEnabled(Database.getSymbolValue("core", "COMPILER_CHOICE")  == 1)
 
 freeRtosPortSource_iar = thirdPartyFreeRTOS.createFileSymbol("FREERTOS_IAR_SAM_PORT_C", None)
-freeRtosPortSource_iar.setSourcePath("../CMSIS-FreeRTOS/Source/portable/IAR/ARM_CA5_No_GIC/port.c")
+freeRtosPortSource_iar.setSourcePath("../FreeRTOS-Kernel/portable/IAR/ARM_CA5_No_GIC/port.c")
 freeRtosPortSource_iar.setOutputName("port.c")
 freeRtosPortSource_iar.setDestPath("../../third_party/rtos/FreeRTOS/Source/portable/IAR/SAM/CA5")
 freeRtosPortSource_iar.setProjectPath("FreeRTOS/Source/portable/IAR/SAM/CA5")
@@ -100,7 +103,7 @@ freeRtosPortSource_iar.setDependencies(lambda symbol, event: symbol.setEnabled(D
 freeRtosPortSource_iar.setEnabled(Database.getSymbolValue("core", "COMPILER_CHOICE")  == 1)
 
 freeRtosPortASMHeader_iar = thirdPartyFreeRTOS.createFileSymbol("FREERTOS_IAR_SAM_PORT_ASM_H", None)
-freeRtosPortASMHeader_iar.setSourcePath("../CMSIS-FreeRTOS/Source/portable/IAR/ARM_CA5_No_GIC/portASM.h")
+freeRtosPortASMHeader_iar.setSourcePath("../FreeRTOS-Kernel/portable/IAR/ARM_CA5_No_GIC/portASM.h")
 freeRtosPortASMHeader_iar.setOutputName("portASM.h")
 freeRtosPortASMHeader_iar.setDestPath("../../third_party/rtos/FreeRTOS/Source/portable/IAR/SAM/CA5")
 freeRtosPortASMHeader_iar.setProjectPath("FreeRTOS/Source/portable/IAR/SAM/CA5")
@@ -110,7 +113,7 @@ freeRtosPortASMHeader_iar.setDependencies(lambda symbol, event: symbol.setEnable
 freeRtosPortASMHeader_iar.setEnabled(Database.getSymbolValue("core", "COMPILER_CHOICE")  == 1)
 
 freeRtosPortASMSource_iar = thirdPartyFreeRTOS.createFileSymbol("FREERTOS_IAR_SAM_PORT_ASM_S", None)
-freeRtosPortASMSource_iar.setSourcePath("../CMSIS-FreeRTOS/Source/portable/IAR/ARM_CA5_No_GIC/portASM.s")
+freeRtosPortASMSource_iar.setSourcePath("../FreeRTOS-Kernel/portable/IAR/ARM_CA5_No_GIC/portASM.s")
 freeRtosPortASMSource_iar.setOutputName("portASM.s")
 freeRtosPortASMSource_iar.setDestPath("../../third_party/rtos/FreeRTOS/Source/portable/IAR/SAM/CA5")
 freeRtosPortASMSource_iar.setProjectPath("FreeRTOS/Source/portable/IAR/SAM/CA5")
@@ -120,7 +123,7 @@ freeRtosPortASMSource_iar.setDependencies(lambda symbol, event: symbol.setEnable
 freeRtosPortASMSource_iar.setEnabled(Database.getSymbolValue("core", "COMPILER_CHOICE")  == 1)
 
 freeRtosPortHeader_iar = thirdPartyFreeRTOS.createFileSymbol("FREERTOS_IAR_SAM_PORT_MACRO_H", None)
-freeRtosPortHeader_iar.setSourcePath("../CMSIS-FreeRTOS/Source/portable/IAR/ARM_CA5_No_GIC/portmacro.h")
+freeRtosPortHeader_iar.setSourcePath("../FreeRTOS-Kernel/portable/IAR/ARM_CA5_No_GIC/portmacro.h")
 freeRtosPortHeader_iar.setOutputName("portmacro.h")
 freeRtosPortHeader_iar.setDestPath("../../third_party/rtos/FreeRTOS/Source/portable/IAR/SAM/CA5")
 freeRtosPortHeader_iar.setProjectPath("FreeRTOS/Source/portable/IAR/SAM/CA5")

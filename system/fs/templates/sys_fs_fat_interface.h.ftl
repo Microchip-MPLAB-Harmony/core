@@ -34,7 +34,16 @@ extern "C" {
 #include <stdint.h>
 #include <stdbool.h>
 #include <stddef.h>
+/* MISRAC-2023 Rule 17.1 deviation taken for using stdarg.h header file */
+<#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wunknown-pragmas"
+#pragma coverity compliance deviate "MISRA C-2023 Rule 17.1" "H3_MISRAC_2023_R_17_1_DR_1"
+</#if>
 #include <stdarg.h>
+<#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
+#pragma GCC diagnostic pop
+</#if>
 
 int FATFS_mount (uint8_t vol);
 
@@ -46,7 +55,7 @@ int FATFS_read (uintptr_t handle, void* buff, uint32_t btr, uint32_t* br);
 
 int FATFS_close (uintptr_t handle);
 
-int FATFS_lseek (uintptr_t handle, uint32_t ofs);
+int FATFS_lseek (uintptr_t handle, FSIZE_t ofs);
 
 int FATFS_stat (const char* path, uintptr_t fileInfo);
 
@@ -71,11 +80,11 @@ int FATFS_chdrive (uint8_t drv);
 
     <#lt>int FATFS_getfree (const char* path, uint32_t* nclst, FATFS** fatfs);
 
-    <#lt>uint32_t FATFS_tell(uintptr_t handle);
+    <#lt>FSIZE_t FATFS_tell(uintptr_t handle);
 
     <#lt>bool FATFS_eof(uintptr_t handle);
 
-    <#lt>uint32_t FATFS_size(uintptr_t handle);
+    <#lt>FSIZE_t FATFS_size(uintptr_t handle);
 
     <#lt>int FATFS_mkdir (const char* path);
 

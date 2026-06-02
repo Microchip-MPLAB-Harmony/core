@@ -191,7 +191,7 @@ void OSAL_CRIT_Leave(OSAL_CRIT_TYPE severity, OSAL_CRITSECT_DATA_TYPE status)
 // Semaphore group
 // *****************************************************************************
 /* Function: OSAL_RESULT OSAL_SEM_Create(OSAL_SEM_HANDLE_TYPE* semID, OSAL_SEM_TYPE type,
-                                uint8_t maxCount, uint8_t initialCount)
+                                OSAL_SEM_COUNT_TYPE maxCount, OSAL_SEM_COUNT_TYPE initialCount)
   Summary:
     Create an OSAL Semaphore
 
@@ -229,19 +229,19 @@ void OSAL_CRIT_Leave(OSAL_CRIT_TYPE severity, OSAL_CRITSECT_DATA_TYPE status)
 
   Remarks:
  */
-/* MISRA C-2012 Rule 16.1, 16.3 deviated below. Deviation record ID -
-   H3_MISRAC_2012_R_16_1_DR_1 & H3_MISRAC_2012_R_16_3_DR_1*/
+/* MISRA C-2023 Rule 16.1, 16.3 deviated below. Deviation record ID -
+   H3_MISRAC_2023_R_16_1_DR_1 & H3_MISRAC_2023_R_16_3_DR_1*/
 <#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
 <#if core.COMPILER_CHOICE == "XC32">
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Wunknown-pragmas"
 </#if>
 #pragma coverity compliance block \
-(deviate:1 "MISRA C-2012 Rule 16.1" "H3_MISRAC_2012_R_16_1_DR_1" )\
-(deviate:1 "MISRA C-2012 Rule 16.3" "H3_MISRAC_2012_R_16_3_DR_1" )
+(deviate:1 "MISRA C-2023 Rule 16.1" "H3_MISRAC_2023_R_16_1_DR_1" )\
+(deviate:1 "MISRA C-2023 Rule 16.3" "H3_MISRAC_2023_R_16_3_DR_1" )
 </#if>
 
-OSAL_RESULT OSAL_SEM_Create(OSAL_SEM_HANDLE_TYPE* semID, OSAL_SEM_TYPE type, uint8_t maxCount, uint8_t initialCount)
+OSAL_RESULT OSAL_SEM_Create(OSAL_SEM_HANDLE_TYPE* semID, OSAL_SEM_TYPE type, OSAL_SEM_COUNT_TYPE maxCount, OSAL_SEM_COUNT_TYPE initialCount)
 {
   switch (type)
   {
@@ -292,8 +292,8 @@ OSAL_RESULT OSAL_SEM_Create(OSAL_SEM_HANDLE_TYPE* semID, OSAL_SEM_TYPE type, uin
   return (OSAL_RESULT)OSAL_RESULT_SUCCESS;
 }
 <#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
-#pragma coverity compliance end_block "MISRA C-2012 Rule 16.1"
-#pragma coverity compliance end_block "MISRA C-2012 Rule 16.3"
+#pragma coverity compliance end_block "MISRA C-2023 Rule 16.1"
+#pragma coverity compliance end_block "MISRA C-2023 Rule 16.3"
 </#if>
 /* MISRAC 2012 deviation block end */
 // *****************************************************************************
@@ -331,7 +331,7 @@ OSAL_RESULT OSAL_SEM_Delete(OSAL_SEM_HANDLE_TYPE* semID)
 }
 
 // *****************************************************************************
-/* Function: OSAL_RESULT OSAL_SEM_Pend(OSAL_SEM_HANDLE_TYPE* semID, uint16_t waitMS)
+/* Function: OSAL_RESULT OSAL_SEM_Pend(OSAL_SEM_HANDLE_TYPE* semID, OSAL_TICK_TYPE waitMS)
 
   Summary:
      Pend on a semaphore. Returns true if semaphore obtained within time limit.
@@ -373,27 +373,32 @@ OSAL_RESULT OSAL_SEM_Delete(OSAL_SEM_HANDLE_TYPE* semID)
 
   Remarks:
  */
-OSAL_RESULT OSAL_SEM_Pend(OSAL_SEM_HANDLE_TYPE* semID, uint16_t waitMS)
+OSAL_RESULT OSAL_SEM_Pend(OSAL_SEM_HANDLE_TYPE* semID, OSAL_TICK_TYPE waitMS)
 {
-  TickType_t timeout = 0;
+    TickType_t timeout = 0;
 
-  if(waitMS == OSAL_WAIT_FOREVER)
-  {
-    timeout = portMAX_DELAY;
-  }
-  else
-  {
-    timeout = ((TickType_t)waitMS / portTICK_PERIOD_MS);
-  }
+    if ((semID == NULL) || (*(SemaphoreHandle_t*)semID == NULL))
+    {
+        return (OSAL_RESULT)OSAL_RESULT_FAIL;
+    }
 
-  if (xSemaphoreTake(*(SemaphoreHandle_t*)semID, timeout) == (int32_t)pdTRUE)
-  {
-    return (OSAL_RESULT)OSAL_RESULT_SUCCESS;
-  }
-  else
-  {
-    return (OSAL_RESULT)OSAL_RESULT_FAIL;
-  }
+    if(waitMS == OSAL_WAIT_FOREVER)
+    {
+        timeout = portMAX_DELAY;
+    }
+    else
+    {
+        timeout = ((TickType_t)waitMS / portTICK_PERIOD_MS);
+    }
+
+    if (xSemaphoreTake(*(SemaphoreHandle_t*)semID, timeout) == (int32_t)pdTRUE)
+    {
+        return (OSAL_RESULT)OSAL_RESULT_SUCCESS;
+    }
+    else
+    {
+        return (OSAL_RESULT)OSAL_RESULT_FAIL;
+    }
 }
 
 // *****************************************************************************
@@ -426,29 +431,33 @@ OSAL_RESULT OSAL_SEM_Pend(OSAL_SEM_HANDLE_TYPE* semID, uint16_t waitMS)
  */
 OSAL_RESULT OSAL_SEM_Post(OSAL_SEM_HANDLE_TYPE* semID)
 {
-  if (xSemaphoreGive(*(SemaphoreHandle_t*)semID) == (int32_t)pdTRUE)
-  {
-    return (OSAL_RESULT)OSAL_RESULT_SUCCESS;
-  }
+    if ((semID == NULL) || (*(SemaphoreHandle_t*)semID == NULL))
+    {
+        return (OSAL_RESULT)OSAL_RESULT_FAIL;
+    }
+    if (xSemaphoreGive(*(SemaphoreHandle_t*)semID) == (int32_t)pdTRUE)
+    {
+        return (OSAL_RESULT)OSAL_RESULT_SUCCESS;
+    }
 
-  return (OSAL_RESULT)OSAL_RESULT_FAIL;
+    return (OSAL_RESULT)OSAL_RESULT_FAIL;
 }
 
 // *****************************************************************************
-/* MISRA C-2012 Rule 15.6, 14.4,20.7 deviated below. Deviation record ID -
-   H3_MISRAC_2012_R_14_4_DR_1, H3_MISRAC_2012_R_15_6_DR_1 & H3_MISRAC_2012_R_20_7_DR_1*/
+/* MISRA C-2023 Rule 15.6, 14.4,20.7 deviated below. Deviation record ID -
+   H3_MISRAC_2023_R_14_4_DR_1, H3_MISRAC_2023_R_15_6_DR_1 & H3_MISRAC_2023_R_20_7_DR_1*/
 <#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
 #pragma coverity compliance block \
 <#if core.CoreArchitecture == "CORTEX-A7">
-(deviate:1 "MISRA C-2012 Rule 8.3" "H3_MISRAC_2012_R_8_3_DR_1" )\
-(deviate:1 "MISRA C-2012 Rule 8.5" "H3_MISRAC_2012_R_8_5_DR_1" )\
+(deviate:1 "MISRA C-2023 Rule 8.3" "H3_MISRAC_2023_R_8_3_DR_1" )\
+(deviate:1 "MISRA C-2023 Rule 8.5" "H3_MISRAC_2023_R_8_5_DR_1" )\
 </#if>
 <#if core.CoreArchitecture == "MIPS">
-(deviate:1 "MISRA C-2012 Rule 12.2" "H3_MISRAC_2012_R_12_2_DR_1" )\
+(deviate:1 "MISRA C-2023 Rule 12.2" "H3_MISRAC_2023_R_12_2_DR_1" )\
 </#if>
-(deviate:1 "MISRA C-2012 Rule 14.4" "H3_MISRAC_2012_R_14_4_DR_1" )\
-(deviate:1 "MISRA C-2012 Rule 15.6" "H3_MISRAC_2012_R_15_6_DR_1" )\
-(deviate:1 "MISRA C-2012 Rule 20.7" "H3_MISRAC_2012_R_20_7_DR_1" )
+(deviate:1 "MISRA C-2023 Rule 14.4" "H3_MISRAC_2023_R_14_4_DR_1" )\
+(deviate:1 "MISRA C-2023 Rule 15.6" "H3_MISRAC_2023_R_15_6_DR_1" )\
+(deviate:1 "MISRA C-2023 Rule 20.7" "H3_MISRAC_2023_R_20_7_DR_1" )
 </#if>
 /* Function: OSAL_RESULT OSAL_SEM_PostISR(OSAL_SEM_HANDLE_TYPE* semID)
 
@@ -494,35 +503,39 @@ OSAL_RESULT OSAL_SEM_Post(OSAL_SEM_HANDLE_TYPE* semID)
  */
 OSAL_RESULT OSAL_SEM_PostISR(OSAL_SEM_HANDLE_TYPE* semID)
 {
-  BaseType_t taskWoken = (int32_t)pdFALSE;
+    BaseType_t taskWoken = (int32_t)pdFALSE;
 
-  if ((xSemaphoreGiveFromISR(*(SemaphoreHandle_t*)semID, &taskWoken)) != 0)
-  {
-    portEND_SWITCHING_ISR(taskWoken);
-    return (OSAL_RESULT)OSAL_RESULT_SUCCESS;
-  }
+    if ((semID == NULL) || (*(SemaphoreHandle_t*)semID == NULL))
+    {
+        return (OSAL_RESULT)OSAL_RESULT_FAIL;
+    }
+    if ((xSemaphoreGiveFromISR(*(SemaphoreHandle_t*)semID, &taskWoken)) != 0)
+    {
+        portEND_SWITCHING_ISR(taskWoken);
+        return (OSAL_RESULT)OSAL_RESULT_SUCCESS;
+    }
 
-  return (OSAL_RESULT)OSAL_RESULT_FAIL;
+    return (OSAL_RESULT)OSAL_RESULT_FAIL;
 }
 
 <#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
 <#if core.CoreArchitecture == "CORTEX-A7">
-#pragma coverity compliance end_block "MISRA C-2012 Rule 8.3"
-#pragma coverity compliance end_block "MISRA C-2012 Rule 8.5"
+#pragma coverity compliance end_block "MISRA C-2023 Rule 8.3"
+#pragma coverity compliance end_block "MISRA C-2023 Rule 8.5"
 </#if>
 <#if core.CoreArchitecture == "MIPS">
-#pragma coverity compliance end_block "MISRA C-2012 Rule 12.2"
+#pragma coverity compliance end_block "MISRA C-2023 Rule 12.2"
 </#if>
-#pragma coverity compliance end_block "MISRA C-2012 Rule 14.4"
-#pragma coverity compliance end_block "MISRA C-2012 Rule 15.6"
-#pragma coverity compliance end_block "MISRA C-2012 Rule 20.7"
+#pragma coverity compliance end_block "MISRA C-2023 Rule 14.4"
+#pragma coverity compliance end_block "MISRA C-2023 Rule 15.6"
+#pragma coverity compliance end_block "MISRA C-2023 Rule 20.7"
 <#if core.COMPILER_CHOICE == "XC32">
 #pragma GCC diagnostic pop
 </#if>
 </#if>
 /* MISRAC 2012 deviation block end */
 // *****************************************************************************
-/* Function: uint8_t OSAL_SEM_GetCount(OSAL_SEM_HANDLE_TYPE* semID)
+/* Function: OSAL_SEM_COUNT_TYPE OSAL_SEM_GetCount(OSAL_SEM_HANDLE_TYPE* semID)
 
   Summary:
     Return the current value of a counting semaphore.
@@ -543,7 +556,7 @@ OSAL_RESULT OSAL_SEM_PostISR(OSAL_SEM_HANDLE_TYPE* semID)
 
   Example:
     <code>
-     uint8_t semCount;
+     OSAL_SEM_COUNT_TYPE semCount;
 
      semCount = OSAL_SEM_GetCount(semUART);
 
@@ -570,17 +583,18 @@ OSAL_RESULT OSAL_SEM_PostISR(OSAL_SEM_HANDLE_TYPE* semID)
      a critical section. The exact requirements will depend upon the particular
      RTOS being used.
  */
-uint8_t OSAL_SEM_GetCount(OSAL_SEM_HANDLE_TYPE* semID)
+OSAL_SEM_COUNT_TYPE OSAL_SEM_GetCount(OSAL_SEM_HANDLE_TYPE* semID)
 {
-  UBaseType_t SemCount;
-  SemCount = uxQueueMessagesWaiting(*(SemaphoreHandle_t*)semID);
+    UBaseType_t SemCount;
 
-  if(SemCount > 255U)
-  {
-    SemCount = 255;
-  }
+    SemCount = uxQueueMessagesWaiting(*(SemaphoreHandle_t*)semID);
 
-  return (uint8_t)SemCount;
+    if(SemCount > 255U)
+    {
+        SemCount = 255;
+    }
+
+    return (OSAL_SEM_COUNT_TYPE)SemCount;
 }
 
 // *****************************************************************************
@@ -622,15 +636,24 @@ uint8_t OSAL_SEM_GetCount(OSAL_SEM_HANDLE_TYPE* semID)
  */
 OSAL_RESULT OSAL_MUTEX_Create(OSAL_MUTEX_HANDLE_TYPE* mutexID)
 {
-  /* mutex may already have been created so test before creating it */
-  if (*(SemaphoreHandle_t*)mutexID != NULL)
-  {
-    return (OSAL_RESULT)OSAL_RESULT_FAIL;
-  }
+    if (mutexID == NULL)
+    {
+        return (OSAL_RESULT)OSAL_RESULT_FAIL;
+    }
+    /* mutex may already have been created so test before creating it */
+    if (*(SemaphoreHandle_t*)mutexID != NULL)
+    {
+        return (OSAL_RESULT)OSAL_RESULT_FAIL;
+    }
 
-  *(SemaphoreHandle_t*)mutexID = xSemaphoreCreateMutex();
+    *(SemaphoreHandle_t*)mutexID = xSemaphoreCreateMutex();
 
-  return (OSAL_RESULT)OSAL_RESULT_SUCCESS;
+    if (*(SemaphoreHandle_t*)mutexID == NULL)
+    {
+        return (OSAL_RESULT)OSAL_RESULT_FAIL;
+    }
+
+    return (OSAL_RESULT)OSAL_RESULT_SUCCESS;
 }
 
 // *****************************************************************************
@@ -663,19 +686,19 @@ OSAL_RESULT OSAL_MUTEX_Create(OSAL_MUTEX_HANDLE_TYPE* mutexID)
  */
 OSAL_RESULT OSAL_MUTEX_Delete(OSAL_MUTEX_HANDLE_TYPE* mutexID)
 {
-  if(*(SemaphoreHandle_t*)mutexID == NULL)
-  {
-    return (OSAL_RESULT)OSAL_RESULT_FAIL;
-  }
+    if ((mutexID == NULL) || (*(SemaphoreHandle_t*)mutexID == NULL))
+    {
+        return (OSAL_RESULT)OSAL_RESULT_FAIL;
+    }
 
-  vSemaphoreDelete(*(SemaphoreHandle_t*)mutexID);
-  *(SemaphoreHandle_t*)mutexID = NULL;
+    vSemaphoreDelete(*(SemaphoreHandle_t*)mutexID);
+    *(SemaphoreHandle_t*)mutexID = NULL;
 
-  return (OSAL_RESULT)OSAL_RESULT_SUCCESS;
+    return (OSAL_RESULT)OSAL_RESULT_SUCCESS;
 }
 
 // *****************************************************************************
-/* Function: OSAL_RESULT OSAL_MUTEX_Lock(OSAL_MUTEX_HANDLE_TYPE* mutexID, uint16_t waitMS)
+/* Function: OSAL_RESULT OSAL_MUTEX_Lock(OSAL_MUTEX_HANDLE_TYPE* mutexID, OSAL_TICK_TYPE waitMS)
 
   Summary:
     Lock a mutex.
@@ -719,27 +742,32 @@ OSAL_RESULT OSAL_MUTEX_Delete(OSAL_MUTEX_HANDLE_TYPE* mutexID)
   Remarks:
 
  */
-OSAL_RESULT OSAL_MUTEX_Lock(OSAL_MUTEX_HANDLE_TYPE* mutexID, uint16_t waitMS)
+OSAL_RESULT OSAL_MUTEX_Lock(OSAL_MUTEX_HANDLE_TYPE* mutexID, OSAL_TICK_TYPE waitMS)
 {
-  TickType_t timeout = 0;
+    TickType_t timeout = 0;
 
-  if(waitMS == OSAL_WAIT_FOREVER)
-  {
-    timeout = portMAX_DELAY;
-  }
-  else
-  {
-    timeout = ((TickType_t)waitMS / portTICK_PERIOD_MS);
-  }
+    if ((mutexID == NULL) || (*(SemaphoreHandle_t*)mutexID == NULL))
+    {
+        return (OSAL_RESULT)OSAL_RESULT_FAIL;
+    }
 
-  if (xSemaphoreTake(*(SemaphoreHandle_t*)mutexID, timeout) == (int32_t)pdTRUE)
-  {
-    return (OSAL_RESULT)OSAL_RESULT_SUCCESS;
-  }
-  else
-  {
-    return (OSAL_RESULT)OSAL_RESULT_FAIL;
-  }
+    if(waitMS == OSAL_WAIT_FOREVER)
+    {
+        timeout = portMAX_DELAY;
+    }
+    else
+    {
+        timeout = ((TickType_t)waitMS / portTICK_PERIOD_MS);
+    }
+
+    if (xSemaphoreTake(*(SemaphoreHandle_t*)mutexID, timeout) == (int32_t)pdTRUE)
+    {
+        return (OSAL_RESULT)OSAL_RESULT_SUCCESS;
+    }
+    else
+    {
+        return (OSAL_RESULT)OSAL_RESULT_FAIL;
+    }
 }
 
 // *****************************************************************************
@@ -783,12 +811,16 @@ OSAL_RESULT OSAL_MUTEX_Lock(OSAL_MUTEX_HANDLE_TYPE* mutexID, uint16_t waitMS)
  */
 OSAL_RESULT OSAL_MUTEX_Unlock(OSAL_MUTEX_HANDLE_TYPE* mutexID)
 {
-  if (xSemaphoreGive(*(SemaphoreHandle_t*)mutexID) == (int32_t)pdTRUE)
-  {
-    return (OSAL_RESULT)OSAL_RESULT_SUCCESS;
-  }
+    if ((mutexID == NULL) || (*(SemaphoreHandle_t*)mutexID == NULL))
+    {
+        return (OSAL_RESULT)OSAL_RESULT_FAIL;
+    }
+    if (xSemaphoreGive(*(SemaphoreHandle_t*)mutexID) == (int32_t)pdTRUE)
+    {
+        return (OSAL_RESULT)OSAL_RESULT_SUCCESS;
+    }
 
-  return (OSAL_RESULT)OSAL_RESULT_FAIL;
+    return (OSAL_RESULT)OSAL_RESULT_FAIL;
 }
 
 // *****************************************************************************

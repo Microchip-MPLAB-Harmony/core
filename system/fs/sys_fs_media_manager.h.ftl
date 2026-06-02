@@ -47,6 +47,9 @@ File System Service Media Manager Interface Declarations and Types
 #include "system/fs/sys_fs.h"
 #include "system/system_media.h"
 #include "system/system.h"
+<#if SYS_FS_FAT == true>
+#include "system/fs/fat_fs/file_system/ff.h"
+</#if>
 
 // DOM-IGNORE-BEGIN
 #ifdef __cplusplus  // Provide C++ Compatibility
@@ -77,13 +80,13 @@ File System Service Media Manager Interface Declarations and Types
     Refer to sys_media.h for actual definition..
 */
 
-/* MISRA C-2012 Rule 5.5 deviated:3 Deviation record ID -  H3_MISRAC_2012_R_5_5_DR_1 */
+/* MISRA C-2023 Rule 5.5 deviated:3 Deviation record ID -  H3_MISRAC_2023_R_5_5_DR_1 */
 <#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
 <#if core.COMPILER_CHOICE == "XC32">
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Wunknown-pragmas"
 </#if>
-#pragma coverity compliance block deviate:3 "MISRA C-2012 Rule 5.5" "H3_MISRAC_2012_R_5_5_DR_1"
+#pragma coverity compliance block deviate:3 "MISRA C-2023 Rule 5.5" "H3_MISRAC_2023_R_5_5_DR_1"
 </#if>
 
 typedef SYS_MEDIA_BLOCK_COMMAND_HANDLE  SYS_FS_MEDIA_BLOCK_COMMAND_HANDLE;
@@ -137,9 +140,9 @@ typedef uintptr_t SYS_FS_MEDIA_HANDLE;
 #define SYS_FS_MEDIA_BLOCK_COMMAND_HANDLE_INVALID SYS_MEDIA_BLOCK_COMMAND_HANDLE_INVALID
 
 // *****************************************************************************
-/* MISRA C-2012 Rule 5.2 deviated:2 Deviation record ID -  H3_MISRAC_2012_R_5_2_DR_1 */
+/* MISRA C-2023 Rule 5.2 deviated:2 Deviation record ID -  H3_MISRAC_2023_R_5_2_DR_1 */
 <#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
-#pragma coverity compliance block deviate:2 "MISRA C-2012 Rule 5.2" "H3_MISRAC_2012_R_5_2_DR_1"
+#pragma coverity compliance block deviate:2 "MISRA C-2023 Rule 5.2" "H3_MISRAC_2023_R_5_2_DR_1"
 </#if>
 /* SYS FS Media Events
 
@@ -169,8 +172,8 @@ typedef enum
 } SYS_FS_MEDIA_BLOCK_EVENT;
 
 <#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
-#pragma coverity compliance end_block "MISRA C-2012 Rule 5.2"
-#pragma coverity compliance end_block "MISRA C-2012 Rule 5.5"
+#pragma coverity compliance end_block "MISRA C-2023 Rule 5.2"
+#pragma coverity compliance end_block "MISRA C-2023 Rule 5.5"
 </#if>
 /* MISRAC 2012 deviation block end */
 
@@ -861,13 +864,13 @@ uintptr_t SYS_FS_MEDIA_MANAGER_AddressGet
 
     See sys_fs.h for usage information.
 */
-/* MISRA C-2012 Rule 5.1, 8.6 deviated below. Deviation record ID -
-   H3_MISRAC_2012_R_5_1_DR_1 & H3_MISRAC_2012_R_8_6_DR_1*/
+/* MISRA C-2023 Rule 5.1, 8.6 deviated below. Deviation record ID -
+   H3_MISRAC_2023_R_5_1_DR_1 & H3_MISRAC_2023_R_8_6_DR_1*/
 <#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
 #pragma coverity compliance block \
-(deviate:1 "MISRA C-2012 Rule 5.1" "H3_MISRAC_2012_R_5_1_DR_1" )\
-(deviate:1 "MISRA C-2012 Rule 5.2" "H3_MISRAC_2012_R_5_1_DR_1" )\
-(deviate:1 "MISRA C-2012 Rule 8.6" "H3_MISRAC_2012_R_8_6_DR_1" )
+(deviate:1 "MISRA C-2023 Rule 5.1" "H3_MISRAC_2023_R_5_1_DR_1" )\
+(deviate:1 "MISRA C-2023 Rule 5.2" "H3_MISRAC_2023_R_5_1_DR_1" )\
+(deviate:1 "MISRA C-2023 Rule 8.6" "H3_MISRAC_2023_R_8_6_DR_1" )
 </#if>
 
 void SYS_FS_MEDIA_MANAGER_EventHandlerSet
@@ -876,9 +879,9 @@ void SYS_FS_MEDIA_MANAGER_EventHandlerSet
     const uintptr_t context
 );
 <#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
-#pragma coverity compliance end_block "MISRA C-2012 Rule 5.1"
-#pragma coverity compliance end_block "MISRA C-2012 Rule 5.2"
-#pragma coverity compliance end_block "MISRA C-2012 Rule 8.6"
+#pragma coverity compliance end_block "MISRA C-2023 Rule 5.1"
+#pragma coverity compliance end_block "MISRA C-2023 Rule 5.2"
+#pragma coverity compliance end_block "MISRA C-2023 Rule 8.6"
 <#if core.COMPILER_CHOICE == "XC32">
 #pragma GCC diagnostic pop
 </#if>

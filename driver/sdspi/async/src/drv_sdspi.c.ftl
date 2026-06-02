@@ -63,18 +63,18 @@
 #include "driver/sdspi/src/drv_sdspi_file_system.h"
 </#if>
 
-/* MISRA C-2012 Rule 11.3 deviated:5 Deviation record ID -  H3_MISRAC_2012_R_11_3_DR_1 */
+/* MISRA C-2023 Rule 11.3 deviated:5 Deviation record ID -  H3_MISRAC_2023_R_11_3_DR_1 */
 <#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
 <#if core.COMPILER_CHOICE == "XC32">
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Wunknown-pragmas"
 </#if>
 #pragma coverity compliance block \
-(deviate:3 "MISRA C-2012 Rule 11.1" "H3_MISRAC_2012_R_11_1_DR_1")\
-(deviate:5 "MISRA C-2012 Rule 11.3" "H3_MISRAC_2012_R_11_3_DR_1")\
-(deviate:1 "MISRA C-2012 Rule 11.8" "H3_MISRAC_2012_R_11_8_DR_1")\
-(deviate:1 "MISRA C-2012 Rule 16.1" "H3_MISRAC_2012_R_16_1_DR_1")\
-(deviate:1 "MISRA C-2012 Rule 16.3" "H3_MISRAC_2012_R_16_3_DR_1")
+(deviate:3 "MISRA C-2023 Rule 11.1" "H3_MISRAC_2023_R_11_1_DR_1")\
+(deviate:5 "MISRA C-2023 Rule 11.3" "H3_MISRAC_2023_R_11_3_DR_1")\
+(deviate:1 "MISRA C-2023 Rule 11.8" "H3_MISRAC_2023_R_11_8_DR_1")\
+(deviate:1 "MISRA C-2023 Rule 16.1" "H3_MISRAC_2023_R_16_1_DR_1")\
+(deviate:1 "MISRA C-2023 Rule 16.3" "H3_MISRAC_2023_R_16_3_DR_1")
 </#if>
 
 // *****************************************************************************
@@ -2750,7 +2750,7 @@ static void DRV_SDSPI_SetupXfer(
         {
             return;
         }
-        if (((blockStart + nBlocks) > dObj->mediaGeometryTable[SYS_MEDIA_GEOMETRY_TABLE_READ_ENTRY].numBlocks))
+        if ((((uint64_t)blockStart + nBlocks) > dObj->mediaGeometryTable[SYS_MEDIA_GEOMETRY_TABLE_READ_ENTRY].numBlocks))
         {
             return;
         }
@@ -2761,7 +2761,7 @@ static void DRV_SDSPI_SetupXfer(
         {
             return;
         }
-        if (((blockStart + nBlocks) > dObj->mediaGeometryTable[SYS_MEDIA_GEOMETRY_TABLE_WRITE_ENTRY].numBlocks))
+        if ((((uint64_t)blockStart + nBlocks) > dObj->mediaGeometryTable[SYS_MEDIA_GEOMETRY_TABLE_WRITE_ENTRY].numBlocks))
         {
             return;
         }
@@ -2959,11 +2959,11 @@ bool DRV_SDSPI_IsWriteProtected( const DRV_HANDLE handle )
 }
 
 <#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
-#pragma coverity compliance end_block "MISRA C-2012 Rule 11.1"
-#pragma coverity compliance end_block "MISRA C-2012 Rule 11.3"
-#pragma coverity compliance end_block "MISRA C-2012 Rule 11.8"
-#pragma coverity compliance end_block "MISRA C-2012 Rule 16.1"
-#pragma coverity compliance end_block "MISRA C-2012 Rule 16.3"
+#pragma coverity compliance end_block "MISRA C-2023 Rule 11.1"
+#pragma coverity compliance end_block "MISRA C-2023 Rule 11.3"
+#pragma coverity compliance end_block "MISRA C-2023 Rule 11.8"
+#pragma coverity compliance end_block "MISRA C-2023 Rule 16.1"
+#pragma coverity compliance end_block "MISRA C-2023 Rule 16.3"
 <#if core.COMPILER_CHOICE == "XC32">
 #pragma GCC diagnostic pop
 </#if>

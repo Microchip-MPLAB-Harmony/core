@@ -132,19 +132,19 @@ static void DRV_NAND_FLASH_RowAddressWrite(uint32_t rowAddress)
         rowAddress >>= 8;
     }
 }
-/* MISRA C-2012 Rule 11.1, 11.3, 11.6 and 11.8 deviated below. Deviation record ID -
-   H3_MISRAC_2012_R_11_1_DR_1, H3_MISRAC_2012_R_11_3_DR_1
-   H3_MISRAC_2012_R_11_6_DR_1 and H3_MISRAC_2012_R_11_8_DR_1*/
+/* MISRA C-2023 Rule 11.1, 11.3, 11.6 and 11.8 deviated below. Deviation record ID -
+   H3_MISRAC_2023_R_11_1_DR_1, H3_MISRAC_2023_R_11_3_DR_1
+   H3_MISRAC_2023_R_11_6_DR_1 and H3_MISRAC_2023_R_11_8_DR_1*/
 <#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
 <#if core.COMPILER_CHOICE == "XC32">
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Wunknown-pragmas"
 </#if>
 #pragma coverity compliance block \
-(deviate:1 "MISRA C-2012 Rule 11.1" "H3_MISRAC_2012_R_11_1_DR_1" )\
-(deviate:10 "MISRA C-2012 Rule 11.3" "H3_MISRAC_2012_R_11_3_DR_1" )\
-(deviate:7 "MISRA C-2012 Rule 11.6" "H3_MISRAC_2012_R_11_6_DR_1" )\
-(deviate:1 "MISRA C-2012 Rule 11.8" "H3_MISRAC_2012_R_11_8_DR_1" )
+(deviate:1 "MISRA C-2023 Rule 11.1" "H3_MISRAC_2023_R_11_1_DR_1" )\
+(deviate:10 "MISRA C-2023 Rule 11.3" "H3_MISRAC_2023_R_11_3_DR_1" )\
+(deviate:7 "MISRA C-2023 Rule 11.6" "H3_MISRAC_2023_R_11_6_DR_1" )\
+(deviate:1 "MISRA C-2023 Rule 11.8" "H3_MISRAC_2023_R_11_8_DR_1" )
 </#if>
 static void DRV_NAND_FLASH_DataWrite(uint32_t dataAddress, uint8_t *data, uint32_t size)
 {
@@ -467,7 +467,7 @@ static bool DRV_NAND_FLASH_PageReadPmecc(const DRV_HANDLE handle, uint16_t block
     uint32_t columnAddress = 0;
     uint32_t rowAddress = 0;
     DRV_NAND_FLASH_TRANSFER_STATUS transferStatus = DRV_NAND_FLASH_TRANSFER_BUSY;
-<#if core.DATA_CACHE_ENABLE?? && core.DATA_CACHE_ENABLE == true >
+<#if core.DMA_ENABLE?has_content && DRV_NAND_FLASH_TX_RX_DMA?? && DRV_NAND_FLASH_TX_RX_DMA == true && core.DATA_CACHE_ENABLE?? && core.DATA_CACHE_ENABLE == true>
     uint32_t temp;
 </#if>
 
@@ -700,7 +700,7 @@ static bool DRV_NAND_FLASH_PageWriteWithPMECC(const DRV_HANDLE handle, uint16_t 
     {
 <#if core.DATA_CACHE_ENABLE?? && core.DATA_CACHE_ENABLE == true >
         /* Clean the data buffer to push the data to the main memory */
-        SYS_CACHE_CleanDCache_by_Addr(gDrvNandFlashData.spareBuffer, DRV_NAND_FLASH_PMECC_ECC_SPARE_SIZE);
+        SYS_CACHE_CleanDCache_by_Addr(gDrvNandFlashData.spareBuffer, (int32_t)DRV_NAND_FLASH_PMECC_ECC_SPARE_SIZE);
 </#if>
         gDrvNandFlashObj.transferStatus = DRV_NAND_FLASH_TRANSFER_BUSY;
 
@@ -1363,10 +1363,10 @@ SYS_MODULE_OBJ DRV_NAND_FLASH_Initialize
     return drvIndex;
 }
 <#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
-#pragma coverity compliance end_block "MISRA C-2012 Rule 11.1"
-#pragma coverity compliance end_block "MISRA C-2012 Rule 11.3"
-#pragma coverity compliance end_block "MISRA C-2012 Rule 11.6"
-#pragma coverity compliance end_block "MISRA C-2012 Rule 11.8"
+#pragma coverity compliance end_block "MISRA C-2023 Rule 11.1"
+#pragma coverity compliance end_block "MISRA C-2023 Rule 11.3"
+#pragma coverity compliance end_block "MISRA C-2023 Rule 11.6"
+#pragma coverity compliance end_block "MISRA C-2023 Rule 11.8"
 <#if core.COMPILER_CHOICE == "XC32">
 #pragma GCC diagnostic pop
 </#if>

@@ -28,6 +28,10 @@ drv_sdspi_mcc_helpkeyword = "mcc_h3_drv_sdspi_configurations"
 
 fsCounter = 0
 
+#SHD
+global drvSdspiShdInstance
+drvSdspiShdInstance = None
+
 def enableFileSystemIntegration(symbol, event):
     symbol.setEnabled(event["value"])
 
@@ -77,6 +81,41 @@ def handleMessage(messageID, args):
             sdspiSymSYSDMAEnableCntr.setValue(sdspiSymSYSDMAEnableCntr.getValue() - 1)
         if sdspiSymSYSDMAEnableCntr.getValue() == 0:
             sdspiSymSYSDMACodeEnable.setValue(False)
+    if (messageID == "DRV_SDSPI_CONFIG_HW_IO"):
+        global drvSdspiShdInstance
+
+        result_dict = {"Result": "Fail"}
+        if drvSdspiShdInstance is not None:
+            component = "drv_sdspi_" + drvSdspiShdInstance
+            drvSdspiShdInstance = None
+
+            pinId, signalId, nameValue, enable = args['config']
+            key = "SYS_PORT_PIN_" + pinId
+            if signalId == "cs" and "_microSD_SS" in nameValue:
+                remoteComponent = Database.getComponentByID(component)
+                if remoteComponent is not None:
+                    symbol = remoteComponent.getSymbolByID("DRV_SDSPI_CHIP_SELECT_PIN")
+                    if symbol is not None:
+                        if enable == True:
+                            res = symbol.setSelectedKey(key)
+                            if res == True:
+                                result_dict = {"Result": "Success"}
+
+    elif (messageID == "DRV_SDSPI_CONFIG_INSTANCE_HW_IO"):
+        global drvSdspiShdInstance
+        
+        plib, enable = args['config']
+
+        activeCompList = Database.getActiveComponentIDs()
+        for component in activeCompList:
+            if "drv_sdspi_" in component:
+                instanceNum = component.split("_")[-1]
+                #get PLIB
+                instancePLIB = Database.getSymbolValue(component, "DRV_SDSPI_PLIB")
+                if instancePLIB.upper() == plib.upper():
+                    drvSdspiShdInstance = instanceNum
+
+        result_dict = {"Result": "Success"}
 
     return result_dict
 

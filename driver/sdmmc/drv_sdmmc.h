@@ -277,12 +277,12 @@ typedef SYS_MEDIA_EVENT_HANDLER DRV_SDMMC_EVENT_HANDLER;
     <code>
     DRV_SDMMC_INIT      init;
     SYS_MODULE_OBJ      objectHandle;
-    
+
 
     objectHandle = DRV_SDMMC_Initialize(DRV_SDMMC_INDEX_0, (SYS_MODULE_INIT*)&init);
     if (objectHandle == SYS_MODULE_OBJ_INVALID)
     {
-       
+
     }
     </code>
 
@@ -333,14 +333,14 @@ SYS_MODULE_OBJ DRV_SDMMC_Initialize
 
   Example:
     <code>
-    SYS_MODULE_OBJ      object;     
+    SYS_MODULE_OBJ      object;
     SYS_STATUS          status;
 
     status = DRV_SDMMC_Status(object);
 
     if (status == SYS_STATUS_READY)
     {
-        
+
     }
     </code>
 
@@ -378,12 +378,12 @@ SYS_STATUS DRV_SDMMC_Status
 
   Example:
     <code>
-    SYS_MODULE_OBJ      object;    
+    SYS_MODULE_OBJ      object;
 
     while (true)
     {
         DRV_SDMMC_Tasks (object);
-        
+
     }
     </code>
 
@@ -443,7 +443,7 @@ void DRV_SDMMC_Tasks
 
     if (handle == DRV_HANDLE_INVALID)
     {
-        
+
     }
     </code>
 
@@ -487,7 +487,7 @@ DRV_HANDLE DRV_SDMMC_Open
 
   Example:
     <code>
-    DRV_HANDLE handle;  
+    DRV_HANDLE handle;
 
     DRV_SDMMC_Close (handle);
     </code>
@@ -568,22 +568,22 @@ void DRV_SDMMC_Close
     <code>
 
     uint8_t CACHE_ALIGN myBuffer[MY_BUFFER_SIZE];
-    
+
     uint32_t blockStart = 0x00;
     uint32_t nBlock = 2;
     DRV_SDMMC_COMMAND_HANDLE commandHandle;
     MY_APP_OBJ myAppObj;
-    
+
 
     DRV_SDMMC_AsyncRead(mySDMMCHandle, &commandHandle, &myBuffer[0], blockStart, nBlock);
 
     if(commandHandle == DRV_SDMMC_COMMAND_HANDLE_INVALID)
     {
-        
+
     }
     else
     {
-        
+
     }
 
     </code>
@@ -662,12 +662,12 @@ void DRV_SDMMC_AsyncRead
     <code>
 
     uint8_t CACHE_ALIGN myBuffer[MY_BUFFER_SIZE];
-    
+
     uint32_t blockStart = 0x00;
     uint32_t nBlock = 2;
     DRV_SDMMC_COMMAND_HANDLE commandHandle;
     MY_APP_OBJ myAppObj;
-    
+
 
     void APP_SDMMCEventHandler(
         DRV_SDMMC_EVENT event,
@@ -675,18 +675,18 @@ void DRV_SDMMC_AsyncRead
         uintptr_t contextHandle
     )
     {
-        
+
         switch(event)
         {
             case DRV_SDMMC_EVENT_COMMAND_COMPLETE:
             {
-               
+
                 break;
             }
 
             case DRV_SDMMC_EVENT_COMMAND_ERROR:
             {
-                
+
                 break;
             }
 
@@ -695,7 +695,7 @@ void DRV_SDMMC_AsyncRead
                 break;
             }
         }
-    }    
+    }
 
     DRV_SDMMC_EventHandlerSet(mySDMMCHandle, APP_SDMMCEventHandler, (uintptr_t)&myAppObj);
 
@@ -703,7 +703,7 @@ void DRV_SDMMC_AsyncRead
 
     if(commandHandle == DRV_SDMMC_COMMAND_HANDLE_INVALID)
     {
-       
+
     }
 
     </code>
@@ -758,14 +758,14 @@ void DRV_SDMMC_AsyncWrite
 
   Example:
     <code>
-    DRV_HANDLE                    handle;         
+    DRV_HANDLE                    handle;
     DRV_SDMMC_COMMAND_HANDLE      commandHandle;
     DRV_SDMMC_COMMAND_STATUS      status;
 
     status = DRV_SDMMC_CommandStatus(handle, commandHandle);
     if(status == DRV_SDMMC_COMMAND_COMPLETED)
     {
-        
+
     }
     </code>
 
@@ -887,12 +887,12 @@ SYS_MEDIA_GEOMETRY* DRV_SDMMC_GeometryGet
     None.
 
   Example:
-    <code>   
+    <code>
     MY_APP_OBJ myAppObj;
 
     uint8_t CACHE_ALIGN myBuffer[MY_BUFFER_SIZE];
     uint32_t blockStart, nBlock;
-    DRV_SDMMC_COMMAND_HANDLE commandHandle;    
+    DRV_SDMMC_COMMAND_HANDLE commandHandle;
 
     void APP_SDMMCEventHandler(
         DRV_SDMMC_EVENT event,
@@ -900,20 +900,20 @@ SYS_MEDIA_GEOMETRY* DRV_SDMMC_GeometryGet
         uintptr_t context
     )
     {
-        
+
         MY_APP_OBJ myAppObj = (MY_APP_OBJ* ) context;
 
         switch(event)
         {
             case DRV_SDMMC_EVENT_COMMAND_COMPLETE:
             {
-               
+
                 break;
             }
 
             case DRV_SDMMC_EVENT_COMMAND_ERROR:
             {
-                
+
                 break;
             }
 
@@ -924,14 +924,14 @@ SYS_MEDIA_GEOMETRY* DRV_SDMMC_GeometryGet
         }
     }
 
-   
+
     DRV_SDMMC_EventHandlerSet(drvSDMMCHandle, APP_SDMMCEventHandler, (uintptr_t)&myAppObj);
 
     DRV_SDMMC_AsyncRead(drvSDMMCHandle, &commandHandle, &myBuffer[0], blockStart, nBlock);
 
     if(commandHandle == DRV_SDMMC_COMMAND_HANDLE_INVALID)
     {
-        
+
     }
 
     </code>
@@ -1037,6 +1037,971 @@ bool DRV_SDMMC_IsAttached
 bool DRV_SDMMC_IsWriteProtected
 (
     const DRV_HANDLE handle
+);
+
+// *****************************************************************************
+/* Function:
+    void DRV_SDMMC_Async_SDIO_ExtBlockWrite (
+        const DRV_HANDLE handle,
+        DRV_SDMMC_COMMAND_HANDLE* commandHandle,
+        uint8_t fn,
+        uint32_t regAddr,
+        void* wrData,
+        uint32_t nBlocks,
+        bool isAddrInc
+    );
+
+  Summary:
+    Writes blocks (chunks of 512 bytes) of data SDIO card (using CMD53 in block mode).
+
+  Description:
+    This function schedules a non-blocking write operation for writing blocks of data
+    to the SDIO Card.
+    The function returns with a valid buffer handle
+    in the commandHandle argument if the write request was scheduled successfully.
+    The function adds the request to the hardware instance queue and returns
+    immediately. While the request is in the queue, the application buffer is
+    owned by the driver and should not be modified. The function returns
+    DRV_SDMMC_COMMAND_HANDLE_INVALID in the commandHandle argument under the
+    following circumstances:
+    - if the driver handle is invalid
+    - if the source buffer pointer is NULL
+    - if the number of blocks to write is 0 or more than 511
+    - if a buffer object could not be allocated to the request
+
+    If the requesting client registered an event callback with the driver, the
+    driver will issue a DRV_SDMMC_EVENT_COMMAND_COMPLETE event if the
+    buffer was processed successfully or DRV_SDMMC_EVENT_COMMAND_ERROR
+    event if the buffer was not processed successfully.
+
+  Precondition:
+    The DRV_SDMMC_Initialize routine must have been called for the specified
+    SDMMC driver instance.
+
+    DRV_SDMMC_Open routine must have been called to obtain a valid opened device
+    handle.
+
+  Parameters:
+    handle        - A valid open-instance handle, returned from the driver's
+                    open function
+
+    commandHandle - Pointer to an argument that will contain the return buffer
+                    handle
+
+    fn            - SDIO function number
+
+    regAddr       - Address to read data from
+
+    wrData        - Pointer to data buffer to be written
+
+    nBlocks       - Number of blocks to write
+
+    isAddrInc     - Specifies if the destination address is to be incremented or not (OP Code)
+
+  Returns:
+    The buffer handle is returned in the commandHandle argument. It will be
+    DRV_SDMMC_COMMAND_HANDLE_INVALID if the request was not successful.
+
+  Example:
+    <code>
+
+    uint16_t CACHE_ALIGN card_data[512] = {0};
+    DRV_SDMMC_COMMAND_HANDLE writeHandle;
+    DRV_HANDLE sdmmcHandle;
+    MY_APP_OBJ myAppObj;
+
+    void APP_SDMMCEventHandler(
+        DRV_SDMMC_EVENT event,
+        DRV_SDMMC_COMMAND_HANDLE commandHandle,
+        uintptr_t contextHandle
+    )
+    {
+        switch(event)
+        {
+            case DRV_SDMMC_EVENT_COMMAND_COMPLETE:
+            {
+                
+                break;
+            }
+
+            case DRV_SDMMC_EVENT_COMMAND_ERROR:
+            {
+                
+                break;
+            }
+
+            default:
+            {
+                break;
+            }
+        }
+    }
+
+    DRV_SDMMC_EventHandlerSet(sdmmcHandle, APP_SDMMCEventHandler, (uintptr_t)&myAppObj);
+
+    DRV_SDMMC_Async_SDIO_ExtBlockWrite(sdmmcHandle, &writeHandle, DRV_SDMMC_FN0, 0, card_data, 1, true);
+
+    if(writeHandle == DRV_SDMMC_COMMAND_HANDLE_INVALID)
+    {
+
+    }
+
+    </code>
+
+  Remarks:
+    None.
+*/
+
+void DRV_SDMMC_Async_SDIO_ExtBlockWrite (
+    const DRV_HANDLE handle,
+    DRV_SDMMC_COMMAND_HANDLE* commandHandle,
+    uint8_t fn,
+    uint32_t regAddr,
+    void* wrData,
+    uint32_t nBlocks,
+    bool isAddrInc
+);
+
+// *****************************************************************************
+/* Function:
+    void DRV_SDMMC_Async_SDIO_ExtBlockRead (
+        const DRV_HANDLE handle,
+        DRV_SDMMC_COMMAND_HANDLE* commandHandle,
+        uint8_t fn,
+        uint32_t regAddr,
+        void* rdData,
+        uint32_t nBlocks,
+        bool isAddrInc
+    );
+
+  Summary:
+    Reads blocks (chunks of 512 bytes) of data from SDIO card (using CMD53 in block mode).
+
+  Description:
+    This function schedules a non-blocking read operation to read blocks of data
+    from the SDIO Card.
+    The function returns with a valid buffer handle
+    in the commandHandle argument if the read request was scheduled successfully.
+    The function adds the request to the hardware instance queue and returns
+    immediately. While the request is in the queue, the application buffer is
+    owned by the driver and should not be modified. The function returns
+    DRV_SDMMC_COMMAND_HANDLE_INVALID in the commandHandle argument under the
+    following circumstances:
+    - if the driver handle is invalid
+    - if the destination buffer pointer is NULL
+    - if the number of blocks to read is 0 or more than 511
+    - if a buffer object could not be allocated to the request
+
+    If the requesting client registered an event callback with the driver, the
+    driver will issue a DRV_SDMMC_EVENT_COMMAND_COMPLETE event if the
+    buffer was processed successfully or DRV_SDMMC_EVENT_COMMAND_ERROR
+    event if the buffer was not processed successfully.
+
+  Precondition:
+    The DRV_SDMMC_Initialize routine must have been called for the specified
+    SDMMC driver instance.
+
+    DRV_SDMMC_Open routine must have been called to obtain a valid opened device
+    handle.
+
+  Parameters:
+    handle        - A valid open-instance handle, returned from the driver's
+                    open function
+
+    commandHandle - Pointer to an argument that will contain the return buffer
+                    handle
+
+    fn            - SDIO function number
+
+    regAddr       - Address to read data from
+
+    rdData        - Pointer to data buffer to store the read data
+
+    nBlocks       - Number of blocks to read
+
+    isAddrInc     - Specifies if the destination address is to be incremented or not (OP Code)
+
+  Returns:
+    The buffer handle is returned in the commandHandle argument. It will be
+    DRV_SDMMC_COMMAND_HANDLE_INVALID if the request was not successful.
+
+  Example:
+    <code>
+
+    uint16_t CACHE_ALIGN card_data[512] = {0};
+    DRV_SDMMC_COMMAND_HANDLE readHandle;
+    DRV_HANDLE sdmmcHandle;
+    MY_APP_OBJ myAppObj;
+
+    void APP_SDMMCEventHandler(
+        DRV_SDMMC_EVENT event,
+        DRV_SDMMC_COMMAND_HANDLE commandHandle,
+        uintptr_t contextHandle
+    )
+    {
+        switch(event)
+        {
+            case DRV_SDMMC_EVENT_COMMAND_COMPLETE:
+            {
+                
+                break;
+            }
+
+            case DRV_SDMMC_EVENT_COMMAND_ERROR:
+            {
+                
+                break;
+            }
+
+            default:
+            {
+                break;
+            }
+        }
+    }
+
+    DRV_SDMMC_EventHandlerSet(sdmmcHandle, APP_SDMMCEventHandler, (uintptr_t)&myAppObj);
+
+    DRV_SDMMC_Async_SDIO_ExtBlockRead(sdmmcHandle, &readHandle, DRV_SDMMC_FN0, 0, card_data, 1, true);
+
+    if(readHandle == DRV_SDMMC_COMMAND_HANDLE_INVALID)
+    {
+
+    }
+
+    </code>
+
+  Remarks:
+    None.
+*/
+
+void DRV_SDMMC_Async_SDIO_ExtBlockRead (
+    const DRV_HANDLE handle,
+    DRV_SDMMC_COMMAND_HANDLE* commandHandle,
+    uint8_t fn,
+    uint32_t regAddr,
+    void* rdData,
+    uint32_t nBlocks,
+    bool isAddrInc
+);
+
+// *****************************************************************************
+/* Function:
+    void DRV_SDMMC_Async_SDIO_ExtBytesWrite (
+        const DRV_HANDLE handle,
+        DRV_SDMMC_COMMAND_HANDLE* commandHandle,
+        uint8_t fn,
+        uint32_t regAddr,
+        void* wrData,
+        uint32_t nBytes,
+        bool isAddrInc
+    );
+
+  Summary:
+    Writes data to SDIO card (using CMD53 in byte mode).
+
+  Description:
+    This function schedules a non-blocking write operation for writing data to the SDIO Card.
+    The function returns with a valid buffer handle
+    in the commandHandle argument if the write request was scheduled successfully.
+    The function adds the request to the hardware instance queue and returns
+    immediately. While the request is in the queue, the application buffer is
+    owned by the driver and should not be modified. The function returns
+    DRV_SDMMC_COMMAND_HANDLE_INVALID in the commandHandle argument under the
+    following circumstances:
+    - if the driver handle is invalid
+    - if the destination buffer pointer is NULL
+    - if the number of bytes to write is 0 or more than 511
+    - if a buffer object could not be allocated to the request
+
+    If the requesting client registered an event callback with the driver, the
+    driver will issue a DRV_SDMMC_EVENT_COMMAND_COMPLETE event if the
+    buffer was processed successfully or DRV_SDMMC_EVENT_COMMAND_ERROR
+    event if the buffer was not processed successfully.
+
+  Precondition:
+    The DRV_SDMMC_Initialize routine must have been called for the specified
+    SDMMC driver instance.
+
+    DRV_SDMMC_Open routine must have been called to obtain a valid opened device
+    handle.
+
+  Parameters:
+    handle        - A valid open-instance handle, returned from the driver's
+                    open function
+
+    commandHandle - Pointer to an argument that will contain the return buffer
+                    handle
+
+    fn            - SDIO function number
+
+    regAddr       - Address to read data from
+
+    wrData        - Pointer to data buffer to be written
+
+    nBytes        - Number of bytes to write
+
+    isAddrInc     - Specifies if the destination address is to be incremented or not (OP Code)
+
+  Returns:
+    The buffer handle is returned in the commandHandle argument. It will be
+    DRV_SDMMC_COMMAND_HANDLE_INVALID if the request was not successful.
+
+  Example:
+    <code>
+
+    uint16_t CACHE_ALIGN fn0_block_sz = 512;
+    DRV_SDMMC_COMMAND_HANDLE writeHandle;
+    DRV_HANDLE sdmmcHandle;
+    MY_APP_OBJ myAppObj;
+
+    void APP_SDMMCEventHandler(
+        DRV_SDMMC_EVENT event,
+        DRV_SDMMC_COMMAND_HANDLE commandHandle,
+        uintptr_t contextHandle
+    )
+    {
+        switch(event)
+        {
+            case DRV_SDMMC_EVENT_COMMAND_COMPLETE:
+            {
+                
+                break;
+            }
+
+            case DRV_SDMMC_EVENT_COMMAND_ERROR:
+            {
+                
+                break;
+            }
+
+            default:
+            {
+                break;
+            }
+        }
+    }
+
+    DRV_SDMMC_EventHandlerSet(sdmmcHandle, APP_SDMMCEventHandler, (uintptr_t)&myAppObj);
+
+    DRV_SDMMC_Async_SDIO_ExtBytesWrite(sdmmcHandle, &writeHandle, DRV_SDMMC_FN0, 0x10, &fn0_block_sz, 2, true);
+
+    if(writeHandle == DRV_SDMMC_COMMAND_HANDLE_INVALID)
+    {
+
+    }
+
+    </code>
+
+  Remarks:
+    None.
+*/
+
+void DRV_SDMMC_Async_SDIO_ExtBytesWrite (
+    const DRV_HANDLE handle,
+    DRV_SDMMC_COMMAND_HANDLE* commandHandle,
+    uint8_t fn,
+    uint32_t regAddr,
+    void* wrData,
+    uint32_t nBytes,
+    bool isAddrInc
+);
+
+// *****************************************************************************
+/* Function:
+    void DRV_SDMMC_Async_SDIO_ExtBytesRead (
+        const DRV_HANDLE handle,
+        DRV_SDMMC_COMMAND_HANDLE* commandHandle,
+        uint8_t fn,
+        uint32_t regAddr,
+        void* rdData,
+        uint32_t nBytes,
+        bool isAddrInc
+    );
+
+  Summary:
+    Reads data from SDIO card (using CMD53 in byte mode).
+
+  Description:
+    This function schedules a non-blocking read operation for reading data from the SDIO Card.
+    The function returns with a valid buffer handle
+    in the commandHandle argument if the read request was scheduled successfully.
+    The function adds the request to the hardware instance queue and returns
+    immediately. While the request is in the queue, the application buffer is
+    owned by the driver and should not be modified. The function returns
+    DRV_SDMMC_COMMAND_HANDLE_INVALID in the commandHandle argument under the
+    following circumstances:
+    - if the driver handle is invalid
+    - if the destination buffer pointer is NULL
+    - if the number of bytes to read is 0 or more than 511
+    - if a buffer object could not be allocated to the request
+
+    If the requesting client registered an event callback with the driver, the
+    driver will issue a DRV_SDMMC_EVENT_COMMAND_COMPLETE event if the
+    buffer was processed successfully or DRV_SDMMC_EVENT_COMMAND_ERROR
+    event if the buffer was not processed successfully.
+
+  Precondition:
+    The DRV_SDMMC_Initialize routine must have been called for the specified
+    SDMMC driver instance.
+
+    DRV_SDMMC_Open routine must have been called to obtain a valid opened device
+    handle.
+
+  Parameters:
+    handle        - A valid open-instance handle, returned from the driver's
+                    open function
+
+    commandHandle - Pointer to an argument that will contain the return buffer
+                    handle
+
+    fn            - SDIO function number
+
+    regAddr       - Address to read data from
+
+    rdData        - Pointer to destination buffer where the data read from the SDIO card needs to be saved
+
+    nBytes        - Number of bytes to read
+
+    isAddrInc     - Specifies if the destination address is to be incremented or not (OP Code)
+
+  Returns:
+    The buffer handle is returned in the commandHandle argument. It will be
+    DRV_SDMMC_COMMAND_HANDLE_INVALID if the request was not successful.
+
+  Example:
+    <code>
+
+    uint16_t CACHE_ALIGN fn0_block_sz;
+    DRV_SDMMC_COMMAND_HANDLE readHandle;
+    DRV_HANDLE sdmmcHandle;
+    MY_APP_OBJ myAppObj;
+
+    void APP_SDMMCEventHandler(
+        DRV_SDMMC_EVENT event,
+        DRV_SDMMC_COMMAND_HANDLE commandHandle,
+        uintptr_t contextHandle
+    )
+    {
+        switch(event)
+        {
+            case DRV_SDMMC_EVENT_COMMAND_COMPLETE:
+            {
+                
+                break;
+            }
+
+            case DRV_SDMMC_EVENT_COMMAND_ERROR:
+            {
+                
+                break;
+            }
+
+            default:
+            {
+                break;
+            }
+        }
+    }
+
+    DRV_SDMMC_EventHandlerSet(sdmmcHandle, APP_SDMMCEventHandler, (uintptr_t)&myAppObj);
+
+    DRV_SDMMC_Async_SDIO_ExtBytesRead(sdmmcHandle, &readHandle, DRV_SDMMC_FN0, 0x10, &fn0_block_sz, 2, true);
+
+    if(readHandle == DRV_SDMMC_COMMAND_HANDLE_INVALID)
+    {
+
+    }
+
+    </code>
+
+  Remarks:
+    None.
+*/
+
+void DRV_SDMMC_Async_SDIO_ExtBytesRead (
+    const DRV_HANDLE handle,
+    DRV_SDMMC_COMMAND_HANDLE* commandHandle,
+    uint8_t fn,
+    uint32_t regAddr,
+    void* rdData,
+    uint32_t nBytes,
+    bool isAddrInc
+);
+
+// *****************************************************************************
+/* Function:
+    void DRV_SDMMC_Async_SDIO_DirByteWrite (
+        const DRV_HANDLE handle,
+        DRV_SDMMC_COMMAND_HANDLE* commandHandle,
+        uint8_t fn,
+        uint32_t regAddr,
+        uint8_t* wrData,
+        bool raw
+    );
+
+
+  Summary:
+    Writes a byte of data from the SDIO card (using CMD52)
+
+  Description:
+    This function schedules a non-blocking write operation for writing data to the SDIO Card.
+    The function returns with a valid buffer handle
+    in the commandHandle argument if the write request was scheduled successfully.
+    The function adds the request to the hardware instance queue and returns
+    immediately. While the request is in the queue, the application buffer is
+    owned by the driver and should not be modified. The function returns
+    DRV_SDMMC_COMMAND_HANDLE_INVALID in the commandHandle argument under the
+    following circumstances:
+    - if the driver handle is invalid
+    - if the source address pointer is NULL
+    - if a buffer object could not be allocated to the request
+
+    If the requesting client registered an event callback with the driver, the
+    driver will issue a DRV_SDMMC_EVENT_COMMAND_COMPLETE event if the
+    buffer was processed successfully or DRV_SDMMC_EVENT_COMMAND_ERROR
+    event if the buffer was not processed successfully.
+
+  Precondition:
+    The DRV_SDMMC_Initialize routine must have been called for the specified
+    SDMMC driver instance.
+
+    DRV_SDMMC_Open routine must have been called to obtain a valid opened device
+    handle.
+
+  Parameters:
+    handle        - A valid open-instance handle, returned from the driver's
+                    open function
+
+    commandHandle - Pointer to an argument that will contain the return buffer
+                    handle
+
+    fn            - SDIO function number
+
+    regAddr       - Address to read data from
+
+    wrData        - Pointer to the data to be written
+
+  Returns:
+    The buffer handle is returned in the commandHandle argument. It will be
+    DRV_SDMMC_COMMAND_HANDLE_INVALID if the request was not successful.
+
+  Example:
+    <code>
+
+    uint8_t CACHE_ALIGN io_en = 0x01;
+    DRV_SDMMC_COMMAND_HANDLE writeHandle;
+    DRV_HANDLE sdmmcHandle;
+    MY_APP_OBJ myAppObj;
+
+    void APP_SDMMCEventHandler(
+        DRV_SDMMC_EVENT event,
+        DRV_SDMMC_COMMAND_HANDLE commandHandle,
+        uintptr_t contextHandle
+    )
+    {
+        switch(event)
+        {
+            case DRV_SDMMC_EVENT_COMMAND_COMPLETE:
+            {
+                
+                break;
+            }
+
+            case DRV_SDMMC_EVENT_COMMAND_ERROR:
+            {
+                
+                break;
+            }
+
+            default:
+            {
+                break;
+            }
+        }
+    }
+
+    DRV_SDMMC_EventHandlerSet(sdmmcHandle, APP_SDMMCEventHandler, (uintptr_t)&myAppObj);
+
+    DRV_SDMMC_Async_SDIO_DirByteWrite(sdmmcHandle, &writeHandle, DRV_SDMMC_FN0, DRV_SDMMC_CCCR_ADDR_IO_EN, &io_en);
+
+    if(writeHandle == DRV_SDMMC_COMMAND_HANDLE_INVALID)
+    {
+
+    }
+
+    </code>
+
+  Remarks:
+    None.
+*/
+
+void DRV_SDMMC_Async_SDIO_DirByteWrite (
+    const DRV_HANDLE handle,
+    DRV_SDMMC_COMMAND_HANDLE* commandHandle,
+    uint8_t fn,
+    uint32_t regAddr,
+    uint8_t* wrData,
+    bool raw
+);
+
+// *****************************************************************************
+/* Function:
+    void DRV_SDMMC_Async_SDIO_DirByteRead (
+        const DRV_HANDLE handle,
+        DRV_SDMMC_COMMAND_HANDLE* commandHandle,
+        uint8_t fn,
+        uint32_t regAddr,
+        uint8_t* rdData
+    );
+
+  Summary:
+    Reads a byte of data from the SDIO card (using CMD52)
+
+  Description:
+    This function schedules a non-blocking read operation for reading data from the SDIO Card.
+    The function returns with a valid buffer handle
+    in the commandHandle argument if the read request was scheduled successfully.
+    The function adds the request to the hardware instance queue and returns
+    immediately. While the request is in the queue, the application buffer is
+    owned by the driver and should not be modified. The function returns
+    DRV_SDMMC_COMMAND_HANDLE_INVALID in the commandHandle argument under the
+    following circumstances:
+    - if the driver handle is invalid
+    - if the destination address pointer is NULL
+    - if a buffer object could not be allocated to the request
+
+    If the requesting client registered an event callback with the driver, the
+    driver will issue a DRV_SDMMC_EVENT_COMMAND_COMPLETE event if the
+    buffer was processed successfully or DRV_SDMMC_EVENT_COMMAND_ERROR
+    event if the buffer was not processed successfully.
+
+  Precondition:
+    The DRV_SDMMC_Initialize routine must have been called for the specified
+    SDMMC driver instance.
+
+    DRV_SDMMC_Open routine must have been called to obtain a valid opened device
+    handle.
+
+  Parameters:
+    handle        - A valid open-instance handle, returned from the driver's
+                    open function
+
+    commandHandle - Pointer to an argument that will contain the return buffer
+                    handle
+
+    fn            - SDIO function number
+
+    regAddr       - Address to read data from
+
+    rdData        - Pointer to destination address where the data byte read from the SDIO card needs to be saved
+
+  Returns:
+    The buffer handle is returned in the commandHandle argument. It will be
+    DRV_SDMMC_COMMAND_HANDLE_INVALID if the request was not successful.
+
+  Example:
+    <code>
+
+    uint8_t CACHE_ALIGN sdio_rev;
+    DRV_SDMMC_COMMAND_HANDLE readHandle;
+    DRV_HANDLE sdmmcHandle;
+    MY_APP_OBJ myAppObj;
+
+    void APP_SDMMCEventHandler(
+        DRV_SDMMC_EVENT event,
+        DRV_SDMMC_COMMAND_HANDLE commandHandle,
+        uintptr_t contextHandle
+    )
+    {
+        switch(event)
+        {
+            case DRV_SDMMC_EVENT_COMMAND_COMPLETE:
+            {
+                
+                break;
+            }
+
+            case DRV_SDMMC_EVENT_COMMAND_ERROR:
+            {
+                
+                break;
+            }
+
+            default:
+            {
+                break;
+            }
+        }
+    }
+
+    DRV_SDMMC_EventHandlerSet(sdmmcHandle, APP_SDMMCEventHandler, (uintptr_t)&myAppObj);
+
+    DRV_SDMMC_Async_SDIO_DirByteRead(sdmmcHandle, &readHandle, DRV_SDMMC_FN0, DRV_SDMMC_CCCR_ADDR_SDIO_REV, &sdio_rev);
+
+    if(readHandle == DRV_SDMMC_COMMAND_HANDLE_INVALID)
+    {
+
+    }
+
+    </code>
+
+  Remarks:
+    None.
+*/
+
+void DRV_SDMMC_Async_SDIO_DirByteRead (
+    const DRV_HANDLE handle,
+    DRV_SDMMC_COMMAND_HANDLE* commandHandle,
+    uint8_t fn,
+    uint32_t regAddr,
+    uint8_t* rdData
+);
+
+// *****************************************************************************
+/* Function:
+    void DRV_SDMMC_Async_SDIO_Read (
+        const DRV_HANDLE handle,
+        DRV_SDMMC_COMMAND_HANDLE* commandHandle,
+        uint8_t fn,
+        uint32_t regAddr,
+        void* rdData,
+        uint32_t nBytes,
+        bool isAddrInc
+    );
+
+  Summary:
+    Reads data from SDIO card.
+
+  Description:
+    This function schedules a non-blocking read operation for reading data from the SDIO Card.
+    The function returns with a valid buffer handle
+    in the commandHandle argument if the read request was scheduled successfully.
+    The function adds the request to the hardware instance queue and returns
+    immediately. While the request is in the queue, the application buffer is
+    owned by the driver and should not be modified. The function returns
+    DRV_SDMMC_COMMAND_HANDLE_INVALID in the commandHandle argument under the
+    following circumstances:
+    - if the driver handle is invalid
+    - if the destination buffer pointer is NULL
+    - if the number of bytes to read is zero
+    - if the number of bytes to read is greater than 511 and is not a multiple of 512 bytes
+    - if a buffer object could not be allocated to the request
+
+    If the requesting client registered an event callback with the driver, the
+    driver will issue a DRV_SDMMC_EVENT_COMMAND_COMPLETE event if the
+    buffer was processed successfully or DRV_SDMMC_EVENT_COMMAND_ERROR
+    event if the buffer was not processed successfully.
+
+  Precondition:
+    The DRV_SDMMC_Initialize routine must have been called for the specified
+    SDMMC driver instance.
+
+    DRV_SDMMC_Open routine must have been called to obtain a valid opened device
+    handle.
+
+  Parameters:
+    handle        - A valid open-instance handle, returned from the driver's
+                    open function
+
+    commandHandle - Pointer to an argument that will contain the return buffer
+                    handle
+
+    fn            - SDIO function number
+
+    regAddr       - Address to read data from
+
+    rdData        - Pointer to destination buffer where the data read from the SDIO card needs to be saved
+
+    nBytes        - Number of bytes to read
+
+    isAddrInc     - Specifies if the destination address is to be incremented or not (OP Code)
+
+  Returns:
+    The buffer handle is returned in the commandHandle argument. It will be
+    DRV_SDMMC_COMMAND_HANDLE_INVALID if the request was not successful.
+
+  Example:
+    <code>
+
+    uint16_t CACHE_ALIGN fn0_block_sz;
+    DRV_SDMMC_COMMAND_HANDLE readHandle;
+    DRV_HANDLE sdmmcHandle;
+    MY_APP_OBJ myAppObj;
+
+    void APP_SDMMCEventHandler(
+        DRV_SDMMC_EVENT event,
+        DRV_SDMMC_COMMAND_HANDLE commandHandle,
+        uintptr_t contextHandle
+    )
+    {
+        switch(event)
+        {
+            case DRV_SDMMC_EVENT_COMMAND_COMPLETE:
+            {
+                
+                break;
+            }
+
+            case DRV_SDMMC_EVENT_COMMAND_ERROR:
+            {
+                
+                break;
+            }
+
+            default:
+            {
+                break;
+            }
+        }
+    }
+
+    DRV_SDMMC_EventHandlerSet(sdmmcHandle, APP_SDMMCEventHandler, (uintptr_t)&myAppObj);
+
+    DRV_SDMMC_Async_SDIO_Read(sdmmcHandle, &readHandle, DRV_SDMMC_FN0, 0x10, &fn0_block_sz, 2, true);
+
+    if(readHandle == DRV_SDMMC_COMMAND_HANDLE_INVALID)
+    {
+
+    }
+
+    </code>
+
+  Remarks:
+    None.
+*/
+
+void DRV_SDMMC_Async_SDIO_Read (
+    const DRV_HANDLE handle,
+    DRV_SDMMC_COMMAND_HANDLE* commandHandle,
+    uint8_t fn,
+    uint32_t regAddr,
+    void* rdData,
+    uint32_t nBytes,
+    bool isAddrInc
+);
+
+// *****************************************************************************
+/* Function:
+    void DRV_SDMMC_Async_SDIO_Write (
+        const DRV_HANDLE handle,
+        DRV_SDMMC_COMMAND_HANDLE* commandHandle,
+        uint8_t fn,
+        uint32_t regAddr,
+        void* wrData,
+        uint32_t nBytes,
+        bool isAddrInc
+    );
+
+  Summary:
+    Writes data to SDIO card.
+
+  Description:
+    This function schedules a non-blocking write operation for writing data to the SDIO Card.
+    The function returns with a valid buffer handle
+    in the commandHandle argument if the write request was scheduled successfully.
+    The function adds the request to the hardware instance queue and returns
+    immediately. While the request is in the queue, the application buffer is
+    owned by the driver and should not be modified. The function returns
+    DRV_SDMMC_COMMAND_HANDLE_INVALID in the commandHandle argument under the
+    following circumstances:
+    - if the driver handle is invalid
+    - if the source buffer pointer is NULL
+    - if the number of bytes to write is zero
+    - if the number of bytes to write is greater than 511 and is not a multiple of 512 bytes
+    - if a buffer object could not be allocated to the request
+
+    If the requesting client registered an event callback with the driver, the
+    driver will issue a DRV_SDMMC_EVENT_COMMAND_COMPLETE event if the
+    buffer was processed successfully or DRV_SDMMC_EVENT_COMMAND_ERROR
+    event if the buffer was not processed successfully.
+
+  Precondition:
+    The DRV_SDMMC_Initialize routine must have been called for the specified
+    SDMMC driver instance.
+
+    DRV_SDMMC_Open routine must have been called to obtain a valid opened device
+    handle.
+
+  Parameters:
+    handle        - A valid open-instance handle, returned from the driver's
+                    open function
+
+    commandHandle - Pointer to an argument that will contain the return buffer
+                    handle
+
+    fn            - SDIO function number
+
+    regAddr       - Address to write to
+
+    wrData        - Pointer to source buffer containing data to be written to the SDIO Card.
+
+    nBytes        - Number of bytes to write
+
+    isAddrInc     - Specifies if the destination address is to be incremented or not (OP Code)
+
+  Returns:
+    The buffer handle is returned in the commandHandle argument. It will be
+    DRV_SDMMC_COMMAND_HANDLE_INVALID if the request was not successful.
+
+  Example:
+    <code>
+
+    uint16_t CACHE_ALIGN fn0_block_sz = 512;
+    DRV_SDMMC_COMMAND_HANDLE writeHandle;
+    DRV_HANDLE sdmmcHandle;
+    MY_APP_OBJ myAppObj;
+
+    void APP_SDMMCEventHandler(
+        DRV_SDMMC_EVENT event,
+        DRV_SDMMC_COMMAND_HANDLE commandHandle,
+        uintptr_t contextHandle
+    )
+    {
+        switch(event)
+        {
+            case DRV_SDMMC_EVENT_COMMAND_COMPLETE:
+            {
+                
+                break;
+            }
+
+            case DRV_SDMMC_EVENT_COMMAND_ERROR:
+            {
+                
+                break;
+            }
+
+            default:
+            {
+                break;
+            }
+        }
+    }
+
+    DRV_SDMMC_EventHandlerSet(sdmmcHandle, APP_SDMMCEventHandler, (uintptr_t)&myAppObj);
+
+    DRV_SDMMC_Async_SDIO_Write(sdmmcHandle, &writeHandle, DRV_SDMMC_FN0, 0x10, &fn0_block_sz, 2, true);
+
+    if(writeHandle == DRV_SDMMC_COMMAND_HANDLE_INVALID)
+    {
+
+    }
+
+    </code>
+
+  Remarks:
+    None.
+*/
+
+void DRV_SDMMC_Async_SDIO_Write (
+    const DRV_HANDLE handle,
+    DRV_SDMMC_COMMAND_HANDLE* commandHandle,
+    uint8_t fn,
+    uint32_t regAddr,
+    void* wrData,
+    uint32_t nBytes,
+    bool isAddrInc
 );
 
 #ifdef __cplusplus

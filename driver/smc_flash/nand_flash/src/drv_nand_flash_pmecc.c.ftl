@@ -3155,13 +3155,13 @@ static const uint16_t pmeccGf1024[2][PMECC_GF_1024_SIZE] = {
 // Section: NAND FLASH Driver PMECC Local Functions
 // *****************************************************************************
 // *****************************************************************************
-/* MISRA C-2012 Rule 11.3 deviated:4 Deviation record ID -  H3_MISRAC_2012_R_11_3_DR_1 */
+/* MISRA C-2023 Rule 11.3 deviated:4 Deviation record ID -  H3_MISRAC_2023_R_11_3_DR_1 */
 <#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
 <#if core.COMPILER_CHOICE == "XC32">
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Wunknown-pragmas"
 </#if>
-#pragma coverity compliance block deviate:4 "MISRA C-2012 Rule 11.3" "H3_MISRAC_2012_R_11_3_DR_1"    
+#pragma coverity compliance block deviate:4 "MISRA C-2023 Rule 11.3" "H3_MISRAC_2023_R_11_3_DR_1"
 </#if>
 static void DRV_NAND_FLASH_PmeccGetGf512Tables(const int16_t **alphaTo, const int16_t **indexOf)
 {
@@ -3175,27 +3175,27 @@ static void DRV_NAND_FLASH_PmeccGetGf1024Tables(const int16_t **alphaTo, const i
     *alphaTo = (const int16_t*)&(pmeccGf1024[1]);
 }
 <#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
-#pragma coverity compliance end_block "MISRA C-2012 Rule 11.3"
+#pragma coverity compliance end_block "MISRA C-2023 Rule 11.3"
 <#if core.COMPILER_CHOICE == "XC32">
 #pragma GCC diagnostic pop
-</#if>    
+</#if>
 /* MISRAC 2012 deviation block end */
 </#if>
 
-/* MISRA C-2012 Rule 10.1, 10.3, 10.4, 10.8, and 14.3 deviated below. 
-  Deviation record ID - H3_MISRAC_2012_R_10_1_DR_1, H3_MISRAC_2012_R_10_3_DR_1,
-  H3_MISRAC_2012_R_10_4_DR_1, H3_MISRAC_2012_R_10_8_DR_1 and H3_MISRAC_2012_R_14_3_DR_1*/
+/* MISRA C-2023 Rule 10.1, 10.3, 10.4, 10.8, and 14.3 deviated below.
+  Deviation record ID - H3_MISRAC_2023_R_10_1_DR_1, H3_MISRAC_2023_R_10_3_DR_1,
+  H3_MISRAC_2023_R_10_4_DR_1, H3_MISRAC_2023_R_10_8_DR_1 and H3_MISRAC_2023_R_14_3_DR_1*/
 <#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
 <#if core.COMPILER_CHOICE == "XC32">
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Wunknown-pragmas"
 </#if>
 #pragma coverity compliance block \
-(deviate:26 "MISRA C-2012 Rule 10.1" "H3_MISRAC_2012_R_10_1_DR_1" )\
-(deviate:5 "MISRA C-2012 Rule 10.3" "H3_MISRAC_2012_R_10_3_DR_1" )\
-(deviate:1 "MISRA C-2012 Rule 10.4" "H3_MISRAC_2012_R_10_4_DR_1" )\
-(deviate:3 "MISRA C-2012 Rule 10.8" "H3_MISRAC_2012_R_10_8_DR_1" )\
-(deviate:1 "MISRA C-2012 Rule 14.3" "H3_MISRAC_2012_R_14_3_DR_1" )  
+(deviate:26 "MISRA C-2023 Rule 10.1" "H3_MISRAC_2023_R_10_1_DR_1" )\
+(deviate:5 "MISRA C-2023 Rule 10.3" "H3_MISRAC_2023_R_10_3_DR_1" )\
+(deviate:1 "MISRA C-2023 Rule 10.4" "H3_MISRAC_2023_R_10_4_DR_1" )\
+(deviate:3 "MISRA C-2023 Rule 10.8" "H3_MISRAC_2023_R_10_8_DR_1" )\
+(deviate:1 "MISRA C-2023 Rule 14.3" "H3_MISRAC_2023_R_14_3_DR_1" )
 </#if>
 static void DRV_NAND_FLASH_GenPartialSyndromes(uint32_t sector)
 {
@@ -3222,10 +3222,10 @@ static uint32_t DRV_NAND_FLASH_Substitute(void)
 
     /* Computation 2t syndromes based on S(x) */
     /* Odd syndromes */
-    for (i = 1; i <= ((2 * gDrvNandPmeccDescriptor.tt) - 1); i = i + 2) 
+    for (i = 1; i <= ((2 * gDrvNandPmeccDescriptor.tt) - 1); i = i + 2)
     {
         si[i] = 0;
-        for (j = 0; j < gDrvNandPmeccDescriptor.mm; j++) 
+        for (j = 0; j < gDrvNandPmeccDescriptor.mm; j++)
         {
             if (((uint16_t)partialSyn[i] & ((uint16_t)0x1 << j)) != 0U)
             {
@@ -3234,14 +3234,14 @@ static uint32_t DRV_NAND_FLASH_Substitute(void)
         }
     }
     /* Even syndrome = (Odd syndrome) ** 2 */
-    for (i = 2; i <= (2 * gDrvNandPmeccDescriptor.tt); i = i + 2) 
+    for (i = 2; i <= (2 * gDrvNandPmeccDescriptor.tt); i = i + 2)
     {
         j = i / 2;
-        if (si[j] == 0) 
+        if (si[j] == 0)
         {
             si[i] = 0;
-        } 
-        else 
+        }
+        else
         {
             si[i] = alphaTo[(2 * indexOf[si[j]]) % (int16_t)gDrvNandPmeccDescriptor.nn];
         }
@@ -3323,7 +3323,7 @@ static uint32_t DRV_NAND_FLASH_GetSigma(void)
             dmu_0_count++;
             if (((tt - (lmu[i] >> 1) - 1) & 0x1) != 0)
             {
-                if (dmu_0_count == (uint32_t)((tt - (lmu[i] >> 1) - 1) / 2) + 2U) 
+                if (dmu_0_count == (uint32_t)((tt - (lmu[i] >> 1) - 1) / 2) + 2U)
                 {
                     for (j = 0; j <= ((lmu[i] >> 1) + 1); j++)
                     {
@@ -3332,10 +3332,10 @@ static uint32_t DRV_NAND_FLASH_GetSigma(void)
                     lmu[tt + 1] = lmu[i];
                     return 0;
                 }
-            } 
-            else 
+            }
+            else
             {
-                if (dmu_0_count == (uint32_t)((tt - (lmu[i] >> 1) - 1) / 2) + 1U) 
+                if (dmu_0_count == (uint32_t)((tt - (lmu[i] >> 1) - 1) / 2) + 1U)
                 {
                     for (j = 0; j <= ((lmu[i] >> 1) + 1); j++)
                     {
@@ -3354,17 +3354,17 @@ static uint32_t DRV_NAND_FLASH_GetSigma(void)
 
             /* copy previous polynom order to the next */
             lmu[i + 1] = lmu[i];
-        } 
-        else 
+        }
+        else
         {
             /* find largest delta with dmu != 0 */
             ro = 0;
             largest = -1;
-            for (j = 0; j < i; j++) 
+            for (j = 0; j < i; j++)
             {
-                if ((dmu[j]) != 0)  
+                if ((dmu[j]) != 0)
                 {
-                    if (delta[j] > largest) 
+                    if (delta[j] > largest)
                     {
                         largest = delta[j];
                         ro = j;
@@ -3392,7 +3392,7 @@ static uint32_t DRV_NAND_FLASH_GetSigma(void)
             }
 
             /* Compute smu[i+1] */
-            for (k = 0; k <= (lmu[ro] >> 1); k++) 
+            for (k = 0; k <= (lmu[ro] >> 1); k++)
             {
                 if ((gDrvNandPmeccDescriptor.smu[ro][k] != 0) && (dmu[i] != 0))
                 {
@@ -3415,9 +3415,9 @@ static uint32_t DRV_NAND_FLASH_GetSigma(void)
         delta[i + 1] = ((mu[i + 1] * 2) - lmu[i + 1]) >> 1;
 
         /* Do not compute discrepancy for the last iteration */
-        if (i < tt) 
+        if (i < tt)
         {
-            for (k = 0 ; k <= (lmu[i + 1] >> 1); k++) 
+            for (k = 0 ; k <= (lmu[i + 1] >> 1); k++)
             {
                 if (k == 0)
                 {
@@ -3573,13 +3573,13 @@ bool DRV_NAND_FLASH_PmeccCorrection(uint32_t pmeccStatus, uint32_t pageBuffer)
 }
 
 <#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
-#pragma coverity compliance end_block "MISRA C-2012 Rule 10.1"
-#pragma coverity compliance end_block "MISRA C-2012 Rule 10.3"
-#pragma coverity compliance end_block "MISRA C-2012 Rule 10.4"
-#pragma coverity compliance end_block "MISRA C-2012 Rule 10.8"
-#pragma coverity compliance end_block "MISRA C-2012 Rule 14.3"
+#pragma coverity compliance end_block "MISRA C-2023 Rule 10.1"
+#pragma coverity compliance end_block "MISRA C-2023 Rule 10.3"
+#pragma coverity compliance end_block "MISRA C-2023 Rule 10.4"
+#pragma coverity compliance end_block "MISRA C-2023 Rule 10.8"
+#pragma coverity compliance end_block "MISRA C-2023 Rule 14.3"
 <#if core.COMPILER_CHOICE == "XC32">
 #pragma GCC diagnostic pop
-</#if>    
-</#if> 
+</#if>
+</#if>
 /* MISRAC 2012 deviation block end */

@@ -38,6 +38,7 @@
 // DOM-IGNORE-END
 #include "FreeRTOS.h"
 #include "task.h"
+${LIST_FREERTOS_HOOKS_C_INCLUDES}
 
 void vApplicationIdleHook( void );
 void vApplicationTickHook( void );
@@ -49,7 +50,7 @@ void vAssertCalled( const char * pcFile, unsigned long ulLine );
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Wunknown-pragmas"
 </#if>
-#pragma coverity compliance block deviate:1 "MISRA C-2012 Rule 12.2" "H3_MISRAC_2012_R_12_2_DR_1"
+#pragma coverity compliance block deviate:1 "MISRA C-2023 Rule 12.2" "H3_MISRAC_2023_R_12_2_DR_1"
 </#if>
 </#if>
 /*
@@ -131,7 +132,7 @@ void vApplicationMallocFailedHook( void )
 }
 <#if core.CoreArchitecture == "MIPS">
 <#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
-#pragma coverity compliance end_block "MISRA C-2012 Rule 12.2"
+#pragma coverity compliance end_block "MISRA C-2023 Rule 12.2"
 <#if core.COMPILER_CHOICE == "XC32">
 #pragma GCC diagnostic pop
 </#if>
@@ -150,6 +151,7 @@ void vApplicationIdleHook( void )
     important that vApplicationIdleHook() is permitted to return to its calling
     function, because it is the responsibility of the idle task to clean up
     memory allocated by the kernel to any task that has since been deleted. */
+    ${LIST_FREERTOS_HOOKS_C_CALL_APP_IDLE_TASKS}
 }
 
 /*-----------------------------------------------------------*/
@@ -163,6 +165,7 @@ void vApplicationTickHook( void )
     added here, but the tick hook is called from an interrupt context, so
     code must not attempt to block, and only the interrupt safe FreeRTOS API
     functions can be used (those that end in FromISR()). */
+    ${LIST_FREERTOS_HOOKS_C_CALL_APP_TICK_TASKS}
 }
 
 /*-----------------------------------------------------------*/
@@ -210,6 +213,68 @@ void ${FREERTOS_TRACE_FREE_FNC}(void *pAddr, size_t size)
     ( void ) size;
 }
 /*-----------------------------------------------------------*/
+</#if>
+
+/*-----------------------------------------------------------*/
+
+<#if FREERTOS_STATIC_ALLOC == true>
+/* configUSE_STATIC_ALLOCATION is set to 1, so the application must provide an
+ * implementation of vApplicationGetIdleTaskMemory() to provide the memory that is
+ * used by the Idle task. */
+void vApplicationGetIdleTaskMemory( StaticTask_t ** ppxIdleTaskTCBBuffer,
+                                    StackType_t ** ppxIdleTaskStackBuffer,
+                                    configSTACK_DEPTH_TYPE * pulIdleTaskStackSize )
+{
+    /* If the buffers to be provided to the Idle task are declared inside this
+     * function then they must be declared static - otherwise they will be allocated on
+     * the stack and so not exists after this function exits. */
+    static StaticTask_t xIdleTaskTCB;
+    static StackType_t uxIdleTaskStack[ configMINIMAL_STACK_SIZE ];
+
+    /* Pass out a pointer to the StaticTask_t structure in which the Idle
+     * task's state will be stored. */
+    *ppxIdleTaskTCBBuffer = &xIdleTaskTCB;
+
+    /* Pass out the array that will be used as the Idle task's stack. */
+    *ppxIdleTaskStackBuffer = uxIdleTaskStack;
+
+    /* Pass out the size of the array pointed to by *ppxIdleTaskStackBuffer.
+     * Note that, as the array is necessarily of type StackType_t,
+     * configMINIMAL_STACK_SIZE is specified in words, not bytes. */
+    *pulIdleTaskStackSize = configMINIMAL_STACK_SIZE;
+}
+</#if>
+/*-----------------------------------------------------------*/
+<#if FREERTOS_STATIC_ALLOC == true && FREERTOS_USE_TIMERS == true>
+/**
+ * @brief This is to provide the memory that is used by the RTOS daemon/time task.
+ *
+ * If configUSE_STATIC_ALLOCATION is set to 1, so the application must provide an
+ * implementation of vApplicationGetTimerTaskMemory() to provide the memory that is
+ * used by the RTOS daemon/time task.
+ */
+void vApplicationGetTimerTaskMemory( StaticTask_t ** ppxTimerTaskTCBBuffer,
+                                     StackType_t ** ppxTimerTaskStackBuffer,
+                                     configSTACK_DEPTH_TYPE * pulTimerTaskStackSize )
+{
+    /* If the buffers to be provided to the Timer task are declared inside this
+     * function then they must be declared static - otherwise they will be allocated on
+     * the stack and so not exists after this function exits. */
+    static StaticTask_t xTimerTaskTCB;
+    static StackType_t uxTimerTaskStack[ configTIMER_TASK_STACK_DEPTH ];
+
+    /* Pass out a pointer to the StaticTask_t structure in which the Idle
+     * task's state will be stored. */
+    *ppxTimerTaskTCBBuffer = &xTimerTaskTCB;
+
+    /* Pass out the array that will be used as the Timer task's stack. */
+    *ppxTimerTaskStackBuffer = uxTimerTaskStack;
+
+    /* Pass out the size of the array pointed to by *ppxTimerTaskStackBuffer.
+     * Note that, as the array is necessarily of type StackType_t,
+     * configMINIMAL_STACK_SIZE is specified in words, not bytes. */
+    *pulTimerTaskStackSize = configTIMER_TASK_STACK_DEPTH;
+}
 </#if>
 /*******************************************************************************
  End of File

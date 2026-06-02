@@ -237,16 +237,16 @@ static SYS_FS_MEDIA_MANAGER_OBJ gSYSFSMediaManagerObj =
 </#if>
 
 //*****************************************************************************
-/* MISRA C-2012 Rule 11.1, 11.8 deviated below. Deviation record ID -
-   H3_MISRAC_2012_R_11_1_DR_1 & H3_MISRAC_2012_R_11_8_DR_1*/
+/* MISRA C-2023 Rule 11.1, 11.8 deviated below. Deviation record ID -
+   H3_MISRAC_2023_R_11_1_DR_1 & H3_MISRAC_2023_R_11_8_DR_1*/
 <#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
 <#if core.COMPILER_CHOICE == "XC32">
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Wunknown-pragmas"
 </#if>
 #pragma coverity compliance block \
-(deviate:1 "MISRA C-2012 Rule 11.1" "H3_MISRAC_2012_R_11_1_DR_1" )\
-(deviate:3 "MISRA C-2012 Rule 11.8" "H3_MISRAC_2012_R_11_8_DR_1" )
+(deviate:1 "MISRA C-2023 Rule 11.1" "H3_MISRAC_2023_R_11_1_DR_1" )\
+(deviate:3 "MISRA C-2023 Rule 11.8" "H3_MISRAC_2023_R_11_8_DR_1" )
 </#if>
 /* Function:
     static void SYS_FS_MEDIA_T_MANAGER_HandleMediaDetach
@@ -613,14 +613,14 @@ static uint8_t SYS_FS_MEDIA_T_MANAGER_FindNextMedia
 }
 
 <#if SYS_FS_FAT == true || SYS_FS_FILEX == true>
-     /* MISRA C-2012 Rule 16.1 deviate: 1, 16.3 deviate:2 and 16.6 deviate:1.
-      Deviation record ID - H3_MISRAC_2012_R_16_1_DR_1, H3_MISRAC_2012_R_16_3_DR_1
-      & H3_MISRAC_2012_R_16_6_DR_1 */
+     /* MISRA C-2023 Rule 16.1 deviate: 1, 16.3 deviate:2 and 16.6 deviate:1.
+      Deviation record ID - H3_MISRAC_2023_R_16_1_DR_1, H3_MISRAC_2023_R_16_3_DR_1
+      & H3_MISRAC_2023_R_16_6_DR_1 */
       <#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
       #pragma coverity compliance block \
-      (deviate:1 "MISRA C-2012 Rule 16.1" "H3_MISRAC_2012_R_16_1_DR_1" )\
-      (deviate:2 "MISRA C-2012 Rule 16.3" "H3_MISRAC_2012_R_16_3_DR_1" )\
-      (deviate:1 "MISRA C-2012 Rule 16.6" "H3_MISRAC_2012_R_16_6_DR_1" )
+      (deviate:1 "MISRA C-2023 Rule 16.1" "H3_MISRAC_2023_R_16_1_DR_1" )\
+      (deviate:2 "MISRA C-2023 Rule 16.3" "H3_MISRAC_2023_R_16_3_DR_1" )\
+      (deviate:1 "MISRA C-2023 Rule 16.6" "H3_MISRAC_2023_R_16_6_DR_1" )
       </#if>
     <#lt>// *****************************************************************************
     <#lt>/* Function:
@@ -666,9 +666,9 @@ static uint8_t SYS_FS_MEDIA_T_MANAGER_FindNextMedia
     <#lt>}
 </#if>
     <#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
-    #pragma coverity compliance end_block "MISRA C-2012 Rule 16.1"
-    #pragma coverity compliance end_block "MISRA C-2012 Rule 16.3"
-    #pragma coverity compliance end_block "MISRA C-2012 Rule 16.6"
+    #pragma coverity compliance end_block "MISRA C-2023 Rule 16.1"
+    #pragma coverity compliance end_block "MISRA C-2023 Rule 16.3"
+    #pragma coverity compliance end_block "MISRA C-2023 Rule 16.6"
     </#if>
     /* MISRAC 2012 deviation block end */
 // *****************************************************************************
@@ -854,17 +854,6 @@ SYS_FS_MEDIA_HANDLE SYS_FS_MEDIA_MANAGER_Register
     SYS_FS_MEDIA *mediaObj = NULL;
 
     mediaObj = &gSYSFSMediaManagerObj.mediaObj[0];
-    for (mediaIndex = 0; mediaIndex < SYS_FS_MEDIA_NUMBER; mediaIndex++)
-    {
-         if ((mediaObj->inUse) && (mediaType == mediaObj->mediaType))
-         {
-             /* For every type of media, increment the mediaID as a, b, c... */
-             mediaId++;
-         }
-         mediaObj++;
-    }
-
-    mediaObj = &gSYSFSMediaManagerObj.mediaObj[0];
     /* Start with 0th disk and find a disk which is free */
     for (mediaIndex = 0; mediaIndex < SYS_FS_MEDIA_NUMBER; mediaIndex++)
     {
@@ -890,6 +879,10 @@ SYS_FS_MEDIA_HANDLE SYS_FS_MEDIA_MANAGER_Register
             return (SYS_FS_MEDIA_HANDLE)mediaObj;
         }
 
+        if (mediaType == mediaObj->mediaType)
+        {
+            mediaId++;
+        }
         mediaObj++;
     }
 
@@ -1478,16 +1471,16 @@ bool SYS_FS_MEDIA_MANAGER_VolumePropertyGet
 
     return false;
 }
-/* MISRA C-2012 Rule 5.1, 5.2 deviated below. Deviation record ID -
-   H3_MISRAC_2012_R_5_1_DR_1 & H3_MISRAC_2012_R_5_2_DR_1*/
+/* MISRA C-2023 Rule 5.1, 5.2 deviated below. Deviation record ID -
+   H3_MISRAC_2023_R_5_1_DR_1 & H3_MISRAC_2023_R_5_2_DR_1*/
 <#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
 <#if core.COMPILER_CHOICE == "XC32">
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Wunknown-pragmas"
 </#if>
 #pragma coverity compliance block \
-(deviate:2 "MISRA C-2012 Rule 5.1" "H3_MISRAC_2012_R_5_1_DR_1" )\
-(deviate:1 "MISRA C-2012 Rule 5.2" "H3_MISRAC_2012_R_5_2_DR_1" )
+(deviate:2 "MISRA C-2023 Rule 5.1" "H3_MISRAC_2023_R_5_1_DR_1" )\
+(deviate:1 "MISRA C-2023 Rule 5.2" "H3_MISRAC_2023_R_5_2_DR_1" )
 </#if>
 <#if SYS_FS_AUTO_MOUNT == true>
     <#lt>//*****************************************************************************
@@ -1523,8 +1516,8 @@ bool SYS_FS_MEDIA_MANAGER_VolumePropertyGet
 </#if>
 
 <#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
-#pragma coverity compliance end_block "MISRA C-2012 Rule 11.1"
-#pragma coverity compliance end_block "MISRA C-2012 Rule 11.8"
+#pragma coverity compliance end_block "MISRA C-2023 Rule 11.1"
+#pragma coverity compliance end_block "MISRA C-2023 Rule 11.8"
 </#if>
 /* MISRAC 2012 deviation block end */
 //*****************************************************************************
@@ -1542,13 +1535,13 @@ bool SYS_FS_MEDIA_MANAGER_VolumePropertyGet
 
 ***************************************************************************/
 
-/* MISRA C-2012 Rule 11.1, 11.6 & 11.8 deviated below. Deviation record ID -
-   H3_MISRAC_2012_R_11_1_DR_1, H3_MISRAC_2012_R_11_6_DR_1 & H3_MISRAC_2012_R_11_8_DR_1*/
+/* MISRA C-2023 Rule 11.1, 11.6 & 11.8 deviated below. Deviation record ID -
+   H3_MISRAC_2023_R_11_1_DR_1, H3_MISRAC_2023_R_11_6_DR_1 & H3_MISRAC_2023_R_11_8_DR_1*/
 <#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
 #pragma coverity compliance block \
-(deviate:1 "MISRA C-2012 Rule 11.1" "H3_MISRAC_2012_R_11_1_DR_1" )\
-(deviate:1 "MISRA C-2012 Rule 11.6" "H3_MISRAC_2012_R_11_6_DR_1" )\
-(deviate:1 "MISRA C-2012 Rule 11.8" "H3_MISRAC_2012_R_11_8_DR_1" )
+(deviate:1 "MISRA C-2023 Rule 11.1" "H3_MISRAC_2023_R_11_1_DR_1" )\
+(deviate:1 "MISRA C-2023 Rule 11.6" "H3_MISRAC_2023_R_11_6_DR_1" )\
+(deviate:1 "MISRA C-2023 Rule 11.8" "H3_MISRAC_2023_R_11_8_DR_1" )
 </#if>
 
 void SYS_FS_MEDIA_MANAGER_RegisterTransferHandler
@@ -1604,11 +1597,11 @@ static void SYS_FS_MEDIA_MANAGER_EventHandler
     }
 }
 <#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
-#pragma coverity compliance end_block "MISRA C-2012 Rule 5.1"
-#pragma coverity compliance end_block "MISRA C-2012 Rule 5.2"
-#pragma coverity compliance end_block "MISRA C-2012 Rule 11.1"
-#pragma coverity compliance end_block "MISRA C-2012 Rule 11.6"
-#pragma coverity compliance end_block "MISRA C-2012 Rule 11.8"
+#pragma coverity compliance end_block "MISRA C-2023 Rule 5.1"
+#pragma coverity compliance end_block "MISRA C-2023 Rule 5.2"
+#pragma coverity compliance end_block "MISRA C-2023 Rule 11.1"
+#pragma coverity compliance end_block "MISRA C-2023 Rule 11.6"
+#pragma coverity compliance end_block "MISRA C-2023 Rule 11.8"
 <#if core.COMPILER_CHOICE == "XC32">
 #pragma GCC diagnostic pop
 </#if>

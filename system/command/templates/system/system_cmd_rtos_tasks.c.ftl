@@ -24,13 +24,13 @@
 -->
 <#if (HarmonyCore.SELECT_RTOS)?? && HarmonyCore.SELECT_RTOS == "FreeRTOS">
     <#lt>TaskHandle_t xSYS_CMD_Tasks;
-    <#lt>void lSYS_CMD_Tasks(  void *pvParameters  )
+    <#lt>static void lSYS_CMD_Tasks(  void *pvParameters  )
     <#lt>{
-    <#lt>    while(1)
+    <#lt>    while(true)
     <#lt>    {
-    <#lt>        SYS_CMD_Tasks();
+    <#lt>        (void) SYS_CMD_Tasks();
              <#if SYS_COMMAND_RTOS_USE_DELAY >
-    <#lt>        vTaskDelay(${SYS_COMMAND_RTOS_DELAY} / portTICK_PERIOD_MS);
+    <#lt>        vTaskDelay(${SYS_COMMAND_RTOS_DELAY}U / portTICK_PERIOD_MS);
              </#if>
     <#lt>    }
     <#lt>}
@@ -40,11 +40,11 @@
 
     <#lt>static void lSYS_CMD_Tasks( ULONG thread_input )
     <#lt>{
-    <#lt>    while(1)
+    <#lt>    while(true)
     <#lt>    {
-    <#lt>        SYS_CMD_Tasks();
+    <#lt>        (void) SYS_CMD_Tasks();
              <#if SYS_COMMAND_RTOS_USE_DELAY >
-    <#lt>        tx_thread_sleep((ULONG)(${SYS_COMMAND_RTOS_DELAY} / (TX_TICK_PERIOD_MS)));
+    <#lt>        tx_thread_sleep((ULONG)(${SYS_COMMAND_RTOS_DELAY}U / (TX_TICK_PERIOD_MS)));
              </#if>
     <#lt>    }
     <#lt>}
@@ -52,27 +52,27 @@
     <#lt>OS_TCB  _SYS_CMD_Tasks_TCB;
     <#lt>CPU_STK _SYS_CMD_TasksStk[SYS_CMD_RTOS_STACK_SIZE];
 
-    <#lt>void _SYS_CMD_Tasks(  void *pvParameters  )
+    <#lt>static void _SYS_CMD_Tasks(  void *pvParameters  )
     <#lt>{
     <#if SYS_COMMAND_RTOS_USE_DELAY == true>
     <#lt>    OS_ERR os_err;
     </#if>
-    <#lt>    while(1)
+    <#lt>    while(true)
     <#lt>    {
-    <#lt>        SYS_CMD_Tasks();
+    <#lt>        (void) SYS_CMD_Tasks();
     <#if SYS_COMMAND_RTOS_USE_DELAY == true>
-    <#lt>        OSTimeDly(${SYS_COMMAND_RTOS_DELAY} , OS_OPT_TIME_DLY, &os_err);
+    <#lt>        OSTimeDly(${SYS_COMMAND_RTOS_DELAY}U , OS_OPT_TIME_DLY, &os_err);
     </#if>
     <#lt>    }
     <#lt>}
 <#elseif (HarmonyCore.SELECT_RTOS)?? && HarmonyCore.SELECT_RTOS == "MbedOS">
-    <#lt>void _SYS_CMD_Tasks( void *pvParameters )
+    <#lt>static void _SYS_CMD_Tasks( void *pvParameters )
     <#lt>{
-    <#lt>    while(1)
+    <#lt>    while(true)
     <#lt>    {
-    <#lt>        SYS_CMD_Tasks();
+    <#lt>        (void) SYS_CMD_Tasks();
              <#if SYS_COMMAND_RTOS_USE_DELAY == true>
-    <#lt>        thread_sleep_for((uint32_t)(${SYS_COMMAND_RTOS_DELAY} / MBED_OS_TICK_PERIOD_MS));
+    <#lt>        thread_sleep_for((uint32_t)(${SYS_COMMAND_RTOS_DELAY}U / MBED_OS_TICK_PERIOD_MS));
              </#if>
     <#lt>    }
     <#lt>}

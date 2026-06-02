@@ -361,13 +361,13 @@ typedef enum
 
 } DRV_SDSPI_TYPE;
 
-/* MISRA C-2012 Rule 5.2 deviated:2 Deviation record ID -  H3_MISRAC_2012_R_5_2_DR_1 */
+/* MISRA C-2023 Rule 5.2 deviated:2 Deviation record ID -  H3_MISRAC_2023_R_5_2_DR_1 */
 <#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
 <#if core.COMPILER_CHOICE == "XC32">
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Wunknown-pragmas"
 </#if>
-#pragma coverity compliance block deviate:2 "MISRA C-2012 Rule 5.2" "H3_MISRAC_2012_R_5_2_DR_1"    
+#pragma coverity compliance block deviate:2 "MISRA C-2023 Rule 5.2" "H3_MISRAC_2023_R_5_2_DR_1"
 </#if>
 
 /* SD Card initialization states. */
@@ -387,10 +387,10 @@ typedef enum
 
 } DRV_SDSPI_CMD_DETECT_STATES;
 <#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
-#pragma coverity compliance end_block "MISRA C-2012 Rule 5.2"
+#pragma coverity compliance end_block "MISRA C-2023 Rule 5.2"
 <#if core.COMPILER_CHOICE == "XC32">
 #pragma GCC diagnostic pop
-</#if>    
+</#if>
 </#if>
 /* MISRAC 2012 deviation block end */
 
@@ -455,13 +455,13 @@ typedef struct
 
 } DRV_SDSPI_CMD_OBJ;
 
-/* MISRA C-2012 Rule 6.1 deviated:32 Deviation record ID -  H3_MISRAC_2012_R_6_1_DR_1 */
+/* MISRA C-2023 Rule 6.1 deviated:32 Deviation record ID -  H3_MISRAC_2023_R_6_1_DR_1 */
 <#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
 <#if core.COMPILER_CHOICE == "XC32">
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Wunknown-pragmas"
 </#if>
-#pragma coverity compliance block deviate:32 "MISRA C-2012 Rule 6.1" "H3_MISRAC_2012_R_6_1_DR_1"    
+#pragma coverity compliance block deviate:32 "MISRA C-2023 Rule 6.1" "H3_MISRAC_2023_R_6_1_DR_1"
 </#if>
 
 /* SD Card R1 type response format. */
@@ -625,10 +625,10 @@ typedef union
 
 } DRV_SDSPI_RESPONSE_7;
 <#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
-#pragma coverity compliance end_block "MISRA C-2012 Rule 6.1"
+#pragma coverity compliance end_block "MISRA C-2023 Rule 6.1"
 <#if core.COMPILER_CHOICE == "XC32">
 #pragma GCC diagnostic pop
-</#if>    
+</#if>
 </#if>
 /* MISRAC 2012 deviation block end */
 

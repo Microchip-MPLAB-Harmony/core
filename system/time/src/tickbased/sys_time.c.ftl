@@ -450,13 +450,13 @@ static SYS_TIME_HANDLE SYS_TIME_TimerObjectCreate(
     return tmrHandle;
 }
 
-/* MISRA C-2012 Rule 11.3 deviated:1 Deviation record ID -  H3_MISRAC_2012_R_11_3_DR_1 */
+/* MISRA C-2023 Rule 11.3 deviated:1 Deviation record ID -  H3_MISRAC_2023_R_11_3_DR_1 */
 <#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
 <#if core.COMPILER_CHOICE == "XC32">
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Wunknown-pragmas"
 </#if>
-#pragma coverity compliance block deviate:1 "MISRA C-2012 Rule 11.3" "H3_MISRAC_2012_R_11_3_DR_1"
+#pragma coverity compliance block deviate:1 "MISRA C-2023 Rule 11.3" "H3_MISRAC_2023_R_11_3_DR_1"
 </#if>
 static void SYS_TIME_CounterInit(const SYS_MODULE_INIT* init)
 {
@@ -480,7 +480,7 @@ static void SYS_TIME_CounterInit(const SYS_MODULE_INIT* init)
 }
 
 <#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
-#pragma coverity compliance end_block "MISRA C-2012 Rule 11.3"
+#pragma coverity compliance end_block "MISRA C-2023 Rule 11.3"
 </#if>
 /* MISRAC 2012 deviation block end */
 
@@ -593,9 +593,9 @@ void SYS_TIME_Counter64Set ( uint64_t count )
     SYS_INT_Restore(interruptState);
 }
 
-/* MISRA C-2012 Rule 10.8 deviated:2 Deviation record ID -  H3_MISRAC_2012_R_10_8_DR_1 */
+/* MISRA C-2023 Rule 10.8 deviated:2 Deviation record ID -  H3_MISRAC_2023_R_10_8_DR_1 */
 <#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
-#pragma coverity compliance block deviate:2 "MISRA C-2012 Rule 10.8" "H3_MISRAC_2012_R_10_8_DR_1"
+#pragma coverity compliance block deviate:2 "MISRA C-2023 Rule 10.8" "H3_MISRAC_2023_R_10_8_DR_1"
 </#if>
 
 uint32_t  SYS_TIME_CountToUS ( uint32_t count )
@@ -608,13 +608,13 @@ uint32_t  SYS_TIME_CountToMS ( uint32_t count )
     return (uint32_t) (((uint64_t)count * 1000u) / gSystemCounterObj.hwTimerTickFreq);
 }
 
-/* MISRA C-2012 Rule 10.1 deviated:2 Deviation record ID -  H3_MISRAC_2012_R_10_1_DR_1 */
+/* MISRA C-2023 Rule 10.1 deviated:2 Deviation record ID -  H3_MISRAC_2023_R_10_1_DR_1 */
 <#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
-#pragma coverity compliance block deviate:2 "MISRA C-2012 Rule 10.1" "H3_MISRAC_2012_R_10_1_DR_1"
+#pragma coverity compliance block deviate:2 "MISRA C-2023 Rule 10.1" "H3_MISRAC_2023_R_10_1_DR_1"
 </#if>
 
 <#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
-#pragma coverity compliance end_block "MISRA C-2012 Rule 10.8"
+#pragma coverity compliance end_block "MISRA C-2023 Rule 10.8"
 </#if>
 /* MISRAC 2012 deviation block end */
 
@@ -644,7 +644,7 @@ uint32_t SYS_TIME_MSToCount ( uint32_t ms )
 </#if>
 }
 <#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
-#pragma coverity compliance end_block "MISRA C-2012 Rule 10.1"
+#pragma coverity compliance end_block "MISRA C-2023 Rule 10.1"
 <#if core.COMPILER_CHOICE == "XC32">
 #pragma GCC diagnostic pop
 </#if>

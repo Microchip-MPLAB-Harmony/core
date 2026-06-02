@@ -80,13 +80,13 @@
 #define DRV_MEMORY_TOKEN_MAX                            (DRV_MEMORY_TOKEN_MASK >> 16)
 #define DRV_MEMORY_MAKE_HANDLE(token, instance, index)  (((token) << 16) | ((instance) << 8) | (index))
 
-/* MISRA C-2012 Rule 5.2 deviated twice: Deviation record ID -  H3_MISRAC_2012_R_5_2_DR_1 */
+/* MISRA C-2023 Rule 5.2 deviated twice: Deviation record ID -  H3_MISRAC_2023_R_5_2_DR_1 */
 <#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
 <#if core.COMPILER_CHOICE == "XC32">
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Wunknown-pragmas"
 </#if>
-#pragma coverity compliance block deviate:2 "MISRA C-2012 Rule 5.2" "H3_MISRAC_2012_R_5_2_DR_1"    
+#pragma coverity compliance block deviate:2 "MISRA C-2023 Rule 5.2" "H3_MISRAC_2023_R_5_2_DR_1"
 </#if>
 
 /* MEMORY Driver operations. */
@@ -106,10 +106,10 @@ typedef enum
 
 } DRV_MEMORY_OPERATION_TYPE;
 <#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
-#pragma coverity compliance end_block "MISRA C-2012 Rule 5.2"
+#pragma coverity compliance end_block "MISRA C-2023 Rule 5.2"
 <#if core.COMPILER_CHOICE == "XC32">
 #pragma GCC diagnostic pop
-</#if>  
+</#if>
 </#if>
 /* MISRAC 2012 deviation block end */
 

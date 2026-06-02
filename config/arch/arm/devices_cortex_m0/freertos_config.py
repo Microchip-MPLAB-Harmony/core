@@ -26,6 +26,20 @@
 ############## Cortex-M0+ Architecture specific configuration ##############
 ############################################################################
 
+global clearFreeRTOSSymbols
+
+global coreSymbolsCfgDict
+coreSymbolsCfgDict = {}
+
+def clearFreeRTOSSymbols():
+    global coreSymbolsCfgDict
+
+    for key in coreSymbolsCfgDict.keys():
+        coreSymbolsCfgDict[key] = {"clearValue":None}
+
+    Database.sendMessage("core", "FREERTOS_CONFIG", coreSymbolsCfgDict)
+
+
 #CPU Clock Frequency
 cpuclk = Database.getSymbolValue("core", "CPU_CLOCK_FREQUENCY")
 cpuclk = int(cpuclk)
@@ -55,16 +69,20 @@ SysTickInterruptPriority     = "NVIC_"+ str(SysTickInterruptIndex) +"_0_PRIORITY
 SysTickInterruptPriorityLock = "NVIC_" + str(SysTickInterruptIndex) +"_0_PRIORITY_LOCK"
 
 Database.clearSymbolValue("core", SysTickInterruptPriority)
-Database.setSymbolValue("core", SysTickInterruptPriority, "0")
 Database.clearSymbolValue("core", SysTickInterruptPriorityLock)
-Database.setSymbolValue("core", SysTickInterruptPriorityLock, True)
 
 #Set SVCall Priority and Lock the Priority
 SVCallInterruptIndex        = Interrupt.getInterruptIndex("SVCall")
 SVCallInterruptPriorityLock = "NVIC_" + str(SVCallInterruptIndex) +"_0_PRIORITY_LOCK"
 
 Database.clearSymbolValue("core", SVCallInterruptPriorityLock)
-Database.setSymbolValue("core", SVCallInterruptPriorityLock, True)
+
+
+coreSymbolsCfgDict[SysTickInterruptPriority] = {"setValue":"0"}
+coreSymbolsCfgDict[SysTickInterruptPriorityLock] = {"setValue":True}
+coreSymbolsCfgDict[SVCallInterruptPriorityLock] = {"setValue":True}
+
+Database.sendMessage("core", "FREERTOS_CONFIG", coreSymbolsCfgDict)
 
 ############################################################################
 #### Code Generation ####
@@ -96,7 +114,7 @@ freeRtosdefSymXc32cpp.setDependencies(activateCompilerSymbol, ['core.COMPILER_CH
 freeRtosdefSymXc32cpp.setEnabled(selectedCompiler == "XC32")
 
 freeRtosPortSourceXc32 = thirdPartyFreeRTOS.createFileSymbol("FREERTOS_XC32_SAM_PORT_C", None)
-freeRtosPortSourceXc32.setSourcePath("../CMSIS-FreeRTOS/Source/portable/GCC/ARM_CM0/port.c")
+freeRtosPortSourceXc32.setSourcePath("config/arch/arm/devices_cortex_m0/src/portable/gcc/port.c")
 freeRtosPortSourceXc32.setOutputName("port.c")
 freeRtosPortSourceXc32.setDestPath("../../third_party/rtos/FreeRTOS/Source/portable/GCC/ARM_CM0")
 freeRtosPortSourceXc32.setProjectPath("FreeRTOS/Source/portable/GCC/ARM_CM0")
@@ -106,7 +124,7 @@ freeRtosPortSourceXc32.setDependencies(activateCompilerSymbol, ['core.COMPILER_C
 freeRtosPortSourceXc32.setEnabled(selectedCompiler == "XC32")
 
 freeRtosPortHeaderXc32 = thirdPartyFreeRTOS.createFileSymbol("FREERTOS_XC32_SAM_PORTMACRO_H", None)
-freeRtosPortHeaderXc32.setSourcePath("../CMSIS-FreeRTOS/Source/portable/GCC/ARM_CM0/portmacro.h")
+freeRtosPortHeaderXc32.setSourcePath("../FreeRTOS-Kernel/portable/GCC/ARM_CM0/portmacro.h")
 freeRtosPortHeaderXc32.setOutputName("portmacro.h")
 freeRtosPortHeaderXc32.setDestPath("../../third_party/rtos/FreeRTOS/Source/portable/GCC/ARM_CM0")
 freeRtosPortHeaderXc32.setProjectPath("FreeRTOS/Source/portable/GCC/ARM_CM0")
@@ -114,6 +132,26 @@ freeRtosPortHeaderXc32.setType("HEADER")
 freeRtosPortHeaderXc32.setMarkup(False)
 freeRtosPortHeaderXc32.setDependencies(activateCompilerSymbol, ['core.COMPILER_CHOICE'])
 freeRtosPortHeaderXc32.setEnabled(selectedCompiler == "XC32")
+
+freeRtosPortAsmSourceXc32 = thirdPartyFreeRTOS.createFileSymbol("FREERTOS_XC32_SAM_PORTASM_C", None)
+freeRtosPortAsmSourceXc32.setSourcePath("config/arch/arm/devices_cortex_m0/src/portable/gcc/portasm.c")
+freeRtosPortAsmSourceXc32.setOutputName("portasm.c")
+freeRtosPortAsmSourceXc32.setDestPath("../../third_party/rtos/FreeRTOS/Source/portable/GCC/ARM_CM0")
+freeRtosPortAsmSourceXc32.setProjectPath("FreeRTOS/Source/portable/GCC/ARM_CM0")
+freeRtosPortAsmSourceXc32.setType("SOURCE")
+freeRtosPortAsmSourceXc32.setMarkup(False)
+freeRtosPortAsmSourceXc32.setDependencies(activateCompilerSymbol, ['core.COMPILER_CHOICE'])
+freeRtosPortAsmSourceXc32.setEnabled(selectedCompiler == "XC32")
+
+freeRtosPortAsmHeaderXc32 = thirdPartyFreeRTOS.createFileSymbol("FREERTOS_XC32_SAM_PORTASM_H", None)
+freeRtosPortAsmHeaderXc32.setSourcePath("config/arch/arm/devices_cortex_m0/src/portable/gcc/portasm.h")
+freeRtosPortAsmHeaderXc32.setOutputName("portasm.h")
+freeRtosPortAsmHeaderXc32.setDestPath("../../third_party/rtos/FreeRTOS/Source/portable/GCC/ARM_CM0")
+freeRtosPortAsmHeaderXc32.setProjectPath("FreeRTOS/Source/portable/GCC/ARM_CM0")
+freeRtosPortAsmHeaderXc32.setType("HEADER")
+freeRtosPortAsmHeaderXc32.setMarkup(False)
+freeRtosPortAsmHeaderXc32.setDependencies(activateCompilerSymbol, ['core.COMPILER_CHOICE'])
+freeRtosPortAsmHeaderXc32.setEnabled(selectedCompiler == "XC32")
 
 #IAR specific symbols
 freeRtosdefSymIar = thirdPartyFreeRTOS.createSettingSymbol("FREERTOS_IAR_INCLUDE_DIRS", None)
@@ -133,7 +171,7 @@ freeRtosAsmdefSymIar.setDependencies(activateCompilerSymbol, ['core.COMPILER_CHO
 freeRtosAsmdefSymIar.setEnabled(selectedCompiler == "IAR")
 
 freeRtosPortSourceIar = thirdPartyFreeRTOS.createFileSymbol("FREERTOS_IAR_SAM_PORT_C", None)
-freeRtosPortSourceIar.setSourcePath("../CMSIS-FreeRTOS/Source/portable/IAR/ARM_CM0/port.c")
+freeRtosPortSourceIar.setSourcePath("../FreeRTOS-Kernel/portable/IAR/ARM_CM0/port.c")
 freeRtosPortSourceIar.setOutputName("port.c")
 freeRtosPortSourceIar.setDestPath("../../third_party/rtos/FreeRTOS/Source/portable/IAR/SAM/ARM_CM0")
 freeRtosPortSourceIar.setProjectPath("FreeRTOS/Source/portable/IAR/SAM/ARM_CM0")
@@ -143,7 +181,7 @@ freeRtosPortSourceIar.setDependencies(activateCompilerSymbol, ['core.COMPILER_CH
 freeRtosPortSourceIar.setEnabled(selectedCompiler == "IAR")
 
 freeRtosPortAsmIar = thirdPartyFreeRTOS.createFileSymbol("FREERTOS_IAR_SAM_PORTASM_S", None)
-freeRtosPortAsmIar.setSourcePath("../CMSIS-FreeRTOS/Source/portable/IAR/ARM_CM0/portasm.s")
+freeRtosPortAsmIar.setSourcePath("../FreeRTOS-Kernel/portable/IAR/ARM_CM0/portasm.s")
 freeRtosPortAsmIar.setOutputName("portasm.s")
 freeRtosPortAsmIar.setDestPath("../../third_party/rtos/FreeRTOS/Source/portable/IAR/SAM/ARM_CM0")
 freeRtosPortAsmIar.setProjectPath("FreeRTOS/Source/portable/IAR/SAM/ARM_CM0")
@@ -153,7 +191,7 @@ freeRtosPortAsmIar.setDependencies(activateCompilerSymbol, ['core.COMPILER_CHOIC
 freeRtosPortAsmIar.setEnabled(selectedCompiler == "IAR")
 
 freeRtosPortHeaderIar = thirdPartyFreeRTOS.createFileSymbol("FREERTOS_IAR_SAM_PORTMACRO_H", None)
-freeRtosPortHeaderIar.setSourcePath("../CMSIS-FreeRTOS/Source/portable/IAR/ARM_CM0/portmacro.h")
+freeRtosPortHeaderIar.setSourcePath("../FreeRTOS-Kernel/portable/IAR/ARM_CM0/portmacro.h")
 freeRtosPortHeaderIar.setOutputName("portmacro.h")
 freeRtosPortHeaderIar.setDestPath("../../third_party/rtos/FreeRTOS/Source/portable/IAR/SAM/ARM_CM0")
 freeRtosPortHeaderIar.setProjectPath("FreeRTOS/Source/portable/IAR/SAM/ARM_CM0")
@@ -172,7 +210,7 @@ freeRtosdefSymKeil.setDependencies(activateCompilerSymbol, ['core.COMPILER_CHOIC
 freeRtosdefSymKeil.setEnabled(selectedCompiler == "KEIL")
 
 freeRtosPortSourceKeil = thirdPartyFreeRTOS.createFileSymbol("FREERTOS_KEIL_PORT_C", None)
-freeRtosPortSourceKeil.setSourcePath("../CMSIS-FreeRTOS/Source/portable/GCC/ARM_CM0/port.c")
+freeRtosPortSourceKeil.setSourcePath("config/arch/arm/devices_cortex_m0/src/portable/gcc/port.c")
 freeRtosPortSourceKeil.setOutputName("port.c")
 freeRtosPortSourceKeil.setDestPath("../../third_party/rtos/FreeRTOS/Source/portable/KEIL/ARM_CM0")
 freeRtosPortSourceKeil.setProjectPath("FreeRTOS/Source/portable/KEIL/ARM_CM0")
@@ -182,7 +220,7 @@ freeRtosPortSourceKeil.setDependencies(activateCompilerSymbol, ['core.COMPILER_C
 freeRtosPortSourceKeil.setEnabled(selectedCompiler == "KEIL")
 
 freeRtosPortHeaderKeil = thirdPartyFreeRTOS.createFileSymbol("FREERTOS_KEIL_PORTMACRO_H", None)
-freeRtosPortHeaderKeil.setSourcePath("../CMSIS-FreeRTOS/Source/portable/GCC/ARM_CM0/portmacro.h")
+freeRtosPortHeaderKeil.setSourcePath("../FreeRTOS-Kernel/portable/GCC/ARM_CM0/portmacro.h")
 freeRtosPortHeaderKeil.setOutputName("portmacro.h")
 freeRtosPortHeaderKeil.setDestPath("../../third_party/rtos/FreeRTOS/Source/portable/KEIL/ARM_CM0")
 freeRtosPortHeaderKeil.setProjectPath("FreeRTOS/Source/portable/KEIL/ARM_CM0")
@@ -190,3 +228,23 @@ freeRtosPortHeaderKeil.setType("HEADER")
 freeRtosPortHeaderKeil.setMarkup(False)
 freeRtosPortHeaderKeil.setDependencies(activateCompilerSymbol, ['core.COMPILER_CHOICE'])
 freeRtosPortHeaderKeil.setEnabled(selectedCompiler == "KEIL")
+
+freeRtosPortAsmSourceKeil = thirdPartyFreeRTOS.createFileSymbol("FREERTOS_KEIL_PORTASM_C", None)
+freeRtosPortAsmSourceKeil.setSourcePath("config/arch/arm/devices_cortex_m0/src/portable/gcc/portasm.c")
+freeRtosPortAsmSourceKeil.setOutputName("portasm.c")
+freeRtosPortAsmSourceKeil.setDestPath("../../third_party/rtos/FreeRTOS/Source/portable/KEIL/ARM_CM0")
+freeRtosPortAsmSourceKeil.setProjectPath("FreeRTOS/Source/portable/KEIL/ARM_CM0")
+freeRtosPortAsmSourceKeil.setType("SOURCE")
+freeRtosPortAsmSourceKeil.setMarkup(False)
+freeRtosPortAsmSourceKeil.setDependencies(activateCompilerSymbol, ['core.COMPILER_CHOICE'])
+freeRtosPortAsmSourceKeil.setEnabled(selectedCompiler == "KEIL")
+
+freeRtosPortAsmHeaderKeil = thirdPartyFreeRTOS.createFileSymbol("FREERTOS_KEIL_PORTASM_H", None)
+freeRtosPortAsmHeaderKeil.setSourcePath("config/arch/arm/devices_cortex_m0/src/portable/gcc/portasm.h")
+freeRtosPortAsmHeaderKeil.setOutputName("portasm.h")
+freeRtosPortAsmHeaderKeil.setDestPath("../../third_party/rtos/FreeRTOS/Source/portable/KEIL/ARM_CM0")
+freeRtosPortAsmHeaderKeil.setProjectPath("FreeRTOS/Source/portable/KEIL/ARM_CM0")
+freeRtosPortAsmHeaderKeil.setType("HEADER")
+freeRtosPortAsmHeaderKeil.setMarkup(False)
+freeRtosPortAsmHeaderKeil.setDependencies(activateCompilerSymbol, ['core.COMPILER_CHOICE'])
+freeRtosPortAsmHeaderKeil.setEnabled(selectedCompiler == "KEIL")

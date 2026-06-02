@@ -203,7 +203,7 @@ typedef enum
             case DRV_SPI_TRANSFER_EVENT_ERROR:
             default:
             {
-                
+
                 break;
             }
         }
@@ -290,51 +290,51 @@ typedef void (*DRV_SPI_TRANSFER_EVENT_HANDLER )( DRV_SPI_TRANSFER_EVENT event, D
 
     const DRV_SPI_PLIB_INTERFACE drvSPI0PlibAPI = {
 
-        
+
         .setup = (DRV_SPI_PLIB_SETUP)SPI0_TransferSetup,
 
-        
+
         .writeRead = (DRV_SPI_PLIB_WRITE_READ)SPI0_WriteRead,
 
-        
+
         .isBusy = (DRV_SPI_PLIB_IS_BUSY)SPI0_IsBusy,
 
-        
+
         .callbackRegister = (DRV_SPI_PLIB_CALLBACK_REGISTER)SPI0_CallbackRegister,
     };
 
     const DRV_SPI_INIT drvSPI0InitData = {
 
-       
+
         .spiPlib = &drvSPI0PlibAPI,
 
         .remapDataBits = drvSPI0remapDataBits,
         .remapClockPolarity = drvSPI0remapClockPolarity,
         .remapClockPhase = drvSPI0remapClockPhase,
-        
+
         .numClients = DRV_SPI_CLIENTS_NUMBER_IDX0,
-        
+
         .clientObjPool = (uintptr_t)&drvSPI0ClientObjPool[0],
-        
+
         .dmaChannelTransmit = DRV_SPI_XMIT_DMA_CH_IDX0,
-        
+
         .dmaChannelReceive  = DRV_SPI_RCV_DMA_CH_IDX0,
-       
+
         .spiTransmitAddress =  (void *)&(SPI0_REGS->SPI_TDR),
-        
-        .spiReceiveAddress  = (void *)&(SPI0_REGS->SPI_RDR),        
+
+        .spiReceiveAddress  = (void *)&(SPI0_REGS->SPI_RDR),
 
        .interruptSource = XDMAC_IRQn,
-        
+
         .queueSize = DRV_SPI_QUEUE_SIZE_IDX0,
-        
+
         .transferObjPool = (uintptr_t)&drvSPI0TransferObjPool[0],
     };
 
     objectHandle = DRV_SPI_Initialize(DRV_SPI_INDEX_0,(SYS_MODULE_INIT*)&drvSPI0InitData);
     if (objectHandle == SYS_MODULE_OBJ_INVALID)
     {
-       
+
     }
     </code>
 
@@ -378,8 +378,8 @@ SYS_MODULE_OBJ DRV_SPI_Initialize( const SYS_MODULE_INDEX drvIndex, const SYS_MO
     spiStatus = DRV_SPI_Status(object);
     if (spiStatus == SYS_STATUS_READY)
     {
-        
-        
+
+
     }
     </code>
 
@@ -450,7 +450,7 @@ SYS_STATUS DRV_SPI_Status( SYS_MODULE_OBJ object);
     handle = DRV_SPI_Open(DRV_SPI_INDEX_0, DRV_IO_INTENT_EXCLUSIVE);
     if (handle == DRV_HANDLE_INVALID)
     {
-        
+
     }
     </code>
 
@@ -486,7 +486,7 @@ DRV_HANDLE DRV_SPI_Open(const SYS_MODULE_INDEX drvIndex, const DRV_IO_INTENT ioI
 
   Example:
     <code>
-    
+
 
     DRV_SPI_Close(handle);
 
@@ -530,7 +530,7 @@ void DRV_SPI_Close( DRV_HANDLE handle);
 
   Example:
     <code>
-       
+
         DRV_SPI_TRANSFER_SETUP setup;
 
         setup.baudRateInHz = 10000000;
@@ -638,17 +638,17 @@ bool DRV_SPI_TransferSetup ( const DRV_HANDLE handle, DRV_SPI_TRANSFER_SETUP * s
     uint8_t myRxBuffer[MY_RX_BUFFER_SIZE];
     DRV_SPI_TRANSFER_HANDLE transferHandle;
 
-   
+
 
     DRV_SPI_WriteReadTransferAdd(mySPIhandle, myTxBuffer, MY_TX_BUFFER_SIZE,
                                     myRxBuffer, MY_RX_BUFFER_SIZE, &transferHandle);
 
     if(transferHandle == DRV_SPI_TRANSFER_HANDLE_INVALID)
     {
-       
+
     }
 
-   
+
     </code>
 
   Remarks:
@@ -658,13 +658,13 @@ bool DRV_SPI_TransferSetup ( const DRV_HANDLE handle, DRV_SPI_TRANSFER_SETUP * s
       driver instance or event handler of any other peripheral.
     - It should not be called directly in any ISR.
 */
-/* MISRA C-2012 Rule 8.6 deviated:9 Deviation record ID -  H3_MISRAC_2012_R_8_6_DR_1 */
+/* MISRA C-2023 Rule 8.6 deviated:9 Deviation record ID -  H3_MISRAC_2023_R_8_6_DR_1 */
 <#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
 <#if core.COMPILER_CHOICE == "XC32">
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Wunknown-pragmas"
 </#if>
-#pragma coverity compliance block deviate:5 "MISRA C-2012 Rule 8.6" "H3_MISRAC_2012_R_8_6_DR_1"    
+#pragma coverity compliance block deviate:5 "MISRA C-2023 Rule 8.6" "H3_MISRAC_2023_R_8_6_DR_1"
 </#if>
 
 void DRV_SPI_WriteReadTransferAdd(
@@ -740,16 +740,16 @@ void DRV_SPI_WriteReadTransferAdd(
     uint8_t myTxBuffer[MY_TX_BUFFER_SIZE];
     DRV_SPI_TRANSFER_HANDLE transferHandle;
 
-   
+
 
     DRV_SPI_WriteTransferAdd(mySPIhandle, myTxBuffer, MY_TX_BUFFER_SIZE, &transferHandle);
 
     if(transferHandle == DRV_SPI_TRANSFER_HANDLE_INVALID)
     {
-        
+
     }
 
-    
+
     </code>
 
   Remarks:
@@ -833,16 +833,16 @@ void DRV_SPI_WriteTransferAdd(
     MY_APP_OBJ myAppObj;
     uint8_t myRxBuffer[MY_RX_BUFFER_SIZE];
     DRV_SPI_TRANSFER_HANDLE transferHandle;
-    
+
 
     DRV_SPI_ReadTransferAdd(mySPIhandle, myRxBuffer, MY_RX_BUFFER_SIZE, &transferHandle);
 
     if(transferHandle == DRV_SPI_TRANSFER_HANDLE_INVALID)
     {
-        
+
     }
 
-    
+
     </code>
 
   Remarks:
@@ -907,31 +907,31 @@ void DRV_SPI_ReadTransferAdd(
 
   Example:
     <code>
-    
+
     MY_APP_OBJ myAppObj;
 
     uint8_t myTxBuffer[MY_TX_BUFFER_SIZE];
     uint8_t myRxBuffer[MY_RX_BUFFER_SIZE];
     DRV_SPI_TRANSFER_HANDLE transferHandle;
-    
+
 
     void APP_SPITransferEventHandler(DRV_SPI_TRANSFER_EVENT event,
             DRV_SPI_TRANSFER_HANDLE handle, uintptr_t context)
     {
-        
+
         MY_APP_OBJ myAppObj = (MY_APP_OBJ *) context;
 
         switch(event)
         {
             case DRV_SPI_TRANSFER_EVENT_COMPLETE:
             {
-                
+
                 break;
             }
 
             case DRV_SPI_TRANSFER_EVENT_ERROR:
             {
-                
+
                 break;
             }
 
@@ -940,7 +940,7 @@ void DRV_SPI_ReadTransferAdd(
                 break;
             }
         }
-    }   
+    }
 
     DRV_SPI_TransferEventHandlerSet( mySPIHandle, APP_SPITransferEventHandler,
                                      (uintptr_t)&myAppObj );
@@ -951,7 +951,7 @@ void DRV_SPI_ReadTransferAdd(
 
     if(transferHandle == DRV_SPI_TRANSFER_HANDLE_INVALID)
     {
-        
+
     }
     </code>
 
@@ -988,18 +988,18 @@ void DRV_SPI_TransferEventHandlerSet( const DRV_HANDLE handle, const DRV_SPI_TRA
 
   Example:
   <code>
-   
+
     MY_APP_OBJ myAppObj;
 
     uint8_t mybuffer[MY_BUFFER_SIZE];
     DRV_SPI_TRANSFER_HANDLE transferHandle;
-    DRV_SPI_TRANSFER_EVENT event;    
+    DRV_SPI_TRANSFER_EVENT event;
 
     DRV_SPI_ReadTransferAdd( mySPIhandle, myBuffer, MY_RECEIVE_SIZE, &transferHandle);
 
     if(transferHandle == DRV_SPI_TRANSFER_HANDLE_INVALID)
     {
-       
+
     }
 
 
@@ -1065,11 +1065,11 @@ DRV_SPI_TRANSFER_EVENT DRV_SPI_TransferStatusGet(const DRV_SPI_TRANSFER_HANDLE t
     <code>
 
     MY_APP_OBJ myAppObj;
-    uint8_t myTxBuffer[MY_TX_BUFFER_SIZE]; 
+    uint8_t myTxBuffer[MY_TX_BUFFER_SIZE];
 
     if (DRV_SPI_WriteTransfer(mySPIhandle, myTxBuffer, MY_TX_BUFFER_SIZE) == false)
     {
-       
+
     }
     </code>
 
@@ -1125,11 +1125,11 @@ bool DRV_SPI_WriteTransfer(const DRV_HANDLE handle, void* pTransmitData,  size_t
     <code>
 
     MY_APP_OBJ myAppObj;
-    uint8_t myRxBuffer[MY_RX_BUFFER_SIZE]; 
+    uint8_t myRxBuffer[MY_RX_BUFFER_SIZE];
 
     if (DRV_SPI_ReadTransfer(mySPIhandle, myRxBuffer, MY_RX_BUFFER_SIZE) == false)
     {
-     
+
     }
     </code>
 
@@ -1201,12 +1201,12 @@ bool DRV_SPI_ReadTransfer(const DRV_HANDLE handle, void* pReceiveData,  size_t r
 
     MY_APP_OBJ myAppObj;
     uint8_t myTxBuffer[MY_TX_BUFFER_SIZE];
-    uint8_t myRxBuffer[MY_RX_BUFFER_SIZE]; 
+    uint8_t myRxBuffer[MY_RX_BUFFER_SIZE];
 
     if (DRV_SPI_WriteReadTransfer(mySPIhandle, myTxBuffer, MY_TX_BUFFER_SIZE,
                                     myRxBuffer, MY_RX_BUFFER_SIZE) == false)
     {
-       
+
     }
 
     </code>
@@ -1249,7 +1249,7 @@ bool DRV_SPI_WriteReadTransfer(
     - false - failed to acquire driver instance in exclusive mode
 
   Example:
-    <code> 
+    <code>
 
     bool DRV_SPI_Lock( mySPIHandle, true );
 
@@ -1268,10 +1268,10 @@ bool DRV_SPI_WriteReadTransfer(
 bool DRV_SPI_Lock( const DRV_HANDLE handle, bool lock );
 
 <#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
-#pragma coverity compliance end_block "MISRA C-2012 Rule 8.6"
+#pragma coverity compliance end_block "MISRA C-2023 Rule 8.6"
 <#if core.COMPILER_CHOICE == "XC32">
 #pragma GCC diagnostic pop
-</#if>    
+</#if>
 </#if>
 /* MISRAC 2012 deviation block end */
 //DOM-IGNORE-BEGIN

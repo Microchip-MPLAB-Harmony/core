@@ -202,20 +202,20 @@ typedef struct DRV_USART_INIT_T DRV_USART_INIT;
         uintptr_t context
     )
     {
-        
+
         MY_APP_OBJ* myAppObj = (MY_APP_OBJ *) context;
 
         switch(event)
         {
             case DRV_USART_BUFFER_EVENT_COMPLETE:
             {
-                
+
                 break;
             }
 
             case DRV_USART_BUFFER_EVENT_ERROR:
             {
-               
+
                 break;
             }
 
@@ -300,7 +300,7 @@ typedef void (*DRV_USART_BUFFER_EVENT_HANDLER )( DRV_USART_BUFFER_EVENT event, D
     Otherwise, returns SYS_MODULE_OBJ_INVALID.
 
   Example:
-    <code>   
+    <code>
 
     SYS_MODULE_OBJ              objectHandle;
 
@@ -339,7 +339,7 @@ typedef void (*DRV_USART_BUFFER_EVENT_HANDLER )( DRV_USART_BUFFER_EVENT event, D
 
     if (objectHandle == SYS_MODULE_OBJ_INVALID)
     {
-       
+
     }
     </code>
 
@@ -379,13 +379,13 @@ SYS_MODULE_OBJ DRV_USART_Initialize( const SYS_MODULE_INDEX drvIndex,
 
   Example:
     <code>
-    SYS_MODULE_OBJ      object;     
+    SYS_MODULE_OBJ      object;
     SYS_STATUS          usartStatus;
 
     usartStatus = DRV_USART _Status(object);
     if (usartStatus == SYS_STATUS_READY)
     {
-       
+
     }
     </code>
 
@@ -456,7 +456,7 @@ SYS_STATUS DRV_USART_Status( SYS_MODULE_OBJ object);
     handle = DRV_USART_Open(DRV_USART_INDEX_0, DRV_IO_INTENT_EXCLUSIVE);
     if (handle == DRV_HANDLE_INVALID)
     {
-       
+
     }
     </code>
 
@@ -494,7 +494,7 @@ DRV_HANDLE DRV_USART_Open( const SYS_MODULE_INDEX drvIndex, const DRV_IO_INTENT 
 
   Example:
     <code>
-    
+
 
     DRV_USART_Close(handle);
 
@@ -531,11 +531,11 @@ void DRV_USART_Close( DRV_HANDLE handle);
 
   Example:
     <code>
-    
+
 
     if (DRV_USART_ErrorGet(bufferHandle) & DRV_USART_ERROR_OVERRUN)
     {
-        
+
     }
     </code>
 
@@ -582,7 +582,7 @@ DRV_USART_ERROR DRV_USART_ErrorGet( const DRV_USART_BUFFER_HANDLE handle );
     false - Failure while updating serial setup.
 
    Example:
-    <code>   
+    <code>
 
     DRV_USART_SERIAL_SETUP setup = {
             115200,
@@ -653,11 +653,11 @@ bool DRV_USART_SerialSetup(const DRV_HANDLE handle, DRV_USART_SERIAL_SETUP* setu
 
   Example:
     <code>
-  
+
     MY_APP_OBJ myAppObj;
 
     uint8_t mybuffer[MY_BUFFER_SIZE];
-    DRV_USART_BUFFER_HANDLE bufferHandle;   
+    DRV_USART_BUFFER_HANDLE bufferHandle;
 
     void APP_USARTBufferEventHandler(
         DRV_USART_BUFFER_EVENT event,
@@ -665,20 +665,20 @@ bool DRV_USART_SerialSetup(const DRV_HANDLE handle, DRV_USART_SERIAL_SETUP* setu
         uintptr_t context
     )
     {
-       
+
         MY_APP_OBJ* myAppObj = (MY_APP_OBJ *) context;
 
         switch(event)
         {
             case DRV_USART_BUFFER_EVENT_COMPLETE:
             {
-               
+
                 break;
             }
 
             case DRV_USART_BUFFER_EVENT_ERROR:
             {
-               
+
                 break;
             }
 
@@ -687,7 +687,7 @@ bool DRV_USART_SerialSetup(const DRV_HANDLE handle, DRV_USART_SERIAL_SETUP* setu
                 break;
             }
         }
-    }  
+    }
 
     DRV_USART_BufferEventHandlerSet(
         myUSARTHandle,
@@ -704,7 +704,7 @@ bool DRV_USART_SerialSetup(const DRV_HANDLE handle, DRV_USART_SERIAL_SETUP* setu
 
     if(bufferHandle == DRV_USART_BUFFER_HANDLE_INVALID)
     {
-       
+
     }
 
     </code>
@@ -715,12 +715,12 @@ bool DRV_USART_SerialSetup(const DRV_HANDLE handle, DRV_USART_SERIAL_SETUP* setu
     thread safe when called in a RTOS application.
 */
 <#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
-/* MISRA C-2012 Rule 8.6 deviated:10 Deviation record ID -  H3_MISRAC_2012_R_8_6_DR_1 */
+/* MISRA C-2023 Rule 8.6 deviated:10 Deviation record ID -  H3_MISRAC_2023_R_8_6_DR_1 */
 <#if core.COMPILER_CHOICE == "XC32">
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Wunknown-pragmas"
 </#if>
-#pragma coverity compliance block deviate:10 "MISRA C-2012 Rule 8.6" "H3_MISRAC_2012_R_8_6_DR_1"    
+#pragma coverity compliance block deviate:10 "MISRA C-2023 Rule 8.6" "H3_MISRAC_2023_R_8_6_DR_1"
 </#if>
 
 void DRV_USART_BufferEventHandlerSet( const DRV_HANDLE handle, const DRV_USART_BUFFER_EVENT_HANDLER eventHandler, const uintptr_t context );
@@ -780,7 +780,7 @@ void DRV_USART_BufferEventHandlerSet( const DRV_HANDLE handle, const DRV_USART_B
 
     MY_APP_OBJ myAppObj;
     uint8_t mybuffer[MY_BUFFER_SIZE];
-    DRV_USART_BUFFER_HANDLE bufferHandle;   
+    DRV_USART_BUFFER_HANDLE bufferHandle;
 
     DRV_USART_WriteBufferAdd(
         myUSARThandle,
@@ -791,9 +791,9 @@ void DRV_USART_BufferEventHandlerSet( const DRV_HANDLE handle, const DRV_USART_B
 
     if(bufferHandle == DRV_USART_BUFFER_HANDLE_INVALID)
     {
-      
+
     }
- 
+
     </code>
 
   Remarks:
@@ -864,7 +864,7 @@ void DRV_USART_WriteBufferAdd( DRV_HANDLE handle,
 
     MY_APP_OBJ myAppObj;
     uint8_t mybuffer[MY_BUFFER_SIZE];
-    DRV_USART_BUFFER_HANDLE bufferHandle; 
+    DRV_USART_BUFFER_HANDLE bufferHandle;
 
     DRV_USART_ReadBufferAdd(
         myUSARThandle,
@@ -875,9 +875,9 @@ void DRV_USART_WriteBufferAdd( DRV_HANDLE handle,
 
     if(bufferHandle == DRV_USART_BUFFER_HANDLE_INVALID)
     {
-      
+
     }
-  
+
     </code>
 
   Remarks:
@@ -927,18 +927,18 @@ void DRV_USART_ReadBufferAdd( DRV_HANDLE handle, void* buffer,const size_t size,
 
   Example:
     <code>
- 
+
     MY_APP_OBJ myAppObj;
 
     uint8_t mybuffer[MY_BUFFER_SIZE];
-    DRV_USART_BUFFER_HANDLE bufferHandle;  
+    DRV_USART_BUFFER_HANDLE bufferHandle;
 
     void APP_USARTBufferEventHandler(
         DRV_USART_BUFFER_EVENT event,
         DRV_USART_BUFFER_HANDLE bufferHandle,
         uintptr_t context
     )
-    {  
+    {
 
         MY_APP_OBJ* myAppObj = (MY_APP_OBJ *)context;
         size_t processedBytes;
@@ -947,13 +947,13 @@ void DRV_USART_ReadBufferAdd( DRV_HANDLE handle, void* buffer,const size_t size,
         {
             case DRV_USART_BUFFER_EVENT_COMPLETE:
             {
-               
+
                 break;
             }
 
             case DRV_USART_BUFFER_EVENT_ERROR:
             {
-              
+
                 processedBytes= DRV_USART_BufferCompletedBytesGet(bufferHandle);
                 break;
             }
@@ -964,7 +964,7 @@ void DRV_USART_ReadBufferAdd( DRV_HANDLE handle, void* buffer,const size_t size,
             }
         }
     }
-  
+
     DRV_USART_BufferEventHandlerSet(
         myUSARTHandle,
         APP_USARTBufferEventHandler,
@@ -980,7 +980,7 @@ void DRV_USART_ReadBufferAdd( DRV_HANDLE handle, void* buffer,const size_t size,
 
     if(bufferHandle == DRV_USART_BUFFER_HANDLE_INVALID)
     {
-     
+
     }
 
     </code>
@@ -1023,12 +1023,12 @@ size_t DRV_USART_BufferCompletedBytesGet( DRV_USART_BUFFER_HANDLE bufferHandle )
 
   Example:
   <code>
-  
+
     MY_APP_OBJ myAppObj;
 
     uint8_t mybuffer[MY_BUFFER_SIZE];
     DRV_USART_BUFFER_HANDLE bufferHandle;
-    DRV_USART_BUFFER_EVENT event;  
+    DRV_USART_BUFFER_EVENT event;
 
     DRV_USART_ReadBufferAdd(
         myUSARThandle,
@@ -1039,12 +1039,12 @@ size_t DRV_USART_BufferCompletedBytesGet( DRV_USART_BUFFER_HANDLE bufferHandle )
 
     if(bufferHandle == DRV_USART_BUFFER_HANDLE_INVALID)
     {
-     
-    } 
+
+    }
 
     while ((event = DRV_USART_BufferStatusGet(bufferHandle)) == DRV_USART_BUFFER_EVENT_PENDING);
 
- 
+
   </code>
 
   Remarks:
@@ -1081,16 +1081,16 @@ DRV_USART_BUFFER_EVENT DRV_USART_BufferStatusGet( const DRV_USART_BUFFER_HANDLE 
 
   Example:
     <code>
-  
+
     void APP_TimeOut(void)
     {
         if(DRV_USART_WriteQueuePurge(myUSARThandle) == false)
         {
-           
+
         }
         else
         {
-          
+
         }
     }
     </code>
@@ -1112,7 +1112,7 @@ bool DRV_USART_WriteQueuePurge( const DRV_HANDLE handle );
     the on-going read request.
 
   Description:
-    This function removes all the buffer requests from the queue and aborts the 
+    This function removes all the buffer requests from the queue and aborts the
     on-going read request that is submitted to the PLIB.
     The client can use this function to purge the queue on timeout or to remove
     unwanted stalled buffer requests or in any other use case.
@@ -1131,16 +1131,16 @@ bool DRV_USART_WriteQueuePurge( const DRV_HANDLE handle );
 
   Example:
     <code>
-  
+
     void APP_TimeOut(void)
     {
         if(DRV_USART_ReadQueuePurge(myUSARThandle) == false)
         {
-        
+
         }
         else
         {
-          
+
         }
     }
     </code>
@@ -1178,7 +1178,7 @@ bool DRV_USART_ReadQueuePurge( const DRV_HANDLE handle );
     false - error in running the API
 
   Example:
-    <code>   
+    <code>
 
     uint32_t processedBytes;
 
@@ -1242,11 +1242,11 @@ bool DRV_USART_ReadAbort(const DRV_HANDLE handle);
     <code>
 
     MY_APP_OBJ myAppObj;
-    uint8_t myBuffer[MY_BUFFER_SIZE];  
+    uint8_t myBuffer[MY_BUFFER_SIZE];
 
     if (DRV_USART_WriteBuffer(myUSARTHandle, myBuffer, MY_BUFFER_SIZE) == false)
     {
-        
+
     }
     </code>
 
@@ -1297,11 +1297,11 @@ bool DRV_USART_WriteBuffer( const DRV_HANDLE handle, void* buffer, const size_t 
     <code>
 
     MY_APP_OBJ myAppObj;
-    uint8_t myBuffer[MY_BUFFER_SIZE]; 
+    uint8_t myBuffer[MY_BUFFER_SIZE];
 
     if (DRV_USART_ReadBuffer(myUSARTHandle, myBuffer, MY_BUFFER_SIZE) == false)
     {
-       
+
     }
     </code>
 
@@ -1312,10 +1312,10 @@ bool DRV_USART_WriteBuffer( const DRV_HANDLE handle, void* buffer, const size_t 
 bool DRV_USART_ReadBuffer( const DRV_HANDLE handle, void* buffer, const size_t numbytes);
 
 <#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
-#pragma coverity compliance end_block "MISRA C-2012 Rule 8.6"
+#pragma coverity compliance end_block "MISRA C-2023 Rule 8.6"
 <#if core.COMPILER_CHOICE == "XC32">
 #pragma GCC diagnostic pop
-</#if>    
+</#if>
 /* MISRAC 2012 deviation block end */
 </#if>
 

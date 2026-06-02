@@ -62,7 +62,11 @@ enableDependency.setVisible(False)
 enableDependency.setDependencies(enableDependencySymbols, ["ENABLE_SYS_DMA"])
 
 dmaHeaderFile = harmonyCoreComponent.createFileSymbol("DMA_HEADER", None)
-dmaHeaderFile.setSourcePath("system/dma/templates/sys_dma" + deviceFile + ".h.ftl")
+if (Database.getSymbolValue("core", "CoreArchitecture") == "PIC32A" or
+    Database.getSymbolValue("core", "CoreArchitecture") == "dsPIC33A"):
+    dmaHeaderFile.setSourcePath("system/dma/templates/sys_dma_pic32a.h.ftl")
+else:
+    dmaHeaderFile.setSourcePath("system/dma/templates/sys_dma" + deviceFile + ".h.ftl")
 dmaHeaderFile.setOutputName("sys_dma.h")
 dmaHeaderFile.setDestPath("system/dma/")
 dmaHeaderFile.setProjectPath("config/" + configName + "/system/dma/")

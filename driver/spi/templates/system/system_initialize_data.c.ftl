@@ -128,35 +128,45 @@ static const uint32_t drvSPI${INDEX?string}remapClockPhase[] =
 
 static const DRV_SPI_INTERRUPT_SOURCES drvSPI${INDEX?string}InterruptSources =
 {
-    <#if SPI_PLIB_MULTI_IRQn?eval??>
-        <#lt>    /* Peripheral has more than one interrupt vectors */
+    <#if .vars["${DRV_SPI_PLIB?lower_case}"].MULTI_IRQn?has_content>
+        <#lt>    /* Peripheral has more than one interrupt vector */
         <#lt>    .isSingleIntSrc                        = false,
 
         <#lt>    /* Peripheral interrupt lines */
-        <#if SPI_PLIB_TX_READY_INDEX?eval??>
-            <#lt>    .intSources.multi.spiTxReadyInt      = (int32_t)${SPI_PLIB_TX_READY_INDEX?eval},
-        <#else>
-            <#lt>    .intSources.multi.spiTxReadyInt      = -1,
-        </#if>
-        <#if SPI_PLIB_TX_COMPLETE_INDEX?eval??>
-            <#lt>    .intSources.multi.spiTxCompleteInt   = (int32_t)${SPI_PLIB_TX_COMPLETE_INDEX?eval},
-        <#else>
-            <#lt>    .intSources.multi.spiTxCompleteInt   = -1,
-        </#if>
-        <#if SPI_PLIB_RX_INDEX?eval??>
-            <#lt>    .intSources.multi.spiRxInt           = (int32_t)${SPI_PLIB_RX_INDEX?eval},
-        <#else>
-            <#lt>    .intSources.multi.spiRxInt           = -1,
-        </#if>
+        <#lt>   .intSources.multi.spiTxReadyInt     = (int32_t)${.vars["${DRV_SPI_PLIB?lower_case}"].SPI_TX_READY_INT_SRC},
+        <#lt>   .intSources.multi.spiTxCompleteInt  = (int32_t)${.vars["${DRV_SPI_PLIB?lower_case}"].SPI_TX_COMPLETE_INT_SRC},
+        <#lt>   .intSources.multi.spiRxInt          = (int32_t)${.vars["${DRV_SPI_PLIB?lower_case}"].SPI_RX_INT_SRC},
     <#else>
-        <#lt>    /* Peripheral has single interrupt vector */
-        <#lt>    .isSingleIntSrc                        = true,
+        <#if SPI_PLIB_MULTI_IRQn?eval??>
+            <#lt>    /* Peripheral has more than one interrupt vectors */
+            <#lt>    .isSingleIntSrc                        = false,
 
-        <#lt>    /* Peripheral interrupt line */
-        <#if SPI_PLIB_SINGLE_IRQn?eval??>
-            <#lt>    .intSources.spiInterrupt             = (int32_t)${SPI_PLIB_SINGLE_IRQn?eval},
+            <#lt>    /* Peripheral interrupt lines */
+            <#if SPI_PLIB_TX_READY_INDEX?eval??>
+                <#lt>    .intSources.multi.spiTxReadyInt      = (int32_t)${SPI_PLIB_TX_READY_INDEX?eval},
+            <#else>
+                <#lt>    .intSources.multi.spiTxReadyInt      = -1,
+            </#if>
+            <#if SPI_PLIB_TX_COMPLETE_INDEX?eval??>
+                <#lt>    .intSources.multi.spiTxCompleteInt   = (int32_t)${SPI_PLIB_TX_COMPLETE_INDEX?eval},
+            <#else>
+                <#lt>    .intSources.multi.spiTxCompleteInt   = -1,
+            </#if>
+            <#if SPI_PLIB_RX_INDEX?eval??>
+                <#lt>    .intSources.multi.spiRxInt           = (int32_t)${SPI_PLIB_RX_INDEX?eval},
+            <#else>
+                <#lt>    .intSources.multi.spiRxInt           = -1,
+            </#if>
         <#else>
-            <#lt>    .intSources.spiInterrupt             = (int32_t)${DRV_SPI_PLIB}_IRQn,
+            <#lt>    /* Peripheral has single interrupt vector */
+            <#lt>    .isSingleIntSrc                        = true,
+
+            <#lt>    /* Peripheral interrupt line */
+            <#if SPI_PLIB_SINGLE_IRQn?eval??>
+                <#lt>    .intSources.spiInterrupt             = (int32_t)${SPI_PLIB_SINGLE_IRQn?eval},
+            <#else>
+                <#lt>    .intSources.spiInterrupt             = (int32_t)${DRV_SPI_PLIB}_IRQn,
+            </#if>
         </#if>
     </#if>
     <#if core.DMA_ENABLE?has_content && drv_spi.DRV_SPI_SYS_DMA_ENABLE == true>

@@ -104,7 +104,7 @@ const SYS_CONSOLE_DEV_DESC sysConsoleUSBCdcDevDesc =
 // *****************************************************************************
 // *****************************************************************************
 
-USB_DEVICE_CDC_EVENT_RESPONSE USBDeviceCDCEventHandler
+static USB_DEVICE_CDC_EVENT_RESPONSE USBDeviceCDCEventHandler
 (
     USB_DEVICE_CDC_INDEX index,
     USB_DEVICE_CDC_EVENT event,
@@ -220,7 +220,7 @@ USB_DEVICE_CDC_EVENT_RESPONSE USBDeviceCDCEventHandler
 // *****************************************************************************
 // *****************************************************************************
 
-void USBDeviceEventHandler
+static void USBDeviceEventHandler
 (
     USB_DEVICE_EVENT event,
     void* eventData,
@@ -403,7 +403,7 @@ static bool Console_USB_CDC_ReadCompleteEventHandler(uint32_t index, uint32_t nB
 
         result = USB_DEVICE_CDC_Read (cdcInstance->cdcInstanceIndex,
                 &cdcInstance->readTransferHandle, cdcInstance->cdcReadBuffer,
-                SYS_CONSOLE_USB_CDC_READ_WRITE_BUFFER_SIZE);
+                gConsoleUSBCdcData.endpointMaxPktSize);
 
         if ((result != USB_DEVICE_CDC_RESULT_OK) || (cdcInstance->readTransferHandle == USB_DEVICE_CDC_TRANSFER_HANDLE_INVALID))
         {
@@ -674,13 +674,13 @@ ssize_t Console_USB_CDC_WriteCountGet(uint32_t index)
     return nPendingTxBytes;
 }
 
-/* MISRA C-2012 Rule 11.8 deviated:1 Deviation record ID -  H3_MISRAC_2012_R_11_8_DR_1 */
+/* MISRA C-2023 Rule 11.8 deviated:1 Deviation record ID -  H3_MISRAC_2023_R_11_8_DR_1 */
 <#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
 <#if core.COMPILER_CHOICE == "XC32">
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Wunknown-pragmas"
 </#if>
-#pragma coverity compliance block deviate:1 "MISRA C-2012 Rule 11.8" "H3_MISRAC_2012_R_11_8_DR_1"
+#pragma coverity compliance block deviate:1 "MISRA C-2023 Rule 11.8" "H3_MISRAC_2023_R_11_8_DR_1"
 </#if>
 ssize_t Console_USB_CDC_Write(uint32_t index, const void* pWrBuffer, size_t size )
 {
@@ -731,7 +731,7 @@ ssize_t Console_USB_CDC_Write(uint32_t index, const void* pWrBuffer, size_t size
     return nBytesWritten;
 }
 <#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
-#pragma coverity compliance end_block "MISRA C-2012 Rule 11.8"
+#pragma coverity compliance end_block "MISRA C-2023 Rule 11.8"
 <#if core.COMPILER_CHOICE == "XC32">
 #pragma GCC diagnostic pop
 </#if>
@@ -867,12 +867,21 @@ void Console_USB_CDC_Tasks(uint32_t index, SYS_MODULE_OBJ object)
             /* Check if the device was configured */
             if(gConsoleUSBCdcData.isConfigured)
             {
+                if (USB_DEVICE_ActiveSpeedGet(gConsoleUSBCdcData.deviceHandle) == USB_SPEED_FULL)
+                {
+                    gConsoleUSBCdcData.endpointMaxPktSize = 64;
+                }
+                else if (USB_DEVICE_ActiveSpeedGet(gConsoleUSBCdcData.deviceHandle) == USB_SPEED_HIGH)
+                {
+                    gConsoleUSBCdcData.endpointMaxPktSize = 512;
+                }
+
                 /* Device is configured. Start reading. */
                 cdcInstance->isReadComplete = false;
 
                 result = USB_DEVICE_CDC_Read (cdcInstance->cdcInstanceIndex,
                     &cdcInstance->readTransferHandle, cdcInstance->cdcReadBuffer,
-                    SYS_CONSOLE_USB_CDC_READ_WRITE_BUFFER_SIZE);
+                    gConsoleUSBCdcData.endpointMaxPktSize);
 
                 if ((result == USB_DEVICE_CDC_RESULT_OK) && (cdcInstance->readTransferHandle !=     USB_DEVICE_CDC_TRANSFER_HANDLE_INVALID))
                 {

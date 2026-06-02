@@ -39,7 +39,16 @@
 *******************************************************************************/
 //DOM-IGNORE-END
 
+/* MISRAC-2023 Rule 17.1 deviation taken for using stdarg.h header file */
+<#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wunknown-pragmas"
+#pragma coverity compliance deviate "MISRA C-2023 Rule 17.1" "H3_MISRAC_2023_R_17_1_DR_1"
+</#if>
 #include <stdarg.h>
+<#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
+#pragma GCC diagnostic pop
+</#if>
 #include <string.h>
 
 #include "system/fs/src/sys_fs_local.h"
@@ -333,13 +342,13 @@ static bool SYS_FS_StringWildCardCompare
     See sys_fs.h for usage information.
 ***************************************************************************/
 
-/* MISRA C-2012 Rule 11.8 deviated:1 Deviation record ID -  H3_MISRAC_2012_R_11_8_DR_1 */
+/* MISRA C-2023 Rule 11.8 deviated:1 Deviation record ID -  H3_MISRAC_2023_R_11_8_DR_1 */
 <#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
 <#if core.COMPILER_CHOICE == "XC32">
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Wunknown-pragmas"
 </#if>
-#pragma coverity compliance block deviate:1 "MISRA C-2012 Rule 11.8" "H3_MISRAC_2012_R_11_8_DR_1"
+#pragma coverity compliance block deviate:1 "MISRA C-2023 Rule 11.8" "H3_MISRAC_2023_R_11_8_DR_1"
 </#if>
 SYS_FS_RESULT SYS_FS_Initialize
 (
@@ -391,7 +400,7 @@ SYS_FS_RESULT SYS_FS_Initialize
     return SYS_FS_RES_SUCCESS;
 }
 <#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
-#pragma coverity compliance end_block "MISRA C-2012 Rule 11.8"
+#pragma coverity compliance end_block "MISRA C-2023 Rule 11.8"
 </#if>
 /* MISRAC 2012 deviation block end */
 
@@ -562,7 +571,7 @@ SYS_FS_RESULT SYS_FS_Mount
         return SYS_FS_RES_FAILURE;
     }
 
-    /* Clear the error value when mount is sucessful */
+    /* Clear the error value when mount is successful */
     errorValue = SYS_FS_ERROR_OK;
 
     /* Verify if the requested file system is supported by SYS_FS */
@@ -798,8 +807,25 @@ SYS_FS_RESULT SYS_FS_Unmount
         disk->mountNameLength = 0;
 
         /* Reset the current mount point if it is set to the current disk. */
-        if ((gSYSFSCurrentMountPoint.inUse == true) && (gSYSFSCurrentMountPoint.currentDisk == disk))
+        if ((gSYSFSCurrentMountPoint.inUse == true) &&
+            (gSYSFSCurrentMountPoint.currentDisk == disk))
         {
+            /* Find another valid mount point */
+            for (index = 0; index < SYS_FS_VOLUME_NUMBER; index++)
+            {
+                if (gSYSFSMountPoint[index].inUse == true && &gSYSFSMountPoint[index] != disk)
+                {
+                    /* Switch to the next valid mount point */
+                    gSYSFSCurrentMountPoint.currentDisk = &gSYSFSMountPoint[index];
+
+                    /* Release the acquired mutex. */
+                    (void) OSAL_MUTEX_Unlock (&gSysFsMutex);
+
+                    return SYS_FS_RES_SUCCESS;
+                }
+            }
+
+            /* If no other mount points are valid, invalidate the current mount point */
             gSYSFSCurrentMountPoint.inUse = false;
         }
     }
@@ -1197,9 +1223,17 @@ int32_t SYS_FS_FileSeek
 {
     int fileStatus = -1;
     SYS_FS_OBJ *obj = (SYS_FS_OBJ *)handle;
-    long tell = 0;
+<#if SYS_FS_FAT_EXFAT_ENABLE == true>
+    uint64_t tell = 0;
+    uint64_t size = 0;
+    uint64_t temp = 0;
+    uint64_t offset1 = (uint64_t)offset;
+<#else>
+    uint32_t tell = 0;
     uint32_t size = 0;
-    int temp = 0;
+    uint32_t temp = 0;
+    uint32_t offset1 = (uint32_t)offset;
+</#if>
     OSAL_RESULT osalResult = OSAL_RESULT_FAIL;
 
     /* Check if the handle is valid. */
@@ -1239,17 +1273,17 @@ int32_t SYS_FS_FileSeek
     if (osalResult == OSAL_RESULT_SUCCESS)
     {
         /* SYS_FS_SEEK_SET case. */
-        temp = offset;
+        temp = offset1;
 
         if (whence == SYS_FS_SEEK_CUR)
         {
-            tell = (long)obj->mountPoint->fsFunctions->tell(obj->nativeFSFileObj);
-            temp = (offset + tell);
+            tell = obj->mountPoint->fsFunctions->tell(obj->nativeFSFileObj);
+            temp = (offset1 + tell);
         }
         else if (whence == SYS_FS_SEEK_END)
         {
             size = obj->mountPoint->fsFunctions->size(obj->nativeFSFileObj);
-            temp = (offset + (int)size);
+            temp = (offset1 + size);
         }
         else
         {
@@ -2029,9 +2063,9 @@ SYS_FS_RESULT SYS_FS_DirSearch
 
         /* Firstly, match the file attribute with the requested attribute */
 <#if SYS_FS_LFS == true >
-		if ((disk->fsType == LITTLEFS) || ((stat->fattrib & (uint8_t)attr) != 0U) ||
+        if ((disk->fsType == LITTLEFS) || ((stat->fattrib & (uint8_t)attr) != 0U) ||
 <#else>
-		if (((stat->fattrib & (uint8_t)attr) != 0U) ||
+        if (((stat->fattrib & (uint8_t)attr) != 0U) ||
 </#if>
             (attr == SYS_FS_ATTR_FILE))
         {
@@ -2841,9 +2875,9 @@ SYS_FS_RESULT SYS_FS_FileStringPut
     See sys_fs.h for usage information.
 ***************************************************************************/
 
-/* MISRA C-2012 Rule 17.1 deviated:3 Deviation record ID -  H3_MISRAC_2012_R_17_1_DR_1 */
+/* MISRA C-2023 Rule 17.1 deviated:3 Deviation record ID -  H3_MISRAC_2023_R_17_1_DR_1 */
 <#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
-#pragma coverity compliance block deviate:3 "MISRA C-2012 Rule 17.1" "H3_MISRAC_2012_R_17_1_DR_1"
+#pragma coverity compliance block deviate:3 "MISRA C-2023 Rule 17.1" "H3_MISRAC_2023_R_17_1_DR_1"
 </#if>
 SYS_FS_RESULT SYS_FS_FilePrintf
 (
@@ -2909,7 +2943,7 @@ SYS_FS_RESULT SYS_FS_FilePrintf
     return SYS_FS_RES_FAILURE;
 }
 <#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
-#pragma coverity compliance end_block "MISRA C-2012 Rule 17.1"
+#pragma coverity compliance end_block "MISRA C-2023 Rule 17.1"
 <#if core.COMPILER_CHOICE == "XC32">
 #pragma GCC diagnostic pop
 </#if>
@@ -3620,7 +3654,11 @@ SYS_FS_RESULT SYS_FS_DrivePartition
     osalResult = OSAL_MUTEX_Lock(&(disk->mutexDiskVolume), OSAL_WAIT_FOREVER);
     if (osalResult == OSAL_RESULT_SUCCESS)
     {
+<#if SYS_FS_FAT == true>
+        fileStatus = disk->fsFunctions->partitionDisk((uint8_t)VolToPart[disk->diskNumber].pd, partition, work);
+<#else>
         fileStatus = disk->fsFunctions->partitionDisk((uint8_t)disk->diskNumber, partition, work);
+</#if>
         (void) OSAL_MUTEX_Unlock(&(disk->mutexDiskVolume));
 
         errorValue = (SYS_FS_ERROR)fileStatus;

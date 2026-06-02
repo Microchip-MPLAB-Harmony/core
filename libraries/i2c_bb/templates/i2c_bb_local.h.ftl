@@ -73,7 +73,8 @@
 
 <#assign TMR_CLOCK_FREQUENCY = "core." + I2CBB_CONNECTED_TIMER + "_CLOCK_FREQUENCY">
 #define ${I2CBB_INSTANCE_NAME}_IRQn   ${.vars["${I2CBB_CONNECTED_TIMER?lower_case}"].IRQ_ENUM_NAME}
-#define ${I2CBB_INSTANCE_NAME}_TMR_CLOCK_FREQUENCY  ${TMR_CLOCK_FREQUENCY?eval}
+#define ${I2CBB_INSTANCE_NAME}_TMR_CLOCK_FREQUENCY  ${I2CBB_CONNECTED_TIMER_FRQUENCY}
+
 
 #define I2C_BB_DATA_PIN SYS_PORT_PIN_${I2CBB_SDA_PIN}
 #define I2C_BB_CLK_PIN  SYS_PORT_PIN_${I2CBB_SCL_PIN}
@@ -85,13 +86,13 @@
 // *****************************************************************************
 // *****************************************************************************
 
-/* MISRA C-2012 Rule 5.2 deviated:6 Deviation record ID -  H3_MISRAC_2012_R_5_2_DR_1 */
+/* MISRA C-2023 Rule 5.2 deviated:6 Deviation record ID -  H3_MISRAC_2023_R_5_2_DR_1 */
 <#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
 <#if core.COMPILER_CHOICE == "XC32">
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Wunknown-pragmas"
 </#if>
-#pragma coverity compliance block deviate:6 "MISRA C-2012 Rule 5.2" "H3_MISRAC_2012_R_5_2_DR_1"    
+#pragma coverity compliance block deviate:6 "MISRA C-2023 Rule 5.2" "H3_MISRAC_2023_R_5_2_DR_1"
 </#if>
 
 typedef enum
@@ -155,10 +156,10 @@ typedef enum
 } I2CBB_BUS_STATE;
 
 <#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
-#pragma coverity compliance end_block "MISRA C-2012 Rule 5.2"
+#pragma coverity compliance end_block "MISRA C-2023 Rule 5.2"
 <#if core.COMPILER_CHOICE == "XC32">
 #pragma GCC diagnostic pop
-</#if>    
+</#if>
 </#if>
 /* MISRAC 2012 deviation block end */
 

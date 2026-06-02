@@ -3,6 +3,254 @@
 
 # Microchip MPLAB® Harmony 3 Release Notes
 
+## Core Release v3.16.3
+
+### New Features
+- None
+
+### Bug fixes
+- Fixed file system mount point issue when multiple file systems are available
+- Fixed NAND Flash driver error correction configuration in FTL template
+- Fixed SST26 Flash driver status read handling
+- Fixed SD card SPI driver busy signal handling for R1B response
+
+### Known Issues
+
+-  None
+
+### Development Tools
+
+- [MPLAB® X IDE v6.30](https://www.microchip.com/mplab/mplab-x-ide)
+- [MPLAB® XC32 C/C++ Compiler v5.10](https://www.microchip.com/mplab/compilers)
+- MPLAB® X IDE plug-ins:
+    - MPLAB® Code Configurator (MCC) 5.6.4
+
+## Core Release v3.16.2
+
+### New Features
+- None
+
+### Bug fixes
+- Removed package index file from the repository root
+
+### Known Issues
+
+-  None
+
+## Core Release v3.16.1
+
+### New Features
+- None
+
+### Bug fixes
+- Updated MISRA-C deviations from 2012 ruleset to 2023 ruleset
+
+### Known Issues
+
+-  None
+
+## Core Release v3.16.0
+
+### New Features
+
+- **New Features and Enhancements**
+  - Added following drivers and libraries for thermal management on MPU devices:
+      - Added PMIC (Power Management IC) driver
+      - Added PAC1934 driver
+      - Added PMU (Performance Monitor Unit) driver
+      - Added Temperature Sensor driver
+      - Added Thermal management driver - DVFS
+
+- **Applications**
+  - MPLAB Harmony provides large number of application examples to accelerate learning and reduce the development cycles for your embedded systems with reusable software components. The application examples are available in the respective [product family specific repository](apps/readme.md).
+
+### Known Issues
+
+-  None
+
+### Development Tools
+
+-   Same as v3.15.0
+
+### Notes
+
+-  None
+
+## Core Release v3.15.5
+
+### New Features
+- None
+
+### Bug fixes
+- Fixed issue in the FreeRTOS python script for PIC32WM-BW1 device
+- Updated handle message to allow configuration of UART driver operating mode by other modules
+
+### Known Issues
+
+-  None
+
+## Core Release v3.15.4
+
+### New Features
+- None
+
+### Bug fixes
+- Fixed the data type in the FreeRTOS hook function vApplicationGetTimerTaskMemory
+- Updated the default FreeRTOS heap size for PIC32CX-BZ6 and PIC32WM-BZ6 devices
+
+### Known Issues
+
+-  None
+
+## Core Release v3.15.3
+
+### New Features
+- None
+
+### Bug fixes
+- Bug fix in file system service
+
+### Known Issues
+
+-  None
+
+
+## Core Release v3.15.2
+
+### New Features
+- None
+
+### Bug fixes
+- Updated System Console Service for HS USB driver
+
+### Known Issues
+
+-  None
+
+## Core Release v3.15.1
+
+### New Features
+- None
+
+### Bug fixes
+- Fixed MISRA-C required rule violations in the OSAL ThreadX
+
+### Known Issues
+
+-  None
+
+## Core Release v3.15.0
+
+### New Features
+
+- **New Features and Enhancements**
+  - Added Drivers, System services and FreeRTOS support for PIC32AK-GC family of devices
+
+- **Applications**
+  - MPLAB Harmony provides large number of application examples to accelerate learning and reduce the development cycles for your embedded systems with reusable software components. The application examples are available in the respective [product family specific repository](apps/readme.md).
+
+### Known Issues
+
+-  None
+
+### Development Tools
+
+For PIC32AK-GC family of devices:
+- [MPLAB® X IDE v6.25](https://www.microchip.com/mplab/mplab-x-ide) or higher
+- [MPLAB® XC32 C/C++ Compiler v4.60](https://www.microchip.com/mplab/compilers) or higher
+- MPLAB® X IDE plug-ins:
+    - MPLAB® Code Configurator 5.5.2 or higher
+
+For all other parts:
+ - Same as v3.14.0
+
+### Notes
+
+-  None
+
+## Core Release v3.14.2
+
+- Updated the version of BSP package dependency
+
+### New Features
+- N/A
+
+### Bug fixes
+- Fixed SYS TIME service bug for SAM9X60 family of microcontrollers
+
+### Known Issues
+
+-  None
+
+## Core Release v3.14.1
+
+### New Features
+- N/A
+
+### Bug fixes
+- Added messages that allows SHD to configure SST26 driver
+
+### Known Issues
+
+-  None
+
+## Core Release v3.14.0
+
+### New Features
+
+- **New Features and Enhancements**
+  - Added Drivers, System services and FreeRTOS support for PIC32CM-GC/SG, PIC32CX-BZ6 and PIC32CZ-CA70 family of devices
+  - FreeRTOS support updated to the latest V11.1.0 with FreeRTOS-Kernel repository
+  - Updated LittleFS support to the latest version v2.9.3
+  - Added SDIO protocol support in SDMMC driver
+  - Added MPU mode support in FreeRTOS for Cortex-M4 devices, It allows application tasks to create restricted tasks
+  - Added support for creation of application tasks using static memory in FreeRTOS
+  - Other bug fixes and enhancements
+
+- **Applications**
+  - MPLAB Harmony provides large number of application examples to accelerate learning and reduce the development cycles for your embedded systems with reusable software components. The application examples are available in the respective [product family specific repository](apps/readme.md).
+
+### Known Issues
+
+-  None
+
+### Development Tools
+
+- [MPLAB® X IDE v6.20](https://www.microchip.com/mplab/mplab-x-ide) or higher
+- [MPLAB® XC32 C/C++ Compiler v4.45](https://www.microchip.com/mplab/compilers)
+- MPLAB® X IDE plug-ins:
+    - MPLAB® Code Configurator 5.5.1 or higher
+
+### Notes
+
+- With core v3.14.0, FreeRTOS source dependency is changed from [CMSIS-FreeRTOS](https://github.com/ARM-software/CMSIS-FreeRTOS) to [FreeRTOS-Kernel](https://github.com/FreeRTOS/FreeRTOS-Kernel) repository.
+
+## Core Release v3.14.0-E1
+
+### New Features
+- Updated package.yml to support the Engineering release of PIC32CX-BZ6 family of devices.
+
+### Bug fixes
+- None
+
+## Core Release v3.13.5
+
+### New Features
+- N/A
+
+### Bug fixes
+- Fixed MISRA-C violations in SST26, SST38, SST39 and NAND Flash Drivers
+- Updated System Time Service for DVRT support
+
+## Core Release v3.13.4
+
+### New Features
+- N/A
+
+### Bug fixes
+- Fixed variable overflow issue in SDMMC, SD-SPI and Memory Drivers
+- Fixed build issue in SYS_COMMAND service
+
 ## Core Release v3.13.3
 
 ### New Features
@@ -98,7 +346,7 @@ For CEC173x family of devices:
 For all other parts:
 
   - Same as v3.12.0-E1
-  
+
 ### Notes
 
 -  None
@@ -208,7 +456,7 @@ The current known issues are as follows:
 ## Core Release v3.9.2
 
 ### New Features
-- Added MHC UI option to configure maximum command groups and command arguments in Command System Service 
+- Added MHC UI option to configure maximum command groups and command arguments in Command System Service
 
 ### Bug fixes
 - N/A
@@ -312,7 +560,7 @@ The current known issues are as follows:
   -  The following product family requires newer DFP version to be downloaded from packs server and to be used in the MPLAB project to build with MPLAB X IDE v5.4.
      -  **SAM L21 Family**: SAML21_DFP v3.4.80
      -  **SAM L22 Family**: SAML22_DFP v3.4.59
-     -  **SAM L10/L11 Family**: SAML10_DFP v3.3.82, SAML11_DFP v4.0.114     
+     -  **SAM L10/L11 Family**: SAML10_DFP v3.3.82, SAML11_DFP v4.0.114
      -  **PIC32MK MCM/GPK Family**: PIC32MK-GP_DFP v1.4.117, PIC32MK-MC_DFP v1.5.115
 
 
@@ -420,8 +668,8 @@ The current known issues are as follows:
   - SYS_FS_FileStat
   - SYS_FS_DirRead
   - SYS_FS_DirSearch
-  
-- Updating File System based applications created with Harmony Core v3.6.x for PIC32MZ devices to Harmony Core v3.7.x will require removing and adding the File System component in the MHC Project Graph 
+
+- Updating File System based applications created with Harmony Core v3.6.x for PIC32MZ devices to Harmony Core v3.7.x will require removing and adding the File System component in the MHC Project Graph
 
 ### **Development Tools**
 

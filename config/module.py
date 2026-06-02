@@ -51,6 +51,27 @@ def loadModule():
     i2c_bbComponent.setDisplayType("I2C BIT BANG")
     i2c_bbComponent.addCapability("I2C", "I2C", False)
     i2c_bbComponent.addDependency("TMR", "TMR", False, True)
+    i2c_bbComponent.setHelpKeyword("MH3_CORE_i2c_bb")
+
+    dvfs_Component = Module.CreateComponent("dvfs", "DVFS", "/Libraries/", "/libraries/dvfs/config/lib_dvfs.py")
+    dvfs_Component.setDisplayType("Core Library")
+    dvfs_Component.setHelpKeyword("MH3_CORE_dvfs")
+
+    temp_sensor_Component = Module.CreateComponent("Temp_Sensor", "TEMP SENSOR", "/Drivers/", "/driver/temp_sensor/config/drv_temp_sensor.py")
+    temp_sensor_Component.setDisplayType("Core Driver")
+    temp_sensor_Component.setHelpKeyword("MH3_CORE_temp_sensor")
+
+    pac193x_Component = Module.CreateComponent("pac193x", "PAC193X", "/Drivers/", "/driver/pac193x/config/drv_pac193x.py")
+    pac193x_Component.setDisplayType('Core Driver')
+    pac193x_Component.addDependency("PAC193X_DRV_I2C_DEPENDENCY", "DRV_I2C", False)
+
+    mcp16502_Component = Module.CreateComponent("mcp16502", "MCP16502", "/Drivers/", "/driver/mcp16502/config/drv_mcp16502.py")
+    mcp16502_Component.setDisplayType('Core Driver')
+    mcp16502_Component.addDependency("MCP16502_DRV_I2C_DEPENDENCY", "DRV_I2C", False)
+
+    pmu_a7_Component = Module.CreateComponent("pmu", "PMU", "/Drivers/", "/driver/pmu/config/drv_pmu.py")
+    pmu_a7_Component.setDisplayType("Core Driver")
+    pmu_a7_Component.setHelpKeyword("MH3_CORE_mpu_cortex_a7")
 
     #define drivers and system services
     coreComponents = [
@@ -62,7 +83,7 @@ def loadModule():
 
         {"name":"debug", "label": "DEBUG", "type":"system", "display_path":"", "actual_path":"", "capability":["SYS_DEBUG"], "capability_type":"generic", "dependency":["SYS_CONSOLE"], "condition":"True"},
 
-        {"name":"fs", "label": "FILE SYSTEM", "type":"system", "display_path":"", "actual_path":"", "capability":["SYS_FS"], "capability_type":"generic", "dependency":["DRV_MEDIA"], "dependency_type":"multi", "condition":"True"},
+        {"name":"fs", "label": "FILE SYSTEM", "type":"system", "display_path":"", "actual_path":"", "capability":["SYS_FS"], "capability_type":"generic", "dependency":["DRV_MEDIA"], "dependency_type":"multi", "condition":'not any(x in Variables.get("__PROCESSOR") for x in ["PIC32AK", "dsPIC33AK"])'},
 
         {"name":"usart", "label": "USART", "type":"driver", "display_path":"", "actual_path":"", "instance":"multi", "capability":["DRV_USART"], "dependency":["UART"], "condition":"True"},
 
@@ -74,9 +95,9 @@ def loadModule():
 
         {"name":"w25", "label": "W25", "type":"driver", "display_path":"SQI Flash", "actual_path":"sqi_flash", "instance":"single", "capability":["MEMORY"], "dependency":["SQI"], "condition":'any(x in Variables.get("__PROCESSOR") for x in ["CEC17"])'},
 
-        {"name":"i2c", "label": "I2C", "type":"driver", "display_path":"", "actual_path":"", "instance":"multi", "capability":["DRV_I2C"], "dependency":["I2C"], "condition":"True"},
+        {"name":"i2c", "label": "I2C", "type":"driver", "display_path":"", "actual_path":"", "instance":"multi", "capability":["DRV_I2C"], "capability_type":"multi", "dependency":["I2C"], "condition":"True"},
 
-        {"name":"spi", "label": "SPI", "type":"driver", "display_path":"", "actual_path":"", "instance":"multi", "capability":["DRV_SPI"], "dependency":["SPI"], "condition":"True"},
+        {"name":"spi", "label": "SPI", "type":"driver", "display_path":"", "actual_path":"", "instance":"multi", "capability":["DRV_SPI"], "capability_type":"multi", "dependency":["SPI"], "condition":"True"},
 
         {"name":"at24", "label": "AT24", "type":"driver", "display_path":"I2C EEPROM", "actual_path":"i2c_eeprom", "instance":"single", "capability":["MEMORY"], "dependency":["I2C"], "condition":"True"},
 
@@ -88,14 +109,13 @@ def loadModule():
 
         {"name":"sdspi", "label": "SD Card (SPI)", "type":"driver", "display_path":"SDCARD", "actual_path":"", "instance":"multi", "capability":["DRV_MEDIA"], "capability_type":"multi", "dependency":["SPI", "DRV_SPI", "SYS_TIME"], "condition":"True", "is_dependency_required": "False"},
 
-        {"name":"nand_flash", "label": "NAND FLASH", "type":"driver", "display_path":"SMC FLASH", "actual_path":"smc_flash", "instance":"single", "capability":["MEMORY"], "dependency":["NAND_CS"], "condition":'any(x in Variables.get("__PROCESSOR") for x in ["SAM9X"])'},
+        {"name":"nand_flash", "label": "NAND FLASH", "type":"driver", "display_path":"SMC FLASH", "actual_path":"smc_flash", "instance":"single", "capability":["MEMORY"], "dependency":["NAND_CS"], "condition":'any(x in Variables.get("__PROCESSOR") for x in ["SAM9X", "SAMA5D2", "SAMA7"])'},
 
         {"name":"emulated_eeprom", "label": "Emulated EEPROM", "type":"library", "display_path":"", "actual_path":"", "instance":"single", "dependency":["MEMORY"], "condition":'emulated_eeprom_condition()'},
 
         {"name":"sst39", "label": "SST39", "type":"driver", "display_path":"Parallel PROM", "actual_path":"parallel_prom", "instance":"single", "capability":["MEMORY"], "dependency":["HEMC_CS"], "condition":"True"},
 
         {"name":"sst38", "label": "SST38", "type":"driver", "display_path":"Parallel PROM", "actual_path":"parallel_prom", "instance":"single", "capability":["MEMORY"], "dependency":["HEMC_CS"], "condition":"True"},
-
         ]
 
     #load drivers and system services defined above

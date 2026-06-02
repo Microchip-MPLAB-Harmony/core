@@ -32,6 +32,10 @@ global sort_alphanumeric
 
 drv_at25_mcc_helpkeyword = "mcc_h3_drv_at25_configurations"
 
+global at25SymChipSelectPin
+global at25SymHoldPin
+global at25SymWriteProtectPin
+
 def handleMessage(messageID, args):
 
     result_dict = {}
@@ -42,6 +46,47 @@ def handleMessage(messageID, args):
             result_dict = Database.sendMessage(args["localComponentID"], "SPI_MASTER_INTERRUPT_MODE", {"isReadOnly":True, "isEnabled":True})
             result_dict = Database.sendMessage(args["localComponentID"], "SPI_MASTER_HARDWARE_CS", {"isReadOnly":True, "isEnabled":False})
 
+    elif (messageID == "AT25_CONFIG_HW_IO"):
+        global at25SymChipSelectPin
+        global at25SymHoldPin
+        global at25SymWriteProtectPin
+        
+        pinFn, pinId, enable = args['config']
+        component = "drv_at25"
+
+        configurePin = False
+        if pinFn == "WP":
+            symbolInstance = at25SymWriteProtectPin
+            symbolId = "DRV_AT25_WRITE_PROTECT_PIN"
+            configurePin = True
+        elif pinFn == "HOLD":
+            symbolInstance = at25SymHoldPin
+            symbolId = "DRV_AT25_HOLD_PIN"
+            configurePin = True
+        elif pinFn == "CS":
+            symbolInstance = at25SymChipSelectPin
+            symbolId = "DRV_AT25_CHIP_SELECT_PIN"
+            configurePin = True
+        else:
+            result_dict = {"Result": "Fail - AT25 pin is not detected {}".format(pinFn)}
+
+        if configurePin == True:
+            res = False
+            if enable == True:
+                keyCount = symbolInstance.getKeyCount()
+                for index in range(0, keyCount):
+                    symbolKey = symbolInstance.getKey(index)
+                    if pinId.upper() == symbolKey.split("_")[-1].upper():
+                        res = symbolInstance.setValue(index)
+                        break
+            else:
+                res = Database.clearSymbolValue(component, symbolId)
+            
+            if res == True:
+                result_dict = {"Result": "Success"}
+            else:
+                result_dict = {"Result": "Fail"}
+            
     return result_dict
 
 def sort_alphanumeric(l):
@@ -100,18 +145,21 @@ def instantiateComponent(at25Component):
     at25EEPROMFlashSize.setHelp(drv_at25_mcc_helpkeyword)
     at25EEPROMFlashSize.setDefaultValue(262144)
 
+    global at25SymChipSelectPin
     at25SymChipSelectPin = at25Component.createKeyValueSetSymbol("DRV_AT25_CHIP_SELECT_PIN", None)
     at25SymChipSelectPin.setLabel("Chip Select Pin")
     at25SymChipSelectPin.setHelp(drv_at25_mcc_helpkeyword)
     at25SymChipSelectPin.setOutputMode("Key")
     at25SymChipSelectPin.setDisplayMode("Description")
 
+    global at25SymHoldPin
     at25SymHoldPin = at25Component.createKeyValueSetSymbol("DRV_AT25_HOLD_PIN", None)
     at25SymHoldPin.setLabel("Hold Pin")
     at25SymHoldPin.setHelp(drv_at25_mcc_helpkeyword)
     at25SymHoldPin.setOutputMode("Key")
     at25SymHoldPin.setDisplayMode("Description")
 
+    global at25SymWriteProtectPin
     at25SymWriteProtectPin = at25Component.createKeyValueSetSymbol("DRV_AT25_WRITE_PROTECT_PIN", None)
     at25SymWriteProtectPin.setLabel("Write Protect Pin")
     at25SymWriteProtectPin.setHelp(drv_at25_mcc_helpkeyword)

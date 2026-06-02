@@ -151,7 +151,7 @@ static SYS_CMD_INIT cmdInitData;       // data the command processor has been in
 
 static SYS_CMD_DESCRIPTOR_TABLE   usrCmdTbl[MAX_CMD_GROUP] = { {0} };    // current command table
 
-static int stopRequested = 0;       // request to stop the command processor 
+static int stopRequested = 0;       // request to stop the command processor
 
 // function processing the VT100 escape sequence
 typedef void (*keySeqProcess)(SYS_CMD_IO_DCPT* pCmdIO, const struct KEY_SEQ_DCPT_T* pSeqDcpt);
@@ -172,18 +172,18 @@ static void lkeyHomeProcess(SYS_CMD_IO_DCPT* pCmdIO, const KEY_SEQ_DCPT* pSeqDcp
 static void lkeyEndProcess(SYS_CMD_IO_DCPT* pCmdIO, const KEY_SEQ_DCPT* pSeqDcpt);
 
 
-/* MISRA C-2012 Rule 4.1, 17.1 and 21.6 deviated below. Deviation record ID -
-   H3_MISRAC_2012_R_4_1_DR_1, H3_MISRAC_2012_R_17_1_DR_1 and H3_MISRAC_2012_R_21_6_DR_1 */
+/* MISRA C-2023 Rule 4.1, 17.1 and 21.6 deviated below. Deviation record ID -
+   H3_MISRAC_2023_R_4_1_DR_1, H3_MISRAC_2023_R_17_1_DR_1 and H3_MISRAC_2023_R_21_6_DR_1 */
 <#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
 <#if core.COMPILER_CHOICE == "XC32">
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Wunknown-pragmas"
 </#if>
 #pragma coverity compliance block \
-(deviate:1 "MISRA C-2012 Rule 4.1" "H3_MISRAC_2012_R_4_1_DR_1" )\
-(deviate:1 "MISRA C-2012 Rule 17.1" "H3_MISRAC_2012_R_17_1_DR_1" )\
-(deviate:1 "MISRA C-2012 Rule 21.3" "H3_MISRAC_2012_R_21_3_DR_1" )\
-(deviate:1 "MISRA C-2012 Rule 21.6" "H3_MISRAC_2012_R_21_6_DR_1" )
+(deviate:1 "MISRA C-2023 Rule 4.1" "H3_MISRAC_2023_R_4_1_DR_1" )\
+(deviate:1 "MISRA C-2023 Rule 17.1" "H3_MISRAC_2023_R_17_1_DR_1" )\
+(deviate:1 "MISRA C-2023 Rule 21.3" "H3_MISRAC_2023_R_21_3_DR_1" )\
+(deviate:1 "MISRA C-2023 Rule 21.6" "H3_MISRAC_2023_R_21_6_DR_1" )
 </#if>
 // dummy table holding the escape sequences + expected sequence size
 // detection of a sequence is done using only the first 3 characters
@@ -248,12 +248,12 @@ static const SYS_CMD_DESCRIPTOR    builtinCmdTbl[]=
 // *****************************************************************************
 
 // *****************************************************************************
-/* MISRA C-2012 Rule 11.3 deviated : 2, 11.8 deviated :2. Deviation record ID -
-   H3_MISRAC_2012_R_11_3_DR_1 & H3_MISRAC_2012_R_11_8_DR_1*/
+/* MISRA C-2023 Rule 11.3 deviated : 2, 11.8 deviated :2. Deviation record ID -
+   H3_MISRAC_2023_R_11_3_DR_1 & H3_MISRAC_2023_R_11_8_DR_1*/
 <#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
 #pragma coverity compliance block \
-(deviate:2 "MISRA C-2012 Rule 11.3" "H3_MISRAC_2012_R_11_3_DR_1" )\
-(deviate:2 "MISRA C-2012 Rule 11.8" "H3_MISRAC_2012_R_11_8_DR_1" )
+(deviate:2 "MISRA C-2023 Rule 11.3" "H3_MISRAC_2023_R_11_3_DR_1" )\
+(deviate:2 "MISRA C-2023 Rule 11.8" "H3_MISRAC_2023_R_11_8_DR_1" )
 </#if>
 /* Function:
     bool SYS_CMD_Initialize( const SYS_MODULE_INIT * const init  )
@@ -732,7 +732,7 @@ bool SYS_CMD_DELETE(SYS_CMD_DEVICE_NODE* pDeviceNode)
         {
             cmdIODevList.head = p_listnode->next;
         }
-        free(pDevNode);
+        OSAL_Free(pDevNode);
         return true;
     }
 
@@ -747,7 +747,7 @@ bool SYS_CMD_DELETE(SYS_CMD_DEVICE_NODE* pDeviceNode)
             if (cmdIODevList.tail==pDevNode) {
                 cmdIODevList.tail = pre_listnode;
             }
-            free(pDevNode);
+            OSAL_Free(pDevNode);
             return true;
         }
         pre_listnode = p_listnode;
@@ -817,8 +817,8 @@ bool SYS_CMD_CallbackDeregister(SYS_CMD_HANDLE handle)
 }
 
 <#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
-#pragma coverity compliance end_block "MISRA C-2012 Rule 11.3"
-#pragma coverity compliance end_block "MISRA C-2012 Rule 11.8"
+#pragma coverity compliance end_block "MISRA C-2023 Rule 11.3"
+#pragma coverity compliance end_block "MISRA C-2023 Rule 11.8"
 </#if>
 /* MISRAC 2012 deviation block end */
 // ignore the console handle for now, we support a single system console
@@ -911,14 +911,14 @@ static void CommandQuit(SYS_CMD_DEVICE_NODE* pCmdIO, int argc, char** argv)
     {
         if(cmdIODevList.head == cmdIODevList.tail)
         {
-            cmdIODevList.head = cmdIODevList.tail = 0;
+            cmdIODevList.head = cmdIODevList.tail = NULL;
         }
         else
         {
             cmdIODevList.head = cmdIODevList.head->next;
         }
 
-        free(pCmdIoNode);
+        OSAL_Free(pCmdIoNode);
     }
 
     // no longer run the SYS_CMD_Tasks
@@ -1262,10 +1262,10 @@ static void lkeyEndProcess(SYS_CMD_IO_DCPT* pCmdIO, const KEY_SEQ_DCPT* pSeqDcpt
 
 }
 <#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
-#pragma coverity compliance end_block "MISRA C-2012 Rule 4.1"
-#pragma coverity compliance end_block "MISRA C-2012 Rule 17.1"
-#pragma coverity compliance end_block "MISRA C-2012 Rule 21.3"
-#pragma coverity compliance end_block "MISRA C-2012 Rule 21.6"
+#pragma coverity compliance end_block "MISRA C-2023 Rule 4.1"
+#pragma coverity compliance end_block "MISRA C-2023 Rule 17.1"
+#pragma coverity compliance end_block "MISRA C-2023 Rule 21.3"
+#pragma coverity compliance end_block "MISRA C-2023 Rule 21.6"
 <#if core.COMPILER_CHOICE == "XC32">
 #pragma GCC diagnostic pop
 </#if>

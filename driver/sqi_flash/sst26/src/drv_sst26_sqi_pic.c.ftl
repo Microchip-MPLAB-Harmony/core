@@ -71,7 +71,11 @@ static DRV_SST26_OBJECT gDrvSST26Obj;
 static DRV_SST26_OBJECT *dObj = &gDrvSST26Obj;
 
 /* Table mapping the Flash ID's to their sizes. */
-static uint32_t gSstFlashIdSizeTable [5][2] = {
+static uint32_t gSstFlashIdSizeTable [9][2] = {
+    {0x12, 0x40000},  /* 2 MBit */
+    {0x54, 0x80000},  /* 4 MBit */
+    {0x18, 0x100000}, /* 8 MBit */
+    {0x58, 0x100000}, /* 8 MBit */
     {0x01, 0x200000}, /* 16 MBit */
     {0x41, 0x200000}, /* 16 MBit */
     {0x02, 0x400000}, /* 32 MBit */
@@ -87,18 +91,23 @@ static uint8_t CACHE_ALIGN statusRegVal;
 static uint8_t CACHE_ALIGN jedecID[4];
 
 static uint8_t CACHE_ALIGN sqi_cmd_jedec[2];
+<#if LANE_MODE == "QUAD" >
 static uint8_t CACHE_ALIGN sqi_cmd_eqio;
+</#if>
 static uint8_t CACHE_ALIGN sqi_cmd_rsten;
 static uint8_t CACHE_ALIGN sqi_cmd_rst;
 static uint8_t CACHE_ALIGN sqi_cmd_wren;
 static uint8_t CACHE_ALIGN sqi_cmd_rdsr[2];
+static uint8_t CACHE_ALIGN sqi_cmd_wrsr[2];
 static uint8_t CACHE_ALIGN sqi_cmd_ce;
 static uint8_t CACHE_ALIGN sqi_cmd_se[4];
 static uint8_t CACHE_ALIGN sqi_cmd_be[4];
 static uint8_t CACHE_ALIGN sqi_cmd_pp[4];
 static uint8_t CACHE_ALIGN sqi_cmd_hsr[7];
 static uint8_t CACHE_ALIGN sqi_cmd_ULBPR;
+<#if LANE_MODE == "QUAD" >
 static uint8_t CACHE_ALIGN sqi_cmd_dummy[6];
+</#if>
 
 
 // *****************************************************************************
@@ -120,7 +129,7 @@ static uint32_t DRV_SST26_GetFlashSize( uint8_t deviceId )
 {
     uint8_t i = 0;
 
-    for (i = 0; i < 5; i++)
+    for (i = 0; i < 9; i++)
     {
         if (deviceId == gSstFlashIdSizeTable[i][0])
         {
@@ -236,36 +245,70 @@ static bool DRV_SST26_ValidateHandleAndCheckBusy( const DRV_HANDLE handle )
 
 bool DRV_SST26_UnlockFlash( const DRV_HANDLE handle )
 {
+    bool status = true;
+    bool blockWriteProtection = false;
+    uint32_t bdctrlBufLen = 0U;
+
     if(DRV_SST26_ValidateHandleAndCheckBusy(handle) == true)
     {
-        return false;
+        status = false;
     }
-
-    dObj->isTransferDone = false;
-
-    DRV_SST26_WriteEnable();
-
-    sqi_cmd_ULBPR               = (uint8_t)SST26_CMD_UNPROTECT_GLOBAL;
-
-    sqiCmdDesc[1].bd_ctrl       = ( SQI_BDCTRL_BUFFLEN_VAL(1) | SQI_BDCTRL_PKTINTEN |
-                                    SQI_BDCTRL_LASTPKT | SQI_BDCTRL_LASTBD |
-                                    DRV_SQI_LANE_MODE | SQI_CHIP_SELECT |
-                                    SQI_BDCTRL_DEASSERT | SQI_BDCTRL_DESCEN);
-
-    sqiCmdDesc[1].bd_bufaddr    = (uint32_t *)KVA_TO_PA(&sqi_cmd_ULBPR);
-    sqiCmdDesc[1].bd_stat       = 0;
-    sqiCmdDesc[1].bd_nxtptr     = NULL;
-
-    dObj->curOpType = DRV_SST26_OPERATION_TYPE_CMD;
-
-    dObj->sst26Plib->DMATransfer((sqi_dma_desc_t *)KVA_TO_PA(&sqiCmdDesc[0]));
-
-    while(dObj->isTransferDone == false)
+    else
     {
-        /* Wait for  transfer to complete */
+        if (DRV_SST26_ReadJedecId(handle, (void *)&jedecID) == false)
+        {
+            status = false;
+        }
+        else
+        {
+            /* Unblock block write protection using write status register command */
+            if (jedecID[2] == 0x12U || jedecID[2] == 0x18U)
+            {
+                blockWriteProtection = true;
+            }
+            else
+            {
+                blockWriteProtection = false;
+            }
+
+            dObj->isTransferDone = false;
+
+            DRV_SST26_WriteEnable();
+
+            if (blockWriteProtection == true)
+            {
+                sqi_cmd_wrsr[0]             = (uint8_t)SST26_CMD_WRITE_STATUS_REG;
+                sqi_cmd_wrsr[1]             = 0U;
+                bdctrlBufLen                = 2U;
+                sqiCmdDesc[1].bd_bufaddr    = (uint32_t *)KVA_TO_PA(&sqi_cmd_wrsr[0]);
+            }
+            else
+            {
+                sqi_cmd_ULBPR               = (uint8_t)SST26_CMD_UNPROTECT_GLOBAL;
+                bdctrlBufLen                = 1U;
+                sqiCmdDesc[1].bd_bufaddr    = (uint32_t *)KVA_TO_PA(&sqi_cmd_ULBPR);
+            }
+
+            sqiCmdDesc[1].bd_ctrl       = ( SQI_BDCTRL_BUFFLEN_VAL(bdctrlBufLen) | SQI_BDCTRL_PKTINTEN |
+                                            SQI_BDCTRL_LASTPKT | SQI_BDCTRL_LASTBD |
+                                            DRV_SQI_LANE_MODE | SQI_CHIP_SELECT |
+                                            SQI_BDCTRL_DEASSERT | SQI_BDCTRL_DESCEN);
+
+            sqiCmdDesc[1].bd_stat       = 0;
+            sqiCmdDesc[1].bd_nxtptr     = NULL;
+
+            dObj->curOpType = DRV_SST26_OPERATION_TYPE_CMD;
+
+            dObj->sst26Plib->DMATransfer((sqi_dma_desc_t *)KVA_TO_PA(&sqiCmdDesc[0]));
+
+            while(dObj->isTransferDone == false)
+            {
+                /* Wait for  transfer to complete */
+            }
+        }
     }
 
-    return true;
+    return status;
 }
 
 bool DRV_SST26_ReadJedecId( const DRV_HANDLE handle, void *jedec_id)
@@ -402,7 +445,7 @@ bool DRV_SST26_Read( const DRV_HANDLE handle, void *rx_data, uint32_t rx_data_le
         return false;
     }
 
-    if (rx_data_length > (DRV_SST26_PAGE_SIZE * DRV_SST26_BUFF_DESC_NUMBER))
+    if ((rx_data_length == 0U) || (rx_data_length > (DRV_SST26_PAGE_SIZE * DRV_SST26_BUFF_DESC_NUMBER)))
     {
         return false;
     }
@@ -437,9 +480,9 @@ bool DRV_SST26_Read( const DRV_HANDLE handle, void *rx_data, uint32_t rx_data_le
     sqiCmdDesc[0].bd_nxtptr     = (sqi_dma_desc_t *)KVA_TO_PA(&sqiBufDesc[0]);
 </#if>
 
-    while ((i < DRV_SST26_BUFF_DESC_NUMBER) && (pendingBytes > 0))
+    while (i < DRV_SST26_BUFF_DESC_NUMBER)
     {
-        if (pendingBytes > DRV_SST26_PAGE_SIZE)
+        if (pendingBytes >= DRV_SST26_PAGE_SIZE)
         {
             numBytes = DRV_SST26_PAGE_SIZE;
         }
@@ -459,6 +502,10 @@ bool DRV_SST26_Read( const DRV_HANDLE handle, void *rx_data, uint32_t rx_data_le
         pendingBytes    -= numBytes;
         readBuffer      += numBytes;
         i++;
+        if (pendingBytes == 0U)
+        {
+            break;
+        }
     }
 
     /* The last descriptor must indicate the end of the descriptor list */
@@ -679,16 +726,16 @@ void DRV_SST26_Close( const DRV_HANDLE handle )
         dObj->nClients--;
     }
 }
-/* MISRA C-2012 Rule 11.3, 11.8 deviated below. Deviation record ID -
-   H3_MISRAC_2012_R_11_3_DR_1 & H3_MISRAC_2012_R_11_8_DR_1*/
+/* MISRA C-2023 Rule 11.3, 11.8 deviated below. Deviation record ID -
+   H3_MISRAC_2023_R_11_3_DR_1 & H3_MISRAC_2023_R_11_8_DR_1*/
 <#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
 <#if core.COMPILER_CHOICE == "XC32">
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Wunknown-pragmas"
 </#if>
 #pragma coverity compliance block \
-(deviate:1 "MISRA C-2012 Rule 11.3" "H3_MISRAC_2012_R_11_3_DR_1" )\
-(deviate:1 "MISRA C-2012 Rule 11.8" "H3_MISRAC_2012_R_11_8_DR_1" )
+(deviate:1 "MISRA C-2023 Rule 11.3" "H3_MISRAC_2023_R_11_3_DR_1" )\
+(deviate:1 "MISRA C-2023 Rule 11.8" "H3_MISRAC_2023_R_11_8_DR_1" )
 </#if>
 
 SYS_MODULE_OBJ DRV_SST26_Initialize
@@ -726,8 +773,8 @@ SYS_MODULE_OBJ DRV_SST26_Initialize
     return ( (SYS_MODULE_OBJ)drvIndex );
 }
 <#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
-#pragma coverity compliance end_block "MISRA C-2012 Rule 11.3"
-#pragma coverity compliance end_block "MISRA C-2012 Rule 11.8"
+#pragma coverity compliance end_block "MISRA C-2023 Rule 11.3"
+#pragma coverity compliance end_block "MISRA C-2023 Rule 11.8"
 <#if core.COMPILER_CHOICE == "XC32">
 #pragma GCC diagnostic pop
 </#if>

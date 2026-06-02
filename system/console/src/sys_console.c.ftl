@@ -58,7 +58,16 @@
 #include "osal/osal.h"
 #include <stdio.h>
 #include <string.h>
+/* MISRAC-2023 Rule 17.1 deviation taken for using stdarg.h header file */
+<#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wunknown-pragmas"
+#pragma coverity compliance deviate "MISRA C-2023 Rule 17.1" "H3_MISRAC_2023_R_17_1_DR_1"
+</#if>
 #include <stdarg.h>
+<#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
+#pragma GCC diagnostic pop
+</#if>
 
 static SYS_CONSOLE_OBJECT_INSTANCE consoleDeviceInstance[SYS_CONSOLE_DEVICE_MAX_INSTANCES];
 static char consolePrintBuffer[SYS_CONSOLE_PRINT_BUFFER_SIZE];
@@ -67,13 +76,13 @@ static OSAL_MUTEX_DECLARE(consolePrintBufferMutex);
 
 #define SYS_CONSOLE_GET_INSTANCE(index)    ((index) >= (SYS_CONSOLE_DEVICE_MAX_INSTANCES))? (NULL) : (&consoleDeviceInstance[index])
 
-/* MISRA C-2012 Rule 11.3 deviated:1 Deviation record ID -  H3_MISRAC_2012_R_11_3_DR_1 */
+/* MISRA C-2023 Rule 11.3 deviated:1 Deviation record ID -  H3_MISRAC_2023_R_11_3_DR_1 */
 <#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
 <#if core.COMPILER_CHOICE == "XC32">
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Wunknown-pragmas"
 </#if>
-#pragma coverity compliance block deviate:1 "MISRA C-2012 Rule 11.3" "H3_MISRAC_2012_R_11_3_DR_1"
+#pragma coverity compliance block deviate:1 "MISRA C-2023 Rule 11.3" "H3_MISRAC_2023_R_11_3_DR_1"
 </#if>
 
 SYS_MODULE_OBJ SYS_CONSOLE_Initialize(
@@ -118,7 +127,7 @@ SYS_MODULE_OBJ SYS_CONSOLE_Initialize(
 }
 
 <#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
-#pragma coverity compliance end_block "MISRA C-2012 Rule 11.3"
+#pragma coverity compliance end_block "MISRA C-2023 Rule 11.3"
 </#if>
 /* MISRAC 2012 deviation block end */
 
@@ -329,12 +338,12 @@ ssize_t SYS_CONSOLE_WriteCountGet(const SYS_CONSOLE_HANDLE handle)
     }
 }
 
-/* MISRA C-2012 Rule 17.1, 21.6 deviated below. Deviation record ID -
-   H3_MISRAC_2012_R_17_1_DR_1 & H3_MISRAC_2012_R_21_6_DR_1*/
+/* MISRA C-2023 Rule 17.1, 21.6 deviated below. Deviation record ID -
+   H3_MISRAC_2023_R_17_1_DR_1 & H3_MISRAC_2023_R_21_6_DR_1*/
 <#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
 #pragma coverity compliance block \
-(deviate:3 "MISRA C-2012 Rule 17.1" "H3_MISRAC_2012_R_17_1_DR_1" )\
-(deviate:1 "MISRA C-2012 Rule 21.6" "H3_MISRAC_2012_R_21_6_DR_1" )
+(deviate:3 "MISRA C-2023 Rule 17.1" "H3_MISRAC_2023_R_17_1_DR_1" )\
+(deviate:1 "MISRA C-2023 Rule 21.6" "H3_MISRAC_2023_R_21_6_DR_1" )
 </#if>
 
 void SYS_CONSOLE_Print(const SYS_CONSOLE_HANDLE handle, const char *format, ...)
@@ -378,8 +387,8 @@ void SYS_CONSOLE_Print(const SYS_CONSOLE_HANDLE handle, const char *format, ...)
 }
 
 <#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
-#pragma coverity compliance end_block "MISRA C-2012 Rule 17.1"
-#pragma coverity compliance end_block "MISRA C-2012 Rule 21.6"
+#pragma coverity compliance end_block "MISRA C-2023 Rule 17.1"
+#pragma coverity compliance end_block "MISRA C-2023 Rule 21.6"
 <#if core.COMPILER_CHOICE == "XC32">
 #pragma GCC diagnostic pop
 </#if>

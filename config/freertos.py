@@ -32,7 +32,7 @@ selectedCompiler = compilerList[Database.getSymbolValue("core", "COMPILER_CHOICE
 ###############################################################################
 ########################## FreeRTOS Configurations ############################
 ###############################################################################
-if (coreArch == "CORTEX-M0PLUS" or coreArch == "CORTEX-M23" or coreArch == "CORTEX-M33"):
+if (coreArch == "CORTEX-M0PLUS" or coreArch == "CORTEX-M23" or coreArch == "CORTEX-M33" or coreArch == "PIC32A" or coreArch == "dsPIC33A"):
     ComboVal_Task_Selection = ["Generic"]
 else:
     ComboVal_Task_Selection = ["Port_Optimized", "Generic"]
@@ -42,12 +42,42 @@ ComboVal_Tick_Mode          = ["Tickless_Idle", "Tick_Interrupt"]
 ComboVal_Mem_Mgmt_Type      = ["Heap_1", "Heap_2", "Heap_3", "Heap_4", "Heap_5"]
 ComboVal_Stack_Overflow     = ["No_Check", "Method_1", "Method_2"]
 
+if (coreArch == "PIC32A" or coreArch == "dsPIC33A"):
+    timer1VectorIndex = ATDF.getNode('/avr-tools-device-file/devices/device/interrupts/interrupt@[name="T1Interrupt"]').getAttribute("index")
+
+def freeRTOSMPUOptionsVisibility(symbol, event):
+    if symbol.getID() == "FREERTOS_ERRATA_837070_WORKAROUND":
+        symbol.setVisible(event["value"] and coreArch == "CORTEX-M7")
+    else:
+        symbol.setVisible(event["value"])
+
+def freeRTOSMPUWrapperV2OptVisibility(symbol, event):
+    mpu_port_en = symbol.getComponent().getSymbolByID("FREERTOS_MPU_PORT_ENABLE").getValue()
+    mpu_wrapper_v1_en = symbol.getComponent().getSymbolByID("FREERTOS_USE_MPU_WRAPPERS_V1").getValue()
+    symbol.setVisible(mpu_port_en == True and mpu_wrapper_v1_en == False)
 
 def activateCompilerSymbol(symbol, event):
     global compilerList
-    currentCompiler = compilerList[event["value"]]
+    currentCompiler = Database.getComponentByID("core").getSymbolByID("COMPILER_CHOICE").getSelectedKey()
     symbolCompiler = symbol.getID().split("_")[1].replace("CPP", "")
-    symbol.setEnabled(currentCompiler == symbolCompiler)
+    symId = symbol.getID()
+
+    if coreArch == "CORTEX-M4" or coreArch == "CORTEX-M7":
+        mpu_port_en = symbol.getComponent().getSymbolByID("FREERTOS_MPU_PORT_ENABLE").getValue()
+        if symId == "FREERTOS_XC32_SAM_PORT_C" or symId == "FREERTOS_XC32_SAM_PORTMACRO_H" or symId == "FREERTOS_XC32_INCLUDE_DIRS":
+            symbol.setEnabled(currentCompiler == symbolCompiler and mpu_port_en == False)
+        elif symId == "FREERTOS_XC32_SAM_MPU_PORT_C" or symId == "FREERTOS_XC32_SAM_MPU_PORTMACRO_H" or symId == "FREERTOS_XC32_MPU_PORT_INCLUDE_DIRS":
+            symbol.setEnabled(currentCompiler == symbolCompiler and mpu_port_en == True)
+        elif symId == "FREERTOS_XC32_SAM_MPU_WRAPPERS_V1_C":
+            mpu_wrapper_v1 = symbol.getComponent().getSymbolByID("FREERTOS_USE_MPU_WRAPPERS_V1").getValue()
+            symbol.setEnabled(currentCompiler == symbolCompiler and mpu_port_en == True and mpu_wrapper_v1 == True)
+        elif symId == "FREERTOS_XC32_SAM_MPU_WRAPPERS_V2_ASM_C" or symId == "FREERTOS_XC32_SAM_MPU_WRAPPERS_V2_C":
+            mpu_wrapper_v1 = symbol.getComponent().getSymbolByID("FREERTOS_USE_MPU_WRAPPERS_V1").getValue()
+            symbol.setEnabled(currentCompiler == symbolCompiler and mpu_port_en == True and mpu_wrapper_v1 == False)
+        else:
+            symbol.setEnabled(currentCompiler == symbolCompiler)
+    else:
+        symbol.setEnabled(currentCompiler == symbolCompiler)
 
 def freeRtosExpIdleTimeVisibility(symbol, event):
     id = symbol.getID()[-1]
@@ -181,6 +211,15 @@ def freeRtosCpuClockHz(symbol, event):
     clock = int(event["value"])
     symbol.setValue(clock)
 
+def updateTickTypeWidthInBits(symbol, event):
+    if (event["value"]):
+        symbol.setValue("16_BITS")
+    else:
+        symbol.setValue("32_BITS")
+
+def updateOnStaticMemEn(symbol, event):
+    symbol.setVisible(event["value"])
+
 def deactivateActiveRtos():
     activeComponents = Database.getActiveComponentIDs()
 
@@ -206,6 +245,18 @@ def freeRtosIntConfig():
 
         if (Database.getSymbolValue("core", SWI0InterruptEnable) == False):
             Database.sendMessage("core", SWI0InterruptEnable, {"isEnabled":True})
+
+    elif (coreArch == "PIC32A" or coreArch == "dsPIC33A"):
+        global timer1VectorIndex
+        Timer1InterruptEnable   = "INTC_" + timer1VectorIndex + "_ENABLE"
+
+        if (Database.getSymbolValue("core", Timer1InterruptEnable) == False):
+            Database.sendMessage("core", Timer1InterruptEnable, {"isEnabled":True})
+
+        Timer1InterruptHandlerLock = "INTC_" + timer1VectorIndex + "_HANDLER_LOCK"
+
+        if (Database.getSymbolValue("core", Timer1InterruptHandlerLock) == False):
+            Database.sendMessage("core", Timer1InterruptHandlerLock, {"isEnabled":True})
 
     else:
         SysTickInterruptEnable      = "SysTick_INTERRUPT_ENABLE"
@@ -248,16 +299,32 @@ def freeRtosIntConfig():
             Database.sendMessage("core", SVCallInterruptHandlerLock, {"isEnabled":True})
 
 def destroyComponent(thirdPartyFreeRTOS):
+    global clearFreeRTOSSymbols
+
     if coreArch == "MIPS":
         Database.sendMessage("core", "TIMER_1_INTERRUPT_ENABLE", {"isEnabled":False})
         Database.sendMessage("core", "TMR1_CLOCK_ENABLE", {"isEnabled":False})
         Database.sendMessage("core", "CORE_SOFTWARE_0_INTERRUPT_ENABLE", {"isEnabled":False})
+    elif (coreArch == "PIC32A" or coreArch == "dsPIC33A"):
+        global timer1VectorIndex
+        Database.sendMessage("core", "INTC_" + timer1VectorIndex + "_ENABLE", {"isEnabled":False})
+        Database.sendMessage("core", "INTC_" + timer1VectorIndex + "_HANDLER_LOCK", {"isEnabled":False})
     else:
         Database.sendMessage("core", "SysTick_INTERRUPT_ENABLE", {"isEnabled":False})
         Database.sendMessage("core", "SysTick_INTERRUPT_HANDLER", {"intHandler":"SysTick_Handler"})
         Database.sendMessage("core", "SysTick_INTERRUPT_HANDLER_LOCK", {"isEnabled":False})
         Database.sendMessage("core", "PendSV_INTERRUPT_HANDLER", {"intHandler":"PendSV_Handler"})
         Database.sendMessage("core", "SVCall_INTERRUPT_HANDLER", {"intHandler":"SVCall_Handler"})
+        if "ARM926" in coreArch:
+            Database.sendMessage("core", "FREERTOS_CONFIG", {"USE_FREERTOS_VECTORS": {"clearValue":None}})
+            Database.sendMessage("pit", "PIT_TIMER_CONFIG", {"isPitEn": False})
+            Database.deactivateComponents(["pit"])
+        elif "CORTEX-A5" in coreArch:
+            Database.sendMessage("pit", "PIT_TIMER_CONFIG", {"isPitEn": False, "rtosInterruptHandler": ""})
+            Database.sendMessage("core", "FREERTOS_CONFIG", {"USE_FREERTOS_VECTORS": {"clearValue":None}})
+            Database.deactivateComponents(["pit"])
+        else:
+            clearFreeRTOSSymbols()
 
 # Instatntiate FreeRTOS Component
 def instantiateComponent(thirdPartyFreeRTOS):
@@ -269,7 +336,7 @@ def instantiateComponent(thirdPartyFreeRTOS):
     #FreeRTOS Interrupt Handlers configurations
     freeRtosIntConfig()
 
-    if (coreArch == "MIPS"):
+    if (coreArch == "MIPS" or coreArch == "PIC32A" or coreArch == "dsPIC33A"):
         rtosSet = thirdPartyFreeRTOS.createStringSymbol("SET_RTOS", None)
         rtosSet.setVisible(False)
         rtosSet.setValue("FreeRTOS")
@@ -287,7 +354,7 @@ def instantiateComponent(thirdPartyFreeRTOS):
     freeRtosSym_TaskSelection = thirdPartyFreeRTOS.createComboSymbol("FREERTOS_TASK_SELECTION", freeRtosSymMenu, ComboVal_Task_Selection)
     freeRtosSym_TaskSelection.setLabel("Task Selection")
     freeRtosSym_TaskSelection.setDescription("Select either the Port specific or the Generic method of selecting the next task to execute.")
-    if (coreArch == "CORTEX-M0PLUS" or coreArch == "CORTEX-M23" or coreArch == "CORTEX-M33"):
+    if (coreArch == "CORTEX-M0PLUS" or coreArch == "CORTEX-M23" or coreArch == "CORTEX-M33" or coreArch == "PIC32A" or coreArch == "dsPIC33A"):
         freeRtosSym_TaskSelection.setDefaultValue("Generic_Task_Selection")
     else:
         freeRtosSym_TaskSelection.setDefaultValue("Port_Optimized")
@@ -305,7 +372,7 @@ def instantiateComponent(thirdPartyFreeRTOS):
     freeRtosSym_ExpectedIdleTime.setVisible(False)
     freeRtosSym_ExpectedIdleTime.setDependencies(freeRtosExpIdleTimeVisibility, ["FREERTOS_TICKLESS_IDLE_CHOICE"])
 
-    if (coreArch != "MIPS"):
+    if (coreArch != "MIPS" and coreArch != "PIC32A" and coreArch != "dsPIC33A"):
         freeRtosSym_CpuClockHz = thirdPartyFreeRTOS.createIntegerSymbol("FREERTOS_CPU_CLOCK_HZ", freeRtosSymMenu)
         freeRtosSym_CpuClockHz.setLabel("CPU Clock Speed (Hz)")
         freeRtosSym_CpuClockHz.setDescription("This is the CPU clock speed obtained from the Clock System Service configuration.")
@@ -318,8 +385,8 @@ def instantiateComponent(thirdPartyFreeRTOS):
     freeRtosSym_TickRate = thirdPartyFreeRTOS.createIntegerSymbol("FREERTOS_TICK_RATE_HZ", freeRtosSymMenu)
     freeRtosSym_TickRate.setLabel("Tick Rate (Hz)")
     freeRtosSym_TickRate.setDescription("FreeRTOS - Tick rate (Hz)")
-    freeRtosSym_TickRate.setMin(250)
-    freeRtosSym_TickRate.setMax(1000)
+    freeRtosSym_TickRate.setMin(1)
+    freeRtosSym_TickRate.setMax(10000)
     freeRtosSym_TickRate.setDefaultValue(1000)
 
     freeRtosSym_MaxPrio = thirdPartyFreeRTOS.createIntegerSymbol("FREERTOS_MAX_PRIORITIES", freeRtosSymMenu)
@@ -327,14 +394,30 @@ def instantiateComponent(thirdPartyFreeRTOS):
     freeRtosSym_MaxPrio.setDescription("FreeRTOS - Maximum number of priorities")
     freeRtosSym_MaxPrio.setMin(1)
     freeRtosSym_MaxPrio.setMax(999999999)
-    freeRtosSym_MaxPrio.setDefaultValue(5)
+    if (coreArch == "PIC32A" or coreArch == "dsPIC33A"):
+        freeRtosSym_MaxPrio.setDefaultValue(4)
+    else:
+        freeRtosSym_MaxPrio.setDefaultValue(5)
 
     freeRtosSym_StackSize = thirdPartyFreeRTOS.createIntegerSymbol("FREERTOS_MINIMAL_STACK_SIZE", freeRtosSymMenu)
     freeRtosSym_StackSize.setLabel("Minimal Stack Size")
     freeRtosSym_StackSize.setDescription("FreeRTOS - Minimal stack size. The size of the stack (in words) used by the idle task.")
     freeRtosSym_StackSize.setDefaultValue(128)
+    freeRtosSym_StackSize.setMin(1)
+    freeRtosSym_StackSize.setMax(2147483647)
 
     if Variables.get("__TRUSTZONE_ENABLED") != None and Variables.get("__TRUSTZONE_ENABLED") == "true":
+        freeRtosSym_MaxSecureContexts = thirdPartyFreeRTOS.createIntegerSymbol("FREERTOS_MAX_SECURE_CONTEXTS", freeRtosSymMenu)
+        freeRtosSym_MaxSecureContexts.setLabel("Maximum Secure Contexts")
+        freeRtosSym_MaxSecureContexts.setDescription("FreeRTOS - define the maximum number of tasks that can call into the secure side of an ARMv8-M chip")
+        freeRtosSym_MaxSecureContexts.setDefaultValue(8)
+
+        freeRtosSym_SecureKernelStaticMem = thirdPartyFreeRTOS.createBooleanSymbol("FREERTOS_KERNEL_PROVIDED_STATIC_MEMORY", freeRtosSymMenu)
+        freeRtosSym_SecureKernelStaticMem.setLabel("Kernel Provided Static Memory")
+        freeRtosSym_SecureKernelStaticMem.setDescription("FreeRTOS - Defines the kernel provided implementation of\
+                                                          vApplicationGetIdleTaskMemory() and vApplicationGetTimerTaskMemory()\
+                                                          to provide the memory that is used by the Idle task and Timer task respectively")
+
         freeRtosSym_SecureStackSize = thirdPartyFreeRTOS.createIntegerSymbol("FREERTOS_MINIMAL_SECURE_STACK_SIZE", freeRtosSymMenu)
         freeRtosSym_SecureStackSize.setLabel("Minimal Secure Stack Size")
         freeRtosSym_SecureStackSize.setDescription("FreeRTOS - Minimal Secure stack size. The size of the stack in words")
@@ -359,6 +442,11 @@ def instantiateComponent(thirdPartyFreeRTOS):
     freeRtosSym_StaMemAloc.setDescription("FreeRTOS - Static memory allocation")
     freeRtosSym_StaMemAloc.setDefaultValue(False)
 
+    freeRtosSym_StaMemAlocComment = thirdPartyFreeRTOS.createCommentSymbol("FREERTOS_STATIC_ALLOC_COMMENT", freeRtosSymMenu)
+    freeRtosSym_StaMemAlocComment.setLabel("***Note: Allows application tasks to use static memory allocation. OSAL APIs used by Harmony modules will continue to use FreeRTOS objects created using dynamically allocated RAM. ***")
+    freeRtosSym_StaMemAlocComment.setVisible(False)
+    freeRtosSym_StaMemAlocComment.setDependencies(updateOnStaticMemEn, ["FREERTOS_STATIC_ALLOC"])
+
     freeRtosSym_MemMgmtType = thirdPartyFreeRTOS.createComboSymbol("FREERTOS_MEMORY_MANAGEMENT_CHOICE", freeRtosSymMenu, ComboVal_Mem_Mgmt_Type)
     freeRtosSym_MemMgmtType.setLabel("Memory Management Type")
     freeRtosSym_MemMgmtType.setDescription("FreeRTOS - Memory management type")
@@ -368,6 +456,23 @@ def instantiateComponent(thirdPartyFreeRTOS):
     freeRtosSym_TotalHeapSize.setLabel("Total heap size")
     freeRtosSym_TotalHeapSize.setDescription("FreeRTOS - Total heap size")
     freeRtosSym_TotalHeapSize.setDependencies(freeRtosTotalHeapSizeVisibility, ["FREERTOS_MEMORY_MANAGEMENT_CHOICE"])
+    freeRtosSym_TotalHeapSize.setMin(1)
+    freeRtosSym_TotalHeapSize.setMax(2147483647)
+
+    freeRtosSym_AppAllocatedHeap = thirdPartyFreeRTOS.createBooleanSymbol("FREERTOS_APPLICATION_ALLOCATED_HEAP", freeRtosSymMenu)
+    freeRtosSym_AppAllocatedHeap.setLabel("Enable application allocated heap")
+    freeRtosSym_AppAllocatedHeap.setDescription("FreeRTOS - Set configAPPLICATION_ALLOCATED_HEAP to 1 to have the application allocate the array used as the FreeRTOS heap")
+    freeRtosSym_AppAllocatedHeap.setDefaultValue(False)
+
+    freeRtosSym_StackAllocationFromSeparateHeap = thirdPartyFreeRTOS.createBooleanSymbol("FREERTOS_STACK_ALLOCATION_FROM_SEPARATE_HEAP", freeRtosSymMenu)
+    freeRtosSym_StackAllocationFromSeparateHeap.setLabel("Stack allocation from separate heap")
+    freeRtosSym_StackAllocationFromSeparateHeap.setDescription("FreeRTOS - Set configSTACK_ALLOCATION_FROM_SEPARATE_HEAP to 1 to have task stacks allocated from somewhere other than the FreeRTOS heap")
+    freeRtosSym_StackAllocationFromSeparateHeap.setDefaultValue(False)
+
+    freeRtosSym_EnableHeapProtector = thirdPartyFreeRTOS.createBooleanSymbol("FREERTOS_ENABLE_HEAP_PROTECTOR", freeRtosSymMenu)
+    freeRtosSym_EnableHeapProtector.setLabel("Enable heap protector")
+    freeRtosSym_EnableHeapProtector.setDescription("FreeRTOS - Enable bounds checking and obfuscation to internal heap block pointers in heap_4.c and heap_5.c to help catch pointer corruptions")
+    freeRtosSym_EnableHeapProtector.setDefaultValue(False)
 
     freeRtosSym_MaxTaskNameLen = thirdPartyFreeRTOS.createIntegerSymbol("FREERTOS_MAX_TASK_NAME_LEN", freeRtosSymMenu)
     freeRtosSym_MaxTaskNameLen.setLabel("Maximum task name length")
@@ -380,6 +485,14 @@ def instantiateComponent(thirdPartyFreeRTOS):
     freeRtosSym_16BitTicks.setLabel("Use 16-bit ticks")
     freeRtosSym_16BitTicks.setDescription("FreeRTOS - Use 16-bit ticks")
     freeRtosSym_16BitTicks.setDefaultValue(False)
+    freeRtosSym_16BitTicks.setVisible(False)
+
+    tickTypeWidthInBits = ["16_BITS", "32_BITS", "64_BITS"]
+    freeRtosSym_TickTypeWidthInBits = thirdPartyFreeRTOS.createComboSymbol("FREERTOS_TICK_TYPE_WIDTH_IN_BITS", freeRtosSymMenu, tickTypeWidthInBits)
+    freeRtosSym_TickTypeWidthInBits.setLabel("Tick type width in bits")
+    freeRtosSym_TickTypeWidthInBits.setDescription("FreeRTOS - Time is measured in 'ticks' - which is the number of times the tick interrupt has executed since the RTOS kernel was started. The tick count is held in a variable of type TickType_t.")
+    freeRtosSym_TickTypeWidthInBits.setDefaultValue("32_BITS")
+    freeRtosSym_TickTypeWidthInBits.setDependencies(updateTickTypeWidthInBits, ["FREERTOS_USE_16_BIT_TICKS"])
 
     freeRtosSym_IdleTaskYield = thirdPartyFreeRTOS.createBooleanSymbol("FREERTOS_IDLE_SHOULD_YIELD", freeRtosSymMenu)
     freeRtosSym_IdleTaskYield.setLabel("Idle task should yield")
@@ -407,15 +520,64 @@ def instantiateComponent(thirdPartyFreeRTOS):
     freeRtosSym_TaskNotification.setDescription("FreeRTOS - Use Task Notifications")
     freeRtosSym_TaskNotification.setDefaultValue(True)
 
+    freeRtosSym_TaskNotificationArrayEntries = thirdPartyFreeRTOS.createIntegerSymbol("FREERTOS_TASK_NOTIFICATION_ARRAY_ENTRIES", freeRtosSymMenu)
+    freeRtosSym_TaskNotificationArrayEntries.setLabel("Task Notifications Array Entries")
+    freeRtosSym_TaskNotificationArrayEntries.setDescription("FreeRTOS - Each task has an array of task notifications. It sets the number of indexes in the array")
+    freeRtosSym_TaskNotificationArrayEntries.setMin(1)
+    freeRtosSym_TaskNotificationArrayEntries.setDefaultValue(1)
+
     freeRtosSym_QueueRegSize = thirdPartyFreeRTOS.createIntegerSymbol("FREERTOS_QUEUE_REGISTRY_SIZE", freeRtosSymMenu)
     freeRtosSym_QueueRegSize.setLabel("Queue Registry Size")
     freeRtosSym_QueueRegSize.setDescription("FreeRTOS - Queue Registry Size")
     freeRtosSym_QueueRegSize.setDefaultValue(0)
+    freeRtosSym_QueueRegSize.setMin(0)
+    freeRtosSym_QueueRegSize.setMax(2147483647)
 
     freeRtosSym_QueueSets = thirdPartyFreeRTOS.createBooleanSymbol("FREERTOS_USE_QUEUE_SETS", freeRtosSymMenu)
     freeRtosSym_QueueSets.setLabel("Use Queue Sets")
     freeRtosSym_QueueSets.setDescription("FreeRTOS - Use Queue Sets")
     freeRtosSym_QueueSets.setDefaultValue(False)
+
+    freeRtosSym_EnableBackwardCompatibility = thirdPartyFreeRTOS.createBooleanSymbol("FREERTOS_ENABLE_BACKWARD_COMPATIBILITY", freeRtosSymMenu)
+    freeRtosSym_EnableBackwardCompatibility.setLabel("Enable Backward Compatibility")
+    freeRtosSym_EnableBackwardCompatibility.setDescription("FreeRTOS - It maps function names and datatypes from old version of FreeRTOS to their latest equivalent")
+    freeRtosSym_EnableBackwardCompatibility.setDefaultValue(True)
+
+    freeRtosSym_NumTLSPointers = thirdPartyFreeRTOS.createIntegerSymbol("FREERTOS_NUM_THREAD_LOCAL_STORAGE_POINTERS", freeRtosSymMenu)
+    freeRtosSym_NumTLSPointers.setLabel("Number of index in TLS array")
+    freeRtosSym_NumTLSPointers.setDescription("FreeRTOS - Sets the number of indexes in each task's thread local storage array")
+    freeRtosSym_NumTLSPointers.setDefaultValue(0)
+
+    freeRtosSym_UseMiniListItem = thirdPartyFreeRTOS.createBooleanSymbol("FREERTOS_USE_MINI_LIST_ITEM", freeRtosSymMenu)
+    freeRtosSym_UseMiniListItem.setLabel("Use mini list item")
+    freeRtosSym_UseMiniListItem.setDescription("FreeRTOS - When configUSE_MINI_LIST_ITEM is set to 1, MiniListItem_t contains\
+                                                3 fewer fields than ListItem_t which saves some RAM at the cost of violating\
+                                                strict aliasing rules which some compilers depend on for optimization")
+    freeRtosSym_UseMiniListItem.setDefaultValue(True)
+
+    freeRtosSym_StackDepthType = thirdPartyFreeRTOS.createStringSymbol("FREERTOS_STACK_DEPTH_TYPE", freeRtosSymMenu)
+    freeRtosSym_StackDepthType.setLabel("Stack depth type")
+    freeRtosSym_StackDepthType.setDescription("Sets the type used by the parameter to xTaskCreate() that specifies the stack\
+                                               size of the task being created.  The same type is used to return information\
+                                               about stack usage in various other API calls")
+    freeRtosSym_StackDepthType.setDefaultValue("uint16_t")
+
+    freeRtosSym_HeapClearMemoryOnFree = thirdPartyFreeRTOS.createBooleanSymbol("FREERTOS_HEAP_CLEAR_MEMORY_ON_FREE", freeRtosSymMenu)
+    freeRtosSym_HeapClearMemoryOnFree.setLabel("Heap clear memory on free")
+    freeRtosSym_HeapClearMemoryOnFree.setDescription("FreeRTOS - If configHEAP_CLEAR_MEMORY_ON_FREE is set to 1, then blocks of memory allocated\
+                                                      using pvPortMalloc() will be cleared (i.e. set to zero) when freed using\
+                                                      vPortFree()")
+    freeRtosSym_HeapClearMemoryOnFree.setDefaultValue(False)
+
+    freeRtosSym_EventGroups = thirdPartyFreeRTOS.createBooleanSymbol("FREERTOS_USE_EVENT_GROUPS", freeRtosSymMenu)
+    freeRtosSym_EventGroups.setLabel("Use event groups")
+    freeRtosSym_EventGroups.setDescription("FreeRTOS - Use event groups")
+    freeRtosSym_EventGroups.setDefaultValue(True)
+
+    freeRtosSym_StreamBuffers = thirdPartyFreeRTOS.createBooleanSymbol("FREERTOS_USE_STREAM_BUFFERS", freeRtosSymMenu)
+    freeRtosSym_StreamBuffers.setLabel("Use stream buffers")
+    freeRtosSym_StreamBuffers.setDescription("FreeRTOS - Use stream buffers")
+    freeRtosSym_StreamBuffers.setDefaultValue(True)
 
     freeRtosSym_TimeSlicing = thirdPartyFreeRTOS.createBooleanSymbol("FREERTOS_USE_TIME_SLICING", freeRtosSymMenu)
     freeRtosSym_TimeSlicing.setLabel("Use Time Slicing")
@@ -481,6 +643,11 @@ def instantiateComponent(thirdPartyFreeRTOS):
     freeRtosSym_FailedMallocHook.setLabel("Use malloc failed hook")
     freeRtosSym_FailedMallocHook.setDescription("FreeRTOS - Use malloc failed hook")
     freeRtosSym_FailedMallocHook.setDefaultValue(True)
+
+    freeRtosSym_SBCompletedCallback = thirdPartyFreeRTOS.createBooleanSymbol("FREERTOS_USE_SB_COMPLETED_CALLBACK", freeRtosSymMenu)
+    freeRtosSym_SBCompletedCallback.setLabel("Use stream buffer callback")
+    freeRtosSym_SBCompletedCallback.setDescription("FreeRTOS - Set configUSE_SB_COMPLETED_CALLBACK to 1 to have send and receive completed callbacks for each instance of a stream buffer or message buffer")
+    freeRtosSym_SBCompletedCallback.setDefaultValue(False)
 
     freeRtosSym_GenRunTimeStat = thirdPartyFreeRTOS.createBooleanSymbol("FREERTOS_GENERATE_RUN_TIME_STATS", freeRtosSymMenu)
     freeRtosSym_GenRunTimeStat.setLabel("Generate runtime statistics")
@@ -574,11 +741,17 @@ def instantiateComponent(thirdPartyFreeRTOS):
     freeRtosSym_ConfAssertMacro.setDescription("FreeRTOS - Use the configAssert macro")
     freeRtosSym_ConfAssertMacro.setDefaultValue(False)
 
+    if (coreArch != "MIPS") and (coreArch != "CORTEX-A5") and ("ARM926" not in coreArch) and (coreArch != "CORTEX-A7") and (coreArch != "PIC32A") and (coreArch != "dsPIC33A"):
+        freeRtosSym_CheckHandlerInstallation = thirdPartyFreeRTOS.createBooleanSymbol("FREERTOS_CHECK_HANDLER_INSTALLATION", freeRtosSymMenu)
+        freeRtosSym_CheckHandlerInstallation.setLabel("Check handler installation")
+        freeRtosSym_CheckHandlerInstallation.setDescription("FreeRTOS - Enable additional asserts to verify that the application has correctly installed FreeRTOS interrupt handlers")
+        freeRtosSym_CheckHandlerInstallation.setDefaultValue(False)
+
     freeRtosSym_KernelIntrPrio = thirdPartyFreeRTOS.createIntegerSymbol("FREERTOS_KERNEL_INTERRUPT_PRIORITY", freeRtosSymMenu)
     freeRtosSym_KernelIntrPrio.setLabel("Kernel interrupt priority")
     freeRtosSym_KernelIntrPrio.setDescription("FreeRTOS - Kernel interrupt priority")
-    #freeRtosSym_KernelIntrPrio.setMin(1)
-    #freeRtosSym_KernelIntrPrio.setMax(999999999)
+    freeRtosSym_KernelIntrPrio.setMin(0)
+    freeRtosSym_KernelIntrPrio.setMax(999999999)
 
     freeRtosSym_MaxSysCalIntrPrio = thirdPartyFreeRTOS.createIntegerSymbol("FREERTOS_MAX_SYSCALL_INTERRUPT_PRIORITY", freeRtosSymMenu)
     freeRtosSym_MaxSysCalIntrPrio.setLabel("Maximum system call interrupt priority")
@@ -586,7 +759,7 @@ def instantiateComponent(thirdPartyFreeRTOS):
     freeRtosSym_MaxSysCalIntrPrio.setMin(0)
     freeRtosSym_MaxSysCalIntrPrio.setMax(7)
 
-    if (coreArch != "MIPS") and (coreArch != "CORTEX-A5") and ("ARM926" not in coreArch) and (coreArch != "CORTEX-A7"):
+    if (coreArch != "MIPS") and (coreArch != "CORTEX-A5") and ("ARM926" not in coreArch) and (coreArch != "CORTEX-A7") and (coreArch != "PIC32A") and (coreArch != "dsPIC33A"):
         freeRtosSym_ConfigPriorityBits = thirdPartyFreeRTOS.createIntegerSymbol("FREERTOS_CONFIG_PRIORITY_BITS", freeRtosSymMenu)
         freeRtosSym_ConfigPriorityBits.setLabel("Number of Bits used for Priority Levels")
         freeRtosSym_ConfigPriorityBits.setMin(2)
@@ -605,6 +778,113 @@ def instantiateComponent(thirdPartyFreeRTOS):
         freeRtosSym_ConfigMaxApiCallInterruptPriority.setDefaultValue(((freeRtosSym_ConfigUniqueInterruptPriority.getValue() / 2) + 1))
         freeRtosSym_ConfigMaxApiCallInterruptPriority.setMin(1)
         freeRtosSym_ConfigMaxApiCallInterruptPriority.setMax((freeRtosSym_ConfigUniqueInterruptPriority.getMax() - 2))
+
+    #------------------
+    mpu_present = False
+    mpu_present_node = ATDF.getNode("/avr-tools-device-file/devices/device/parameters/param@[name=\"__MPU_PRESENT\"]")
+    if mpu_present_node != None:
+        mpu_present = mpu_present_node.getAttribute("value")
+    mpu_options_visibility = (mpu_present == "1" and (coreArch == "CORTEX-M4" or coreArch == "CORTEX-M7"))
+
+    mpuRegions = 8
+    if mpu_options_visibility == True:
+        mpuRegions = Database.getSymbolValue("core", "MPU_NUMBER_REGIONS")
+
+    freeRtosSymMenu_MPUPortOptions = thirdPartyFreeRTOS.createBooleanSymbol("FREERTOS_MPU_PORT_ENABLE", freeRtosSymMenu)
+    freeRtosSymMenu_MPUPortOptions.setLabel("Enable FreeRTOS MPU Port")
+    freeRtosSymMenu_MPUPortOptions.setDefaultValue(False)
+    freeRtosSymMenu_MPUPortOptions.setVisible(mpu_options_visibility)
+
+    freeRtosSym_APPLICATION_DEFINED_PRIVILEGED_FUNCTIONS = thirdPartyFreeRTOS.createBooleanSymbol("FREERTOS_APPLICATION_DEFINED_PRIVILEGED_FUNCTIONS", freeRtosSymMenu_MPUPortOptions)
+    freeRtosSym_APPLICATION_DEFINED_PRIVILEGED_FUNCTIONS.setLabel("Application Defined Privileged Functions")
+    freeRtosSym_APPLICATION_DEFINED_PRIVILEGED_FUNCTIONS.setDescription(
+    "application writer must provide a header file called \"application_defined_privileged_functions.h\", in which functions the application writer needs to execute in privileged mode can be implemented")
+    freeRtosSym_APPLICATION_DEFINED_PRIVILEGED_FUNCTIONS.setDefaultValue(False)
+    freeRtosSym_APPLICATION_DEFINED_PRIVILEGED_FUNCTIONS.setVisible(False)
+    freeRtosSym_APPLICATION_DEFINED_PRIVILEGED_FUNCTIONS.setDependencies(freeRTOSMPUOptionsVisibility, ["FREERTOS_MPU_PORT_ENABLE"])
+
+    freeRtosSym_TotalMPURegions = thirdPartyFreeRTOS.createIntegerSymbol("FREERTOS_TOTAL_MPU_REGIONS", freeRtosSymMenu_MPUPortOptions)
+    freeRtosSym_TotalMPURegions.setLabel("Total MPU Regions")
+    freeRtosSym_TotalMPURegions.setDescription("Total number of available MPU Regions")
+    freeRtosSym_TotalMPURegions.setDefaultValue(mpuRegions)
+    freeRtosSym_TotalMPURegions.setReadOnly(False)
+    freeRtosSym_TotalMPURegions.setVisible(False)
+    freeRtosSym_TotalMPURegions.setDependencies(freeRTOSMPUOptionsVisibility, ["FREERTOS_MPU_PORT_ENABLE"])
+
+    freeRtosSym_TEX_S_C_B_FLASH = thirdPartyFreeRTOS.createHexSymbol("FREERTOS_TEX_S_C_B_FLASH", freeRtosSymMenu_MPUPortOptions)
+    freeRtosSym_TEX_S_C_B_FLASH.setLabel("TEX S C B for Flash")
+    freeRtosSym_TEX_S_C_B_FLASH.setDescription("TEX (Type extension), S (Shareable), B (Bufferable), and C (Cacheable) fields")
+    freeRtosSym_TEX_S_C_B_FLASH.setDefaultValue(0x07)
+    freeRtosSym_TEX_S_C_B_FLASH.setVisible(False)
+    freeRtosSym_TEX_S_C_B_FLASH.setDependencies(freeRTOSMPUOptionsVisibility, ["FREERTOS_MPU_PORT_ENABLE"])
+
+    freeRtosSym_TEX_S_C_B_SRAM = thirdPartyFreeRTOS.createHexSymbol("FREERTOS_TEX_S_C_B_SRAM", freeRtosSymMenu_MPUPortOptions)
+    freeRtosSym_TEX_S_C_B_SRAM.setLabel("TEX S C B for SRAM")
+    freeRtosSym_TEX_S_C_B_SRAM.setDescription("TEX (Type extension), S (Shareable), B (Bufferable), and C (Cacheable) fields")
+    freeRtosSym_TEX_S_C_B_SRAM.setDefaultValue(0x07)
+    freeRtosSym_TEX_S_C_B_SRAM.setVisible(False)
+    freeRtosSym_TEX_S_C_B_SRAM.setDependencies(freeRTOSMPUOptionsVisibility, ["FREERTOS_MPU_PORT_ENABLE"])
+
+    freeRtosSym_ENFORCE_SYSTEM_CALLS_FROM_KERNEL_ONLY = thirdPartyFreeRTOS.createBooleanSymbol("FREERTOS_ENFORCE_SYSTEM_CALLS_FROM_KERNEL_ONLY", freeRtosSymMenu_MPUPortOptions)
+    freeRtosSym_ENFORCE_SYSTEM_CALLS_FROM_KERNEL_ONLY.setLabel("Enforce System Calls from Kernel Only")
+    freeRtosSym_ENFORCE_SYSTEM_CALLS_FROM_KERNEL_ONLY.setDescription("Enforce System Calls from Kernel Only")
+    freeRtosSym_ENFORCE_SYSTEM_CALLS_FROM_KERNEL_ONLY.setDefaultValue(True)
+    freeRtosSym_ENFORCE_SYSTEM_CALLS_FROM_KERNEL_ONLY.setVisible(False)
+    freeRtosSym_ENFORCE_SYSTEM_CALLS_FROM_KERNEL_ONLY.setDependencies(freeRTOSMPUOptionsVisibility, ["FREERTOS_MPU_PORT_ENABLE"])
+
+    freeRtosSym_ALLOW_UNPRIVILEGED_CRITICAL_SECTIONS = thirdPartyFreeRTOS.createBooleanSymbol("FREERTOS_ALLOW_UNPRIVILEGED_CRITICAL_SECTIONS", freeRtosSymMenu_MPUPortOptions)
+    freeRtosSym_ALLOW_UNPRIVILEGED_CRITICAL_SECTIONS.setLabel("Allow Unprivileged Critical Sections")
+    freeRtosSym_ALLOW_UNPRIVILEGED_CRITICAL_SECTIONS.setDescription("Allow Unprivileged Critical Sections")
+    freeRtosSym_ALLOW_UNPRIVILEGED_CRITICAL_SECTIONS.setDefaultValue(False)
+    freeRtosSym_ALLOW_UNPRIVILEGED_CRITICAL_SECTIONS.setVisible(False)
+    freeRtosSym_ALLOW_UNPRIVILEGED_CRITICAL_SECTIONS.setDependencies(freeRTOSMPUOptionsVisibility, ["FREERTOS_MPU_PORT_ENABLE"])
+
+    freeRtosSym_ERRATA_837070_WORKAROUND = thirdPartyFreeRTOS.createBooleanSymbol("FREERTOS_ERRATA_837070_WORKAROUND", freeRtosSymMenu_MPUPortOptions)
+    freeRtosSym_ERRATA_837070_WORKAROUND.setLabel("Enable Errata 837070 Workaround")
+    freeRtosSym_ERRATA_837070_WORKAROUND.setDescription("Enable Errata 837070 Workaround")
+    freeRtosSym_ERRATA_837070_WORKAROUND.setDefaultValue(coreArch == "CORTEX-M7")
+    freeRtosSym_ERRATA_837070_WORKAROUND.setVisible(False)
+    freeRtosSym_ERRATA_837070_WORKAROUND.setReadOnly(True)
+    freeRtosSym_ERRATA_837070_WORKAROUND.setDependencies(freeRTOSMPUOptionsVisibility, ["FREERTOS_MPU_PORT_ENABLE"])
+
+    # Applicable for FreeRTOS V10.6.0 onwards
+    freeRtosSym_USE_MPU_WRAPPERS_V1 = thirdPartyFreeRTOS.createBooleanSymbol("FREERTOS_USE_MPU_WRAPPERS_V1", freeRtosSymMenu_MPUPortOptions)
+    freeRtosSym_USE_MPU_WRAPPERS_V1.setLabel("Use MPU Wrappers V1")
+    freeRtosSym_USE_MPU_WRAPPERS_V1.setDescription("Use MPU Wrappers V1")
+    freeRtosSym_USE_MPU_WRAPPERS_V1.setDefaultValue(False)
+    freeRtosSym_USE_MPU_WRAPPERS_V1.setVisible(False)
+    freeRtosSym_USE_MPU_WRAPPERS_V1.setDependencies(freeRTOSMPUOptionsVisibility, ["FREERTOS_MPU_PORT_ENABLE"])
+
+    # Applicable for FreeRTOS V10.6.0 onwards
+    freeRtosSym_PROTECTED_KERNEL_OBJECT_POOL_SIZE = thirdPartyFreeRTOS.createIntegerSymbol("FREERTOS_PROTECTED_KERNEL_OBJECT_POOL_SIZE", freeRtosSymMenu_MPUPortOptions)
+    freeRtosSym_PROTECTED_KERNEL_OBJECT_POOL_SIZE.setLabel("Protected Kernel Object Pool Size")
+    freeRtosSym_PROTECTED_KERNEL_OBJECT_POOL_SIZE.setDescription("Protected Kernel Object Pool Size")
+    freeRtosSym_PROTECTED_KERNEL_OBJECT_POOL_SIZE.setDefaultValue(10 if freeRtosSym_USE_MPU_WRAPPERS_V1.getValue() == False else 0)
+    freeRtosSym_PROTECTED_KERNEL_OBJECT_POOL_SIZE.setVisible(False)
+    freeRtosSym_PROTECTED_KERNEL_OBJECT_POOL_SIZE.setDependencies(freeRTOSMPUWrapperV2OptVisibility, ["FREERTOS_MPU_PORT_ENABLE", "FREERTOS_USE_MPU_WRAPPERS_V1"])
+
+    # Applicable for FreeRTOS V10.6.0 onwards
+    freeRtosSym_SYSTEM_CALL_STACK_SIZE = thirdPartyFreeRTOS.createIntegerSymbol("FREERTOS_SYSTEM_CALL_STACK_SIZE", freeRtosSymMenu_MPUPortOptions)
+    freeRtosSym_SYSTEM_CALL_STACK_SIZE.setLabel("System Call Stack Size")
+    freeRtosSym_SYSTEM_CALL_STACK_SIZE.setDescription("Each task has a statically allocated memory buffer of this size which is used as the stack to execute system calls")
+    freeRtosSym_SYSTEM_CALL_STACK_SIZE.setDefaultValue(128 if freeRtosSym_USE_MPU_WRAPPERS_V1.getValue() == False else 0)
+    freeRtosSym_SYSTEM_CALL_STACK_SIZE.setVisible(False)
+    freeRtosSym_SYSTEM_CALL_STACK_SIZE.setDependencies(freeRTOSMPUWrapperV2OptVisibility, ["FREERTOS_MPU_PORT_ENABLE", "FREERTOS_USE_MPU_WRAPPERS_V1"])
+
+    # Applicable for FreeRTOS V10.6.0 onwards
+    freeRtosSym_ENABLE_ACCESS_CONTROL_LIST = thirdPartyFreeRTOS.createIntegerSymbol("FREERTOS_ENABLE_ACCESS_CONTROL_LIST", freeRtosSymMenu_MPUPortOptions)
+    freeRtosSym_ENABLE_ACCESS_CONTROL_LIST.setLabel("Enable Access Control List")
+    freeRtosSym_ENABLE_ACCESS_CONTROL_LIST.setDescription("When ACL is enabled, by default an unprivileged task does not have access to any kernel object other than itself")
+    freeRtosSym_ENABLE_ACCESS_CONTROL_LIST.setDefaultValue(False)
+    freeRtosSym_ENABLE_ACCESS_CONTROL_LIST.setVisible(False)
+    #freeRtosSym_ENABLE_ACCESS_CONTROL_LIST.setDependencies(freeRTOSMPUOptionsVisibility, ["FREERTOS_MPU_PORT_ENABLE"])
+
+    freeRtosSym_MPUConfigOverwriteComment = thirdPartyFreeRTOS.createCommentSymbol("MPU_CONFIG_OVERWRITE", freeRtosSymMenu_MPUPortOptions)
+    freeRtosSym_MPUConfigOverwriteComment.setLabel("***Note: Enabling MPU in FreeRTOS will result in FreeRTOS kernel overwriting any MPU configurations done via MPU Configurator***")
+    freeRtosSym_MPUConfigOverwriteComment.setVisible(False)
+    freeRtosSym_MPUConfigOverwriteComment.setDependencies(freeRTOSMPUOptionsVisibility, ["FREERTOS_MPU_PORT_ENABLE"])
+
+    #------------------
 
     freeRtosSymMenu_IncludeComponents = thirdPartyFreeRTOS.createMenuSymbol("FREERTOS_INCLUDE_COMPONENTS", freeRtosSymMenu)
     freeRtosSymMenu_IncludeComponents.setLabel("Include components")
@@ -629,6 +909,11 @@ def instantiateComponent(thirdPartyFreeRTOS):
     freeRtosSym_vTaskSuspend.setLabel("Include vTaskSuspend")
     freeRtosSym_vTaskSuspend.setDescription("FreeRTOS - Include vTaskSuspend")
     freeRtosSym_vTaskSuspend.setDefaultValue(True)
+
+    freeRtosSym_xResumeFromISR = thirdPartyFreeRTOS.createBooleanSymbol("FREERTOS_INCLUDE_XRESUMEFROMISR", freeRtosSymMenu_IncludeComponents)
+    freeRtosSym_xResumeFromISR.setLabel("Include xResumeFromISR")
+    freeRtosSym_xResumeFromISR.setDescription("FreeRTOS - Include xResumeFromISR")
+    freeRtosSym_xResumeFromISR.setDefaultValue(True)
 
     freeRtosSym_vTaskDelayUntil = thirdPartyFreeRTOS.createBooleanSymbol("FREERTOS_INCLUDE_VTASKDELAYUNTIL", freeRtosSymMenu_IncludeComponents)
     freeRtosSym_vTaskDelayUntil.setLabel("Include vTaskDelayUntil")
@@ -665,6 +950,11 @@ def instantiateComponent(thirdPartyFreeRTOS):
     freeRtosSym_eTaskGetState.setDescription("FreeRTOS - Include eTaskGetState")
     freeRtosSym_eTaskGetState.setDefaultValue(False)
 
+    freeRtosSym_xEventGroupSetBitFromISR = thirdPartyFreeRTOS.createBooleanSymbol("FREERTOS_INCLUDE_XEVENTGROUPSETBITFROMISR", freeRtosSymMenu_IncludeComponents)
+    freeRtosSym_xEventGroupSetBitFromISR.setLabel("Include xEventGroupSetBitFromISR")
+    freeRtosSym_xEventGroupSetBitFromISR.setDescription("FreeRTOS - Include xEventGroupSetBitFromISR")
+    freeRtosSym_xEventGroupSetBitFromISR.setDefaultValue(True)
+
     freeRtosSym_xTimerPendFunctionCall = thirdPartyFreeRTOS.createBooleanSymbol("FREERTOS_INCLUDE_XTIMERPENDFUNCTIONCALL", freeRtosSymMenu_IncludeComponents)
     freeRtosSym_xTimerPendFunctionCall.setLabel("Include xTimerPendFunctionCall")
     freeRtosSym_xTimerPendFunctionCall.setDescription("FreeRTOS - Include xTimerPendFunctionCall")
@@ -700,6 +990,10 @@ def instantiateComponent(thirdPartyFreeRTOS):
     freeRtosSym_xTaskResumeFromISR.setDescription("FreeRTOS - Include xTaskResumeFromISR")
     freeRtosSym_xTaskResumeFromISR.setDefaultValue(False)
 
+    freeRtosHooksIncludeList = thirdPartyFreeRTOS.createListSymbol("LIST_FREERTOS_HOOKS_C_INCLUDES", None)
+    freeRtosHooksCallAppIdleTaskList = thirdPartyFreeRTOS.createListSymbol("LIST_FREERTOS_HOOKS_C_CALL_APP_IDLE_TASKS", None)
+    freeRtosHooksCallAppTickTaskList = thirdPartyFreeRTOS.createListSymbol("LIST_FREERTOS_HOOKS_C_CALL_APP_TICK_TASKS", None)
+
 ############################################################################
 #### Code Generation ####
 ############################################################################
@@ -722,7 +1016,7 @@ def instantiateComponent(thirdPartyFreeRTOS):
     freeRtosHooksSourceFile.setMarkup(True)
 
     freeRtosCoRoutine = thirdPartyFreeRTOS.createFileSymbol("FREERTOS_CROUTINE_C", None)
-    freeRtosCoRoutine.setSourcePath("../CMSIS-FreeRTOS/Source/croutine.c")
+    freeRtosCoRoutine.setSourcePath("../FreeRTOS-Kernel/croutine.c")
     freeRtosCoRoutine.setOutputName("croutine.c")
     freeRtosCoRoutine.setDestPath("../../third_party/rtos/FreeRTOS/Source")
     freeRtosCoRoutine.setProjectPath("FreeRTOS/Source")
@@ -730,7 +1024,7 @@ def instantiateComponent(thirdPartyFreeRTOS):
     freeRtosCoRoutine.setMarkup(False)
 
     freeRtosList = thirdPartyFreeRTOS.createFileSymbol("FREERTOS_LIST_C", None)
-    freeRtosList.setSourcePath("../CMSIS-FreeRTOS/Source/list.c")
+    freeRtosList.setSourcePath("../FreeRTOS-Kernel/list.c")
     freeRtosList.setOutputName("list.c")
     freeRtosList.setDestPath("../../third_party/rtos/FreeRTOS/Source")
     freeRtosList.setProjectPath("FreeRTOS/Source")
@@ -738,7 +1032,7 @@ def instantiateComponent(thirdPartyFreeRTOS):
     freeRtosList.setMarkup(False)
 
     freeRtosQueue = thirdPartyFreeRTOS.createFileSymbol("FREERTOS_QUEUE_C", None)
-    freeRtosQueue.setSourcePath("../CMSIS-FreeRTOS/Source/queue.c")
+    freeRtosQueue.setSourcePath("../FreeRTOS-Kernel/queue.c")
     freeRtosQueue.setOutputName("queue.c")
     freeRtosQueue.setDestPath("../../third_party/rtos/FreeRTOS/Source")
     freeRtosQueue.setProjectPath("FreeRTOS/Source")
@@ -746,7 +1040,7 @@ def instantiateComponent(thirdPartyFreeRTOS):
     freeRtosQueue.setMarkup(False)
 
     freeRtosTask = thirdPartyFreeRTOS.createFileSymbol("FREERTOS_TASKS_C", None)
-    freeRtosTask.setSourcePath("../CMSIS-FreeRTOS/Source/tasks.c")
+    freeRtosTask.setSourcePath("../FreeRTOS-Kernel/tasks.c")
     freeRtosTask.setOutputName("FreeRTOS_tasks.c")
     freeRtosTask.setDestPath("../../third_party/rtos/FreeRTOS/Source")
     freeRtosTask.setProjectPath("FreeRTOS/Source")
@@ -754,7 +1048,7 @@ def instantiateComponent(thirdPartyFreeRTOS):
     freeRtosTask.setMarkup(False)
 
     freeRtosTimers = thirdPartyFreeRTOS.createFileSymbol("FREERTOS_TIMERS_C", None)
-    freeRtosTimers.setSourcePath("../CMSIS-FreeRTOS/Source/timers.c")
+    freeRtosTimers.setSourcePath("../FreeRTOS-Kernel/timers.c")
     freeRtosTimers.setOutputName("timers.c")
     freeRtosTimers.setDestPath("../../third_party/rtos/FreeRTOS/Source")
     freeRtosTimers.setProjectPath("FreeRTOS/Source")
@@ -762,7 +1056,7 @@ def instantiateComponent(thirdPartyFreeRTOS):
     freeRtosTimers.setMarkup(False)
 
     freeRtosEventGroups = thirdPartyFreeRTOS.createFileSymbol("FREERTOS_EVENT_GROUPS_C", None)
-    freeRtosEventGroups.setSourcePath("../CMSIS-FreeRTOS/Source/event_groups.c")
+    freeRtosEventGroups.setSourcePath("../FreeRTOS-Kernel/event_groups.c")
     freeRtosEventGroups.setOutputName("event_groups.c")
     freeRtosEventGroups.setDestPath("../../third_party/rtos/FreeRTOS/Source")
     freeRtosEventGroups.setProjectPath("FreeRTOS/Source")
@@ -770,7 +1064,7 @@ def instantiateComponent(thirdPartyFreeRTOS):
     freeRtosEventGroups.setMarkup(False)
 
     freeRtosStreamBuffer = thirdPartyFreeRTOS.createFileSymbol("FREERTOS_STREAM_BUFFER_C", None)
-    freeRtosStreamBuffer.setSourcePath("../CMSIS-FreeRTOS/Source/stream_buffer.c")
+    freeRtosStreamBuffer.setSourcePath("../FreeRTOS-Kernel/stream_buffer.c")
     freeRtosStreamBuffer.setOutputName("stream_buffer.c")
     freeRtosStreamBuffer.setDestPath("../../third_party/rtos/FreeRTOS/Source")
     freeRtosStreamBuffer.setProjectPath("FreeRTOS/Source")
@@ -779,7 +1073,7 @@ def instantiateComponent(thirdPartyFreeRTOS):
     freeRtosStreamBuffer.setDependencies(buildStreamBuffer, ["FREERTOS_USE_TASK_NOTIFICATIONS"])
 
     freeRtosMemMangHeap1 = thirdPartyFreeRTOS.createFileSymbol("FREERTOS_HEAP_1_C", None)
-    freeRtosMemMangHeap1.setSourcePath("../CMSIS-FreeRTOS/Source/portable/MemMang/heap_1.c")
+    freeRtosMemMangHeap1.setSourcePath("../FreeRTOS-Kernel/portable/MemMang/heap_1.c")
     freeRtosMemMangHeap1.setOutputName("heap_1.c")
     freeRtosMemMangHeap1.setDestPath("../../third_party/rtos/FreeRTOS/Source/portable/MemMang/")
     freeRtosMemMangHeap1.setProjectPath("FreeRTOS/Source/portable/MemMang/")
@@ -788,7 +1082,7 @@ def instantiateComponent(thirdPartyFreeRTOS):
     freeRtosMemMangHeap1.setDependencies(freeRtosMemMangEnableHeap1, ["FREERTOS_MEMORY_MANAGEMENT_CHOICE"])
 
     freeRtosMemMangHeap2 = thirdPartyFreeRTOS.createFileSymbol("FREERTOS_HEAP_2_C", None)
-    freeRtosMemMangHeap2.setSourcePath("../CMSIS-FreeRTOS/Source/portable/MemMang/heap_2.c")
+    freeRtosMemMangHeap2.setSourcePath("../FreeRTOS-Kernel/portable/MemMang/heap_2.c")
     freeRtosMemMangHeap2.setOutputName("heap_2.c")
     freeRtosMemMangHeap2.setDestPath("../../third_party/rtos/FreeRTOS/Source/portable/MemMang/")
     freeRtosMemMangHeap2.setProjectPath("FreeRTOS/Source/portable/MemMang/")
@@ -797,7 +1091,7 @@ def instantiateComponent(thirdPartyFreeRTOS):
     freeRtosMemMangHeap2.setDependencies(freeRtosMemMangEnableHeap2, ["FREERTOS_MEMORY_MANAGEMENT_CHOICE"])
 
     freeRtosMemMangHeap3 = thirdPartyFreeRTOS.createFileSymbol("FREERTOS_HEAP_3_C", None)
-    freeRtosMemMangHeap3.setSourcePath("../CMSIS-FreeRTOS/Source/portable/MemMang/heap_3.c")
+    freeRtosMemMangHeap3.setSourcePath("../FreeRTOS-Kernel/portable/MemMang/heap_3.c")
     freeRtosMemMangHeap3.setOutputName("heap_3.c")
     freeRtosMemMangHeap3.setDestPath("../../third_party/rtos/FreeRTOS/Source/portable/MemMang/")
     freeRtosMemMangHeap3.setProjectPath("FreeRTOS/Source/portable/MemMang/")
@@ -806,7 +1100,7 @@ def instantiateComponent(thirdPartyFreeRTOS):
     freeRtosMemMangHeap3.setDependencies(freeRtosMemMangEnableHeap3, ["FREERTOS_MEMORY_MANAGEMENT_CHOICE"])
 
     freeRtosMemMangHeap4 = thirdPartyFreeRTOS.createFileSymbol("FREERTOS_HEAP_4_C", None)
-    freeRtosMemMangHeap4.setSourcePath("../CMSIS-FreeRTOS/Source/portable/MemMang/heap_4.c")
+    freeRtosMemMangHeap4.setSourcePath("../FreeRTOS-Kernel/portable/MemMang/heap_4.c")
     freeRtosMemMangHeap4.setOutputName("heap_4.c")
     freeRtosMemMangHeap4.setDestPath("../../third_party/rtos/FreeRTOS/Source/portable/MemMang/")
     freeRtosMemMangHeap4.setProjectPath("FreeRTOS/Source/portable/MemMang/")
@@ -815,7 +1109,7 @@ def instantiateComponent(thirdPartyFreeRTOS):
     freeRtosMemMangHeap4.setDependencies(freeRtosMemMangEnableHeap4, ["FREERTOS_MEMORY_MANAGEMENT_CHOICE"])
 
     freeRtosMemMangHeap5 = thirdPartyFreeRTOS.createFileSymbol("FREERTOS_HEAP_5_C", None)
-    freeRtosMemMangHeap5.setSourcePath("../CMSIS-FreeRTOS/Source/portable/MemMang/heap_5.c")
+    freeRtosMemMangHeap5.setSourcePath("../FreeRTOS-Kernel/portable/MemMang/heap_5.c")
     freeRtosMemMangHeap5.setOutputName("heap_5.c")
     freeRtosMemMangHeap5.setDestPath("../../third_party/rtos/FreeRTOS/Source/portable/MemMang/")
     freeRtosMemMangHeap5.setProjectPath("FreeRTOS/Source/portable/MemMang/")
@@ -824,105 +1118,112 @@ def instantiateComponent(thirdPartyFreeRTOS):
     freeRtosMemMangHeap5.setDependencies(freeRtosMemMangEnableHeap5, ["FREERTOS_MEMORY_MANAGEMENT_CHOICE"])
 
     freeRtosCoRoutineHeader = thirdPartyFreeRTOS.createFileSymbol("FREERTOS_CROUTINE_H", None)
-    freeRtosCoRoutineHeader.setSourcePath("../CMSIS-FreeRTOS/Source/include/croutine.h")
+    freeRtosCoRoutineHeader.setSourcePath("../FreeRTOS-Kernel/include/croutine.h")
     freeRtosCoRoutineHeader.setOutputName("croutine.h")
     freeRtosCoRoutineHeader.setDestPath("../../third_party/rtos/FreeRTOS/Source/include")
     freeRtosCoRoutineHeader.setProjectPath("FreeRTOS/Source/include")
     freeRtosCoRoutineHeader.setType("HEADER")
 
     freeRtosEventGrpHeader = thirdPartyFreeRTOS.createFileSymbol("FREERTOS_EVENT_GROUPS_H", None)
-    freeRtosEventGrpHeader.setSourcePath("../CMSIS-FreeRTOS/Source/include/event_groups.h")
+    freeRtosEventGrpHeader.setSourcePath("../FreeRTOS-Kernel/include/event_groups.h")
     freeRtosEventGrpHeader.setOutputName("event_groups.h")
     freeRtosEventGrpHeader.setDestPath("../../third_party/rtos/FreeRTOS/Source/include")
     freeRtosEventGrpHeader.setProjectPath("FreeRTOS/Source/include")
     freeRtosEventGrpHeader.setType("HEADER")
 
     freeRtosFreeRtosHeader = thirdPartyFreeRTOS.createFileSymbol("FREERTOS_FREERTOS_H", None)
-    freeRtosFreeRtosHeader.setSourcePath("../CMSIS-FreeRTOS/Source/include/FreeRTOS.h")
+    freeRtosFreeRtosHeader.setSourcePath("../FreeRTOS-Kernel/include/FreeRTOS.h")
     freeRtosFreeRtosHeader.setOutputName("FreeRTOS.h")
     freeRtosFreeRtosHeader.setDestPath("../../third_party/rtos/FreeRTOS/Source/include")
     freeRtosFreeRtosHeader.setProjectPath("FreeRTOS/Source/include")
     freeRtosFreeRtosHeader.setType("HEADER")
 
     freeRtosListHeader = thirdPartyFreeRTOS.createFileSymbol("FREERTOS_LIST_H", None)
-    freeRtosListHeader.setSourcePath("../CMSIS-FreeRTOS/Source/include/list.h")
+    freeRtosListHeader.setSourcePath("../FreeRTOS-Kernel/include/list.h")
     freeRtosListHeader.setOutputName("list.h")
     freeRtosListHeader.setDestPath("../../third_party/rtos/FreeRTOS/Source/include")
     freeRtosListHeader.setProjectPath("FreeRTOS/Source/include")
     freeRtosListHeader.setType("HEADER")
 
     freeRtosMpuWrappersHeader = thirdPartyFreeRTOS.createFileSymbol("FREERTOS_MPU_WRAPPERS_H", None)
-    freeRtosMpuWrappersHeader.setSourcePath("../CMSIS-FreeRTOS/Source/include/mpu_wrappers.h")
+    freeRtosMpuWrappersHeader.setSourcePath("../FreeRTOS-Kernel/include/mpu_wrappers.h")
     freeRtosMpuWrappersHeader.setOutputName("mpu_wrappers.h")
     freeRtosMpuWrappersHeader.setDestPath("../../third_party/rtos/FreeRTOS/Source/include")
     freeRtosMpuWrappersHeader.setProjectPath("FreeRTOS/Source/include")
     freeRtosMpuWrappersHeader.setType("HEADER")
 
     freeRtosPortableHeader = thirdPartyFreeRTOS.createFileSymbol("FREERTOS_PORTABLE_H", None)
-    freeRtosPortableHeader.setSourcePath("../CMSIS-FreeRTOS/Source/include/portable.h")
+    freeRtosPortableHeader.setSourcePath("../FreeRTOS-Kernel/include/portable.h")
     freeRtosPortableHeader.setOutputName("portable.h")
     freeRtosPortableHeader.setDestPath("../../third_party/rtos/FreeRTOS/Source/include")
     freeRtosPortableHeader.setProjectPath("FreeRTOS/Source/include")
     freeRtosPortableHeader.setType("HEADER")
 
     freeRtosProjDefHeader = thirdPartyFreeRTOS.createFileSymbol("FREERTOS_PROJDEFS_H", None)
-    freeRtosProjDefHeader.setSourcePath("../CMSIS-FreeRTOS/Source/include/projdefs.h")
+    freeRtosProjDefHeader.setSourcePath("../FreeRTOS-Kernel/include/projdefs.h")
     freeRtosProjDefHeader.setOutputName("projdefs.h")
     freeRtosProjDefHeader.setDestPath("../../third_party/rtos/FreeRTOS/Source/include")
     freeRtosProjDefHeader.setProjectPath("FreeRTOS/Source/include")
     freeRtosProjDefHeader.setType("HEADER")
 
     freeRtosQueueHeader = thirdPartyFreeRTOS.createFileSymbol("FREERTOS_QUEUE_H", None)
-    freeRtosQueueHeader.setSourcePath("../CMSIS-FreeRTOS/Source/include/queue.h")
+    freeRtosQueueHeader.setSourcePath("../FreeRTOS-Kernel/include/queue.h")
     freeRtosQueueHeader.setOutputName("queue.h")
     freeRtosQueueHeader.setDestPath("../../third_party/rtos/FreeRTOS/Source/include")
     freeRtosQueueHeader.setProjectPath("FreeRTOS/Source/include")
     freeRtosQueueHeader.setType("HEADER")
 
     freeRtosPortMacro = thirdPartyFreeRTOS.createFileSymbol("FREERTOS_SEMPHR_H", None)
-    freeRtosPortMacro.setSourcePath("../CMSIS-FreeRTOS/Source/include/semphr.h")
+    freeRtosPortMacro.setSourcePath("../FreeRTOS-Kernel/include/semphr.h")
     freeRtosPortMacro.setOutputName("semphr.h")
     freeRtosPortMacro.setDestPath("../../third_party/rtos/FreeRTOS/Source/include")
     freeRtosPortMacro.setProjectPath("FreeRTOS/Source/include")
     freeRtosPortMacro.setType("HEADER")
 
     freeRtosStackMacroHeader = thirdPartyFreeRTOS.createFileSymbol("FREERTOS_STACK_MACROS_H", None)
-    freeRtosStackMacroHeader.setSourcePath("../CMSIS-FreeRTOS/Source/include/stack_macros.h")
+    freeRtosStackMacroHeader.setSourcePath("../FreeRTOS-Kernel/include/stack_macros.h")
     freeRtosStackMacroHeader.setOutputName("stack_macros.h")
     freeRtosStackMacroHeader.setDestPath("../../third_party/rtos/FreeRTOS/Source/include")
     freeRtosStackMacroHeader.setProjectPath("FreeRTOS/Source/include")
     freeRtosStackMacroHeader.setType("HEADER")
 
     freeRtosDepDefHeader = thirdPartyFreeRTOS.createFileSymbol("FREERTOS_DEPRECATED_DEFINITIONS_H", None)
-    freeRtosDepDefHeader.setSourcePath("../CMSIS-FreeRTOS/Source/include/deprecated_definitions.h")
+    freeRtosDepDefHeader.setSourcePath("../FreeRTOS-Kernel/include/deprecated_definitions.h")
     freeRtosDepDefHeader.setOutputName("deprecated_definitions.h")
     freeRtosDepDefHeader.setDestPath("../../third_party/rtos/FreeRTOS/Source/include")
     freeRtosDepDefHeader.setProjectPath("FreeRTOS/Source/include")
     freeRtosDepDefHeader.setType("HEADER")
 
     freeRtosTaskHeader = thirdPartyFreeRTOS.createFileSymbol("FREERTOS_TASK_H", None)
-    freeRtosTaskHeader.setSourcePath("../CMSIS-FreeRTOS/Source/include/task.h")
+    freeRtosTaskHeader.setSourcePath("../FreeRTOS-Kernel/include/task.h")
     freeRtosTaskHeader.setOutputName("task.h")
     freeRtosTaskHeader.setDestPath("../../third_party/rtos/FreeRTOS/Source/include")
     freeRtosTaskHeader.setProjectPath("FreeRTOS/Source/include")
     freeRtosTaskHeader.setType("HEADER")
 
     freeRtosTimerHeader = thirdPartyFreeRTOS.createFileSymbol("FREERTOS_TIMERS_H", None)
-    freeRtosTimerHeader.setSourcePath("../CMSIS-FreeRTOS/Source/include/timers.h")
+    freeRtosTimerHeader.setSourcePath("../FreeRTOS-Kernel/include/timers.h")
     freeRtosTimerHeader.setOutputName("timers.h")
     freeRtosTimerHeader.setDestPath("../../third_party/rtos/FreeRTOS/Source/include")
     freeRtosTimerHeader.setProjectPath("FreeRTOS/Source/include")
     freeRtosTimerHeader.setType("HEADER")
 
     freeRtosMpuProtoHeader = thirdPartyFreeRTOS.createFileSymbol("FREERTOS_MPU_PROTOTYPES_H", None)
-    freeRtosMpuProtoHeader.setSourcePath("../CMSIS-FreeRTOS/Source/include/mpu_prototypes.h")
+    freeRtosMpuProtoHeader.setSourcePath("../FreeRTOS-Kernel/include/mpu_prototypes.h")
     freeRtosMpuProtoHeader.setOutputName("mpu_prototypes.h")
     freeRtosMpuProtoHeader.setDestPath("../../third_party/rtos/FreeRTOS/Source/include")
     freeRtosMpuProtoHeader.setProjectPath("FreeRTOS/Source/include")
     freeRtosMpuProtoHeader.setType("HEADER")
 
+    freeRtosMpuSyscallNumHeader = thirdPartyFreeRTOS.createFileSymbol("FREERTOS_MPU_SYSCALL_NUMBERS_H", None)
+    freeRtosMpuSyscallNumHeader.setSourcePath("../FreeRTOS-Kernel/include/mpu_syscall_numbers.h")
+    freeRtosMpuSyscallNumHeader.setOutputName("mpu_syscall_numbers.h")
+    freeRtosMpuSyscallNumHeader.setDestPath("../../third_party/rtos/FreeRTOS/Source/include")
+    freeRtosMpuSyscallNumHeader.setProjectPath("FreeRTOS/Source/include")
+    freeRtosMpuSyscallNumHeader.setType("HEADER")
+
     freeRtosStreamBufHeader = thirdPartyFreeRTOS.createFileSymbol("FREERTOS_STREAM_BUFFER_H", None)
-    freeRtosStreamBufHeader.setSourcePath("../CMSIS-FreeRTOS/Source/include/stream_buffer.h")
+    freeRtosStreamBufHeader.setSourcePath("../FreeRTOS-Kernel/include/stream_buffer.h")
     freeRtosStreamBufHeader.setOutputName("stream_buffer.h")
     freeRtosStreamBufHeader.setDestPath("../../third_party/rtos/FreeRTOS/Source/include")
     freeRtosStreamBufHeader.setProjectPath("FreeRTOS/Source/include")
@@ -930,12 +1231,21 @@ def instantiateComponent(thirdPartyFreeRTOS):
     freeRtosStreamBufHeader.setDependencies(buildStreamBuffer, ["FREERTOS_USE_TASK_NOTIFICATIONS"])
 
     freeRtosMesgBufHeader = thirdPartyFreeRTOS.createFileSymbol("FREERTOS_MESSAGE_BUFFER_H", None)
-    freeRtosMesgBufHeader.setSourcePath("../CMSIS-FreeRTOS/Source/include/message_buffer.h")
+    freeRtosMesgBufHeader.setSourcePath("../FreeRTOS-Kernel/include/message_buffer.h")
     freeRtosMesgBufHeader.setOutputName("message_buffer.h")
     freeRtosMesgBufHeader.setDestPath("../../third_party/rtos/FreeRTOS/Source/include")
     freeRtosMesgBufHeader.setProjectPath("FreeRTOS/Source/include")
     freeRtosMesgBufHeader.setType("HEADER")
     freeRtosMesgBufHeader.setDependencies(buildStreamBuffer, ["FREERTOS_USE_TASK_NOTIFICATIONS"])
+
+    freeRtosNewlibFreeRTOSHeader = thirdPartyFreeRTOS.createFileSymbol("FREERTOS_NEWLIB_FREERTOS_H", None)
+    freeRtosNewlibFreeRTOSHeader.setSourcePath("../FreeRTOS-Kernel/include/newlib-freertos.h")
+    freeRtosNewlibFreeRTOSHeader.setOutputName("newlib-freertos.h")
+    freeRtosNewlibFreeRTOSHeader.setDestPath("../../third_party/rtos/FreeRTOS/Source/include")
+    freeRtosNewlibFreeRTOSHeader.setProjectPath("FreeRTOS/Source/include")
+    freeRtosNewlibFreeRTOSHeader.setType("HEADER")
+    freeRtosNewlibFreeRTOSHeader.setEnabled(False)
+    freeRtosNewlibFreeRTOSHeader.setDependencies(lambda symbol, event: symbol.setEnabled(event["symbol"].getValue()), ["FREERTOS_USE_NEWLIB_REENTRANT"])
 
     freeRtosSystemDefFile = thirdPartyFreeRTOS.createFileSymbol("FREERTOS_SYS_DEF", None)
     freeRtosSystemDefFile.setType("STRING")
@@ -954,7 +1264,7 @@ def instantiateComponent(thirdPartyFreeRTOS):
     freertosInterruptInclude.setOutputName("core.LIST_SYSTEM_INTERRUPT_C_INCLUDES")
     freertosInterruptInclude.setSourcePath("templates/freertos_interrupt_include.h.ftl")
     freertosInterruptInclude.setMarkup(True)
-    freertosInterruptInclude.setEnabled(Database.getSymbolValue("core", "CoreArchitecture") in ["CORTEX-M23", "CORTEX-M33", "CORTEX-A5"])
+    freertosInterruptInclude.setEnabled(Database.getSymbolValue("core", "CoreArchitecture") in ["CORTEX-M0PLUS", "CORTEX-M23", "CORTEX-M33", "CORTEX-A5"])
 
 
     # load family specific configuration
@@ -962,5 +1272,7 @@ def instantiateComponent(thirdPartyFreeRTOS):
         execfile(Module.getPath() + "config/arch/mips/devices_" + coreFamily[:7].lower() + "/freertos_config.py")
     elif ("ARM926" in coreArch):
         execfile(Module.getPath() + "config/arch/arm/devices_arm926/freertos_config.py")
+    elif (coreArch == "PIC32A" or coreArch == "dsPIC33A"):
+        execfile(Module.getPath() + "config/arch/pic32a/devices_pic32a/freertos_config.py")
     else:
         execfile(Module.getPath() + "config/arch/arm/devices_" + coreArch.replace("-", "_").replace("PLUS", "").lower() + "/freertos_config.py")

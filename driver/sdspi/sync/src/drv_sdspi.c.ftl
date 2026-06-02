@@ -67,11 +67,11 @@
 #pragma GCC diagnostic ignored "-Wunknown-pragmas"
 </#if>
 #pragma coverity compliance block \
-(deviate:6 "MISRA C-2012 Rule 11.1" "H3_MISRAC_2012_R_11_1_DR_1" )\
-(deviate:6 "MISRA C-2012 Rule 11.3" "H3_MISRAC_2012_R_11_3_DR_1" )\
-(deviate:21 "MISRA C-2012 Rule 11.8" "H3_MISRAC_2012_R_11_8_DR_1")\
-(deviate:2 "MISRA C-2012 Rule 16.1" "H3_MISRAC_2012_R_16_1_DR_1" )\
-(deviate:12 "MISRA C-2012 Rule 16.3" "H3_MISRAC_2012_R_16_3_DR_1" )
+(deviate:6 "MISRA C-2023 Rule 11.1" "H3_MISRAC_2023_R_11_1_DR_1" )\
+(deviate:6 "MISRA C-2023 Rule 11.3" "H3_MISRAC_2023_R_11_3_DR_1" )\
+(deviate:21 "MISRA C-2023 Rule 11.8" "H3_MISRAC_2023_R_11_8_DR_1")\
+(deviate:2 "MISRA C-2023 Rule 16.1" "H3_MISRAC_2023_R_16_1_DR_1" )\
+(deviate:12 "MISRA C-2023 Rule 16.3" "H3_MISRAC_2023_R_16_3_DR_1" )
 </#if>
 
 // *****************************************************************************
@@ -294,7 +294,7 @@ static bool lDRV_SDSPI_CommandSend(
         nBytes += 1U;
     }
     /* Send the command bytes */
-    /* MISRA C-2012 Rule 11.8 deviation taken. Deviation record ID -  H3_MISRAC_2012_R_11_8_DR_1 */
+    /* MISRA C-2023 Rule 11.8 deviation taken. Deviation record ID -  H3_MISRAC_2023_R_11_8_DR_1 */
     if (DRV_SDSPI_SPIWrite(dObj, (uint8_t*)dObj->cmdRespBuffer, nBytes) == false)
     {
         <#if DRV_SDSPI_INTERFACE_TYPE == "SPI_DRV">
@@ -306,7 +306,7 @@ static bool lDRV_SDSPI_CommandSend(
      /* Wait for a response from SD Card. Try Ncr times before giving up. */
     for (i = 0; i < ncrTries; i++)
     {
-        /* MISRA C-2012 Rule 11.8 deviation taken. Deviation record ID -  H3_MISRAC_2012_R_11_8_DR_1 */
+        /* MISRA C-2023 Rule 11.8 deviation taken. Deviation record ID -  H3_MISRAC_2023_R_11_8_DR_1 */
         if (DRV_SDSPI_SPIRead(dObj, (uint8_t*)dObj->cmdRespBuffer, 1) == false)
         {
             <#if DRV_SDSPI_INTERFACE_TYPE == "SPI_DRV">
@@ -352,7 +352,7 @@ static bool lDRV_SDSPI_CommandSend(
         {
             do
             {
-                /* MISRA C-2012 Rule 11.8 deviation taken. Deviation record ID -  H3_MISRAC_2012_R_11_8_DR_1 */
+                /* MISRA C-2023 Rule 11.8 deviation taken. Deviation record ID -  H3_MISRAC_2023_R_11_8_DR_1 */
                 if (DRV_SDSPI_SPIRead(dObj, (uint8_t*)dObj->cmdRespBuffer, 1) == false)
                 {
                     <#if DRV_SDSPI_INTERFACE_TYPE == "SPI_DRV">
@@ -360,7 +360,7 @@ static bool lDRV_SDSPI_CommandSend(
                     </#if>
                     return isSuccess;
                 }
-            } while ((dObj->cmdRespTmrExpired == false) && (dObj->cmdRespBuffer[0] != 0x00U));
+            } while ((dObj->cmdRespTmrExpired == false) && (dObj->cmdRespBuffer[0] == 0x00U));
 
             (void) DRV_SDSPI_CmdResponseTimerStop(dObj);
 
@@ -383,7 +383,7 @@ static bool lDRV_SDSPI_CommandSend(
         /* Now, receive remaining response bytes (if any) + send the dummy byte.
         * Device requires at least 8 clock pulses after the response has been sent,
         * before it can process the next command */
-        /* MISRA C-2012 Rule 11.8 deviation taken. Deviation record ID -  H3_MISRAC_2012_R_11_8_DR_1 */
+        /* MISRA C-2023 Rule 11.8 deviation taken. Deviation record ID -  H3_MISRAC_2023_R_11_8_DR_1 */
         if (DRV_SDSPI_SPIRead(dObj, (uint8_t *)dObj->cmdRespBuffer, (nBytes + 1U)) == false)
         {
             <#if DRV_SDSPI_INTERFACE_TYPE == "SPI_DRV">
@@ -419,14 +419,14 @@ static bool lDRV_SDSPI_SendInitClockPulses(DRV_SDSPI_OBJ* const dObj)
     }
 
     /* Generate 74 clock pulses with CS = HIGH */
-    /* MISRA C-2012 Rule 11.8 deviation taken. Deviation record ID -  H3_MISRAC_2012_R_11_8_DR_1 */
+    /* MISRA C-2023 Rule 11.8 deviation taken. Deviation record ID -  H3_MISRAC_2023_R_11_8_DR_1 */
     return DRV_SDSPI_SPIWriteWithChipSelectDisabled(dObj, (uint8_t*)dObj->cmdRespBuffer, MEDIA_INIT_ARRAY_SIZE);
 }
 
 static bool lDRV_SDSPI_EnterIdleState(DRV_SDSPI_OBJ* const dObj)
 {
     bool isSuccess = false;
-    /* MISRA C-2012 Rule 11.3 deviation taken. Deviation record ID -  H3_MISRAC_2012_R_11_3_DR_1 */
+    /* MISRA C-2023 Rule 11.3 deviation taken. Deviation record ID -  H3_MISRAC_2023_R_11_3_DR_1 */
     DRV_SDSPI_RESPONSE_1* r1Response = (DRV_SDSPI_RESPONSE_1*)&dObj->cmdResponse[0];
 
     if (lDRV_SDSPI_CommandSend(dObj, (uint8_t)DRV_SDSPI_GO_IDLE_STATE, 0) == true)
@@ -442,7 +442,7 @@ static bool lDRV_SDSPI_EnterIdleState(DRV_SDSPI_OBJ* const dObj)
 static bool lDRV_SDSPI_CheckIFCondition(DRV_SDSPI_OBJ* const dObj)
 {
     bool isSuccess = false;
-    /* MISRA C-2012 Rule 11.3 deviation taken. Deviation record ID -  H3_MISRAC_2012_R_11_3_DR_1 */
+    /* MISRA C-2023 Rule 11.3 deviation taken. Deviation record ID -  H3_MISRAC_2023_R_11_3_DR_1 */
     DRV_SDSPI_RESPONSE_1* r1Response = (DRV_SDSPI_RESPONSE_1*)&dObj->cmdResponse[0];
 
     /*  Send CMD8 (SEND_IF_COND) to specify/request the SD card interface
@@ -496,7 +496,7 @@ static bool lDRV_SDSPI_CheckIFCondition(DRV_SDSPI_OBJ* const dObj)
 static bool lDRV_SDSPI_SendACMD41(DRV_SDSPI_OBJ* const dObj)
 {
     bool isSuccess = false;
-    /* MISRA C-2012 Rule 11.3 deviation taken. Deviation record ID -  H3_MISRAC_2012_R_11_3_DR_1 */
+    /* MISRA C-2023 Rule 11.3 deviation taken. Deviation record ID -  H3_MISRAC_2023_R_11_3_DR_1 */
     DRV_SDSPI_RESPONSE_1* r1Response = (DRV_SDSPI_RESPONSE_1*)&dObj->cmdResponse[0];
 
     /* Send ACMD41.  This is to check if the SD card is finished booting
@@ -583,10 +583,10 @@ static bool lDRV_SDSPI_ReadCSD(DRV_SDSPI_OBJ* const dObj)
     if (lDRV_SDSPI_CommandSend(dObj, (uint8_t)DRV_SDSPI_SEND_CSD, 0x00) == true)
     {
         /* Data token(1) + CSD(16) + CRC(2) + Dummy(1) = 20 Bytes */
-        /* MISRA C-2012 Rule 11.8 deviation taken. Deviation record ID -  H3_MISRAC_2012_R_11_8_DR_1 */
+        /* MISRA C-2023 Rule 11.8 deviation taken. Deviation record ID -  H3_MISRAC_2023_R_11_8_DR_1 */
         if (DRV_SDSPI_SPIRead(dObj, (uint8_t*)dObj->cmdRespBuffer, DRV_SDSPI_CSD_READ_SIZE) == true)
         {
-            /* MISRA C-2012 Rule 11.8 deviation taken. Deviation record ID -  H3_MISRAC_2012_R_11_8_DR_1 */
+            /* MISRA C-2023 Rule 11.8 deviation taken. Deviation record ID -  H3_MISRAC_2023_R_11_8_DR_1 */
             (void) memcpy(dObj->csdData, (uint8_t *)dObj->cmdRespBuffer, DRV_SDSPI_CSD_READ_SIZE);
             /* Process the received CSD data from the SD Card */
             dObj->discCapacity = lDRV_SDSPI_ProcessCSD(dObj->csdData);
@@ -612,10 +612,10 @@ static bool lDRV_SDSPI_ReadCID(DRV_SDSPI_OBJ* const dObj)
     if (lDRV_SDSPI_CommandSend(dObj, (uint8_t)DRV_SDSPI_SEND_CID, 0x00) == true)
     {
         /* Data token(1) + CID(16) + CRC(2) + Dummy(1) = 20 Bytes */
-        /* MISRA C-2012 Rule 11.8 deviation taken. Deviation record ID -  H3_MISRAC_2012_R_11_8_DR_1 */
+        /* MISRA C-2023 Rule 11.8 deviation taken. Deviation record ID -  H3_MISRAC_2023_R_11_8_DR_1 */
         if (DRV_SDSPI_SPIRead(dObj, (uint8_t*)dObj->cmdRespBuffer, DRV_SDSPI_CID_READ_SIZE) == true)
         {
-            /* MISRA C-2012 Rule 11.8 deviation taken. Deviation record ID -  H3_MISRAC_2012_R_11_8_DR_1 */
+            /* MISRA C-2023 Rule 11.8 deviation taken. Deviation record ID -  H3_MISRAC_2023_R_11_8_DR_1 */
             (void) memcpy(dObj->cidData, (uint8_t *)dObj->cmdRespBuffer, DRV_SDSPI_CID_READ_SIZE);
             isSuccess = true;
         }
@@ -676,7 +676,7 @@ static bool lDRV_SDSPI_ReadResponseWithTimeout(
     /* Wait for the SD card to send the data start token: 0xFE */
     do
     {
-        /* MISRA C-2012 Rule 11.8 deviation taken. Deviation record ID -  H3_MISRAC_2012_R_11_8_DR_1 */
+        /* MISRA C-2023 Rule 11.8 deviation taken. Deviation record ID -  H3_MISRAC_2023_R_11_8_DR_1 */
         if (DRV_SDSPI_SPIRead(dObj, (uint8_t*)dObj->cmdRespBuffer, 1) == false)
         {
             (void) DRV_SDSPI_TimerStop(dObj);
@@ -692,7 +692,7 @@ static bool lDRV_SDSPI_ReadResponseWithTimeout(
     {
         for (i = 0; i < 2U; i++)
         {
-            /* MISRA C-2012 Rule 11.8 deviation taken. Deviation record ID -  H3_MISRAC_2012_R_11_8_DR_1 */
+            /* MISRA C-2023 Rule 11.8 deviation taken. Deviation record ID -  H3_MISRAC_2023_R_11_8_DR_1 */
             if (DRV_SDSPI_SPIRead(dObj, (uint8_t*)dObj->cmdRespBuffer, 1) == true)
             {
                 if (dObj->cmdRespBuffer[0] == expectedResponse)
@@ -743,7 +743,7 @@ static bool lDRV_SDSPI_ReadBlock(
         if (DRV_SDSPI_SPIBlockRead(dObj, targetBuffer) == true)
         {
             /* Data received, now read and discard the dummy CRC bytes */
-            /* MISRA C-2012 Rule 11.8 deviation taken. Deviation record ID -  H3_MISRAC_2012_R_11_8_DR_1 */
+            /* MISRA C-2023 Rule 11.8 deviation taken. Deviation record ID -  H3_MISRAC_2023_R_11_8_DR_1 */
             if (DRV_SDSPI_SPIRead(dObj, (uint8_t*)dObj->cmdRespBuffer, 2) == true)
             {
                 isSuccess = true;
@@ -772,7 +772,7 @@ static bool lDRV_SDSPI_WriteBlock(
     }
 
     /* Send the Data Start token */
-    /* MISRA C-2012 Rule 11.8 deviation taken. Deviation record ID -  H3_MISRAC_2012_R_11_8_DR_1 */
+    /* MISRA C-2023 Rule 11.8 deviation taken. Deviation record ID -  H3_MISRAC_2023_R_11_8_DR_1 */
     if (DRV_SDSPI_SPIWrite(dObj, (uint8_t*)dObj->cmdRespBuffer, 1) == false)
     {
         return isSuccess;
@@ -788,14 +788,14 @@ static bool lDRV_SDSPI_WriteBlock(
     dObj->cmdRespBuffer[0] = 0xFF;
     dObj->cmdRespBuffer[1] = 0xFF;
 
-    /* MISRA C-2012 Rule 11.8 deviation taken. Deviation record ID -  H3_MISRAC_2012_R_11_8_DR_1 */
+    /* MISRA C-2023 Rule 11.8 deviation taken. Deviation record ID -  H3_MISRAC_2023_R_11_8_DR_1 */
     if (DRV_SDSPI_SPIWrite(dObj, (uint8_t*)dObj->cmdRespBuffer, 2) == false)
     {
         return isSuccess;
     }
 
     /* Read the data response token and then poll busy status of the SD Card */
-    /* MISRA C-2012 Rule 11.8 deviation taken. Deviation record ID -  H3_MISRAC_2012_R_11_8_DR_1 */
+    /* MISRA C-2023 Rule 11.8 deviation taken. Deviation record ID -  H3_MISRAC_2023_R_11_8_DR_1 */
     if (DRV_SDSPI_SPIRead(dObj, (uint8_t*)dObj->cmdRespBuffer, 1) == true)
     {
         if ((dObj->cmdRespBuffer[0] & DRV_SDSPI_WRITE_RESPONSE_TOKEN_MASK) ==
@@ -860,7 +860,7 @@ static bool lDRV_SDSPI_Write(
     if (lDRV_SDSPI_CommandSend(dObj, (uint8_t)writeCommand, blockStart) == true)
     {
         /* Verify the response */
-        /* MISRA C-2012 Rule 11.3 deviation taken. Deviation record ID -  H3_MISRAC_2012_R_11_3_DR_1 */
+        /* MISRA C-2023 Rule 11.3 deviation taken. Deviation record ID -  H3_MISRAC_2023_R_11_3_DR_1 */
         r1Response = (DRV_SDSPI_RESPONSE_1*)&dObj->cmdResponse[0];
         if (r1Response->byte != 0x00U)
         {
@@ -886,7 +886,7 @@ static bool lDRV_SDSPI_Write(
             dObj->cmdRespBuffer[0] = DRV_SDSPI_DATA_STOP_TRAN_TOKEN;
             dObj->cmdRespBuffer[1] = 0xFF;
 
-            /* MISRA C-2012 Rule 11.8 deviation taken. Deviation record ID -  H3_MISRAC_2012_R_11_8_DR_1 */
+            /* MISRA C-2023 Rule 11.8 deviation taken. Deviation record ID -  H3_MISRAC_2023_R_11_8_DR_1 */
             if (DRV_SDSPI_SPIWrite(dObj, (uint8_t*)dObj->cmdRespBuffer, 2) == true)
             {
                 /* Poll the SD Card busy status */
@@ -900,7 +900,7 @@ static bool lDRV_SDSPI_Write(
         {
             /* Send a dummy data byte */
             dObj->cmdRespBuffer[0] = 0xFF;
-            /* MISRA C-2012 Rule 11.8 deviation taken. Deviation record ID -  H3_MISRAC_2012_R_11_8_DR_1 */
+            /* MISRA C-2023 Rule 11.8 deviation taken. Deviation record ID -  H3_MISRAC_2023_R_11_8_DR_1 */
             if (true == DRV_SDSPI_SPIWrite(dObj, (uint8_t*)dObj->cmdRespBuffer, 1))
             {
                 isSuccess = true;
@@ -953,7 +953,7 @@ static bool lDRV_SDSPI_Read(
     if (lDRV_SDSPI_CommandSend(dObj, (uint8_t)readCommand, blockStart) == true)
     {
         /* Verify the response */
-        /* MISRA C-2012 Rule 11.3 deviation taken. Deviation record ID -  H3_MISRAC_2012_R_11_3_DR_1 */
+        /* MISRA C-2023 Rule 11.3 deviation taken. Deviation record ID -  H3_MISRAC_2023_R_11_3_DR_1 */
         r1Response = (DRV_SDSPI_RESPONSE_1*)&dObj->cmdResponse[0];
         if (r1Response->byte != 0x00U)
         {
@@ -983,7 +983,7 @@ static bool lDRV_SDSPI_Read(
         }
         /* Send a dummy data byte */
         dObj->cmdRespBuffer[0] = 0xFF;
-        /* MISRA C-2012 Rule 11.8 deviation taken. Deviation record ID -  H3_MISRAC_2012_R_11_8_DR_1 */
+        /* MISRA C-2023 Rule 11.8 deviation taken. Deviation record ID -  H3_MISRAC_2023_R_11_8_DR_1 */
         if (true == DRV_SDSPI_SPIWrite(dObj, (uint8_t*)dObj->cmdRespBuffer, 1))
         {
             isSuccess = true;
@@ -1032,14 +1032,14 @@ static bool lDRV_SDSPI_SetupXfer (
 
     if (opType == DRV_SDSPI_OPERATION_TYPE_READ)
     {
-        if (((blockStart + nBlock) > dObj->mediaGeometryTable[SYS_MEDIA_GEOMETRY_TABLE_READ_ENTRY].numBlocks))
+        if ((((uint64_t)blockStart + nBlock) > dObj->mediaGeometryTable[SYS_MEDIA_GEOMETRY_TABLE_READ_ENTRY].numBlocks))
         {
             return isSuccess;
         }
     }
     else
     {
-        if (((blockStart + nBlock) > dObj->mediaGeometryTable[SYS_MEDIA_GEOMETRY_TABLE_WRITE_ENTRY].numBlocks))
+        if ((((uint64_t)blockStart + nBlock) > dObj->mediaGeometryTable[SYS_MEDIA_GEOMETRY_TABLE_WRITE_ENTRY].numBlocks))
         {
             return isSuccess;
         }
@@ -1360,10 +1360,10 @@ static DRV_SDSPI_ATTACH lDRV_SDSPI_MediaCommandDetect ( SYS_MODULE_OBJ object )
             if (lDRV_SDSPI_CommandSend(dObj, (uint8_t)DRV_SDSPI_SEND_CID, 0x00) == true)
             {
                 /* Data token(1) + CID(16) + CRC(2) + Dummy(1) = 20 Bytes */
-                /* MISRA C-2012 Rule 11.8 deviation taken. Deviation record ID -  H3_MISRAC_2012_R_11_8_DR_1 */
+                /* MISRA C-2023 Rule 11.8 deviation taken. Deviation record ID -  H3_MISRAC_2023_R_11_8_DR_1 */
                 if (DRV_SDSPI_SPIRead(dObj, (uint8_t*)dObj->cmdRespBuffer, DRV_SDSPI_CID_READ_SIZE) == true)
                 {
-                    /* MISRA C-2012 Rule 11.8 deviation taken. Deviation record ID -  H3_MISRAC_2012_R_11_8_DR_1 */
+                    /* MISRA C-2023 Rule 11.8 deviation taken. Deviation record ID -  H3_MISRAC_2023_R_11_8_DR_1 */
                     if (memcmp(dObj->cidData, (uint8_t *)dObj->cmdRespBuffer, DRV_SDSPI_CID_READ_SIZE - 1) == 0)
                     {
                         isCardAttached = DRV_SDSPI_IS_ATTACHED;
@@ -1509,9 +1509,9 @@ void DRV_SDSPI_Tasks ( SYS_MODULE_OBJ object )
 // Section: Driver Interface Function Definitions
 // *****************************************************************************
 // *****************************************************************************
-/* MISRA C-2012 Rule 11.1 deviated:2 Deviation record ID -  H3_MISRAC_2012_R_11_1_DR_1 */
+/* MISRA C-2023 Rule 11.1 deviated:2 Deviation record ID -  H3_MISRAC_2023_R_11_1_DR_1 */
 <#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
-#pragma coverity compliance block deviate:2 "MISRA C-2012 Rule 11.1" "H3_MISRAC_2012_R_11_1_DR_1"
+#pragma coverity compliance block deviate:2 "MISRA C-2023 Rule 11.1" "H3_MISRAC_2023_R_11_1_DR_1"
 </#if>
 SYS_MODULE_OBJ DRV_SDSPI_Initialize(
     const SYS_MODULE_INDEX drvIndex,
@@ -1525,7 +1525,7 @@ SYS_MODULE_OBJ DRV_SDSPI_Initialize(
 </#if>
 </#if>
 </#if>
-    /* MISRA C-2012 Rule 11.3 deviation taken. Deviation record ID -  H3_MISRAC_2012_R_11_3_DR_1 */
+    /* MISRA C-2023 Rule 11.3 deviation taken. Deviation record ID -  H3_MISRAC_2023_R_11_3_DR_1 */
     const DRV_SDSPI_INIT* sdSPIInit = (const DRV_SDSPI_INIT *)init;
     DRV_SDSPI_OBJ* dObj = NULL;
 
@@ -1655,9 +1655,9 @@ SYS_MODULE_OBJ DRV_SDSPI_Initialize(
         );
 </#if>
 
-        /* MISRA C-2012 Rule 11.1 deviation taken. Deviation record ID -  H3_MISRAC_2012_R_11_1_DR_1 */
+        /* MISRA C-2023 Rule 11.1 deviation taken. Deviation record ID -  H3_MISRAC_2023_R_11_1_DR_1 */
         SYS_DMA_ChannelCallbackRegister(dObj->txDMAChannel, DRV_SDSPI_TX_DMA_CallbackHandler, (uintptr_t)dObj);
-        /* MISRA C-2012 Rule 11.1 deviation taken. Deviation record ID -  H3_MISRAC_2012_R_11_1_DR_1 */
+        /* MISRA C-2023 Rule 11.1 deviation taken. Deviation record ID -  H3_MISRAC_2023_R_11_1_DR_1 */
         SYS_DMA_ChannelCallbackRegister(dObj->rxDMAChannel, DRV_SDSPI_RX_DMA_CallbackHandler, (uintptr_t)dObj);
     }
     else
@@ -1906,8 +1906,8 @@ void DRV_SDSPI_EventHandlerSet
     if (clientObj != NULL)
     {
         /* Set the event handler */
-        /* MISRA C-2012 Rule 11.1 deviation taken. Deviation record ID -  H3_MISRAC_2012_R_11_1_DR_1 */
-        /* MISRA C-2012 Rule 11.8 deviation taken. Deviation record ID -  H3_MISRAC_2012_R_11_8_DR_1 */
+        /* MISRA C-2023 Rule 11.1 deviation taken. Deviation record ID -  H3_MISRAC_2023_R_11_1_DR_1 */
+        /* MISRA C-2023 Rule 11.8 deviation taken. Deviation record ID -  H3_MISRAC_2023_R_11_8_DR_1 */
         clientObj->eventHandler = (DRV_SDSPI_EVENT_HANDLER)eventHandler;
         clientObj->context = context;
     }
@@ -1938,11 +1938,11 @@ DRV_SDSPI_COMMAND_STATUS DRV_SDSPI_CommandStatusGet(
 }
 
 <#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
-#pragma coverity compliance end_block "MISRA C-2012 Rule 11.1"
-#pragma coverity compliance end_block "MISRA C-2012 Rule 11.8"
-#pragma coverity compliance end_block "MISRA C-2012 Rule 11.3"
-#pragma coverity compliance end_block "MISRA C-2012 Rule 16.1"
-#pragma coverity compliance end_block "MISRA C-2012 Rule 16.3"
+#pragma coverity compliance end_block "MISRA C-2023 Rule 11.1"
+#pragma coverity compliance end_block "MISRA C-2023 Rule 11.8"
+#pragma coverity compliance end_block "MISRA C-2023 Rule 11.3"
+#pragma coverity compliance end_block "MISRA C-2023 Rule 16.1"
+#pragma coverity compliance end_block "MISRA C-2023 Rule 16.3"
 <#if core.COMPILER_CHOICE == "XC32">
 #pragma GCC diagnostic pop
 </#if>

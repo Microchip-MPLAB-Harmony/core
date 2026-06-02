@@ -66,16 +66,16 @@
 
 static I2CBB_OBJ ${I2CBB_INSTANCE_NAME?lower_case}Obj;
 
-/* MISRA C-2012 Rule 11.3, 11.8 deviated below. Deviation record ID -  
-   H3_MISRAC_2012_R_11_3_DR_1 & H3_MISRAC_2012_R_11_8_DR_1*/
+/* MISRA C-2023 Rule 11.3, 11.8 deviated below. Deviation record ID -
+   H3_MISRAC_2023_R_11_3_DR_1 & H3_MISRAC_2023_R_11_8_DR_1*/
 <#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
 <#if core.COMPILER_CHOICE == "XC32">
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Wunknown-pragmas"
 </#if>
 #pragma coverity compliance block \
-(deviate:1 "MISRA C-2012 Rule 11.1" "H3_MISRAC_2012_R_11_3_DR_1" )\
-(deviate:3 "MISRA C-2012 Rule 11.8" "H3_MISRAC_2012_R_11_8_DR_1" )
+(deviate:1 "MISRA C-2023 Rule 11.1" "H3_MISRAC_2023_R_11_3_DR_1" )\
+(deviate:3 "MISRA C-2023 Rule 11.8" "H3_MISRAC_2023_R_11_8_DR_1" )
 </#if>
 
 static const I2C_BB_TMR_PLIB_INTERFACE i2cTimerPlibAPI = {
@@ -108,7 +108,7 @@ static void ${I2CBB_INSTANCE_NAME}_InitiateTransfer(void)
 
     ${I2CBB_INSTANCE_NAME?lower_case}Obj.writeCount = 0;
     ${I2CBB_INSTANCE_NAME?lower_case}Obj.readCount = 0;
-    
+
     portpinread = SYS_PORT_PinRead(pInitData->i2cbbSDAPin);
     /* send START command only if SCL and SDA are pulled high */
     if ((SYS_PORT_PinRead(pInitData->i2cbbSCLPin) == HIGH) && (portpinread == HIGH))
@@ -446,12 +446,12 @@ void ${I2CBB_INSTANCE_NAME}_Initialize(void)
 }
 
 <#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
-#pragma coverity compliance end_block "MISRA C-2012 Rule 11.1"
-#pragma coverity compliance end_block "MISRA C-2012 Rule 11.8"
+#pragma coverity compliance end_block "MISRA C-2023 Rule 11.1"
+#pragma coverity compliance end_block "MISRA C-2023 Rule 11.8"
 <#if core.COMPILER_CHOICE == "XC32">
 #pragma GCC diagnostic pop
-</#if>    
-</#if> 
+</#if>
+</#if>
 /* MISRAC 2012 deviation block end */
 
 bool ${I2CBB_INSTANCE_NAME}_IsBusy(void)
@@ -461,7 +461,7 @@ bool ${I2CBB_INSTANCE_NAME}_IsBusy(void)
     {
         busycheck = true;
     }
-    return busycheck;    
+    return busycheck;
 }
 
 bool ${I2CBB_INSTANCE_NAME}_Read(uint16_t address, uint8_t *pdata, size_t length)

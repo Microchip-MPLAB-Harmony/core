@@ -53,6 +53,9 @@
 #include <stdint.h>
 #include <stdlib.h>
 #include <stdbool.h>
+<#if (core.CoreArchitecture == "PIC32A") || (core.CoreArchitecture == "dsPIC33A")>
+#include <stdio.h>
+</#if>
 
 #include "configuration.h"
 #include "system/system.h"
@@ -120,13 +123,13 @@
     None.
 */
 
-/* MISRA C-2012 Rule 20.5 deviated:2 Deviation record ID -  H3_MISRAC_2012_R_20_5_DR_1 */
+/* MISRA C-2023 Rule 20.5 deviated:2 Deviation record ID -  H3_MISRAC_2023_R_20_5_DR_1 */
 <#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
 <#if core.COMPILER_CHOICE == "XC32">
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Wunknown-pragmas"
 </#if>
-#pragma coverity compliance block deviate:2 "MISRA C-2012 Rule 20.5" "H3_MISRAC_2012_R_20_5_DR_1"
+#pragma coverity compliance block deviate:2 "MISRA C-2023 Rule 20.5" "H3_MISRAC_2023_R_20_5_DR_1"
 </#if>
 #ifdef SYS_CONSOLE_PRINT
     #undef SYS_CONSOLE_PRINT
@@ -156,7 +159,7 @@
 #endif
 
 <#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
-#pragma coverity compliance end_block "MISRA C-2012 Rule 20.5"
+#pragma coverity compliance end_block "MISRA C-2023 Rule 20.5"
 <#if core.COMPILER_CHOICE == "XC32">
 #pragma GCC diagnostic pop
 </#if>

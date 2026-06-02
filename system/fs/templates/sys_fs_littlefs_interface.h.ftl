@@ -34,7 +34,16 @@ extern "C" {
 #include <stdint.h>
 #include <stdbool.h>
 #include <stddef.h>
+/* MISRAC-2023 Rule 17.1 deviation taken for using stdarg.h header file */
+<#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wunknown-pragmas"
+#pragma coverity compliance deviate "MISRA C-2023 Rule 17.1" "H3_MISRAC_2023_R_17_1_DR_1"
+</#if>
 #include <stdarg.h>
+<#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
+#pragma GCC diagnostic pop
+</#if>
 
 #define FILE_NAME_LEN   255
 
@@ -103,6 +112,12 @@ int LITTLEFS_mkfs (uint8_t vol, void* opt, void* work, uint32_t len);
 
 int LITTLEFS_sync (uintptr_t handle);
 </#if>
+
+int LITTLEFS_getclusters (const char *path, uint32_t *totalSectors, uint32_t *freeSectors);
+
+char* LITTLEFS_gets (char *buff, int len, uintptr_t handle);
+
+int LITTLEFS_puts (const char *buff, uintptr_t handle);
 
 #ifdef __cplusplus
 }

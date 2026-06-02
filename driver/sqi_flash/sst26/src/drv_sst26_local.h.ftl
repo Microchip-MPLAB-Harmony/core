@@ -115,7 +115,10 @@ typedef enum
     SST26_CMD_CHIP_ERASE         = 0xC7,
 
     /* Command to unlock the flash device. */
-    SST26_CMD_UNPROTECT_GLOBAL   = 0x98
+    SST26_CMD_UNPROTECT_GLOBAL   = 0x98,
+
+    /* Command to write the Flash status register. */
+    SST26_CMD_WRITE_STATUS_REG    = 0x01
 
 } SST26_CMD;
 
@@ -140,6 +143,9 @@ typedef enum
 
     <#lt>    /* Request is read operation. */
     <#lt>    DRV_SST26_OPERATION_TYPE_READ,
+	
+	<#lt>    /* Request is read operation status. */
+    <#lt>    DRV_SST26_OPERATION_TYPE_READ_STATUS,
 
     <#lt>    /* Request is write operation. */
     <#lt>    DRV_SST26_OPERATION_TYPE_WRITE,
@@ -156,6 +162,9 @@ typedef enum
     <#lt>{
     <#lt>    /* Flag to indicate in use  */
     <#lt>    bool inUse;
+	
+	<#lt>	/* Flag to indication read operation status*/
+    <#lt>	volatile bool internal_write_complete_flag;
 
     <#lt>    /* Flag to indicate status of transfer */
     <#lt>    volatile bool isTransferDone;

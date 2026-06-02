@@ -160,6 +160,8 @@ typedef struct
 
     /* Device configured state */
     bool                                    isConfigured;
+    
+    uint32_t                                endpointMaxPktSize;
 
     CONS_USB_CDC_INSTANCE                   cdcInstance[SYS_CONSOLE_USB_CDC_MAX_INSTANCES];
 

@@ -5,7 +5,7 @@
     <#lt>        "DRV_SD_${INDEX?string}_TASKS",
     <#lt>        DRV_SDSPI_STACK_SIZE_IDX${INDEX?string},
     <#lt>        (void*)NULL,
-    <#lt>        DRV_SDSPI_PRIORITY_IDX${INDEX?string},
+    <#lt>        DRV_SDSPI_PRIORITY_IDX${INDEX?string} <#if FreeRTOS.FREERTOS_MPU_PORT_ENABLE == true> | portPRIVILEGE_BIT </#if>,
     <#lt>        (TaskHandle_t*)NULL
     <#lt>    );
 <#elseif (HarmonyCore.SELECT_RTOS)?? && HarmonyCore.SELECT_RTOS == "ThreadX">

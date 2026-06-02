@@ -1,5 +1,5 @@
 /*******************************************************************************
-  Azure RTOS ThreadX OSAL Header
+  Eclipse ThreadX OSAL Header
 
   Company:
     Microchip Technology Inc.
@@ -8,10 +8,10 @@
     osal_threadx.h
 
   Summary:
-    OSAL Azure RTOS ThreadX implementation interface file
+    OSAL Eclipse ThreadX implementation interface file
 
   Description:
-    Interface file to allow Azure RTOS ThreadX to be used with the OSAL
+    Interface file to allow Eclipse ThreadX to be used with the OSAL
 
 *******************************************************************************/
 
@@ -40,8 +40,8 @@
  *******************************************************************************/
 //DOM-IGNORE-END
 
-#ifndef _OSAL_THREADX_H
-#define _OSAL_THREADX_H
+#ifndef OSAL_THREADX_H
+#define OSAL_THREADX_H
 
 #ifdef __cplusplus
 extern "C" {
@@ -68,10 +68,12 @@ extern "C" {
 typedef uint32_t                        OSAL_CRITSECT_DATA_TYPE;
 typedef TX_SEMAPHORE                    OSAL_SEM_HANDLE_TYPE;
 typedef TX_MUTEX                        OSAL_MUTEX_HANDLE_TYPE;
+typedef uint16_t                        OSAL_TICK_TYPE;
+typedef uint8_t                         OSAL_SEM_COUNT_TYPE;
 
 extern TX_BYTE_POOL byte_pool_0;
 
-#define OSAL_WAIT_FOREVER               0xFFFF
+#define OSAL_WAIT_FOREVER               0xFFFFU
 #define OSAL_SEM_DECLARE(semID)         TX_SEMAPHORE semID
 #define OSAL_MUTEX_DECLARE(mutexID)     TX_MUTEX mutexID
 
@@ -117,30 +119,30 @@ typedef enum OSAL_RESULT
 // Section: Section: Interface Routines Group Declarations
 // *****************************************************************************
 // *****************************************************************************
-OSAL_RESULT OSAL_SEM_Create(OSAL_SEM_HANDLE_TYPE* semID, OSAL_SEM_TYPE type, uint8_t maxCount, uint8_t initialCount);
+OSAL_RESULT OSAL_SEM_Create(OSAL_SEM_HANDLE_TYPE* semID, OSAL_SEM_TYPE type, OSAL_SEM_COUNT_TYPE maxCount, OSAL_SEM_COUNT_TYPE initialCount);
 OSAL_RESULT OSAL_SEM_Delete(OSAL_SEM_HANDLE_TYPE* semID);
-OSAL_RESULT OSAL_SEM_Pend(OSAL_SEM_HANDLE_TYPE* semID, uint16_t waitMS);
+OSAL_RESULT OSAL_SEM_Pend(OSAL_SEM_HANDLE_TYPE* semID, OSAL_TICK_TYPE waitMS);
 OSAL_RESULT OSAL_SEM_Post(OSAL_SEM_HANDLE_TYPE* semID);
 OSAL_RESULT OSAL_SEM_PostISR(OSAL_SEM_HANDLE_TYPE* semID);
-uint8_t OSAL_SEM_GetCount(OSAL_SEM_HANDLE_TYPE* semID);
+OSAL_SEM_COUNT_TYPE OSAL_SEM_GetCount(OSAL_SEM_HANDLE_TYPE* semID);
 
 <#if core.CoreArchitecture == "MIPS" >
 OSAL_CRITSECT_DATA_TYPE __attribute__((nomips16,nomicromips)) OSAL_CRIT_Enter(OSAL_CRIT_TYPE severity);
 void __attribute__((nomips16,nomicromips)) OSAL_CRIT_Leave(OSAL_CRIT_TYPE severity, OSAL_CRITSECT_DATA_TYPE status);
 <#else>
 OSAL_CRITSECT_DATA_TYPE OSAL_CRIT_Enter(OSAL_CRIT_TYPE severity);
-void OSAL_CRIT_Leave(OSAL_CRIT_TYPE severity, OSAL_CRITSECT_DATA_TYPE status);
+void  OSAL_CRIT_Leave(OSAL_CRIT_TYPE severity, OSAL_CRITSECT_DATA_TYPE status);
 </#if>
 
 OSAL_RESULT OSAL_MUTEX_Create(OSAL_MUTEX_HANDLE_TYPE* mutexID);
 OSAL_RESULT OSAL_MUTEX_Delete(OSAL_MUTEX_HANDLE_TYPE* mutexID);
-OSAL_RESULT OSAL_MUTEX_Lock(OSAL_MUTEX_HANDLE_TYPE* mutexID, uint16_t waitMS);
+OSAL_RESULT OSAL_MUTEX_Lock(OSAL_MUTEX_HANDLE_TYPE* mutexID, OSAL_TICK_TYPE waitMS);
 OSAL_RESULT OSAL_MUTEX_Unlock(OSAL_MUTEX_HANDLE_TYPE* mutexID);
 
 void* OSAL_Malloc(size_t size);
 void OSAL_Free(void* pData);
 
-OSAL_RESULT OSAL_Initialize();
+OSAL_RESULT OSAL_Initialize(void);
 
 // *****************************************************************************
 /* Function: const char* OSAL_Name()
@@ -163,7 +165,6 @@ OSAL_RESULT OSAL_Initialize();
 
   Example:
     <code>
-    // get the RTOS name
     const char* sName;
 
     sName = OSAL_Name();
@@ -182,4 +183,4 @@ __STATIC_INLINE __attribute__((always_inline)) const char* OSAL_Name (void)
 }
 #endif
 
-#endif // _OSAL_THREADX_H
+#endif /* OSAL_THREADX_H */

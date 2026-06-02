@@ -1,6 +1,6 @@
 /*
- * FreeRTOS Kernel V10.5.1
- * Copyright (C) 2021 Amazon.com, Inc. or its affiliates.  All Rights Reserved.
+ * FreeRTOS Kernel V11.1.0
+ * Copyright (C) 2021 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * SPDX-License-Identifier: MIT
  *
@@ -89,12 +89,12 @@ void vClearInterruptMask( uint32_t ulMask ) __attribute__( ( naked ) ) PRIVILEGE
 /**
  * @brief PendSV Exception handler.
  */
-void xPortPendSVHandler( void ) __attribute__ ( ( naked ) ) PRIVILEGED_FUNCTION;
+void xPortPendSVHandler( void ) __attribute__( ( naked ) ) PRIVILEGED_FUNCTION;
 
 /**
  * @brief SVC Handler.
  */
-void vPortSVCHandler( void ) __attribute__ ( ( naked ) ) PRIVILEGED_FUNCTION;
+void vPortSVCHandler( void ) __attribute__( ( naked ) ) PRIVILEGED_FUNCTION;
 
 /**
  * @brief Allocate a Secure context for the calling task.

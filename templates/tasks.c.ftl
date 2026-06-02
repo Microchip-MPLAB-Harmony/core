@@ -81,8 +81,9 @@
 <#if SELECT_RTOS == "ThreadX">
     <#lt>void tx_application_define(void* first_unused_memory)
     <#lt>{
+	<#lt>    CHAR byte_pool_name[] = "byte pool 0";
     <#lt>    /* Create a byte memory pool from which to allocate the thread stacks. */
-    <#lt>    tx_byte_pool_create(&byte_pool_0, "byte pool 0", first_unused_memory, TX_BYTE_POOL_SIZE);
+    <#lt>    (void)tx_byte_pool_create(&byte_pool_0, byte_pool_name, first_unused_memory, TX_BYTE_POOL_SIZE);
 
     <#lt>    /* Maintain system services */
     <#lt>    ${core.LIST_SYSTEM_TASKS_C_CALL_SYSTEM_TASKS}

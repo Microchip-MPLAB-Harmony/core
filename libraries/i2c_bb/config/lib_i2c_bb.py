@@ -21,14 +21,14 @@
 * ANY WAY RELATED TO THIS SOFTWARE WILL NOT EXCEED THE AMOUNT OF FEES, IF ANY,
 * THAT YOU HAVE PAID DIRECTLY TO MICROCHIP FOR THIS SOFTWARE.
 *****************************************************************************"""
-
 global sort_alphanumeric
 
 i2c_bb_mcc_helpkeyword = "mcc_h3_i2c_bb_configurations"
 
 def onAttachmentConnected(source, target):
     global i2cbbTimerDep
-
+    global i2cbbTimerClockFreq
+    
     localComponent = source["component"]
     remoteComponent = target["component"]
     remoteID = remoteComponent.getID()
@@ -37,8 +37,10 @@ def onAttachmentConnected(source, target):
         
     if localComponent.getID() == "i2c_bb" and connectID == "TMR":
         i2cbbTimerDep.setValue(remoteID.upper())
-
-
+        return_dict = dict()
+        return_dict = Database.sendMessage(remoteID, "TIMER_FREQ_GET", {"ID": "i2c_bb","timer_ch": "0"})
+        timer_freq = return_dict["TIMER_FREQ"]
+        i2cbbTimerClockFreq.setValue(timer_freq)
 
 def onAttachmentDisconnected(source, target):
     global i2cbbTimerDep
@@ -60,19 +62,70 @@ def sort_alphanumeric(l):
     return sorted(l, key = alphanum_key)
 
 global i2cbbInstanceName
+global i2cbbSymDataPin
+global i2cbbSymClockPin
+
+def handleMessage(messageID, args):
+    global i2cbbTimerClockFreq
+    global i2cbbInstanceName
+    global i2cbbSymDataPin
+    global i2cbbSymClockPin
+
+    retDict = {}
+    # print("I2C_BB handleMessage: {} args: {}".format(messageID, args))
+    
+    if (messageID == "TIMER_FREQUENCY"):
+        if 'CHANNEL_ID' in args:
+            if((args["CHANNEL_ID"] == 0)):
+                i2cbbTimerClockFreq.setValue(args["frequency"])
+        else:
+            i2cbbTimerClockFreq.setValue(args["frequency"])
+
+    elif (messageID == "I2CBB_CONFIG_HW_IO"):
+        component = i2cbbInstanceName.getValue().lower()
+        signalId, pinId, enable = args['config']
+
+        configurePin = False
+        if signalId.lower() == "sda":
+            symbolInstance = i2cbbSymDataPin
+            symbolId = "I2CBB_SDA_PIN"
+            configurePin = True
+        elif signalId.lower() == "scl":
+            symbolInstance = i2cbbSymClockPin
+            symbolId = "I2CBB_SCL_PIN"
+            configurePin = True
+        else:
+            retDict = {"Result": "Fail"}
+
+        if configurePin == True:
+            res = False
+            if enable == True:
+                keyCount = symbolInstance.getKeyCount()
+                for index in range(0, keyCount):
+                    symbolKey = symbolInstance.getKey(index)
+                    if pinId.upper() == symbolKey.upper():
+                        res = symbolInstance.setValue(index)
+                        break
+            else:
+                res = Database.clearSymbolValue(component, symbolId)
+            
+            if res == True:
+                retDict = {"Result": "Success"}
+            else:
+                retDict = {"Result": "Fail"}
+
+    return retDict
 
 def instantiateComponent(i2cbbComponent):
 
     global i2cbbInstanceName
     global i2cbbTimerDep
+    global i2cbbTimerClockFreq
 
     i2cbbInstanceName = i2cbbComponent.createStringSymbol("I2CBB_INSTANCE_NAME", None)
     i2cbbInstanceName.setVisible(False)
     i2cbbInstanceName.setDefaultValue(i2cbbComponent.getID().upper())
 
-    availablePinDictionary = {}
-
-    availablePinDictionary = Database.sendMessage("core", "I2C_BB", availablePinDictionary)
 
     print("Running " + i2cbbInstanceName.getValue())
 
@@ -101,7 +154,11 @@ def instantiateComponent(i2cbbComponent):
     i2cbbTimerDep.setVisible(False)
     i2cbbTimerDep.setDefaultValue("None")
 
+    i2cbbTimerClockFreq = i2cbbComponent.createIntegerSymbol("I2CBB_CONNECTED_TIMER_FRQUENCY", None)
+    i2cbbTimerClockFreq.setVisible(False)
+    i2cbbTimerClockFreq.setDefaultValue(0)
 
+    global i2cbbSymDataPin
     i2cbbSymDataPin = i2cbbComponent.createKeyValueSetSymbol("I2CBB_SDA_PIN", None)
     i2cbbSymDataPin.setLabel("I2CBB Data Pin")
     i2cbbSymDataPin.setHelp(i2c_bb_mcc_helpkeyword)
@@ -109,6 +166,7 @@ def instantiateComponent(i2cbbComponent):
     i2cbbSymDataPin.setOutputMode("Key")
     i2cbbSymDataPin.setDisplayMode("Description")
 
+    global i2cbbSymClockPin
     i2cbbSymClockPin = i2cbbComponent.createKeyValueSetSymbol("I2CBB_SCL_PIN", None)
     i2cbbSymClockPin.setLabel("I2CBB Clock Pin")
     i2cbbSymClockPin.setHelp(i2c_bb_mcc_helpkeyword)

@@ -167,13 +167,13 @@ int FATFS_unmount ( uint8_t vol )
     return ((int)res);
 }
 
-/* MISRA C-2012 Rule 2.1 deviated:1 Deviation record ID -  H3_MISRAC_2012_R_2_1_DR_1 */
+/* MISRA C-2023 Rule 2.1 deviated:1 Deviation record ID -  H3_MISRAC_2023_R_2_1_DR_1 */
 <#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
 <#if core.COMPILER_CHOICE == "XC32">
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Wunknown-pragmas"
 </#if>
-#pragma coverity compliance block deviate:1 "MISRA C-2012 Rule 2.1" "H3_MISRAC_2012_R_2_1_DR_1"
+#pragma coverity compliance block deviate:1 "MISRA C-2023 Rule 2.1" "H3_MISRAC_2023_R_2_1_DR_1"
 </#if>
 
 int FATFS_open (
@@ -240,13 +240,13 @@ int FATFS_open (
 }
 
 <#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
-#pragma coverity compliance end_block "MISRA C-2012 Rule 2.1"
+#pragma coverity compliance end_block "MISRA C-2023 Rule 2.1"
 </#if>
 /* MISRAC 2012 deviation block end */
 
-/* MISRA C-2012 Rule 11.3 deviated:1 Deviation record ID -  H3_MISRAC_2012_R_11_3_DR_1 */
+/* MISRA C-2023 Rule 11.3 deviated:1 Deviation record ID -  H3_MISRAC_2023_R_11_3_DR_1 */
 <#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
-#pragma coverity compliance block deviate:1 "MISRA C-2012 Rule 11.3" "H3_MISRAC_2012_R_11_3_DR_1"
+#pragma coverity compliance block deviate:1 "MISRA C-2023 Rule 11.3" "H3_MISRAC_2023_R_11_3_DR_1"
 </#if>
 
 int FATFS_read (
@@ -266,7 +266,7 @@ int FATFS_read (
 }
 
 <#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
-#pragma coverity compliance end_block "MISRA C-2012 Rule 11.3"
+#pragma coverity compliance end_block "MISRA C-2023 Rule 11.3"
 <#if core.COMPILER_CHOICE == "XC32">
 #pragma GCC diagnostic pop
 </#if>
@@ -297,14 +297,14 @@ int FATFS_close (
 
 int FATFS_lseek (
     uintptr_t handle,   /* Pointer to the file object */
-    uint32_t ofs        /* File pointer from top of file */
+    FSIZE_t ofs         /* File pointer from top of file */
 )
 {
     FRESULT res;
     FATFS_FILE_OBJECT *ptr = (FATFS_FILE_OBJECT *)handle;
     FIL *fp = &ptr->fileObj;
 
-    res = f_lseek(fp, (FSIZE_t)ofs);
+    res = f_lseek(fp, ofs);
 
     return ((int)res);
 }
@@ -486,13 +486,13 @@ int FATFS_chdrive (
 }
 
 <#if SYS_FS_FAT_READONLY == false>
-/* MISRA C-2012 Rule 11.3 deviated:1 Deviation record ID -  H3_MISRAC_2012_R_11_3_DR_1 */
+/* MISRA C-2023 Rule 11.3 deviated:1 Deviation record ID -  H3_MISRAC_2023_R_11_3_DR_1 */
 <#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
 <#if core.COMPILER_CHOICE == "XC32">
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Wunknown-pragmas"
 </#if>
-#pragma coverity compliance block deviate:1 "MISRA C-2012 Rule 11.3" "H3_MISRAC_2012_R_11_3_DR_1"
+#pragma coverity compliance block deviate:1 "MISRA C-2023 Rule 11.3" "H3_MISRAC_2023_R_11_3_DR_1"
 </#if>
 int FATFS_write (
     uintptr_t handle,   /* Pointer to the file object */
@@ -511,10 +511,10 @@ int FATFS_write (
 }
 
 <#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
-#pragma coverity compliance end_block "MISRA C-2012 Rule 11.3"
+#pragma coverity compliance end_block "MISRA C-2023 Rule 11.3"
 </#if>
 /* MISRAC 2012 deviation block end */
-uint32_t FATFS_tell(uintptr_t handle)
+FSIZE_t FATFS_tell(uintptr_t handle)
 {
     FATFS_FILE_OBJECT *ptr = (FATFS_FILE_OBJECT *)handle;
     FIL *fp = &ptr->fileObj;
@@ -530,7 +530,7 @@ bool FATFS_eof(uintptr_t handle)
     return ((bool)f_eof(fp));
 }
 
-uint32_t FATFS_size(uintptr_t handle)
+FSIZE_t FATFS_size(uintptr_t handle)
 {
     FATFS_FILE_OBJECT *ptr = (FATFS_FILE_OBJECT *)handle;
     FIL *fp = &ptr->fileObj;
@@ -659,9 +659,9 @@ int FATFS_puts (
     return (f_puts((const TCHAR *)str, fp));
 }
 
-/* MISRA C-2012 Rule 17.1 deviated:1 Deviation record ID -  H3_MISRAC_2012_R_17_1_DR_1 */
+/* MISRA C-2023 Rule 17.1 deviated:1 Deviation record ID -  H3_MISRAC_2023_R_17_1_DR_1 */
 <#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
-#pragma coverity compliance block deviate:1 "MISRA C-2012 Rule 17.1" "H3_MISRAC_2012_R_17_1_DR_1"
+#pragma coverity compliance block deviate:1 "MISRA C-2023 Rule 17.1" "H3_MISRAC_2023_R_17_1_DR_1"
 </#if>
 int FATFS_printf (
     uintptr_t handle,           /* Pointer to the file object */
@@ -676,7 +676,7 @@ int FATFS_printf (
 }
 
 <#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
-#pragma coverity compliance end_block "MISRA C-2012 Rule 17.1"
+#pragma coverity compliance end_block "MISRA C-2023 Rule 17.1"
 <#if core.COMPILER_CHOICE == "XC32">
 #pragma GCC diagnostic pop
 </#if>
