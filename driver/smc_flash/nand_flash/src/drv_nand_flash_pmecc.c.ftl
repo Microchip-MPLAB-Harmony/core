@@ -3555,7 +3555,7 @@ bool DRV_NAND_FLASH_PmeccCorrection(uint32_t pmeccStatus, uint32_t pageBuffer)
             /* Get Sigma */
             (void) DRV_NAND_FLASH_GetSigma();
             /* Find error location. Number of bits of the sector + ecc */
-            errorNumber = DRV_NAND_FLASH_ErrorLocation(DRV_NAND_FLASH_PMECC_SECTOR_SIZE * 8 + gDrvNandPmeccDescriptor.tt * gDrvNandPmeccDescriptor.mm);
+            errorNumber = DRV_NAND_FLASH_ErrorLocation(DRV_NAND_FLASH_PMECC_SECTOR_SIZE * 8U + ((uint32_t)DRV_NAND_FLASH_PMECC_ECC_SPARE_SIZE / (uint32_t)DRV_NAND_FLASH_PMECC_NUMBER_OF_SECTORS) * 8U);
             if (errorNumber == -1)
             {
                 return false;
