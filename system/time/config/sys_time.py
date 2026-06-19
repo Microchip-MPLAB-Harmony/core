@@ -171,6 +171,24 @@ def onSysTimeUseSystickChange(symbol, event):
             Database.sendMessage("core", "SYS_TIME_PUBLISH_CAPABILITIES", {"ID":"sys_time"})
             sysTimePLIB.setValue("core")
             sysTimePLIB.setVisible(False)
+            # Ensure systick file generation is enabled. On project reload from
+            # saved state, systick.py does not re-execute and its dependency
+            # callbacks (systickPubCapabilities, sysTickEnableCfgMenu) are not
+            # preserved. Explicitly enable file symbols here.
+            coreComp = Database.getComponentByID("core")
+            if coreComp != None:
+                systickFile0 = coreComp.getSymbolByID("SYSTICK_FILE_0")
+                systickFile1 = coreComp.getSymbolByID("SYSTICK_FILE_1")
+                systickFile2 = coreComp.getSymbolByID("SYSTICK_FILE_2")
+                systickInitFile = coreComp.getSymbolByID("systickSystemInitFile")
+                if systickFile0 != None:
+                    systickFile0.setEnabled(True)
+                if systickFile1 != None:
+                    systickFile1.setEnabled(True)
+                if systickFile2 != None:
+                    systickFile2.setEnabled(True)
+                if systickInitFile != None:
+                    systickInitFile.setEnabled(True)
         else:
             localComponent.getSymbolByID("SYS_TIME_REMOTE_COMPONENT_ID").setValue("")
             localComponent.setDependencyEnabled("sys_time_TMR_dependency", True)
@@ -191,6 +209,22 @@ def onSysTimeUseSystickChange(symbol, event):
                 localComponent.getSymbolByID("SYS_TIME_USE_SYSTICK").setVisible(True)
             elif (localComponent.getSymbolByID("SYS_TIME_USE_SYSTICK").getValue() == False):
                 localComponent.getSymbolByID("SYS_TIME_USE_SYSTICK").setVisible(False)
+            # Also enable systick file symbols here as a secondary trigger.
+            # SYSTICK_BUSY=True confirms systick is actively claimed by sys_time.
+            coreComp = Database.getComponentByID("core")
+            if coreComp != None:
+                systickFile0 = coreComp.getSymbolByID("SYSTICK_FILE_0")
+                systickFile1 = coreComp.getSymbolByID("SYSTICK_FILE_1")
+                systickFile2 = coreComp.getSymbolByID("SYSTICK_FILE_2")
+                systickInitFile = coreComp.getSymbolByID("systickSystemInitFile")
+                if systickFile0 != None:
+                    systickFile0.setEnabled(True)
+                if systickFile1 != None:
+                    systickFile1.setEnabled(True)
+                if systickFile2 != None:
+                    systickFile2.setEnabled(True)
+                if systickInitFile != None:
+                    systickInitFile.setEnabled(True)
     else:
         if event["value"] == "BareMetal":
             symbol.setVisible(True)
