@@ -50,7 +50,7 @@
 #define EEPROM_EMULATOR_VERSION             0x02
 #define CRC8_POLY  0x07  // Polynomial: x^8 + x^2 + x^1 + 1 (0x07)
 
-uint8_t buffer_write[EEPROM_EMULATOR_PAGE_DATA_SIZE] CACHE_ALIGN;
+static uint8_t buffer_write[EEPROM_EMULATOR_PAGE_DATA_SIZE] CACHE_ALIGN;
 /**
  * \internal
  * \brief Internal EEPROM emulator instance.
@@ -138,9 +138,9 @@ static uint8_t crc8_calculate(uint8_t *data, uint32_t length) {
 
         for (uint8_t j = 0; j < 8; j++) 
         {
-            if (crc & 0x80) 
-            {  // Check MSB
-                crc = (crc << 1) ^ CRC8_POLY;
+            if ((crc & 0x80U) != 0U)
+            {  /* Check MSB */
+                crc = (uint8_t)((uint8_t)(crc << 1U) ^ CRC8_POLY);
             } 
             else 
             {
@@ -305,7 +305,7 @@ static void EMU_EEPROM_NVMPageRead(const uint16_t physical_page, void* const dat
 }
 
 /* Make a buffer to hold the initialized EEPROM page */
-EEPROM_PAGE data CACHE_ALIGN;
+static EEPROM_PAGE format_data CACHE_ALIGN;
 
 /**
  * \brief Initializes the emulated EEPROM memory, destroying the current contents.
@@ -335,15 +335,15 @@ static void EMU_EEPROM_MemFormat(void)
          * pair of initialized but blank set of emulated EEPROM pages */
         if ((physical_page % EEPROM_EMULATOR_PAGES_PER_ROW) < EEPROM_EMULATOR_NUM_LOGICAL_PAGES_PER_ROW)
         {
-            (void) memset(&data, 0xFF, sizeof(data));
+            (void) memset(&format_data, 0xFF, sizeof(format_data));
 
             /* Set up the new EEPROM row's header */
-            data.header.logical_page = logical_page;
-            data.header.version = EEPROM_EMULATOR_VERSION;
-            data.header.checksum = crc8_calculate(data.data, EEPROM_EMULATOR_PAGE_DATA_SIZE);
-            
+            format_data.header.logical_page = logical_page;
+            format_data.header.version = EEPROM_EMULATOR_VERSION;
+            format_data.header.checksum = crc8_calculate(format_data.data, EEPROM_EMULATOR_PAGE_DATA_SIZE);
+
             /* Write the page out to physical memory */
-            EMU_EEPROM_NVMBufferFill(physical_page, &data);
+            EMU_EEPROM_NVMBufferFill(physical_page, &format_data);
 
             /* Increment the logical EEPROM page address now that the current
              * address' page has been initialized */
@@ -418,7 +418,7 @@ static void EMU_EEPROM_InvalidPageErase(uint16_t pre_phy_page, uint16_t next_phy
  *
  *  \return void
  */
-void EMU_EEPROM_SanitizeLogicalPages(void)
+static void EMU_EEPROM_SanitizeLogicalPages(void)
 {
     uint16_t p0 = 0;
     uint16_t p1 = 0;
@@ -441,30 +441,32 @@ void EMU_EEPROM_SanitizeLogicalPages(void)
     } page_trans[EEPROM_EMULATOR_NUM_LOGICAL_PAGES_PER_ROW];
       
     /* Scan through each row and sanitize each row */
-    for (uint16_t i = 0, row_num = 0; i < EEPROM_EMULATOR_NUM_PHYSICAL_PAGES; i=i+EEPROM_EMULATOR_PAGES_PER_ROW, row_num++)
+    uint16_t row_num = 0U;
+    for (uint16_t i = 0U; i < EEPROM_EMULATOR_NUM_PHYSICAL_PAGES; i = i + EEPROM_EMULATOR_PAGES_PER_ROW)
     {
         /* Read out the 8 physical pages stored in this row */
         p0 = EMU_EEPROM_PhysicalToLogicalPage(i);
-        p1 = EMU_EEPROM_PhysicalToLogicalPage(i+1);
-        p2 = EMU_EEPROM_PhysicalToLogicalPage(i+2);
-        p3 = EMU_EEPROM_PhysicalToLogicalPage(i+3);
-        p4 = EMU_EEPROM_PhysicalToLogicalPage(i+4);
-        p5 = EMU_EEPROM_PhysicalToLogicalPage(i+5);
-        p6 = EMU_EEPROM_PhysicalToLogicalPage(i+6);
-        p7 = EMU_EEPROM_PhysicalToLogicalPage(i+7);
-                
+        p1 = EMU_EEPROM_PhysicalToLogicalPage((uint16_t)(i + 1U));
+        p2 = EMU_EEPROM_PhysicalToLogicalPage((uint16_t)(i + 2U));
+        p3 = EMU_EEPROM_PhysicalToLogicalPage((uint16_t)(i + 3U));
+        p4 = EMU_EEPROM_PhysicalToLogicalPage((uint16_t)(i + 4U));
+        p5 = EMU_EEPROM_PhysicalToLogicalPage((uint16_t)(i + 5U));
+        p6 = EMU_EEPROM_PhysicalToLogicalPage((uint16_t)(i + 6U));
+        p7 = EMU_EEPROM_PhysicalToLogicalPage((uint16_t)(i + 7U));
+
         page_ptr = EMU_EEPROM_PageToAddrTranslation(i);
-        
+
         if ((p0 == EEPROM_EMULATOR_INVALID_PAGE_NUMBER) && (p1 == EEPROM_EMULATOR_INVALID_PAGE_NUMBER) && \
                 (p2 == EEPROM_EMULATOR_INVALID_PAGE_NUMBER) && (p3 == EEPROM_EMULATOR_INVALID_PAGE_NUMBER) &&\
                 (p4 == EEPROM_EMULATOR_INVALID_PAGE_NUMBER) && (p5 == EEPROM_EMULATOR_INVALID_PAGE_NUMBER) &&\
                 (p6 == EEPROM_EMULATOR_INVALID_PAGE_NUMBER) && (p7 == EEPROM_EMULATOR_INVALID_PAGE_NUMBER))
         {
-            spare_row_found = true;                    
+            spare_row_found = true;
             spare_row = row_num;
+            row_num++;
             continue;
         }
-        
+
         if ((p0 >= EEPROM_EMULATOR_NUM_LOGICAL_PAGES) || (p1 >= EEPROM_EMULATOR_NUM_LOGICAL_PAGES) || (p2 >= EEPROM_EMULATOR_NUM_LOGICAL_PAGES) || (p3 >= EEPROM_EMULATOR_NUM_LOGICAL_PAGES) ||\
                 (p1 != (p0 + 1)) || (p2 != (p1 + 1)) || (p3 != (p2 + 1)) ||\
                 (page_ptr[0].header.version != EEPROM_EMULATOR_VERSION) || \
@@ -472,31 +474,33 @@ void EMU_EEPROM_SanitizeLogicalPages(void)
                 (page_ptr[2].header.version != EEPROM_EMULATOR_VERSION) || \
                 (page_ptr[3].header.version != EEPROM_EMULATOR_VERSION) || \
                 (EMU_EEPROM_isPageCRCValid(i) == false) || \
-                (EMU_EEPROM_isPageCRCValid(i+1) == false) )
+                (EMU_EEPROM_isPageCRCValid((uint16_t)(i + 1U)) == false) )
         {
             /* If in a row, p0 or p1 is having incorrect value (value not in range of 0 to max logical page number), then erase that row.
-             * This can happen only when a row is full and data is being copied to the spare row, and during copy the power goes off. 
+             * This can happen only when a row is full and data is being copied to the spare row, and during copy the power goes off.
              * When this happens, the full row should still be intact and hence it should be safe to erase the row with corrupted p0 or p1.*/
             EMU_EEPROM_NVMRowErase(row_num);
-            spare_row_found = true;                    
+            spare_row_found = true;
             spare_row = row_num;
         }
+        row_num++;
     }
 
-    for (uint16_t i = 0, row_num = 0; i < EEPROM_EMULATOR_NUM_PHYSICAL_PAGES; i=i+EEPROM_EMULATOR_PAGES_PER_ROW, row_num++)
+    row_num = 0U;
+    for (uint16_t i = 0U; i < EEPROM_EMULATOR_NUM_PHYSICAL_PAGES; i = i + EEPROM_EMULATOR_PAGES_PER_ROW)
     {
         /* Read out the all physical pages stored in this row */
         p0 = EMU_EEPROM_PhysicalToLogicalPage(i);
-        p1 = EMU_EEPROM_PhysicalToLogicalPage(i+1);
-        p2 = EMU_EEPROM_PhysicalToLogicalPage(i+2);
-        p3 = EMU_EEPROM_PhysicalToLogicalPage(i+3);
-        p4 = EMU_EEPROM_PhysicalToLogicalPage(i+4);
-        p5 = EMU_EEPROM_PhysicalToLogicalPage(i+5);
-        p6 = EMU_EEPROM_PhysicalToLogicalPage(i+6);
-        p7 = EMU_EEPROM_PhysicalToLogicalPage(i+7);
-        
+        p1 = EMU_EEPROM_PhysicalToLogicalPage((uint16_t)(i + 1U));
+        p2 = EMU_EEPROM_PhysicalToLogicalPage((uint16_t)(i + 2U));
+        p3 = EMU_EEPROM_PhysicalToLogicalPage((uint16_t)(i + 3U));
+        p4 = EMU_EEPROM_PhysicalToLogicalPage((uint16_t)(i + 4U));
+        p5 = EMU_EEPROM_PhysicalToLogicalPage((uint16_t)(i + 5U));
+        p6 = EMU_EEPROM_PhysicalToLogicalPage((uint16_t)(i + 6U));
+        p7 = EMU_EEPROM_PhysicalToLogicalPage((uint16_t)(i + 7U));
+
         page_ptr = EMU_EEPROM_PageToAddrTranslation(i);
-        
+
         if ((p0 == EEPROM_EMULATOR_INVALID_PAGE_NUMBER) &&
             (p1 == EEPROM_EMULATOR_INVALID_PAGE_NUMBER) &&
             (p2 == EEPROM_EMULATOR_INVALID_PAGE_NUMBER) &&
@@ -506,35 +510,36 @@ void EMU_EEPROM_SanitizeLogicalPages(void)
             (p6 == EEPROM_EMULATOR_INVALID_PAGE_NUMBER) &&
             (p7 == EEPROM_EMULATOR_INVALID_PAGE_NUMBER))
         {
+            row_num++;
             continue;
         }
-        
+
         if ((spare_row_found == true) &&
             (
                 /* p4 */
                 ((p4 != EEPROM_EMULATOR_INVALID_PAGE_NUMBER) &&
                  (((p4 != p0) && (p4 != p1) && (p4 != p2) && (p4 != p3)) ||
-                  (EMU_EEPROM_isPageCRCValid(i + 4) == false))) ||
+                  (EMU_EEPROM_isPageCRCValid((uint16_t)(i + 4U)) == false))) ||
 
                 /* p5 */
                 ((p5 != EEPROM_EMULATOR_INVALID_PAGE_NUMBER) &&
                  (((p5 != p0) && (p5 != p1) && (p5 != p2) && (p5 != p3)) ||
-                  (EMU_EEPROM_isPageCRCValid(i + 5) == false))) ||
+                  (EMU_EEPROM_isPageCRCValid((uint16_t)(i + 5U)) == false))) ||
 
                 /* p6 */
                 ((p6 != EEPROM_EMULATOR_INVALID_PAGE_NUMBER) &&
                  (((p6 != p0) && (p6 != p1) && (p6 != p2) && (p6 != p3)) ||
-                  (EMU_EEPROM_isPageCRCValid(i + 6) == false))) ||
+                  (EMU_EEPROM_isPageCRCValid((uint16_t)(i + 6U)) == false))) ||
 
                 /* p7 */
                 ((p7 != EEPROM_EMULATOR_INVALID_PAGE_NUMBER) &&
                  (((p7 != p0) && (p7 != p1) && (p7 != p2) && (p7 != p3)) ||
-                  (EMU_EEPROM_isPageCRCValid(i + 7) == false)))
+                  (EMU_EEPROM_isPageCRCValid((uint16_t)(i + 7U)) == false)))
             ))
         {
             /* If the first EEPROM_EMULATOR_NUM_LOGICAL_PAGES_PER_ROW pages have correct logical page values (value in range of 0 to max logical page number),
-             * but later pages in the row contain value different than previous pages of the row 
-             * then discard the incorrect pages. 
+             * but later pages in the row contain value different than previous pages of the row
+             * then discard the incorrect pages.
              * To do this, take backup (in RAM) of the most recent logical pages in this row.
              * Then find a spare row and copy the backup data in the spare row.
              * Once done, erase the faulty (this) row.
@@ -543,13 +548,13 @@ void EMU_EEPROM_SanitizeLogicalPages(void)
             /* There should be four logical pages of data in each row, possibly with
              * multiple revisions (right-most version is the newest). Start by assuming
              * the left-most four pages contain the newest page revisions. */
-            
+
             for (uint32_t m = 0; m < EEPROM_EMULATOR_NUM_LOGICAL_PAGES_PER_ROW; m++)
             {
                 page_trans[m].logical_page  = row_data[m].header.logical_page;
-                page_trans[m].physical_page = (i) + m;
+                page_trans[m].physical_page = (uint16_t)(i + m);
             }
-            
+
             /* Look for newer revisions of the four logical pages stored in the row */
             for (uint32_t m = 0; m < EEPROM_EMULATOR_NUM_LOGICAL_PAGES_PER_ROW; m++)
             {
@@ -558,7 +563,7 @@ void EMU_EEPROM_SanitizeLogicalPages(void)
                 {
                     if (page_trans[m].logical_page == row_data[n].header.logical_page)
                     {
-                        page_trans[m].physical_page = (i) + n;
+                        page_trans[m].physical_page = (uint16_t)(i + n);
                     }
                 }
             }
@@ -569,10 +574,10 @@ void EMU_EEPROM_SanitizeLogicalPages(void)
                 new_page = (((uint32_t)spare_row * (uint32_t)EEPROM_EMULATOR_PAGES_PER_ROW) + (uint32_t)c);
 
                 /* Copy existing EEPROM page to cache buffer wholesale */
-                EMU_EEPROM_NVMPageRead(page_trans[c].physical_page, &eeprom_instance.cache);                                        
+                EMU_EEPROM_NVMPageRead(page_trans[c].physical_page, &eeprom_instance.cache);
 
                 /* Copy the version number */
-                eeprom_instance.cache.header.version = EEPROM_EMULATOR_VERSION;      
+                eeprom_instance.cache.header.version = EEPROM_EMULATOR_VERSION;
                 eeprom_instance.cache.header.checksum = crc8_calculate(eeprom_instance.cache.data, EEPROM_EMULATOR_PAGE_DATA_SIZE);
 
                 /* Write the cached logical page to the physical memory pointed by new_page */
@@ -584,10 +589,11 @@ void EMU_EEPROM_SanitizeLogicalPages(void)
 
             /* Now erase the faulty row */
             EMU_EEPROM_NVMRowErase(row_num);
-            
+
             /* Set this as the new spare row */
             spare_row = row_num;
-        }                
+        }
+        row_num++;
     }        
 }
 

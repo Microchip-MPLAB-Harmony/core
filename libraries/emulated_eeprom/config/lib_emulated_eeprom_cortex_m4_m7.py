@@ -141,7 +141,7 @@ def fileGeneration(emulated_eeprom):
     configName = Variables.get("__CONFIGURATION_NAME")
 
     eep_emu_sourceFile = emulated_eeprom.createFileSymbol("EEPROM_EMULATOR_SRC", None)
-    eep_emu_sourceFile.setSourcePath("libraries/emulated_eeprom/templates/cortex_m0_m4_m7/emulated_eeprom.c.ftl")
+    eep_emu_sourceFile.setSourcePath("libraries/emulated_eeprom/templates/cortex_m0_m4_m7/v2/emulated_eeprom.c.ftl")
     eep_emu_sourceFile.setOutputName("emulated_eeprom.c")
     eep_emu_sourceFile.setMarkup(True)
     eep_emu_sourceFile.setOverwrite(True)
@@ -159,7 +159,7 @@ def fileGeneration(emulated_eeprom):
     eep_emu_headerFile.setType("HEADER")
 
     eep_emu_LocalHeaderFile = emulated_eeprom.createFileSymbol("EEPROM_EMULATOR_LOCAL_HEADER", None)
-    eep_emu_LocalHeaderFile.setSourcePath("libraries/emulated_eeprom/templates/cortex_m0_m4_m7/emulated_eeprom_local.h.ftl")
+    eep_emu_LocalHeaderFile.setSourcePath("libraries/emulated_eeprom/templates/cortex_m0_m4_m7/v2/emulated_eeprom_local.h.ftl")
     eep_emu_LocalHeaderFile.setOutputName("emulated_eeprom_local.h")
     eep_emu_LocalHeaderFile.setMarkup(True)
     eep_emu_LocalHeaderFile.setOverwrite(True)

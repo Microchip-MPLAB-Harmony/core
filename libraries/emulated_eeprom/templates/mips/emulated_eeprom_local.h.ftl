@@ -165,8 +165,11 @@ typedef struct
     /* Mutex to synchronize multiple simultaneous access */
     OSAL_MUTEX_DECLARE (EmulatedEEPROMAccessLock);
 
-}EEPROM_MODULE CACHE_ALIGN;
-
+<#if core.CACHE_ALIGN?? >
+    <#lt>}EEPROM_MODULE;
+<#else>
+    <#lt>}EEPROM_MODULE CACHE_ALIGN;
+</#if>
 
 /** @} */
 
