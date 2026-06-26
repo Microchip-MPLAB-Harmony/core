@@ -342,8 +342,8 @@ typedef struct
     uint8_t addressBytes;
 
     /* Quad command */
-    uint32_t quadCommandEnable;
-    uint32_t quadCommandDisable;
+    uint8_t quadCommandEnable;
+    uint8_t quadCommandDisable;
 
     /* Device type detected from JEDEC ID */
     SFDP_DEVICE_TYPE deviceType;

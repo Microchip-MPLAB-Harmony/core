@@ -111,6 +111,16 @@ static bool DRV_SFDP_ReadSFDPData(uint32_t address, uint8_t *data, uint32_t leng
     return DRV_SFDP_SPIWriteRead(dObj, &dObj->transferDataObj);
 }
 
+/* MISRA C-2023 Rule 21.15 deviated below. Deviation record ID - H3_MISRAC_2023_R_21_15_DR_1 */
+<#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
+<#if core.COMPILER_CHOICE == "XC32">
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wunknown-pragmas"
+</#if>
+#pragma coverity compliance block \
+(deviate:2 "MISRA C-2023 Rule 21.15" "H3_MISRAC_2023_R_21_15_DR_1" )
+</#if>
+
 static bool DRV_SFDP_ReadHeader(DRV_SFDP_HEADER *header)
 {
     bool status = false;
@@ -129,7 +139,7 @@ static bool DRV_SFDP_ReadHeader(DRV_SFDP_HEADER *header)
     }
 
     (void)memcpy(header, ((uint8_t *)dwordData + 5U), sizeof(DRV_SFDP_HEADER));
-    
+
     if (status == true)
     {
         if (header->signature != SFDP_SIGNATURE)
@@ -165,6 +175,14 @@ static bool DRV_SFDP_ReadParamHeader(uint32_t headerIndex, DRV_SFDP_PARAM_HEADER
 
     return status;
 }
+
+<#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
+#pragma coverity compliance end_block "MISRA C-2023 Rule 21.15"
+<#if core.COMPILER_CHOICE == "XC32">
+#pragma GCC diagnostic pop
+</#if>
+</#if>
+/* MISRAC 2023 deviation block end */
 
 static uint32_t DRV_SFDP_GetTableAddress(const DRV_SFDP_PARAM_HEADER *paramHeader)
 {
@@ -233,7 +251,8 @@ static bool DRV_SFDP_ParseBasicFlashParams(uint32_t tableAddress, uint8_t tableL
 
         /* Parse DWORD 0: Address Bytes */
         /* Bits 18:17 - Address Bytes: 00 = 3 byte */
-        uint8_t addrMode = (uint8_t)((dwordData[0] >> 17U) & 0x03U);
+        uint32_t addrModeTemp = (dwordData[0] >> 17U) & 0x03U;
+        uint8_t addrMode = (uint8_t)addrModeTemp;
         if (addrMode == 0x02U)
         {
             flashParams->addressBytes = 4U;
@@ -248,11 +267,11 @@ static bool DRV_SFDP_ParseBasicFlashParams(uint32_t tableAddress, uint8_t tableL
         if ((density & 0x80000000U) != 0U)
         {
             /* Bit 31 = 1: Density is 2^n bits */
-            uint32_t n = density & 0x7FFFFFFFU;
+            uint32_t n_bits = density & 0x7FFFFFFFU;
             /* Convert bits to bytes: 2^n bits = 2^(n-3) bytes */
-            if (n >= 3U)
+            if (n_bits >= 3U)
             {
-                flashParams->flashSize = (1U << (n - 3U));
+                flashParams->flashSize = ((uint32_t)1U << (n_bits - 3U));
             }
             else
             {
@@ -273,12 +292,14 @@ static bool DRV_SFDP_ParseBasicFlashParams(uint32_t tableAddress, uint8_t tableL
         /* Parse DWORD 7: Sector Erase (4KB) - Bits 7:0 size, Bits 15:8 opcode */
         if (readLength >= 32U)
         {
-            flashParams->eraseOpcode4K = (uint8_t)((dwordData[7] >> 8U) & 0xFFU);
+            uint32_t eraseOpcodeTemp = (dwordData[7] >> 8U) & 0xFFU;
+            flashParams->eraseOpcode4K = (uint8_t)eraseOpcodeTemp;
             /* Sector size encoding: 2^N bytes */
-            uint8_t sizeExp = (uint8_t)(dwordData[7] & 0xFFU);
+            uint32_t sizeExpTemp = dwordData[7] & 0xFFU;
+            uint8_t sizeExp = (uint8_t)sizeExpTemp;
             if (sizeExp != 0U)
             {
-                flashParams->sectorSize = (1U << sizeExp);
+                flashParams->sectorSize = ((uint32_t)1U << sizeExp);
             }
         }
 
@@ -286,11 +307,13 @@ static bool DRV_SFDP_ParseBasicFlashParams(uint32_t tableAddress, uint8_t tableL
         if (readLength >= 36U)
         {
             /* Erase 64KB: Bits 31:24 opcode, Bits 23:16 size */
-            flashParams->eraseOpcode64K = (uint8_t)((dwordData[8] >> 24U) & 0xFFU);
-            uint8_t blockSizeExp = (uint8_t)((dwordData[8] >> 16U) & 0xFFU);
+            uint32_t eraseOpcode64KTemp = (dwordData[8] >> 24U) & 0xFFU;
+            flashParams->eraseOpcode64K = (uint8_t)eraseOpcode64KTemp;
+            uint32_t blockSizeExpTemp = (dwordData[8] >> 16U) & 0xFFU;
+            uint8_t blockSizeExp = (uint8_t)blockSizeExpTemp;
             if (blockSizeExp != 0U)
             {
-                flashParams->blockSize = (1U << blockSizeExp);
+                flashParams->blockSize = ((uint32_t)1U << blockSizeExp);
             }
         }
 
@@ -300,10 +323,11 @@ static bool DRV_SFDP_ParseBasicFlashParams(uint32_t tableAddress, uint8_t tableL
         /* Parse DWORD 10: Page Size - Bits 7:4 (2^N bytes) */
         if (readLength >= 44U)
         {
-            uint8_t pageSizeExp = (uint8_t)((dwordData[10] >> 4U) & 0x0FU);
+            uint32_t pageSizeExpTemp = (dwordData[10] >> 4U) & 0x0FU;
+            uint8_t pageSizeExp = (uint8_t)pageSizeExpTemp;
             if (pageSizeExp != 0U)
             {
-                flashParams->pageSize = (1U << pageSizeExp);
+                flashParams->pageSize = ((uint32_t)1U << pageSizeExp);
             }
         }
 
@@ -983,11 +1007,13 @@ bool DRV_SFDP_GeometryGet( const DRV_HANDLE handle, DRV_SFDP_GEOMETRY *geometry 
     {
         status = false;
     }
-    else if(DRV_SFDP_START_ADDRESS >= flash_size)
+
+    if (DRV_SFDP_START_ADDRESS >= flash_size)
     {
         status = false;
     }
-    else
+
+    if (status == true)
     {
         flash_size = flash_size - DRV_SFDP_START_ADDRESS;
 
@@ -996,30 +1022,40 @@ bool DRV_SFDP_GeometryGet( const DRV_HANDLE handle, DRV_SFDP_GEOMETRY *geometry 
         {
             status = false;
         }
-        else
-        {
-            /* Read block size and number of blocks */
-            geometry->read_blockSize = 1;
-            geometry->read_numBlocks = flash_size;
+    }
 
-            /* Write block size and number of blocks */
-            geometry->write_blockSize = dObj->flashParams.pageSize;
-            geometry->write_numBlocks = (flash_size / dObj->flashParams.pageSize);
+    if (status == true)
+    {
+        /* Read block size and number of blocks */
+        geometry->read_blockSize = 1;
+        geometry->read_numBlocks = flash_size;
 
-            /* Erase block size and number of blocks */
-            geometry->erase_blockSize = dObj->flashParams.sectorSize;
-            geometry->erase_numBlocks = (flash_size / dObj->flashParams.sectorSize);
+        /* Write block size and number of blocks */
+        geometry->write_blockSize = dObj->flashParams.pageSize;
+        geometry->write_numBlocks = (flash_size / dObj->flashParams.pageSize);
 
-            geometry->numReadRegions = 1;
-            geometry->numWriteRegions = 1;
-            geometry->numEraseRegions = 1;
+        /* Erase block size and number of blocks */
+        geometry->erase_blockSize = dObj->flashParams.sectorSize;
+        geometry->erase_numBlocks = (flash_size / dObj->flashParams.sectorSize);
 
-            geometry->blockStartAddress = DRV_SFDP_START_ADDRESS;
-        }
+        geometry->numReadRegions = 1;
+        geometry->numWriteRegions = 1;
+        geometry->numEraseRegions = 1;
+
+        geometry->blockStartAddress = DRV_SFDP_START_ADDRESS;
     }
 
     return status;
 }
+
+/* MISRA C-2023 Rule 18.6 deviated below. Deviation record ID - H3_MISRAC_2023_R_18_6_DR_1 */
+<#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
+<#if core.COMPILER_CHOICE == "XC32">
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wunknown-pragmas"
+</#if>
+#pragma coverity compliance block deviate "MISRA C-2023 Rule 18.6" "H3_MISRAC_2023_R_18_6_DR_1"
+</#if>
 
 DRV_HANDLE DRV_SFDP_Open( const SYS_MODULE_INDEX drvIndex, const DRV_IO_INTENT ioIntent )
 {
@@ -1058,9 +1094,9 @@ DRV_HANDLE DRV_SFDP_Open( const SYS_MODULE_INDEX drvIndex, const DRV_IO_INTENT i
     }
 
     /* Read JEDEC ID for device-specific detection */
-    uint8_t jedecID[3] = { 0 };
+    uint8_t jedecIdLocal[3] = { 0 };
 
-    if (DRV_SFDP_ReadJedecId((DRV_HANDLE)drvIndex, (void *)&jedecID) == false)
+    if (DRV_SFDP_ReadJedecId((DRV_HANDLE)drvIndex, (void *)&jedecIdLocal) == false)
     {
         /* Continue with generic mode if JEDEC ID read fails */
         dObj->flashParams.deviceType = SFDP_DEVICE_TYPE_GENERIC;
@@ -1073,7 +1109,7 @@ DRV_HANDLE DRV_SFDP_Open( const SYS_MODULE_INDEX drvIndex, const DRV_IO_INTENT i
         }
 
         /* Detect device type and apply device-specific overrides */
-        dObj->flashParams.deviceType = DRV_SFDP_DetectDeviceType(jedecID, &dObj->flashParams);
+        dObj->flashParams.deviceType = DRV_SFDP_DetectDeviceType(jedecIdLocal, &dObj->flashParams);
 
         /* For SPI mode, no quad enable needed, but we set device-specific parameters
          * that may affect read/write command selection */
@@ -1102,6 +1138,10 @@ DRV_HANDLE DRV_SFDP_Open( const SYS_MODULE_INDEX drvIndex, const DRV_IO_INTENT i
             /* IS25 specific parameters for SPI mode */
             dObj->flashParams.optimalReadDummyCycles = 8; /* Standard SPI dummy cycles */
         }
+        else
+        {
+            /* Generic device - use default parameters already set during SFDP parsing */
+        }
     }
 
     if (((uint32_t)ioIntent & (uint32_t)DRV_IO_INTENT_WRITE) == (uint32_t)(DRV_IO_INTENT_WRITE))
@@ -1124,6 +1164,14 @@ DRV_HANDLE DRV_SFDP_Open( const SYS_MODULE_INDEX drvIndex, const DRV_IO_INTENT i
 
     return ((DRV_HANDLE)drvIndex);
 }
+
+<#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
+#pragma coverity compliance end_block "MISRA C-2023 Rule 18.6"
+<#if core.COMPILER_CHOICE == "XC32">
+#pragma GCC diagnostic pop
+</#if>
+</#if>
+/* MISRAC 2023 deviation block end */
 
 void DRV_SFDP_Close( const DRV_HANDLE handle )
 {

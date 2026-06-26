@@ -95,6 +95,17 @@ static CACHE_ALIGN uint32_t dwordData[20] = { 0 };
 // *****************************************************************************
 // *****************************************************************************
 
+/* MISRA C-2023 Rule 11.3 deviated below. Deviation record ID -
+   H3_MISRAC_2023_R_11_3_DR_1*/
+<#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
+<#if core.COMPILER_CHOICE == "XC32">
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wunknown-pragmas"
+</#if>
+#pragma coverity compliance block \
+(deviate:41 "MISRA C-2023 Rule 11.3" "H3_MISRAC_2023_R_11_3_DR_1" )
+</#if>
+
 /* Reads SFDP data using DMA descriptor chain.
  * Per JESD216, SFDP must be read in single-bit SPI mode (1-1-1) */
 static bool DRV_SFDP_ReadSFDPData(uint32_t address, uint8_t *data, uint32_t length)
@@ -269,7 +280,8 @@ static bool DRV_SFDP_ParseBasicFlashParams(uint32_t tableAddress, uint8_t tableL
 
         /* Parse DWORD 0: Address Bytes */
         /* Bits 18:17 - Address Bytes: 00 = 3 byte */
-        uint8_t addrMode = (uint8_t)((dwordData[0] >> 17U) & 0x03U);
+        uint32_t addrModeTemp = (dwordData[0] >> 17U) & 0x03U;
+        uint8_t addrMode = (uint8_t)addrModeTemp;
         if (addrMode == 0x02U)
         {
             flashParams->addressBytes = 4U;
@@ -288,7 +300,7 @@ static bool DRV_SFDP_ParseBasicFlashParams(uint32_t tableAddress, uint8_t tableL
             /* Convert bits to bytes: 2^n bits = 2^(n-3) bytes */
             if (n >= 3U)
             {
-                flashParams->flashSize = (1U << (n - 3U));
+                flashParams->flashSize = ((uint32_t)1U << (n - 3U));
             }
             else
             {
@@ -313,19 +325,24 @@ static bool DRV_SFDP_ParseBasicFlashParams(uint32_t tableAddress, uint8_t tableL
             if (flashParams->supports_1_4_4)
             {
                 /* Bits 15:8 - 1-4-4 Fast Read instruction */
-                flashParams->fastReadOpcode_1_4_4 = (uint8_t)((dwordData[2] >> 8U) & 0xFFU);
+                uint32_t opcode144Temp = (dwordData[2] >> 8U) & 0xFFU;
+                flashParams->fastReadOpcode_1_4_4 = (uint8_t)opcode144Temp;
                 /* Bits 4:0 - Number of dummy cycles for 1-4-4 */
-                flashParams->fastReadDummyCycles_1_4_4 = (uint8_t)(dwordData[2] & 0x1FU) + (uint8_t)((dwordData[2] >> 5U) & 0x7U);
+                uint32_t waitStates144 = dwordData[2] & 0x1FU;
+                uint32_t modeClocks144 = (dwordData[2] >> 5U) & 0x7U;
+                flashParams->fastReadDummyCycles_1_4_4 = (uint8_t)waitStates144 + (uint8_t)modeClocks144;
             }
 
             /* Parse 1-1-4 Fast Read (Quad Output) */
             if (flashParams->supports_1_1_4)
             {
                 /* Bits 31:24 - 1-1-4 Fast Read instruction */
-                flashParams->fastReadOpcode_1_1_4 = (uint8_t)((dwordData[2] >> 24U) & 0xFFU);
+                uint32_t opcode114Temp = (dwordData[2] >> 24U) & 0xFFU;
+                flashParams->fastReadOpcode_1_1_4 = (uint8_t)opcode114Temp;
                 /* Bits 20:16 - Number of dummy cycles for 1-1-4 */
                 /* Note: Dummy cycles for 1-1-4 */
-                flashParams->fastReadDummyCycles_1_1_4 = (uint8_t)((dwordData[2] >> 16U) & 0x1FU);
+                uint32_t dummy114Temp = (dwordData[2] >> 16U) & 0x1FU;
+                flashParams->fastReadDummyCycles_1_1_4 = (uint8_t)dummy114Temp;
             }
         }
 
@@ -333,7 +350,8 @@ static bool DRV_SFDP_ParseBasicFlashParams(uint32_t tableAddress, uint8_t tableL
         if (readLength >= 20U)
         {
             /* Bit 4: Supports 4-4-4 Fast Read (Quad command) */
-            flashParams->supports_4_4_4 = ((dwordData[4] & 0x10U) != 0U);
+            bool tempSupports444 = ((dwordData[4] & 0x10U) != 0U);
+            flashParams->supports_4_4_4 = tempSupports444;
         }
 
         /* Parse DWORD 6: Fast Read instructions and dummy cycles */
@@ -343,22 +361,29 @@ static bool DRV_SFDP_ParseBasicFlashParams(uint32_t tableAddress, uint8_t tableL
             if (flashParams->supports_4_4_4)
             {
                 /* Bits 31:24 - 4-4-4 Fast Read instruction */
-                flashParams->fastReadOpcode_4_4_4 = (uint8_t)((dwordData[6] >> 24U) & 0xFFU);
+                uint32_t opcode444Temp = (dwordData[6] >> 24U) & 0xFFU;
+                flashParams->fastReadOpcode_4_4_4 = (uint8_t)opcode444Temp;
                 /* Bits 20:16 - Number of dummy cycles for 4-4-4 */
                 /* Note: Dummy cycles for 4-4-4 */
-                flashParams->fastReadDummyCycles_4_4_4 = (uint8_t)((dwordData[6] >> 16U) & 0x1FU) + (uint8_t)((dwordData[6] >> 21U) & 0x7U);
+                uint32_t dummy_low_temp = (dwordData[6] >> 16U) & 0x1FU;
+                uint32_t dummy_high_temp = (dwordData[6] >> 21U) & 0x7U;
+                uint8_t dummy_low = (uint8_t)dummy_low_temp;
+                uint8_t dummy_high = (uint8_t)dummy_high_temp;
+                flashParams->fastReadDummyCycles_4_4_4 = dummy_low + dummy_high;
             }
         }
 
         /* Parse DWORD 7: Sector Erase (4KB) - Bits 7:0 size, Bits 15:8 opcode */
         if (readLength >= 32U)
         {
-            flashParams->eraseOpcode4K = (uint8_t)((dwordData[7] >> 8U) & 0xFFU);
+            uint32_t eraseOpcodeTemp = (dwordData[7] >> 8U) & 0xFFU;
+            flashParams->eraseOpcode4K = (uint8_t)eraseOpcodeTemp;
             /* Sector size encoding: 2^N bytes */
-            uint8_t sizeExp = (uint8_t)(dwordData[7] & 0xFFU);
+            uint32_t sizeExpTemp = dwordData[7] & 0xFFU;
+            uint8_t sizeExp = (uint8_t)sizeExpTemp;
             if (sizeExp != 0U)
             {
-                flashParams->sectorSize = (1U << sizeExp);
+                flashParams->sectorSize = ((uint32_t)1U << sizeExp);
             }
         }
 
@@ -366,15 +391,17 @@ static bool DRV_SFDP_ParseBasicFlashParams(uint32_t tableAddress, uint8_t tableL
         if (readLength >= 36U)
         {
             /* Erase 64KB: Bits 31:24 opcode, Bits 23:16 size */
-            flashParams->eraseOpcode64K = (uint8_t)((dwordData[8] >> 24U) & 0xFFU);
+            uint32_t eraseOpcode64KTemp = (dwordData[8] >> 24U) & 0xFFU;
+            flashParams->eraseOpcode64K = (uint8_t)eraseOpcode64KTemp;
             if (flashParams->eraseOpcode64K == 0xFFU)
             {
-                flashParams->eraseOpcode64K = SFDP_CMD_BLOCK_ERASE_64K;
+                flashParams->eraseOpcode64K = (uint8_t)SFDP_CMD_BLOCK_ERASE_64K;
             }
-            uint8_t blockSizeExp = (uint8_t)((dwordData[8] >> 16U) & 0xFFU);
+            uint32_t blockSizeExpTemp = (dwordData[8] >> 16U) & 0xFFU;
+            uint8_t blockSizeExp = (uint8_t)blockSizeExpTemp;
             if (blockSizeExp != 0U)
             {
-                flashParams->blockSize = (1U << blockSizeExp);
+                flashParams->blockSize = ((uint32_t)1U << blockSizeExp);
             }
         }
 
@@ -384,17 +411,19 @@ static bool DRV_SFDP_ParseBasicFlashParams(uint32_t tableAddress, uint8_t tableL
         /* Parse DWORD 10: Page Size - Bits 7:4 (2^N bytes) */
         if (readLength >= 44U)
         {
-            uint8_t pageSizeExp = (uint8_t)((dwordData[10] >> 4U) & 0x0FU);
+            uint32_t pageSizeExpTemp = (dwordData[10] >> 4U) & 0x0FU;
+            uint8_t pageSizeExp = (uint8_t)pageSizeExpTemp;
             if (pageSizeExp != 0U)
             {
-                flashParams->pageSize = (1U << pageSizeExp);
+                flashParams->pageSize = ((uint32_t)1U << pageSizeExp);
             }
         }
 
         /* Parse DWORD 14:  Quad command enable - Bits 8:4, Quad command disable - Bits 3:0 */
         if (readLength >= 60U)
         {
-            uint8_t quadEnable = (uint8_t)((dwordData[14] >> 4U) & 0x1FU);
+            uint32_t quadEnableTemp = (dwordData[14] >> 4U) & 0x1FU;
+            uint8_t quadEnable = (uint8_t)quadEnableTemp;
             if ((quadEnable & 0x3U) != 0U)
             {
                 flashParams->quadCommandEnable = 0x38U;
@@ -408,7 +437,8 @@ static bool DRV_SFDP_ParseBasicFlashParams(uint32_t tableAddress, uint8_t tableL
                 // do nothing
             }
 
-            uint8_t quadDisable = (uint8_t)(dwordData[14] & 0xFU);
+            uint32_t quadDisableTemp = dwordData[14] & 0xFU;
+            uint8_t quadDisable = (uint8_t)quadDisableTemp;
             if ((quadDisable & 0x1U) != 0U)
             {
                 flashParams->quadCommandDisable = 0xFFU;
@@ -598,15 +628,6 @@ static void DRV_SFDP_EventHandler(uintptr_t context)
         // Do nothing
     }
 }
-
-/* MISRA C-2023 Rule 11.3 deviated:40 Deviation record ID -  H3_MISRAC_2023_R_11_3_DR_1 */
-<#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
-<#if core.COMPILER_CHOICE == "XC32">
-#pragma GCC diagnostic push
-#pragma GCC diagnostic ignored "-Wunknown-pragmas"
-</#if>
-#pragma coverity compliance block deviate:40 "MISRA C-2023 Rule 11.3" "H3_MISRAC_2023_R_11_3_DR_1"
-</#if>
 
 static void DRV_SFDP_ResetFlash(void)
 {
@@ -1348,7 +1369,7 @@ DRV_SFDP_TRANSFER_STATUS DRV_SFDP_TransferStatusGet(const DRV_HANDLE handle)
     }
     else
     {
-        //Do nothing
+        /* Do nothing - status already set to DRV_SFDP_TRANSFER_ERROR_UNKNOWN */
     }
 
     return status;
@@ -1423,20 +1444,27 @@ bool DRV_SFDP_Read(const DRV_HANDLE handle, void *rx_data, uint32_t rx_data_leng
 
     if (addrBytes == 4U)
     {
-        sqiCmdBuffer[1] = (uint8_t)((address >> 24) & 0xFFU);
-        sqiCmdBuffer[2] = (uint8_t)((address >> 16) & 0xFFU);
-        sqiCmdBuffer[3] = (uint8_t)((address >> 8) & 0xFFU);
-        sqiCmdBuffer[4] = (uint8_t)(address & 0xFFU);
+        uint32_t addr_byte3 = (address >> 24) & 0xFFU;
+        uint32_t addr_byte2 = (address >> 16) & 0xFFU;
+        uint32_t addr_byte1 = (address >> 8) & 0xFFU;
+        uint32_t addr_byte0 = address & 0xFFU;
+        sqiCmdBuffer[1] = (uint8_t)addr_byte3;
+        sqiCmdBuffer[2] = (uint8_t)addr_byte2;
+        sqiCmdBuffer[3] = (uint8_t)addr_byte1;
+        sqiCmdBuffer[4] = (uint8_t)addr_byte0;
     }
     else
     {
-        sqiCmdBuffer[1] = (uint8_t)((address >> 16) & 0xFFU);
-        sqiCmdBuffer[2] = (uint8_t)((address >> 8) & 0xFFU);
-        sqiCmdBuffer[3] = (uint8_t)(address & 0xFFU);
+        uint32_t addr_byte2 = (address >> 16) & 0xFFU;
+        uint32_t addr_byte1 = (address >> 8) & 0xFFU;
+        uint32_t addr_byte0 = address & 0xFFU;
+        sqiCmdBuffer[1] = (uint8_t)addr_byte2;
+        sqiCmdBuffer[2] = (uint8_t)addr_byte1;
+        sqiCmdBuffer[3] = (uint8_t)addr_byte0;
     }
 
     /* Command descriptor */
-    sqiCmdDesc[0].bd_ctrl = (SQI_BDCTRL_BD_BUFLEN(1 + addrBytes) | readWidth |
+    sqiCmdDesc[0].bd_ctrl = (SQI_BDCTRL_BD_BUFLEN((uint32_t)1U + addrBytes) | readWidth |
                              SQI_CHIP_SELECT | SQI_BDCTRL_DESC_EN_Msk);
     ptr = &sqiCmdBuffer[0];
     sqiCmdDesc[0].bd_bufaddr = (uint32_t *)(ptr);
@@ -1461,7 +1489,7 @@ bool DRV_SFDP_Read(const DRV_HANDLE handle, void *rx_data, uint32_t rx_data_leng
 
         for (j = 0; j < dummyBytes; j++)
         {
-            sqiCmdBuffer[8 + j] = DUMMY_BYTE;
+            sqiCmdBuffer[8U + j] = DUMMY_BYTE;
         }
 
         ptr = &sqiCmdDesc[1];
@@ -1578,19 +1606,26 @@ bool DRV_SFDP_PageWrite(const DRV_HANDLE handle, void *tx_data, uint32_t address
 
     if (addrBytes == 4U)
     {
-        sqiCmdBuffer[5] = (uint8_t)((address >> 24) & 0xFFU);
-        sqiCmdBuffer[6] = (uint8_t)((address >> 16) & 0xFFU);
-        sqiCmdBuffer[7] = (uint8_t)((address >> 8) & 0xFFU);
-        sqiCmdBuffer[8] = (uint8_t)(address & 0xFFU);
+        uint32_t addr_byte3 = (address >> 24) & 0xFFU;
+        uint32_t addr_byte2 = (address >> 16) & 0xFFU;
+        uint32_t addr_byte1 = (address >> 8) & 0xFFU;
+        uint32_t addr_byte0 = address & 0xFFU;
+        sqiCmdBuffer[5] = (uint8_t)addr_byte3;
+        sqiCmdBuffer[6] = (uint8_t)addr_byte2;
+        sqiCmdBuffer[7] = (uint8_t)addr_byte1;
+        sqiCmdBuffer[8] = (uint8_t)addr_byte0;
     }
     else
     {
-        sqiCmdBuffer[5] = (uint8_t)((address >> 16) & 0xFFU);
-        sqiCmdBuffer[6] = (uint8_t)((address >> 8) & 0xFFU);
-        sqiCmdBuffer[7] = (uint8_t)(address & 0xFFU);
+        uint32_t addr_byte2 = (address >> 16) & 0xFFU;
+        uint32_t addr_byte1 = (address >> 8) & 0xFFU;
+        uint32_t addr_byte0 = address & 0xFFU;
+        sqiCmdBuffer[5] = (uint8_t)addr_byte2;
+        sqiCmdBuffer[6] = (uint8_t)addr_byte1;
+        sqiCmdBuffer[7] = (uint8_t)addr_byte0;
     }
 
-    sqiCmdDesc[1].bd_ctrl = (SQI_BDCTRL_BD_BUFLEN(1 + addrBytes) | writeWidth |
+    sqiCmdDesc[1].bd_ctrl = (SQI_BDCTRL_BD_BUFLEN((uint32_t)1U + addrBytes) | writeWidth |
                              SQI_CHIP_SELECT | SQI_BDCTRL_DESC_EN_Msk);
     ptr = &sqiCmdBuffer[4];
     sqiCmdDesc[1].bd_bufaddr = (uint32_t *)(ptr);
@@ -1628,7 +1663,7 @@ static bool DRV_SFDP_Erase(uint8_t instruction, uint32_t address)
 {
     void *ptr = NULL;
     uint8_t addrBytes = dObj->flashParams.addressBytes;
-    uint32_t bufLen = 1U + addrBytes;
+    uint32_t bufLen = ((uint32_t)1U + addrBytes);
 
     dObj->isTransferDone = false;
 
@@ -1638,16 +1673,23 @@ static bool DRV_SFDP_Erase(uint8_t instruction, uint32_t address)
 
     if (addrBytes == 4U)
     {
-        sqiCmdBuffer[5] = (uint8_t)((address >> 24) & 0xFFU);
-        sqiCmdBuffer[6] = (uint8_t)((address >> 16) & 0xFFU);
-        sqiCmdBuffer[7] = (uint8_t)((address >> 8) & 0xFFU);
-        sqiCmdBuffer[8] = (uint8_t)(address & 0xFFU);
+        uint32_t addr_byte3 = (address >> 24) & 0xFFU;
+        uint32_t addr_byte2 = (address >> 16) & 0xFFU;
+        uint32_t addr_byte1 = (address >> 8) & 0xFFU;
+        uint32_t addr_byte0 = address & 0xFFU;
+        sqiCmdBuffer[5] = (uint8_t)addr_byte3;
+        sqiCmdBuffer[6] = (uint8_t)addr_byte2;
+        sqiCmdBuffer[7] = (uint8_t)addr_byte1;
+        sqiCmdBuffer[8] = (uint8_t)addr_byte0;
     }
     else
     {
-        sqiCmdBuffer[5] = (uint8_t)((address >> 16) & 0xFFU);
-        sqiCmdBuffer[6] = (uint8_t)((address >> 8) & 0xFFU);
-        sqiCmdBuffer[7] = (uint8_t)(address & 0xFFU);
+        uint32_t addr_byte2 = (address >> 16) & 0xFFU;
+        uint32_t addr_byte1 = (address >> 8) & 0xFFU;
+        uint32_t addr_byte0 = address & 0xFFU;
+        sqiCmdBuffer[5] = (uint8_t)addr_byte2;
+        sqiCmdBuffer[6] = (uint8_t)addr_byte1;
+        sqiCmdBuffer[7] = (uint8_t)addr_byte0;
     }
 
     sqiCmdDesc[1].bd_ctrl = (SQI_BDCTRL_BD_BUFLEN(bufLen) | SQI_BDCTRL_PKT_INT_EN_Msk |
@@ -1831,6 +1873,10 @@ DRV_HANDLE DRV_SFDP_Open(const SYS_MODULE_INDEX drvIndex, const DRV_IO_INTENT io
             {
                 dObj->flashParams.optimalReadWidth = SQI_LANE_MODE_M;
             }
+            else
+            {
+                /* Use SFDP-discovered single mode */
+            }
         }
         else if (dObj->flashParams.deviceType == SFDP_DEVICE_TYPE_IS25)
         {
@@ -1843,6 +1889,10 @@ DRV_HANDLE DRV_SFDP_Open(const SYS_MODULE_INDEX drvIndex, const DRV_IO_INTENT io
             else if (dObj->flashParams.supports_1_1_4)
             {
                 dObj->flashParams.optimalReadWidth = SQI_LANE_MODE_M;
+            }
+            else
+            {
+                /* Use SFDP-discovered single mode */
             }
         }
         else
