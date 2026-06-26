@@ -140,7 +140,7 @@ static uint8_t crc8_calculate(uint8_t *data, uint32_t length) {
         {
             if ((crc & 0x80U) != 0U)
             {  /* Check MSB */
-                crc = (uint8_t)((uint8_t)(crc << 1U) ^ CRC8_POLY);
+                crc = (uint8_t)((uint8_t)(crc << 1U) ^ (uint8_t)CRC8_POLY);
             } 
             else 
             {
@@ -286,6 +286,9 @@ static void EMU_EEPROM_NVMBufferFill( const uint16_t physical_page, const void* 
     SYS_CACHE_CleanDCache_by_Addr(flashAddr, (int32_t)EEPROM_EMULATOR_PAGE_SIZE);
 </#if>
 }
+<#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
+#pragma coverity compliance end_block "MISRA C-2023 Rule 11.8"
+</#if>
 
 /** \internal
  *  \brief Reads a page of data stored in physical EEPROM memory space.
