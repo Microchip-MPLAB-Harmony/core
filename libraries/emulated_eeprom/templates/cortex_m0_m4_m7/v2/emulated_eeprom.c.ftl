@@ -51,7 +51,7 @@
 #include <stdio.h>
 #endif
 
-#define EEPROM_EMULATOR_VERSION                 0x02
+#define EEPROM_EMULATOR_VERSION                 0x02U
 #define EEPROM_EMULATOR_CRC8_POLY               0x07  // Polynomial: x^8 + x^2 + x^1 + 1 (0x07)
 
 /**
@@ -73,7 +73,7 @@ static uint8_t EMU_EEPROM_CRC8Calculate(uint8_t* data, uint8_t length)
     {
         crc ^= data[i];  // XOR with input byte
 
-        for (uint8_t j = 0; j < 8; j++)
+        for (uint8_t j = 0U; j < 8U; j++)
         {
             if ((crc & 0x80U) != 0U)
             {  // Check MSB
@@ -414,7 +414,8 @@ static void EMU_EEPROM_SanitizeLogicalPages(void)
     } page_trans[EEPROM_EMULATOR_NUM_LOGICAL_PAGES_PER_ROW];
 
     /* Scan through each row and sanitize each row */
-    for (uint16_t i = 0U, row_num = 0U; i < EEPROM_EMULATOR_NUM_PHYSICAL_PAGES; i=i+EEPROM_EMULATOR_PAGES_PER_ROW, row_num++)
+    uint16_t row_num = 0U;
+    for (uint16_t i = 0U; i < EEPROM_EMULATOR_NUM_PHYSICAL_PAGES; i = i + EEPROM_EMULATOR_PAGES_PER_ROW)
     {
         /* Read out the 4 logical pages stored in this row */
         p0 = EMU_EEPROM_PhysicalToLogicalPage(i);
@@ -429,14 +430,15 @@ static void EMU_EEPROM_SanitizeLogicalPages(void)
         {
             spare_row_found = true;
             spare_row = row_num;
+            row_num++;
             continue;
         }
 
         if ((p0 >= EEPROM_EMULATOR_NUM_LOGICAL_PAGES) || (p1 >= EEPROM_EMULATOR_NUM_LOGICAL_PAGES) || (p1 != (p0 + 1U)) || \
                 (page_ptr[0].header.version != EEPROM_EMULATOR_VERSION) || \
                 (page_ptr[1].header.version != EEPROM_EMULATOR_VERSION) || \
-                (EMU_EEPROM_IsPageCRCValid(i) == false) || \
-                (EMU_EEPROM_IsPageCRCValid(i+1U) == false) )
+                (EMU_EEPROM_IsPageCRCValid(i) == (bool)false) || \
+                (EMU_EEPROM_IsPageCRCValid(i+1U) == (bool)false) )
         {
             /* If in a row, p0 or p1 is having incorrect value (value not in range of 0 to max logical page number), then erase that row.
              * This can happen only when a row is full and data is being copied to the spare row, and during copy the power goes off.
@@ -446,8 +448,11 @@ static void EMU_EEPROM_SanitizeLogicalPages(void)
             spare_row_found = true;
             spare_row = row_num;
         }
+        row_num++;
     }
-    for (uint16_t i = 0U, row_num = 0U; i < EEPROM_EMULATOR_NUM_PHYSICAL_PAGES; i=i+EEPROM_EMULATOR_PAGES_PER_ROW, row_num++)
+
+    row_num = 0U;
+    for (uint16_t i = 0U; i < EEPROM_EMULATOR_NUM_PHYSICAL_PAGES; i = i + EEPROM_EMULATOR_PAGES_PER_ROW)
     {
         /* Read out the 4 logical pages stored in this row */
         p0 = EMU_EEPROM_PhysicalToLogicalPage(i);
@@ -460,16 +465,17 @@ static void EMU_EEPROM_SanitizeLogicalPages(void)
         if ((p0 == EEPROM_EMULATOR_INVALID_PAGE_NUMBER) && (p1 == EEPROM_EMULATOR_INVALID_PAGE_NUMBER) && \
                 (p2 == EEPROM_EMULATOR_INVALID_PAGE_NUMBER) && (p3 == EEPROM_EMULATOR_INVALID_PAGE_NUMBER))
         {
+            row_num++;
             continue;
         }
 
         if ( (spare_row_found == true) && \
                 (((p2 != EEPROM_EMULATOR_INVALID_PAGE_NUMBER) &&
                 (((p2 != p0) && (p2 != p1)) || \
-                (EMU_EEPROM_IsPageCRCValid(i+2U) == false))) || \
+                (EMU_EEPROM_IsPageCRCValid(i+2U) == (bool)false))) || \
                 ((p3 != EEPROM_EMULATOR_INVALID_PAGE_NUMBER) &&
                 (((p3 != p0) && (p3 != p1)) || \
-                (EMU_EEPROM_IsPageCRCValid(i+3U) == false)))))
+                (EMU_EEPROM_IsPageCRCValid(i+3U) == (bool)false)))))
         {
             /* If p0 and p1 is having correct values (value in range of 0 to max logical page number), and if p2 or p3 logical page value is
              * different than p0 and p1, then discard the incorrect p2 or p3.
@@ -519,7 +525,7 @@ static void EMU_EEPROM_SanitizeLogicalPages(void)
 
                 EMU_EEPROM_NVMBufferFill((uint16_t)new_page, &eeprom_instance.cache);
 
-                EMU_EEPROM_NVMBufferCommit(new_page);
+                EMU_EEPROM_NVMBufferCommit((uint16_t)new_page);
             }
 
             /* Now erase the faulty row */
@@ -528,6 +534,7 @@ static void EMU_EEPROM_SanitizeLogicalPages(void)
             /* Set this as the new spare row */
             spare_row = row_num;
         }
+        row_num++;
     }
 }
 
