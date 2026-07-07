@@ -3,6 +3,32 @@
 
 # Microchip MPLAB® Harmony 3 Release Notes
 
+## Core Release v3.17.0
+
+### New Features
+
+- **New Features and Enhancements**
+  - Added EEPROM Emulation library support for PIC32M devices
+  - Added SFDP Flash driver to support multiple vendor NOR Flash devices
+
+- **Bug Fixes and Improvements**
+  - Fixed PMECC issue in NAND Flash driver
+  - Fixed MISRA-C violations
+
+- **Applications**
+  - MPLAB Harmony provides large number of application examples to accelerate learning and reduce the development cycles for your embedded systems with reusable software components. The application examples are available in the respective [product family specific repository](apps/readme.md).
+
+### Known Issues
+
+-  None
+
+### Development Tools
+
+- [MPLAB® X IDE v6.30](https://www.microchip.com/mplab/mplab-x-ide) or higher
+- [MPLAB® XC32 C/C++ Compiler v5.10](https://www.microchip.com/mplab/compilers) or higher
+- MPLAB® X IDE plug-ins:
+    - MPLAB® Code Configurator 5.6.4 or higher
+
 ## Core Release v3.16.3
 
 ### New Features
