@@ -458,6 +458,14 @@ static void lDRV_I2C_PLibCallbackHandler( uintptr_t contextHandle )
     // Get the transfer object at the head of the list
     transferObj = lDRV_I2C_TransferObjListGet(dObj);
 
+    if (transferObj == NULL)
+    {
+        /* DRV_I2C_QueuePurge() emptied the list before this interrupt was
+         * serviced, so the transfer this event belongs to is already gone.
+         * Nothing left to complete. */
+        return;
+    }
+
     // Get the client object that owns this buffer
     clientObj = &((DRV_I2C_CLIENT_OBJ *)gDrvI2CObj[((transferObj->clientHandle & DRV_I2C_INSTANCE_MASK) >> 8)].clientObjPool)
                 [transferObj->clientHandle & DRV_I2C_INDEX_MASK];
