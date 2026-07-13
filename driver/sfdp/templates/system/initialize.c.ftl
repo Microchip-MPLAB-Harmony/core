@@ -1,0 +1,1 @@
+    sysObj.drvSFDP = DRV_SFDP_Initialize((SYS_MODULE_INDEX)DRV_SFDP_INDEX, (SYS_MODULE_INIT *)&drvSFDPInitData);

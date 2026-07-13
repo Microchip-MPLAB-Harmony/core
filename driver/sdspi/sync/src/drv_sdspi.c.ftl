@@ -431,7 +431,7 @@ static bool lDRV_SDSPI_EnterIdleState(DRV_SDSPI_OBJ* const dObj)
 
     if (lDRV_SDSPI_CommandSend(dObj, (uint8_t)DRV_SDSPI_GO_IDLE_STATE, 0) == true)
     {
-        if (r1Response->inIdleState == CMD_R1_END_BIT_SET)
+        if (r1Response->task.inIdleState == CMD_R1_END_BIT_SET)
         {
             isSuccess = true;
         }
@@ -459,7 +459,7 @@ static bool lDRV_SDSPI_CheckIFCondition(DRV_SDSPI_OBJ* const dObj)
     */
     if (lDRV_SDSPI_CommandSend(dObj, (uint8_t)DRV_SDSPI_SEND_IF_COND, 0x000001AA) == true)
     {
-        if (r1Response->illegalCommand == (uint8_t)false)
+        if (r1Response->task.illegalCommand == (uint8_t)false)
         {
             /* Version 2.0 SD Memory Card (SDSC, SDHC/SDXC).
              * The CCS bit in response to CMD58 will indicate if its a SDSC (CCS = 0).
@@ -525,7 +525,7 @@ static bool lDRV_SDSPI_SendACMD41(DRV_SDSPI_OBJ* const dObj)
             return isSuccess;
         }
 
-    }while ((r1Response->inIdleState == CMD_R1_END_BIT_SET) && (dObj->timerExpired == false));
+    }while ((r1Response->task.inIdleState == CMD_R1_END_BIT_SET) && (dObj->timerExpired == false));
 
     (void) DRV_SDSPI_TimerStop(dObj);
 

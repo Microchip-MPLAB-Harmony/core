@@ -1,6 +1,6 @@
 # coding: utf-8
 """*****************************************************************************
-* Copyright (C) 2021 Microchip Technology Inc. and its subsidiaries.
+* Copyright (C) 2026 Microchip Technology Inc. and its subsidiaries.
 *
 * Subject to your compliance with these terms, you may use Microchip software
 * and any derivatives exclusively with Microchip products. It is your
@@ -24,7 +24,7 @@
 
 emulated_eeprom_mcc_helpkeyword = "mcc_h3_emulated_eeprom_configurations"
 
-NvmMemoryNames      = ["NVMCTRL", "EFC"]
+NvmMemoryNames      = ["NVM", "NVMCTRL", "EFC"]
 
 periphNode          = ATDF.getNode("/avr-tools-device-file/devices/device/peripherals")
 peripherals         = periphNode.getChildren()
@@ -73,8 +73,8 @@ def updateEEPROMStartAddr(symbol, event):
     if event["id"] == "EEPROM_EMULATOR_EEPROM_SIZE":
         total_eeprom_size = event["value"]
         flash_start_addr = localComponent.getSymbolValue("EEPROM_EMULATOR_FLASH_START_ADDR")
+        flash_start_addr = int(flash_start_addr[:-1],16)
         flash_size = localComponent.getSymbolValue("EEPROM_EMULATOR_FLASH_SIZE")
-
         eeprom_start_addr = (flash_start_addr + flash_size) - total_eeprom_size
         symbol.setValue(int(eeprom_start_addr))
     else:
@@ -141,7 +141,7 @@ def fileGeneration(emulated_eeprom):
     configName = Variables.get("__CONFIGURATION_NAME")
 
     eep_emu_sourceFile = emulated_eeprom.createFileSymbol("EEPROM_EMULATOR_SRC", None)
-    eep_emu_sourceFile.setSourcePath("libraries/emulated_eeprom/templates/cortex_m0_m4_m7/v2/emulated_eeprom.c.ftl")
+    eep_emu_sourceFile.setSourcePath("libraries/emulated_eeprom/templates/mips/emulated_eeprom.c.ftl")
     eep_emu_sourceFile.setOutputName("emulated_eeprom.c")
     eep_emu_sourceFile.setMarkup(True)
     eep_emu_sourceFile.setOverwrite(True)
@@ -150,7 +150,7 @@ def fileGeneration(emulated_eeprom):
     eep_emu_sourceFile.setType("SOURCE")
 
     eep_emu_headerFile = emulated_eeprom.createFileSymbol("EEPROM_EMULATOR_HEADER", None)
-    eep_emu_headerFile.setSourcePath("libraries/emulated_eeprom/templates/emulated_eeprom.h")
+    eep_emu_headerFile.setSourcePath("libraries/emulated_eeprom/templates/emulated_eeprom_mips.h")
     eep_emu_headerFile.setOutputName("emulated_eeprom.h")
     eep_emu_headerFile.setMarkup(False)
     eep_emu_headerFile.setOverwrite(True)
@@ -159,7 +159,7 @@ def fileGeneration(emulated_eeprom):
     eep_emu_headerFile.setType("HEADER")
 
     eep_emu_LocalHeaderFile = emulated_eeprom.createFileSymbol("EEPROM_EMULATOR_LOCAL_HEADER", None)
-    eep_emu_LocalHeaderFile.setSourcePath("libraries/emulated_eeprom/templates/cortex_m0_m4_m7/v2/emulated_eeprom_local.h.ftl")
+    eep_emu_LocalHeaderFile.setSourcePath("libraries/emulated_eeprom/templates/mips/emulated_eeprom_local.h.ftl")
     eep_emu_LocalHeaderFile.setOutputName("emulated_eeprom_local.h")
     eep_emu_LocalHeaderFile.setMarkup(True)
     eep_emu_LocalHeaderFile.setOverwrite(True)
@@ -236,9 +236,9 @@ def instantiateComponent(emulated_eeprom):
     eep_emu_NumPagesPerRow.setVisible(False)
 
     #Flash Start Address
-    eep_emu_FlashStartAddr = emulated_eeprom.createIntegerSymbol("EEPROM_EMULATOR_FLASH_START_ADDR", None)
+    eep_emu_FlashStartAddr = emulated_eeprom.createStringSymbol("EEPROM_EMULATOR_FLASH_START_ADDR", None)
     eep_emu_FlashStartAddr.setLabel("Flash Start Addr")
-    eep_emu_FlashStartAddr.setDefaultValue(0)
+    eep_emu_FlashStartAddr.setDefaultValue("")
     eep_emu_FlashStartAddr.setReadOnly(True)
     eep_emu_FlashStartAddr.setVisible(False)
 
@@ -274,6 +274,7 @@ def instantiateComponent(emulated_eeprom):
     eep_emu_EEPROMStartAddr.setHelp(emulated_eeprom_mcc_helpkeyword)
     eep_emu_EEPROMStartAddr.setDefaultValue(0)
     eep_emu_EEPROMStartAddr.setVisible(False)
+    eep_emu_EEPROMStartAddr.setReadOnly(True)
     eep_emu_EEPROMStartAddr.setDependencies(updateEEPROMStartAddr, ["EEPROM_EMULATOR_IS_DEPENDENCY_SATISFIED", "EEPROM_EMULATOR_EEPROM_SIZE"])
     
     #XC32 Linker macor - ROM Length 
@@ -348,6 +349,19 @@ def onAttachmentConnected(source, target):
             localComponent.setSymbolValue("EEPROM_EMULATOR_PAGE_SIZE", page_size)
             localComponent.setSymbolValue("EEPROM_EMULATOR_PAGES_PER_ROW", (row_size/page_size))
             localComponent.setSymbolValue("EEPROM_EMULATOR_FLASH_START_ADDR", main_array_start_addr)
+            localComponent.setSymbolValue("EEPROM_EMULATOR_FLASH_SIZE", main_array_size)
+            localComponent.setSymbolValue("EEPROM_EMULATOR_IS_DEPENDENCY_SATISFIED", True)
+            localComponent.getSymbolByID("EEPROM_EMULATOR_COMMENT").setVisible(False)
+        elif remoteID.upper() == "NVM":
+            row_size = int(Database.getSymbolValue(remoteID, "FLASH_ERASE_SIZE"))
+            page_size = int(Database.getSymbolValue(remoteID, "FLASH_PROGRAM_SIZE"))
+            main_array_start_addr = int(Database.getSymbolValue(remoteID, "FLASH_START_ADDRESS"),16)
+            main_array_size = int(Database.getSymbolValue(remoteID, "FLASH_SIZE")[2:],16)
+            localComponent.setSymbolValue("EEPROM_EMULATOR_NVM_PLIB", remoteID.upper())
+            localComponent.setSymbolValue("EEPROM_EMULATOR_ROW_SIZE", row_size)
+            localComponent.setSymbolValue("EEPROM_EMULATOR_PAGE_SIZE", page_size)
+            localComponent.setSymbolValue("EEPROM_EMULATOR_PAGES_PER_ROW", (row_size/page_size))
+            localComponent.setSymbolValue("EEPROM_EMULATOR_FLASH_START_ADDR", hex(main_array_start_addr))
             localComponent.setSymbolValue("EEPROM_EMULATOR_FLASH_SIZE", main_array_size)
             localComponent.setSymbolValue("EEPROM_EMULATOR_IS_DEPENDENCY_SATISFIED", True)
             localComponent.getSymbolByID("EEPROM_EMULATOR_COMMENT").setVisible(False)

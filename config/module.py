@@ -25,7 +25,7 @@
 USBNamesList        = ["USB", "USBHS", "UDP"]
 SDHCNamesList       = ["HSMCI", "SDHC", "SDMMC"]
 SQINamesList        = ["QSPI", "SQI"]
-EMUEEPMemList       = ["NVMCTRL", "EFC"]
+EMUEEPMemList       = ["NVM","NVMCTRL", "EFC"]
 
 def hasPeripheral(peripheralList):
     periphNode          = ATDF.getNode("/avr-tools-device-file/devices/device/peripherals")
@@ -40,7 +40,7 @@ def hasPeripheral(peripheralList):
 
 def emulated_eeprom_condition():
     arch = ATDF.getNode( "/avr-tools-device-file/devices/device" ).getAttribute( "architecture" )
-    if arch == "CORTEX-M0PLUS" or arch == "CORTEX-M4" or arch == "CORTEX-M7" or arch == "CORTEX-M23" or arch == "CORTEX-M33":
+    if arch == "CORTEX-M0PLUS" or arch == "CORTEX-M4" or arch == "CORTEX-M7" or arch == "CORTEX-M23" or arch == "CORTEX-M33" or arch == "MIPS":
         return hasPeripheral(EMUEEPMemList)
     else:
         return False
@@ -116,6 +116,8 @@ def loadModule():
         {"name":"sst39", "label": "SST39", "type":"driver", "display_path":"Parallel PROM", "actual_path":"parallel_prom", "instance":"single", "capability":["MEMORY"], "dependency":["HEMC_CS"], "condition":"True"},
 
         {"name":"sst38", "label": "SST38", "type":"driver", "display_path":"Parallel PROM", "actual_path":"parallel_prom", "instance":"single", "capability":["MEMORY"], "dependency":["HEMC_CS"], "condition":"True"},
+
+        {"name":"sfdp", "label": "SFDP", "type":"driver", "display_path":"SFDP Flash", "actual_path":"", "instance":"single", "capability":["MEMORY"], "dependency":["SQI", "SPI", "DRV_SPI"] if hasPeripheral(SQINamesList) else ["SPI", "DRV_SPI"], "condition":"True"}
         ]
 
     #load drivers and system services defined above
