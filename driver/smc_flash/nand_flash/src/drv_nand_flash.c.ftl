@@ -509,7 +509,7 @@ static bool DRV_NAND_FLASH_PageReadPmecc(const DRV_HANDLE handle, uint16_t block
         if (gDrvNandFlashObj.txrxDMAChannel != SYS_DMA_CHANNEL_NONE)
         {
 <#if core.DATA_CACHE_ENABLE?? && core.DATA_CACHE_ENABLE == true >
-            temp = (gDrvNandFlashData.nandFlashGeometry.pageSize + DRV_NAND_FLASH_PMECC_ECC_START_ADDR + (uint32_t)DRV_NAND_FLASH_PMECC_ECC_SPARE_SIZE);
+            temp = (gDrvNandFlashData.nandFlashGeometry.pageSize + DRV_NAND_FLASH_PMECC_ECC_START_ADDR + (uint32_t)DRV_NAND_FLASH_PMECC_ECC_SIZE);
             /* Invalidate the data buffer to force the CPU to read from the main memory */
             SYS_CACHE_InvalidateDCache_by_Addr(data, (int32_t)temp);
 </#if>
@@ -518,7 +518,7 @@ static bool DRV_NAND_FLASH_PageReadPmecc(const DRV_HANDLE handle, uint16_t block
             (void) SYS_DMA_ChannelTransfer(gDrvNandFlashObj.txrxDMAChannel,
                                    (const void *)gDrvNandFlashData.dataAddress,
                                    (const void *)data,
-                                   (gDrvNandFlashData.nandFlashGeometry.pageSize + DRV_NAND_FLASH_PMECC_ECC_START_ADDR + (uint32_t)DRV_NAND_FLASH_PMECC_ECC_SPARE_SIZE));
+                                   (gDrvNandFlashData.nandFlashGeometry.pageSize + DRV_NAND_FLASH_PMECC_ECC_START_ADDR + (uint32_t)DRV_NAND_FLASH_PMECC_ECC_SIZE));
 
             /* Wait for DMA transfer completion */
             while (gDrvNandFlashObj.transferStatus == DRV_NAND_FLASH_TRANSFER_BUSY)
@@ -535,12 +535,12 @@ static bool DRV_NAND_FLASH_PageReadPmecc(const DRV_HANDLE handle, uint16_t block
         {
             /* Read data page */
             DRV_NAND_FLASH_DataRead(gDrvNandFlashData.dataAddress, data,
-            (gDrvNandFlashData.nandFlashGeometry.pageSize + DRV_NAND_FLASH_PMECC_ECC_START_ADDR + (uint32_t)DRV_NAND_FLASH_PMECC_ECC_SPARE_SIZE));
+            (gDrvNandFlashData.nandFlashGeometry.pageSize + DRV_NAND_FLASH_PMECC_ECC_START_ADDR + (uint32_t)DRV_NAND_FLASH_PMECC_ECC_SIZE));
         }
 <#else>
         /* Read data page */
         DRV_NAND_FLASH_DataRead(gDrvNandFlashData.dataAddress, data,
-        (gDrvNandFlashData.nandFlashGeometry.pageSize + DRV_NAND_FLASH_PMECC_ECC_START_ADDR + DRV_NAND_FLASH_PMECC_ECC_SPARE_SIZE));
+        (gDrvNandFlashData.nandFlashGeometry.pageSize + DRV_NAND_FLASH_PMECC_ECC_START_ADDR + DRV_NAND_FLASH_PMECC_ECC_SIZE));
 </#if>
 
         /* Wait until PMECC is not busy */
@@ -688,9 +688,9 @@ static bool DRV_NAND_FLASH_PageWriteWithPMECC(const DRV_HANDLE handle, uint16_t 
     /* Read all ECC registers */
     for (count = 0; count < (uint32_t)DRV_NAND_FLASH_PMECC_NUMBER_OF_SECTORS; count++)
     {
-        for (byteIndex = 0; byteIndex < ((uint32_t)DRV_NAND_FLASH_PMECC_ECC_SPARE_SIZE / (uint32_t)DRV_NAND_FLASH_PMECC_NUMBER_OF_SECTORS); byteIndex++)
+        for (byteIndex = 0; byteIndex < ((uint32_t)DRV_NAND_FLASH_PMECC_ECC_SIZE / (uint32_t)DRV_NAND_FLASH_PMECC_NUMBER_OF_SECTORS); byteIndex++)
         {
-            gDrvNandFlashData.spareBuffer[(count * ((uint32_t)DRV_NAND_FLASH_PMECC_ECC_SPARE_SIZE / (uint32_t)DRV_NAND_FLASH_PMECC_NUMBER_OF_SECTORS)) + byteIndex] =
+            gDrvNandFlashData.spareBuffer[(count * ((uint32_t)DRV_NAND_FLASH_PMECC_ECC_SIZE / (uint32_t)DRV_NAND_FLASH_PMECC_NUMBER_OF_SECTORS)) + byteIndex] =
             gDrvNandFlashObj.nandFlashPlib->ECCGet(count, byteIndex);
         }
     }
@@ -700,14 +700,14 @@ static bool DRV_NAND_FLASH_PageWriteWithPMECC(const DRV_HANDLE handle, uint16_t 
     {
 <#if core.DATA_CACHE_ENABLE?? && core.DATA_CACHE_ENABLE == true >
         /* Clean the data buffer to push the data to the main memory */
-        SYS_CACHE_CleanDCache_by_Addr(gDrvNandFlashData.spareBuffer, (int32_t)DRV_NAND_FLASH_PMECC_ECC_SPARE_SIZE);
+        SYS_CACHE_CleanDCache_by_Addr(gDrvNandFlashData.spareBuffer, (int32_t)DRV_NAND_FLASH_PMECC_ECC_SIZE);
 </#if>
         gDrvNandFlashObj.transferStatus = DRV_NAND_FLASH_TRANSFER_BUSY;
 
         (void) SYS_DMA_ChannelTransfer(gDrvNandFlashObj.txrxDMAChannel,
                                (const void *)gDrvNandFlashData.spareBuffer,
                                (const void *)gDrvNandFlashData.dataAddress,
-                                DRV_NAND_FLASH_PMECC_ECC_SPARE_SIZE);
+                                DRV_NAND_FLASH_PMECC_ECC_SIZE);
 
         /* Wait for DMA transfer completion */
         while (gDrvNandFlashObj.transferStatus == DRV_NAND_FLASH_TRANSFER_BUSY)
@@ -723,11 +723,11 @@ static bool DRV_NAND_FLASH_PageWriteWithPMECC(const DRV_HANDLE handle, uint16_t 
     else
     {
         /* Write spare page */
-        DRV_NAND_FLASH_DataWrite(gDrvNandFlashData.dataAddress, gDrvNandFlashData.spareBuffer, DRV_NAND_FLASH_PMECC_ECC_SPARE_SIZE);
+        DRV_NAND_FLASH_DataWrite(gDrvNandFlashData.dataAddress, gDrvNandFlashData.spareBuffer, DRV_NAND_FLASH_PMECC_ECC_SIZE);
     }
 <#else>
     /* Write spare page */
-    DRV_NAND_FLASH_DataWrite(gDrvNandFlashData.dataAddress, gDrvNandFlashData.spareBuffer, DRV_NAND_FLASH_PMECC_ECC_SPARE_SIZE);
+    DRV_NAND_FLASH_DataWrite(gDrvNandFlashData.dataAddress, gDrvNandFlashData.spareBuffer, DRV_NAND_FLASH_PMECC_ECC_SIZE);
 </#if>
 
     /* Send page program command for cycle 2 */

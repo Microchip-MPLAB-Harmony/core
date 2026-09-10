@@ -3522,14 +3522,14 @@ bool DRV_NAND_FLASH_PmeccDescSetup(uint32_t pageSize, uint16_t spareSize, DRV_NA
     gDrvNandPmeccDescriptor.nn = (1UL << gDrvNandPmeccDescriptor.mm) - 1;
     gDrvNandPmeccDescriptor.tt = DRV_NAND_FLASH_PMECC_ECC_ERR_CAPABILITY;
 
-    if (DRV_NAND_FLASH_PMECC_ECC_SPARE_SIZE !=
+    if (DRV_NAND_FLASH_PMECC_ECC_SIZE !=
        (((((gDrvNandPmeccDescriptor.mm * DRV_NAND_FLASH_PMECC_ECC_ERR_CAPABILITY) + 8) - 1) / 8) *
         DRV_NAND_FLASH_PMECC_NUMBER_OF_SECTORS))
     {
         return false;
     }
 
-    if ((DRV_NAND_FLASH_PMECC_ECC_START_ADDR + (uint16_t)DRV_NAND_FLASH_PMECC_ECC_SPARE_SIZE) > spareSize)
+    if ((DRV_NAND_FLASH_PMECC_ECC_START_ADDR + (uint16_t)DRV_NAND_FLASH_PMECC_ECC_SIZE) > spareSize)
     {
         return false;
     }
@@ -3555,7 +3555,7 @@ bool DRV_NAND_FLASH_PmeccCorrection(uint32_t pmeccStatus, uint32_t pageBuffer)
             /* Get Sigma */
             (void) DRV_NAND_FLASH_GetSigma();
             /* Find error location. Number of bits of the sector + ecc */
-            errorNumber = DRV_NAND_FLASH_ErrorLocation(DRV_NAND_FLASH_PMECC_SECTOR_SIZE * 8U + ((uint32_t)DRV_NAND_FLASH_PMECC_ECC_SPARE_SIZE / (uint32_t)DRV_NAND_FLASH_PMECC_NUMBER_OF_SECTORS) * 8U);
+            errorNumber = DRV_NAND_FLASH_ErrorLocation(DRV_NAND_FLASH_PMECC_SECTOR_SIZE * 8U + ((uint32_t)DRV_NAND_FLASH_PMECC_ECC_SIZE / (uint32_t)DRV_NAND_FLASH_PMECC_NUMBER_OF_SECTORS) * 8U);
             if (errorNumber == -1)
             {
                 return false;

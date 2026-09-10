@@ -22,9 +22,9 @@
     <#assign ECC_SECTOR_SIZE = DRV_NAND_FLASH_PLIB?lower_case + "." + "SMC_PMECC_SECTOR_SIZE">
     <#assign ECC_BCH_ERR = DRV_NAND_FLASH_PLIB?lower_case + "." + "SMC_PMECC_ERROR_CORRECTION_CAPABILITY">
   </#if>
-  <#lt>#define DRV_NAND_FLASH_PMECC_ECC_SPARE_SIZE           (${(ECC_SPARE_SIZE)?eval}U)
   <#lt>#define DRV_NAND_FLASH_PMECC_ECC_START_ADDR           (${(ECC_START_ADDR)?eval}U)
   <#lt>#define DRV_NAND_FLASH_PMECC_ECC_END_ADDR             (${(ECC_END_ADDR)?eval}U)
+  <#lt>#define DRV_NAND_FLASH_PMECC_ECC_SIZE                 (DRV_NAND_FLASH_PMECC_ECC_END_ADDR - DRV_NAND_FLASH_PMECC_ECC_START_ADDR + 1)
   <#assign NUM_OF_SECTORS = 8>
   <#if (ECC_PAGE_SIZE)?eval == "0x0" || (ECC_PAGE_SIZE)?eval == "0">
     <#assign NUM_OF_SECTORS = 1>
