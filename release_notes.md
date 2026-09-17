@@ -3,6 +3,26 @@
 
 # Microchip MPLAB® Harmony 3 Release Notes
 
+## Core Release v3.17.1
+
+### New Features
+- None
+
+### Bug fixes
+- Fixed FreeRTOS component issue for PIC32CZ-CA91 devices
+- Fixed NAND Flash driver ECC size issue
+
+### Known Issues
+
+-  None
+
+### Development Tools
+
+- [MPLAB® X IDE v6.35](https://www.microchip.com/mplab/mplab-x-ide) or higher
+- [MPLAB® XC32 C/C++ Compiler v6.00](https://www.microchip.com/mplab/compilers) or higher
+- MPLAB® X IDE plug-ins:
+    - MPLAB® Code Configurator 5.7.0 or higher
+
 ## Core Release v3.17.0
 
 ### New Features
