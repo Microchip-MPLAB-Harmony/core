@@ -24,7 +24,7 @@
   </#if>
   <#lt>#define DRV_NAND_FLASH_PMECC_ECC_START_ADDR           (${(ECC_START_ADDR)?eval}U)
   <#lt>#define DRV_NAND_FLASH_PMECC_ECC_END_ADDR             (${(ECC_END_ADDR)?eval}U)
-  <#lt>#define DRV_NAND_FLASH_PMECC_ECC_SIZE                 (DRV_NAND_FLASH_PMECC_ECC_END_ADDR - DRV_NAND_FLASH_PMECC_ECC_START_ADDR + 1)
+  <#lt>#define DRV_NAND_FLASH_PMECC_ECC_SIZE                 (DRV_NAND_FLASH_PMECC_ECC_END_ADDR - DRV_NAND_FLASH_PMECC_ECC_START_ADDR + 1U)
   <#assign NUM_OF_SECTORS = 8>
   <#if (ECC_PAGE_SIZE)?eval == "0x0" || (ECC_PAGE_SIZE)?eval == "0">
     <#assign NUM_OF_SECTORS = 1>

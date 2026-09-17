@@ -52,6 +52,15 @@
 #include "driver/smc_flash/nand_flash/src/drv_nand_flash_pmecc.h"
 </#if>
 
+/* MISRAC 2023 deviation block start */
+/* MISRA C-2023 Rule 10.8 deviated in this file. Deviation record ID - H3_MISRAC_2023_R_10_8_DR_1 */
+<#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
+<#if core.COMPILER_CHOICE == "XC32">
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wunknown-pragmas"
+</#if>
+#pragma coverity compliance block deviate "MISRA C-2023 Rule 10.8" "H3_MISRAC_2023_R_10_8_DR_1"
+</#if>
 // *****************************************************************************
 // *****************************************************************************
 // Section: Global objects
@@ -1378,3 +1387,10 @@ SYS_STATUS DRV_NAND_FLASH_Status( const SYS_MODULE_INDEX drvIndex )
     /* Return the driver status */
     return (gDrvNandFlashObj.status);
 }
+<#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
+#pragma coverity compliance end_block "MISRA C-2023 Rule 10.8"
+<#if core.COMPILER_CHOICE == "XC32">
+#pragma GCC diagnostic pop
+</#if>
+</#if>
+/* MISRAC 2023 deviation block end */
